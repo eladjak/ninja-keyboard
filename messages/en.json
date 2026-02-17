@@ -1,0 +1,97 @@
+{
+  "nav": {
+    "home": "Home",
+    "lessons": "Lessons",
+    "battle": "Battle Arena",
+    "progress": "Progress",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "name": "Name",
+    "loginTitle": "Login to Ninja Keyboard",
+    "registerTitle": "Register",
+    "joinTitle": "Join a Class",
+    "classCode": "Class Code",
+    "classCodePlaceholder": "Enter the class code from your teacher",
+    "avatarTitle": "Choose Your Character",
+    "avatarSubtitle": "Pick the ninja that will join you on your journey",
+    "pinTitle": "Enter Secret Code",
+    "pinSubtitle": "4 digits only you know",
+    "googleLogin": "Sign in with Google",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "joinClass": "Join a class with code",
+    "firstName": "First Name",
+    "submit": "Submit",
+    "continue": "Continue"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "search": "Search",
+    "comingSoon": "Coming Soon!"
+  },
+  "errors": {
+    "required": "Required field",
+    "invalidEmail": "Invalid email",
+    "invalidCode": "Invalid code",
+    "invalidPin": "Invalid PIN",
+    "networkError": "Network error, try again",
+    "unauthorized": "Unauthorized",
+    "notFound": "Not found"
+  },
+  "a11y": {
+    "skipNav": "Skip to main content",
+    "mainContent": "Main content",
+    "navigation": "Main navigation",
+    "closeMenu": "Close menu",
+    "openMenu": "Open menu",
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode",
+    "toggleTheme": "Toggle color scheme"
+  },
+  "home": {
+    "welcome": "Welcome to Ninja Keyboard!",
+    "subtitle": "Ready to become typing ninjas?",
+    "startLesson": "Start Lesson",
+    "continueLesson": "Continue where you left off"
+  },
+  "lessons": {
+    "title": "Lessons",
+    "comingSoon": "Typing lessons coming soon in Sprint 2!"
+  },
+  "battle": {
+    "title": "Battle Arena",
+    "comingSoon": "Battle Arena coming soon!"
+  },
+  "progress": {
+    "title": "My Progress",
+    "comingSoon": "Progress tracking coming soon!"
+  },
+  "profile": {
+    "title": "My Profile"
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": "Theme",
+    "colorScheme": "Color Scheme",
+    "language": "Language",
+    "accessibility": "Accessibility"
+  }
+}

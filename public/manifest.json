@@ -1,0 +1,27 @@
+{
+  "name": "נינג'ה מקלדת",
+  "short_name": "נינג'ה",
+  "description": "לימוד הקלדה עיוורת בעברית לילדים ומבוגרים",
+  "start_url": "/",
+  "display": "standalone",
+  "dir": "rtl",
+  "lang": "he",
+  "theme_color": "#6C5CE7",
+  "background_color": "#ffffff",
+  "orientation": "any",
+  "categories": ["education", "games"],
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

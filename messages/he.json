@@ -1,0 +1,97 @@
+{
+  "nav": {
+    "home": "בית",
+    "lessons": "שיעורים",
+    "battle": "זירת קרב",
+    "progress": "התקדמות",
+    "profile": "פרופיל",
+    "settings": "הגדרות"
+  },
+  "auth": {
+    "login": "כניסה",
+    "register": "הרשמה",
+    "logout": "התנתק",
+    "email": "אימייל",
+    "password": "סיסמה",
+    "confirmPassword": "אימות סיסמה",
+    "name": "שם",
+    "loginTitle": "כניסה לנינג'ה מקלדת",
+    "registerTitle": "הרשמה",
+    "joinTitle": "הצטרפות לכיתה",
+    "classCode": "קוד כיתה",
+    "classCodePlaceholder": "הכנס את קוד הכיתה שקיבלת מהמורה",
+    "avatarTitle": "בחר את הדמות שלך",
+    "avatarSubtitle": "בחר את הנינג'ה שילווה אותך במסע",
+    "pinTitle": "הכנס קוד סודי",
+    "pinSubtitle": "4 ספרות שרק אתה יודע",
+    "googleLogin": "כניסה עם Google",
+    "noAccount": "אין לך חשבון?",
+    "hasAccount": "כבר יש לך חשבון?",
+    "joinClass": "הצטרף לכיתה עם קוד",
+    "firstName": "שם פרטי",
+    "submit": "שלח",
+    "continue": "המשך"
+  },
+  "common": {
+    "loading": "טוען...",
+    "error": "שגיאה",
+    "success": "הצלחה",
+    "cancel": "ביטול",
+    "save": "שמור",
+    "delete": "מחק",
+    "edit": "ערוך",
+    "back": "חזור",
+    "next": "הבא",
+    "previous": "הקודם",
+    "close": "סגור",
+    "search": "חיפוש",
+    "comingSoon": "בקרוב!"
+  },
+  "errors": {
+    "required": "שדה חובה",
+    "invalidEmail": "אימייל לא תקין",
+    "invalidCode": "קוד לא תקין",
+    "invalidPin": "קוד סודי לא תקין",
+    "networkError": "שגיאת רשת, נסה שוב",
+    "unauthorized": "אין הרשאה",
+    "notFound": "לא נמצא"
+  },
+  "a11y": {
+    "skipNav": "דלג לתוכן הראשי",
+    "mainContent": "תוכן ראשי",
+    "navigation": "ניווט ראשי",
+    "closeMenu": "סגור תפריט",
+    "openMenu": "פתח תפריט",
+    "darkMode": "מצב כהה",
+    "lightMode": "מצב בהיר",
+    "toggleTheme": "החלף ערכת צבעים"
+  },
+  "home": {
+    "welcome": "ברוכים הבאים לנינג'ה מקלדת!",
+    "subtitle": "מוכנים להפוך לנינג'ות הקלדה?",
+    "startLesson": "התחל שיעור",
+    "continueLesson": "המשך מאיפה שהפסקת"
+  },
+  "lessons": {
+    "title": "שיעורים",
+    "comingSoon": "שיעורי הקלדה מגיעים בקרוב בספרינט 2!"
+  },
+  "battle": {
+    "title": "זירת קרב",
+    "comingSoon": "זירת הקרב מגיעה בקרוב!"
+  },
+  "progress": {
+    "title": "ההתקדמות שלי",
+    "comingSoon": "מעקב התקדמות מגיע בקרוב!"
+  },
+  "profile": {
+    "title": "הפרופיל שלי"
+  },
+  "settings": {
+    "title": "הגדרות",
+    "theme": "ערכת נושא",
+    "colorScheme": "ערכת צבעים",
+    "language": "שפה",
+    "accessibility": "נגישות"
+  }
+}
