@@ -3,10 +3,19 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { validateClassCode } from './class-code'
+import { loginSchema, registerSchema, studentProfileSchema } from './schemas'
 
 export async function loginWithEmail(formData: FormData) {
-  const email = formData.get('email') as string
-  const password = formData.get('password') as string
+  const parsed = loginSchema.safeParse({
+    email: formData.get('email'),
+    password: formData.get('password'),
+  })
+
+  if (!parsed.success) {
+    return { error: parsed.error.issues[0].message }
+  }
+
+  const { email, password } = parsed.data
 
   const supabase = await createClient()
   const { error } = await supabase.auth.signInWithPassword({ email, password })
@@ -37,9 +46,17 @@ export async function loginWithGoogle() {
 }
 
 export async function registerParent(formData: FormData) {
-  const displayName = formData.get('displayName') as string
-  const email = formData.get('email') as string
-  const password = formData.get('password') as string
+  const parsed = registerSchema.safeParse({
+    displayName: formData.get('displayName'),
+    email: formData.get('email'),
+    password: formData.get('password'),
+  })
+
+  if (!parsed.success) {
+    return { error: parsed.error.issues[0].message }
+  }
+
+  const { displayName, email, password } = parsed.data
 
   const supabase = await createClient()
 
@@ -92,9 +109,17 @@ export async function joinClass(code: string) {
 }
 
 export async function createStudentProfile(formData: FormData) {
-  const displayName = formData.get('displayName') as string
-  const avatarId = formData.get('avatarId') as string
-  const classId = formData.get('classId') as string
+  const parsed = studentProfileSchema.safeParse({
+    displayName: formData.get('displayName'),
+    avatarId: formData.get('avatarId'),
+    classId: formData.get('classId') || undefined,
+  })
+
+  if (!parsed.success) {
+    return { error: parsed.error.issues[0].message }
+  }
+
+  const { displayName, avatarId, classId } = parsed.data
 
   const supabase = await createClient()
 

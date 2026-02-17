@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useState } from 'react'
+import { Suspense, useCallback, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import {
   Card,
@@ -12,11 +12,12 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Skeleton } from '@/components/ui/skeleton'
 import { AvatarPicker } from '@/components/auth/avatar-picker'
 import { createStudentProfile } from '@/lib/auth/actions'
 import type { AvatarId } from '@/types/auth'
 
-export default function StudentSetupPage() {
+function StudentSetupForm() {
   const searchParams = useSearchParams()
   const classId = searchParams.get('classId') ?? ''
   const className = searchParams.get('className') ?? ''
@@ -103,5 +104,13 @@ export default function StudentSetupPage() {
         )}
       </CardContent>
     </Card>
+  )
+}
+
+export default function StudentSetupPage() {
+  return (
+    <Suspense fallback={<Skeleton className="h-96 w-full rounded-xl" />}>
+      <StudentSetupForm />
+    </Suspense>
   )
 }

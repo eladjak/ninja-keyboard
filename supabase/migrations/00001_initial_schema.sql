@@ -38,18 +38,22 @@ CREATE TABLE public.class_members (
   PRIMARY KEY (class_id, user_id)
 );
 
--- Typing sessions (for analytics)
+-- Typing sessions (for analytics) - partitioned by created_at for scalability
 CREATE TABLE public.sessions (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
+  id UUID NOT NULL DEFAULT uuid_generate_v4(),
+  user_id UUID NOT NULL,
   lesson_id TEXT NOT NULL,
   wpm INTEGER DEFAULT 0,
   accuracy NUMERIC(5,2) DEFAULT 0,
   duration_seconds INTEGER DEFAULT 0,
   key_stats JSONB DEFAULT '{}',
   emotional_flags TEXT[] DEFAULT '{}',
-  created_at TIMESTAMPTZ DEFAULT now()
-);
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (id, created_at)
+) PARTITION BY RANGE (created_at);
+
+-- Default partition to capture all data
+CREATE TABLE public.sessions_default PARTITION OF public.sessions DEFAULT;
 
 -- Progress tracking
 CREATE TABLE public.progress (
