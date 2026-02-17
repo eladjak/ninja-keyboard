@@ -6,7 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test --config tests/e2e/playwright.config.ts",
+    "typecheck": "tsc --noEmit",
+    "verify": "npm run typecheck && npm run test",
+    "db:migrate": "supabase migration up --local"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.11",

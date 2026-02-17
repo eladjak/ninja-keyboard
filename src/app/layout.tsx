@@ -32,6 +32,9 @@ export default function RootLayout({
       <body
         className={`${heebo.variable} ${inter.variable} ${assistant.variable} antialiased`}
       >
+        <a href="#main-content" className="skip-nav">
+          דלג לתוכן הראשי
+        </a>
         <AppProviders>{children}</AppProviders>
       </body>
     </html>
