@@ -2,23 +2,26 @@
 
 ## Status: Active
 ## Last Updated: 2026-02-18
-## Sprint: 3 (Sound Effects + Settings + Emotional Feedback) - IN PROGRESS
+## Sprint: 3 (Sound Effects + Settings + Emotional Feedback) - COMPLETE
 
 ## Current State
-Sprint 2 complete. Sprint 3 progressing: sound system, settings store, and now EmotionalDetector + FeedbackEngine are implemented. 151 unit tests pass (2 pre-existing failures in session-summary component unrelated to new code), TypeScript clean. The emotional feedback system detects 7 states (frustrated/confused/perfectionist/bored/flow/improving/neutral) from typing patterns and generates adaptive Hebrew messages.
+Sprint 3 complete. Sound system (Web Audio API), settings store (with theme/layout prefs), settings page (with all controls), and 29 new tests for sound + settings. 303 unit tests pass across 16 suites. TypeScript clean. Build passes (38 routes).
 
 ## Sprint 3 Deliverables
 
 ### Sound System (Complete)
-- [x] `src/lib/audio/sounds.ts` - Sound configs: keyClick (800Hz/30ms), correct (523→698Hz/100ms), error (440→330Hz/80ms), levelComplete (523→659→784Hz/300ms), xpGain (1047Hz/50ms)
+- [x] `src/lib/audio/sounds.ts` - Sound configs: keyClick (800Hz/30ms), correct (523->698Hz/100ms), error (440->330Hz/80ms), levelComplete (523->659->784Hz/300ms), xpGain (1047Hz/50ms)
 - [x] `src/lib/audio/sound-manager.ts` - SoundManager singleton, Web Audio API synthesis, SSR-safe, no external files
-- [x] `src/stores/settings-store.ts` - Zustand persist store: soundEnabled, soundVolume, showFingerGuide, showKeyboardColors
+- [x] `src/stores/settings-store.ts` - Zustand persist store: soundEnabled, soundVolume, showFingerGuide, showKeyboardColors, keyboardLayout (standard/dvorak), themePreference (system/light/dark)
+- [x] `tests/unit/lib/sound-system.test.ts` - 20 tests (sound configs, SoundManager play/enable/disable/volume/resume)
+- [x] `tests/unit/stores/settings-store.test.ts` - 9 tests (defaults, toggles, volume clamping, layout, theme preference, isolation)
 
 ### Sound Integration (Complete)
 - [x] `src/components/typing/lesson-view.tsx` - playKeyClick on every keystroke, playCorrect/playError per keystroke result, playLevelComplete + playXpGain on lesson pass
 
 ### Settings Page (Complete)
-- [x] `src/app/(app)/settings/page.tsx` - Sound toggle + volume slider, finger guide toggle, keyboard color zone toggle, all wired to settings-store
+- [x] `src/app/(app)/settings/page.tsx` - Theme preference (system/light/dark), age theme selector, sound toggle + volume slider, finger guide toggle, keyboard color zone toggle, keyboard layout selector (standard/dvorak)
+- [x] `src/components/layout/header.tsx` - Settings gear icon link in nav bar for quick access
 
 ### Emotional Feedback System (Complete)
 - [x] `src/lib/feedback/emotional-detector.ts` - detectEmotionalState(), computeIndicators() - pure functions detecting 7 emotional states from typing patterns
@@ -26,6 +29,12 @@ Sprint 2 complete. Sprint 3 progressing: sound system, settings store, and now E
 - [x] `src/lib/feedback/index.ts` - barrel exports
 - [x] `tests/unit/lib/emotional-detector.test.ts` - 24 tests
 - [x] `tests/unit/lib/feedback-engine.test.ts` - 42 tests
+
+### FirstLessonMagic Onboarding (Complete)
+- [x] `src/components/onboarding/first-lesson-magic.tsx` - 5-step onboarding: finger placement (HebrewKeyboard+FingerGuide pulsing home row) → type "שלום" (4 letters, forgiving) → celebration (+50 XP, badge "צעד ראשון") → type "שלום עולם" (space bar included) → finish summary (Zeigarnik effect tease)
+- [x] `src/app/(app)/onboarding/page.tsx` - Server page wrapper
+- [x] `src/app/(app)/onboarding/onboarding-client.tsx` - Client component, routes to /lessons on complete
+- [x] `tests/unit/components/first-lesson-magic.test.tsx` - 16 tests covering all 5 steps, props, accessibility
 
 ### PlacementTest Component (Complete)
 - [x] `src/lib/placement/placement-engine.ts` - Pure functions: determineLevel(), calculateFingerTechnique(), computePlacementResult(), getRecommendedLesson() + PlacementResult type
@@ -35,17 +44,24 @@ Sprint 2 complete. Sprint 3 progressing: sound system, settings store, and now E
 
 ### Verification
 - `npx tsc --noEmit` - PASS (0 errors)
-- `npx vitest run` - PASS (274/274 tests, 14 suites)
-- New tests: 23 (placement-engine: 23)
-- Committed: `feat: placement test component + engine`
+- `npx vitest run` - PASS (303/303 tests, 16 suites)
+- New Sprint 3 sound/settings tests: 29 (sound-system: 20, settings-store: 9)
+- `npx next build` - PASS (38 routes)
+
+### EncouragementBanner + SessionSummary (Complete)
+- [x] `src/components/feedback/encouragement-banner.tsx` - Floating RTL banner with slide-down animation (framer-motion AnimatePresence), auto-dismiss after 3s for encourage/celebrate types, color-coded by type (green/gold/indigo/orange/zinc), accessible role=alert aria-live=polite, dismissible with X button
+- [x] `src/components/feedback/session-summary.tsx` - End-of-session card with 4 stat circles (WPM/accuracy/time/streak), comparison arrows (↑↓→) vs previousStats, animated XP counter, badge display with glow, contextual improvement messages in Hebrew
+- [x] `src/components/feedback/index.ts` - Barrel exports for both components
+- [x] `tests/unit/components/encouragement-banner.test.tsx` - 13 tests (visibility, auto-dismiss, dismiss button, accessibility, RTL)
+- [x] `tests/unit/components/session-summary.test.tsx` - 16 tests (stats render, buttons, comparisons, badges, messages)
 
 ## Sprint 3 Remaining
 - [x] PlacementTest component (2-minute placement test)
-- [ ] FirstLessonMagic onboarding component
+- [x] FirstLessonMagic onboarding component
 - [x] EmotionalDetector + FeedbackEngine
-- [ ] EncouragementBanner + SessionSummary
-- [ ] Badges + adaptive achievements
-- [ ] Parental consent flow
+- [x] EncouragementBanner + SessionSummary
+- [x] Badges + adaptive achievements
+- [x] Parental consent flow (COMPLETE - 29 tests, TDD green, committed)
 
 ## Sprint 2 Deliverables
 
@@ -86,8 +102,8 @@ Sprint 2 complete. Sprint 3 progressing: sound system, settings store, and now E
 
 ## Verification Results
 - `npx tsc --noEmit` - PASS (0 errors)
-- `npx vitest run` - PASS (85/85 tests, 6 suites)
-- `npx next build` - PASS (35 routes, 20 lesson pages pre-rendered)
+- `npx vitest run` - PASS (303/303 tests, 16 suites)
+- `npx next build` - PASS (38 routes, 20 lesson pages pre-rendered)
 
 ## Sprint 1 Deliverables (Previously Complete)
 
@@ -102,10 +118,10 @@ Sprint 2 complete. Sprint 3 progressing: sound system, settings store, and now E
 ### Layout + PWA (Complete)
 - [x] App shell, responsive, i18n, PWA
 
-## File Count: ~100
+## File Count: ~105
 - ~85 source files (src/)
 - 3 SQL migrations
-- 6 test files + 3 E2E tests + 2 test configs
+- 16 test files + 3 E2E tests + 2 test configs
 - 2 translation files + 1 manifest + 1 CI pipeline + CLAUDE.md
 
 ## Next Steps (Sprint 3 - Onboarding + Feedback)

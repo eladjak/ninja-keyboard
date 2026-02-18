@@ -1,6 +1,7 @@
 'use client'
 
-import { Moon, Sun } from 'lucide-react'
+import Link from 'next/link'
+import { Moon, Sun, Settings } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useThemeStore } from '@/stores/theme-store'
 
@@ -18,6 +19,16 @@ export function Header() {
       <div className="hidden md:block" />
 
       <div className="flex items-center gap-2">
+        <Button
+          variant="ghost"
+          size="icon"
+          asChild
+          aria-label="הגדרות"
+        >
+          <Link href="/settings">
+            <Settings className="size-5" />
+          </Link>
+        </Button>
         <Button
           variant="ghost"
           size="icon"

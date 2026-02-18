@@ -3,26 +3,41 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import { Settings, Volume2, Keyboard, Hand } from 'lucide-react'
+import { Settings, Volume2, Keyboard, Hand, Monitor, Sun, Moon } from 'lucide-react'
 import { useThemeStore } from '@/stores/theme-store'
 import { useSettingsStore } from '@/stores/settings-store'
+import type { KeyboardLayout, ThemePreference } from '@/stores/settings-store'
 import { themes } from '@/styles/themes'
 import type { AgeName } from '@/types/theme'
 import { cn } from '@/lib/utils'
 
+const KEYBOARD_LAYOUTS: { value: KeyboardLayout; label: string; description: string }[] = [
+  { value: 'standard', label: 'תקנית', description: 'פריסת מקלדת עברית תקנית' },
+  { value: 'dvorak', label: 'דבורק', description: 'פריסת דבורק עברית' },
+]
+
+const THEME_OPTIONS: { value: ThemePreference; label: string; icon: typeof Monitor }[] = [
+  { value: 'system', label: 'אוטומטי (מערכת)', icon: Monitor },
+  { value: 'light', label: 'בהיר', icon: Sun },
+  { value: 'dark', label: 'כהה', icon: Moon },
+]
+
 export default function SettingsPage() {
-  const { ageName, colorScheme, setAgeName, toggleDarkMode } = useThemeStore()
-  const isDark = colorScheme === 'dark' || colorScheme === 'dark-high-contrast'
+  const { ageName, setAgeName } = useThemeStore()
 
   const {
     soundEnabled,
     soundVolume,
     showFingerGuide,
     showKeyboardColors,
+    keyboardLayout,
+    themePreference,
     toggleSound,
     setVolume,
     toggleFingerGuide,
     toggleKeyboardColors,
+    setKeyboardLayout,
+    setThemePreference,
   } = useSettingsStore()
 
   return (
@@ -35,17 +50,33 @@ export default function SettingsPage() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Dark mode */}
-          <div className="flex items-center justify-between">
-            <Label htmlFor="dark-mode">מצב כהה</Label>
-            <Switch
-              id="dark-mode"
-              checked={isDark}
-              onCheckedChange={toggleDarkMode}
-            />
+          {/* Theme preference (system/light/dark) */}
+          <div className="space-y-3">
+            <Label>מראה</Label>
+            <div className="grid grid-cols-3 gap-2">
+              {THEME_OPTIONS.map((option) => {
+                const Icon = option.icon
+                return (
+                  <button
+                    key={option.value}
+                    onClick={() => setThemePreference(option.value)}
+                    className={cn(
+                      'flex flex-col items-center gap-1.5 rounded-lg border p-3 text-sm transition-colors',
+                      themePreference === option.value
+                        ? 'border-primary bg-primary/10 text-primary'
+                        : 'border-border hover:border-primary/50'
+                    )}
+                    aria-pressed={themePreference === option.value}
+                  >
+                    <Icon className="size-5" />
+                    {option.label}
+                  </button>
+                )
+              })}
+            </div>
           </div>
 
-          {/* Theme selector */}
+          {/* Theme selector (age) */}
           <div className="space-y-3">
             <Label>ערכת נושא (גיל)</Label>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -152,6 +183,31 @@ export default function SettingsPage() {
               checked={showKeyboardColors}
               onCheckedChange={toggleKeyboardColors}
             />
+          </div>
+
+          {/* Keyboard layout preference */}
+          <div className="space-y-3">
+            <Label>פריסת מקלדת</Label>
+            <div className="grid grid-cols-2 gap-2">
+              {KEYBOARD_LAYOUTS.map((layout) => (
+                <button
+                  key={layout.value}
+                  onClick={() => setKeyboardLayout(layout.value)}
+                  className={cn(
+                    'flex flex-col items-start rounded-lg border p-3 text-start transition-colors',
+                    keyboardLayout === layout.value
+                      ? 'border-primary bg-primary/10'
+                      : 'border-border hover:border-primary/50'
+                  )}
+                  aria-pressed={keyboardLayout === layout.value}
+                >
+                  <span className="font-medium">{layout.label}</span>
+                  <span className="text-xs text-muted-foreground">
+                    {layout.description}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
         </CardContent>
       </Card>

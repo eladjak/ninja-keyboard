@@ -1,6 +1,12 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+/** Keyboard layout variants: standard Hebrew or Dvorak Hebrew */
+export type KeyboardLayout = 'standard' | 'dvorak'
+
+/** Theme preference: system, light, or dark */
+export type ThemePreference = 'system' | 'light' | 'dark'
+
 interface SettingsState {
   /** Whether sound effects are enabled */
   soundEnabled: boolean
@@ -10,6 +16,10 @@ interface SettingsState {
   showFingerGuide: boolean
   /** Show color zones on the visual keyboard */
   showKeyboardColors: boolean
+  /** Keyboard layout preference */
+  keyboardLayout: KeyboardLayout
+  /** Theme preference (system/light/dark) */
+  themePreference: ThemePreference
   /** Toggle sound on/off */
   toggleSound: () => void
   /** Set volume */
@@ -18,6 +28,10 @@ interface SettingsState {
   toggleFingerGuide: () => void
   /** Toggle keyboard color zones */
   toggleKeyboardColors: () => void
+  /** Set keyboard layout */
+  setKeyboardLayout: (layout: KeyboardLayout) => void
+  /** Set theme preference */
+  setThemePreference: (pref: ThemePreference) => void
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -27,6 +41,8 @@ export const useSettingsStore = create<SettingsState>()(
       soundVolume: 0.7,
       showFingerGuide: true,
       showKeyboardColors: true,
+      keyboardLayout: 'standard' as KeyboardLayout,
+      themePreference: 'system' as ThemePreference,
 
       toggleSound: () => set((s) => ({ soundEnabled: !s.soundEnabled })),
 
@@ -38,6 +54,10 @@ export const useSettingsStore = create<SettingsState>()(
 
       toggleKeyboardColors: () =>
         set((s) => ({ showKeyboardColors: !s.showKeyboardColors })),
+
+      setKeyboardLayout: (layout) => set({ keyboardLayout: layout }),
+
+      setThemePreference: (pref) => set({ themePreference: pref }),
     }),
     { name: 'ninja-keyboard-settings' },
   ),
