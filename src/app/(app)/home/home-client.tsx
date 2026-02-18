@@ -3,8 +3,10 @@
 import Link from 'next/link'
 import {
   BookOpen,
+  Keyboard,
   Swords,
   TrendingUp,
+  BarChart3,
   Settings,
   Star,
   Flame,
@@ -17,26 +19,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
+import { DailyChallengeCard } from '@/components/challenges/daily-challenge-card'
 import { useXpStore } from '@/stores/xp-store'
 import { useBadgeStore } from '@/stores/badge-store'
 import { LESSONS } from '@/lib/content/lessons'
 import { BADGE_DEFINITIONS } from '@/lib/gamification/badge-definitions'
-
-/** Deterministic daily challenge based on date */
-function getDailyChallenge(): { targetWpm: number; text: string } {
-  const today = new Date()
-  const dayOfYear =
-    Math.floor(
-      (today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) /
-        86_400_000,
-    )
-  const targets = [15, 20, 25, 18, 22, 30, 17]
-  const targetWpm = targets[dayOfYear % targets.length]
-  return {
-    targetWpm,
-    text: `הקלד ${targetWpm} מ"ש היום`,
-  }
-}
 
 function getNextLesson(
   completedLessons: Record<string, unknown>,
@@ -77,6 +64,13 @@ const QUICK_LINKS = [
     bg: 'bg-blue-100 dark:bg-blue-900/40',
   },
   {
+    href: '/practice',
+    icon: Keyboard,
+    label: 'תרגול חופשי',
+    color: 'text-purple-600 dark:text-purple-400',
+    bg: 'bg-purple-100 dark:bg-purple-900/40',
+  },
+  {
     href: '/battle',
     icon: Swords,
     label: 'זירת קרב',
@@ -84,11 +78,18 @@ const QUICK_LINKS = [
     bg: 'bg-red-100 dark:bg-red-900/40',
   },
   {
+    href: '/statistics',
+    icon: BarChart3,
+    label: 'סטטיסטיקות',
+    color: 'text-green-600 dark:text-green-400',
+    bg: 'bg-green-100 dark:bg-green-900/40',
+  },
+  {
     href: '/progress',
     icon: TrendingUp,
     label: 'התקדמות',
-    color: 'text-green-600 dark:text-green-400',
-    bg: 'bg-green-100 dark:bg-green-900/40',
+    color: 'text-teal-600 dark:text-teal-400',
+    bg: 'bg-teal-100 dark:bg-teal-900/40',
   },
   {
     href: '/settings',
@@ -111,7 +112,6 @@ export function HomeDashboard() {
   const recentBadges = recentBadgeIds
     .map((id) => BADGE_DEFINITIONS.find((b) => b.id === id))
     .filter(Boolean)
-  const dailyChallenge = getDailyChallenge()
   const progress = levelProgress()
 
   return (
@@ -197,17 +197,7 @@ export function HomeDashboard() {
       )}
 
       {/* Daily Challenge */}
-      <Card data-testid="daily-challenge">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Target className="size-5 text-primary" />
-            אתגר יומי
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-lg font-medium">{dailyChallenge.text}</p>
-        </CardContent>
-      </Card>
+      <DailyChallengeCard />
 
       {/* Recent Activity */}
       {recentLessons.length > 0 && (

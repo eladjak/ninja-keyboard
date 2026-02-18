@@ -2,15 +2,15 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, BookOpen, Swords, BarChart3, User } from 'lucide-react'
+import { Home, BookOpen, Keyboard, Swords, User } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { motion } from 'framer-motion'
 
 const tabs = [
   { href: '/home', label: 'בית', icon: Home },
   { href: '/lessons', label: 'שיעורים', icon: BookOpen },
+  { href: '/practice', label: 'תרגול', icon: Keyboard },
   { href: '/battle', label: 'קרב', icon: Swords },
-  { href: '/progress', label: 'התקדמות', icon: BarChart3 },
   { href: '/profile', label: 'פרופיל', icon: User },
 ]
 

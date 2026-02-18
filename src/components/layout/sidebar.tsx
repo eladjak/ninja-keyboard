@@ -2,7 +2,19 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, BookOpen, Swords, BarChart3, User, Settings, LogOut } from 'lucide-react'
+import {
+  Home,
+  BookOpen,
+  Keyboard,
+  Timer,
+  Swords,
+  Command,
+  Trophy,
+  BarChart3,
+  User,
+  Settings,
+  LogOut,
+} from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
@@ -10,8 +22,12 @@ import { Separator } from '@/components/ui/separator'
 const navItems = [
   { href: '/home', label: 'בית', icon: Home },
   { href: '/lessons', label: 'שיעורים', icon: BookOpen },
+  { href: '/practice', label: 'תרגול חופשי', icon: Keyboard },
+  { href: '/speed-test', label: 'מבחן מהירות', icon: Timer },
   { href: '/battle', label: 'זירת קרב', icon: Swords },
-  { href: '/progress', label: 'התקדמות', icon: BarChart3 },
+  { href: '/shortcuts', label: 'קיצורי מקלדת', icon: Command },
+  { href: '/leaderboard', label: 'טבלת מובילים', icon: Trophy },
+  { href: '/statistics', label: 'סטטיסטיקות', icon: BarChart3 },
   { href: '/profile', label: 'פרופיל', icon: User },
   { href: '/settings', label: 'הגדרות', icon: Settings },
 ]

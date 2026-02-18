@@ -187,11 +187,13 @@ describe('HomeDashboard', () => {
     // "שיעורים" appears both in stats row and quick links, so check within quickLinks
     expect(quickLinks).toHaveTextContent('שיעורים')
     expect(quickLinks).toHaveTextContent('זירת קרב')
+    expect(quickLinks).toHaveTextContent('תרגול חופשי')
+    expect(quickLinks).toHaveTextContent('סטטיסטיקות')
     expect(quickLinks).toHaveTextContent('התקדמות')
     expect(quickLinks).toHaveTextContent('הגדרות')
-    // Verify there are 4 link cards
+    // Verify there are 6 link cards
     const links = quickLinks.querySelectorAll('a')
-    expect(links).toHaveLength(4)
+    expect(links).toHaveLength(6)
   })
 
   it('renders daily challenge card', () => {
@@ -199,7 +201,8 @@ describe('HomeDashboard', () => {
     const challenge = screen.getByTestId('daily-challenge')
     expect(challenge).toBeInTheDocument()
     expect(screen.getByText('אתגר יומי')).toBeInTheDocument()
-    expect(screen.getByText(/הקלד \d+ מ"ש היום/)).toBeInTheDocument()
+    // New DailyChallengeCard shows challenge title and start button
+    expect(screen.getByText('התחל אתגר')).toBeInTheDocument()
   })
 
   it('renders empty state for new user (0 XP, level 1, no streak)', () => {
