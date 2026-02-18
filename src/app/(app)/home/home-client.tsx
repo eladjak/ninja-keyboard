@@ -20,6 +20,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { DailyChallengeCard } from '@/components/challenges/daily-challenge-card'
+import { DailyTip } from '@/components/tips/daily-tip'
 import { useXpStore } from '@/stores/xp-store'
 import { useBadgeStore } from '@/stores/badge-store'
 import { LESSONS } from '@/lib/content/lessons'
@@ -248,6 +249,9 @@ export function HomeDashboard() {
           </CardContent>
         </Card>
       )}
+
+      {/* Daily Tip */}
+      <DailyTip />
 
       {/* Quick Links */}
       <div
