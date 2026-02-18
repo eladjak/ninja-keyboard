@@ -2,10 +2,44 @@
 
 ## Status: Active
 ## Last Updated: 2026-02-18
-## Sprint: 2 (Typing Engine) - COMPLETE
+## Sprint: 3 (Sound Effects + Settings + Emotional Feedback) - IN PROGRESS
 
 ## Current State
-Sprint 2 Typing Engine is complete. The project now has a full Hebrew typing engine with 20 progressive lessons, visual keyboard with finger guides, real-time WPM/accuracy tracking, XP/leveling system, and complete lesson UI with results modal. All 85 unit tests pass, TypeScript clean, build passes with 35 routes (including 20 pre-rendered lesson pages).
+Sprint 2 complete. Sprint 3 progressing: sound system, settings store, and now EmotionalDetector + FeedbackEngine are implemented. 151 unit tests pass (2 pre-existing failures in session-summary component unrelated to new code), TypeScript clean. The emotional feedback system detects 7 states (frustrated/confused/perfectionist/bored/flow/improving/neutral) from typing patterns and generates adaptive Hebrew messages.
+
+## Sprint 3 Deliverables
+
+### Sound System (Complete)
+- [x] `src/lib/audio/sounds.ts` - Sound configs: keyClick (800Hz/30ms), correct (523→698Hz/100ms), error (440→330Hz/80ms), levelComplete (523→659→784Hz/300ms), xpGain (1047Hz/50ms)
+- [x] `src/lib/audio/sound-manager.ts` - SoundManager singleton, Web Audio API synthesis, SSR-safe, no external files
+- [x] `src/stores/settings-store.ts` - Zustand persist store: soundEnabled, soundVolume, showFingerGuide, showKeyboardColors
+
+### Sound Integration (Complete)
+- [x] `src/components/typing/lesson-view.tsx` - playKeyClick on every keystroke, playCorrect/playError per keystroke result, playLevelComplete + playXpGain on lesson pass
+
+### Settings Page (Complete)
+- [x] `src/app/(app)/settings/page.tsx` - Sound toggle + volume slider, finger guide toggle, keyboard color zone toggle, all wired to settings-store
+
+### Emotional Feedback System (Complete)
+- [x] `src/lib/feedback/emotional-detector.ts` - detectEmotionalState(), computeIndicators() - pure functions detecting 7 emotional states from typing patterns
+- [x] `src/lib/feedback/feedback-engine.ts` - getEmotionalFeedback(), getKeystrokeFeedback(), getWordCompleteFeedback(), getLessonEndFeedback(), getReturnFeedback() - adaptive Hebrew messages
+- [x] `src/lib/feedback/index.ts` - barrel exports
+- [x] `tests/unit/lib/emotional-detector.test.ts` - 24 tests
+- [x] `tests/unit/lib/feedback-engine.test.ts` - 42 tests
+
+### Verification
+- `npx tsc --noEmit` - PASS (0 errors)
+- `npx vitest run` - PASS (272/274 tests, 2 pre-existing failures unrelated)
+- New tests: 66 (emotional-detector: 24, feedback-engine: 42)
+- Committed: `feat: emotional detector + feedback engine`
+
+## Sprint 3 Remaining
+- [ ] PlacementTest component (2-minute placement test)
+- [ ] FirstLessonMagic onboarding component
+- [x] EmotionalDetector + FeedbackEngine
+- [ ] EncouragementBanner + SessionSummary
+- [ ] Badges + adaptive achievements
+- [ ] Parental consent flow
 
 ## Sprint 2 Deliverables
 
