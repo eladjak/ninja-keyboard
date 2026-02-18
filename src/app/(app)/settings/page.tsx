@@ -3,8 +3,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import { Settings } from 'lucide-react'
+import { Settings, Volume2, Keyboard, Hand } from 'lucide-react'
 import { useThemeStore } from '@/stores/theme-store'
+import { useSettingsStore } from '@/stores/settings-store'
 import { themes } from '@/styles/themes'
 import type { AgeName } from '@/types/theme'
 import { cn } from '@/lib/utils'
@@ -12,6 +13,17 @@ import { cn } from '@/lib/utils'
 export default function SettingsPage() {
   const { ageName, colorScheme, setAgeName, toggleDarkMode } = useThemeStore()
   const isDark = colorScheme === 'dark' || colorScheme === 'dark-high-contrast'
+
+  const {
+    soundEnabled,
+    soundVolume,
+    showFingerGuide,
+    showKeyboardColors,
+    toggleSound,
+    setVolume,
+    toggleFingerGuide,
+    toggleKeyboardColors,
+  } = useSettingsStore()
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
@@ -23,6 +35,7 @@ export default function SettingsPage() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
+          {/* Dark mode */}
           <div className="flex items-center justify-between">
             <Label htmlFor="dark-mode">מצב כהה</Label>
             <Switch
@@ -32,6 +45,7 @@ export default function SettingsPage() {
             />
           </div>
 
+          {/* Theme selector */}
           <div className="space-y-3">
             <Label>ערכת נושא (גיל)</Label>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -56,6 +70,88 @@ export default function SettingsPage() {
                 </button>
               ))}
             </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Sound settings */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-base">
+            <Volume2 className="size-5" />
+            צלילים
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-5">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="sound-enabled">אפקטי קול</Label>
+            <Switch
+              id="sound-enabled"
+              checked={soundEnabled}
+              onCheckedChange={toggleSound}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <Label htmlFor="sound-volume">עוצמת קול</Label>
+              <span className="text-sm tabular-nums text-muted-foreground">
+                {Math.round(soundVolume * 100)}%
+              </span>
+            </div>
+            <input
+              id="sound-volume"
+              type="range"
+              min={0}
+              max={1}
+              step={0.05}
+              value={soundVolume}
+              disabled={!soundEnabled}
+              onChange={(e) => setVolume(Number(e.target.value))}
+              className="w-full accent-primary disabled:opacity-40"
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Lesson display settings */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-base">
+            <Keyboard className="size-5" />
+            תצוגת שיעור
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-5">
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <Label htmlFor="finger-guide" className="flex items-center gap-2">
+                <Hand className="size-4" />
+                מדריך אצבעות
+              </Label>
+              <p className="text-xs text-muted-foreground">
+                הצג דיאגרמת ידיים עם הדגשת האצבע הפעילה
+              </p>
+            </div>
+            <Switch
+              id="finger-guide"
+              checked={showFingerGuide}
+              onCheckedChange={toggleFingerGuide}
+            />
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <Label htmlFor="keyboard-colors">צבעי אזורי מקלדת</Label>
+              <p className="text-xs text-muted-foreground">
+                הצג אזורי אצבעות בצבעים על המקלדת הוויזואלית
+              </p>
+            </div>
+            <Switch
+              id="keyboard-colors"
+              checked={showKeyboardColors}
+              onCheckedChange={toggleKeyboardColors}
+            />
           </div>
         </CardContent>
       </Card>

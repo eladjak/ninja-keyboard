@@ -7,8 +7,10 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useTypingSessionStore } from '@/stores/typing-session-store'
 import { useXpStore } from '@/stores/xp-store'
+import { useSettingsStore } from '@/stores/settings-store'
 import { getLessonById } from '@/lib/content/lessons'
 import { getLessonContent } from '@/lib/content/sentences'
+import { soundManager } from '@/lib/audio/sound-manager'
 import { HebrewKeyboard } from './hebrew-keyboard'
 import { TypingArea } from './typing-area'
 import { FingerGuide } from './finger-guide'
@@ -51,6 +53,13 @@ function calculateStars(
 export function LessonView({ lessonId }: LessonViewProps) {
   const session = useTypingSessionStore()
   const xpStore = useXpStore()
+  const { soundEnabled, soundVolume } = useSettingsStore()
+
+  // Keep soundManager in sync with settings
+  useEffect(() => {
+    soundManager.setEnabled(soundEnabled)
+    soundManager.setVolume(soundVolume)
+  }, [soundEnabled, soundVolume])
 
   const [pressedKey, setPressedKey] = useState<string | null>(null)
   const [lastCorrect, setLastCorrect] = useState<boolean | null>(null)
@@ -157,6 +166,8 @@ export function LessonView({ lessonId }: LessonViewProps) {
         if (passed) {
           xpStore.completeLesson(lessonId, finalStats.wpm, finalStats.accuracy)
           xpStore.addXp(xpReward.total)
+          soundManager.playLevelComplete()
+          soundManager.playXpGain()
         }
         xpStore.updateStreak()
 
@@ -185,6 +196,14 @@ export function LessonView({ lessonId }: LessonViewProps) {
       // Determine correctness after the store updates
       // (index advances on correct key, stays on wrong key)
       const wasCorrect = session.currentIndex > prevIndex
+
+      // Sound feedback
+      soundManager.playKeyClick()
+      if (wasCorrect) {
+        soundManager.playCorrect()
+      } else {
+        soundManager.playError()
+      }
 
       // Pressed key flash (100 ms)
       setPressedKey(key)
