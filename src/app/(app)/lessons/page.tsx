@@ -1,20 +1,21 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { BookOpen } from 'lucide-react'
+import { LESSONS } from '@/lib/content/lessons'
+import { LessonListClient } from './lesson-list-client'
 
 export default function LessonsPage() {
   return (
-    <div className="mx-auto max-w-2xl">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <BookOpen className="size-6" />
-            שיעורים
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">שיעורי הקלדה מגיעים בקרוב בספרינט 2!</p>
-        </CardContent>
-      </Card>
+    <div className="mx-auto max-w-2xl space-y-6 p-4">
+      <div className="flex items-center gap-3">
+        <BookOpen className="size-7 text-primary" />
+        <div>
+          <h1 className="text-2xl font-bold">שיעורי הקלדה</h1>
+          <p className="text-sm text-muted-foreground">
+            20 שיעורים מדורגים - משורת הבית ועד מאסטר מקלדת
+          </p>
+        </div>
+      </div>
+
+      <LessonListClient lessons={LESSONS} />
     </div>
   )
 }
