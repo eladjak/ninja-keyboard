@@ -11,3 +11,19 @@ export {
   getRandomLine,
   getLessonLines,
 } from './sentences'
+
+export {
+  SHORTCUTS,
+  SHORTCUT_LESSONS,
+  getShortcutsByCategory,
+  getShortcutsByDifficulty,
+  getShortcutById,
+  getShortcutLessonById,
+  getShortcutLessonByCategory,
+} from './shortcuts'
+export type {
+  ShortcutDefinition,
+  ShortcutLesson,
+  ShortcutCategory,
+  ShortcutDifficulty,
+} from './shortcuts'
