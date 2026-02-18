@@ -2,10 +2,64 @@
 
 ## Status: Active
 ## Last Updated: 2026-02-18
-## Sprint: 4 (Accessibility + Offline + Teacher + Navigation + Performance) - COMPLETE
+## Sprint: 5 (Practice + Statistics + Challenges + Polish) - COMPLETE
 
 ## Current State
-Sprint 4 complete. 6 parallel agents built all features. 498 unit tests pass across 28 suites. TypeScript clean. 5 E2E Playwright specs (66 test cases) added.
+Sprint 5 complete. 854 unit tests pass across 50 suites. TypeScript clean. 5 E2E Playwright specs (66 test cases). 20+ pages. Full navigation with 11 sidebar links.
+
+## Sprint 5 Deliverables
+
+### Free Practice Mode (Complete)
+- [x] `src/app/(app)/practice/page.tsx` - Full practice page with text selector, timer, typing area, results
+- [x] `src/components/practice/practice-timer.tsx` - Countdown timer (1/2/5 min) with SVG progress ring
+- [x] `src/lib/content/practice-texts.ts` - 5 Hebrew practice texts (easy/medium/hard)
+- [x] `src/stores/practice-history-store.ts` - Zustand persist store with history analytics
+- [x] 34 tests (practice-timer, practice-texts, practice-history-store)
+
+### Statistics Dashboard (Complete)
+- [x] `src/app/(app)/statistics/page.tsx` - Full stats dashboard with charts
+- [x] `src/components/statistics/progress-chart.tsx` - SVG line chart
+- [x] Tests for chart component
+
+### Daily Challenge System (Complete)
+- [x] `src/lib/challenges/daily-challenge.ts` - 3 types (speed/accuracy/endurance), 14 texts, 7 configs, deterministic by date
+- [x] `src/stores/daily-challenge-store.ts` - Zustand persist: completion tracking, streak
+- [x] `src/components/challenges/daily-challenge-card.tsx` - Full challenge card for home page
+- [x] 24 tests (daily-challenge, daily-challenge-store)
+
+### Speed Test (Complete)
+- [x] `src/app/(app)/speed-test/page.tsx` - 1-minute typing speed test with rank system
+- [x] `src/lib/challenges/speed-test.ts` - 25 Hebrew sentences, rank system (beginner->ninja)
+- [x] 13 tests (speed-test)
+
+### Certificate System (Complete)
+- [x] `src/lib/gamification/certificate.ts` - 5 levels: bronze, silver, gold, platinum, ninja-master
+- [x] `src/components/gamification/certificate-card.tsx` - Earned/locked card with progress
+- [x] `src/app/(app)/certificates/page.tsx` - Full certificates page
+- [x] 18 tests (certificate)
+
+### Typing Tips (Complete)
+- [x] `src/lib/content/typing-tips.ts` - 16 tips in 4 categories, level-gated
+- [x] `src/components/tips/daily-tip.tsx` - Daily tip on home page
+- [x] `src/app/(app)/tips/page.tsx` - Full tips page with category filter
+- [x] 13 tests (typing-tips)
+
+### Parent Progress Report (Complete)
+- [x] `src/lib/reports/parent-report.ts` - Report generator with strengths, areas to improve, recommendations
+- [x] `src/app/(app)/parent-report/page.tsx` - Full report page for parents
+- [x] 10 tests (parent-report)
+
+### Navigation Update (Complete)
+- [x] Sidebar: 11 links (home, lessons, practice, speed-test, battle, shortcuts, leaderboard, certificates, statistics, profile, settings)
+- [x] Bottom tabs: practice replaces progress for mobile
+- [x] Home quick links: added practice + statistics (6 total)
+- [x] DailyChallengeCard + DailyTip on home page
+- [x] 13 tests (navigation)
+
+### Verification
+- `npx tsc --noEmit` - PASS (0 errors)
+- `npx vitest run` - PASS (854/854 tests, 50 suites)
+- E2E specs: 66 test cases across 5 files
 
 ## Sprint 4 Deliverables
 
