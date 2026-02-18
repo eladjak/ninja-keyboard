@@ -27,14 +27,20 @@ Sprint 2 complete. Sprint 3 progressing: sound system, settings store, and now E
 - [x] `tests/unit/lib/emotional-detector.test.ts` - 24 tests
 - [x] `tests/unit/lib/feedback-engine.test.ts` - 42 tests
 
+### PlacementTest Component (Complete)
+- [x] `src/lib/placement/placement-engine.ts` - Pure functions: determineLevel(), calculateFingerTechnique(), computePlacementResult(), getRecommendedLesson() + PlacementResult type
+- [x] `src/components/onboarding/placement-test.tsx` - 3-stage 2-minute skill assessment: free typing (Stage 1, 30s), key identification (Stage 2, 30s), shortcuts (Stage 3, 30s, geza+ only). Awards 20 XP on completion.
+- [x] `src/app/(app)/placement/page.tsx` - Server page rendering PlacementTest
+- [x] `tests/unit/lib/placement-engine.test.ts` - 23 tests (determineLevel thresholds, fingerTechnique detection, computePlacementResult, getRecommendedLesson)
+
 ### Verification
 - `npx tsc --noEmit` - PASS (0 errors)
-- `npx vitest run` - PASS (272/274 tests, 2 pre-existing failures unrelated)
-- New tests: 66 (emotional-detector: 24, feedback-engine: 42)
-- Committed: `feat: emotional detector + feedback engine`
+- `npx vitest run` - PASS (274/274 tests, 14 suites)
+- New tests: 23 (placement-engine: 23)
+- Committed: `feat: placement test component + engine`
 
 ## Sprint 3 Remaining
-- [ ] PlacementTest component (2-minute placement test)
+- [x] PlacementTest component (2-minute placement test)
 - [ ] FirstLessonMagic onboarding component
 - [x] EmotionalDetector + FeedbackEngine
 - [ ] EncouragementBanner + SessionSummary
