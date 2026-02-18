@@ -2,10 +2,68 @@
 
 ## Status: Active
 ## Last Updated: 2026-02-18
-## Sprint: 3 (Sound Effects + Settings + Emotional Feedback) - COMPLETE
+## Sprint: 4 (Accessibility + Offline + Teacher + Navigation + Performance) - COMPLETE
 
 ## Current State
-Sprint 3 complete. Sound system (Web Audio API), settings store (with theme/layout prefs), settings page (with all controls), and 29 new tests for sound + settings. 303 unit tests pass across 16 suites. TypeScript clean. Build passes (38 routes).
+Sprint 4 complete. 6 parallel agents built all features. 498 unit tests pass across 28 suites. TypeScript clean. 5 E2E Playwright specs (66 test cases) added.
+
+## Sprint 4 Deliverables
+
+### Accessibility Panel (Complete)
+- [x] `src/stores/accessibility-store.ts` - Zustand persist store: fontSize, highContrast, reducedMotion, screenReaderAnnouncements, keyboardOnlyMode, dyslexiaFont + resetAll
+- [x] `src/components/accessibility/accessibility-panel.tsx` - Full settings panel with shadcn/ui (Switch, Select, Separator), RTL, Hebrew labels, keyboard accessible
+- [x] `src/app/(app)/accessibility/page.tsx` - Server page wrapper
+- [x] `src/components/ui/select.tsx` + `slider.tsx` - New shadcn/ui components
+- [x] `tests/unit/components/accessibility-panel.test.tsx` - 16 tests
+- [x] `tests/unit/stores/accessibility-store.test.ts` - 10 tests
+
+### PWA Offline Sync (Complete)
+- [x] `src/lib/offline/sync-manager.ts` - Offline sync manager: cacheLesson, savePendingResult, syncPendingResults, clearCache, isOnline, SSR-safe localStorage
+- [x] `src/hooks/use-online-status.ts` - Custom hook: isOnline, wasOffline, online/offline event listeners
+- [x] `src/components/offline/offline-indicator.tsx` - RTL Hebrew banner with framer-motion animation, pending count, sync status
+- [x] `tests/unit/lib/offline-sync.test.ts` - 28 tests
+- [x] `tests/unit/hooks/use-online-status.test.ts` - 9 tests
+
+### Teacher Dashboard (Complete)
+- [x] `src/lib/teacher/dashboard-utils.ts` - Pure functions: calculateClassStats, getWeakStudents, getTopPerformers, calculateProgressTrend, generateClassReport, getStudentStatus
+- [x] `src/components/teacher/class-overview.tsx` - Class overview with stats grid, progress bar, student cards, status dots
+- [x] `src/components/teacher/student-card.tsx` - Student card with WPM/accuracy/level, trend arrows, expandable details
+- [x] `src/app/(app)/teacher/page.tsx` - Server page with mock data
+- [x] `tests/unit/lib/teacher-dashboard.test.ts` - 31 tests
+- [x] `tests/unit/components/teacher-dashboard.test.tsx` - 19 tests
+
+### Keyboard Navigation (Complete)
+- [x] `src/hooks/use-focus-trap.ts` - Focus trap: Tab/Shift+Tab cycling, Escape handler, auto-focus, SSR-safe
+- [x] `src/hooks/use-roving-focus.ts` - Roving focus: arrow keys, Home/End, RTL-aware, wrapping
+- [x] `src/hooks/use-keyboard-shortcuts.ts` - Global shortcuts: modifier combos, disabled during typing, Hebrew layout support
+- [x] `src/components/navigation/skip-link.tsx` - "דלג לתוכן הראשי" hidden skip link
+- [x] `src/components/navigation/focus-ring.tsx` - :focus-visible ring wrapper
+- [x] `tests/unit/hooks/use-focus-trap.test.ts` - 13 tests
+- [x] `tests/unit/hooks/use-roving-focus.test.ts` - 18 tests
+- [x] `tests/unit/hooks/use-keyboard-shortcuts.test.ts` - 12 tests
+
+### Performance Utilities (Complete)
+- [x] `src/lib/performance/debounce.ts` - Debounce with cancel, typed generics
+- [x] `src/lib/performance/throttle.ts` - Throttle with leading edge, trailing call, cancel
+- [x] `src/lib/performance/memoize.ts` - Memoize with LRU eviction, custom key resolver, max cache size
+- [x] `src/hooks/use-lazy-load.ts` - IntersectionObserver hook: ref, isVisible, hasLoaded, once mode
+- [x] `src/hooks/use-debounced-value.ts` - Debounced value hook
+- [x] `src/lib/performance/index.ts` - Barrel exports
+- [x] `tests/unit/lib/performance.test.ts` - 23 tests
+- [x] `tests/unit/hooks/use-lazy-load.test.ts` - 9 tests
+- [x] `tests/unit/hooks/use-debounced-value.test.ts` - 7 tests
+
+### E2E Playwright Tests (Complete)
+- [x] `tests/e2e/lessons-flow.spec.ts` - 14 specs: lesson list, unlock, navigation, typing, results
+- [x] `tests/e2e/onboarding-flow.spec.ts` - 10 specs: 5-step onboarding flow
+- [x] `tests/e2e/settings-flow.spec.ts` - 13 specs: toggles, persistence
+- [x] `tests/e2e/progress-dashboard.spec.ts` - 9 specs: XP, level, streak, lessons
+- [x] `tests/e2e/accessibility.spec.ts` - 20 specs: axe audits, RTL, keyboard nav, ARIA
+
+### Verification
+- `npx tsc --noEmit` - PASS (0 errors)
+- `npx vitest run` - PASS (498/498 tests, 28 suites)
+- E2E specs: 66 test cases across 5 files
 
 ## Sprint 3 Deliverables
 
