@@ -1,11 +1,63 @@
 # Ninja Keyboard (נינג'ה מקלדת) - Progress
 
 ## Status: Active
-## Last Updated: 2026-02-18
-## Sprint: 5 (Practice + Statistics + Challenges + Polish) - COMPLETE
+## Last Updated: 2026-02-19
+## Sprint: 6 (Error Handling + Games + Polish) - COMPLETE
 
 ## Current State
-Sprint 5 complete. 854 unit tests pass across 50 suites. TypeScript clean. 5 E2E Playwright specs (66 test cases). 20+ pages. Full navigation with 11 sidebar links.
+Sprint 6 complete. 987 unit tests pass across 60 suites. TypeScript clean. 6 E2E Playwright specs (82 test cases). 23 pages. Full navigation with 12 sidebar links.
+
+## Sprint 6 Deliverables
+
+### Error Handling (Complete)
+- [x] `src/app/error.tsx` - Global error page with retry button
+- [x] `src/app/(app)/error.tsx` - App error page with retry + home link, digest display
+- [x] `src/app/not-found.tsx` - Custom 404 page with ninja theme
+- [x] 12 tests (error-pages, not-found)
+
+### Loading States (Complete)
+- [x] `src/app/(app)/loading.tsx` - Default app skeleton
+- [x] 9 page-specific loading skeletons (home, lessons, practice, statistics, speed-test, certificates, battle, leaderboard, games)
+- [x] 27 tests (loading-states: render, skeleton elements, RTL)
+
+### Share System (Complete)
+- [x] `src/lib/sharing/share-utils.ts` - Web Share API + clipboard fallback
+  - generateSpeedTestShareText, generateCertificateShareText, generateStreakShareText
+- [x] `src/components/sharing/share-button.tsx` - Reusable share button with status feedback
+- [x] Speed test: integrated share button in results screen
+- [x] 19 tests (share-utils, share-button)
+
+### Achievement Notification (Complete)
+- [x] `src/components/gamification/achievement-notification.tsx` - Animated toast for newly earned badges
+- [x] 8 tests (achievement-notification)
+
+### Word Rain Game (Complete)
+- [x] `src/lib/games/word-rain.ts` - Game logic: spawn, tick, processInput, scoring, combos
+  - 60 Hebrew words across 3 difficulty pools, combo system, lives
+  - 3 difficulties (easy/medium/hard) with progressive speed increase
+- [x] `src/app/(app)/games/page.tsx` - Games hub with game cards
+- [x] `src/app/(app)/games/word-rain/page.tsx` - Full game UI with falling words, input, HUD
+- [x] `src/app/(app)/games/loading.tsx` - Games loading skeleton
+- [x] Sidebar: added Games link (12 nav items total)
+- [x] 39 tests (word-rain logic, games-hub)
+
+### Keyboard Heatmap (Complete)
+- [x] `src/lib/statistics/keyboard-heatmap.ts` - Per-key accuracy aggregation, heat levels
+- [x] `src/components/statistics/keyboard-heatmap.tsx` - Visual heatmap on Hebrew keyboard layout
+- [x] Integrated into statistics page
+- [x] 15 tests (keyboard-heatmap)
+
+### Typing Warmup (Complete)
+- [x] `src/lib/warmup/typing-warmup.ts` - 8 exercises, 5 focus areas, daily warmup
+- [x] 12 tests (typing-warmup)
+
+### E2E Tests (Complete)
+- [x] `tests/e2e/games-flow.spec.ts` - 16 specs: games hub, Word Rain, speed test, certificates
+
+### Verification
+- `npx tsc --noEmit` - PASS (0 errors)
+- `npx vitest run` - PASS (987/987 tests, 60 suites)
+- E2E specs: 82 test cases across 6 files
 
 ## Sprint 5 Deliverables
 
@@ -230,10 +282,10 @@ Sprint 5 complete. 854 unit tests pass across 50 suites. TypeScript clean. 5 E2E
 ### Layout + PWA (Complete)
 - [x] App shell, responsive, i18n, PWA
 
-## File Count: ~105
-- ~85 source files (src/)
+## File Count: ~130
+- ~110 source files (src/)
 - 3 SQL migrations
-- 16 test files + 3 E2E tests + 2 test configs
+- 22 test files + 6 E2E tests + 2 test configs
 - 2 translation files + 1 manifest + 1 CI pipeline + CLAUDE.md
 
 ## Next Steps (Sprint 3 - Onboarding + Feedback)
