@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ProgressChart } from '@/components/statistics/progress-chart'
+import { KeyboardHeatmap } from '@/components/statistics/keyboard-heatmap'
 import { usePracticeHistoryStore } from '@/stores/practice-history-store'
 import { useXpStore } from '@/stores/xp-store'
 import { cn } from '@/lib/utils'
@@ -197,6 +198,9 @@ export default function StatisticsPage() {
         title="דיוק לאורך זמן"
         metric="accuracy"
       />
+
+      {/* ── Keyboard Heatmap ──────────────────────────────────── */}
+      <KeyboardHeatmap />
 
       {/* ── Problematic keys ────────────────────────────────────── */}
       <Card>
