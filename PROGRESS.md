@@ -2,10 +2,73 @@
 
 ## Status: Active
 ## Last Updated: 2026-02-19
-## Sprint: 6 (Error Handling + Games + Polish) - COMPLETE
+## Sprint: 7 (New Games + Full Coverage) - COMPLETE
 
 ## Current State
-Sprint 6 complete. 987 unit tests pass across 60 suites. TypeScript clean. 6 E2E Playwright specs (82 test cases). 23 pages. Full navigation with 12 sidebar links.
+Sprint 7 complete. 1081 unit tests pass across 62 suites. TypeScript clean. 10 E2E Playwright spec files (164 test cases). 25 pages. 4 typing games. Full navigation with 12 sidebar links.
+
+## Sprint 7 Deliverables
+
+### Ninja Slice Game (Complete)
+- [x] `src/lib/games/ninja-slice.ts` - Game engine: Hebrew letters/words fly across screen from 4 directions
+  - 27 Hebrew letters, 19 combos, 36 hard words
+  - 3 difficulties with progressive speed increase, combo system, lives
+- [x] `src/app/(app)/games/ninja-slice/page.tsx` - Full game UI with flying targets, input, HUD, game over
+- [x] 49 tests (ninja-slice)
+
+### Letter Memory Game (Complete)
+- [x] `src/lib/games/letter-memory.ts` - Memory card matching with Hebrew letters
+  - Fisher-Yates shuffle, reveal/check match mechanics, combo scoring
+  - 3 difficulties: 4/6/8 pairs, hard mode uses similar-looking letters (ב/כ, ח/ה, ד/ר)
+- [x] `src/app/(app)/games/letter-memory/page.tsx` - Card grid UI with flip animations, click + type input
+- [x] 45 tests (letter-memory)
+
+### Games Hub Enhancement (Complete)
+- [x] Updated `src/app/(app)/games/page.tsx` - Now 4 games: Word Rain, Letter Memory, Battle, Ninja Slice
+- [x] 2×2 responsive grid layout
+
+### New E2E Tests (Complete)
+- [x] `tests/e2e/battle-flow.spec.ts` - 22 specs: difficulty selection, countdown, battle UI, accessibility
+- [x] `tests/e2e/shortcuts-flow.spec.ts` - 18 specs: categories, tabs, practice mode, keyboard nav
+- [x] `tests/e2e/profile-flow.spec.ts` - 17 specs: profile card, badges, stats, RTL
+- [x] `tests/e2e/leaderboard-flow.spec.ts` - 25 specs: podium, table, rankings, medals
+
+### Middleware Fix (Complete)
+- [x] `src/middleware.ts` - Skip auth when Supabase not configured (demo/local dev)
+
+### Verification
+- `npx tsc --noEmit` - PASS (0 errors)
+- `npx vitest run` - PASS (1081/1081 tests, 62 suites)
+- E2E specs: 164 test cases across 10 files
+
+## Previously Undocumented Features (Built in Sprint 6, Now Documented)
+
+### Battle Mode (Complete - 51 tests)
+- [x] `src/lib/battle/battle-engine.ts` - Typing race vs AI: 3 difficulties (15/30/50 WPM), error rate simulation, XP rewards
+- [x] `src/components/battle/battle-arena.tsx` - Full battle UI: countdown, live WPM, progress bars, text highlighting
+- [x] `src/components/battle/battle-results.tsx` - Results modal with winner display
+
+### Leaderboard (Complete - 34 tests)
+- [x] `src/lib/leaderboard/leaderboard-utils.ts` - Sort, rank, medals, mock generation with seeded random, 20 Hebrew names
+- [x] `src/components/leaderboard/leaderboard-podium.tsx` - Top 3 podium display
+- [x] `src/components/leaderboard/leaderboard-table.tsx` - Full ranking table with current player highlight
+
+### Profile (Complete - 46 tests)
+- [x] `src/lib/profile/profile-utils.ts` - 5 ninja ranks (beginner→grandmaster), XP milestones, typing time calculation
+- [x] `src/components/profile/profile-card.tsx` - User card with rank, level, XP
+- [x] `src/components/profile/badge-showcase.tsx` - Badge display grid
+- [x] `src/components/profile/stats-chart.tsx` - Statistics visualization
+
+### Ki Mascot (Complete - 32 tests)
+- [x] `src/lib/mascot/mascot-reactions.ts` - 8 moods, 12 event reactions, 12 typing tips in Hebrew
+- [x] `src/components/mascot/ki-mascot.tsx` - SVG ninja with mood-based animations, speech bubbles, blinking eyes
+- [x] `src/components/mascot/mascot-provider.tsx` - Context provider for mascot state
+
+### Keyboard Shortcuts (Complete - 40 tests)
+- [x] `src/lib/content/shortcuts.ts` - 40+ shortcuts in 5 categories (basic/text/browser/windows/advanced)
+- [x] `src/app/(app)/shortcuts/page.tsx` - Tabbed UI with category filter
+- [x] `src/components/shortcuts/shortcut-card.tsx` - Individual shortcut card
+- [x] `src/components/shortcuts/shortcut-practice.tsx` - Interactive practice mode with scoring
 
 ## Sprint 6 Deliverables
 
@@ -282,20 +345,19 @@ Sprint 6 complete. 987 unit tests pass across 60 suites. TypeScript clean. 6 E2E
 ### Layout + PWA (Complete)
 - [x] App shell, responsive, i18n, PWA
 
-## File Count: ~130
-- ~110 source files (src/)
+## File Count: ~140
+- ~120 source files (src/)
 - 3 SQL migrations
-- 22 test files + 6 E2E tests + 2 test configs
+- 26 test files + 10 E2E tests + 2 test configs
 - 2 translation files + 1 manifest + 1 CI pipeline + CLAUDE.md
 
-## Next Steps (Sprint 3 - Onboarding + Feedback)
-1. PlacementTest.tsx (2-minute placement test)
-2. FirstLessonMagic.tsx ("first magic" onboarding)
-3. EmotionalDetector.ts + FeedbackEngine.ts
-4. EncouragementBanner.tsx + SessionSummary.tsx
-5. Badges + adaptive achievements
-6. Parental consent flow
-7. Sound effects (howler.js) + "Ki" mascot animations
+## Next Steps (Sprint 8)
+1. Service Worker for real PWA offline caching
+2. English i18n (next-intl translations)
+3. Real Supabase integration (replace mock data with live queries)
+4. Ki mascot integration into lesson flow
+5. Multiplayer battles (WebSocket for real-time PvP)
+6. Achievement system with persistent unlocks
 
 ## Key Decisions Made
 - Next.js 15 with App Router (SSR + RSC)

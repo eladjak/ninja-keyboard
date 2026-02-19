@@ -5,6 +5,11 @@ const PROTECTED_ROUTES = ['/home', '/lessons', '/battle', '/progress', '/profile
 const AUTH_ROUTES = ['/login', '/register', '/join']
 
 export async function middleware(request: NextRequest) {
+  // Skip auth when Supabase is not configured (demo / local dev)
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return NextResponse.next()
+  }
+
   const { supabase, response } = createMiddlewareClient(request)
 
   const {

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Gamepad2, CloudRain, Swords } from 'lucide-react'
+import { Gamepad2, CloudRain, Swords, Sword, Brain } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 
 const GAMES = [
@@ -15,6 +15,15 @@ const GAMES = [
     bgColor: 'bg-blue-500/10',
   },
   {
+    id: 'letter-memory',
+    href: '/games/letter-memory',
+    nameHe: 'זיכרון אותיות',
+    descriptionHe: 'הקלד אות כדי לגלות קלף – מצא את הזוגות!',
+    icon: Brain,
+    color: 'text-indigo-500',
+    bgColor: 'bg-indigo-500/10',
+  },
+  {
     id: 'battle',
     href: '/battle',
     nameHe: 'זירת קרב',
@@ -22,6 +31,15 @@ const GAMES = [
     icon: Swords,
     color: 'text-red-500',
     bgColor: 'bg-red-500/10',
+  },
+  {
+    id: 'ninja-slice',
+    href: '/games/ninja-slice',
+    nameHe: 'חיתוך נינג\'ה',
+    descriptionHe: 'חתכו אותיות ומילים לפני שהן בורחות!',
+    icon: Sword,
+    color: 'text-purple-500',
+    bgColor: 'bg-purple-500/10',
   },
 ]
 
