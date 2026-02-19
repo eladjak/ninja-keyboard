@@ -2,8 +2,10 @@
 
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Timer, Zap, Target, RotateCcw, Share2 } from 'lucide-react'
+import { Timer, Zap, Target, RotateCcw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { ShareButton } from '@/components/sharing/share-button'
+import { generateSpeedTestShareText } from '@/lib/sharing/share-utils'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { TypingArea } from '@/components/typing/typing-area'
 import { HebrewKeyboard } from '@/components/typing/hebrew-keyboard'
@@ -292,6 +294,15 @@ export default function SpeedTestPage() {
                     <RotateCcw className="size-4" />
                     נסה שוב
                   </Button>
+                  <ShareButton
+                    text={generateSpeedTestShareText({
+                      wpm: result.wpm,
+                      accuracy: result.accuracy,
+                      rank: result.rank,
+                      rankLabel: SPEED_RANK_LABELS[result.rank].he,
+                    })}
+                    className="flex-1"
+                  />
                   <Button className="flex-1 gap-2" onClick={handleRetry}>
                     <Zap className="size-4" />
                     מבחן חדש
