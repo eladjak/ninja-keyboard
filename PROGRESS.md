@@ -2,75 +2,90 @@
 
 ## Status: Active
 ## Last Updated: 2026-03-04
-## Sprint: Character World Expansion + Visual Integration
+## Sprint: Character World + Vision Planning (COMPLETE)
 
 ## Current State
-12 character model sheets generated (Brawl Stars + anime style). Ki clearly male, 4 female characters (Yuki, Luna, Noa, Mika), 3 companions (Sensei Zen, Pixel, Rex), 3 battle rivals (Shadow, Storm, Blaze). All characters integrated into relevant pages. 4 new environment backgrounds (dojo, speed arena, cyber lab, moonlit garden). Dark gaming theme deployed. 1093 unit tests pass, TypeScript clean, build succeeds with 25+ pages.
+3 comprehensive planning documents created by agent team. 12 character model sheets generated. Dark gaming theme deployed. Ready for deep implementation based on approved plans.
 
-## Character World (Phase 1 - COMPLETE)
+## Planning Documents (NEW - Agent Team Output)
 
-### 12 Model Sheets Generated
-- [x] **Ki** (קי) - BOY, 12, main mascot, purple ninja outfit - CLEARLY MALE
-- [x] **Yuki** (יוקי) - GIRL, 11, speed specialist, teal/cyan hair
-- [x] **Luna** (לונה) - GIRL, 13, moon ninja, silver-white hair
-- [x] **Noa** (נועה) - GIRL, 10, medic ninja, green braided hair
-- [x] **Kai** (קאי) - BOY, 13, fire warrior, red-orange hair
-- [x] **Mika** (מיקה) - GIRL, 12, tech ninja hacker, purple-pink hair
-- [x] **Sensei Zen** (סנסאי זן) - Turtle mentor, golden/brown robes
-- [x] **Pixel** (פיקסל) - Robot companion, cyan/silver
-- [x] **Rex** (רקס) - Dino ninja, lime green
-- [x] **Shadow** (צל) - Cat rival (easy), black/gray
-- [x] **Storm** (סערה) - Fox rival (medium), electric blue
-- [x] **Blaze** (להבה) - Dragon rival (hard), fiery red-orange
+### 1. Character Bible (`docs/character-bible-merged.md`)
+Merges original spec (6 characters) with new characters (12 model sheets) into one unified world:
+- **14 characters total** in 5 tiers (Core Heroes, Specialists, Mentors, Villains, Rivals)
+- Ki + Mika = core duo (original spec, equal partners)
+- NEW: Yuki, Luna, Kai, Noa = specialist heroes per page
+- Bug + Glitch = villains (from original spec, need to be generated)
+- Sensei Zen = merged Sensei Code + turtle design
+- 3-Act narrative mapped to all 20 lessons
+- Age theme scaling per character
+- Seasonal events mapping
+- Gemini art prompts ready for Bug + Glitch generation
+- YouTube series alignment
 
-### Characters Integrated Into Pages
-- [x] Lessons page - Sensei Zen + dojo background
-- [x] Speed test - Yuki + speed arena background
-- [x] Practice - Luna + moonlit garden background
-- [x] Shortcuts - Mika + cyber lab background
-- [x] Statistics - Pixel
-- [x] Games - Rex
-- [x] Battle arena - Ki player avatar, rival character images
-- [x] Home dashboard - Ki hero image, hero background
-- [x] Sidebar - Ki mascot image
-- [x] Header - Ki mascot image
+### 2. Age-Adaptive UX Spec (`docs/age-adaptive-ux-spec.md`)
+5 radically different experiences per age group:
+- **Shatil (6-8)**: Warm cream, large Ki, 3 tabs, stars not XP, xylophone sounds
+- **Nevet (8-10)**: Light sky, adventure, medium characters, 4 tabs
+- **Geza (10-12)**: Current dark gaming (preserved), neon, competitive
+- **Anaf (12-14)**: Softer dark, tiny mascot, keyboard shortcuts, minimal celebrations
+- **Tzameret (14-16+)**: Monochrome, NO characters, command palette, auto-start
+- **Teacher**: Data tables, class management, Sensei Zen + Pixel focus
+- **3-Layer Architecture**: CSS variables → Attribute selectors → Component variants
+- **Migration checklist**: 16 files need hardcoded color replacement
+- **8-phase implementation plan**
 
-### Environment Backgrounds (8 total)
-- [x] hero-bg.jpg, dashboard-bg.jpg, battle-bg.jpg, games-bg.jpg, typing-bg.jpg (from V2)
-- [x] dojo-bg.jpg - Traditional Japanese dojo for lessons
-- [x] speed-arena-bg.jpg - Futuristic neon arena for speed tests
-- [x] cyber-lab-bg.jpg - Hacker lab for keyboard shortcuts
-- [x] moonlit-garden-bg.jpg - Zen garden at night for practice
+### 3. Story Mode + Animation System (in agent output)
+- 3-beat story pattern per lesson (Hook → Companion → Reward)
+- Speech bubble system (never cutscenes, always skippable)
+- Boss battles: Bug (L7), Bug+Glitch (L15), Final Bug (L20)
+- "Weapon = keyboard" - no violence, Bug NEVER dies
+- Animation system: Framer Motion + CSS particles
+- Music: Web Audio API synthesis, adaptive tempo
+- 15+ new sound effects
+- Performance budget for school laptops
+- 3-phase implementation (Foundation → Boss Battles → Full Story)
 
-### Documentation
-- [x] `docs/character-world-plan.md` - Full character bible (12 chars, 6 environments, roadmap)
-- [x] `character-gallery.html` - Visual gallery of all characters
+## Character Art Status
+- [x] 12 model sheets generated (Ki, Yuki, Luna, Noa, Kai, Mika, Sensei Zen, Pixel, Rex, Shadow, Storm, Blaze)
+- [ ] Bug (באג) - cute beetle villain - NEEDS GENERATION
+- [ ] Glitch (גליץ') - shape-shifting pixel entity - NEEDS GENERATION
+- [x] Ki updated to clearly male
+- [x] Characters integrated into 6 pages
 
-## Dark Gaming Theme (V2 - COMPLETE)
-- [x] Dark CSS variables, gaming utilities, glass-morphism
-- [x] All layout components (header, sidebar, bottom-tabs, app-shell)
-- [x] Home dashboard gaming lobby redesign
-- [x] Gemini character art replacing all SVGs
-
-## Phase 1 Effects (COMPLETE from previous sprints)
-- [x] Page transitions, confetti burst, XP float
-- [x] 15 synthesized sounds (Web Audio API)
-- [x] Ki mascot with 8 moods
+## Dark Gaming Theme Status
+- [x] CSS variables, gaming utilities, glass-morphism
+- [x] All layout components themed
+- [x] Home dashboard gaming lobby
+- [x] 8 environment backgrounds
+- [ ] PROBLEM: All colors hardcoded - need CSS variable migration for age themes
 
 ## Test Status
 - Unit: 1093 tests, 62 suites (all pass)
 - TypeScript: Clean
 - Build: 25+ pages, production ready
 
-## Next Steps (Character World Phases 2-6)
-1. **Phase 2**: Animations - idle bounce/float per character, victory/defeat
-2. **Phase 3**: Sound & Voice - character SFX, Hebrew voice lines
-3. **Phase 4**: 3D Models - key scenes, character selection
-4. **Phase 5**: Advanced - unlockable skins, character progression
-5. **Phase 6**: Environments per challenge type with unique enemies
+## Next Steps (Pending User Decision)
+Based on the 3 planning documents, the recommended priority order is:
+
+### Immediate (This Sprint)
+1. Generate Bug + Glitch character art (Gemini prompts ready in bible)
+2. CSS variable migration (replace all hardcoded #0d0b1a colors)
+3. Expand theme-vars.css from 4 to 25+ variables
+
+### Short-term
+4. Story mode foundation (speech bubbles, story store, Act 1 script)
+5. Age-adaptive navigation variants
+6. Character companion reactions during lessons
+
+### Medium-term
+7. Boss Battle system (Lesson 7 first)
+8. Adaptive music engine
+9. Home page variants per age theme
+10. Teacher dashboard UX
 
 ## Key Files
-- `docs/character-world-plan.md` - Character world bible
+- `docs/character-bible-merged.md` - Merged character world bible
+- `docs/age-adaptive-ux-spec.md` - Age-adaptive UX specification
+- `docs/character-world-plan.md` - Original character plan (superseded by bible)
 - `public/images/characters/model-sheets/` - 12 character model sheets
 - `public/images/backgrounds/` - 8 environment backgrounds
-- `character-gallery.html` - Visual gallery
