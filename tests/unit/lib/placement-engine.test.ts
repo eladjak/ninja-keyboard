@@ -4,6 +4,9 @@ import {
   calculateFingerTechnique,
   computePlacementResult,
   getRecommendedLesson,
+  simplifyLevel,
+  SIMPLIFIED_LEVEL_NAMES,
+  SIMPLIFIED_LEVEL_EMOJI,
 } from '@/lib/placement/placement-engine'
 import type { Keystroke } from '@/lib/typing-engine/types'
 
@@ -194,5 +197,67 @@ describe('getRecommendedLesson', () => {
       expect(lesson).toBeGreaterThanOrEqual(1)
       expect(lesson).toBeLessThanOrEqual(20)
     }
+  })
+})
+
+// ── simplifyLevel ─────────────────────────────────────────────────
+
+describe('simplifyLevel', () => {
+  it('maps shatil to beginner', () => {
+    expect(simplifyLevel('shatil')).toBe('beginner')
+  })
+
+  it('maps nevet to beginner', () => {
+    expect(simplifyLevel('nevet')).toBe('beginner')
+  })
+
+  it('maps geza to intermediate', () => {
+    expect(simplifyLevel('geza')).toBe('intermediate')
+  })
+
+  it('maps anaf to advanced', () => {
+    expect(simplifyLevel('anaf')).toBe('advanced')
+  })
+
+  it('maps tzameret to advanced', () => {
+    expect(simplifyLevel('tzameret')).toBe('advanced')
+  })
+})
+
+// ── SIMPLIFIED_LEVEL_NAMES ─────────────────────────────────────────
+
+describe('SIMPLIFIED_LEVEL_NAMES', () => {
+  it('has Hebrew name for beginner', () => {
+    expect(SIMPLIFIED_LEVEL_NAMES.beginner).toBe('מתחיל')
+  })
+
+  it('has Hebrew name for intermediate', () => {
+    expect(SIMPLIFIED_LEVEL_NAMES.intermediate).toBe('בינוני')
+  })
+
+  it('has Hebrew name for advanced', () => {
+    expect(SIMPLIFIED_LEVEL_NAMES.advanced).toBe('מתקדם')
+  })
+})
+
+// ── SIMPLIFIED_LEVEL_EMOJI ─────────────────────────────────────────
+
+describe('SIMPLIFIED_LEVEL_EMOJI', () => {
+  it('has emoji for all 3 levels', () => {
+    expect(SIMPLIFIED_LEVEL_EMOJI.beginner).toBeTruthy()
+    expect(SIMPLIFIED_LEVEL_EMOJI.intermediate).toBeTruthy()
+    expect(SIMPLIFIED_LEVEL_EMOJI.advanced).toBeTruthy()
+  })
+
+  it('uses plant emoji for beginner', () => {
+    expect(SIMPLIFIED_LEVEL_EMOJI.beginner).toBe('🌱')
+  })
+
+  it('uses tree emoji for intermediate', () => {
+    expect(SIMPLIFIED_LEVEL_EMOJI.intermediate).toBe('🌳')
+  })
+
+  it('uses crown emoji for advanced', () => {
+    expect(SIMPLIFIED_LEVEL_EMOJI.advanced).toBe('👑')
   })
 })

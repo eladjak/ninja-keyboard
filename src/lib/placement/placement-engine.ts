@@ -10,6 +10,7 @@ import type { Keystroke } from '@/lib/typing-engine/types'
 
 export type SkillLevel = 'shatil' | 'nevet' | 'geza' | 'anaf' | 'tzameret'
 export type FingerTechnique = 'none' | 'partial' | 'full'
+export type SimplifiedLevel = 'beginner' | 'intermediate' | 'advanced'
 
 export interface PlacementResult {
   /** Determined skill level */
@@ -67,6 +68,32 @@ export function determineLevel(wpm: number): SkillLevel {
   if (wpm < 30) return 'geza'
   if (wpm < 50) return 'anaf'
   return 'tzameret'
+}
+
+// ── simplifyLevel ───────────────────────────────────────────────
+
+/**
+ * Map 5 skill levels to 3 simplified levels for clearer user display.
+ * shatil/nevet → beginner, geza → intermediate, anaf/tzameret → advanced
+ */
+export function simplifyLevel(level: SkillLevel): SimplifiedLevel {
+  if (level === 'shatil' || level === 'nevet') return 'beginner'
+  if (level === 'geza') return 'intermediate'
+  return 'advanced'
+}
+
+/** Hebrew display names for simplified levels */
+export const SIMPLIFIED_LEVEL_NAMES: Record<SimplifiedLevel, string> = {
+  beginner: 'מתחיל',
+  intermediate: 'בינוני',
+  advanced: 'מתקדם',
+}
+
+/** Emoji for simplified levels */
+export const SIMPLIFIED_LEVEL_EMOJI: Record<SimplifiedLevel, string> = {
+  beginner: '🌱',
+  intermediate: '🌳',
+  advanced: '👑',
 }
 
 // ── calculateFingerTechnique ─────────────────────────────────────

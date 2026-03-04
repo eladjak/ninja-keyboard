@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   BookOpen,
   Keyboard,
@@ -69,51 +70,57 @@ const QUICK_LINKS = [
     href: '/lessons',
     icon: BookOpen,
     label: 'שיעורים',
-    color: 'text-blue-600 dark:text-blue-400',
-    bg: 'bg-blue-100 dark:bg-blue-900/40',
+    color: 'text-blue-400',
+    bg: 'bg-blue-500/20',
+    accent: '#3b82f6',
   },
   {
     href: '/practice',
     icon: Keyboard,
     label: 'תרגול חופשי',
-    color: 'text-purple-600 dark:text-purple-400',
-    bg: 'bg-purple-100 dark:bg-purple-900/40',
+    color: 'text-purple-400',
+    bg: 'bg-purple-500/20',
+    accent: '#a855f7',
   },
   {
     href: '/games',
     icon: Gamepad2,
     label: 'משחקים',
-    color: 'text-pink-600 dark:text-pink-400',
-    bg: 'bg-pink-100 dark:bg-pink-900/40',
+    color: 'text-pink-400',
+    bg: 'bg-pink-500/20',
+    accent: '#ec4899',
   },
   {
     href: '/battle',
     icon: Swords,
     label: 'זירת קרב',
-    color: 'text-red-600 dark:text-red-400',
-    bg: 'bg-red-100 dark:bg-red-900/40',
+    color: 'text-red-400',
+    bg: 'bg-red-500/20',
+    accent: '#ef4444',
   },
   {
     href: '/speed-test',
     icon: Timer,
     label: 'מבחן מהירות',
-    color: 'text-amber-600 dark:text-amber-400',
-    bg: 'bg-amber-100 dark:bg-amber-900/40',
+    color: 'text-amber-400',
+    bg: 'bg-amber-500/20',
+    accent: '#f59e0b',
   },
   {
     href: '/statistics',
     icon: BarChart3,
     label: 'סטטיסטיקות',
-    color: 'text-green-600 dark:text-green-400',
-    bg: 'bg-green-100 dark:bg-green-900/40',
+    color: 'text-green-400',
+    bg: 'bg-green-500/20',
+    accent: '#22c55e',
   },
 ] as const
 
 const STAT_CARDS = [
-  { key: 'level', icon: Star, color: 'text-primary', label: 'רמה' },
-  { key: 'xp', icon: Zap, color: 'text-amber-500', label: 'XP' },
-  { key: 'streak', icon: Flame, color: 'text-orange-500', label: 'ימי רצף' },
-  { key: 'lessons', icon: Trophy, color: 'text-green-500', label: 'שיעורים' },
+  { key: 'level', icon: Star, color: 'text-purple-400', accent: '#6C5CE7', label: 'רמה' },
+  { key: 'xp', icon: Zap, color: 'text-amber-400', accent: '#f59e0b', label: 'XP' },
+  { key: 'streak', icon: Flame, color: 'text-orange-400', accent: '#f97316', label: 'ימי רצף' },
+  { key: 'lessons', icon: Trophy, color: 'text-green-400', accent: '#00B894', label: 'שיעורים' },
 ] as const
 
 export function HomeDashboard() {
@@ -156,31 +163,50 @@ export function HomeDashboard() {
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}
-        className="relative overflow-hidden rounded-2xl ninja-gradient p-6 text-white shadow-lg"
+        className="relative overflow-hidden rounded-2xl hero-glow-border p-6 text-white shadow-lg"
+        style={{ background: '#0d0b1a' }}
       >
-        {/* Decorative elements */}
-        <div className="pointer-events-none absolute -top-6 -end-6 text-8xl opacity-15 ninja-shimmer" role="img" aria-label="נינג'ה">🥷</div>
-        <div className="pointer-events-none absolute bottom-2 start-4 text-4xl opacity-10">⌨️</div>
+        {/* Background image */}
+        <Image
+          src="/images/backgrounds/hero-bg.jpg"
+          alt=""
+          fill
+          className="object-cover opacity-40"
+          priority
+        />
+        {/* Dark overlay gradient */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0d0b1a] via-[#0d0b1a]/60 to-transparent" />
 
-        <div className="relative space-y-2">
+        {/* Ki character image */}
+        <div className="pointer-events-none absolute bottom-0 end-4 z-10">
+          <Image
+            src="/images/characters/ki-hero.jpg"
+            alt="Ki - מדריך הנינג'ה"
+            width={100}
+            height={100}
+            className="rounded-full border-2 border-purple-500/50 shadow-lg shadow-purple-500/20"
+          />
+        </div>
+
+        <div className="relative z-10 space-y-2">
           <div className="flex items-center gap-2">
-            <Sparkles className="size-5 text-white/80" />
-            <p className="text-sm font-medium text-white/80">ברוכים הבאים!</p>
+            <Sparkles className="size-5 text-purple-300" />
+            <p className="text-sm font-medium text-purple-200">ברוכים הבאים!</p>
           </div>
-          <h1 className="text-2xl font-bold sm:text-3xl">שלום, נינג&apos;ה! 🥷</h1>
-          <p className="text-base text-white/80">
+          <h1 className="text-2xl font-bold text-glow sm:text-3xl">שלום, נינג&apos;ה!</h1>
+          <p className="text-base text-glow-sm text-white/80">
             מוכנים לאימון הקלדה היום?
           </p>
         </div>
 
         {/* Level progress in hero */}
-        <div className="mt-4 space-y-1.5">
+        <div className="relative z-10 mt-4 space-y-1.5">
           <div className="flex items-center justify-between text-xs text-white/70">
             <span>רמה {level}</span>
             <span>{progress}%</span>
           </div>
           <div
-            className="h-2 rounded-full bg-white/20 overflow-hidden"
+            className="h-2.5 rounded-full bg-white/10 overflow-hidden border border-white/10"
             role="progressbar"
             aria-label="התקדמות לרמה הבאה"
             aria-valuenow={progress}
@@ -188,7 +214,8 @@ export function HomeDashboard() {
             aria-valuemax={100}
           >
             <motion.div
-              className="h-full rounded-full bg-white/80"
+              className="h-full rounded-full"
+              style={{ background: 'linear-gradient(90deg, #6C5CE7, #00B894)' }}
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -206,15 +233,30 @@ export function HomeDashboard() {
           const Icon = stat.icon
           const value = statValues[stat.key]
           return (
-            <GameCard key={stat.key} delay={i * 0.06}>
+            <motion.div
+              key={stat.key}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: i * 0.06 }}
+              className="game-card-border p-3"
+              style={{ borderColor: `${stat.accent}40` }}
+            >
               <div className="flex flex-col items-center gap-1">
-                <div className="flex size-9 items-center justify-center rounded-full bg-muted">
+                <div
+                  className="flex size-9 items-center justify-center rounded-full"
+                  style={{ background: `${stat.accent}20` }}
+                >
                   <Icon className={`size-4.5 ${stat.color}`} />
                 </div>
-                <span className="text-2xl font-bold">{value}</span>
-                <span className="text-xs text-muted-foreground">{stat.label}</span>
+                <span
+                  className="text-2xl font-bold"
+                  style={{ color: stat.accent, textShadow: `0 0 12px ${stat.accent}60` }}
+                >
+                  {value}
+                </span>
+                <span className="text-xs text-gray-400">{stat.label}</span>
               </div>
-            </GameCard>
+            </motion.div>
           )
         })}
       </div>
@@ -222,23 +264,23 @@ export function HomeDashboard() {
       {/* Continue Lesson CTA */}
       {nextLesson ? (
         <Link href={`/lessons/${nextLesson.id}`}>
-          <Button size="lg" className="w-full text-lg gap-2 ninja-gradient border-0 text-white shadow-md hover:opacity-90 transition-opacity" data-testid="continue-lesson-btn">
+          <Button size="lg" className="w-full text-lg gap-2 game-button" data-testid="continue-lesson-btn">
             <Target className="size-5" />
             המשך שיעור: {nextLesson.titleHe}
             <ChevronLeft className="size-5" />
           </Button>
         </Link>
       ) : (
-        <Button size="lg" className="w-full text-lg" disabled data-testid="continue-lesson-btn">
-          כל השיעורים הושלמו! 🎉
+        <Button size="lg" className="w-full text-lg game-button opacity-60" disabled data-testid="continue-lesson-btn">
+          כל השיעורים הושלמו!
         </Button>
       )}
 
       {/* Placement Test Link */}
       {lessonsCompletedCount === 0 && (
         <Link href="/placement" data-testid="placement-test-link">
-          <Button variant="outline" className="w-full gap-2 border-primary/30 hover:bg-primary/5">
-            <Target className="size-4 text-primary" />
+          <Button variant="outline" className="w-full gap-2 border-purple-500/40 text-purple-300 hover:bg-purple-500/10 hover:border-purple-500/60">
+            <Target className="size-4 text-purple-400" />
             מבחן מיקום
           </Button>
         </Link>
@@ -249,23 +291,29 @@ export function HomeDashboard() {
 
       {/* Quick Links */}
       <div>
-        <h2 className="mb-3 text-sm font-semibold text-muted-foreground">ניווט מהיר</h2>
+        <h2 className="game-section-title mb-3">ניווט מהיר</h2>
         <div
           className="grid grid-cols-3 gap-2.5 sm:grid-cols-6"
           data-testid="quick-links"
         >
           {QUICK_LINKS.map((link, i) => (
             <Link key={link.href} href={link.href}>
-              <GameCard delay={i * 0.04}>
-                <div className="flex flex-col items-center gap-1.5 p-3">
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2, delay: i * 0.04 }}
+                className="game-card-border cursor-pointer"
+                style={{ borderColor: `${link.accent}30` }}
+              >
+                <div className="flex flex-col items-center gap-1.5 p-2">
                   <div
-                    className={`flex size-10 items-center justify-center rounded-xl ${link.bg}`}
+                    className={`flex size-12 items-center justify-center rounded-xl ${link.bg}`}
                   >
-                    <link.icon className={`size-5 ${link.color}`} />
+                    <link.icon className={`size-7 ${link.color}`} />
                   </div>
-                  <span className="text-[11px] font-medium text-center leading-tight">{link.label}</span>
+                  <span className="text-[11px] font-medium text-center leading-tight text-gray-300">{link.label}</span>
                 </div>
-              </GameCard>
+              </motion.div>
             </Link>
           ))}
         </div>
@@ -273,34 +321,32 @@ export function HomeDashboard() {
 
       {/* Recent Activity */}
       {recentLessons.length > 0 && (
-        <Card className="card-glow" data-testid="recent-activity">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-base">
-              <TrendingUp className="size-4 text-primary" />
-              פעילות אחרונה
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
+        <div className="game-card-border" data-testid="recent-activity">
+          <div className="flex items-center gap-2 pb-3">
+            <TrendingUp className="size-4 text-purple-400" />
+            <h3 className="game-section-title">פעילות אחרונה</h3>
+          </div>
+          <div className="space-y-2">
             {recentLessons.map((lesson) => (
               <div
                 key={lesson.lessonId}
-                className="flex items-center justify-between rounded-lg border p-3 transition-colors hover:bg-muted/50"
+                className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-3 transition-colors hover:bg-white/10"
               >
-                <span className="text-sm font-medium">{lesson.title}</span>
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <span className="text-sm font-medium text-gray-200">{lesson.title}</span>
+                <div className="flex items-center gap-3 text-xs text-gray-400">
                   <span className="flex items-center gap-1">
-                    <Zap className="size-3 text-amber-500" />
+                    <Zap className="size-3 text-amber-400" />
                     {lesson.bestWpm} מ/ד
                   </span>
                   <span className="flex items-center gap-1">
-                    <Target className="size-3 text-green-500" />
+                    <Target className="size-3 text-green-400" />
                     {lesson.bestAccuracy}%
                   </span>
                 </div>
               </div>
             ))}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       )}
 
       {/* WPM Progress Chart */}
@@ -314,33 +360,40 @@ export function HomeDashboard() {
 
       {/* Achievement Preview */}
       {recentBadges.length > 0 && (
-        <Card className="card-glow" data-testid="achievement-preview">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-base">
-              <Trophy className="size-4 text-amber-500" />
-              הישגים אחרונים
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center justify-center gap-6">
-              {recentBadges.map((badge) => (
-                <motion.div
-                  key={badge!.id}
-                  className="flex flex-col items-center gap-1.5"
-                  whileHover={{ scale: 1.08 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                >
-                  <div className="flex size-14 items-center justify-center rounded-2xl bg-amber-50 dark:bg-amber-900/20">
-                    <span className="text-3xl" role="img" aria-label={badge!.nameHe}>
-                      {badge!.emoji}
-                    </span>
-                  </div>
-                  <Badge variant="secondary" className="text-[10px]">{badge!.nameHe}</Badge>
-                </motion.div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        <div
+          className="game-card-border"
+          style={{ borderColor: '#f59e0b40' }}
+          data-testid="achievement-preview"
+        >
+          <div className="flex items-center gap-2 pb-3">
+            <Trophy className="size-4 text-amber-400" />
+            <h3 className="game-section-title" style={{ color: '#fbbf24' }}>הישגים אחרונים</h3>
+          </div>
+          <div className="flex items-center justify-center gap-6">
+            {recentBadges.map((badge) => (
+              <motion.div
+                key={badge!.id}
+                className="flex flex-col items-center gap-1.5"
+                whileHover={{ scale: 1.08 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+              >
+                <div className="relative flex size-16 items-center justify-center rounded-2xl border-2 border-amber-500/30 bg-amber-500/10">
+                  <Image
+                    src="/images/badges/achievement-star.jpg"
+                    alt=""
+                    width={40}
+                    height={40}
+                    className="absolute opacity-30 rounded-lg"
+                  />
+                  <span className="relative text-3xl" role="img" aria-label={badge!.nameHe}>
+                    {badge!.emoji}
+                  </span>
+                </div>
+                <Badge variant="secondary" className="text-[10px] border-amber-500/30 bg-amber-500/10 text-amber-300">{badge!.nameHe}</Badge>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       )}
 
       {/* Daily Tip */}

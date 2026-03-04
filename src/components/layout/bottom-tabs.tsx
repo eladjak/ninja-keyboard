@@ -45,7 +45,7 @@ function TabLink({ href, label, icon: Icon, isActive }: TabLinkProps) {
       {isActive && (
         <motion.div
           layoutId="active-tab"
-          className="absolute -top-[5px] inset-x-1 h-1 rounded-full ninja-gradient"
+          className="absolute -top-[5px] inset-x-1 h-1.5 rounded-full ninja-gradient"
           transition={{ type: 'spring', stiffness: 400, damping: 30 }}
         />
       )}
@@ -55,7 +55,12 @@ function TabLink({ href, label, icon: Icon, isActive }: TabLinkProps) {
       >
         <Icon className={cn('size-5', isActive && 'text-primary')} />
       </motion.div>
-      <span className={cn('font-medium', isActive && 'font-semibold')}>{label}</span>
+      <span
+        className={cn('font-medium', isActive && 'font-semibold')}
+        style={isActive ? { textShadow: '0 0 8px oklch(0.55 0.2 292 / 50%)' } : undefined}
+      >
+        {label}
+      </span>
     </Link>
   )
 }
@@ -65,11 +70,11 @@ export function BottomTabs() {
 
   return (
     <nav
-      className="fixed bottom-0 inset-x-0 z-50 border-t bg-card/85 backdrop-blur-md md:hidden"
+      className="fixed bottom-0 inset-x-0 z-50 border-t border-[oklch(0.25_0.04_292)] bg-[#0d0b1a]/95 backdrop-blur-md md:hidden"
       aria-label="ניווט ראשי"
     >
       {/* Top gradient accent */}
-      <div className="h-px ninja-gradient opacity-50" />
+      <div className="h-px ninja-gradient" />
 
       <div className="flex h-16 items-center justify-around">
         {tabs.map((tab) => {

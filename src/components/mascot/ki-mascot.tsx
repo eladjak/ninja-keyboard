@@ -1,7 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
+import { cn } from '@/lib/utils'
 import type { MascotMood } from '@/lib/mascot/mascot-reactions'
 
 interface KiMascotProps {
@@ -321,39 +323,25 @@ function KiNinjaSVG({ mood, containerW, containerH }: { mood: MascotMood; contai
   )
 }
 
-// --- Mini head-only SVG for sidebar (32px) ---
+// --- Mini image for sidebar (32px) ---
 export function KiNinjaMini({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="12 4 40 40"
+    <Image
+      src="/images/characters/ki-mascot.jpg"
+      alt="קי"
       width={32}
       height={32}
-      role="img"
-      aria-label="קי"
-      className={className}
+      className={cn('rounded-full', className)}
       style={{ display: 'inline-block' }}
-    >
-      {/* Head */}
-      <ellipse cx="32" cy="24" rx="18" ry="20" fill="#2D3436" />
-      {/* Mask */}
-      <rect x="14" y="30" width="36" height="14" rx="7" fill="#1A0533" />
-      {/* Headband */}
-      <rect x="12" y="20" width="40" height="7" rx="3.5" fill="#6C5CE7" />
-      <rect x="12" y="22" width="40" height="1.5" rx="0.75" fill="#8B7FFF" opacity="0.6" />
-      {/* Ribbon */}
-      <path d="M 8 26 Q 4 28 5 32 Q 3 34 5 36" stroke="#6C5CE7" strokeWidth="3" fill="none" strokeLinecap="round" />
-      {/* Eyes: simple happy default */}
-      <path d="M19,21 Q23,17 27,21" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" />
-      <path d="M37,21 Q41,17 45,21" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" />
-    </svg>
+    />
   )
 }
 
-// --- Size map ---
-const SIZE_MAP: Record<NonNullable<KiMascotProps['size']>, { w: number; h: number }> = {
-  small:  { w: 60,  h: 75  },
-  medium: { w: 90,  h: 113 },
-  large:  { w: 120, h: 150 },
+// --- Image size map (square, 1:1 aspect) ---
+const IMAGE_SIZE_MAP: Record<NonNullable<KiMascotProps['size']>, number> = {
+  small: 40,
+  medium: 64,
+  large: 96,
 }
 
 // --- Main export ---
@@ -376,7 +364,7 @@ export function KiMascot({
     setShowBubble(false)
   }, [message, messageDuration])
 
-  const { w, h } = SIZE_MAP[size]
+  const imgSize = IMAGE_SIZE_MAP[size]
   const moodAnimation = MOOD_ANIMATIONS[mood]
 
   return (
@@ -407,9 +395,16 @@ export function KiMascot({
       <motion.div
         animate={moodAnimation.animate}
         transition={moodAnimation.transition}
-        style={{ width: w, height: h }}
+        style={{ width: imgSize, height: imgSize }}
       >
-        <KiNinjaSVG mood={mood} containerW={w} containerH={h} />
+        <Image
+          src="/images/characters/ki-mascot.jpg"
+          alt="Ki הנינג'ה"
+          width={imgSize}
+          height={imgSize}
+          className="rounded-full"
+          data-testid="ninja-svg"
+        />
       </motion.div>
     </div>
   )

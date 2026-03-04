@@ -9,7 +9,12 @@ import { Badge } from '@/components/ui/badge'
 import { HebrewKeyboard } from '@/components/typing/hebrew-keyboard'
 import { processKeystroke } from '@/lib/typing-engine/engine'
 import { ALL_KEYS } from '@/lib/typing-engine/keyboard-layout'
-import { computePlacementResult } from '@/lib/placement/placement-engine'
+import {
+  computePlacementResult,
+  simplifyLevel,
+  SIMPLIFIED_LEVEL_NAMES,
+  SIMPLIFIED_LEVEL_EMOJI,
+} from '@/lib/placement/placement-engine'
 import { soundManager } from '@/lib/audio/sound-manager'
 import { useXpStore } from '@/stores/xp-store'
 import { useSettingsStore } from '@/stores/settings-store'
@@ -605,72 +610,106 @@ export function PlacementTest({ onComplete }: PlacementTestProps) {
         )}
 
         {/* ── Results ── */}
-        {stage === 'results' && result && (
-          <motion.div
-            key="results"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.15 }}
-            className="flex flex-col gap-4"
-          >
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-center text-3xl">
-                  {LEVEL_NAMES[result.level] ?? result.level}
-                </CardTitle>
-                <p className="text-center text-muted-foreground">
-                  נמצאנו את הרמה שלך!
-                </p>
-              </CardHeader>
-              <CardContent className="flex flex-col gap-4">
-                {/* Stats grid */}
-                <div className="grid grid-cols-2 gap-3">
-                  <StatCard label="מהירות" value={`${result.wpm} WPM`} />
-                  <StatCard label="דיוק" value={`${result.accuracy}%`} />
-                  <StatCard label="מקשים ידועים" value={`${result.knownKeys.length}`} />
-                  <StatCard
-                    label="טכניקת אצבעות"
-                    value={
-                      result.fingerTechnique === 'full'
-                        ? 'מלאה'
-                        : result.fingerTechnique === 'partial'
-                          ? 'חלקית'
-                          : 'ללא'
-                    }
-                  />
-                </div>
+        {stage === 'results' && result && (() => {
+          const simplified = simplifyLevel(result.level)
+          const simplifiedName = SIMPLIFIED_LEVEL_NAMES[simplified]
+          const simplifiedEmoji = SIMPLIFIED_LEVEL_EMOJI[simplified]
+          const levelColor = simplified === 'beginner'
+            ? 'border-green-400 bg-green-50 dark:bg-green-950/30'
+            : simplified === 'intermediate'
+              ? 'border-blue-400 bg-blue-50 dark:bg-blue-950/30'
+              : 'border-purple-400 bg-purple-50 dark:bg-purple-950/30'
 
-                {/* Recommendation */}
-                <div className="rounded-xl bg-primary/10 p-4 text-center">
-                  <p className="text-sm text-muted-foreground">אנחנו ממליצים להתחיל מ</p>
-                  <p className="text-xl font-bold text-primary">
-                    שיעור {result.recommendedLesson}
+          return (
+            <motion.div
+              key="results"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.15 }}
+              className="flex flex-col gap-4"
+            >
+              <Card>
+                <CardHeader className="space-y-3">
+                  {/* 3-level indicator bar */}
+                  <div className="flex items-center justify-center gap-2" data-testid="level-indicator">
+                    {(['beginner', 'intermediate', 'advanced'] as const).map((lvl) => (
+                      <div
+                        key={lvl}
+                        className={cn(
+                          'flex flex-col items-center gap-1 rounded-xl border-2 px-4 py-2 transition-all',
+                          lvl === simplified
+                            ? levelColor + ' shadow-md scale-110'
+                            : 'border-muted bg-muted/20 opacity-40',
+                        )}
+                      >
+                        <span className="text-2xl">{SIMPLIFIED_LEVEL_EMOJI[lvl]}</span>
+                        <span className={cn(
+                          'text-xs font-semibold',
+                          lvl === simplified ? 'text-foreground' : 'text-muted-foreground',
+                        )}>
+                          {SIMPLIFIED_LEVEL_NAMES[lvl]}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <CardTitle className="text-center text-3xl">
+                    {simplifiedEmoji} {simplifiedName}
+                  </CardTitle>
+                  <p className="text-center text-sm text-muted-foreground">
+                    {LEVEL_NAMES[result.level] ?? result.level}
                   </p>
-                </div>
+                </CardHeader>
+                <CardContent className="flex flex-col gap-4">
+                  {/* Stats grid */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <StatCard label="מהירות" value={`${result.wpm} WPM`} />
+                    <StatCard label="דיוק" value={`${result.accuracy}%`} />
+                    <StatCard label="מקשים ידועים" value={`${result.knownKeys.length}`} />
+                    <StatCard
+                      label="טכניקת אצבעות"
+                      value={
+                        result.fingerTechnique === 'full'
+                          ? 'מלאה'
+                          : result.fingerTechnique === 'partial'
+                            ? 'חלקית'
+                            : 'ללא'
+                      }
+                    />
+                  </div>
 
-                {/* XP earned */}
-                <motion.div
-                  className="rounded-xl bg-yellow-100/60 p-3 text-center dark:bg-yellow-900/20"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  <p className="text-sm font-medium text-yellow-700 dark:text-yellow-300">
-                    +20 XP על השלמת מבחן המיקום!
-                  </p>
-                </motion.div>
+                  {/* Recommendation */}
+                  <div className="rounded-xl bg-primary/10 p-4 text-center">
+                    <p className="text-sm text-muted-foreground">אנחנו ממליצים להתחיל מ</p>
+                    <p className="text-xl font-bold text-primary">
+                      שיעור {result.recommendedLesson}
+                    </p>
+                  </div>
 
-                <Button
-                  size="lg"
-                  className="w-full"
-                  onClick={() => onComplete?.(result)}
-                >
-                  בואו נתחיל ללמוד!
-                </Button>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
+                  {/* XP earned */}
+                  <motion.div
+                    className="rounded-xl bg-yellow-100/60 p-3 text-center dark:bg-yellow-900/20"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <p className="text-sm font-medium text-yellow-700 dark:text-yellow-300">
+                      +20 XP על השלמת מבחן המיקום!
+                    </p>
+                  </motion.div>
+
+                  <Button
+                    size="lg"
+                    className="w-full"
+                    onClick={() => onComplete?.(result)}
+                  >
+                    בואו נתחיל ללמוד!
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )
+        })()}
 
       </AnimatePresence>
     </div>

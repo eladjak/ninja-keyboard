@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>נינג'ה מקלדת - סיכום מתיחת פנים</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap');
+
+    :root {
+      --primary: #6C5CE7;
+      --primary-light: #A29BFE;
+      --secondary: #00B894;
+      --secondary-light: #55EFC4;
+      --dark: #2D3436;
+      --darker: #1A1A2E;
+      --bg: #0F0F1A;
+      --card-bg: #1A1A2E;
+      --card-border: rgba(108, 92, 231, 0.2);
+      --text: #E8E8F0;
+      --text-muted: #8B8BA3;
+      --red: #FF6B81;
+      --orange: #FDCB6E;
+      --blue: #74B9FF;
+      --gradient: linear-gradient(135deg, #6C5CE7 0%, #00B894 100%);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      padding: 80px 24px 60px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(108,92,231,0.15) 0%, transparent 70%),
+                  radial-gradient(ellipse at 80% 100%, rgba(0,184,148,0.1) 0%, transparent 50%);
+      z-index: 0;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(108,92,231,0.15);
+      border: 1px solid rgba(108,92,231,0.3);
+      border-radius: 100px;
+      padding: 6px 20px;
+      font-size: 14px;
+      color: var(--primary-light);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 32px;
+    }
+
+    /* Stats bar */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: -4px;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Section */
+    .section {
+      padding: 48px 0;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .section-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+    }
+
+    .section-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* Phase cards */
+    .phase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .phase-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .phase-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(108,92,231,0.15);
+    }
+
+    .phase-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 3px;
+      background: var(--gradient);
+    }
+
+    .phase-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: rgba(108,92,231,0.15);
+      color: var(--primary-light);
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .phase-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .phase-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .phase-card li {
+      padding: 6px 0;
+      font-size: 14px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .phase-card li::before {
+      content: '✦';
+      color: var(--secondary);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .tag-new { background: rgba(0,184,148,0.15); color: var(--secondary-light); }
+    .tag-modified { background: rgba(108,92,231,0.15); color: var(--primary-light); }
+    .tag-enhanced { background: rgba(253,203,110,0.15); color: var(--orange); }
+
+    /* File table */
+    .file-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+
+    .file-table th {
+      text-align: right;
+      padding: 12px 16px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      border-bottom: 1px solid rgba(108,92,231,0.15);
+    }
+
+    .file-table td {
+      padding: 10px 16px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .file-table tr:hover td {
+      background: rgba(108,92,231,0.05);
+    }
+
+    .file-path {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: var(--primary-light);
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+
+    /* Sound table */
+    .sound-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .sound-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
+    .sound-chip .emoji { font-size: 20px; }
+    .sound-chip .name { color: var(--text); font-weight: 500; }
+    .sound-chip .desc { color: var(--text-muted); font-size: 11px; }
+
+    /* Verification */
+    .verify-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .verify-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+    }
+
+    .verify-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .verify-status {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--secondary);
+    }
+
+    .verify-label {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(108,92,231,0.3), transparent);
+      margin: 16px 0;
+    }
+
+    /* Characters showcase */
+    .character-showcase {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+      padding: 32px 0;
+    }
+
+    .character {
+      text-align: center;
+    }
+
+    .character-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      margin: 0 auto 12px;
+      position: relative;
+    }
+
+    .character-avatar::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 23px;
+      padding: 3px;
+      background: var(--gradient);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+
+    .character-name { font-weight: 700; font-size: 15px; }
+    .character-role { font-size: 12px; color: var(--text-muted); }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-right: 32px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--primary), var(--secondary));
+      border-radius: 3px;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 0 32px 32px 0;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      right: -6px;
+      top: 6px;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: 3px solid var(--bg);
+    }
+
+    .timeline-item h4 {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .timeline-item p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    .footer {
+      padding: 48px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer-gradient {
+      height: 2px;
+      background: var(--gradient);
+      margin-bottom: 32px;
+      border-radius: 2px;
+    }
+
+    /* Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .float { animation: float 3s ease-in-out infinite; }
+
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+
+    .shimmer-text {
+      background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 3s linear infinite;
+    }
+
+    @keyframes confetti-fall {
+      0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+
+    .confetti {
+      position: fixed;
+      top: -20px;
+      width: 8px;
+      height: 5px;
+      border-radius: 2px;
+      animation: confetti-fall 4s ease-in forwards;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .stats-bar { gap: 16px; }
+      .stat-value { font-size: 2rem; }
+      .phase-grid { grid-template-columns: 1fr; }
+      .character-showcase { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Confetti on load -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const colors = ['#6C5CE7','#00B894','#FDCB6E','#FF6B81','#74B9FF','#A29BFE'];
+      for (let i = 0; i < 40; i++) {
+        const el = document.createElement('div');
+        el.className = 'confetti';
+        el.style.left = Math.random() * 100 + '%';
+        el.style.backgroundColor = colors[i % colors.length];
+        el.style.animationDelay = Math.random() * 2 + 's';
+        el.style.animationDuration = (3 + Math.random() * 2) + 's';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 6000);
+      }
+    });
+  </script>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span>🎨</span>
+        <span>Sprint 8 — מתיחת פנים מלאה</span>
+      </div>
+      <h1>נינג'ה מקלדת</h1>
+      <p>שדרוג עיצובי מקיף ברמת AAA — אפקטים, מעברים, סאונד, דמויות חדשות ועיצוב פרימיום בכל האפליקציה</p>
+
+      <div class="stats-bar">
+        <div class="stat-item">
+          <div class="stat-value">1093</div>
+          <div class="stat-label">טסטים עוברים</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">25+</div>
+          <div class="stat-label">דפים בנויים</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">15</div>
+          <div class="stat-label">סאונדים סינתטיים</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">30+</div>
+          <div class="stat-label">קבצים שונו/נוצרו</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Phase 1: Effects Foundation -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: rgba(108,92,231,0.15);">⚡</div>
+        <div>
+          <div class="section-title">Phase 1 — אפקטים, מעברים וסאונד</div>
+          <div class="section-subtitle">הבסיס שנותן לכל עמוד תחושה חיה ומלאת אנרגיה</div>
+        </div>
+      </div>
+
+      <div class="phase-grid">
+        <div class="phase-card">
+          <div class="phase-number">1A</div>
+          <h3>🌊 מעברי עמודים <span class="tag tag-new">חדש</span></h3>
+          <ul>
+            <li>AnimatePresence עוטף כל ניווט בין דפים</li>
+            <li>Fade + Slide (opacity 0→1, y 8→0, 200ms)</li>
+            <li>מכבד הגדרת reducedMotion לנגישות</li>
+            <li>משולב ב-AppShell — עובד אוטומטית בכל הדפים</li>
+          </ul>
+        </div>
+
+        <div class="phase-card">
+          <div class="phase-number">1B</div>
+          <h3>🎉 אפקטי חגיגה <span class="tag tag-new">חדש</span></h3>
+          <ul>
+            <li><strong>ConfettiBurst</strong> — 30 חלקיקי CSS בשבעה צבעים</li>
+            <li><strong>XpFloat</strong> — טקסט "+XP" צף כלפי מעלה ונעלם</li>
+            <li>7 keyframe animations חדשים ב-globals.css</li>
+            <li>כל האפקטים pointer-events: none — בלתי נראים לטסטים</li>
+          </ul>
+        </div>
+
+        <div class="phase-card">
+          <div class="phase-number">1C</div>
+          <h3>🔊 הרחבת סאונד (5 → 15) <span class="tag tag-enhanced">שודרג</span></h3>
+          <ul>
+            <li>Web Audio API synthesis — אפס קבצים חיצוניים</li>
+            <li>10 סאונדים חדשים: buttonClick, navigate, countdownBeep, countdownGo, comboHit, achievementFanfare, badgeUnlock, starEarned, timerTick, battleStart</li>
+            <li>כל סאונד עם gain מכוון ו-fade-out חלק</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Sound Grid -->
+      <h4 style="margin-top: 32px; margin-bottom: 16px; color: var(--text-muted);">🎵 כל 15 הסאונדים:</h4>
+      <div class="sound-grid">
+        <div class="sound-chip"><span class="emoji">⌨️</span><div><div class="name">keyClick</div><div class="desc">800Hz, 30ms</div></div></div>
+        <div class="sound-chip"><span class="emoji">✅</span><div><div class="name">correct</div><div class="desc">523→698Hz</div></div></div>
+        <div class="sound-chip"><span class="emoji">❌</span><div><div class="name">error</div><div class="desc">440→330Hz</div></div></div>
+        <div class="sound-chip"><span class="emoji">🎓</span><div><div class="name">levelComplete</div><div class="desc">C5→E5→G5</div></div></div>
+        <div class="sound-chip"><span class="emoji">⚡</span><div><div class="name">xpGain</div><div class="desc">1047Hz ping</div></div></div>
+        <div class="sound-chip"><span class="emoji">👆</span><div><div class="name">buttonClick</div><div class="desc">1200Hz, 15ms</div></div></div>
+        <div class="sound-chip"><span class="emoji">🧭</span><div><div class="name">navigate</div><div class="desc">800→400Hz whoosh</div></div></div>
+        <div class="sound-chip"><span class="emoji">⏱️</span><div><div class="name">countdownBeep</div><div class="desc">880Hz beep</div></div></div>
+        <div class="sound-chip"><span class="emoji">🚀</span><div><div class="name">countdownGo</div><div class="desc">C5→E5→G5 chord</div></div></div>
+        <div class="sound-chip"><span class="emoji">🔥</span><div><div class="name">comboHit</div><div class="desc">Ascending rapid</div></div></div>
+        <div class="sound-chip"><span class="emoji">🏆</span><div><div class="name">achievementFanfare</div><div class="desc">4-note fanfare</div></div></div>
+        <div class="sound-chip"><span class="emoji">🎖️</span><div><div class="name">badgeUnlock</div><div class="desc">Sparkle 1200→2000Hz</div></div></div>
+        <div class="sound-chip"><span class="emoji">⭐</span><div><div class="name">starEarned</div><div class="desc">Chime 1047→1319Hz</div></div></div>
+        <div class="sound-chip"><span class="emoji">⏰</span><div><div class="name">timerTick</div><div class="desc">600Hz tick</div></div></div>
+        <div class="sound-chip"><span class="emoji">⚔️</span><div><div class="name">battleStart</div><div class="desc">Dramatic sawtooth</div></div></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Phase 2: Characters -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: rgba(0,184,148,0.15);">🥷</div>
+        <div>
+          <div class="section-title">Phase 2 — קי + דמויות חדשות</div>
+          <div class="section-subtitle">עיצוב מחדש של המסקוט בסגנון Brawl Stars + 3 יריבים חדשים</div>
+        </div>
+      </div>
+
+      <div class="character-showcase">
+        <div class="character">
+          <div class="character-avatar float" style="background: linear-gradient(135deg, #2D3436, #6C5CE7);">🥷</div>
+          <div class="character-name">קי (Ki)</div>
+          <div class="character-role">המסקוט הראשי — 8 מצבי רוח</div>
+          <div style="margin-top: 8px;">
+            <span class="tag tag-enhanced" style="margin: 2px;">Full-body SVG</span>
+            <span class="tag tag-enhanced" style="margin: 2px;">עיניים אנימה</span>
+            <span class="tag tag-enhanced" style="margin: 2px;">שוריקן בחגורה</span>
+          </div>
+        </div>
+        <div class="character">
+          <div class="character-avatar" style="background: linear-gradient(135deg, #2D3436, #636E72);">👤</div>
+          <div class="character-name">Shadow</div>
+          <div class="character-role">יריב קל — שקט ומסתורי</div>
+        </div>
+        <div class="character">
+          <div class="character-avatar" style="background: linear-gradient(135deg, #0984E3, #74B9FF);">⚡</div>
+          <div class="character-name">Storm</div>
+          <div class="character-role">יריב בינוני — חשמלי ומהיר</div>
+        </div>
+        <div class="character">
+          <div class="character-avatar" style="background: linear-gradient(135deg, #D63031, #FF7675);">🔥</div>
+          <div class="character-name">Blaze</div>
+          <div class="character-role">יריב קשה — לוהט ואגרסיבי</div>
+        </div>
+      </div>
+
+      <div class="phase-grid">
+        <div class="phase-card">
+          <h3>🎭 Ki Mascot — עיצוב מחדש</h3>
+          <ul>
+            <li>SVG גוף מלא (viewBox 64×80) בסגנון Brawl Stars</li>
+            <li>חליפה סגולה (#6C5CE7) + אקסנטים ירוקים (#00B894)</li>
+            <li>עיניים אנימה גדולות עם תגובה למצב רוח</li>
+            <li>סרט ראש עם זנבות מתנופפים (CSS animation)</li>
+            <li>כוכב שוריקן בחגורה</li>
+            <li>3 גדלים: small (60), medium (90), large (120)</li>
+            <li>KiNinjaMini — גרסת 32px לסיידבר</li>
+          </ul>
+        </div>
+        <div class="phase-card">
+          <h3>⚔️ RivalNinja — 3 יריבים</h3>
+          <ul>
+            <li><strong>Shadow</strong> — שחור/אפור, עיניים לבנות, קל</li>
+            <li><strong>Storm</strong> — כחול חשמלי, ניצוצות, בינוני</li>
+            <li><strong>Blaze</strong> — אדום/כתום, צלקת, קשה</li>
+            <li>כל יריב עם SVG ייחודי ואנימציה</li>
+            <li>משולב בזירת הקרב במקום אייקון Bot</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Phase 3: Cards & Layout -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: rgba(253,203,110,0.15);">✨</div>
+        <div>
+          <div class="section-title">Phase 3 — כרטיסים, ניווט ומצבי טעינה</div>
+          <div class="section-subtitle">שדרוג ויזואלי של דף הבית, סיידבר, הדר וטאבים</div>
+        </div>
+      </div>
+
+      <div class="phase-grid">
+        <div class="phase-card">
+          <h3>💎 GameCard <span class="tag tag-new">חדש</span></h3>
+          <ul>
+            <li>גבול גרדיאנט עליון</li>
+            <li>אפקט Shine בהובר</li>
+            <li>אנימציית כניסה עם stagger</li>
+            <li>Scale בהובר + tap feedback</li>
+            <li>משולב בדשבורד ובמשחקים</li>
+          </ul>
+        </div>
+        <div class="phase-card">
+          <h3>📱 סיידבר + הדר + טאבים <span class="tag tag-modified">שודרג</span></h3>
+          <ul>
+            <li><strong>סיידבר:</strong> KiMascot בהדר, XP bar shimmer, hover effects</li>
+            <li><strong>הדר:</strong> Badge pulse על תצוגת XP</li>
+            <li><strong>טאבים:</strong> סאונד navigate + spring bounce על אייקונים</li>
+            <li><strong>AppShell:</strong> PageTransition wrapper</li>
+          </ul>
+        </div>
+        <div class="phase-card">
+          <h3>⏳ מצבי טעינה <span class="tag tag-enhanced">שודרג</span></h3>
+          <ul>
+            <li><strong>NinjaLoader</strong> — קי חושב + נקודות מקפצות</li>
+            <li>10 דפי loading.tsx הוחלפו</li>
+            <li>הודעות טעינה בעברית לכל דף</li>
+            <li>מצב compact לשימוש inline</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Phase 4: Typing -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: rgba(116,185,255,0.15);">⌨️</div>
+        <div>
+          <div class="section-title">Phase 4 — חוויית הקלדה</div>
+          <div class="section-subtitle">קורסור זוהר, פידבק ויזואלי ומודל תוצאות מרשים</div>
+        </div>
+      </div>
+
+      <div class="phase-grid">
+        <div class="phase-card">
+          <h3>✍️ אזור הקלדה <span class="tag tag-modified">שודרג</span></h3>
+          <ul>
+            <li>קורסור פועם עם gradient glow</li>
+            <li>זוהר ירוק על תווים נכונים (drop-shadow)</li>
+            <li>זוהר אדום על שגיאות (drop-shadow)</li>
+            <li>GPU-accelerated via CSS filter</li>
+          </ul>
+        </div>
+        <div class="phase-card">
+          <h3>🏅 מודל תוצאות <span class="tag tag-enhanced">שודרג</span></h3>
+          <ul>
+            <li>כוכבים מתגלים אחד-אחד עם spring animation</li>
+            <li>סאונד starEarned לכל כוכב (200ms delay)</li>
+            <li>קונפטי אוטומטי בעת הצלחה (ConfettiBurst)</li>
+            <li>מונה XP עם count-up animation</li>
+            <li>כפתור "שיעור הבא" בגרדיאנט ninja</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Phase 5: Battle & Games -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: rgba(255,107,129,0.15);">🎮</div>
+        <div>
+          <div class="section-title">Phase 5 — קרב ומשחקים</div>
+          <div class="section-subtitle">ספירה לאחור דרמטית, קווי מהירות, כניסות מדורגות</div>
+        </div>
+      </div>
+
+      <div class="phase-grid">
+        <div class="phase-card">
+          <h3>⚔️ זירת קרב <span class="tag tag-enhanced">שודרג</span></h3>
+          <ul>
+            <li>סאונד countdownBeep + countdownGo בספירה</li>
+            <li>סאונד battleStart בתחילת הקרב</li>
+            <li>אנימציית shake + scale בספירה לאחור</li>
+            <li>קווי מהירות (speed-lines) ברקע בזמן קרב</li>
+            <li>דמות RivalNinja במקום אייקון Bot</li>
+          </ul>
+        </div>
+        <div class="phase-card">
+          <h3>🕹️ חנות משחקים <span class="tag tag-enhanced">שודרג</span></h3>
+          <ul>
+            <li>כרטיסי GameCard עם כניסה מדורגת (80ms stagger)</li>
+            <li>אנימציית כותרת (fade + slide)</li>
+            <li>Hover effects + tap feedback</li>
+            <li>גרדיאנט עליון בכל כרטיס</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Files Changed -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: rgba(108,92,231,0.15);">📁</div>
+        <div>
+          <div class="section-title">קבצים שנוצרו ושונו</div>
+          <div class="section-subtitle">סה"כ 30+ קבצים — 7 חדשים, 23+ שודרגו</div>
+        </div>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table class="file-table">
+          <thead>
+            <tr>
+              <th>קובץ</th>
+              <th>סטטוס</th>
+              <th>שינוי</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="file-path">components/transitions/page-transition.tsx</span></td><td><span class="tag tag-new">חדש</span></td><td>AnimatePresence wrapper</td></tr>
+            <tr><td><span class="file-path">components/effects/confetti-burst.tsx</span></td><td><span class="tag tag-new">חדש</span></td><td>CSS confetti particles</td></tr>
+            <tr><td><span class="file-path">components/effects/xp-float.tsx</span></td><td><span class="tag tag-new">חדש</span></td><td>Floating XP text</td></tr>
+            <tr><td><span class="file-path">components/feedback/ninja-loader.tsx</span></td><td><span class="tag tag-new">חדש</span></td><td>Ki mascot loading animation</td></tr>
+            <tr><td><span class="file-path">components/characters/rival-ninja.tsx</span></td><td><span class="tag tag-new">חדש</span></td><td>3 AI battle opponents</td></tr>
+            <tr><td><span class="file-path">components/ui/game-card.tsx</span></td><td><span class="tag tag-new">חדש</span></td><td>Enhanced card component</td></tr>
+            <tr><td><span class="file-path">components/mascot/ki-mascot.tsx</span></td><td><span class="tag tag-modified">שוכתב</span></td><td>Full-body Brawl Stars SVG</td></tr>
+            <tr><td><span class="file-path">lib/audio/sounds.ts</span></td><td><span class="tag tag-enhanced">הורחב</span></td><td>5 → 15 sounds</td></tr>
+            <tr><td><span class="file-path">lib/audio/sound-manager.ts</span></td><td><span class="tag tag-enhanced">הורחב</span></td><td>10 new play methods</td></tr>
+            <tr><td><span class="file-path">stores/settings-store.ts</span></td><td><span class="tag tag-modified">שונה</span></td><td>Added reducedMotion</td></tr>
+            <tr><td><span class="file-path">app/globals.css</span></td><td><span class="tag tag-enhanced">הורחב</span></td><td>7 new keyframe animations</td></tr>
+            <tr><td><span class="file-path">components/layout/app-shell.tsx</span></td><td><span class="tag tag-modified">שונה</span></td><td>PageTransition wrapper</td></tr>
+            <tr><td><span class="file-path">components/layout/sidebar.tsx</span></td><td><span class="tag tag-enhanced">שודרג</span></td><td>KiMascot, XP shimmer, hover</td></tr>
+            <tr><td><span class="file-path">components/layout/header.tsx</span></td><td><span class="tag tag-enhanced">שודרג</span></td><td>Badge pulse on XP</td></tr>
+            <tr><td><span class="file-path">components/layout/bottom-tabs.tsx</span></td><td><span class="tag tag-enhanced">שודרג</span></td><td>Sound + spring bounce</td></tr>
+            <tr><td><span class="file-path">app/(app)/home/home-client.tsx</span></td><td><span class="tag tag-enhanced">שודרג</span></td><td>GameCard in stats + links</td></tr>
+            <tr><td><span class="file-path">components/typing/typing-area.tsx</span></td><td><span class="tag tag-enhanced">שודרג</span></td><td>Cursor glow, char shadows</td></tr>
+            <tr><td><span class="file-path">components/typing/lesson-view.tsx</span></td><td><span class="tag tag-enhanced">שודרג</span></td><td>Stars, confetti, sounds</td></tr>
+            <tr><td><span class="file-path">components/battle/battle-arena.tsx</span></td><td><span class="tag tag-enhanced">שודרג</span></td><td>Countdown FX, rival, speed lines</td></tr>
+            <tr><td><span class="file-path">app/(app)/games/page.tsx</span></td><td><span class="tag tag-enhanced">שודרג</span></td><td>GameCard, stagger entrance</td></tr>
+            <tr><td colspan="3" style="color: var(--text-muted); font-style: italic; text-align: center;">+ 10 loading.tsx files → NinjaLoader</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Verification -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: rgba(0,184,148,0.15);">✅</div>
+        <div>
+          <div class="section-title">אימות</div>
+          <div class="section-subtitle">הכל עובר — TypeScript, טסטים, Build</div>
+        </div>
+      </div>
+
+      <div class="verify-grid">
+        <div class="verify-card">
+          <div class="verify-icon">🔷</div>
+          <div class="verify-status">Clean</div>
+          <div class="verify-label">npx tsc --noEmit</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">אפס שגיאות TypeScript</div>
+        </div>
+        <div class="verify-card">
+          <div class="verify-icon">🧪</div>
+          <div class="verify-status">1093/1093</div>
+          <div class="verify-label">npx vitest run</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">62 suites, 0 failures</div>
+        </div>
+        <div class="verify-card">
+          <div class="verify-icon">📦</div>
+          <div class="verify-status">Success</div>
+          <div class="verify-label">npm run build</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">25+ pages prerendered</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- CSS Animations Added -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: rgba(162,155,254,0.15);">🎬</div>
+        <div>
+          <div class="section-title">אנימציות CSS חדשות</div>
+          <div class="section-subtitle">כל האנימציות transform/opacity only — ביצועים מעולים</div>
+        </div>
+      </div>
+
+      <div class="phase-grid" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
+        <div class="phase-card" style="padding: 20px;">
+          <h3 style="font-size: 1rem;">🎊 confetti-fall</h3>
+          <p style="font-size: 13px; color: var(--text-muted);">translateY + rotate, 2s ease-in</p>
+        </div>
+        <div class="phase-card" style="padding: 20px;">
+          <h3 style="font-size: 1rem;">⬆️ xp-float-up</h3>
+          <p style="font-size: 13px; color: var(--text-muted);">translate + scale + opacity, 1.2s</p>
+        </div>
+        <div class="phase-card" style="padding: 20px;">
+          <h3 style="font-size: 1rem;">✨ card-shine</h3>
+          <p style="font-size: 13px; color: var(--text-muted);">Linear gradient sweep on hover</p>
+        </div>
+        <div class="phase-card" style="padding: 20px;">
+          <h3 style="font-size: 1rem;">💜 cursor-pulse</h3>
+          <p style="font-size: 13px; color: var(--text-muted);">box-shadow glow, 1.2s infinite</p>
+        </div>
+        <div class="phase-card" style="padding: 20px;">
+          <h3 style="font-size: 1rem;">💫 xp-shimmer</h3>
+          <p style="font-size: 13px; color: var(--text-muted);">background-position sweep, 3s</p>
+        </div>
+        <div class="phase-card" style="padding: 20px;">
+          <h3 style="font-size: 1rem;">🫀 badge-pulse</h3>
+          <p style="font-size: 13px; color: var(--text-muted);">scale 1→1.08→1, 0.4s</p>
+        </div>
+        <div class="phase-card" style="padding: 20px;">
+          <h3 style="font-size: 1rem;">💨 speed-lines</h3>
+          <p style="font-size: 13px; color: var(--text-muted);">translateX sweep, 1.5s infinite</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Safety -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: rgba(0,184,148,0.15);">🛡️</div>
+        <div>
+          <div class="section-title">בטיחות טסטים</div>
+          <div class="section-subtitle">אפס שבירה — כל 1093 הטסטים עוברים</div>
+        </div>
+      </div>
+
+      <div class="phase-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        <div class="phase-card" style="border-color: rgba(0,184,148,0.3);">
+          <h3>🔄 API לא השתנה</h3>
+          <ul>
+            <li>Ki Mascot — אותם props בדיוק</li>
+            <li>כל data-testid נשמרו</li>
+            <li>כל aria attributes נשמרו</li>
+          </ul>
+        </div>
+        <div class="phase-card" style="border-color: rgba(0,184,148,0.3);">
+          <h3>👻 אפקטים שקופים</h3>
+          <ul>
+            <li>pointer-events: none — לא מפריעים</li>
+            <li>SoundManager mocked בטסטים</li>
+            <li>reducedMotion מכובד בכל אנימציה</li>
+          </ul>
+        </div>
+        <div class="phase-card" style="border-color: rgba(0,184,148,0.3);">
+          <h3>📝 טסט אחד עודכן</h3>
+          <ul>
+            <li>loading-states.test.tsx — בדיקת NinjaLoader</li>
+            <li>במקום בדיקת Skeleton elements</li>
+            <li>27/27 pass</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="container">
+      <div class="footer-gradient"></div>
+      <p style="font-size: 18px; margin-bottom: 8px;">
+        <span class="shimmer-text" style="font-weight: 800;">נינג'ה מקלדת — מתיחת פנים מלאה</span>
+      </p>
+      <p>נבנה עם Claude Code — Sprint 8, מרץ 2026</p>
+      <p style="margin-top: 16px; font-size: 12px; opacity: 0.5;">
+        C:\Users\eladj\projects\ninja-keyboard
+      </p>
+    </div>
+  </div>
+
+</body>
+</html>

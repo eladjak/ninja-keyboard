@@ -2,10 +2,65 @@
 
 ## Status: Active
 ## Last Updated: 2026-02-19
-## Sprint: 7 (New Games + Full Coverage) - COMPLETE
+## Sprint: 8 (Onboarding Polish + Feedback) - COMPLETE
 
 ## Current State
-Sprint 7 complete. 1081 unit tests pass across 62 suites. TypeScript clean. 10 E2E Playwright spec files (164 test cases). 25 pages. 4 typing games. Full navigation with 12 sidebar links.
+Sprint 8 complete. 1093 unit tests pass across 62 suites (+12 new). TypeScript clean. 12 E2E Playwright spec files (195+ test cases). 25 pages. 4 typing games. Ki mascot integrated into onboarding, visual keystroke feedback, WPM history charts on home, 3-level placement results.
+
+## Sprint 8 Deliverables
+
+### Ki Mascot in Onboarding (Complete)
+- [x] `src/components/onboarding/first-lesson-magic.tsx` - Ki mascot added to all 5 onboarding steps
+  - Step 1: thinking mood ("שים את האצבעות על שורת הבית!")
+  - Step 2: happy mood, reacts to correct/incorrect keys, cheers on completion
+  - Step 3: cheering mood ("כל הכבוד! 🎉")
+  - Step 4: excited mood, reacts to typing, cheers on complete
+  - Step 5: cheering mood ("מעולה! חזור מחר ותהיה נינג׳ה אמיתי!")
+
+### Visual Keystroke Feedback (Complete)
+- [x] `src/components/typing/typing-area.tsx` - Animated flash per character
+  - Each typed character now has scale+opacity animation (1.3→1, 150ms)
+  - Uses framer-motion `motion.span` instead of plain `span`
+  - Correct chars flash green, errors flash red with background
+
+### WPM Progress Charts (Complete)
+- [x] `src/components/typing/lesson-view.tsx` - Lessons now save results to practice history
+  - Per-key accuracy tracking, WPM, accuracy, duration saved after each lesson
+  - Feeds into statistics dashboard charts
+- [x] `src/app/(app)/home/home-client.tsx` - WPM mini-chart on home page
+  - Shows WPM over time when 2+ practice sessions exist
+  - Derived from practice history store with memoization
+
+### Placement Test - 3-Level UI (Complete)
+- [x] `src/lib/placement/placement-engine.ts` - New `simplifyLevel()` function
+  - Maps 5 skill levels → 3 simplified: beginner/intermediate/advanced
+  - Hebrew names: מתחיל / בינוני / מתקדם
+  - Emojis: 🌱 / 🌳 / 👑
+- [x] `src/components/onboarding/placement-test.tsx` - 3-level visual indicator in results
+  - Horizontal 3-box indicator showing beginner/intermediate/advanced
+  - Active level highlighted with color border + shadow, others dimmed
+  - Still shows detailed 5-level name underneath
+
+### E2E Tests for Badges (Complete)
+- [x] `tests/e2e/badges-flow.spec.ts` - 31 test cases
+  - Page structure: heading, RTL, badge count summary
+  - Category tabs: all 6 categories, filtering, tab switching
+  - Badge display: grid, lock icons, grayscale unearned
+  - Specific badges: צעד ראשון, מתמיד, speed milestones
+  - Emoji display, accessibility (ARIA roles, keyboard nav)
+  - Placement test integration: intro, stages, start button
+
+### Unit Tests (Complete - 12 new)
+- [x] `tests/unit/lib/placement-engine.test.ts` - 12 new tests
+  - simplifyLevel: shatil→beginner, nevet→beginner, geza→intermediate, anaf→advanced, tzameret→advanced
+  - SIMPLIFIED_LEVEL_NAMES: Hebrew names for all 3 levels
+  - SIMPLIFIED_LEVEL_EMOJI: emojis for all 3 levels
+
+### Verification
+- `npx tsc --noEmit` - PASS (0 errors)
+- `npx vitest run` - PASS (1093/1093 tests, 62 suites)
+- `npx next build` - PASS (25 pages)
+- E2E specs: 195+ test cases across 12 files
 
 ## Sprint 7 Deliverables
 

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Gamepad2, CloudRain, Swords, Sword, Brain } from 'lucide-react'
 import { GameCard } from '@/components/ui/game-card'
@@ -46,7 +47,8 @@ const GAMES = [
 
 export default function GamesPage() {
   return (
-    <div className="mx-auto max-w-2xl space-y-4 p-4" dir="rtl">
+    <div className="relative mx-auto max-w-2xl space-y-4 overflow-hidden p-4" dir="rtl">
+      <Image src="/images/backgrounds/games-bg.jpg" alt="" fill className="object-cover opacity-15 pointer-events-none" />
       <motion.div
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}

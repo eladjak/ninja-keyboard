@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -283,7 +284,8 @@ export function LessonView({ lessonId }: LessonViewProps) {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4 sm:gap-6 sm:p-6" dir="rtl">
+    <div className="relative flex flex-col gap-4 overflow-hidden p-4 sm:gap-6 sm:p-6" dir="rtl">
+      <Image src="/images/backgrounds/typing-bg.jpg" alt="" fill className="object-cover opacity-10 pointer-events-none" />
       {/* ── Header ────────────────────────────────────────────────── */}
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="flex flex-col gap-1">

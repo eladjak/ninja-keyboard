@@ -90,14 +90,15 @@ describe('KiMascot', () => {
     expect(screen.getByTestId('speech-bubble')).toHaveAttribute('dir', 'rtl')
   })
 
-  it('has accessible aria-label on SVG', () => {
+  it('has accessible alt text on character image', () => {
     render(<KiMascot />)
-    const svg = screen.getByTestId('ninja-svg')
-    expect(svg).toHaveAttribute('aria-label', 'קי - הנינג\'ה המלווה')
+    const img = screen.getByTestId('ninja-svg')
+    expect(img).toHaveAttribute('alt', 'Ki הנינג\'ה')
   })
 
-  it('renders eyes element', () => {
+  it('renders character image', () => {
     render(<KiMascot mood="idle" />)
-    expect(screen.getByTestId('mascot-eyes')).toBeInTheDocument()
+    const img = screen.getByTestId('ninja-svg')
+    expect(img.tagName.toLowerCase()).toBe('img')
   })
 })

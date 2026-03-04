@@ -6,9 +6,20 @@ import { cn } from '@/lib/utils'
 import { HebrewKeyboard } from '@/components/typing/hebrew-keyboard'
 import { FingerGuide } from '@/components/typing/finger-guide'
 import { TypingArea } from '@/components/typing/typing-area'
+import { KiMascot } from '@/components/mascot/ki-mascot'
+import type { MascotMood } from '@/lib/mascot/mascot-reactions'
 import { useXpStore } from '@/stores/xp-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { soundManager } from '@/lib/audio/sound-manager'
+
+/** Mascot configuration per onboarding step */
+const STEP_MASCOT: Record<Step, { mood: MascotMood; message: string }> = {
+  1: { mood: 'thinking', message: 'שים את האצבעות על שורת הבית!' },
+  2: { mood: 'happy', message: 'יופי! הקלד לאט ובזהירות 🥷' },
+  3: { mood: 'cheering', message: 'כל הכבוד! 🎉' },
+  4: { mood: 'excited', message: 'עכשיו שתי מילים — אתה נינג׳ה!' },
+  5: { mood: 'cheering', message: 'מעולה! חזור מחר ותהיה נינג׳ה אמיתי!' },
+}
 
 // ── Types ─────────────────────────────────────────────────────────
 
@@ -84,6 +95,11 @@ function Step1FingerPlacement({ onNext }: { onNext: () => void }) {
 
   return (
     <div className="flex flex-col items-center gap-6">
+      <KiMascot
+        mood={STEP_MASCOT[1].mood}
+        message={STEP_MASCOT[1].message}
+        size="large"
+      />
       <div className="text-center">
         <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
           שים את האצבעות ככה
@@ -132,6 +148,7 @@ interface Step2TypingProps {
 function Step2Typing({ onWordComplete, soundEnabled }: Step2TypingProps) {
   const [keystrokes, setKeystrokes] = useState<Keystroke[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [mascotMood, setMascotMood] = useState<MascotMood>('happy')
   const completedRef = useRef(false)
 
   const handleKeyPress = useCallback(
@@ -151,6 +168,8 @@ function Step2Typing({ onWordComplete, soundEnabled }: Step2TypingProps) {
         }
       }
 
+      setMascotMood(isCorrect ? 'happy' : 'thinking')
+
       setKeystrokes((prev) => [...prev, newKeystroke])
 
       // Only advance on correct key (very forgiving — no wrong answer blocks progress)
@@ -160,6 +179,7 @@ function Step2Typing({ onWordComplete, soundEnabled }: Step2TypingProps) {
 
         if (nextIndex >= STEP_1_WORD.length) {
           completedRef.current = true
+          setMascotMood('cheering')
           // Small delay for the last correct animation to show
           setTimeout(() => {
             onWordComplete()
@@ -174,6 +194,11 @@ function Step2Typing({ onWordComplete, soundEnabled }: Step2TypingProps) {
 
   return (
     <div className="flex flex-col items-center gap-6">
+      <KiMascot
+        mood={mascotMood}
+        message={STEP_MASCOT[2].message}
+        size="small"
+      />
       <div className="text-center">
         <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
           הקלד: {STEP_1_WORD}
@@ -245,6 +270,11 @@ function Step3Celebration({
 }) {
   return (
     <div className="flex flex-col items-center gap-6 text-center">
+      <KiMascot
+        mood={STEP_MASCOT[3].mood}
+        message={STEP_MASCOT[3].message}
+        size="large"
+      />
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -320,6 +350,7 @@ interface Step4TypingProps {
 function Step4Typing({ onComplete, soundEnabled }: Step4TypingProps) {
   const [keystrokes, setKeystrokes] = useState<Keystroke[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [mascotMood, setMascotMood] = useState<MascotMood>('excited')
   const completedRef = useRef(false)
 
   const handleKeyPress = useCallback(
@@ -339,6 +370,8 @@ function Step4Typing({ onComplete, soundEnabled }: Step4TypingProps) {
         }
       }
 
+      setMascotMood(isCorrect ? 'excited' : 'thinking')
+
       setKeystrokes((prev) => [...prev, newKeystroke])
 
       if (isCorrect) {
@@ -347,6 +380,7 @@ function Step4Typing({ onComplete, soundEnabled }: Step4TypingProps) {
 
         if (nextIndex >= STEP_4_TEXT.length) {
           completedRef.current = true
+          setMascotMood('cheering')
           setTimeout(() => {
             onComplete()
           }, 400)
@@ -361,6 +395,11 @@ function Step4Typing({ onComplete, soundEnabled }: Step4TypingProps) {
 
   return (
     <div className="flex flex-col items-center gap-6">
+      <KiMascot
+        mood={mascotMood}
+        message={STEP_MASCOT[4].message}
+        size="small"
+      />
       <div className="text-center">
         <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
           עכשיו: {STEP_4_TEXT}
@@ -449,6 +488,11 @@ function Step5Finish({
 }) {
   return (
     <div className="flex flex-col items-center gap-6 text-center">
+      <KiMascot
+        mood={STEP_MASCOT[5].mood}
+        message={STEP_MASCOT[5].message}
+        size="large"
+      />
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}

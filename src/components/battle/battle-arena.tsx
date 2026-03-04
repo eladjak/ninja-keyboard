@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Swords, User, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -256,7 +257,8 @@ export function BattleArena() {
 
   if (phase === 'select') {
     return (
-      <div className="mx-auto max-w-2xl space-y-6">
+      <div className="relative mx-auto max-w-2xl space-y-6 overflow-hidden">
+        <Image src="/images/backgrounds/battle-bg.jpg" alt="" fill className="object-cover opacity-20 pointer-events-none" />
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="flex items-center justify-center gap-2 text-2xl">
@@ -322,7 +324,8 @@ export function BattleArena() {
   // ── Render: Battle / Results ───────────────────────────────────
 
   return (
-    <div className="mx-auto max-w-3xl space-y-4">
+    <div className="relative mx-auto max-w-3xl space-y-4 overflow-hidden">
+      <Image src="/images/backgrounds/battle-bg.jpg" alt="" fill className="object-cover opacity-20 pointer-events-none" />
       {phase === 'battle' && (
         <div className="speed-lines pointer-events-none fixed inset-0 z-0" aria-hidden="true" />
       )}

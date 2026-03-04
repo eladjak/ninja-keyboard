@@ -108,10 +108,10 @@ describe('HomeDashboard', () => {
     mockBadgeStore.hasBadge = () => false
   })
 
-  it('renders the welcome message with ninja emoji', () => {
+  it('renders the welcome message with Ki character image', () => {
     render(<HomeDashboard />)
     expect(screen.getByText(/שלום, נינג'ה!/)).toBeInTheDocument()
-    expect(screen.getByLabelText('נינג\'ה')).toBeInTheDocument()
+    expect(screen.getByAltText('Ki - מדריך הנינג\'ה')).toBeInTheDocument()
   })
 
   it('shows XP value', () => {
@@ -180,17 +180,17 @@ describe('HomeDashboard', () => {
     expect(link).toHaveAttribute('href', '/lessons/lesson-02')
   })
 
-  it('renders 4 quick links', () => {
+  it('renders 6 quick links', () => {
     render(<HomeDashboard />)
     const quickLinks = screen.getByTestId('quick-links')
     expect(quickLinks).toBeInTheDocument()
     // "שיעורים" appears both in stats row and quick links, so check within quickLinks
     expect(quickLinks).toHaveTextContent('שיעורים')
-    expect(quickLinks).toHaveTextContent('זירת קרב')
     expect(quickLinks).toHaveTextContent('תרגול חופשי')
+    expect(quickLinks).toHaveTextContent('משחקים')
+    expect(quickLinks).toHaveTextContent('זירת קרב')
+    expect(quickLinks).toHaveTextContent('מבחן מהירות')
     expect(quickLinks).toHaveTextContent('סטטיסטיקות')
-    expect(quickLinks).toHaveTextContent('התקדמות')
-    expect(quickLinks).toHaveTextContent('הגדרות')
     // Verify there are 6 link cards
     const links = quickLinks.querySelectorAll('a')
     expect(links).toHaveLength(6)
