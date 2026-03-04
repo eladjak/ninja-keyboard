@@ -88,6 +88,56 @@ class SoundManager {
     this.play(SOUNDS.xpGain)
   }
 
+  /** Short click for button interactions. */
+  playButtonClick(): void {
+    this.play(SOUNDS.buttonClick)
+  }
+
+  /** Whoosh sound for navigation transitions. */
+  playNavigate(): void {
+    this.play(SOUNDS.navigate)
+  }
+
+  /** Countdown beep (3, 2, 1). */
+  playCountdownBeep(): void {
+    this.play(SOUNDS.countdownBeep)
+  }
+
+  /** "Go!" sound at countdown end. */
+  playCountdownGo(): void {
+    this.play(SOUNDS.countdownGo)
+  }
+
+  /** Ascending rapid notes for combo streaks. */
+  playComboHit(): void {
+    this.play(SOUNDS.comboHit)
+  }
+
+  /** Fanfare for achievements. */
+  playAchievementFanfare(): void {
+    this.play(SOUNDS.achievementFanfare)
+  }
+
+  /** Sparkle for badge unlock. */
+  playBadgeUnlock(): void {
+    this.play(SOUNDS.badgeUnlock)
+  }
+
+  /** Chime for star earned in lesson results. */
+  playStarEarned(): void {
+    this.play(SOUNDS.starEarned)
+  }
+
+  /** Tick for timer countdown. */
+  playTimerTick(): void {
+    this.play(SOUNDS.timerTick)
+  }
+
+  /** Dramatic sound for battle start. */
+  playBattleStart(): void {
+    this.play(SOUNDS.battleStart)
+  }
+
   /** Sync enabled state from settings store. */
   setEnabled(enabled: boolean): void {
     this.enabled = enabled

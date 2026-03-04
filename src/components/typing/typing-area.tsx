@@ -91,39 +91,49 @@ export function TypingArea({
           aria-label="טקסט לתרגול"
         >
           <p className="flex flex-wrap justify-start font-mono text-2xl leading-loose tracking-wider sm:text-3xl">
-            {characters.map(({ char, index, isTyped, isCurrent, isCorrect }) => (
-              <span
-                key={index}
-                className={cn(
-                  'relative inline-block transition-colors duration-100',
-                  // Already typed – green for correct, red for error
-                  isTyped && isCorrect === true &&
-                    'text-green-600 dark:text-green-400',
-                  isTyped && isCorrect === false &&
-                    'bg-red-200/60 text-red-600 dark:bg-red-900/30 dark:text-red-400',
-                  // Current character – normal foreground, cursor rendered below
-                  isCurrent && 'text-foreground',
-                  // Future characters – dimmed
-                  !isTyped && !isCurrent && 'text-muted-foreground/40',
-                )}
-              >
-                {/* Non-breaking space so empty chars keep their width */}
-                {char === ' ' ? '\u00A0' : char}
+            {characters.map(({ char, index, isTyped, isCurrent, isCorrect }) => {
+              // Flash animation on the character that was just typed
+              const justTyped = isTyped && index === currentIndex - 1
 
-                {/* Blinking cursor under the current character */}
-                {isCurrent && (
-                  <motion.span
-                    className="absolute bottom-0 start-0 h-0.5 w-full rounded-full bg-primary"
-                    animate={{ opacity: [1, 0, 1] }}
-                    transition={{
-                      duration: 0.8,
-                      repeat: Infinity,
-                      ease: 'linear',
-                    }}
-                  />
-                )}
-              </span>
-            ))}
+              return (
+                <motion.span
+                  key={index}
+                  className={cn(
+                    'relative inline-block',
+                    // Already typed – green for correct, red for error
+                    isTyped && isCorrect === true &&
+                      'text-green-600 dark:text-green-400 drop-shadow-[0_0_3px_rgba(22,163,74,0.3)]',
+                    isTyped && isCorrect === false &&
+                      'rounded bg-red-200/60 text-red-600 dark:bg-red-900/30 dark:text-red-400 drop-shadow-[0_0_3px_rgba(220,38,38,0.3)]',
+                    // Current character – normal foreground, cursor rendered below
+                    isCurrent && 'text-foreground',
+                    // Future characters – dimmed
+                    !isTyped && !isCurrent && 'text-muted-foreground/40',
+                  )}
+                  animate={justTyped
+                    ? { scale: [1.3, 1], opacity: [0.6, 1] }
+                    : {}
+                  }
+                  transition={{ duration: 0.15, ease: 'easeOut' }}
+                >
+                  {/* Non-breaking space so empty chars keep their width */}
+                  {char === ' ' ? '\u00A0' : char}
+
+                  {/* Blinking cursor under the current character */}
+                  {isCurrent && (
+                    <motion.span
+                      className="absolute bottom-0 start-0 h-0.5 w-full rounded-full bg-primary cursor-glow"
+                      animate={{ opacity: [1, 0, 1] }}
+                      transition={{
+                        duration: 0.8,
+                        repeat: Infinity,
+                        ease: 'linear',
+                      }}
+                    />
+                  )}
+                </motion.span>
+              )
+            })}
           </p>
         </div>
 

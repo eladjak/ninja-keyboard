@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useTypingSessionStore } from '@/stores/typing-session-store'
 import { useXpStore } from '@/stores/xp-store'
 import { useSettingsStore } from '@/stores/settings-store'
+import { usePracticeHistoryStore } from '@/stores/practice-history-store'
 import { getLessonById } from '@/lib/content/lessons'
 import { getLessonContent } from '@/lib/content/sentences'
 import { soundManager } from '@/lib/audio/sound-manager'
@@ -15,6 +16,7 @@ import { HebrewKeyboard } from './hebrew-keyboard'
 import { TypingArea } from './typing-area'
 import { FingerGuide } from './finger-guide'
 import { SessionStats } from './session-stats'
+import { ConfettiBurst } from '@/components/effects/confetti-burst'
 import {
   computeSessionStats,
   isLessonComplete,
@@ -54,6 +56,7 @@ export function LessonView({ lessonId }: LessonViewProps) {
   const session = useTypingSessionStore()
   const xpStore = useXpStore()
   const { soundEnabled, soundVolume } = useSettingsStore()
+  const addPracticeResult = usePracticeHistoryStore((s) => s.addResult)
 
   // Keep soundManager in sync with settings
   useEffect(() => {
@@ -171,6 +174,27 @@ export function LessonView({ lessonId }: LessonViewProps) {
         }
         xpStore.updateStreak()
 
+        // Save to practice history for progress charts
+        const keyAccuracy: Record<string, { correct: number; total: number }> = {}
+        for (const ks of keystrokes) {
+          const char = ks.expected
+          const existing = keyAccuracy[char] ?? { correct: 0, total: 0 }
+          existing.total += 1
+          if (ks.isCorrect) existing.correct += 1
+          keyAccuracy[char] = existing
+        }
+        addPracticeResult({
+          textId: lessonId,
+          wpm: finalStats.wpm,
+          accuracy: finalStats.accuracy,
+          durationMs: finalStats.durationMs,
+          totalKeystrokes: keystrokes.length,
+          correctKeystrokes: keystrokes.filter((k) => k.isCorrect).length,
+          keyAccuracy,
+          completedAt: Date.now(),
+          timerDuration: 0,
+        })
+
         setResult({
           wpm: finalStats.wpm,
           accuracy: finalStats.accuracy,
@@ -227,6 +251,17 @@ export function LessonView({ lessonId }: LessonViewProps) {
     setElapsed(0)
     session.startSession(lines[0], lessonId)
   }, [lesson, lines, lessonId, session])
+
+  // ── Star sounds on results ────────────────────────────────────────────
+  useEffect(() => {
+    if (!showResults || !result) return
+    // Play star sounds with delays
+    const timers: ReturnType<typeof setTimeout>[] = []
+    for (let i = 0; i < result.stars; i++) {
+      timers.push(setTimeout(() => soundManager.playStarEarned(), 300 + i * 200))
+    }
+    return () => timers.forEach(clearTimeout)
+  }, [showResults, result])
 
   // ── Computed values ───────────────────────────────────────────────────
   const realtimeWpm = session.getRealtimeWpm()
@@ -304,7 +339,8 @@ export function LessonView({ lessonId }: LessonViewProps) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
           >
-            <motion.div
+            <ConfettiBurst active={result.passed} />
+          <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -322,8 +358,11 @@ export function LessonView({ lessonId }: LessonViewProps) {
                     aria-label={`${result.stars} כוכבים`}
                   >
                     {Array.from({ length: 3 }, (_, i) => (
-                      <span
+                      <motion.span
                         key={i}
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: 0.3 + i * 0.2, duration: 0.3, type: 'spring', stiffness: 300 }}
                         className={
                           i < result.stars
                             ? 'text-yellow-400'
@@ -332,7 +371,7 @@ export function LessonView({ lessonId }: LessonViewProps) {
                         aria-hidden
                       >
                         ★
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
                 </CardHeader>
@@ -350,9 +389,9 @@ export function LessonView({ lessonId }: LessonViewProps) {
                     <div>
                       <motion.p
                         className="text-2xl font-bold tabular-nums text-primary"
-                        initial={{ scale: 0.5, opacity: 0 }}
+                        initial={{ scale: 0.3, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        transition={{ delay: 0.2, duration: 0.18 }}
+                        transition={{ delay: 0.8, duration: 0.25, type: 'spring', stiffness: 300 }}
                       >
                         +{result.xpEarned}
                       </motion.p>
@@ -371,7 +410,7 @@ export function LessonView({ lessonId }: LessonViewProps) {
                     </Button>
                     {result.passed && (
                       <Button
-                        className="flex-1"
+                        className="flex-1 ninja-gradient border-0 text-white"
                         onClick={() => {
                           // Navigate to next lesson — parent route handles this
                           const nextLevel = lesson.level + 1

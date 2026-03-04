@@ -2,11 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Bot, Swords, User, Zap } from 'lucide-react'
+import { Swords, User, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { BattleResults } from '@/components/battle/battle-results'
+import { RivalNinja } from '@/components/characters/rival-ninja'
+import { soundManager } from '@/lib/audio/sound-manager'
 import {
   type BattleConfig,
   type BattleDifficulty,
@@ -80,6 +82,25 @@ export function BattleArena() {
     }, COUNTDOWN_INTERVAL_MS)
 
     return () => clearInterval(timer)
+  }, [phase])
+
+  // ── Countdown sounds ───────────────────────────────────────────
+
+  useEffect(() => {
+    if (phase !== 'countdown') return
+    if (countdownIndex < COUNTDOWN_STEPS.length - 1) {
+      soundManager.playCountdownBeep()
+    } else if (countdownIndex === COUNTDOWN_STEPS.length - 1) {
+      soundManager.playCountdownGo()
+    }
+  }, [countdownIndex, phase])
+
+  // ── Battle start sound ─────────────────────────────────────────
+
+  useEffect(() => {
+    if (phase === 'battle') {
+      soundManager.playBattleStart()
+    }
   }, [phase])
 
   // ── Focus input on battle start ────────────────────────────────
@@ -281,8 +302,8 @@ export function BattleArena() {
           <motion.div
             key={countdownIndex}
             initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 1.5, opacity: 0 }}
+            animate={{ scale: [0.5, 1.1, 1], opacity: 1, rotate: [0, -3, 3, 0] }}
+            exit={{ scale: 2, opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="text-center"
           >
@@ -302,6 +323,10 @@ export function BattleArena() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-4">
+      {phase === 'battle' && (
+        <div className="speed-lines pointer-events-none fixed inset-0 z-0" aria-hidden="true" />
+      )}
+
       {/* Hidden input for capturing keystrokes */}
       <input
         ref={inputRef}
@@ -336,7 +361,7 @@ export function BattleArena() {
         <Card className="border-red-500/50">
           <CardContent className="p-4 text-center">
             <div className="flex items-center justify-center gap-2">
-              <Bot className="size-5 text-red-500" />
+              <RivalNinja difficulty={difficulty} size={24} animated={false} />
               <span className="font-bold text-red-500">נינג&apos;ה בוט</span>
             </div>
             <div className="mt-2 text-2xl font-black text-red-500" data-testid="ai-wpm">

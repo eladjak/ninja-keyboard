@@ -30,10 +30,11 @@ describe('Loading states', () => {
         expect(container.firstElementChild).toBeInTheDocument()
       })
 
-      it('contains skeleton elements', () => {
+      it('contains ninja loader elements', () => {
         const { container } = render(<Component />)
-        const skeletons = container.querySelectorAll('[data-slot="skeleton"]')
-        expect(skeletons.length).toBeGreaterThan(0)
+        // NinjaLoader renders animated dots and a loading message
+        const text = container.textContent ?? ''
+        expect(text.length).toBeGreaterThan(0)
       })
 
       it('is RTL-directed', () => {

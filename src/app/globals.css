@@ -169,3 +169,211 @@
   margin-inline-start: 1rem;
   margin-inline-end: 1rem;
 }
+
+/* Ninja Gradient Backgrounds */
+.ninja-gradient {
+  background: linear-gradient(135deg, oklch(0.495 0.205 292) 0%, oklch(0.55 0.18 280) 50%, oklch(0.672 0.148 168) 100%);
+}
+
+.ninja-gradient-subtle {
+  background: linear-gradient(135deg, oklch(0.495 0.205 292 / 8%) 0%, oklch(0.672 0.148 168 / 5%) 100%);
+}
+
+.dark .ninja-gradient-subtle {
+  background: linear-gradient(135deg, oklch(0.495 0.205 292 / 12%) 0%, oklch(0.672 0.148 168 / 8%) 100%);
+}
+
+/* Sidebar gradient */
+.sidebar-gradient {
+  background: linear-gradient(180deg, oklch(0.98 0.01 292) 0%, oklch(1 0 0) 100%);
+}
+
+.dark .sidebar-gradient {
+  background: linear-gradient(180deg, oklch(0.22 0.015 292) 0%, oklch(0.205 0 0) 100%);
+}
+
+/* Card hover glow */
+.card-glow {
+  transition: box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.card-glow:hover {
+  box-shadow: 0 0 20px oklch(0.495 0.205 292 / 12%), 0 4px 12px oklch(0 0 0 / 6%);
+  border-color: oklch(0.495 0.205 292 / 25%);
+}
+
+.dark .card-glow:hover {
+  box-shadow: 0 0 20px oklch(0.495 0.205 292 / 20%), 0 4px 12px oklch(0 0 0 / 30%);
+  border-color: oklch(0.72 0.15 292 / 30%);
+}
+
+/* Hero shimmer */
+@keyframes shimmer {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+.ninja-shimmer {
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Nav pill active */
+.nav-pill-active {
+  background: linear-gradient(135deg, oklch(0.495 0.205 292 / 15%) 0%, oklch(0.672 0.148 168 / 10%) 100%);
+  box-shadow: inset 0 0 0 1px oklch(0.495 0.205 292 / 20%);
+}
+
+.dark .nav-pill-active {
+  background: linear-gradient(135deg, oklch(0.72 0.15 292 / 20%) 0%, oklch(0.672 0.148 168 / 12%) 100%);
+  box-shadow: inset 0 0 0 1px oklch(0.72 0.15 292 / 25%);
+}
+
+/* Stat card gradient borders */
+.stat-card-purple {
+  border-image: linear-gradient(135deg, oklch(0.495 0.205 292 / 30%), transparent) 1;
+}
+
+.stat-card-green {
+  border-image: linear-gradient(135deg, oklch(0.672 0.148 168 / 30%), transparent) 1;
+}
+
+/* ── Confetti particles ─────────────────────────────────────────── */
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.confetti-particle {
+  animation: confetti-fall 2s ease-in forwards;
+}
+
+/* ── XP float text ──────────────────────────────────────────────── */
+@keyframes xp-float-up {
+  0% {
+    transform: translate(-50%, 0) scale(0.8);
+    opacity: 0;
+  }
+  20% {
+    transform: translate(-50%, -12px) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -48px) scale(1);
+    opacity: 0;
+  }
+}
+
+.xp-float-text {
+  animation: xp-float-up 1.2s ease-out forwards;
+}
+
+/* ── Card shine effect ──────────────────────────────────────────── */
+.game-card:hover .card-shine {
+  opacity: 1;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    oklch(1 0 0 / 4%) 45%,
+    oklch(1 0 0 / 8%) 50%,
+    oklch(1 0 0 / 4%) 55%,
+    transparent 60%
+  );
+}
+
+.dark .game-card:hover .card-shine {
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    oklch(1 0 0 / 3%) 45%,
+    oklch(1 0 0 / 6%) 50%,
+    oklch(1 0 0 / 3%) 55%,
+    transparent 60%
+  );
+}
+
+/* ── Pulsing cursor ─────────────────────────────────────────────── */
+@keyframes cursor-pulse {
+  0%, 100% {
+    box-shadow: 0 0 4px oklch(0.495 0.205 292 / 40%);
+  }
+  50% {
+    box-shadow: 0 0 12px oklch(0.495 0.205 292 / 70%);
+  }
+}
+
+.cursor-glow {
+  animation: cursor-pulse 1.2s ease-in-out infinite;
+}
+
+/* ── XP bar shimmer ─────────────────────────────────────────────── */
+@keyframes xp-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.xp-bar-shimmer {
+  background-size: 200% 100%;
+  background-image: linear-gradient(
+    90deg,
+    oklch(0.495 0.205 292) 0%,
+    oklch(0.6 0.18 280) 25%,
+    oklch(0.72 0.15 292) 50%,
+    oklch(0.6 0.18 280) 75%,
+    oklch(0.495 0.205 292) 100%
+  );
+  animation: xp-shimmer 3s linear infinite;
+}
+
+/* ── Badge pulse ────────────────────────────────────────────────── */
+@keyframes badge-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+.badge-pulse {
+  animation: badge-pulse 0.4s ease-out;
+}
+
+/* ── Speed lines background ─────────────────────────────────────── */
+@keyframes speed-lines {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.15;
+  }
+  90% {
+    opacity: 0.15;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+.speed-lines {
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 20px,
+    oklch(0.495 0.205 292 / 8%) 20px,
+    oklch(0.495 0.205 292 / 8%) 22px
+  );
+  animation: speed-lines 1.5s linear infinite;
+}

@@ -1,8 +1,9 @@
 'use client'
 
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { Gamepad2, CloudRain, Swords, Sword, Brain } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
+import { GameCard } from '@/components/ui/game-card'
 
 const GAMES = [
   {
@@ -46,21 +47,26 @@ const GAMES = [
 export default function GamesPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-4 p-4" dir="rtl">
-      <div className="flex items-center justify-between">
+      <motion.div
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.25 }}
+        className="flex items-center justify-between"
+      >
         <div>
           <h1 className="text-xl font-bold sm:text-2xl">משחקי הקלדה</h1>
           <p className="text-sm text-muted-foreground">תרגלו הקלדה בכיף!</p>
         </div>
         <Gamepad2 className="size-8 text-primary" />
-      </div>
+      </motion.div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        {GAMES.map((game) => {
+        {GAMES.map((game, i) => {
           const Icon = game.icon
           return (
             <Link key={game.id} href={game.href}>
-              <Card className="transition-colors hover:border-primary/50">
-                <CardContent className="flex items-center gap-4 px-4 py-5">
+              <GameCard delay={i * 0.08}>
+                <div className="flex items-center gap-4">
                   <div className={`flex size-12 items-center justify-center rounded-lg ${game.bgColor}`}>
                     <Icon className={`size-6 ${game.color}`} />
                   </div>
@@ -68,8 +74,8 @@ export default function GamesPage() {
                     <h3 className="font-bold">{game.nameHe}</h3>
                     <p className="text-sm text-muted-foreground">{game.descriptionHe}</p>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </GameCard>
             </Link>
           )
         })}

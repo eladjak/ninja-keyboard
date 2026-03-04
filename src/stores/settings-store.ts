@@ -32,6 +32,10 @@ interface SettingsState {
   setKeyboardLayout: (layout: KeyboardLayout) => void
   /** Set theme preference */
   setThemePreference: (pref: ThemePreference) => void
+  /** Whether to reduce motion/animations (accessibility) */
+  reducedMotion: boolean
+  /** Toggle reduced motion */
+  toggleReducedMotion: () => void
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -58,6 +62,10 @@ export const useSettingsStore = create<SettingsState>()(
       setKeyboardLayout: (layout) => set({ keyboardLayout: layout }),
 
       setThemePreference: (pref) => set({ themePreference: pref }),
+
+      reducedMotion: false,
+      toggleReducedMotion: () =>
+        set((s) => ({ reducedMotion: !s.reducedMotion })),
     }),
     { name: 'ninja-keyboard-settings' },
   ),
