@@ -1,0 +1,51 @@
+{
+  "generated_tracks": [
+    {
+      "name": "main-theme",
+      "title": "Ninja Keyboard Main Theme",
+      "description": "Happy energetic chiptune ninja game theme for kids",
+      "style": "chiptune, 8-bit, Japanese game music, upbeat, adventure, kids game",
+      "files": [
+        "main-theme.mp3",
+        "main-theme-v2.mp3"
+      ],
+      "durations": [
+        213.92,
+        217.88
+      ],
+      "cover": "main-theme-cover.jpg"
+    },
+    {
+      "name": "boss-battle",
+      "title": "Boss Battle",
+      "description": "Epic intense boss battle music for the rival/challenge mode",
+      "style": "chiptune, orchestral, epic, intense, boss battle, 8-bit, dramatic",
+      "files": [
+        "boss-battle.mp3",
+        "boss-battle-v2.mp3"
+      ],
+      "durations": [
+        292.04,
+        229.32
+      ],
+      "cover": "boss-battle-cover.jpg"
+    }
+  ],
+  "not_generated": [
+    {
+      "name": "practice-mode",
+      "reason": "Insufficient credits (needed 25 more credits)",
+      "prompt": "Calm relaxing lo-fi typing music, soft piano and ambient pads"
+    },
+    {
+      "name": "victory-fanfare",
+      "reason": "Insufficient credits",
+      "prompt": "Short triumphant victory fanfare, brass and chiptune"
+    },
+    {
+      "name": "character-unlock",
+      "reason": "Insufficient credits",
+      "prompt": "Magical sparkle jingle, whimsical discovery music"
+    }
+  ]
+}

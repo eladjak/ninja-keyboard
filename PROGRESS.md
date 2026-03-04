@@ -1,91 +1,79 @@
 # Ninja Keyboard - Progress
 
 ## Status: Active
-## Last Updated: 2026-03-04
-## Sprint: Character World + Vision Planning (COMPLETE)
+## Last Updated: 2026-03-05
+## Sprint: Character World Expansion (IN PROGRESS)
 
 ## Current State
-3 comprehensive planning documents created by agent team. 12 character model sheets generated. Dark gaming theme deployed. Ready for deep implementation based on approved plans.
+Massive character world built: 14 characters with model sheets, 22 voice lines (ElevenLabs), 2 music tracks (Suno), comprehensive planning docs, HTML Game Bible dashboard. Game UI research agent running.
 
-## Planning Documents (NEW - Agent Team Output)
+## What Was Done This Session
 
-### 1. Character Bible (`docs/character-bible-merged.md`)
-Merges original spec (6 characters) with new characters (12 model sheets) into one unified world:
-- **14 characters total** in 5 tiers (Core Heroes, Specialists, Mentors, Villains, Rivals)
-- Ki + Mika = core duo (original spec, equal partners)
-- NEW: Yuki, Luna, Kai, Noa = specialist heroes per page
-- Bug + Glitch = villains (from original spec, need to be generated)
-- Sensei Zen = merged Sensei Code + turtle design
-- 3-Act narrative mapped to all 20 lessons
-- Age theme scaling per character
-- Seasonal events mapping
-- Gemini art prompts ready for Bug + Glitch generation
-- YouTube series alignment
+### 1. Character Model Sheet Regeneration (COMPLETE)
+- [x] Regenerated all 12 non-villain characters in consistent Brawl Stars + anime chibi style
+- [x] ki-boy.jpg, mika-girl.jpg, yuki-girl.jpg, luna-girl.jpg, noa-girl.jpg, kai-boy.jpg
+- [x] sensei-zen.jpg, pixel-robot.jpg, rex-dino.jpg, shadow-cat.jpg, storm-fox.jpg, blaze-dragon.jpg
+- [x] Deleted old versions (ki-boy-v2, shadow-v2, storm-v2, blaze-v2)
+- [x] All approved by user
 
-### 2. Age-Adaptive UX Spec (`docs/age-adaptive-ux-spec.md`)
-5 radically different experiences per age group:
-- **Shatil (6-8)**: Warm cream, large Ki, 3 tabs, stars not XP, xylophone sounds
-- **Nevet (8-10)**: Light sky, adventure, medium characters, 4 tabs
-- **Geza (10-12)**: Current dark gaming (preserved), neon, competitive
-- **Anaf (12-14)**: Softer dark, tiny mascot, keyboard shortcuts, minimal celebrations
-- **Tzameret (14-16+)**: Monochrome, NO characters, command palette, auto-start
-- **Teacher**: Data tables, class management, Sensei Zen + Pixel focus
-- **3-Layer Architecture**: CSS variables → Attribute selectors → Component variants
-- **Migration checklist**: 16 files need hardcoded color replacement
-- **8-phase implementation plan**
+### 2. ElevenLabs Voice Generation (COMPLETE - 22 MP3s)
+- [x] 22 Hebrew voice lines across 10 characters (864KB total)
+- [x] Voice profiles: speed-as-personality, stability-as-character
+- [x] Ki (4), Mika (3), Sensei Zen (3), Bug (4), Glitch (3), Yuki (1), Luna (1), Kai (1), Noa (1), Rex (1)
+- [x] Glitch uses low stability (0.2) for chaotic unpredictability
+- [x] Reusable generation script: `scripts/generate-voices.cjs`
+- [x] Voice profiles doc: `docs/character-voice-profiles.md`
 
-### 3. Story Mode + Animation System (in agent output)
-- 3-beat story pattern per lesson (Hook → Companion → Reward)
-- Speech bubble system (never cutscenes, always skippable)
-- Boss battles: Bug (L7), Bug+Glitch (L15), Final Bug (L20)
-- "Weapon = keyboard" - no violence, Bug NEVER dies
-- Animation system: Framer Motion + CSS particles
-- Music: Web Audio API synthesis, adaptive tempo
-- 15+ new sound effects
-- Performance budget for school laptops
-- 3-phase implementation (Foundation → Boss Battles → Full Story)
+### 3. Suno Music Generation (PARTIAL - 2/5 tracks)
+- [x] Main Theme (2 versions: 3:33 + 3:37) - Chiptune, 8-bit, adventure
+- [x] Boss Battle (2 versions: 4:52 + 3:49) - Orchestral, epic, intense
+- [ ] Practice Mode - needs credit top-up
+- [ ] Victory Fanfare - needs credit top-up
+- [ ] Character Unlock jingle - needs credit top-up
+- [x] Generation scripts in `scripts/`
 
-## Character Art Status
-- [x] 12 model sheets generated (Ki, Yuki, Luna, Noa, Kai, Mika, Sensei Zen, Pixel, Rex, Shadow, Storm, Blaze)
-- [ ] Bug (באג) - cute beetle villain - NEEDS GENERATION
-- [ ] Glitch (גליץ') - shape-shifting pixel entity - NEEDS GENERATION
-- [x] Ki updated to clearly male
-- [x] Characters integrated into 6 pages
+### 4. Planning Documents (COMPLETE)
+- [x] `docs/character-integration-map.md` (1,184 lines) - 20-lesson timeline, unlock mechanics, page-to-character map, villain arcs, skins, age visibility matrix
+- [x] `docs/character-progression-system.md` - Unlock tree, companion system, rival progression, boss mechanics, TypeScript specs
+- [x] `docs/character-voice-profiles.md` - All 14 character voice profiles, ElevenLabs mappings
 
-## Dark Gaming Theme Status
-- [x] CSS variables, gaming utilities, glass-morphism
-- [x] All layout components themed
-- [x] Home dashboard gaming lobby
-- [x] 8 environment backgrounds
-- [ ] PROBLEM: All colors hardcoded - need CSS variable migration for age themes
+### 5. HTML Game Bible Dashboard (COMPLETE)
+- [x] `docs/game-bible-dashboard.html` - Beautiful dark-themed dashboard
+- [x] Sections: characters, timeline, unlocks, companions, bosses, pages map, villains, skins, voices (playable!), music (playable!), age matrix
+- [x] Sticky nav, collapsible sections, character cards with images, audio players
 
-## Test Status
-- Unit: 1093 tests, 62 suites (all pass)
-- TypeScript: Clean
-- Build: 25+ pages, production ready
+### 6. Suno MCP Setup (COMPLETE)
+- [x] Cloned suno-mcp to C:\Users\eladj\suno-mcp
+- [x] Configured API key and base URL
+- [x] Added to ~/.claude/.mcp.json
 
-## Next Steps (Pending User Decision)
-Based on the 3 planning documents, the recommended priority order is:
+## Previously Completed
+- Bug + Glitch villain art (5 images)
+- CSS variable migration (13 --game-* properties)
+- Story mode foundation (6 files, 1,062 lines)
+- Character Bible merged doc
+- Age-adaptive UX spec
+- Story mode master plan
+- 17 character model sheets total
+- 8 environment backgrounds
 
-### Immediate (This Sprint)
-1. Generate Bug + Glitch character art (Gemini prompts ready in bible)
-2. CSS variable migration (replace all hardcoded #0d0b1a colors)
-3. Expand theme-vars.css from 4 to 25+ variables
+## Running Agents
+- Game UI Research Agent - researching Brawl Stars, Duolingo, Clash Royale UI patterns
 
-### Short-term
-4. Story mode foundation (speech bubbles, story store, Act 1 script)
-5. Age-adaptive navigation variants
-6. Character companion reactions during lessons
-
-### Medium-term
-7. Boss Battle system (Lesson 7 first)
-8. Adaptive music engine
-9. Home page variants per age theme
-10. Teacher dashboard UX
+## Next Steps
+1. Review Game Bible dashboard + music + voices
+2. Implement game UI improvements from research agent
+3. Generate more character poses/expressions
+4. Implement companion system (Zustand store)
+5. Implement unlock system
+6. Generate remaining 3 music tracks (need Suno credits)
+7. Generate Shadow/Storm/Blaze voice lines
 
 ## Key Files
-- `docs/character-bible-merged.md` - Merged character world bible
-- `docs/age-adaptive-ux-spec.md` - Age-adaptive UX specification
-- `docs/character-world-plan.md` - Original character plan (superseded by bible)
-- `public/images/characters/model-sheets/` - 12 character model sheets
-- `public/images/backgrounds/` - 8 environment backgrounds
+- `docs/game-bible-dashboard.html` - THE review document (open in browser!)
+- `docs/character-integration-map.md` - Master narrative plan
+- `docs/character-progression-system.md` - Progression system design
+- `public/audio/voices/` - 22 character voice MP3s
+- `public/audio/music/` - 4 music MP3s (2 tracks x 2 versions)
+- `scripts/generate-voices.cjs` - Voice generation script
+- `scripts/generate_music.py` - Music generation script

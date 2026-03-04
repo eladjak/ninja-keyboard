@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ninja Keyboard - Game Bible Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg-primary: #0d0b1a;
+    --bg-secondary: #080618;
+    --bg-card: #0c0a20;
+    --bg-elevated: #13102a;
+    --bg-input: #1a1530;
+    --border: rgba(108, 92, 231, 0.15);
+    --purple: #6C5CE7;
+    --green: #00B894;
+    --pink: #FD79A8;
+    --orange: #FDCB6E;
+    --red: #FF6B6B;
+    --blue: #74B9FF;
+    --cyan: #00CEC9;
+    --text: #E8E6F0;
+    --text-dim: #8B86A6;
+    --glow-purple: 0 0 20px rgba(108, 92, 231, 0.3);
+    --glow-green: 0 0 20px rgba(0, 184, 148, 0.3);
+  }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Sticky Nav */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13, 11, 26, 0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+
+  nav a:hover, nav a.active {
+    color: var(--purple);
+    background: rgba(108, 92, 231, 0.1);
+    border-color: rgba(108, 92, 231, 0.3);
+  }
+
+  nav .logo {
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--purple);
+    margin-left: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 60px 24px 40px;
+    background: linear-gradient(180deg, rgba(108, 92, 231, 0.08) 0%, transparent 100%);
+  }
+
+  .hero h1 {
+    font-size: 42px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--purple), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+
+  .hero p {
+    color: var(--text-dim);
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  .stat-box {
+    text-align: center;
+  }
+
+  .stat-box .num {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--purple);
+  }
+
+  .stat-box .label {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  /* Sections */
+  section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 24px;
+  }
+
+  section h2 {
+    font-size: 28px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  section h2 .emoji { font-size: 28px; margin-left: 8px; }
+
+  section .subtitle {
+    color: var(--text-dim);
+    margin-bottom: 32px;
+    font-size: 15px;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 24px 0 12px;
+    color: var(--green);
+  }
+
+  /* Cards Grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    border-color: rgba(108, 92, 231, 0.4);
+    box-shadow: var(--glow-purple);
+    transform: translateY(-2px);
+  }
+
+  .card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .card .avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid var(--border);
+  }
+
+  .card .name {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .card .name-he {
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+
+  .card .role {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    display: inline-block;
+    font-weight: 600;
+  }
+
+  .role-hero { background: rgba(0, 184, 148, 0.15); color: var(--green); }
+  .role-villain { background: rgba(255, 107, 107, 0.15); color: var(--red); }
+  .role-rival { background: rgba(253, 203, 110, 0.15); color: var(--orange); }
+  .role-mentor { background: rgba(116, 185, 255, 0.15); color: var(--blue); }
+  .role-helper { background: rgba(0, 206, 201, 0.15); color: var(--cyan); }
+
+  .card .desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+
+  .card .unlock {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .card .unlock strong {
+    color: var(--orange);
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-right: 40px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    right: 15px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--purple), var(--green), var(--red));
+    border-radius: 3px;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: all 0.2s;
+  }
+
+  .timeline-item:hover {
+    border-color: rgba(108, 92, 231, 0.4);
+    box-shadow: var(--glow-purple);
+  }
+
+  .timeline-item::before {
+    content: attr(data-lesson);
+    position: absolute;
+    right: -40px;
+    top: 16px;
+    width: 28px;
+    height: 28px;
+    background: var(--purple);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .timeline-item.boss::before {
+    background: var(--red);
+    width: 32px;
+    height: 32px;
+    font-size: 11px;
+  }
+
+  .timeline-item .act-badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+
+  .act-1 { background: rgba(108, 92, 231, 0.2); color: var(--purple); }
+  .act-2 { background: rgba(0, 184, 148, 0.2); color: var(--green); }
+  .act-3 { background: rgba(255, 107, 107, 0.2); color: var(--red); }
+
+  .timeline-item .title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .timeline-item .chars {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .timeline-item .story-beat {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: var(--bg-elevated);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text-dim);
+    border-right: 3px solid var(--purple);
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+
+  th {
+    background: var(--bg-elevated);
+    padding: 10px 14px;
+    text-align: right;
+    font-weight: 600;
+    color: var(--purple);
+    border-bottom: 2px solid var(--border);
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  tr:hover td {
+    background: rgba(108, 92, 231, 0.05);
+  }
+
+  /* Collapsible */
+  details {
+    margin: 12px 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  summary {
+    padding: 14px 20px;
+    background: var(--bg-card);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  summary::before {
+    content: '▸';
+    transition: transform 0.2s;
+    font-size: 12px;
+  }
+
+  details[open] summary::before {
+    transform: rotate(90deg);
+  }
+
+  details > div {
+    padding: 16px 20px;
+    background: var(--bg-secondary);
+  }
+
+  /* Voice Player */
+  .voice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+  }
+
+  .voice-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 13px;
+  }
+
+  .voice-item .char-name {
+    font-weight: 700;
+    color: var(--green);
+    min-width: 60px;
+  }
+
+  .voice-item .line-text {
+    color: var(--text-dim);
+    flex: 1;
+  }
+
+  audio {
+    height: 32px;
+    min-width: 160px;
+  }
+
+  /* Unlock Tree */
+  .unlock-tree {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    background: var(--bg-card);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+  }
+
+  .unlock-node {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: var(--bg-elevated);
+    border-right: 3px solid var(--purple);
+  }
+
+  .unlock-node .lesson-num {
+    font-weight: 900;
+    color: var(--purple);
+    font-size: 18px;
+    min-width: 40px;
+    text-align: center;
+  }
+
+  .unlock-node .char-info {
+    flex: 1;
+  }
+
+  .unlock-node .char-info .name {
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  .unlock-node .char-info .condition {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  /* Companion Table */
+  .companion-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+
+  .companion-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .companion-card .bonus {
+    margin-top: 8px;
+    padding: 6px 10px;
+    background: rgba(0, 184, 148, 0.1);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--green);
+  }
+
+  /* Boss Cards */
+  .boss-card {
+    background: linear-gradient(135deg, var(--bg-card), rgba(255, 107, 107, 0.05));
+    border: 1px solid rgba(255, 107, 107, 0.2);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 16px 0;
+  }
+
+  .boss-card .boss-name {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+
+  .boss-card .hp-bar {
+    height: 8px;
+    background: var(--bg-elevated);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 8px 0;
+  }
+
+  .boss-card .hp-bar .fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--red), var(--orange));
+  }
+
+  /* Page Map */
+  .page-map {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+
+  .page-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .page-item .page-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+
+  .page-item .char-list {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  /* Age Matrix */
+  .age-matrix {
+    overflow-x: auto;
+  }
+
+  .age-matrix table th:first-child,
+  .age-matrix table td:first-child {
+    position: sticky;
+    right: 0;
+    background: var(--bg-primary);
+    z-index: 1;
+  }
+
+  .age-matrix .size-large { color: var(--green); font-weight: 700; }
+  .age-matrix .size-medium { color: var(--blue); }
+  .age-matrix .size-small { color: var(--text-dim); }
+  .age-matrix .size-hidden { color: var(--red); opacity: 0.5; }
+  .age-matrix .size-data { color: var(--cyan); }
+
+  /* Skins */
+  .skin-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 12px 0;
+  }
+
+  .skin-tag {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  /* Music Section */
+  .music-status {
+    padding: 16px 20px;
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    border-radius: 12px;
+    color: var(--red);
+    margin: 16px 0;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-dim);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+  ::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 4px; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 28px; }
+    .stats-row { gap: 16px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    nav { padding: 8px 12px; }
+    nav a { font-size: 11px; padding: 4px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Ninja Keyboard Bible</span>
+  <a href="#characters">דמויות</a>
+  <a href="#timeline">ציר זמן</a>
+  <a href="#unlocks">פתיחת דמויות</a>
+  <a href="#companions">מלווים</a>
+  <a href="#bosses">קרבות בוס</a>
+  <a href="#pages">מפת עמודים</a>
+  <a href="#villains">נבלים</a>
+  <a href="#skins">סקינים</a>
+  <a href="#voices">קולות</a>
+  <a href="#music">מוזיקה</a>
+  <a href="#age">גילאים</a>
+</nav>
+
+<div class="hero">
+  <h1>נינג'ה מקלדת - תנ"ך המשחק</h1>
+  <p>מסמך סקירה מלא של עולם הדמויות, הנרטיב, מערכת ההתקדמות, הקולות והמוזיקה</p>
+  <div class="stats-row">
+    <div class="stat-box"><div class="num">14</div><div class="label">דמויות</div></div>
+    <div class="stat-box"><div class="num">20</div><div class="label">שיעורים</div></div>
+    <div class="stat-box"><div class="num">3</div><div class="label">קרבות בוס</div></div>
+    <div class="stat-box"><div class="num">22</div><div class="label">קולות MP3</div></div>
+    <div class="stat-box"><div class="num">3</div><div class="label">מערכות</div></div>
+    <div class="stat-box"><div class="num">8</div><div class="label">סקינים עונתיים</div></div>
+  </div>
+</div>
+
+<!-- ====== CHARACTERS ====== -->
+<section id="characters">
+  <h2>עולם הדמויות</h2>
+  <p class="subtitle">14 דמויות ייחודיות בסגנון Brawl Stars + אנימה צ'יבי. כל דמות עם אישיות, קול ותפקיד בנרטיב.</p>
+
+  <h3>גיבורים (6)</h3>
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-header">
+        <img class="avatar" src="../public/images/characters/model-sheets/ki-boy.jpg" alt="Ki" onerror="this.style.display='none'">
+        <div><div class="name">Ki <span class="name-he">קי</span></div><span class="role role-hero">גיבור ראשי</span></div>
+      </div>
+      <div class="desc">נינג'ה צעיר, ילד 10, מגלה מקלדת קסומה. סקרן, אמיץ, מעודד. הצבע: סגול #6C5CE7. נשק: מקלדת זוהרת.</div>
+      <div class="unlock"><strong>זמין תמיד</strong> - ברירת מחדל מתחילת המשחק</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <img class="avatar" src="../public/images/characters/model-sheets/mika-girl.jpg" alt="Mika" onerror="this.style.display='none'">
+        <div><div class="name">Mika <span class="name-he">מיקה</span></div><span class="role role-hero">שותפה שווה</span></div>
+      </div>
+      <div class="desc">האקרית וטכנולוגית. מומחית קיצורי מקלדת. גאנטלט הולוגרפי, דרון ריחוף. הצבע: ציאן #00CEC9.</div>
+      <div class="unlock"><strong>שיעור 2</strong> - מצטרפת כשותפה</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <img class="avatar" src="../public/images/characters/model-sheets/yuki-girl.jpg" alt="Yuki" onerror="this.style.display='none'">
+        <div><div class="name">Yuki <span class="name-he">יוקי</span></div><span class="role role-hero">מומחית מהירות</span></div>
+      </div>
+      <div class="desc">חתולה נינג'ה מהירה. מתחרה ידידותית. שיער כחול ארוך עם סרט. הצבע: כחול #74B9FF.</div>
+      <div class="unlock"><strong>שיעור 10</strong> + מבחן מהירות</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <img class="avatar" src="../public/images/characters/model-sheets/luna-girl.jpg" alt="Luna" onerror="this.style.display='none'">
+        <div><div class="name">Luna <span class="name-he">לונה</span></div><span class="role role-hero">מדריכת ריכוז</span></div>
+      </div>
+      <div class="desc">שפנפנה שלווה. מתרגלת דיוק וסבלנות. אור ירח וכוכבים. הצבע: אינדיגו #5C6BC0.</div>
+      <div class="unlock"><strong>שיעור 11</strong> + 10 אימונים</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <img class="avatar" src="../public/images/characters/model-sheets/kai-boy.jpg" alt="Kai" onerror="this.style.display='none'">
+        <div><div class="name">Kai <span class="name-he">קאי</span></div><span class="role role-hero">לוחם אש</span></div>
+      </div>
+      <div class="desc">דרקון לוחם, חם ונלהב. מוביל קרבות. אש באצבעות! הצבע: כתום #E17055.</div>
+      <div class="unlock"><strong>50 WPM</strong> - כשמגיעים למהירות</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <img class="avatar" src="../public/images/characters/model-sheets/noa-girl.jpg" alt="Noa" onerror="this.style.display='none'">
+        <div><div class="name">Noa <span class="name-he">נועה</span></div><span class="role role-hero">מרפאה</span></div>
+      </div>
+      <div class="desc">מרפאה נינג'ה. מתקנת שגיאות ומרפאה את מה שהבאג שובר. ניצוצות ירוקים. הצבע: ירוק #00B894.</div>
+      <div class="unlock"><strong>ניצחון על באג</strong> - שיעור 7</div>
+    </div>
+  </div>
+
+  <h3>מנטורים ועוזרים (3)</h3>
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-header">
+        <img class="avatar" src="../public/images/characters/model-sheets/sensei-zen.jpg" alt="Sensei Zen" onerror="this.style.display='none'">
+        <div><div class="name">Sensei Zen <span class="name-he">סנסאי זן</span></div><span class="role role-mentor">מנטור</span></div>
+      </div>
+      <div class="desc">צב חכם ועתיק. מאסטר המקלדת. מלמד סבלנות וחוכמה. "כל מסע מתחיל בלחיצה אחת!"</div>
+      <div class="unlock"><strong>שיעור 8</strong> - מופיע פיזית (קול משיעור 1)</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <img class="avatar" src="../public/images/characters/model-sheets/pixel-robot.jpg" alt="Pixel" onerror="this.style.display='none'">
+        <div><div class="name">Pixel <span class="name-he">פיקסל</span></div><span class="role role-helper">עוזר נתונים</span></div>
+      </div>
+      <div class="desc">רובוט חמוד. מציג סטטיסטיקות, WPM, דיוק. חי בעמוד הסטטיסטיקות. הצבע: ציאן #00CEC9.</div>
+      <div class="unlock"><strong>זמין תמיד</strong> - עוזר UI</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <img class="avatar" src="../public/images/characters/model-sheets/rex-dino.jpg" alt="Rex" onerror="this.style.display='none'">
+        <div><div class="name">Rex <span class="name-he">רקס</span></div><span class="role role-helper">חבר משחקים</span></div>
+      </div>
+      <div class="desc">דינוזאור T-Rex עם ידיים קטנטנות. אוהב משחקים למרות האתגר. "גם עם ידיים קטנות - אני פה!"</div>
+      <div class="unlock"><strong>5 משחקים</strong> - Games Hub</div>
+    </div>
+  </div>
+
+  <h3>נבלים (2)</h3>
+  <div class="cards-grid">
+    <div class="card" style="border-color: rgba(255,107,107,0.3);">
+      <div class="card-header">
+        <img class="avatar" src="../public/images/characters/model-sheets/bug-villain.jpg" alt="Bug" onerror="this.style.display='none'">
+        <div><div class="name">Bug <span class="name-he">באג</span></div><span class="role role-villain">נבל ראשי</span></div>
+      </div>
+      <div class="desc">חיפושית דיגיטלית שובבה. מבלבל אותיות ומילים. חמוד ומצחיק, לא מפחיד. באג לעולם לא מת! תמיד חוזר.</div>
+      <div class="unlock"><strong>שיעור 5</strong> - מופיע ראשון. לא ניתן לפתיחה כמלווה.</div>
+    </div>
+    <div class="card" style="border-color: rgba(255,107,107,0.3);">
+      <div class="card-header">
+        <img class="avatar" src="../public/images/characters/model-sheets/glitch-entity.jpg" alt="Glitch" onerror="this.style.display='none'">
+        <div><div class="name">Glitch <span class="name-he">גליץ'</span></div><span class="role role-villain">נבל/ריפוי</span></div>
+      </div>
+      <div class="desc">ישות פיקסלים כאוטית. מגמגם, מתנצל, מבולבל. הפך מושפע של באג - אבל בסוף עובר ריפוי. "א-א-אני לא רוצה להיות ר-ר-רע!"</div>
+      <div class="unlock"><strong>שיעור 12</strong> - מופיע. ריפוי בשיעור 18.</div>
+    </div>
+  </div>
+
+  <h3>יריבים - זירת הקרב (3)</h3>
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-header">
+        <img class="avatar" src="../public/images/characters/model-sheets/shadow-cat.jpg" alt="Shadow" onerror="this.style.display='none'">
+        <div><div class="name">Shadow <span class="name-he">שאדו</span></div><span class="role role-rival">יריב קל</span></div>
+      </div>
+      <div class="desc">חתול נינג'ה שחור ומסתורי. שקט ומהיר. WPM: 15-25. "...צל מופיע. הכינו את האצבעות."</div>
+      <div class="unlock"><strong>כניסה ראשונה לזירה</strong></div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <img class="avatar" src="../public/images/characters/model-sheets/storm-fox.jpg" alt="Storm" onerror="this.style.display='none'">
+        <div><div class="name">Storm <span class="name-he">סטורם</span></div><span class="role role-rival">יריב בינוני</span></div>
+      </div>
+      <div class="desc">שועל נינג'ה חשמלי. מהיר ויהיר. WPM: 25-40. "ברק! מוכנים לגורל שלכם?"</div>
+      <div class="unlock"><strong>3 ניצחונות על Shadow</strong></div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <img class="avatar" src="../public/images/characters/model-sheets/blaze-dragon.jpg" alt="Blaze" onerror="this.style.display='none'">
+        <div><div class="name">Blaze <span class="name-he">בלייז</span></div><span class="role role-rival">יריב קשה</span></div>
+      </div>
+      <div class="desc">דרקון אש אצילי. חזק ומכובד. WPM: 40-60. "אש קדושה! רק הראויים ישרדו!"</div>
+      <div class="unlock"><strong>3 ניצחונות על Storm</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== TIMELINE ====== -->
+<section id="timeline">
+  <h2>ציר הזמן - 20 שיעורים</h2>
+  <p class="subtitle">המסע המלא מגילוי המקלדת ועד הניצחון על מלך הבאגים</p>
+
+  <div class="timeline">
+    <div class="timeline-item" data-lesson="1">
+      <span class="act-badge act-1">מערכה 1 - ההתעוררות</span>
+      <div class="title">המקלדת הזוהרת</div>
+      <div class="chars">Ki + Sensei Zen (קול)</div>
+      <div class="story-beat">"?אהה, תלמיד חדש" - קי מגלה מקלדת קסומה בדוג'ו ישן</div>
+    </div>
+
+    <div class="timeline-item" data-lesson="2">
+      <span class="act-badge act-1">מערכה 1</span>
+      <div class="title">שותפה מופיעה - מיקה נכנסת</div>
+      <div class="chars">Ki + Mika (חדשה!)</div>
+      <div class="story-beat">"!בוא ננסה ביחד, קי" - מיקה יוצאת מהצללים, כבר התאמנה בסתר</div>
+    </div>
+
+    <div class="timeline-item" data-lesson="3">
+      <span class="act-badge act-1">מערכה 1</span>
+      <div class="title">שורת הבית</div>
+      <div class="chars">Ki + Mika</div>
+      <div class="story-beat">שליטה בשורת הבית. "!שורת הבית - הבסיס של כל נינג'ה"</div>
+    </div>
+
+    <div class="timeline-item" data-lesson="4">
+      <span class="act-badge act-1">מערכה 1</span>
+      <div class="title">יותר מהר!</div>
+      <div class="chars">Ki + Mika</div>
+      <div class="story-beat">"!הפעם - יותר מהר" - מיקה דוחפת למהירות</div>
+    </div>
+
+    <div class="timeline-item" data-lesson="5">
+      <span class="act-badge act-1">מערכה 1</span>
+      <div class="title">הבאג מופיע!</div>
+      <div class="chars">Ki + Mika + Bug (חדש!)</div>
+      <div class="story-beat">"!הא הא! בלבלתי לכם את האותיות" - באג פורץ פנימה, אותיות מתערבלות</div>
+    </div>
+
+    <div class="timeline-item" data-lesson="6">
+      <span class="act-badge act-1">מערכה 1</span>
+      <div class="title">לא ניתן לבאג לנצח</div>
+      <div class="chars">Ki + Mika vs Bug</div>
+      <div class="story-beat">"!לא ניתן לבאג לנצח" - בניית ביטחון לפני הבוס</div>
+    </div>
+
+    <div class="timeline-item boss" data-lesson="B1">
+      <span class="act-badge act-1">מערכה 1 - שיא</span>
+      <div class="title" style="color: var(--red);">MINI-BOSS: באג הקטן</div>
+      <div class="chars">Ki + Mika vs Bug</div>
+      <div class="story-beat">10 מילים ב-60 שניות. כל מילה נכונה = -1 לב לבאג. באג בורח עם ענן פוף!</div>
+    </div>
+
+    <div class="timeline-item" data-lesson="8">
+      <span class="act-badge act-2">מערכה 2 - האימון</span>
+      <div class="title">סנסאי זן מגיע</div>
+      <div class="chars">Sensei Zen (פיזי!) + Ki + Mika</div>
+      <div class="story-beat">"!סבלנות היא הנשק החזק ביותר" - המנטור נכנס לראשונה</div>
+    </div>
+
+    <div class="timeline-item" data-lesson="9">
+      <span class="act-badge act-2">מערכה 2</span>
+      <div class="title">כל המקשים</div>
+      <div class="chars">Ki + Mika + Sensei Zen</div>
+      <div class="story-beat">"...המקלדת מדברת... אם תקשיבו" - אימון מקלדת מלאה</div>
+    </div>
+
+    <div class="timeline-item" data-lesson="10">
+      <span class="act-badge act-2">מערכה 2</span>
+      <div class="title">יוקי מאתגרת</div>
+      <div class="chars">Yuki (חדשה!) + Ki + Mika</div>
+      <div class="story-beat">"!אני הכי מהירה בדוג'ו" - יוקי מאתגרת למירוץ</div>
+    </div>
+
+    <div class="timeline-item" data-lesson="11">
+      <span class="act-badge act-2">מערכה 2</span>
+      <div class="title">גן הירח</div>
+      <div class="chars">Luna (חדשה!) + Ki</div>
+      <div class="story-beat">"...נשימה עמוקה, ואז מתחילים" - לונה מלמדת ריכוז ודיוק</div>
+    </div>
+
+    <div class="timeline-item" data-lesson="12">
+      <span class="act-badge act-2">מערכה 2</span>
+      <div class="title">גליץ' מכה!</div>
+      <div class="chars">Glitch (חדש!) + Ki + Mika</div>
+      <div class="story-beat">"!גגג-גליץ' פ-פ-פה" - המסך מתעוות, הפריסה מתהפכת</div>
+    </div>
+
+    <div class="timeline-item" data-lesson="13">
+      <span class="act-badge act-2">מערכה 2</span>
+      <div class="title">לוחמים ומרפאים</div>
+      <div class="chars">Kai (חדש!) + Noa (חדשה!) + Ki + Mika</div>
+      <div class="story-beat">"!בוא נלחם" - קאי, "...ואני אתקן מה שהבאג שובר" - נועה</div>
+    </div>
+
+    <div class="timeline-item" data-lesson="14">
+      <span class="act-badge act-2">מערכה 2</span>
+      <div class="title">ביחד אנחנו חזקים</div>
+      <div class="chars">כל הגיבורים + Sensei Zen</div>
+      <div class="story-beat">"!עכשיו אנחנו מוכנים" - הצוות מאוחד</div>
+    </div>
+
+    <div class="timeline-item boss" data-lesson="B2">
+      <span class="act-badge act-2">מערכה 2 - שיא</span>
+      <div class="title" style="color: var(--red);">MID-BOSS: באג + גליץ'</div>
+      <div class="chars">כל הגיבורים vs Bug + Glitch</div>
+      <div class="story-beat">20 מילים + היפוך מקשים. 120 שניות. גליץ' מתבלבל: "?מ-מה קורה ל-לי"</div>
+    </div>
+
+    <div class="timeline-item" data-lesson="16">
+      <span class="act-badge act-3">מערכה 3 - הנינג'ה</span>
+      <div class="title">מבוך השגיאות</div>
+      <div class="chars">Ki + Mika + Bug (מארח)</div>
+      <div class="story-beat">"!ברוכים הבאים לעולם שלי" - באג בנה מבוך דיגיטלי שלם</div>
+    </div>
+
+    <div class="timeline-item" data-lesson="17">
+      <span class="act-badge act-3">מערכה 3</span>
+      <div class="title">מיקה פורצת</div>
+      <div class="chars">Mika (מובילה) + Luna + Pixel</div>
+      <div class="story-beat">"!בואי נפרוץ את המערכת" - מיקה ולונה זורחות</div>
+    </div>
+
+    <div class="timeline-item" data-lesson="18">
+      <span class="act-badge act-3">מערכה 3</span>
+      <div class="title">גליץ' מתלבט - ריפוי</div>
+      <div class="chars">Glitch + Ki</div>
+      <div class="story-beat">"!א-א-אני לא רוצה להיות ר-ר-רע" - הקלדה מדויקת מרגיעה את גליץ'</div>
+    </div>
+
+    <div class="timeline-item" data-lesson="19">
+      <span class="act-badge act-3">מערכה 3</span>
+      <div class="title">מחזיקים מעמד</div>
+      <div class="chars">Kai (מוביל) + Noa + Yuki</div>
+      <div class="story-beat">"!אני אעצור אותם - אתם תקלידו" - קאי, נועה ויוקי מובילים</div>
+    </div>
+
+    <div class="timeline-item boss" data-lesson="B3">
+      <span class="act-badge act-3">מערכה 3 - גמר!</span>
+      <div class="title" style="color: var(--red);">FINAL BOSS: מלך הבאגים</div>
+      <div class="chars">כל הדמויות vs Bug King</div>
+      <div class="story-beat">50 מילים, 120 שניות, 90%+ דיוק. "!אני מלך הבאגים! לעולם לא תנצחו אותי" - כתר זהב זעיר, גלימת קוד</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== UNLOCKS ====== -->
+<section id="unlocks">
+  <h2>מערכת פתיחת דמויות</h2>
+  <p class="subtitle">דמויות נפתחות באופן טבעי דרך הסיפור והאימון - לא שערים מלאכותיים</p>
+
+  <div class="unlock-tree">
+    <div class="unlock-node" style="border-color: var(--purple);">
+      <div class="lesson-num">0</div>
+      <div class="char-info">
+        <div class="name">Ki + Pixel</div>
+        <div class="condition">זמינים מתחילת המשחק. Ki = מלווה ראשי, Pixel = עוזר UI</div>
+      </div>
+    </div>
+    <div class="unlock-node">
+      <div class="lesson-num">2</div>
+      <div class="char-info">
+        <div class="name">Mika מיקה</div>
+        <div class="condition">השלמת שיעור 2. "!בוא ננסה ביחד, קי" - storyFlag: mikaJoined</div>
+      </div>
+    </div>
+    <div class="unlock-node">
+      <div class="lesson-num">8</div>
+      <div class="char-info">
+        <div class="name">Sensei Zen סנסאי זן</div>
+        <div class="condition">השלמת שיעור 8. הופעה פיזית (לפני כן קול בלבד)</div>
+      </div>
+    </div>
+    <div class="unlock-node">
+      <div class="lesson-num">10</div>
+      <div class="char-info">
+        <div class="name">Yuki יוקי</div>
+        <div class="condition">שיעור 10 + לפחות מבחן מהירות אחד</div>
+      </div>
+    </div>
+    <div class="unlock-node">
+      <div class="lesson-num">11</div>
+      <div class="char-info">
+        <div class="name">Luna לונה</div>
+        <div class="condition">שיעור 11 + 10 אימונים חופשיים</div>
+      </div>
+    </div>
+    <div class="unlock-node" style="border-color: var(--red);">
+      <div class="lesson-num">B1</div>
+      <div class="char-info">
+        <div class="name">Noa נועה</div>
+        <div class="condition">ניצחון על באג הקטן (בוס שיעור 7). "!נועה המרפאה הצטרפה"</div>
+      </div>
+    </div>
+    <div class="unlock-node" style="border-color: var(--orange);">
+      <div class="lesson-num">50</div>
+      <div class="char-info">
+        <div class="name">Kai קאי</div>
+        <div class="condition">הגעה ל-50 WPM בכל מצב. "!קאי לוחם האש מכיר בכוחך"</div>
+      </div>
+    </div>
+    <div class="unlock-node" style="border-color: var(--green);">
+      <div class="lesson-num">5G</div>
+      <div class="char-info">
+        <div class="name">Rex רקס</div>
+        <div class="condition">5 משחקים ב-Games Hub. "!רקס רוצה לשחק איתך"</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>יריבים - שרשרת פתיחה</h3>
+  <table>
+    <tr><th>יריב</th><th>תנאי פתיחה</th><th>רמת קושי</th><th>WPM</th><th>תג הישג</th></tr>
+    <tr><td>Shadow שאדו</td><td>כניסה ראשונה לזירת הקרב</td><td>קל</td><td>15-25</td><td>"נוצח צל"</td></tr>
+    <tr><td>Storm סטורם</td><td>3 ניצחונות על Shadow</td><td>בינוני</td><td>25-40</td><td>"שובר סערות"</td></tr>
+    <tr><td>Blaze בלייז</td><td>3 ניצחונות על Storm</td><td>קשה</td><td>40-60</td><td>"מאלף להבות"</td></tr>
+    <tr><td style="color:var(--text-dim);">??? Phantom פנטום</td><td>3 ניצחונות על Blaze</td><td>סיוט</td><td>60-80</td><td>"צייד רוחות"</td></tr>
+  </table>
+</section>
+
+<!-- ====== COMPANIONS ====== -->
+<section id="companions">
+  <h2>מערכת המלווים</h2>
+  <p class="subtitle">כל דמות שנפתחת הופכת למלווה עם בונוס פסיבי ותגובות אישיות</p>
+
+  <div class="companion-grid">
+    <div class="companion-card">
+      <div class="name" style="color:var(--purple)">Ki קי</div>
+      <div class="bonus">+5% XP לכל אימון</div>
+      <div class="desc" style="margin-top:8px;font-size:13px;color:var(--text-dim)">
+        streak_20: "!וואו, אתה על אש"<br>
+        error_burst: "!גם אני טועה לפעמים, קדימה"
+      </div>
+    </div>
+    <div class="companion-card">
+      <div class="name" style="color:var(--cyan)">Mika מיקה</div>
+      <div class="bonus">טיפים לקיצורי מקלדת כל 2 דקות</div>
+      <div class="desc" style="margin-top:8px;font-size:13px;color:var(--text-dim)">
+        streak_20: "!מהר ומדויק, ככה אני אוהבת"<br>
+        error_burst: "!Ctrl+Z ונמשיך"
+      </div>
+    </div>
+    <div class="companion-card">
+      <div class="name" style="color:var(--blue)">Yuki יוקי</div>
+      <div class="bonus">+3 שניות במבחני מהירות</div>
+      <div class="desc" style="margin-top:8px;font-size:13px;color:var(--text-dim)">
+        streak_20: "!כמעט עקפת אותי"<br>
+        error_burst: "!לאט יותר, מדויק יותר"
+      </div>
+    </div>
+    <div class="companion-card">
+      <div class="name" style="color:#5C6BC0">Luna לונה</div>
+      <div class="bonus">הדגשת 3 מקשים חלשים בתחילת אימון</div>
+      <div class="desc" style="margin-top:8px;font-size:13px;color:var(--text-dim)">
+        streak_20: "...נשימה עמוקה... מושלם"<br>
+        error_burst: "!נשימה. שקט. ומתחילים מחדש"
+      </div>
+    </div>
+    <div class="companion-card">
+      <div class="name" style="color:var(--green)">Noa נועה</div>
+      <div class="bonus">+1 לב בקרבות בוס</div>
+      <div class="desc" style="margin-top:8px;font-size:13px;color:var(--text-dim)">
+        streak_20: "!את מתקדמת מדהים"<br>
+        error_burst: "!לא נורא, ננסה שוב ביחד"
+      </div>
+    </div>
+    <div class="companion-card">
+      <div class="name" style="color:var(--orange)">Kai קאי</div>
+      <div class="bonus">+10% בונוס קומבו</div>
+      <div class="desc" style="margin-top:8px;font-size:13px;color:var(--text-dim)">
+        streak_20: "!אש באצבעות"<br>
+        error_burst: "!לוחם אמיתי לא מוותר"
+      </div>
+    </div>
+    <div class="companion-card">
+      <div class="name" style="color:var(--blue)">Sensei Zen סנסאי זן</div>
+      <div class="bonus">+3% XP + ציטוט חוכמה יומי</div>
+      <div class="desc" style="margin-top:8px;font-size:13px;color:var(--text-dim)">
+        streak_20: "!סבלנות מובילה למהירות"<br>
+        error_burst: "!כל טעות היא שיעור"
+      </div>
+    </div>
+    <div class="companion-card">
+      <div class="name" style="color:var(--cyan)">Pixel פיקסל</div>
+      <div class="bonus">HUD סטטיסטיקות מיני בזמן אמת</div>
+      <div class="desc" style="margin-top:8px;font-size:13px;color:var(--text-dim)">
+        streak_20: "!שיפור של 12% מאתמול"<br>
+        error_burst: "!סורק... מומלץ להאט קצת"
+      </div>
+    </div>
+    <div class="companion-card">
+      <div class="name" style="color:var(--orange)">Rex רקס</div>
+      <div class="bonus">+10% ניקוד במשחקונים</div>
+      <div class="desc" style="margin-top:8px;font-size:13px;color:var(--text-dim)">
+        streak_20: "!ררררמ! מהיר כמו דינוזאור"<br>
+        error_burst: "!גם עם ידיים קטנות, ממשיכים"
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== BOSSES ====== -->
+<section id="bosses">
+  <h2>קרבות בוס</h2>
+  <p class="subtitle">3 קרבות בוס אפיים - הנשק = המקלדת, הכוח = הדיוק</p>
+
+  <div class="boss-card">
+    <div class="boss-name">שיעור 7: באג הקטן (Mini-Boss)</div>
+    <div class="hp-bar"><div class="fill" style="width: 33%;"></div></div>
+    <table>
+      <tr><td style="width:140px;font-weight:700;">HP</td><td>10 (כל מילה נכונה = -1)</td></tr>
+      <tr><td style="font-weight:700;">זמן</td><td>60 שניות</td></tr>
+      <tr><td style="font-weight:700;">מילים</td><td>10 מילים מבולבלות</td></tr>
+      <tr><td style="font-weight:700;">דיוק מינימלי</td><td>אין - בוס ראשון, טוטוריאל</td></tr>
+      <tr><td style="font-weight:700;">קומבו</td><td>5 מילים רצופות = Super Hit (-2 HP)</td></tr>
+      <tr><td style="font-weight:700;">שגיאה</td><td>באג מרפא +1 HP</td></tr>
+      <tr><td style="font-weight:700;">פרסים</td><td>100 XP + תג "מגרש באגים" + Noa נפתחת</td></tr>
+      <tr><td style="font-weight:700;">הפסד</td><td>"!הא הא! אחזור מחר" - באג רוקד</td></tr>
+      <tr><td style="font-weight:700;">ניצחון</td><td>באג מחבק את עצמו, עיניים מסתחררות, בורח עם ענן פוף</td></tr>
+    </table>
+  </div>
+
+  <div class="boss-card">
+    <div class="boss-name">שיעור 15: באג + גליץ' (Mid-Boss)</div>
+    <div class="hp-bar"><div class="fill" style="width: 66%;"></div></div>
+    <table>
+      <tr><td style="width:140px;font-weight:700;">HP</td><td>באג: 150 (מילים) + גליץ': 100 (תיקוני שגיאות)</td></tr>
+      <tr><td style="font-weight:700;">זמן</td><td>120 שניות</td></tr>
+      <tr><td style="font-weight:700;">מילים</td><td>20 מילים + היפוכי מקשים</td></tr>
+      <tr><td style="font-weight:700;">דיוק מינימלי</td><td>80%</td></tr>
+      <tr><td style="font-weight:700;">מכניקת גליץ'</td><td>כל 15 שניות הופך 3 מקשים למשך 5 שניות</td></tr>
+      <tr><td style="font-weight:700;">פרסים</td><td>250 XP + תג "שורד גליץ'"</td></tr>
+    </table>
+  </div>
+
+  <div class="boss-card" style="border-color: rgba(253,203,110,0.4);">
+    <div class="boss-name" style="color: var(--orange);">שיעור 20: מלך הבאגים (Final Boss)</div>
+    <div class="hp-bar"><div class="fill" style="width: 100%; background: linear-gradient(90deg, var(--orange), var(--red));"></div></div>
+    <table>
+      <tr><td style="width:140px;font-weight:700;">HP</td><td>200 (50 מילים)</td></tr>
+      <tr><td style="font-weight:700;">זמן</td><td>120 שניות</td></tr>
+      <tr><td style="font-weight:700;">מילים</td><td>50 מילים!</td></tr>
+      <tr><td style="font-weight:700;">דיוק מינימלי</td><td>90%+</td></tr>
+      <tr><td style="font-weight:700;">פרסים</td><td>500 XP + תעודת "נינג'ה מקלדת אמיתי" + קרדיטים</td></tr>
+      <tr><td style="font-weight:700;">מערכת קומבו</td><td>Ki = Speed Burst (+10% WPM), Mika = Accuracy Shield, Yuki = Burst Mode, Luna = Focus Lens, Kai = Power Strike (-2HP), Noa = Heal</td></tr>
+    </table>
+
+    <h3 style="margin-top:16px;">כלל הזהב: באג לעולם לא מת!</h3>
+    <table>
+      <tr><th>אירוע</th><th>מה קורה</th><th>ויזואל</th></tr>
+      <tr><td>מילה נכונה</td><td>באג מחבק את עצמו</td><td>עיניים מסתחררות, התנדנד</td></tr>
+      <tr><td>HP אפס</td><td>הכתר נופל, באג מתכווץ</td><td>ספירלות סחרחורת, פרצוף מצחיק</td></tr>
+      <tr><td>"הפסד"</td><td>באג מנפח לחיים, אומר "!אחזוווור" ועף</td><td>ענן פוף, ניצוצות</td></tr>
+      <tr><td style="color:var(--red)">באג אף פעם לא</td><td>מת, סובל, מדמם, מתפוצץ, נהרס</td><td>---</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ====== PAGES MAP ====== -->
+<section id="pages">
+  <h2>מפת עמודים ← דמויות</h2>
+  <p class="subtitle">כל עמוד באפליקציה עם הדמויות המוקצות לו</p>
+
+  <div class="page-map">
+    <div class="page-item">
+      <div class="page-name">דשבורד ראשי</div>
+      <div class="char-list"><strong>ראשי:</strong> Ki (ברכה, טיפ יומי)<br><strong>משני:</strong> מלווים נפתחים (מקס 3)<br><strong>רקע:</strong> Pixel (בר סטטיסטיקות)</div>
+    </div>
+    <div class="page-item">
+      <div class="page-name">שיעורים</div>
+      <div class="char-list"><strong>ראשי:</strong> Sensei Zen (מדריך)<br><strong>משני:</strong> Ki (עידוד)<br><strong>סביבה:</strong> Training Dojo</div>
+    </div>
+    <div class="page-item">
+      <div class="page-name">אימון חופשי</div>
+      <div class="char-list"><strong>ראשי:</strong> Luna (מדריכה שלווה)<br><strong>משני:</strong> Noa (אם שגיאות > 40%)<br><strong>סביבה:</strong> Moonlit Garden</div>
+    </div>
+    <div class="page-item">
+      <div class="page-name">מבחן מהירות</div>
+      <div class="char-list"><strong>ראשי:</strong> Yuki (מתחרה)<br><strong>משני:</strong> Rex (מעודד)<br><strong>סביבה:</strong> Speed Arena</div>
+    </div>
+    <div class="page-item">
+      <div class="page-name">זירת קרב</div>
+      <div class="char-list"><strong>ראשי:</strong> Kai (מאמן)<br><strong>יריבים:</strong> Shadow/Storm/Blaze<br><strong>סביבה:</strong> Battle Colosseum</div>
+    </div>
+    <div class="page-item">
+      <div class="page-name">קיצורי מקלדת</div>
+      <div class="char-list"><strong>ראשי:</strong> Mika (מומחית טכנולוגיה)<br><strong>משני:</strong> Pixel (נתונים)<br><strong>סביבה:</strong> Cyber Lab</div>
+    </div>
+    <div class="page-item">
+      <div class="page-name">משחקונים</div>
+      <div class="char-list"><strong>ראשי:</strong> Rex (חבר משחקים)<br><strong>משני:</strong> Pixel (ניקוד)<br><strong>סביבה:</strong> Games Arcade</div>
+    </div>
+    <div class="page-item">
+      <div class="page-name">סטטיסטיקות</div>
+      <div class="char-list"><strong>ראשי:</strong> Pixel (מציג נתונים)<br><strong>רקע:</strong> Ki (קטן, בפינה)</div>
+    </div>
+    <div class="page-item">
+      <div class="page-name">פרופיל / הגדרות</div>
+      <div class="char-list"><strong>ראשי:</strong> Ki (אייקון קטן)<br>בחירת מלווה פעיל</div>
+    </div>
+    <div class="page-item">
+      <div class="page-name">אונבורדינג</div>
+      <div class="char-list"><strong>ראשי:</strong> Ki (מדריך ראשי)<br><strong>משני:</strong> Sensei Zen (טיפים)</div>
+    </div>
+    <div class="page-item">
+      <div class="page-name">הישגים</div>
+      <div class="char-list"><strong>ראשי:</strong> Ki (מעודד)<br>דמות רלוונטית לכל הישג</div>
+    </div>
+    <div class="page-item">
+      <div class="page-name">עזרה בשגיאות (overlay)</div>
+      <div class="char-list"><strong>ראשי:</strong> Noa (מרפאה)<br>"!לא נורא, ננסה שוב"</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== VILLAINS ====== -->
+<section id="villains">
+  <h2>ארק הנבלים</h2>
+  <p class="subtitle">באג = כאוס שמח, גליץ' = כאוס מבולבל → ריפוי</p>
+
+  <details open>
+    <summary>באג - 3 מערכות של אסקלציה</summary>
+    <div>
+      <table>
+        <tr><th>מערכה</th><th>כינוי</th><th>שיעורים</th><th>רמת כוח</th><th>סוג התקפה</th></tr>
+        <tr><td>1</td><td>המטריד</td><td>5-7</td><td>נמוך-בינוני</td><td>החלפת אותיות → מילים שלמות</td></tr>
+        <tr><td>2</td><td>ההסלמה</td><td>8-15</td><td>בינוני-גבוה</td><td>פסקאות + שותף גליץ'</td></tr>
+        <tr><td>3</td><td>מלך הבאגים</td><td>16-20</td><td>מקסימלי</td><td>מבוך שגיאות שלם + כתר זהב</td></tr>
+      </table>
+      <p style="margin-top:12px;font-size:13px;color:var(--orange)">
+        <strong>מוטיבציה:</strong> באג לא מבין שהוא "רע". הוא חושב שבלבול זה כיף! הוא צוחק, רוקד - כאוס בלי זדון. קריטי לבטיחות רגשית של ילדים.
+      </p>
+    </div>
+  </details>
+
+  <details>
+    <summary>גליץ' - ארק ריפוי</summary>
+    <div>
+      <table>
+        <tr><th>שלב</th><th>שיעור</th><th>מצב</th><th>תיאור</th></tr>
+        <tr><td>הופעה</td><td>12</td><td>כאוטי</td><td>מגמגם, מתנצל, מבולבל. "!גגג-גליץ' פ-פ-פה"</td></tr>
+        <tr><td>ברית</td><td>12-15</td><td>שותף לא רצוני</td><td>באג מגייס אותו, אבל גליץ' מתנצל</td></tr>
+        <tr><td>ריפוי</td><td>18</td><td>ריפוי חלקי</td><td>הקלדה מדויקת מרגיעה אותו. "...ת-תודה"</td></tr>
+        <tr><td>פוסט-גיים</td><td>אירועים</td><td>Wild Card</td><td>חוזר באירועים עונתיים כסוכן כאוס ניטרלי</td></tr>
+      </table>
+      <p style="margin-top:12px;font-size:13px;color:var(--green)">
+        <strong>מסר חינוכי:</strong> לא כל התנגדות היא עוינת. גליץ' פשוט שבור וצריך סבלנות. הקלדה מדויקת = אמפתיה, לא אלימות.
+      </strong>
+    </div>
+  </details>
+
+  <details>
+    <summary>צורות עתידיות של באג</summary>
+    <div>
+      <div class="skin-row">
+        <span class="skin-tag">באג הקטן (שיעור 7)</span>
+        <span class="skin-tag">באג + גליץ' (שיעור 15)</span>
+        <span class="skin-tag">מלך הבאגים (שיעור 20)</span>
+        <span class="skin-tag">באג חנוכה (כסלו)</span>
+        <span class="skin-tag">באג פורים (אדר)</span>
+        <span class="skin-tag">באג חוף (קיץ)</span>
+        <span class="skin-tag">SPAM (בוס חודשי עתידי)</span>
+        <span class="skin-tag">VIRUS (בוס חודשי עתידי)</span>
+      </div>
+    </div>
+  </details>
+</section>
+
+<!-- ====== SKINS ====== -->
+<section id="skins">
+  <h2>סקינים עונתיים</h2>
+  <p class="subtitle">תלבושות עונתיות קוסמטיות לחגים ואירועים ישראליים</p>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="name" style="color:var(--blue)">חנוכה (כסלו)</div>
+      <div class="desc">Ki: סרט חנוכייה, מבטאי כחול/לבן. Mika: דרון סביבון הולוגרפי.</div>
+    </div>
+    <div class="card">
+      <div class="name" style="color:var(--pink)">פורים (אדר)</div>
+      <div class="desc">כל הדמויות בתחפושות מצחיקות! Ki כליצן, Mika כרובוט, Rex כתרנגולת. באג מקבל את התחפושת הכי טובה. גליץ' הוא הכוכב!</div>
+    </div>
+    <div class="card">
+      <div class="name" style="color:var(--green)">ט"ו בשבט</div>
+      <div class="desc">Noa: כתר פרחים, דוגמאות עלים. Rex: תחפושת עץ.</div>
+    </div>
+    <div class="card">
+      <div class="name" style="color:var(--blue)">שבוע העברית</div>
+      <div class="desc">Sensei Zen: לבוש סופר מסורתי, אביזר נוצה.</div>
+    </div>
+    <div class="card">
+      <div class="name" style="color:var(--purple)">שבוע הספר (אייר)</div>
+      <div class="desc">Luna: דפי ספר מרחפים סביבה. Ki: משקפי תולעת ספרים.</div>
+    </div>
+    <div class="card">
+      <div class="name" style="color:var(--orange)">קיץ (יולי-אוגוסט)</div>
+      <div class="desc">Ki: מכנסי חוף, גלשן. Yuki: משקפי שחייה, אפקטי מים.</div>
+    </div>
+    <div class="card">
+      <div class="name" style="color:var(--cyan)">שבוע הסייבר (פברואר)</div>
+      <div class="desc">Mika: שריון סייברפאנק משודרג, דרונים כפולים. Pixel: מצב התראה אדום.</div>
+    </div>
+    <div class="card">
+      <div class="name" style="color:var(--orange)">חזרה ללימודים (ספטמבר)</div>
+      <div class="desc">Ki: תרמיל, עיפרון מאחורי האוזן. Sensei Zen: מצביע ללוח.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== VOICES ====== -->
+<section id="voices">
+  <h2>קולות דמויות (ElevenLabs)</h2>
+  <p class="subtitle">22 קבצי MP3 נוצרו בעברית. לחצו Play כדי לשמוע!</p>
+
+  <h3>Ki קי (4 קולות)</h3>
+  <div class="voice-grid">
+    <div class="voice-item">
+      <span class="char-name">Ki</span>
+      <span class="line-text">!וואו! המקלדת הזו זוהרת</span>
+      <audio controls preload="none"><source src="../public/audio/voices/ki/ki-discovery.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name">Ki</span>
+      <span class="line-text">!ביחד אנחנו חזקים יותר</span>
+      <audio controls preload="none"><source src="../public/audio/voices/ki/ki-team.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name">Ki</span>
+      <span class="line-text">...ניצחנו! אבל הוא ברח</span>
+      <audio controls preload="none"><source src="../public/audio/voices/ki/ki-victory.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name">Ki</span>
+      <span class="line-text">!עכשיו אנחנו מוכנים</span>
+      <audio controls preload="none"><source src="../public/audio/voices/ki/ki-final.mp3" type="audio/mpeg"></audio>
+    </div>
+  </div>
+
+  <h3>Mika מיקה (3 קולות)</h3>
+  <div class="voice-grid">
+    <div class="voice-item">
+      <span class="char-name">Mika</span>
+      <span class="line-text">!בוא ננסה ביחד, קי</span>
+      <audio controls preload="none"><source src="../public/audio/voices/mika/mika-intro.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name">Mika</span>
+      <span class="line-text">!לא ניתן לבאג לנצח</span>
+      <audio controls preload="none"><source src="../public/audio/voices/mika/mika-fight.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name">Mika</span>
+      <span class="line-text">!בואי נפרוץ את המערכת</span>
+      <audio controls preload="none"><source src="../public/audio/voices/mika/mika-hack.mp3" type="audio/mpeg"></audio>
+    </div>
+  </div>
+
+  <h3>Sensei Zen סנסאי זן (3 קולות)</h3>
+  <div class="voice-grid">
+    <div class="voice-item">
+      <span class="char-name">Sensei</span>
+      <span class="line-text">!סבלנות היא הנשק החזק ביותר</span>
+      <audio controls preload="none"><source src="../public/audio/voices/sensei-zen/sensei-patience.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name">Sensei</span>
+      <span class="line-text">!כל מסע מתחיל בלחיצה אחת</span>
+      <audio controls preload="none"><source src="../public/audio/voices/sensei-zen/sensei-journey.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name">Sensei</span>
+      <span class="line-text">...נינג'ה אמיתי</span>
+      <audio controls preload="none"><source src="../public/audio/voices/sensei-zen/sensei-final.mp3" type="audio/mpeg"></audio>
+    </div>
+  </div>
+
+  <h3>Bug באג (4 קולות)</h3>
+  <div class="voice-grid">
+    <div class="voice-item">
+      <span class="char-name">Bug</span>
+      <span class="line-text">!הא הא! בלבלתי לכם את האותיות</span>
+      <audio controls preload="none"><source src="../public/audio/voices/bug/bug-scramble.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name">Bug</span>
+      <span class="line-text">!עכשיו אני מבלבל עשר מילים שלמות</span>
+      <audio controls preload="none"><source src="../public/audio/voices/bug/bug-boss.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name">Bug</span>
+      <span class="line-text">!אני מלך הבאגים! לעולם לא תנצחו אותי</span>
+      <audio controls preload="none"><source src="../public/audio/voices/bug/bug-king.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name">Bug</span>
+      <span class="line-text">!אוי! אחזוווור</span>
+      <audio controls preload="none"><source src="../public/audio/voices/bug/bug-defeat.mp3" type="audio/mpeg"></audio>
+    </div>
+  </div>
+
+  <h3>Glitch גליץ' (3 קולות)</h3>
+  <div class="voice-grid">
+    <div class="voice-item">
+      <span class="char-name">Glitch</span>
+      <span class="line-text">!גגג-גליץ' פ-פ-פה</span>
+      <audio controls preload="none"><source src="../public/audio/voices/glitch/glitch-intro.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name">Glitch</span>
+      <span class="line-text">!א-א-אני לא רוצה להיות ר-ר-רע</span>
+      <audio controls preload="none"><source src="../public/audio/voices/glitch/glitch-redemption.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name">Glitch</span>
+      <span class="line-text">...ת-תודה</span>
+      <audio controls preload="none"><source src="../public/audio/voices/glitch/glitch-thanks.mp3" type="audio/mpeg"></audio>
+    </div>
+  </div>
+
+  <h3>דמויות נוספות (5 קולות)</h3>
+  <div class="voice-grid">
+    <div class="voice-item">
+      <span class="char-name">Yuki</span>
+      <span class="line-text">!אני הכי מהירה בדוג'ו</span>
+      <audio controls preload="none"><source src="../public/audio/voices/yuki/yuki-challenge.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name">Luna</span>
+      <span class="line-text">...נשימה עמוקה, ואז מתחילים</span>
+      <audio controls preload="none"><source src="../public/audio/voices/luna/luna-breathe.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name">Kai</span>
+      <span class="line-text">!בוא נלחם</span>
+      <audio controls preload="none"><source src="../public/audio/voices/kai/kai-fight.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name">Noa</span>
+      <span class="line-text">!אני כאן, לא נורא לטעות</span>
+      <audio controls preload="none"><source src="../public/audio/voices/noa/noa-heal.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name">Rex</span>
+      <span class="line-text">!גם עם ידיים קטנות - אני פה</span>
+      <audio controls preload="none"><source src="../public/audio/voices/rex/rex-play.mp3" type="audio/mpeg"></audio>
+    </div>
+  </div>
+</section>
+
+<!-- ====== MUSIC ====== -->
+<section id="music">
+  <h2>מוזיקה (Suno)</h2>
+  <p class="subtitle">פסקול מותאם אישית למשחק</p>
+
+  <h3 style="color:var(--green)">נוצרו בהצלחה (2 מסלולים + וריאציות)</h3>
+  <div class="voice-grid">
+    <div class="voice-item">
+      <span class="char-name" style="color:var(--purple)">Main</span>
+      <span class="line-text">Main Theme v1 (3:33, 4.5MB)</span>
+      <audio controls preload="none"><source src="../public/audio/music/main-theme.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name" style="color:var(--purple)">Main</span>
+      <span class="line-text">Main Theme v2 (3:37, 4.8MB)</span>
+      <audio controls preload="none"><source src="../public/audio/music/main-theme-v2.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name" style="color:var(--red)">Boss</span>
+      <span class="line-text">Boss Battle v1 (4:52, 6.7MB)</span>
+      <audio controls preload="none"><source src="../public/audio/music/boss-battle.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="voice-item">
+      <span class="char-name" style="color:var(--red)">Boss</span>
+      <span class="line-text">Boss Battle v2 (3:49, 4.3MB)</span>
+      <audio controls preload="none"><source src="../public/audio/music/boss-battle-v2.mp3" type="audio/mpeg"></audio>
+    </div>
+  </div>
+
+  <div class="music-status" style="margin-top:16px;">
+    <strong>ממתין לקרדיטים (3 מסלולים נותרו):</strong>
+    <ul style="margin-top:8px;padding-right:20px;">
+      <li>Practice Mode - מוזיקת אימון רגועה (lo-fi)</li>
+      <li>Victory Fanfare - פנפרת ניצחון קצרה</li>
+      <li>Character Unlock - ג'ינגל פתיחת דמות</li>
+    </ul>
+    <p style="margin-top:8px;font-size:13px;">הרצת <code>python scripts/submit_tracks.py</code> אחרי הטענת קרדיטים.</p>
+  </div>
+</section>
+
+<!-- ====== AGE ====== -->
+<section id="age">
+  <h2>מטריצת נראות לפי גיל</h2>
+  <p class="subtitle">5 תמות גיל - כל דמות נראית אחרת בכל גיל</p>
+
+  <div class="age-matrix">
+    <table>
+      <tr>
+        <th>דמות</th>
+        <th>שתיל (6-8)</th>
+        <th>נבט (8-10)</th>
+        <th>גזע (10-12)</th>
+        <th>ענף (12-14)</th>
+        <th>צמרת (14-16)</th>
+      </tr>
+      <tr>
+        <td><strong>Ki</strong></td>
+        <td class="size-large">גדול + מונפש</td>
+        <td class="size-large">גדול</td>
+        <td class="size-medium">בינוני</td>
+        <td class="size-small">קטן</td>
+        <td class="size-small">אייקון בלבד</td>
+      </tr>
+      <tr>
+        <td><strong>Mika</strong></td>
+        <td class="size-large">גדולה + מדברת</td>
+        <td class="size-large">גדולה</td>
+        <td class="size-medium">בינונית</td>
+        <td class="size-small">קטנה</td>
+        <td class="size-small">אייקון</td>
+      </tr>
+      <tr>
+        <td><strong>Sensei Zen</strong></td>
+        <td class="size-large">גדול + חם</td>
+        <td class="size-medium">בינוני</td>
+        <td class="size-medium">בינוני</td>
+        <td class="size-small">קטן</td>
+        <td class="size-hidden">מוסתר</td>
+      </tr>
+      <tr>
+        <td><strong>Bug</strong></td>
+        <td class="size-large">גדול + חמוד מאוד</td>
+        <td class="size-large">גדול + מצחיק</td>
+        <td class="size-medium">בינוני</td>
+        <td class="size-medium">בינוני</td>
+        <td class="size-small">קטן + מינימלי</td>
+      </tr>
+      <tr>
+        <td><strong>Pixel</strong></td>
+        <td class="size-large">גדול + מונפש</td>
+        <td class="size-medium">בינוני</td>
+        <td class="size-data">מצב נתונים</td>
+        <td class="size-data">מצב נתונים</td>
+        <td class="size-data">HUD בלבד</td>
+      </tr>
+      <tr>
+        <td><strong>יריבים</strong></td>
+        <td class="size-large">גדולים + ידידותיים</td>
+        <td class="size-medium">בינוניים</td>
+        <td class="size-medium">בינוניים</td>
+        <td class="size-small">קטנים + קומפקטיים</td>
+        <td class="size-small">אייקונים</td>
+      </tr>
+      <tr>
+        <td><strong>דיאלוגים</strong></td>
+        <td class="size-large">מלאים + קוליים</td>
+        <td class="size-large">מלאים</td>
+        <td class="size-medium">מקוצרים</td>
+        <td class="size-small">מינימליים</td>
+        <td class="size-hidden">כבויים</td>
+      </tr>
+      <tr>
+        <td><strong>סיפור</strong></td>
+        <td class="size-large">מלא + אנימציות</td>
+        <td class="size-large">מלא</td>
+        <td class="size-medium">מקוצר</td>
+        <td class="size-small">אופציונלי</td>
+        <td class="size-hidden">כבוי</td>
+      </tr>
+    </table>
+  </div>
+
+  <h3>מורה / מנהל - תצוגה מקצועית</h3>
+  <table>
+    <tr><th>אלמנט</th><th>תצוגת תלמיד</th><th>תצוגת מורה</th></tr>
+    <tr><td>דמות ראשית</td><td>Ki (אנרגטי, גדול)</td><td>Sensei Zen (חכם, אווטאר קטן)</td></tr>
+    <tr><td>נוכחות דמויות</td><td>דמויות מלאות, מונפשות</td><td>Sensei Zen בסיידבר בלבד</td></tr>
+    <tr><td>סיפור/נרטיב</td><td>בועות וסצנות מלאות</td><td>כבוי</td></tr>
+    <tr><td>מצב קרב</td><td>זמין</td><td>מוסתר או דמו בלבד</td></tr>
+  </table>
+</section>
+
+<footer>
+  <p>Ninja Keyboard Game Bible v1.0 - March 2026</p>
+  <p style="margin-top:4px;">Generated from character-integration-map.md + character-progression-system.md</p>
+</footer>
+
+<script>
+  // Smooth scroll for nav
+  document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      if (window.scrollY >= section.offsetTop - 120) current = section.id;
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>
