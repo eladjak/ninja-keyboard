@@ -53,6 +53,23 @@
   --radius: 0.625rem;
   --background: oklch(0.09 0.02 290);
   --foreground: oklch(0.95 0.01 290);
+
+  /* Gaming surface & border tokens */
+  --game-bg-primary: #0d0b1a;
+  --game-bg-secondary: #080618;
+  --game-bg-card: #0c0a20;
+  --game-bg-elevated: #13102a;
+  --game-bg-input: #1a1530;
+  --game-border: oklch(0.25 0.04 292);
+  --game-glow-purple: oklch(0.72 0.15 292 / 40%);
+  --game-glow-green: oklch(0.72 0.15 170 / 40%);
+  --game-accent-purple: #6C5CE7;
+  --game-accent-green: #00B894;
+  --game-text-glow: 0 0 10px oklch(0.72 0.15 292 / 40%);
+  --game-text-glow-sm: 0 0 8px oklch(0.72 0.15 292 / 25%);
+  --game-hover-bg: oklch(0.72 0.15 292 / 0.06);
+  --game-active-inset: inset 0 0 12px oklch(0.72 0.15 292 / 10%);
+  --game-tab-glow: 0 0 8px oklch(0.55 0.2 292 / 50%);
   --card: oklch(0.13 0.025 290);
   --card-foreground: oklch(0.95 0.01 290);
   --popover: oklch(0.13 0.025 290);
@@ -88,6 +105,23 @@
 .dark {
   --background: oklch(0.09 0.02 290);
   --foreground: oklch(0.95 0.01 290);
+
+  /* Gaming surface & border tokens (same as :root default) */
+  --game-bg-primary: #0d0b1a;
+  --game-bg-secondary: #080618;
+  --game-bg-card: #0c0a20;
+  --game-bg-elevated: #13102a;
+  --game-bg-input: #1a1530;
+  --game-border: oklch(0.25 0.04 292);
+  --game-glow-purple: oklch(0.72 0.15 292 / 40%);
+  --game-glow-green: oklch(0.72 0.15 170 / 40%);
+  --game-accent-purple: #6C5CE7;
+  --game-accent-green: #00B894;
+  --game-text-glow: 0 0 10px oklch(0.72 0.15 292 / 40%);
+  --game-text-glow-sm: 0 0 8px oklch(0.72 0.15 292 / 25%);
+  --game-hover-bg: oklch(0.72 0.15 292 / 0.06);
+  --game-active-inset: inset 0 0 12px oklch(0.72 0.15 292 / 10%);
+  --game-tab-glow: 0 0 8px oklch(0.55 0.2 292 / 50%);
   --card: oklch(0.13 0.025 290);
   --card-foreground: oklch(0.95 0.01 290);
   --popover: oklch(0.13 0.025 290);
@@ -123,6 +157,23 @@
 .light {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
+
+  /* Gaming surface & border tokens (light override) */
+  --game-bg-primary: #FFF8F0;
+  --game-bg-secondary: #FFF3E6;
+  --game-bg-card: #FFFFFF;
+  --game-bg-elevated: #FFFFFF;
+  --game-bg-input: #F5F0EB;
+  --game-border: #E8DDD0;
+  --game-glow-purple: transparent;
+  --game-glow-green: transparent;
+  --game-accent-purple: #6C5CE7;
+  --game-accent-green: #00B894;
+  --game-text-glow: none;
+  --game-text-glow-sm: none;
+  --game-hover-bg: oklch(0.495 0.205 292 / 0.06);
+  --game-active-inset: none;
+  --game-tab-glow: none;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -419,7 +470,7 @@
 
 /* Dark gaming background with ambient glow */
 .game-bg {
-  background-color: #0d0b1a;
+  background-color: var(--game-bg-primary);
   background-image:
     radial-gradient(ellipse at 20% 50%, oklch(0.3 0.08 292 / 15%) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 20%, oklch(0.3 0.06 168 / 10%) 0%, transparent 50%);

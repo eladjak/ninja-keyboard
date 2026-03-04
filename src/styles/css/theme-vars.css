@@ -5,6 +5,21 @@
   --theme-font-scale: 1.2;
   --theme-button-height: 56px;
   --theme-spacing: 1.25;
+
+  /* Warm light gaming surface for youngest age group */
+  --game-bg-primary: #FFF8F0;
+  --game-bg-secondary: #FFF3E6;
+  --game-bg-card: #FFFFFF;
+  --game-bg-elevated: #FFFFFF;
+  --game-bg-input: #F5F0EB;
+  --game-border: #E8DDD0;
+  --game-glow-purple: transparent;
+  --game-glow-green: transparent;
+  --game-text-glow: none;
+  --game-text-glow-sm: none;
+  --game-hover-bg: oklch(0.495 0.205 292 / 0.06);
+  --game-active-inset: none;
+  --game-tab-glow: none;
 }
 
 [data-theme='nevet'] {

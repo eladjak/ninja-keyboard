@@ -164,7 +164,7 @@ export function HomeDashboard() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}
         className="relative overflow-hidden rounded-2xl hero-glow-border p-6 text-white shadow-lg"
-        style={{ background: '#0d0b1a' }}
+        style={{ background: 'var(--game-bg-primary)' }}
       >
         {/* Background image */}
         <Image
@@ -175,7 +175,7 @@ export function HomeDashboard() {
           priority
         />
         {/* Dark overlay gradient */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0d0b1a] via-[#0d0b1a]/60 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--game-bg-primary)] via-[var(--game-bg-primary)]/60 to-transparent" />
 
         {/* Ki character image */}
         <div className="pointer-events-none absolute bottom-0 end-4 z-10">

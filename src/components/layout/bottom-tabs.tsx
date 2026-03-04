@@ -57,7 +57,7 @@ function TabLink({ href, label, icon: Icon, isActive }: TabLinkProps) {
       </motion.div>
       <span
         className={cn('font-medium', isActive && 'font-semibold')}
-        style={isActive ? { textShadow: '0 0 8px oklch(0.55 0.2 292 / 50%)' } : undefined}
+        style={isActive ? { textShadow: 'var(--game-tab-glow)' } : undefined}
       >
         {label}
       </span>
@@ -70,7 +70,7 @@ export function BottomTabs() {
 
   return (
     <nav
-      className="fixed bottom-0 inset-x-0 z-50 border-t border-[oklch(0.25_0.04_292)] bg-[#0d0b1a]/95 backdrop-blur-md md:hidden"
+      className="fixed bottom-0 inset-x-0 z-50 border-t border-[var(--game-border)] bg-[var(--game-bg-primary)]/95 backdrop-blur-md md:hidden"
       aria-label="ניווט ראשי"
     >
       {/* Top gradient accent */}

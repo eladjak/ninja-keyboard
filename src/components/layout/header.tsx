@@ -13,7 +13,7 @@ export function Header() {
   const { level, totalXp } = useXpStore()
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[oklch(0.25_0.04_292)] bg-[#0d0b1a]/90 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-[var(--game-border)] bg-[var(--game-bg-primary)]/90 backdrop-blur-md">
       {/* Gradient accent line */}
       <div className="h-0.5 ninja-gradient" />
 
