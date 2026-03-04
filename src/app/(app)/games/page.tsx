@@ -55,9 +55,18 @@ export default function GamesPage() {
         transition={{ duration: 0.25 }}
         className="flex items-center justify-between"
       >
-        <div>
-          <h1 className="text-xl font-bold sm:text-2xl">משחקי הקלדה</h1>
-          <p className="text-sm text-muted-foreground">תרגלו הקלדה בכיף!</p>
+        <div className="flex items-center gap-3">
+          <Image
+            src="/images/characters/model-sheets/rex-dino.jpg"
+            alt="Rex"
+            width={48}
+            height={48}
+            className="rounded-full border-2 border-purple-500/30 shadow-lg shadow-purple-500/10"
+          />
+          <div>
+            <h1 className="text-xl font-bold sm:text-2xl">משחקי הקלדה</h1>
+            <p className="text-sm text-muted-foreground">תרגלו הקלדה בכיף!</p>
+          </div>
         </div>
         <Gamepad2 className="size-8 text-primary" />
       </motion.div>

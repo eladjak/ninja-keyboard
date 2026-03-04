@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Swords, User, Zap } from 'lucide-react'
+import { Swords, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
@@ -348,7 +348,7 @@ export function BattleArena() {
         <Card className="border-primary/50">
           <CardContent className="p-4 text-center">
             <div className="flex items-center justify-center gap-2">
-              <User className="size-5 text-primary" />
+              <Image src="/images/characters/ki-mascot.jpg" alt="Ki" width={28} height={28} className="rounded-full border border-primary/50" />
               <span className="font-bold">אתה</span>
             </div>
             <div className="mt-2 text-2xl font-black text-primary" data-testid="player-wpm">

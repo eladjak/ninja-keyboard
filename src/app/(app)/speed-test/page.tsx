@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Timer, Zap, Target, RotateCcw } from 'lucide-react'
@@ -175,12 +176,22 @@ export default function SpeedTestPage() {
   const activeChar = session.text[session.currentIndex] ?? undefined
 
   return (
-    <div className="mx-auto flex max-w-3xl flex-col gap-4 p-4" dir="rtl">
+    <div className="relative mx-auto flex max-w-3xl flex-col gap-4 p-4" dir="rtl">
+      <Image src="/images/backgrounds/speed-arena-bg.jpg" alt="" fill className="object-cover opacity-10 pointer-events-none fixed inset-0 -z-10" />
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold sm:text-2xl">מבחן מהירות</h1>
-          <p className="text-sm text-muted-foreground">דקה אחת. כמה מהר אתה?</p>
+        <div className="flex items-center gap-3">
+          <Image
+            src="/images/characters/model-sheets/yuki-girl.jpg"
+            alt="Yuki"
+            width={48}
+            height={48}
+            className="rounded-full border-2 border-purple-500/30 shadow-lg shadow-purple-500/10"
+          />
+          <div>
+            <h1 className="text-xl font-bold sm:text-2xl">מבחן מהירות</h1>
+            <p className="text-sm text-muted-foreground">דקה אחת. כמה מהר אתה?</p>
+          </div>
         </div>
         <Timer className="size-8 text-primary" />
       </div>

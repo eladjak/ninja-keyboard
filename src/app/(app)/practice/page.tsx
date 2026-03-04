@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Keyboard, Target, Zap, RotateCcw, ChevronDown } from 'lucide-react'
@@ -256,14 +257,24 @@ export default function PracticePage() {
       : []
 
   return (
-    <div className="mx-auto flex max-w-3xl flex-col gap-4 p-4" dir="rtl">
+    <div className="relative mx-auto flex max-w-3xl flex-col gap-4 p-4" dir="rtl">
+      <Image src="/images/backgrounds/moonlit-garden-bg.jpg" alt="" fill className="object-cover opacity-10 pointer-events-none fixed inset-0 -z-10" />
       {/* ── Header ──────────────────────────────────────────────── */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold sm:text-2xl">תרגול חופשי</h1>
-          <p className="text-sm text-muted-foreground">
-            בחר טקסט וזמן, והתחל לתרגל
-          </p>
+        <div className="flex items-center gap-3">
+          <Image
+            src="/images/characters/model-sheets/luna-girl.jpg"
+            alt="Luna"
+            width={48}
+            height={48}
+            className="rounded-full border-2 border-purple-500/30 shadow-lg shadow-purple-500/10"
+          />
+          <div>
+            <h1 className="text-xl font-bold sm:text-2xl">תרגול חופשי</h1>
+            <p className="text-sm text-muted-foreground">
+              בחר טקסט וזמן, והתחל לתרגל
+            </p>
+          </div>
         </div>
         <Keyboard className="size-8 text-primary" />
       </div>

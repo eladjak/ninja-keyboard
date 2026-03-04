@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ninja Keyboard - Character Gallery</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #0d0b1a;
+    color: #e0e0e0;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+  h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, #6C5CE7, #00B894);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+  }
+  .subtitle {
+    text-align: center;
+    color: #888;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+  }
+  .section {
+    margin-bottom: 3rem;
+  }
+  .section-title {
+    font-size: 1.5rem;
+    color: #6C5CE7;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #6C5CE730;
+    text-shadow: 0 0 15px #6C5CE740;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .card {
+    background: #13102a;
+    border: 2px solid #6C5CE730;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: #6C5CE780;
+  }
+  .card img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-bottom: 1px solid #6C5CE720;
+  }
+  .card-body {
+    padding: 1rem;
+  }
+  .card-name {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 0.25rem;
+  }
+  .card-name .hebrew {
+    color: #00B894;
+    font-size: 1rem;
+  }
+  .card-role {
+    font-size: 0.85rem;
+    color: #6C5CE7;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .card-meta {
+    font-size: 0.8rem;
+    color: #888;
+    line-height: 1.6;
+  }
+  .card-meta strong { color: #bbb; }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin: 2px;
+  }
+  .tag-male { background: #3b82f620; color: #60a5fa; border: 1px solid #3b82f640; }
+  .tag-female { background: #ec489920; color: #f472b6; border: 1px solid #ec489940; }
+  .tag-neutral { background: #f59e0b20; color: #fbbf24; border: 1px solid #f59e0b40; }
+  .tag-rival { background: #ef444420; color: #f87171; border: 1px solid #ef444440; }
+  .environments {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1rem;
+  }
+  .env-card {
+    background: #13102a;
+    border: 1px solid #00B89430;
+    border-radius: 12px;
+    padding: 1.2rem;
+  }
+  .env-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #00B894;
+    margin-bottom: 0.3rem;
+  }
+  .env-use { color: #888; font-size: 0.85rem; margin-bottom: 0.5rem; }
+  .env-desc { color: #aaa; font-size: 0.85rem; line-height: 1.6; }
+  .stats {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+  }
+  .stat-box {
+    background: #13102a;
+    border: 2px solid #6C5CE740;
+    border-radius: 12px;
+    padding: 1rem 2rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #6C5CE7;
+    text-shadow: 0 0 15px #6C5CE760;
+  }
+  .stat-label { font-size: 0.85rem; color: #888; margin-top: 0.25rem; }
+  .roadmap {
+    background: #13102a;
+    border: 1px solid #6C5CE730;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .phase {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .phase-num {
+    min-width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #6C5CE720;
+    color: #6C5CE7;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border: 2px solid #6C5CE740;
+  }
+  .phase-done { background: #00B89420; color: #00B894; border-color: #00B89440; }
+  .phase-text h4 { color: #ddd; margin-bottom: 0.25rem; }
+  .phase-text p { color: #888; font-size: 0.85rem; }
+  footer {
+    text-align: center;
+    color: #555;
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid #6C5CE720;
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+
+<h1>Ninja Keyboard - Character World</h1>
+<p class="subtitle">12 Characters | 6 Environments | Brawl Stars + Anime Style</p>
+
+<div class="stats">
+  <div class="stat-box">
+    <div class="stat-num">12</div>
+    <div class="stat-label">Model Sheets</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num">6</div>
+    <div class="stat-label">Hero Characters</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num">3</div>
+    <div class="stat-label">Battle Rivals</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num">3</div>
+    <div class="stat-label">Companions</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num">6</div>
+    <div class="stat-label">Environments</div>
+  </div>
+</div>
+
+<!-- HEROES -->
+<div class="section">
+  <h2 class="section-title">Heroes (Player Companions)</h2>
+  <div class="grid">
+
+    <div class="card">
+      <img src="public/images/characters/model-sheets/ki-boy-v2.jpg" alt="Ki">
+      <div class="card-body">
+        <div class="card-name">Ki <span class="hebrew">(קי)</span></div>
+        <div class="card-role">Main Mascot & Guide</div>
+        <span class="tag tag-male">BOY, 12</span>
+        <div class="card-meta">
+          <strong>Species:</strong> Human ninja<br>
+          <strong>Colors:</strong> Purple outfit, green accents<br>
+          <strong>Personality:</strong> Energetic, encouraging, funny<br>
+          <strong>Role:</strong> Main guide in all screens
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="public/images/characters/model-sheets/yuki-girl.jpg" alt="Yuki">
+      <div class="card-body">
+        <div class="card-name">Yuki <span class="hebrew">(יוקי)</span></div>
+        <div class="card-role">Speed Specialist</div>
+        <span class="tag tag-female">GIRL, 11</span>
+        <div class="card-meta">
+          <strong>Species:</strong> Human ninja<br>
+          <strong>Colors:</strong> Teal/cyan hair, pink accents<br>
+          <strong>Personality:</strong> Fast, precise, competitive<br>
+          <strong>Role:</strong> Speed test companion
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="public/images/characters/model-sheets/luna-girl.jpg" alt="Luna">
+      <div class="card-body">
+        <div class="card-name">Luna <span class="hebrew">(לונה)</span></div>
+        <div class="card-role">Night/Moon Ninja</div>
+        <span class="tag tag-female">GIRL, 13</span>
+        <div class="card-meta">
+          <strong>Species:</strong> Human ninja<br>
+          <strong>Colors:</strong> Silver-white hair, indigo outfit<br>
+          <strong>Personality:</strong> Calm, wise, mysterious<br>
+          <strong>Role:</strong> Practice mode companion
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="public/images/characters/model-sheets/noa-girl.jpg" alt="Noa">
+      <div class="card-body">
+        <div class="card-name">Noa <span class="hebrew">(נועה)</span></div>
+        <div class="card-role">Medic Ninja</div>
+        <span class="tag tag-female">GIRL, 10</span>
+        <div class="card-meta">
+          <strong>Species:</strong> Human ninja<br>
+          <strong>Colors:</strong> Green braided hair, white/mint outfit<br>
+          <strong>Personality:</strong> Caring, gentle, patient<br>
+          <strong>Role:</strong> Error correction guide
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="public/images/characters/model-sheets/kai-boy.jpg" alt="Kai">
+      <div class="card-body">
+        <div class="card-name">Kai <span class="hebrew">(קאי)</span></div>
+        <div class="card-role">Fire Warrior</div>
+        <span class="tag tag-male">BOY, 13</span>
+        <div class="card-meta">
+          <strong>Species:</strong> Human ninja<br>
+          <strong>Colors:</strong> Red-orange hair, flame outfit<br>
+          <strong>Personality:</strong> Fierce, determined, bold<br>
+          <strong>Role:</strong> Battle arena partner
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="public/images/characters/model-sheets/mika-girl.jpg" alt="Mika">
+      <div class="card-body">
+        <div class="card-name">Mika <span class="hebrew">(מיקה)</span></div>
+        <div class="card-role">Tech Ninja Hacker</div>
+        <span class="tag tag-female">GIRL, 12</span>
+        <div class="card-meta">
+          <strong>Species:</strong> Human ninja<br>
+          <strong>Colors:</strong> Purple-pink hair, cyberpunk suit<br>
+          <strong>Personality:</strong> Smart, mischievous, creative<br>
+          <strong>Role:</strong> Keyboard shortcuts guide
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MENTORS & COMPANIONS -->
+<div class="section">
+  <h2 class="section-title">Mentors & Companions</h2>
+  <div class="grid">
+
+    <div class="card">
+      <img src="public/images/characters/model-sheets/sensei-zen.jpg" alt="Sensei Zen">
+      <div class="card-body">
+        <div class="card-name">Sensei Zen <span class="hebrew">(סנסאי זן)</span></div>
+        <div class="card-role">Wise Turtle Mentor</div>
+        <span class="tag tag-neutral">MENTOR</span>
+        <div class="card-meta">
+          <strong>Species:</strong> Turtle ninja<br>
+          <strong>Colors:</strong> Golden/brown robes, jade<br>
+          <strong>Personality:</strong> Wise, patient, philosophical<br>
+          <strong>Role:</strong> Tutorial guide, lesson intros
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="public/images/characters/model-sheets/pixel-robot.jpg" alt="Pixel">
+      <div class="card-body">
+        <div class="card-name">Pixel <span class="hebrew">(פיקסל)</span></div>
+        <div class="card-role">Robot Assistant</div>
+        <span class="tag tag-neutral">COMPANION</span>
+        <div class="card-meta">
+          <strong>Species:</strong> Floating robot<br>
+          <strong>Colors:</strong> Cyan/silver, orange accents<br>
+          <strong>Personality:</strong> Helpful, precise, cheerful<br>
+          <strong>Role:</strong> Statistics, progress tracking
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="public/images/characters/model-sheets/rex-dino.jpg" alt="Rex">
+      <div class="card-body">
+        <div class="card-name">Rex <span class="hebrew">(רקס)</span></div>
+        <div class="card-role">Dino Ninja</div>
+        <span class="tag tag-neutral">COMPANION</span>
+        <div class="card-meta">
+          <strong>Species:</strong> T-Rex ninja<br>
+          <strong>Colors:</strong> Lime green, orange accents<br>
+          <strong>Personality:</strong> Enthusiastic, clumsy, lovable<br>
+          <strong>Role:</strong> Speed test buddy, Word Rain
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- RIVALS -->
+<div class="section">
+  <h2 class="section-title">Battle Rivals</h2>
+  <div class="grid">
+
+    <div class="card" style="border-color: #6C5CE740;">
+      <img src="public/images/characters/model-sheets/shadow-v2.jpg" alt="Shadow">
+      <div class="card-body">
+        <div class="card-name">Shadow <span class="hebrew">(צל)</span></div>
+        <div class="card-role">Easy Rival - Cat Ninja</div>
+        <span class="tag tag-rival">EASY 15-25 WPM</span>
+        <div class="card-meta">
+          <strong>Species:</strong> Cat ninja<br>
+          <strong>Colors:</strong> Black/gray, purple eyes<br>
+          <strong>Personality:</strong> Mysterious, quiet, stealthy
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color: #3b82f640;">
+      <img src="public/images/characters/model-sheets/storm-v2.jpg" alt="Storm">
+      <div class="card-body">
+        <div class="card-name">Storm <span class="hebrew">(סערה)</span></div>
+        <div class="card-role">Medium Rival - Fox Ninja</div>
+        <span class="tag tag-rival">MEDIUM 25-40 WPM</span>
+        <div class="card-meta">
+          <strong>Species:</strong> Fox ninja<br>
+          <strong>Colors:</strong> Electric blue, lightning<br>
+          <strong>Personality:</strong> Fast, cocky, electrifying
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color: #ef444440;">
+      <img src="public/images/characters/model-sheets/blaze-v2.jpg" alt="Blaze">
+      <div class="card-body">
+        <div class="card-name">Blaze <span class="hebrew">(להבה)</span></div>
+        <div class="card-role">Hard Rival - Dragon Ninja</div>
+        <span class="tag tag-rival">HARD 40-60 WPM</span>
+        <div class="card-meta">
+          <strong>Species:</strong> Dragon ninja<br>
+          <strong>Colors:</strong> Fiery red-orange, gold armor<br>
+          <strong>Personality:</strong> Fierce, honorable, powerful
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ENVIRONMENTS -->
+<div class="section">
+  <h2 class="section-title">Game Environments</h2>
+  <div class="environments">
+    <div class="env-card">
+      <div class="env-name">Training Dojo (Lessons)</div>
+      <div class="env-use">Characters: Ki, Sensei Zen</div>
+      <div class="env-desc">Traditional Japanese dojo, wooden floors, cherry blossoms, scrolls with Hebrew letters on walls</div>
+    </div>
+    <div class="env-card">
+      <div class="env-name">Speed Arena (Speed Tests)</div>
+      <div class="env-use">Characters: Yuki, Rex</div>
+      <div class="env-desc">Futuristic racing track, neon blue lights, countdown timers, digital speed displays</div>
+    </div>
+    <div class="env-card">
+      <div class="env-name">Battle Colosseum (Battle Mode)</div>
+      <div class="env-use">Characters: Kai, Shadow/Storm/Blaze</div>
+      <div class="env-desc">Epic arena with crowd, purple/red spotlights, dramatic versus screen</div>
+    </div>
+    <div class="env-card">
+      <div class="env-name">Cyber Lab (Shortcuts)</div>
+      <div class="env-use">Characters: Mika, Pixel</div>
+      <div class="env-desc">High-tech hacker lab, holographic displays, matrix-style code rain</div>
+    </div>
+    <div class="env-card">
+      <div class="env-name">Moonlit Garden (Practice)</div>
+      <div class="env-use">Characters: Luna, Noa</div>
+      <div class="env-desc">Peaceful Japanese garden at night, fireflies, moonlight, falling cherry blossoms</div>
+    </div>
+    <div class="env-card">
+      <div class="env-name">Games Arcade (Games Hub)</div>
+      <div class="env-use">Characters: Rex, Pixel</div>
+      <div class="env-desc">Retro arcade with modern touches, glowing game cabinets, neon signs</div>
+    </div>
+  </div>
+</div>
+
+<!-- ROADMAP -->
+<div class="section">
+  <h2 class="section-title">Development Roadmap</h2>
+  <div class="roadmap">
+    <div class="phase">
+      <div class="phase-num phase-done">1</div>
+      <div class="phase-text">
+        <h4>Static Character Art (DONE)</h4>
+        <p>12 model sheets generated with consistent Brawl Stars + anime style. Ki clearly male, 4 female characters, 3 companions, 3 rivals.</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">2</div>
+      <div class="phase-text">
+        <h4>Character Integration (IN PROGRESS)</h4>
+        <p>Replace all placeholder characters, assign characters to screens, mood-reactive expressions, Hebrew speech bubbles.</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">3</div>
+      <div class="phase-text">
+        <h4>Animations</h4>
+        <p>Idle animations per character, victory/defeat effects, screen transition animations, celebration particles.</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">4</div>
+      <div class="phase-text">
+        <h4>Sound & Voice</h4>
+        <p>Character SFX, Hebrew voice lines (recorded or TTS), character music themes, battle sound design.</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">5</div>
+      <div class="phase-text">
+        <h4>3D Models</h4>
+        <p>3D character models for key scenes, interactive character selection, 3D environments, camera transitions.</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">6</div>
+      <div class="phase-text">
+        <h4>Advanced Interaction</h4>
+        <p>Character selection for sessions, unlockable skins, character progression, special abilities/power-ups.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Ninja Keyboard Character World | Generated 2026-03-04 | 12 Characters, 6 Environments
+</footer>
+
+</body>
+</html>

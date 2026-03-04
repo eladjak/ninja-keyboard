@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import {
@@ -80,13 +81,22 @@ export default function StatisticsPage() {
     <div className="mx-auto max-w-3xl space-y-4 p-4" dir="rtl">
       {/* ── Header ──────────────────────────────────────────────── */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold sm:text-2xl">סטטיסטיקות</h1>
-          <p className="text-sm text-muted-foreground">
-            {hasData
-              ? `${totalSessions} תרגולים עד כה`
-              : 'התחל לתרגל כדי לראות סטטיסטיקות'}
-          </p>
+        <div className="flex items-center gap-3">
+          <Image
+            src="/images/characters/model-sheets/pixel-robot.jpg"
+            alt="Pixel"
+            width={48}
+            height={48}
+            className="rounded-full border-2 border-purple-500/30 shadow-lg shadow-purple-500/10"
+          />
+          <div>
+            <h1 className="text-xl font-bold sm:text-2xl">סטטיסטיקות</h1>
+            <p className="text-sm text-muted-foreground">
+              {hasData
+                ? `${totalSessions} תרגולים עד כה`
+                : 'התחל לתרגל כדי לראות סטטיסטיקות'}
+            </p>
+          </div>
         </div>
         <BarChart3 className="size-8 text-primary" />
       </div>
