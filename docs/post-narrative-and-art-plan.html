@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ninja Keyboard - תכנית פוסט-נרטיב ואמנות</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0d0b1a;--bg2:#080618;--card:#0c0a20;--elevated:#13102a;
+  --border:rgba(108,92,231,.18);--purple:#6C5CE7;--green:#00B894;
+  --pink:#FD79A8;--orange:#FDCB6E;--red:#FF6B6B;--blue:#74B9FF;
+  --cyan:#00CEC9;--text:#E8E6F0;--dim:#8B86A6;
+  --gp:0 0 24px rgba(108,92,231,.35);
+}
+body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+a{color:var(--purple);text-decoration:none}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(8,6,24,.95);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;gap:4px;flex-wrap:wrap;min-height:52px}
+nav a{color:var(--dim);font-size:13px;font-weight:500;padding:6px 11px;border-radius:8px;transition:all .2s;white-space:nowrap}
+nav a:hover{color:var(--text);background:rgba(108,92,231,.15)}
+.logo{color:var(--purple);font-weight:900;font-size:16px;margin-right:auto;padding:6px 0}
+
+/* LAYOUT */
+main{max-width:1200px;margin:0 auto;padding:32px 20px 80px}
+section{margin-bottom:64px}
+
+/* TYPOGRAPHY */
+h1{font-size:2.4rem;font-weight:900;background:linear-gradient(135deg,var(--purple),var(--cyan));
+   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+h2{font-size:1.55rem;font-weight:700;color:var(--purple);margin-bottom:20px;padding-bottom:10px;
+   border-bottom:2px solid rgba(108,92,231,.25);display:flex;align-items:center;gap:10px}
+h3{font-size:1.1rem;font-weight:700;color:var(--green);margin-bottom:9px}
+h4{font-size:.95rem;font-weight:600;color:var(--orange);margin-bottom:7px}
+.snum{background:var(--purple);color:#fff;border-radius:8px;padding:2px 10px;font-size:.83rem;font-weight:700;flex-shrink:0}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,rgba(108,92,231,.2),rgba(0,184,148,.1));
+      border:1px solid rgba(108,92,231,.3);border-radius:20px;padding:40px;margin-bottom:48px;
+      text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(108,92,231,.15),transparent 70%);pointer-events:none}
+.hero-sub{color:var(--dim);font-size:.95rem;margin-top:8px}
+.hero-meta{display:flex;justify-content:center;gap:12px;margin-top:22px;flex-wrap:wrap}
+.hb{background:rgba(108,92,231,.15);border:1px solid rgba(108,92,231,.3);border-radius:12px;padding:6px 14px;font-size:.83rem;color:var(--purple);font-weight:600}
+
+/* STAT BAR */
+.sbar{background:var(--elevated);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:40px;
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px}
+.ss{text-align:center}
+.sv{font-size:1.9rem;font-weight:900;background:linear-gradient(135deg,var(--purple),var(--cyan));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sl{font-size:.75rem;color:var(--dim);margin-top:3px}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:14px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.cgrid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(480px,1fr));gap:14px}
+
+/* MODE CARDS */
+.mc{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;
+    position:relative;overflow:hidden;transition:all .25s}
+.mc:hover{transform:translateY(-3px);box-shadow:var(--gp)}
+.mc .mi{font-size:2.2rem;margin-bottom:9px}
+.mc .mt{position:absolute;top:14px;left:14px;background:rgba(108,92,231,.2);border:1px solid rgba(108,92,231,.3);
+        border-radius:20px;font-size:.71rem;color:var(--purple);font-weight:700;padding:2px 9px}
+.mc h3{color:var(--text);font-size:1rem;margin-bottom:7px}
+.mc p{color:var(--dim);font-size:.86rem;line-height:1.6}
+
+/* PILLS */
+.pills{display:flex;flex-wrap:wrap;gap:5px;margin-top:11px}
+.pill{background:rgba(0,184,148,.1);border:1px solid rgba(0,184,148,.2);border-radius:20px;font-size:.71rem;color:var(--green);padding:2px 9px;font-weight:500}
+.pill.p{background:rgba(108,92,231,.1);border-color:rgba(108,92,231,.2);color:var(--purple)}
+.pill.o{background:rgba(253,203,110,.1);border-color:rgba(253,203,110,.2);color:var(--orange)}
+.pill.r{background:rgba(255,107,107,.1);border-color:rgba(255,107,107,.2);color:var(--red)}
+.pill.pk{background:rgba(253,121,168,.1);border-color:rgba(253,121,168,.2);color:var(--pink)}
+.pill.c{background:rgba(0,206,201,.1);border-color:rgba(0,206,201,.2);color:var(--cyan)}
+
+/* PROGRESS BARS */
+.pb-wrap{margin:8px 0}
+.pb-label{display:flex;justify-content:space-between;font-size:.75rem;color:var(--dim);margin-bottom:3px}
+.pb-bg{background:rgba(255,255,255,.07);border-radius:8px;height:6px;overflow:hidden}
+.pb-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--purple),var(--cyan))}
+
+/* TIMELINE */
+.tl{position:relative;padding-right:20px}
+.tl::before{content:'';position:absolute;right:5px;top:0;bottom:0;width:2px;background:rgba(108,92,231,.25)}
+.tli{position:relative;padding-right:20px;padding-bottom:16px}
+.tli::before{content:'';position:absolute;right:-4px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--purple);border:2px solid var(--bg)}
+.tli:last-child{padding-bottom:0}
+.tll{font-size:.75rem;color:var(--purple);font-weight:700;margin-bottom:2px}
+.tlc{font-size:.83rem;color:var(--dim)}
+
+/* CODE */
+.codeblock{background:rgba(0,0,0,.4);border:1px solid rgba(108,92,231,.2);border-radius:10px;padding:12px 14px;
+            font-family:'Courier New',monospace;font-size:.78rem;color:var(--green);overflow-x:auto;margin:9px 0;line-height:1.7;direction:ltr;text-align:left}
+
+/* CHARACTER ASSET TABLE */
+.char-row{background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:14px;overflow:hidden}
+.char-hdr{display:flex;align-items:center;gap:12px;padding:13px 18px;
+          background:linear-gradient(135deg,rgba(108,92,231,.1),rgba(0,184,148,.05));border-bottom:1px solid var(--border)}
+.cav{width:42px;height:42px;border-radius:9px;border:2px solid rgba(108,92,231,.4);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.cn{font-size:.95rem;font-weight:700;color:var(--text)}
+.cr{font-size:.75rem;color:var(--dim);margin-top:1px}
+.ct{margin-right:auto;background:rgba(108,92,231,.15);border:1px solid rgba(108,92,231,.25);border-radius:20px;font-size:.68rem;color:var(--purple);font-weight:700;padding:2px 8px}
+.char-body{padding:18px}
+.alist{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:5px;margin-bottom:12px}
+.ai{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.055);font-size:.81rem}
+.ai .si{font-size:.9rem;flex-shrink:0}
+.ai .al{color:var(--dim)}
+.ai.di .al{color:var(--text)}
+.skin-section{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.skin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px;margin-top:8px}
+.skin-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:8px;text-align:center;font-size:.78rem}
+.skin-icon{font-size:1.4rem;margin-bottom:3px}
+.skin-name{color:var(--dim)}
+
+/* BACKGROUND TABLE */
+.bgtable{width:100%;border-collapse:collapse}
+.bgtable th{background:rgba(108,92,231,.15);color:var(--purple);font-weight:700;padding:9px 12px;text-align:right;font-size:.81rem;border-bottom:1px solid var(--border)}
+.bgtable td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.05);font-size:.81rem;vertical-align:top}
+.bgtable tr:hover td{background:rgba(255,255,255,.02)}
+.bgt{display:inline-block;background:rgba(108,92,231,.12);border:1px solid rgba(108,92,231,.2);border-radius:5px;font-size:.68rem;color:var(--purple);font-weight:600;padding:2px 6px;margin:2px}
+.bgt.g{background:rgba(0,184,148,.12);border-color:rgba(0,184,148,.2);color:var(--green)}
+.bgt.r{background:rgba(255,107,107,.12);border-color:rgba(255,107,107,.2);color:var(--red)}
+.bgt.o{background:rgba(253,203,110,.12);border-color:rgba(253,203,110,.2);color:var(--orange)}
+
+/* ANIMATION */
+.acard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:10px}
+.atitle{font-size:.95rem;font-weight:700;color:var(--cyan);margin-bottom:10px;display:flex;align-items:center;gap:9px}
+.aprops{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px}
+.aprop{background:rgba(0,206,201,.06);border:1px solid rgba(0,206,201,.15);border-radius:8px;padding:7px 10px;font-size:.78rem}
+.aplabel{color:var(--dim);font-size:.7rem;margin-bottom:1px}
+.apval{color:var(--text);font-weight:600}
+
+/* PERF LEVELS */
+.perf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+.perf-card{border-radius:12px;padding:14px;text-align:center;border:1px solid transparent}
+.ph{background:rgba(0,184,148,.08);border-color:rgba(0,184,148,.25)}
+.pm{background:rgba(253,203,110,.08);border-color:rgba(253,203,110,.25)}
+.pl{background:rgba(255,107,107,.08);border-color:rgba(255,107,107,.25)}
+.pfi{font-size:1.7rem;margin-bottom:5px}
+.pft{font-weight:700;margin-bottom:5px;font-size:.87rem}
+.ph .pft{color:var(--green)}.pm .pft{color:var(--orange)}.pl .pft{color:var(--red)}
+.pfl{font-size:.77rem;color:var(--dim);line-height:1.8;text-align:right}
+
+/* MENU CARDS */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
+.mpc{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.mpc-hdr{padding:13px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.mpc-page{font-size:.92rem;font-weight:700;color:var(--text)}
+.mpc-chars{font-size:.77rem;color:var(--purple);font-weight:600}
+.mpc-body{padding:16px}
+.msl{font-size:.72rem;color:var(--dim);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.msv{font-size:.83rem;color:var(--text);margin-bottom:9px}
+
+/* STATUS */
+.done{color:var(--green);font-weight:700}
+.needed{color:var(--red);font-weight:700}
+
+/* RESPONSIVE */
+@media(max-width:700px){
+  .perf-grid{grid-template-columns:1fr}
+  h1{font-size:1.7rem}
+  .hero{padding:24px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">&#x1F977; Ninja Keyboard</span>
+  <a href="#post-narrative">פוסט-נרטיב</a>
+  <a href="#art-checklist">רשימת אמנות</a>
+  <a href="#backgrounds">רקעים</a>
+  <a href="#animation">הנפשה</a>
+  <a href="#menu-integration">תפריטים</a>
+</nav>
+
+<main>
+
+<!-- HERO BANNER -->
+<div class="hero">
+  <h1>תכנית פוסט-נרטיב ואמנות</h1>
+  <p class="hero-sub">נינג'ה מקלדת &middot; 14 דמויות &middot; Brawl Stars + Anime Chibi &middot; RTL &middot; גיל 6&ndash;16</p>
+  <div class="hero-meta">
+    <span class="hb">20 שיעורים + &#8734; תוכן פוסט</span>
+    <span class="hb">14 דמויות</span>
+    <span class="hb">5 עולמות גיל</span>
+    <span class="hb">3 אקטים נרטיביים</span>
+    <span class="hb">עדכון: מרץ 2026</span>
+  </div>
+</div>
+
+<!-- SUMMARY STATS -->
+<div class="sbar">
+  <div class="ss"><div class="sv">14</div><div class="sl">דמויות במשחק</div></div>
+  <div class="ss"><div class="sv">10</div><div class="sl">מצבי פוסט-נרטיב</div></div>
+  <div class="ss"><div class="sv">140+</div><div class="sl">נכסי אמנות נדרשים</div></div>
+  <div class="ss"><div class="sv">17</div><div class="sl">נכסים קיימים &#10003;</div></div>
+  <div class="ss"><div class="sv">5</div><div class="sl">עולמות גיל</div></div>
+  <div class="ss"><div class="sv">100+</div><div class="sl">הישגים מתוכננים</div></div>
+</div>
+
+<!-- ============================= SECTION 1 ============================= -->
+<section id="post-narrative">
+<h2><span class="snum">01</span> מה קורה אחרי 20 השיעורים? &mdash; מצבי פוסט-נרטיב</h2>
+
+<div class="card" style="background:linear-gradient(135deg,rgba(108,92,231,.1),rgba(0,184,148,.05));margin-bottom:22px">
+  <h4>הבעיה שצריך לפתור</h4>
+  <p style="color:var(--dim);font-size:.88rem">
+    הנרטיב של נינג'ה מקלדת מסתיים אחרי 20 שיעורים &mdash; ניצחון ב-Bug King, קי הופך לנינג'ה מקלדת אמיתי.
+    אבל הילדים רוצים להמשיך! הפתרון: <strong style="color:var(--purple)">עשרה מצבי פוסט-נרטיב</strong> שמשמרים מעורבות,
+    מוסיפים עומק, ומאפשרים חזרה על הנרטיב בדרכים חדשות לאינסוף.
+  </p>
+</div>
+
+<div class="cgrid">
+
+<!-- MODE 1 -->
+<div class="mc">
+  <div class="mt">מצב 1</div>
+  <div class="mi">&#128128;</div>
+  <h3>Boss Rush Mode &mdash; ריצת בוסים</h3>
+  <p>התמודדות מול כל הבוסים ברצף ללא הפסקות, מוגבל בזמן. לוח שיאים גלובלי לשחקנים הטובים.</p>
+  <div class="pills">
+    <span class="pill r">זמן מוגבל</span>
+    <span class="pill p">לוח שיאים</span>
+    <span class="pill o">4 בוסים ברצף</span>
+    <span class="pill">פרסים בלעדיים</span>
+  </div>
+  <div style="margin-top:13px;background:rgba(255,107,107,.07);border:1px solid rgba(255,107,107,.2);border-radius:10px;padding:11px">
+    <div style="font-size:.73rem;color:var(--dim);font-weight:700;margin-bottom:7px">מבנה הריצה:</div>
+    <div class="tl">
+      <div class="tli"><div class="tll">שלב 1</div><div class="tlc">Bug Mini &mdash; 60 שניות, WPM רגיל</div></div>
+      <div class="tli"><div class="tll">שלב 2</div><div class="tlc">Bug Enhanced &mdash; 45 שניות, שגיאות כפולות</div></div>
+      <div class="tli"><div class="tll">שלב 3</div><div class="tlc">Bug King &mdash; 90 שניות, מילים מורכבות</div></div>
+      <div class="tli"><div class="tll">בוס סופי</div><div class="tlc">Glitch &mdash; 60 שניות, פריסת מקלדת משובשת</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODE 2 -->
+<div class="mc">
+  <div class="mt">מצב 2</div>
+  <div class="mi">&#127775;</div>
+  <h3>אירועים עונתיים &mdash; Seasonal Events</h3>
+  <p>כל חודש אירוע חדש עם סקינים בלעדיים, אתגרים מיוחדים ותגים נדירים. קשורים לחגים ישראליים ולתרבות הילדים.</p>
+  <div class="pills">
+    <span class="pill pk">חודשי</span>
+    <span class="pill p">סקינים בלעדיים</span>
+    <span class="pill o">תגים נדירים</span>
+    <span class="pill c">תרבות ישראלית</span>
+  </div>
+  <div style="margin-top:11px;display:grid;gap:3px;font-size:.78rem">
+    <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(253,203,110,.06);border-radius:5px"><span>ספטמבר</span><span style="color:var(--orange)">פסטיבל חזרה לבית-הספר</span></div>
+    <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(0,206,201,.06);border-radius:5px"><span>אוקטובר</span><span style="color:var(--cyan)">Bug Attack &mdash; סוכות</span></div>
+    <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(253,121,168,.06);border-radius:5px"><span>דצמבר</span><span style="color:var(--pink)">Hanukkah Typing Marathon</span></div>
+    <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(0,184,148,.06);border-radius:5px"><span>מרץ</span><span style="color:var(--green)">Purim Glitch Festival</span></div>
+    <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(108,92,231,.06);border-radius:5px"><span>אפריל</span><span style="color:var(--purple)">Yom Ha'atzmaut Sprint</span></div>
+    <div style="display:flex;justify-content:space-between;padding:4px 8px;background:rgba(253,203,110,.06);border-radius:5px"><span>יוני</span><span style="color:var(--orange)">Summer Ninja Festival</span></div>
+  </div>
+</div>
+
+<!-- MODE 3 -->
+<div class="mc">
+  <div class="mt">מצב 3</div>
+  <div class="mi">&#9889;</div>
+  <h3>אתגרים שבועיים &mdash; Weekly Challenges</h3>
+  <p>שלושה אתגרים מתחלפים כל שלושה ימים עם מכפיל XP. שונים בכל שבוע. מונעים שגרה ומשמרים עניין לאורך זמן.</p>
+  <div class="pills">
+    <span class="pill">מכפיל XP x2</span>
+    <span class="pill p">מתחלפים כל 3 ימים</span>
+    <span class="pill o">3 קטגוריות</span>
+  </div>
+  <div style="margin-top:11px;display:grid;grid-template-columns:repeat(3,1fr);gap:7px">
+    <div style="background:rgba(108,92,231,.08);border:1px solid rgba(108,92,231,.2);border-radius:9px;padding:9px;text-align:center">
+      <div style="font-size:1.3rem;margin-bottom:3px">&#128640;</div>
+      <div style="font-size:.72rem;color:var(--purple);font-weight:700">מהירות</div>
+      <div style="font-size:.68rem;color:var(--dim)">הגע ל-X WPM</div>
+    </div>
+    <div style="background:rgba(0,184,148,.08);border:1px solid rgba(0,184,148,.2);border-radius:9px;padding:9px;text-align:center">
+      <div style="font-size:1.3rem;margin-bottom:3px">&#127919;</div>
+      <div style="font-size:.72rem;color:var(--green);font-weight:700">דיוק</div>
+      <div style="font-size:.68rem;color:var(--dim)">100% ב-3 שיעורים</div>
+    </div>
+    <div style="background:rgba(253,203,110,.08);border:1px solid rgba(253,203,110,.2);border-radius:9px;padding:9px;text-align:center">
+      <div style="font-size:1.3rem;margin-bottom:3px">&#127942;</div>
+      <div style="font-size:.72rem;color:var(--orange);font-weight:700">אתגר</div>
+      <div style="font-size:.68rem;color:var(--dim)">נצח בוס ברצף</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODE 4 -->
+<div class="mc">
+  <div class="mt">מצב 4</div>
+  <div class="mi">&#11088;</div>
+  <h3>שליטה בדמויות &mdash; Character Mastery</h3>
+  <p>פרוגרשן עמוק לכל דמות. רמות 1&ndash;100, יכולות ייחודיות שנפתחות ב-milestone-ים, ו&quot;ביוגרפיית גיבור&quot; כפרס.</p>
+  <div class="pills">
+    <span class="pill p">רמות 1&ndash;100</span>
+    <span class="pill">יכולות ייחודיות</span>
+    <span class="pill o">14 מסלולים</span>
+    <span class="pill c">ביוגרפיית דמות</span>
+  </div>
+  <div style="margin-top:11px">
+    <div style="font-size:.72rem;color:var(--dim);font-weight:700;margin-bottom:6px">פתיחות Ki לדוגמה:</div>
+    <div class="pb-wrap"><div class="pb-label"><span>רמה 25 &mdash; סקין Ki Turbo</span><span style="color:var(--purple)">25%</span></div><div class="pb-bg"><div class="pb-fill" style="width:25%"></div></div></div>
+    <div class="pb-wrap"><div class="pb-label"><span>רמה 50 &mdash; XP Boost פסיבי</span><span style="color:var(--purple)">50%</span></div><div class="pb-bg"><div class="pb-fill" style="width:50%"></div></div></div>
+    <div class="pb-wrap"><div class="pb-label"><span>רמה 75 &mdash; הנפשת ניצחון אפית</span><span style="color:var(--purple)">75%</span></div><div class="pb-bg"><div class="pb-fill" style="width:75%"></div></div></div>
+    <div class="pb-wrap"><div class="pb-label"><span>רמה 100 &mdash; Ki Legendary Skin</span><span style="color:var(--cyan)">100%</span></div><div class="pb-bg"><div class="pb-fill" style="width:100%;background:linear-gradient(90deg,var(--purple),var(--cyan),var(--pink))"></div></div></div>
+  </div>
+</div>
+
+<!-- MODE 5 -->
+<div class="mc">
+  <div class="mt">מצב 5</div>
+  <div class="mi">&#127979;</div>
+  <h3>קרבות קהילה &mdash; Community Battles</h3>
+  <p>כיתה נגד כיתה בתחרויות הקלדה. ממשק מורה לניהול, לוחות שיאים כיתתיים, ציון קבוצתי מצטבר שבועי.</p>
+  <div class="pills">
+    <span class="pill">כיתה vs כיתה</span>
+    <span class="pill p">ניהול מורה</span>
+    <span class="pill">לוח שיאים</span>
+    <span class="pill pk">תגים לכיתה</span>
+  </div>
+  <div style="margin-top:11px;background:rgba(0,184,148,.06);border:1px solid rgba(0,184,148,.15);border-radius:9px;padding:11px;font-size:.8rem;color:var(--dim);line-height:1.8">
+    &#9312; מורה פותח אירוע (5 דק') &rarr; &#9313; כל הכיתה מקלידה בו-זמנית &rarr; &#9314; XP מצטבר לכיתה &rarr;
+    &#9315; הכיתה הגבוהה מקבלת תג "אלופת השבוע" &rarr; &#9316; כל הגיבורים חוגגים בהנפשה
+  </div>
+</div>
+
+<!-- MODE 6 -->
+<div class="mc">
+  <div class="mt">מצב 6</div>
+  <div class="mi">&#9854;</div>
+  <h3>תרגול אינסופי &mdash; Endless Practice</h3>
+  <p>אתגרי הקלדה שנוצרים פרוצדורלית עם קושי עולה. מנוע חכם שלומד מהחסרונות האישיים ומתאים תוכן ייחודי.</p>
+  <div class="pills">
+    <span class="pill">AI-generated</span>
+    <span class="pill p">קושי אדפטיבי</span>
+    <span class="pill c">אישי לשחקן</span>
+    <span class="pill o">ללא סוף</span>
+  </div>
+  <div class="codeblock">if accuracy &gt; 95% and wpm &gt; target:
+    increase_difficulty()
+if accuracy &lt; 80%:
+    add_luna_guide()
+    slow_down()
+focus = analyze_weak_keys(last_30_sessions)
+next_challenge = generate(focus_keys=focus)</div>
+</div>
+
+<!-- MODE 7 -->
+<div class="mc">
+  <div class="mt">מצב 7</div>
+  <div class="mi">&#127949;</div>
+  <h3>ציד הישגים &mdash; Achievement Hunter</h3>
+  <p>100+ הישגים הפרוסים על פני כל מצבי המשחק. שלוש רמות נדירות. הישגים נסתרים לגילוי ספונטני.</p>
+  <div class="pills">
+    <span class="pill o">100+ הישגים</span>
+    <span class="pill">3 רמות נדירות</span>
+    <span class="pill p">הישגים נסתרים</span>
+    <span class="pill c">תגים ייחודיים</span>
+  </div>
+  <div style="margin-top:11px;display:grid;grid-template-columns:repeat(3,1fr);gap:5px">
+    <div style="background:rgba(184,115,51,.1);border:1px solid rgba(184,115,51,.3);border-radius:9px;padding:9px;text-align:center">
+      <div style="font-size:1.2rem">&#129351;</div><div style="font-size:.71rem;color:#CD7F32;font-weight:700">ברונזה</div><div style="font-size:.66rem;color:var(--dim)">60 הישגים</div></div>
+    <div style="background:rgba(192,192,192,.1);border:1px solid rgba(192,192,192,.3);border-radius:9px;padding:9px;text-align:center">
+      <div style="font-size:1.2rem">&#129350;</div><div style="font-size:.71rem;color:#C0C0C0;font-weight:700">כסף</div><div style="font-size:.66rem;color:var(--dim)">30 הישגים</div></div>
+    <div style="background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.3);border-radius:9px;padding:9px;text-align:center">
+      <div style="font-size:1.2rem">&#129349;</div><div style="font-size:.71rem;color:#FFD700;font-weight:700">זהב</div><div style="font-size:.66rem;color:var(--dim)">10 הישגים</div></div>
+  </div>
+</div>
+
+<!-- MODE 8 -->
+<div class="mc">
+  <div class="mt">מצב 8</div>
+  <div class="mi">&#9998;</div>
+  <h3>עורך מסלולים &mdash; Custom Track Editor</h3>
+  <p>שחקנים יוצרים ומשתפים אתגרי הקלדה. מנוע בדיקת תוכן, דירוג קהילתי, "מסלולים מובחרים" שאושרו על ידי מורים.</p>
+  <div class="pills">
+    <span class="pill c">יצירת תוכן</span>
+    <span class="pill">שיתוף קהילתי</span>
+    <span class="pill p">אישור מורה</span>
+    <span class="pill">בטיחות תוכן</span>
+  </div>
+</div>
+
+<!-- MODE 9 -->
+<div class="mc">
+  <div class="mt">מצב 9</div>
+  <div class="mi">&#128034;</div>
+  <h3>דוג'ו של סנסאי זן &mdash; Sensei's Dojo</h3>
+  <p>אימון טכניקות מתקדמות: הקלדה עיוורת, שיאי מהירות, תנוחת ידיים. סנסאי זן מסביר בחוכמה ובהנפשה.</p>
+  <div class="pills">
+    <span class="pill o">הקלדה עיוורת</span>
+    <span class="pill p">שיאי מהירות</span>
+    <span class="pill">ארגונומיה</span>
+    <span class="pill c">עצות חכמה</span>
+  </div>
+  <div style="margin-top:11px;display:grid;gap:3px;font-size:.78rem">
+    <div style="padding:5px 9px;background:rgba(255,255,255,.04);border-radius:7px;display:flex;gap:9px"><span style="color:var(--purple)">I</span><span style="color:var(--dim)">יסודות הקלדה עיוורת (שלב 1&ndash;5)</span></div>
+    <div style="padding:5px 9px;background:rgba(255,255,255,.04);border-radius:7px;display:flex;gap:9px"><span style="color:var(--purple)">II</span><span style="color:var(--dim)">בניית שרירי הקלדה (10 ימים)</span></div>
+    <div style="padding:5px 9px;background:rgba(255,255,255,.04);border-radius:7px;display:flex;gap:9px"><span style="color:var(--purple)">III</span><span style="color:var(--dim)">שובר מחסום 60 WPM</span></div>
+    <div style="padding:5px 9px;background:rgba(255,255,255,.04);border-radius:7px;display:flex;gap:9px"><span style="color:var(--orange)">IV</span><span style="color:var(--dim)">מאסטר &mdash; 100 WPM ומעלה (נדיר)</span></div>
+  </div>
+</div>
+
+<!-- MODE 10 -->
+<div class="mc">
+  <div class="mt">מצב 10</div>
+  <div class="mi">&#128218;</div>
+  <h3>סיפורי הדמויות &mdash; Character Stories</h3>
+  <p>פרקי סיפור שנפתחים לכל דמות לפי רמת שליטה. Origin stories, מאחורי-הקלעים, ופרקי "מה קורה אחרי" הניצחון.</p>
+  <div class="pills">
+    <span class="pill pk">14 סיפורים</span>
+    <span class="pill p">נפתח לפי שליטה</span>
+    <span class="pill c">ויז'ואל נובל</span>
+    <span class="pill o">Hebrew narrative</span>
+  </div>
+</div>
+
+</div><!-- /cgrid -->
+</section>
+
+<!-- ============================= SECTION 2 ============================= -->
+<section id="art-checklist">
+<h2><span class="snum">02</span> רשימת נכסים ויזואליים לפי דמות</h2>
+
+<div class="card" style="background:linear-gradient(135deg,rgba(0,184,148,.08),rgba(108,92,231,.05));margin-bottom:22px">
+  <h4>מקרא</h4>
+  <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:.85rem;margin-top:6px">
+    <span><span class="done">&#10003;</span> &mdash; קיים</span>
+    <span><span class="needed">&#10007;</span> &mdash; נדרש</span>
+    <span style="color:var(--orange);font-weight:700">&#9651;</span> &mdash; חלקי
+  </div>
+  <p style="color:var(--dim);font-size:.83rem;margin-top:8px">
+    כל model sheet שמוצג ב-<span class="done">&#10003;</span> הוא קובץ שנוצר על ידי Gemini ונמצא ב-<code style="background:rgba(0,0,0,.3);padding:1px 5px;border-radius:4px">public/images/characters/model-sheets/</code>.
+    כל שאר הנכסים נדרשים לגנרציה.
+  </p>
+</div>
+
+<!-- KI -->
+<div class="char-row">
+  <div class="char-hdr">
+    <div class="cav">&#128084;</div>
+    <div><div class="cn">Ki (קי) &mdash; מסכות ראשי</div><div class="cr">&#9733; טייר 1 &middot; בן 12 &middot; נינג'ה אנושי &middot; צבעים: סגול + ירוק</div></div>
+    <div class="ct">TIER 1 &mdash; Core Hero</div>
+  </div>
+  <div class="char-body">
+    <h4>נכסי אמנות בסיסיים</h4>
+    <div class="alist">
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Model Sheet (חזית/גב/צד)</span></div>
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Ki Hero Portrait</span></div>
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Ki Mascot (כל הגוף)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Expression Sheet (8 רגשות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Pose Sheet (7 פוזות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Mini Avatar 48x48</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Full Portrait 256x256</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Battle Stance</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Victory Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Defeat Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Companion Mode (floating small)</span></div>
+    </div>
+    <div class="skin-section">
+      <h4>סקינים עונתיים (4 נדרשים)</h4>
+      <div class="skin-grid">
+        <div class="skin-card"><div class="skin-icon">&#9728;</div><div class="skin-name">Ki Summer &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127875;</div><div class="skin-name">Ki Halloween &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#10052;</div><div class="skin-name">Ki Winter &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127800;</div><div class="skin-name">Ki Spring &mdash; <span class="needed">&#10007;</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MIKA -->
+<div class="char-row">
+  <div class="char-hdr">
+    <div class="cav">&#128187;</div>
+    <div><div class="cn">Mika (מיקה) &mdash; נינג'ה טכנולוגיה</div><div class="cr">&#9733; טייר 1 &middot; בת 12 &middot; צבעים: סגול-ורוד + כתום</div></div>
+    <div class="ct">TIER 1 &mdash; Core Hero</div>
+  </div>
+  <div class="char-body">
+    <div class="alist">
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Model Sheet</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Expression Sheet (8 רגשות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Pose Sheet (7 פוזות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Mini Avatar 48x48</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Full Portrait 256x256</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Battle Stance</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Victory Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Defeat Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Companion Mode</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Battle Mode (Orange Mask)</span></div>
+    </div>
+    <div class="skin-section">
+      <h4>סקינים עונתיים</h4>
+      <div class="skin-grid">
+        <div class="skin-card"><div class="skin-icon">&#9728;</div><div class="skin-name">Mika Summer &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127875;</div><div class="skin-name">Mika Halloween &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#10052;</div><div class="skin-name">Mika Winter &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127800;</div><div class="skin-name">Mika Spring &mdash; <span class="needed">&#10007;</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- YUKI -->
+<div class="char-row">
+  <div class="char-hdr">
+    <div class="cav">&#128007;</div>
+    <div><div class="cn">Yuki (יוקי) &mdash; מומחית מהירות</div><div class="cr">&#9733; טייר 2 &middot; בת 11 &middot; צבעים: טיל/ציאן + ורוד</div></div>
+    <div class="ct">TIER 2 &mdash; Specialist</div>
+  </div>
+  <div class="char-body">
+    <div class="alist">
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Model Sheet</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Expression Sheet (8 רגשות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Pose Sheet (7 פוזות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Mini Avatar 48x48</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Full Portrait 256x256</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Battle Stance</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Victory Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Defeat Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Companion Mode (speed blur trail)</span></div>
+    </div>
+    <div class="skin-section">
+      <h4>סקינים עונתיים</h4>
+      <div class="skin-grid">
+        <div class="skin-card"><div class="skin-icon">&#9728;</div><div class="skin-name">Yuki Summer &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127875;</div><div class="skin-name">Yuki Halloween &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#10052;</div><div class="skin-name">Yuki Winter &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127800;</div><div class="skin-name">Yuki Spring &mdash; <span class="needed">&#10007;</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LUNA -->
+<div class="char-row">
+  <div class="char-hdr">
+    <div class="cav">&#127769;</div>
+    <div><div class="cn">Luna (לונה) &mdash; נינג'ת ירח, מדריכת תרגול</div><div class="cr">&#9733; טייר 2 &middot; בת 13 &middot; צבעים: כסף-לבן + אינדיגו</div></div>
+    <div class="ct">TIER 2 &mdash; Specialist</div>
+  </div>
+  <div class="char-body">
+    <div class="alist">
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Model Sheet</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Expression Sheet (8 רגשות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Pose Sheet (7 פוזות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Mini Avatar 48x48</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Full Portrait 256x256</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Battle Stance</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Victory Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Defeat Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Companion Mode (moonlight glow)</span></div>
+    </div>
+    <div class="skin-section">
+      <h4>סקינים עונתיים</h4>
+      <div class="skin-grid">
+        <div class="skin-card"><div class="skin-icon">&#9728;</div><div class="skin-name">Luna Summer &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127875;</div><div class="skin-name">Luna Halloween &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#10052;</div><div class="skin-name">Luna Winter &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127800;</div><div class="skin-name">Luna Spring &mdash; <span class="needed">&#10007;</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NOA -->
+<div class="char-row">
+  <div class="char-hdr">
+    <div class="cav">&#129354;</div>
+    <div><div class="cn">Noa (נועה) &mdash; מרפאת שגיאות</div><div class="cr">&#9733; טייר 2 &middot; בת 10 &middot; צבעים: ירוק + לבן/מנטה</div></div>
+    <div class="ct">TIER 2 &mdash; Specialist</div>
+  </div>
+  <div class="char-body">
+    <div class="alist">
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Model Sheet</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Expression Sheet (8 רגשות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Pose Sheet (7 פוזות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Mini Avatar 48x48</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Full Portrait 256x256</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Battle Stance</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Victory Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Defeat Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Companion Mode (contextual, error helper)</span></div>
+    </div>
+    <div class="skin-section">
+      <h4>סקינים עונתיים</h4>
+      <div class="skin-grid">
+        <div class="skin-card"><div class="skin-icon">&#9728;</div><div class="skin-name">Noa Summer &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127875;</div><div class="skin-name">Noa Halloween &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#10052;</div><div class="skin-name">Noa Winter &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127800;</div><div class="skin-name">Noa Spring &mdash; <span class="needed">&#10007;</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KAI -->
+<div class="char-row">
+  <div class="char-hdr">
+    <div class="cav">&#128293;</div>
+    <div><div class="cn">Kai (קאי) &mdash; לוחם אש, שותף קרב</div><div class="cr">&#9733; טייר 2 &middot; בן 13 &middot; צבעים: אדום-כתום, להבות</div></div>
+    <div class="ct">TIER 2 &mdash; Specialist</div>
+  </div>
+  <div class="char-body">
+    <div class="alist">
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Model Sheet</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Expression Sheet (8 רגשות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Pose Sheet (7 פוזות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Mini Avatar 48x48</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Full Portrait 256x256</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Battle Stance</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Victory Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Defeat Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Companion Mode (battle arena coach)</span></div>
+    </div>
+    <div class="skin-section">
+      <h4>סקינים עונתיים</h4>
+      <div class="skin-grid">
+        <div class="skin-card"><div class="skin-icon">&#9728;</div><div class="skin-name">Kai Summer &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127875;</div><div class="skin-name">Kai Halloween &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#10052;</div><div class="skin-name">Kai Winter &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127800;</div><div class="skin-name">Kai Spring &mdash; <span class="needed">&#10007;</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SENSEI ZEN -->
+<div class="char-row">
+  <div class="char-hdr">
+    <div class="cav">&#128034;</div>
+    <div><div class="cn">Sensei Zen (סנסאי זן) &mdash; אמן צב עתיק</div><div class="cr">&#9733; טייר 3 &middot; צב נינג'ה &middot; צבעים: זהב/חום + ירוק ג'ייד</div></div>
+    <div class="ct">TIER 3 &mdash; Mentor</div>
+  </div>
+  <div class="char-body">
+    <div class="alist">
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Model Sheet</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Expression Sheet (8 רגשות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Pose Sheet (7 פוזות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Mini Avatar 48x48</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Full Portrait 256x256</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Teaching Pose (שיעור)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Meditation Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Companion Mode (lessons sidebar)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Teacher Dashboard Version</span></div>
+    </div>
+    <div class="skin-section">
+      <h4>סקינים עונתיים</h4>
+      <div class="skin-grid">
+        <div class="skin-card"><div class="skin-icon">&#9728;</div><div class="skin-name">Zen Summer &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127875;</div><div class="skin-name">Zen Halloween &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#10052;</div><div class="skin-name">Zen Winter &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127800;</div><div class="skin-name">Zen Spring &mdash; <span class="needed">&#10007;</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PIXEL -->
+<div class="char-row">
+  <div class="char-hdr">
+    <div class="cav">&#129302;</div>
+    <div><div class="cn">Pixel (פיקסל) &mdash; רובוט נתונים</div><div class="cr">&#9733; טייר 3 &middot; רובוט מרחף &middot; צבעים: ציאן/כסף + כתום</div></div>
+    <div class="ct">TIER 3 &mdash; Companion</div>
+  </div>
+  <div class="char-body">
+    <div class="alist">
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Model Sheet</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Expression Sheet (8 מצבים)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">UI Overlay Version (transparent)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Mini Avatar 48x48</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Full Portrait 256x256</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Data Display Mode</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Hovering Companion Mode</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Settings Assistant Version</span></div>
+    </div>
+    <div class="skin-section">
+      <h4>סקינים עונתיים</h4>
+      <div class="skin-grid">
+        <div class="skin-card"><div class="skin-icon">&#9728;</div><div class="skin-name">Pixel Summer &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127875;</div><div class="skin-name">Pixel Halloween &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#10052;</div><div class="skin-name">Pixel Winter &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127800;</div><div class="skin-name">Pixel Spring &mdash; <span class="needed">&#10007;</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REX -->
+<div class="char-row">
+  <div class="char-hdr">
+    <div class="cav">&#129430;</div>
+    <div><div class="cn">Rex (רקס) &mdash; דינוזאור נינג'ה</div><div class="cr">&#9733; טייר 3 &middot; T-Rex נינג'ה &middot; צבעים: ירוק-ליים + כתום</div></div>
+    <div class="ct">TIER 3 &mdash; Companion</div>
+  </div>
+  <div class="char-body">
+    <div class="alist">
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Model Sheet</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Expression Sheet (8 רגשות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Pose Sheet (7 פוזות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Mini Avatar 48x48</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Full Portrait 256x256</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Typing Pose (tiny arms)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Victory Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Companion Mode (games page)</span></div>
+    </div>
+    <div class="skin-section">
+      <h4>סקינים עונתיים</h4>
+      <div class="skin-grid">
+        <div class="skin-card"><div class="skin-icon">&#9728;</div><div class="skin-name">Rex Summer &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127875;</div><div class="skin-name">Rex Halloween &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#10052;</div><div class="skin-name">Rex Winter &mdash; <span class="needed">&#10007;</span></div></div>
+        <div class="skin-card"><div class="skin-icon">&#127800;</div><div class="skin-name">Rex Spring &mdash; <span class="needed">&#10007;</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SHADOW -->
+<div class="char-row">
+  <div class="char-hdr">
+    <div class="cav">&#128008;</div>
+    <div><div class="cn">Shadow (צל) &mdash; יריב קל, חתול נינג'ה</div><div class="cr">&#9733; טייר 5 &middot; חתול שחור &middot; 15&ndash;25 WPM</div></div>
+    <div class="ct">TIER 5 &mdash; Battle Rival</div>
+  </div>
+  <div class="char-body">
+    <div class="alist">
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Model Sheet</span></div>
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Character Portrait (shadow.jpg)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Expression Sheet (8 רגשות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Battle Stance (arena)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Victory Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Defeat Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Mini Avatar 48x48</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Seasonal Skins (x4)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- STORM -->
+<div class="char-row">
+  <div class="char-hdr">
+    <div class="cav">&#9889;</div>
+    <div><div class="cn">Storm (סערה) &mdash; יריב בינוני, שועל חשמל</div><div class="cr">&#9733; טייר 5 &middot; שועל כחול-חשמלי &middot; 25&ndash;40 WPM</div></div>
+    <div class="ct">TIER 5 &mdash; Battle Rival</div>
+  </div>
+  <div class="char-body">
+    <div class="alist">
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Model Sheet</span></div>
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Character Portrait (storm.jpg)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Expression Sheet (8 רגשות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Battle Stance (arena)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Victory Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Defeat Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Mini Avatar 48x48</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Seasonal Skins (x4)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- BLAZE -->
+<div class="char-row">
+  <div class="char-hdr">
+    <div class="cav">&#128009;</div>
+    <div><div class="cn">Blaze (להבה) &mdash; יריב קשה, דרקון אש</div><div class="cr">&#9733; טייר 5 &middot; דרקון אדום-כתום &middot; 40&ndash;60 WPM</div></div>
+    <div class="ct">TIER 5 &mdash; Battle Rival</div>
+  </div>
+  <div class="char-body">
+    <div class="alist">
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Model Sheet</span></div>
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Character Portrait (blaze.jpg)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Expression Sheet (8 רגשות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Battle Stance (arena)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Victory Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Defeat Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Mini Avatar 48x48</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Seasonal Skins (x4)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- BUG -->
+<div class="char-row">
+  <div class="char-hdr">
+    <div class="cav">&#128027;</div>
+    <div><div class="cn">Bug (באג) &mdash; הנבל החמוד, חיפושית דיגיטלית</div><div class="cr">&#9733; טייר 4 &middot; NEEDS GEMINI ART &middot; ירוק ניאון + עיניים מגנטה</div></div>
+    <div class="ct">TIER 4 &mdash; Villain</div>
+  </div>
+  <div class="char-body">
+    <div style="background:rgba(255,107,107,.08);border:1px solid rgba(255,107,107,.2);border-radius:10px;padding:11px;margin-bottom:12px;font-size:.82rem">
+      <strong style="color:var(--red)">&#9888; דחוף:</strong> <span style="color:var(--dim)">Bug עדיין ללא אמנות Gemini! כל הנכסים נדרשים מאפס. כלל קריטי: Bug לא &quot;מת&quot; אף פעם &mdash; כשמנוצח הוא מחבק את עצמו ובורח בשמחה.</span>
+    </div>
+    <div class="alist">
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">Portrait (bug.jpg &mdash; Gemini)</span></div>
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">bug-action.jpg</span></div>
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">bug-king.jpg</span></div>
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">bug-villain.jpg</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Model Sheet (חזית/גב/צד)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Expression Sheet (8 רגשות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Boss Forms: Mini / Enhanced / King</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Defeat Pose (dizzy + escape)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Seasonal Skins (x4)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Error Event Cameo (random appearance)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- GLITCH -->
+<div class="char-row">
+  <div class="char-hdr">
+    <div class="cav">&#128166;</div>
+    <div><div class="cn">Glitch (גליץ') &mdash; סוכן כאוס, אנומליה דיגיטלית</div><div class="cr">&#9733; טייר 4 &middot; NEEDS GEMINI ART &middot; פיקסלים כחול-ורוד משתנים</div></div>
+    <div class="ct">TIER 4 &mdash; Wild Card</div>
+  </div>
+  <div class="char-body">
+    <div style="background:rgba(255,107,107,.08);border:1px solid rgba(255,107,107,.2);border-radius:10px;padding:11px;margin-bottom:12px;font-size:.82rem">
+      <strong style="color:var(--red)">&#9888; דחוף:</strong> <span style="color:var(--dim)">Glitch עדיין ללא model sheet מלאה! אין צורה קבועה &mdash; קלאסטר פיקסלים שמשתנה. שני עיניים לבנות הן הקבוע היחיד.</span>
+    </div>
+    <div class="alist">
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">glitch-action.jpg</span></div>
+      <div class="ai di"><span class="si">&#10003;</span><span class="al done">glitch-entity.jpg</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Model Sheet (מצבים שונים)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Expression Sheet (8 מצבים)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Boss Form (אקט 2)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">&quot;Calm Mode&quot; (כשעוזר לצוות)</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Defeat Pose</span></div>
+      <div class="ai"><span class="si">&#10007;</span><span class="al">Seasonal Skins (x4)</span></div>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<!-- ============================= SECTION 3 ============================= -->
+<section id="backgrounds">
+<h2><span class="snum">03</span> דרישות אמנות רקע</h2>
+
+<div class="card" style="margin-bottom:20px;background:linear-gradient(135deg,rgba(0,206,201,.08),rgba(108,92,231,.05))">
+  <h4>עקרון מרכזי: דמויות גדולות ברקעים!</h4>
+  <p style="color:var(--dim);font-size:.87rem">בכל רקע תפריט &mdash; הדמויות מופיעות <strong style="color:var(--cyan)">גדולות ובולטות</strong>, לא כאלמנט קטן. הרקע בנוי סביב הדמות, לא להיפך.
+  רקעי שיעורים הם עולמות שלמים עם עומק ומרחב. רקעי קרב הם זירות מלאות אנרגיה.</p>
+</div>
+
+<table class="bgtable">
+<thead>
+<tr><th>סוג רקע</th><th>שם</th><th>דמויות מופיעות</th><th>סטטוס</th><th>פרטים</th></tr>
+</thead>
+<tbody>
+
+<tr>
+  <td><strong style="color:var(--purple)">תפריט ראשי</strong></td>
+  <td>Home Dashboard</td>
+  <td>Ki (מרכזי, גדול) + חברים קטנים</td>
+  <td><span class="bgt g">&#10003; קיים</span> <span class="bgt o">חלקי</span></td>
+  <td>Ki גדול במרכז, ברכת יום יומית אנימטיבית. <code style="font-size:.72rem">dashboard-bg.jpg</code> קיים, אינטגרציה עם Ki נדרשת.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--purple)">תפריט</strong></td>
+  <td>Lessons Page</td>
+  <td>Sensei Zen (גדול בצד) + Ki</td>
+  <td><span class="bgt r">&#10007; נדרש</span></td>
+  <td>Training Dojo רקע, Sensei Zen מימין גדול, Ki מביט מעלה. אווירה: עתיק + מיסתורי.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--purple)">תפריט</strong></td>
+  <td>Battle Page</td>
+  <td>Kai (שמאל) vs יריב (ימין)</td>
+  <td><span class="bgt o">&#9651; קיים בסיסי</span></td>
+  <td><code style="font-size:.72rem">battle-bg.jpg</code> קיים. נדרש: overlay שני דמויות vs VS splash.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--purple)">תפריט</strong></td>
+  <td>Progress Page</td>
+  <td>Ki קטן &#8594; Ki גדול (לפי רמה)</td>
+  <td><span class="bgt r">&#10007; נדרש</span></td>
+  <td>ויזואליזציית צמיחה: הדמות גדלה ככל שהרמה עולה. Stars + XP ויז'ואל.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--purple)">תפריט</strong></td>
+  <td>Games Hub</td>
+  <td>Rex + Pixel + Ki (משחק)</td>
+  <td><span class="bgt o">&#9651; קיים בסיסי</span></td>
+  <td><code style="font-size:.72rem">games-bg.jpg</code> קיים. Rex ו-Pixel צריכים להיות גדולים ובולטים.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--purple)">תפריט</strong></td>
+  <td>Settings</td>
+  <td>Pixel (עוזר הגדרות)</td>
+  <td><span class="bgt r">&#10007; נדרש</span></td>
+  <td>Pixel כרובוט הגדרות, מסך פנים שמציג אפשרויות. ממשק+דמות משולבים.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--purple)">תפריט</strong></td>
+  <td>Profile</td>
+  <td>Ki + תגים + סטטיסטיקות</td>
+  <td><span class="bgt r">&#10007; נדרש</span></td>
+  <td>Ki עם כל התגים שלו, ויז'ואל של ההישגים האישיים.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--green)">שיעורים</strong></td>
+  <td>Training Dojo (Shatil/Nevet)</td>
+  <td>Sensei Zen + Ki</td>
+  <td><span class="bgt g">&#10003; קיים</span></td>
+  <td><code style="font-size:.72rem">dojo-bg.jpg</code> &mdash; דוג'ו יפני עתיק, אור חמים, רהיטי עץ.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--green)">שיעורים</strong></td>
+  <td>Moonlit Garden (Geza)</td>
+  <td>Luna (גדולה בימין)</td>
+  <td><span class="bgt g">&#10003; קיים</span></td>
+  <td><code style="font-size:.72rem">moonlit-garden-bg.jpg</code> &mdash; גן יפני לילי, ירח מלא, אורות.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--green)">שיעורים</strong></td>
+  <td>Cyber Lab (Anaf)</td>
+  <td>Mika + Pixel</td>
+  <td><span class="bgt g">&#10003; קיים</span></td>
+  <td><code style="font-size:.72rem">cyber-lab-bg.jpg</code> &mdash; מעבדת עתיד, מסכים, קודים.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--green)">שיעורים</strong></td>
+  <td>Speed Arena (Tzameret)</td>
+  <td>Yuki (גדולה, ריצה)</td>
+  <td><span class="bgt g">&#10003; קיים</span></td>
+  <td><code style="font-size:.72rem">speed-arena-bg.jpg</code> &mdash; זירת מירוץ, תאורת ניאון.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--green)">שיעורים</strong></td>
+  <td>Games Arcade (ממד משחקים)</td>
+  <td>Rex + Pixel</td>
+  <td><span class="bgt r">&#10007; נדרש</span></td>
+  <td>ארקייד רטרו מיסתורי, מכונות משחק, Rex קופץ.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--orange)">קרב</strong></td>
+  <td>Battle Colosseum (קל)</td>
+  <td>Shadow + שחקן</td>
+  <td><span class="bgt g">&#10003; קיים</span></td>
+  <td><code style="font-size:.72rem">battle-bg.jpg</code> &mdash; קולוסיאום חשוך, מנורות.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--orange)">קרב</strong></td>
+  <td>Storm Arena (בינוני)</td>
+  <td>Storm + שחקן</td>
+  <td><span class="bgt r">&#10007; נדרש</span></td>
+  <td>זירת סופה, ברקים, גשם. אנרגיה חשמלית. Storm גדול ובולט.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--orange)">קרב</strong></td>
+  <td>Blaze Volcano (קשה)</td>
+  <td>Blaze + שחקן</td>
+  <td><span class="bgt r">&#10007; נדרש</span></td>
+  <td>לוע הר געש, לבה, אש. Blaze על כס מלכים של אש. אפי מאוד.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--red)">בוסים</strong></td>
+  <td>Bug's Error Maze (אקט 1)</td>
+  <td>Bug (גדול מאוד)</td>
+  <td><span class="bgt r">&#10007; נדרש</span></td>
+  <td>מבוך של שגיאות ובאגים. Bug במרכז ענק. אותיות מעוותות ברקע.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--red)">בוסים</strong></td>
+  <td>Glitch Storm (אקט 2)</td>
+  <td>Bug + Glitch</td>
+  <td><span class="bgt r">&#10007; נדרש</span></td>
+  <td>כאוס ויז'ואלי מוחלט, פיקסלים מתפוצצים, Bug ו-Glitch יחד.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--red)">בוסים</strong></td>
+  <td>Bug King's Throne (אקט 3)</td>
+  <td>Bug King (ענק) + כל הגיבורים</td>
+  <td><span class="bgt r">&#10007; נדרש</span></td>
+  <td>Bug עם כתר על כסא מלכים. הגיבורים קטנים מאחור. Epic final boss energy.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--pink)">אירועים</strong></td>
+  <td>Achievement Unlock</td>
+  <td>Ki חוגג + תג</td>
+  <td><span class="bgt r">&#10007; נדרש</span></td>
+  <td>רקע חגיגי, קונפטי, Ki בפוזת ניצחון. נפתח כ-overlay על כל מסך.</td>
+</tr>
+
+<tr>
+  <td><strong style="color:var(--pink)">אירועים</strong></td>
+  <td>Seasonal Event Hub (x6)</td>
+  <td>דמות העונה</td>
+  <td><span class="bgt r">&#10007; נדרש</span></td>
+  <td>6 רקעים עונתיים: קיץ/חגים/חנוכה/פורים/יום העצמאות/סוכות.</td>
+</tr>
+
+</tbody>
+</table>
+
+<div class="card" style="margin-top:16px;background:rgba(108,92,231,.06)">
+  <h4>סיכום רקעים</h4>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:10px;text-align:center">
+    <div><div style="font-size:1.5rem;font-weight:900;color:var(--green)">9</div><div style="font-size:.78rem;color:var(--dim)">קיימים</div></div>
+    <div><div style="font-size:1.5rem;font-weight:900;color:var(--red)">12</div><div style="font-size:.78rem;color:var(--dim)">נדרשים</div></div>
+    <div><div style="font-size:1.5rem;font-weight:900;color:var(--orange)">2</div><div style="font-size:.78rem;color:var(--dim)">חלקיים</div></div>
+    <div><div style="font-size:1.5rem;font-weight:900;color:var(--purple)">21</div><div style="font-size:.78rem;color:var(--dim)">סה"כ</div></div>
+  </div>
+</div>
+</section>
+
+<!-- ============================= SECTION 4 ============================= -->
+<section id="animation">
+<h2><span class="snum">04</span> מפרט הנפשה &mdash; דמויות תמיד מונפשות!</h2>
+
+<div class="card" style="background:linear-gradient(135deg,rgba(0,206,201,.1),rgba(108,92,231,.05));margin-bottom:20px">
+  <h4>עקרון יסוד</h4>
+  <p style="color:var(--dim);font-size:.87rem">הדמויות ב-Ninja Keyboard <strong style="color:var(--cyan)">תמיד מונפשות</strong>. אין דמות סטטית. גם ה&quot;idle&quot; הבסיסי כולל נשימה, הניה ועיניים מצמצמות.
+  כל הנפשה חייבת לעבוד על <strong style="color:var(--purple)">transform ו-opacity בלבד</strong> (לא width/height/top/left).</p>
+</div>
+
+<!-- IDLE -->
+<div class="acard">
+  <div class="atitle">&#127775; Idle Animation &mdash; נשימה ותנועה בסיסית</div>
+  <div class="aprops">
+    <div class="aprop"><div class="aplabel">אפקט</div><div class="apval">translateY +-3px (גוף)</div></div>
+    <div class="aprop"><div class="aplabel">משך</div><div class="apval">3&ndash;4 שניות (loop)</div></div>
+    <div class="aprop"><div class="aplabel">easing</div><div class="apval">easeInOut (sine)</div></div>
+    <div class="aprop"><div class="aplabel">פעולות נוספות</div><div class="apval">הצמצת עיניים כל 4 שנ', הנעת זנב/שיער</div></div>
+    <div class="aprop"><div class="aplabel">property</div><div class="apval">transform: translateY + scaleY רדיד</div></div>
+    <div class="aprop"><div class="aplabel">Framer Motion</div><div class="apval">animate="idle" variants={idleVariants}</div></div>
+  </div>
+  <div class="codeblock">// Ki Idle Animation - Framer Motion
+const idleVariants = {
+  idle: {
+    y: [0, -4, 0],
+    transition: { duration: 3.5, repeat: Infinity, ease: "easeInOut" }
+  }
+}
+
+// Blink sub-animation (separate component)
+const blinkVariants = {
+  open: { scaleY: 1 },
+  closed: { scaleY: 0.1, transition: { duration: 0.08 } }
+}</div>
+</div>
+
+<!-- HOVER -->
+<div class="acard">
+  <div class="atitle">&#128161; Hover Animation &mdash; תגובת ריחוף</div>
+  <div class="aprops">
+    <div class="aprop"><div class="aplabel">אפקט</div><div class="apval">scale(1.08) + translateY(-6px)</div></div>
+    <div class="aprop"><div class="aplabel">משך</div><div class="apval">150ms</div></div>
+    <div class="aprop"><div class="aplabel">easing</div><div class="apval">spring (stiffness 400)</div></div>
+    <div class="aprop"><div class="aplabel">תגובת דמות</div><div class="apval">חיוך, קפיצה קלה</div></div>
+    <div class="aprop"><div class="aplabel">דרישה</div><div class="apval">מקסימום 200ms לתגובה</div></div>
+    <div class="aprop"><div class="aplabel">CSS Fallback</div><div class="apval">transform: scale(1.08) בלבד</div></div>
+  </div>
+</div>
+
+<!-- CLICK -->
+<div class="acard">
+  <div class="atitle">&#128293; Click / Tap Animation &mdash; תגובת לחיצה</div>
+  <div class="aprops">
+    <div class="aprop"><div class="aplabel">אפקט</div><div class="apval">scale(0.93) &rarr; scale(1.05) &rarr; scale(1)</div></div>
+    <div class="aprop"><div class="aplabel">משך</div><div class="apval">180ms סה"כ</div></div>
+    <div class="aprop"><div class="aplabel">דמות reaction</div><div class="apval">wink + sound effect</div></div>
+    <div class="aprop"><div class="aplabel">whileTap</div><div class="apval">Framer: whileTap={{scale: 0.93}}</div></div>
+    <div class="aprop"><div class="aplabel">קול</div><div class="apval">Web Audio API synthesized</div></div>
+    <div class="aprop"><div class="aplabel">דרישה</div><div class="apval">מקסימום 200ms מתחילה לסוף</div></div>
+  </div>
+</div>
+
+<!-- TRANSITION -->
+<div class="acard">
+  <div class="atitle">&#127809; Scene Transition Animation &mdash; כניסה ויציאה</div>
+  <div class="aprops">
+    <div class="aprop"><div class="aplabel">כניסה</div><div class="apval">opacity 0&rarr;1 + translateX(30px)&rarr;0</div></div>
+    <div class="aprop"><div class="aplabel">יציאה</div><div class="apval">opacity 1&rarr;0 + translateX(-30px)</div></div>
+    <div class="aprop"><div class="aplabel">משך</div><div class="apval">250ms (כניסה) / 180ms (יציאה)</div></div>
+    <div class="aprop"><div class="aplabel">Framer Motion</div><div class="apval">AnimatePresence + variants</div></div>
+    <div class="aprop"><div class="aplabel">RTL שיקול</div><div class="apval">translateX הפוך ל-RTL: +30 &rarr; -30</div></div>
+    <div class="aprop"><div class="aplabel">stagger</div><div class="apval">דמויות מופיעות בזו אחר זו (+50ms)</div></div>
+  </div>
+</div>
+
+<!-- VICTORY -->
+<div class="acard">
+  <div class="atitle">&#127942; Victory / Celebration Animation &mdash; ניצחון</div>
+  <div class="aprops">
+    <div class="aprop"><div class="aplabel">אפקט</div><div class="apval">קפיצות + spin + particle burst</div></div>
+    <div class="aprop"><div class="aplabel">משך</div><div class="apval">2&ndash;3 שניות (one-shot)</div></div>
+    <div class="aprop"><div class="aplabel">Confetti</div><div class="apval">CSS particles (opacity + transform)</div></div>
+    <div class="aprop"><div class="aplabel">דמות</div><div class="apval">Victory Pose (asset נפרד)</div></div>
+    <div class="aprop"><div class="aplabel">קול</div><div class="apval">fanfare (Web Audio synthesized)</div></div>
+    <div class="aprop"><div class="aplabel">גיל אדפטיבי</div><div class="apval">Shatil: ענק ומאוד רועש; Tzameret: עדין</div></div>
+  </div>
+</div>
+
+<!-- PERFORMANCE LEVELS -->
+<div class="card" style="margin-top:8px">
+  <h3>רמות ביצועים &mdash; הגדרות גרפיקה</h3>
+  <p style="color:var(--dim);font-size:.85rem;margin-bottom:4px">המשתמש יכול לבחור את רמת הגרפיקה בהגדרות. Pixel מציג את הבחירה.</p>
+  <div class="perf-grid">
+    <div class="perf-card ph">
+      <div class="pfi">&#129760;</div>
+      <div class="pft">High &mdash; גרפיקה מלאה</div>
+      <div class="pfl">
+        &bull; כל ה-idle animations<br>
+        &bull; הצמצת עיניים + תנועת שיער<br>
+        &bull; Particle effects<br>
+        &bull; Scene transitions מלאות<br>
+        &bull; Victory animations<br>
+        &bull; Confetti + sound<br>
+        &bull; מומלץ: מחשב/טאבלט
+      </div>
+    </div>
+    <div class="perf-card pm">
+      <div class="pfi">&#9881;</div>
+      <div class="pft">Medium &mdash; גרפיקה מופחתת</div>
+      <div class="pfl">
+        &bull; Idle: translateY בלבד (no blink)<br>
+        &bull; Hover + click animations<br>
+        &bull; Scene transitions מפושטות<br>
+        &bull; Particles מוגבלים (10 max)<br>
+        &bull; Sound effects בלבד<br>
+        &bull; מומלץ: מכשירים ישנים יותר
+      </div>
+    </div>
+    <div class="perf-card pl">
+      <div class="pfi">&#9889;</div>
+      <div class="pft">Low &mdash; מינימלי</div>
+      <div class="pfl">
+        &bull; Idle: opacity pulse בלבד<br>
+        &bull; Click: scale(0.95) בלבד<br>
+        &bull; ללא particles<br>
+        &bull; ללא sound effects<br>
+        &bull; Transitions: fade בלבד<br>
+        &bull; מומלץ: מכשירים חלשים / מצב חסכון סוללה
+      </div>
+    </div>
+  </div>
+  <div class="codeblock">// Performance detection + user preference
+const graphicsLevel = useSettingsStore(s => s.graphicsLevel)
+// 'high' | 'medium' | 'low' | 'auto'
+
+// Auto detection:
+const auto = navigator.hardwareConcurrency &gt;= 4 ? 'high' :
+             navigator.hardwareConcurrency &gt;= 2 ? 'medium' : 'low'
+
+// CSS: prefers-reduced-motion always overrides
+@media (prefers-reduced-motion: reduce) {
+  .character-animated { animation: none !important; transition: none !important; }
+}</div>
+</div>
+</section>
+
+<!-- ============================= SECTION 5 ============================= -->
+<section id="menu-integration">
+<h2><span class="snum">05</span> דמויות גדולות בתפריטים &mdash; מפרט אינטגרציה</h2>
+
+<div class="card" style="background:linear-gradient(135deg,rgba(253,121,168,.08),rgba(108,92,231,.05));margin-bottom:20px">
+  <h4>עקרון העיצוב</h4>
+  <p style="color:var(--dim);font-size:.87rem">
+    בכל עמוד תפריט, הדמות הראשית <strong style="color:var(--pink)">תופסת מינימום 30% מגובה המסך</strong> ומיוצבת בצד שמאל או ימין (לפי היגיון RTL).
+    הדמות אינטראקטיבית: מגיבה ל-hover, מברכת בכניסה, ומגיבה לפעולות המשתמש.
+    <strong style="color:var(--cyan)">NEVER</strong> רק icon קטן.
+  </p>
+</div>
+
+<div class="mgrid">
+
+<!-- HOME -->
+<div class="mpc">
+  <div class="mpc-hdr">
+    <div class="mpc-page">&#127968; דף הבית (Home)</div>
+    <div class="mpc-chars">Ki ראשי + Mika/Yuki משניים</div>
+  </div>
+  <div class="mpc-body">
+    <div class="msl">מיקום Ki</div>
+    <div class="msv">מרכז-שמאל, גובה 45&ndash;55% מהמסך, idle animation</div>
+    <div class="msl">ברכה יומית</div>
+    <div class="msv">Ki מדבר לפי שעה: "בוקר טוב נינג'ה!" / "מה קורה?" / "כבר לילה?"</div>
+    <div class="msl">אינטראקציה</div>
+    <div class="msv">לחיצה על Ki &rarr; קפיצה + קול + דיאלוג מוטיבציה</div>
+    <div class="msl">ימי חול vs שישי</div>
+    <div class="msv">שישי: "שבת שלום! תספיק שיעור אחד?"</div>
+    <div class="pills"><span class="pill p">idle animation</span><span class="pill c">greeting</span><span class="pill o">clickable</span></div>
+  </div>
+</div>
+
+<!-- LESSONS -->
+<div class="mpc">
+  <div class="mpc-hdr">
+    <div class="mpc-page">&#128218; עמוד שיעורים</div>
+    <div class="mpc-chars">Sensei Zen ראשי + Ki קטן</div>
+  </div>
+  <div class="mpc-body">
+    <div class="msl">מיקום Sensei Zen</div>
+    <div class="msv">ימין, גובה 40% מהמסך, ידיים מקופלות על חזה</div>
+    <div class="msl">אינטראקציה</div>
+    <div class="msv">ריחוף &rarr; Sensei Zen מציץ למעלה ומחייך; לחיצה &rarr; עצת חוכמה</div>
+    <div class="msl">לפי שיעור נוכחי</div>
+    <div class="msv">הדמות של השיעור (Ki/Mika/Yuki) מופיעה קטנה ליד Sensei</div>
+    <div class="msl">עבור מורים</div>
+    <div class="msv">Sensei Zen מוצג עם ממשק מורה מיוחד, ענידת משקפיים נוספת</div>
+    <div class="pills"><span class="pill p">wisdom tips</span><span class="pill">RTL position</span><span class="pill o">teacher mode</span></div>
+  </div>
+</div>
+
+<!-- BATTLE -->
+<div class="mpc">
+  <div class="mpc-hdr">
+    <div class="mpc-page">&#9876; עמוד קרב (Battle)</div>
+    <div class="mpc-chars">Kai + Shadow/Storm/Blaze + VS Splash</div>
+  </div>
+  <div class="mpc-body">
+    <div class="msl">פריסה</div>
+    <div class="msv">שחקן (Kai) בימין, יריב משמאל, VS splash במרכז</div>
+    <div class="msl">VS Splash</div>
+    <div class="msv">אנימציה: VS מופיע בbounce, ברק ויז'ואל, קול "FIGHT!"</div>
+    <div class="msl">בחירת יריב</div>
+    <div class="msv">Shadow/Storm/Blaze מסתובבים ב-carousel, לחיצה &rarr; גדלים ומדברים</div>
+    <div class="msl">לאחר קרב</div>
+    <div class="msv">Victory: Kai קפיצה, יריב Defeated pose. Defeat: הפוך.</div>
+    <div class="pills"><span class="pill r">VS splash</span><span class="pill p">character select</span><span class="pill">battle energy</span></div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="mpc">
+  <div class="mpc-hdr">
+    <div class="mpc-page">&#128200; עמוד התקדמות</div>
+    <div class="mpc-chars">Ki מתפתח לפי רמה</div>
+  </div>
+  <div class="mpc-body">
+    <div class="msl">ויזואליזציית צמיחה</div>
+    <div class="msv">רמות 1&ndash;10: Ki קטן, רמות 11&ndash;50: בינוני, רמות 51+: Ki ענק עם אפקטים</div>
+    <div class="msl">אנימציה לפי רמה</div>
+    <div class="msv">Pixel מציג גרפים חיים; Ki מגיב לכל שיפור בנתונים</div>
+    <div class="msl">Pixel כ-co-pilot</div>
+    <div class="msv">Pixel מרחף ומציג "WPM עלה ב-5 השבוע!" עם הנפשת מסך</div>
+    <div class="pills"><span class="pill">growth visual</span><span class="pill c">pixel data</span><span class="pill p">level scaling</span></div>
+  </div>
+</div>
+
+<!-- GAMES HUB -->
+<div class="mpc">
+  <div class="mpc-hdr">
+    <div class="mpc-page">&#127918; Games Hub</div>
+    <div class="mpc-chars">Rex ראשי + Pixel + Ki קטן</div>
+  </div>
+  <div class="mpc-body">
+    <div class="msl">מיקום Rex</div>
+    <div class="msv">שמאל מרכז, גובה 40%, ידיים קטנות מנסות לגעת בלחצנים בצורה מצחיקה</div>
+    <div class="msl">הומור</div>
+    <div class="msv">Rex לא מצליח ללחוץ כפתורים עם הידיים הקטנות; Ki עוזר לו</div>
+    <div class="msl">Pixel</div>
+    <div class="msv">Pixel מציג סטטיסטיקות משחק ברקע על מסך קטן</div>
+    <div class="pills"><span class="pill o">comedy duo</span><span class="pill c">pixel stats</span><span class="pill">arcade vibe</span></div>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div class="mpc">
+  <div class="mpc-hdr">
+    <div class="mpc-page">&#9881; הגדרות</div>
+    <div class="mpc-chars">Pixel כעוזר הגדרות</div>
+  </div>
+  <div class="mpc-body">
+    <div class="msl">מיקום Pixel</div>
+    <div class="msv">ימין למעלה, גובה 30%, מסך פנים מציג את אפשרות ההגדרה הנוכחית</div>
+    <div class="msl">מסך פנים</div>
+    <div class="msv">כשמשנים הגדרת גרפיקה: Pixel מציג "High/Medium/Low" על פניו</div>
+    <div class="msl">כשמשנים שפה</div>
+    <div class="msv">Pixel מציג "HE/EN" על פניו, מדבר בשפה החדשה</div>
+    <div class="pills"><span class="pill c">interactive face</span><span class="pill p">settings helper</span></div>
+  </div>
+</div>
+
+</div><!-- /mgrid -->
+
+<!-- IMPLEMENTATION TECH SPEC -->
+<div class="card" style="margin-top:20px;background:rgba(108,92,231,.06)">
+  <h3>מפרט טכני &mdash; React Implementation</h3>
+  <div class="codeblock">// Character component with full animation support
+interface CharacterProps {
+  character: CharacterName     // 'ki' | 'mika' | 'yuki' | ...
+  size: 'sm' | 'md' | 'lg' | 'hero'  // sm=48px, md=128px, lg=256px, hero=fullscreen
+  mood?: CharacterMood         // 'idle' | 'happy' | 'excited' | 'sad' | ...
+  interactive?: boolean        // enables hover/click animations
+  graphicsLevel?: 'high' | 'medium' | 'low'  // overrides global setting
+  onInteract?: () => void      // callback for click events
+  className?: string
+}
+
+// Size mapping
+const sizeMap = {
+  sm: 'w-12 h-12',         // 48px - mini avatar
+  md: 'w-32 h-32',         // 128px - companion mode
+  lg: 'w-64 h-64',         // 256px - menu presence
+  hero: 'w-1/3 h-auto',    // 33vw - full hero presence
+}
+
+// Always use transform/opacity ONLY
+// NEVER: width, height, top, left, margin in animations</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<div style="text-align:center;padding:40px 0 20px;border-top:1px solid var(--border);margin-top:40px">
+  <div style="font-size:2rem;margin-bottom:12px">&#x1F977;</div>
+  <div style="color:var(--purple);font-weight:700;font-size:1.1rem">Ninja Keyboard &mdash; נינג'ה מקלדת</div>
+  <div style="color:var(--dim);font-size:.82rem;margin-top:6px">תכנית פוסט-נרטיב ואמנות &middot; מרץ 2026 &middot; 14 דמויות &middot; גיל 6&ndash;16</div>
+  <div style="color:var(--dim);font-size:.75rem;margin-top:12px">Generated for internal development review &middot; Not for distribution</div>
+</div>
+
+</main>
+</body>
+</html>
