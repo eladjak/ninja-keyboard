@@ -5,87 +5,99 @@
 ## Sprint: Character World Expansion (IN PROGRESS)
 
 ## Current State
-Massive character world built: 14 characters with model sheets, 22 voice lines at V3 (Hebrew-optimized), 2 music tracks (Suno), comprehensive planning docs, HTML Game Bible dashboard, Suno direct connection configured, post-narrative content designed.
+Massive character world built: 14 characters with model sheets, Voice Design V4 previews (27 custom voices for user selection), 16 AI-generated game SFX, 48-track soundtrack master plan, comprehensive planning docs, Israeli holiday skins doc in progress.
 
-## What Was Done This Session (Iteration 2)
+## What Was Done This Session (Iteration 3)
 
-### 1. Voice V3 - Hebrew Optimization (COMPLETE)
-- [x] Gemini Vision analyzed all 9 character model sheets → 60KB detailed voice profiles
-- [x] New `language_code: 'he'` parameter forces Hebrew phonetic processing
-- [x] Higher stability (0.25-0.85) and similarity_boost (0.82-0.95) preserve Hebrew gutturals
-- [x] Style parameter added per character personality
-- [x] Speaker boost enabled for clearer Hebrew articulation
-- [x] 19 V3 voices generated (all except Sensei Zen = approved)
-- [x] V2 backed up to `v2/` subfolders, V1 in `v1/` subfolders
-- [x] Scripts: `scripts/generate-voices-v3.mjs`
-- [x] Docs: `public/audio/voices/VOICE-SETTINGS-V3.md`, `_gemini-voice-analysis.md`
+### 1. Voice Design V4 - Custom Voices (COMPLETE)
+- [x] ElevenLabs Creator tier confirmed: 108K chars/month, 30 voice slots, instant cloning
+- [x] Voice Library search: Hebrew community voices very limited (API returns ~0 for Hebrew filter)
+- [x] Voice Design v3 API: `/v1/text-to-voice/create-previews` endpoint discovered
+- [x] Safety filter workaround: removed age references from descriptions (ElevenLabs blocks "10-year-old" etc.)
+- [x] 9 characters × 3 voice previews = **27 custom voice MP3s** generated
+- [x] Preview HTML: `docs/voice-preview-v4.html` with side-by-side V3 vs V4 comparison
+- [x] Voice IDs saved: `public/audio/voices/voice-design-previews/results.json`
+- [x] Scripts: `scripts/voice-design-v4.mjs`, `scripts/voice-design-heroes.mjs`, `scripts/voice-design-test.mjs`
+- [ ] **WAITING**: User to listen and select best voice per character
 
-### 2. Suno Direct Connection (COMPLETE)
-- [x] Replaced sunoapi.org proxy with suno-mcp-direct (Playwright-based)
-- [x] No more double payment - uses user's own Suno subscription
-- [x] Installed at `C:\Users\eladj\suno-mcp-direct`
-- [x] Configured in `~/.claude/.mcp.json`
-- [x] 6 basic tools: open_browser, login, generate_track, download_track, get_status, close_browser
-- [x] Ready for next session (MCP loads at session start)
+### 2. Game Sound Effects (COMPLETE)
+- [x] 16 AI-generated SFX via ElevenLabs Sound Generation API
+- [x] Saved to `public/audio/sfx/`
+- [x] Effects: keyboard-click, keyboard-combo, level-up, achievement-unlock, character-unlock, ninja-slash, bug-appear, glitch-warp, correct-answer, wrong-answer, streak-fire, victory-cheers, countdown-beep, countdown-go, star-earn, xp-gain
 
-### 3. Iteration Review V2 (COMPLETE)
-- [x] `docs/iteration-review-v2.html` - comprehensive review document
-- [x] Sections: voices V3, Suno direct, post-narrative design, art plan, character menus, animation, UI research, voice cloning options, music status, next steps
-- [x] All voice files playable inline
+### 3. Soundtrack Master Plan (COMPLETE)
+- [x] `docs/soundtrack-master-plan.html` - 48 tracks across 8 sections (90KB)
+- [x] Sections: Menu (6), Gameplay (5), Battle (9), Events (8), Character Themes (8), Age Worlds (5), SFX (7)
+- [x] Music gamification: unlock tracks as achievements (15 unlockable tracks)
+- [x] Jukebox system: per-zone music selection
+- [x] Generation priority tiers with Batch 1 recommendation (8 tracks first)
+- [x] Full Suno MCP workflow documented
 
-### 4. Post-Narrative Content Design (COMPLETE)
-- [x] Boss Rush Mode, Seasonal Events, Weekly Challenges
-- [x] Character Mastery (100 levels), Community Battles
-- [x] Endless Practice, 100+ Achievements, Sensei Zen's Dojo
-- [x] Character Stories (unlockable backstories)
-- [x] All documented in iteration-review-v2.html
+### 4. ElevenLabs Creator Research (COMPLETE - previous session)
+- [x] `docs/elevenlabs-creator-research.md` - 587 lines
+- [x] Voice Design v3, Instant Voice Clone, Audio Tags, Sound Effects API
+- [x] Hebrew only supported in eleven_v3
 
-### 5. Art Asset Checklist (COMPLETE)
-- [x] Full matrix: 14 characters × 9 asset types = 126 needed
-- [x] Currently: 12 model sheets complete (9.5%)
-- [x] 18 backgrounds needed (5 existing, 13 needed)
-- [x] Documented in iteration-review-v2.html
+### 5. 3D Character Research (COMPLETE - previous session)
+- [x] `docs/3d-character-tools-research.md` - free pipeline identified
+- [x] VRoid Studio → Mixamo → Blender → GLB → React Three Fiber
+- [x] Meshy AI for 2D→3D conversion (200 free credits/month)
+
+### 6. Israeli Holiday Skins (IN PROGRESS)
+- [ ] `docs/israeli-holiday-skins.html` - agent running in background
+- [ ] All Jewish holidays + real-life hero skins
+- [ ] Character-specific skins with color palettes and unlock conditions
+
+### 7. Post-Game Hebrew Translation (COMPLETE - previous session)
+- [x] `docs/post-game-and-art-requirements.html` translated from English to Hebrew
+
+## Previously Completed (Iteration 2)
+- Voice V3: 19 voices with `language_code:'he'`, Gemini-tuned settings
+- Suno Direct Connection (Playwright-based, user's own subscription)
+- Iteration Review V2 HTML
+- Post-Narrative Content Design (Boss Rush, Seasonal Events, etc.)
+- Art Asset Checklist (14 chars × 9 types = 126 needed)
 
 ## Previously Completed (Iteration 1)
 - 12 character model sheets (Brawl Stars + anime chibi)
-- 22 voice lines V1→V2 (ElevenLabs eleven_v3)
-- 2 music tracks × 2 versions (Suno - Main Theme + Boss Battle)
+- 22 voice lines V1→V2→V3 (ElevenLabs eleven_v3)
+- 2 music tracks × 2 versions (Suno)
 - Game Bible Dashboard HTML
-- Character integration map (1,184 lines)
-- Character progression system
-- Character voice profiles doc
-- Bug + Glitch villain art (5 images)
-- CSS variable migration (13 --game-* properties)
-- Story mode foundation (6 files, 1,062 lines)
-- Character Bible merged doc
-- Age-adaptive UX spec
+- Character integration map, progression system, voice profiles
+- Bug + Glitch villain art, CSS variable migration
+- Story mode foundation, Character Bible, Age-adaptive UX spec
 - 8 environment backgrounds
 
 ## Voice Version History
 - V1: Initial ElevenLabs generation (American accent)
 - V2: Young voices, ffmpeg effects for villains (still American)
-- V3: `language_code:'he'`, Gemini-tuned settings, speaker boost (current)
+- V3: `language_code:'he'`, Gemini-tuned settings, speaker boost
+- V4: Voice Design v3 custom voices from text descriptions (current previews)
 - Sensei Zen: Original voice, approved by user, never changed
 
 ## Next Steps
-1. **Listen to V3 voices** - did `language_code='he'` fix the accent?
-2. **Decide voice strategy** - manual recording / voice cloning / community voices
-3. **Generate 3 remaining songs** with Suno direct connection
-4. **Create Bug + Glitch model sheets** (2 missing from 14)
-5. **Create expression sheets** for all characters (8 emotions each)
-6. **Create menu backgrounds** with large character art (6 needed)
-7. **Implement idle animations** (CSS keyframes, always-on)
-8. **Implement game-style buttons** (Brawl Stars asymmetric design)
-9. **Add graphics settings** (High/Medium/Low)
-10. **Implement character unlock system** (Zustand store)
+1. **Listen to V4 voice previews** - open `docs/voice-preview-v4.html` in browser
+2. **Select best voice per character** → save to ElevenLabs account → generate all lines
+3. **Generate remaining music** with Suno direct (8 priority tracks in Batch 1)
+4. **Israeli holiday skins** - review when agent completes
+5. **Create Bug + Glitch model sheets** (2 missing from 14)
+6. **Create expression sheets** for all characters (8 emotions each)
+7. **Create menu backgrounds** with large character art (6 needed)
+8. **Implement idle animations** (CSS keyframes, always-on)
+9. **Implement game-style buttons** (Brawl Stars asymmetric design)
+10. **Integrate SFX** into game (replace Web Audio synthesis with AI SFX)
+11. **Implement music system** (zone-based, with Jukebox unlock)
 
 ## Key Files
-- `docs/iteration-review-v2.html` - **LATEST review doc (open in browser!)**
-- `docs/game-bible-dashboard.html` - Game Bible with all media playable
+- `docs/voice-preview-v4.html` - **LISTEN TO VOICE PREVIEWS HERE!**
+- `docs/soundtrack-master-plan.html` - 48-track soundtrack plan
+- `docs/iteration-review-v2.html` - Iteration 2 review
+- `docs/elevenlabs-creator-research.md` - Creator tier capabilities
+- `docs/3d-character-tools-research.md` - 3D pipeline research
+- `docs/game-bible-dashboard.html` - Game Bible with all media
 - `docs/character-integration-map.md` - Master narrative plan
-- `docs/character-progression-system.md` - Progression system design
-- `public/audio/voices/` - 22 voice MP3s (V3 current, V2/V1 in subfolders)
-- `public/audio/voices/_gemini-voice-analysis.md` - Gemini vision voice analysis
-- `public/audio/voices/VOICE-SETTINGS-V3.md` - V3 technical settings
+- `public/audio/voices/voice-design-previews/` - **27 V4 voice previews**
+- `public/audio/sfx/` - **16 AI-generated sound effects**
+- `public/audio/voices/` - 22 V3 voice MP3s
 - `public/audio/music/` - 4 music MP3s (2 tracks × 2 versions)
-- `scripts/generate-voices-v3.mjs` - Voice generation script (V3)
+- `scripts/voice-design-v4.mjs` - V4 voice script (all Creator features)
