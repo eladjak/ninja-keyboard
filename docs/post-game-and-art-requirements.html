@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ninja Keyboard - Post-Game &amp; Art Requirements</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0d0b1a;--surface:#16132b;--surface2:#1e1a38;--border:#2d2754;--primary:#6C5CE7;--secondary:#00B894;--accent:#FF6B6B;--gold:#FFD93D;--text:#e8e6f0;--text-dim:#9b97b0;--cyan:#00d2d3;--pink:#FF3CAC;--lime:#00FF41}
+body{background:var(--bg);color:var(--text);font-family:'Heebo',sans-serif;line-height:1.7;font-size:15px}
+a{color:var(--primary);text-decoration:none}a:hover{text-decoration:underline}
+nav.sticky{position:sticky;top:0;z-index:100;background:rgba(13,11,26,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center}
+nav.sticky a{color:var(--text-dim);font-size:13px;font-weight:500;padding:4px 10px;border-radius:6px;transition:.2s}
+nav.sticky a:hover{color:var(--primary);background:rgba(108,92,231,.12);text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:24px 20px 80px}
+h1{font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;text-align:center}
+.sub{text-align:center;color:var(--text-dim);font-size:1rem;margin-bottom:40px}
+h2{font-size:1.5rem;font-weight:700;color:var(--primary);margin:48px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+h3{font-size:1.15rem;font-weight:700;color:var(--cyan);margin:28px 0 12px}
+h4{font-size:1rem;font-weight:600;color:var(--gold);margin:20px 0 8px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
+.ca{border-right:4px solid var(--primary)}.cg{border-right:4px solid var(--secondary)}.cr{border-right:4px solid var(--accent)}.cgo{border-right:4px solid var(--gold)}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.5px}
+th{background:var(--surface2);color:var(--cyan);font-weight:600;text-align:right;padding:9px 11px;border:1px solid var(--border)}
+td{padding:7px 11px;border:1px solid var(--border);vertical-align:top}
+tr:nth-child(even){background:rgba(30,26,56,.5)}
+.bp0{display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:600;background:rgba(255,107,107,.2);color:var(--accent)}
+.bp1{display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:600;background:rgba(255,217,61,.2);color:var(--gold)}
+.bp2{display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:600;background:rgba(0,184,148,.2);color:var(--secondary)}
+.bp3{display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:600;background:rgba(108,92,231,.2);color:var(--primary)}
+.prompt{background:#0a0818;border:1px solid var(--border);border-radius:8px;padding:16px;margin:12px 0;font-size:13px;line-height:1.6;white-space:pre-wrap;direction:ltr;text-align:left;color:var(--text-dim)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:768px){.g2{grid-template-columns:1fr}}
+.sbox{background:linear-gradient(135deg,rgba(108,92,231,.1),rgba(0,210,211,.1));border:1px solid var(--primary);border-radius:12px;padding:24px;margin:24px 0;text-align:center}
+.sbox .bn{font-size:3rem;font-weight:900;color:var(--gold)}
+.sbox p{color:var(--text-dim);margin-top:4px}
+.wf{background:var(--surface2);border:2px dashed var(--border);border-radius:12px;padding:24px;margin:16px 0;font-size:13px;color:var(--text-dim)}
+ul{padding-right:20px;margin:8px 0}li{margin:4px 0}
+</style>
+</head>
+<body>
+<nav class="sticky">
+<a href="#post-game">Post-Game</a>
+<a href="#endless">Endless</a>
+<a href="#seasonal">Seasonal</a>
+<a href="#challenges">Challenges</a>
+<a href="#newgame">NG+</a>
+<a href="#weekly">Weekly</a>
+<a href="#bossrush">Boss Rush</a>
+<a href="#mastery">Mastery</a>
+<a href="#future">Future</a>
+<a href="#art-expressions">Expressions</a>
+<a href="#art-poses">Poses</a>
+<a href="#art-backgrounds">Backgrounds</a>
+<a href="#art-bosses">Boss Splash</a>
+<a href="#art-unlocks">Unlock Art</a>
+<a href="#art-seasonal">Skins</a>
+<a href="#animation-spec">Animation ON</a>
+<a href="#settings-ui">Settings UI</a>
+<a href="#totals">Totals</a>
+</nav>
+<div class="container">
+<h1>Ninja Keyboard &mdash; Post-Game &amp; Art Requirements</h1>
+<p class="sub">Comprehensive design: content after 20 lessons + full character art pipeline</p>
+
+<h2 id="post-game">1. Post-Game Content Design</h2>
+<div class="card ca"><p>After the player completes Lesson 20 and defeats Bug King, the game <strong>evolves</strong>. Bug escapes, opening the door to 8 post-game systems.</p></div>
+
+<h3 id="endless">1.1 Endless / Replay Mode</h3>
+<div class="card cg">
+<h4>Triple-Star System</h4>
+<table><tr><th>Star</th><th>Condition</th><th>Color</th></tr>
+<tr><td>1 - Completion</td><td>Finish the lesson</td><td>Bronze</td></tr>
+<tr><td>2 - Accuracy</td><td>95%+ accuracy</td><td>Silver</td></tr>
+<tr><td>3 - Speed</td><td>Target WPM per lesson</td><td>Gold</td></tr></table>
+<h4>Mutators</h4>
+<table><tr><th>Mutator</th><th>Effect</th><th>XP Bonus</th><th>Character</th></tr>
+<tr><td>Double Speed</td><td>Bug scrambles at 2x</td><td>+50%</td><td>Yuki</td></tr>
+<tr><td>Mirror</td><td>Letters reversed</td><td>+75%</td><td>Glitch</td></tr>
+<tr><td>No Hints</td><td>No finger highlighting</td><td>+30%</td><td>Sensei Zen</td></tr>
+<tr><td>Hardcore Timer</td><td>Half the time</td><td>+60%</td><td>Kai</td></tr>
+<tr><td>Bug Chaos</td><td>Bug scrambles every 10s</td><td>+40%</td><td>Bug</td></tr>
+<tr><td>Zen Mode</td><td>No timer, calm music</td><td>0%</td><td>Luna</td></tr></table>
+</div>
+
+<h3 id="seasonal">1.2 Seasonal Events (Israeli Holidays)</h3>
+<div class="card cgo">
+<table><tr><th>Event</th><th>Date</th><th>Lead</th><th>Mechanic</th><th>Reward</th></tr>
+<tr><td><strong>Hanukkah</strong></td><td>Kislev</td><td>Ki+Mika</td><td>8 challenges x 8 nights = Full Menorah</td><td>Hanukkah Ninja skin + 800 XP</td></tr>
+<tr><td><strong>Purim</strong></td><td>Adar</td><td>Glitch</td><td>Glitch flips letters, costumes for all</td><td>Purim Flip skin + 500 XP</td></tr>
+<tr><td><strong>Tu BiShvat</strong></td><td>Shvat</td><td>Rex+Noa</td><td>Each word = tree, class plants forest</td><td>Garden Ninja skin + 400 XP</td></tr>
+<tr><td><strong>Hebrew Week</strong></td><td>Tevet</td><td>Sensei Zen</td><td>Rare Hebrew vocabulary</td><td>Guardian of Hebrew skin + 600 XP</td></tr>
+<tr><td><strong>Book Week</strong></td><td>Iyar</td><td>Luna</td><td>Israeli literature sentences</td><td>Story Ninja skin + 400 XP</td></tr>
+<tr><td><strong>Summer</strong></td><td>Jul-Aug</td><td>Yuki+Ki</td><td>30-day streak marathon</td><td>Beach Ninja skin + 1000 XP</td></tr>
+<tr><td><strong>Cyber Week</strong></td><td>Feb</td><td>Mika+Pixel</td><td>Password typing, cyber shortcuts</td><td>Cyber Ninja skin + 500 XP</td></tr>
+<tr><td><strong>Back to School</strong></td><td>Sep</td><td>Sensei+Ki</td><td>Renewed placement test</td><td>First Day skin + 300 XP</td></tr></table>
+<h4>Monthly Boss Rotation</h4>
+<table><tr><th>Cycle</th><th>Boss</th><th>Skill</th><th>Mechanic</th></tr>
+<tr><td>Jan/May/Sep</td><td>Bug Rematch</td><td>Accuracy</td><td>Bug speed = player WPM + 10%</td></tr>
+<tr><td>Feb/Jun/Oct</td><td>Glitch Challenge</td><td>Adaptation</td><td>Full keyboard flip</td></tr>
+<tr><td>Mar/Jul/Nov</td><td>SPAM (new!)</td><td>Speed</td><td>Spam messages flood screen</td></tr>
+<tr><td>Apr/Aug/Dec</td><td>VIRUS (new!)</td><td>Precision</td><td>Corrupted text repair</td></tr>
+<tr><td>Every 3 months</td><td>CO-OP Boss</td><td>Teamwork</td><td>Class types together</td></tr></table>
+</div>
+
+<h3 id="challenges">1.3 Challenge Modes</h3>
+<div class="card cr">
+<div class="g2"><div>
+<h4>Speed Run</h4><ul><li>Complete 5 lessons in sequence ASAP</li><li>Yuki races alongside</li><li>Leaderboard: total time + avg WPM</li></ul>
+<h4>Accuracy Challenge</h4><ul><li>Type 100 words at 100% accuracy</li><li>Luna guides, Noa heals</li><li>Tiers: 25/50/100/200 words</li></ul>
+</div><div>
+<h4>Endurance</h4><ul><li>Type as long as possible nonstop</li><li>Kai encourages, Sensei gives wisdom</li><li>Metrics: time, words, avg WPM</li></ul>
+<h4>Daily Challenge</h4><ul><li>New challenge daily, same for all</li><li>Ki presents each morning</li><li>50 XP daily + streak bonus</li></ul>
+</div></div></div>
+
+<h3 id="newgame">1.4 New Game+</h3>
+<div class="card ca">
+<table><tr><th>Element</th><th>Normal</th><th>NG+</th></tr>
+<tr><td>Characters</td><td>Unlock gradually</td><td><strong>All unlocked from start</strong></td></tr>
+<tr><td>Boss difficulty</td><td>Normal</td><td><strong>+25% words, -20% time</strong></td></tr>
+<tr><td>Mutators</td><td>Not available</td><td><strong>One always active</strong></td></tr>
+<tr><td>Dialogue</td><td>Normal</td><td><strong>New! Characters remember</strong></td></tr>
+<tr><td>Bug</td><td>Starts small</td><td><strong>Starts as Bug King, shrinks</strong></td></tr>
+<tr><td>Glitch</td><td>Enemy</td><td><strong>Ally! On your side</strong></td></tr>
+<tr><td>XP</td><td>Normal</td><td><strong>x1.5 on everything</strong></td></tr>
+<tr><td>Stars</td><td>3 stars</td><td><strong>4th star: Ninja Master</strong></td></tr></table>
+</div>
+
+<h3 id="weekly">1.5 Weekly Community Challenges</h3>
+<div class="card cg">
+<table><tr><th>Week</th><th>Challenge</th><th>Community Goal</th><th>Lead</th><th>Reward</th></tr>
+<tr><td>1</td><td>Speed Marathon</td><td>100K words total</td><td>Yuki</td><td>50 XP for all</td></tr>
+<tr><td>2</td><td>Accuracy Week</td><td>Avg accuracy &gt; 90%</td><td>Luna+Noa</td><td>Badge</td></tr>
+<tr><td>3</td><td>Bug Hunt</td><td>1000 Bug wins</td><td>Ki+Mika</td><td>Special animation</td></tr>
+<tr><td>4</td><td>Shortcut Week</td><td>5000 shortcuts used</td><td>Mika+Pixel</td><td>Hacker frame</td></tr></table>
+</div>
+
+<h3 id="bossrush">1.6 Boss Rush</h3>
+<div class="card cr">
+<table><tr><th>Stage</th><th>Boss</th><th>Words</th><th>Time</th><th>Accuracy</th><th>Helper</th></tr>
+<tr><td>1</td><td>Bug the Small</td><td>10</td><td>60s</td><td>--</td><td>Mika</td></tr>
+<tr><td>2</td><td>Shadow</td><td>15</td><td>45s</td><td>80%</td><td>Kai</td></tr>
+<tr><td>3</td><td>Storm</td><td>20</td><td>50s</td><td>85%</td><td>Yuki</td></tr>
+<tr><td>4</td><td>Bug + Glitch</td><td>25</td><td>90s</td><td>85%</td><td>Luna</td></tr>
+<tr><td>5</td><td>Blaze</td><td>25</td><td>60s</td><td>88%</td><td>Noa</td></tr>
+<tr><td>6</td><td>Bug King</td><td>50</td><td>120s</td><td>90%</td><td>ALL</td></tr></table>
+<ul><li>5 shared hearts for entire run</li><li>Noa heals 1 heart between stages</li><li>NG+ adds Phantom (7) and SPAM (8)</li></ul>
+</div>
+
+<h3 id="mastery">1.7 Character Mastery</h3>
+<div class="card cgo">
+<table><tr><th>Level</th><th>Requirement</th><th>Bonus</th><th>Visual</th></tr>
+<tr><td>1 - Apprentice</td><td>10 sessions</td><td>x1</td><td>Bronze frame</td></tr>
+<tr><td>2 - Partner</td><td>25 sessions + 30 WPM</td><td>x1.5</td><td>Silver frame</td></tr>
+<tr><td>3 - Friend</td><td>50 sessions + 40 WPM + 90%</td><td>x2</td><td>Gold frame + glow</td></tr>
+<tr><td>4 - Master</td><td>100 sessions + 50 WPM + 95%</td><td>x2.5 + new passive</td><td>Purple + animation</td></tr>
+<tr><td>5 - Ninja</td><td>200 sessions + 60 WPM + 97%</td><td>x3 + golden skin</td><td>Holographic + title</td></tr></table>
+</div>
+
+<h3 id="future">1.8 Future Content Hooks</h3>
+<div class="card ca">
+<table><tr><th>Villain</th><th>Type</th><th>Mechanic</th><th>Act</th></tr>
+<tr><td><strong>SPAM</strong></td><td>Email spam entity</td><td>Selective typing - sort real from junk</td><td>Act 4 (21-27)</td></tr>
+<tr><td><strong>VIRUS</strong></td><td>Corrupting entity</td><td>Precision - errors spread infection</td><td>Act 5 (28-35)</td></tr>
+<tr><td><strong>PHISH</strong></td><td>Impersonation entity</td><td>Critical reading - spot fakes</td><td>Act 6 (36-40)</td></tr></table>
+</div>
+
+<h2 id="art-expressions">2. Character Expression Sheets</h2>
+<div class="card ca"><p>Every character needs a dedicated expression sheet generated via Gemini. Each sheet is a single image showing all expressions in a grid layout, consistent style (Brawl Stars + anime chibi).</p></div>
+
+<h3>2.1 Ki -- Main Mascot (12 expressions)</h3>
+<div class="card cg">
+<table><tr><th>Expression</th><th>Hebrew</th><th>Usage Context</th><th>Priority</th></tr>
+<tr><td>idle</td><td>&#x05DE;&#x05E6;&#x05D1; &#x05E8;&#x05D2;&#x05D9;&#x05DC;</td><td>Default state on all pages</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>happy</td><td>&#x05E9;&#x05DE;&#x05D7;</td><td>Correct answer, small win</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>excited</td><td>&#x05E0;&#x05E8;&#x05D2;&#x05E9;</td><td>Big achievement, level up, combo</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>thinking</td><td>&#x05D7;&#x05D5;&#x05E9;&#x05D1;</td><td>Lesson intro, before typing</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>sad</td><td>&#x05E2;&#x05E6;&#x05D5;&#x05D1;</td><td>Failed attempt, low score</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>cheering</td><td>&#x05DE;&#x05E2;&#x05D5;&#x05D3;&#x05D3;</td><td>Boss defeated, milestone</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>sleeping</td><td>&#x05D9;&#x05E9;&#x05DF;</td><td>Idle timeout (&gt;60s no input)</td><td><span class="bp1">P1</span></td></tr>
+<tr><td>surprised</td><td>&#x05DE;&#x05D5;&#x05E4;&#x05EA;&#x05E2;</td><td>Bug appears, unexpected event</td><td><span class="bp1">P1</span></td></tr>
+<tr><td>determined</td><td>&#x05E0;&#x05D7;&#x05D5;&#x05E9;</td><td>Boss battle start</td><td><span class="bp1">P1</span></td></tr>
+<tr><td>celebrating</td><td>&#x05D7;&#x05D5;&#x05D2;&#x05D2;</td><td>Lesson complete, achievement</td><td><span class="bp1">P1</span></td></tr>
+<tr><td>confused</td><td>&#x05DE;&#x05D1;&#x05D5;&#x05DC;&#x05D1;&#x05DC;</td><td>Glitch distortion</td><td><span class="bp2">P2</span></td></tr>
+<tr><td>winking</td><td>&#x05E7;&#x05D5;&#x05E8;&#x05E5;</td><td>Easter egg found</td><td><span class="bp2">P2</span></td></tr></table>
+</div>
+
+<h3>2.2 Mika -- Tech Ninja (10 expressions)</h3>
+<div class="card cg">
+<table><tr><th>Expression</th><th>Usage</th><th>Priority</th></tr>
+<tr><td>idle</td><td>Default on shortcuts page</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>happy</td><td>Correct shortcut used</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>excited</td><td>Tech challenge completed</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>thinking</td><td>Analyzing problem</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>competitive</td><td>Challenging the player</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>impressed</td><td>Player exceeds expectations</td><td><span class="bp1">P1</span></td></tr>
+<tr><td>hacking</td><td>Shortcut demonstrations</td><td><span class="bp1">P1</span></td></tr>
+<tr><td>determined</td><td>Boss battle, orange mask on</td><td><span class="bp1">P1</span></td></tr>
+<tr><td>sarcastic</td><td>Obvious mistake (Geza+ only)</td><td><span class="bp2">P2</span></td></tr>
+<tr><td>celebrating</td><td>Boss defeated</td><td><span class="bp2">P2</span></td></tr></table>
+<p><strong>Special states:</strong> Orange Mask (battle mode Easter egg), Drone Active (shoulder drone buzzes during shortcuts)</p>
+</div>
+
+<h3>2.3 Bug -- Cute Villain (10 expressions)</h3>
+<div class="card cr">
+<table><tr><th>Expression</th><th>Usage</th><th>Priority</th><th>CRITICAL RULES</th></tr>
+<tr><td>idle</td><td>Hovering, antenna wiggling</td><td><span class="bp0">P0</span></td><td>Mischievous grin always</td></tr>
+<tr><td>mischievous</td><td>Scrambling letters</td><td><span class="bp0">P0</span></td><td>Giggling, playful</td></tr>
+<tr><td>giggling</td><td>After creating error</td><td><span class="bp0">P0</span></td><td>Self-amused</td></tr>
+<tr><td>hit</td><td>Player types correctly</td><td><span class="bp0">P0</span></td><td><strong>Hugs self + dizzy spirals. NEVER pain!</strong></td></tr>
+<tr><td>fleeing</td><td>Defeated, flying away</td><td><span class="bp0">P0</span></td><td><strong>Silly face + poof cloud. NEVER destroyed!</strong></td></tr>
+<tr><td>confident</td><td>Pre-boss, puffing up</td><td><span class="bp1">P1</span></td><td>Chest puffed</td></tr>
+<tr><td>surprised</td><td>Player big combo</td><td><span class="bp1">P1</span></td><td>Wide cute eyes</td></tr>
+<tr><td>healing</td><td>Player makes error</td><td><span class="bp1">P1</span></td><td>Bug regains HP, happy</td></tr>
+<tr><td>king-form</td><td>Bug King: crown + cape</td><td><span class="bp1">P1</span></td><td>1.5x size, still ADORABLE</td></tr>
+<tr><td>dancing</td><td>Bug won (player lost)</td><td><span class="bp2">P2</span></td><td>Celebratory, cute</td></tr></table>
+</div>
+
+<h3>2.4 Glitch -- Shape-Shifting Chaos (8 expressions)</h3>
+<div class="card cr">
+<table><tr><th>Expression</th><th>Usage</th><th>Priority</th></tr>
+<tr><td>default</td><td>Vaguely humanoid pixel cluster, confused (??) eyes</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>attacking</td><td>Body stretches, pixels fly outward</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>glitching</td><td>Half one form / half another, heavy static</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>calm</td><td>Pixels settle, gentle crescent eyes (Lesson 18)</td><td><span class="bp1">P1</span></td></tr>
+<tr><td>confused</td><td>Stuttering animation, flickering shapes</td><td><span class="bp1">P1</span></td></tr>
+<tr><td>dissolving</td><td>Losing form, pixels scattering</td><td><span class="bp1">P1</span></td></tr>
+<tr><td>helping</td><td>Brief clarity, opens path (Lesson 18 redemption)</td><td><span class="bp2">P2</span></td></tr>
+<tr><td>reforming</td><td>Coming back together after dissolving</td><td><span class="bp2">P2</span></td></tr></table>
+<p><strong>Rule:</strong> Glitch has NO fixed form. Only constants: two white circular eyes + general size/silhouette.</p>
+</div>
+
+<h3>2.5 Remaining Characters (8 each)</h3>
+<div class="card cg">
+<h4>Yuki -- Speed Specialist (8)</h4>
+<table><tr><th>Expression</th><th>Usage</th><th>Priority</th></tr>
+<tr><td>idle, racing, impressed</td><td>Default / speed test / player beats record</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>taunting, defeated, celebrating</td><td>Pre-race / player beats her / milestone</td><td><span class="bp1">P1</span></td></tr>
+<tr><td>stretching, windswept</td><td>Warmup / ultra-high speed</td><td><span class="bp2">P2</span></td></tr></table>
+
+<h4>Luna -- Moon Ninja (8)</h4>
+<table><tr><th>Expression</th><th>Usage</th><th>Priority</th></tr>
+<tr><td>idle, peaceful, encouraging</td><td>Default (serene) / calm mode / accuracy improving</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>meditating, concerned, happy</td><td>Zen mode / player frustrated / accuracy goal</td><td><span class="bp1">P1</span></td></tr>
+<tr><td>moonlit, whispering</td><td>Accuracy &gt;95% glow / boss battle tips</td><td><span class="bp2">P2</span></td></tr></table>
+
+<h4>Kai -- Fire Warrior (10)</h4>
+<table><tr><th>Expression</th><th>Usage</th><th>Priority</th></tr>
+<tr><td>idle, battle-ready, attacking</td><td>Ready stance / arena default / combo hit</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>defending, victory, defeat, fired-up</td><td>Under pressure / won / lost / streak &gt;10</td><td><span class="bp1">P1</span></td></tr>
+<tr><td>coaching, exhausted, saluting</td><td>Between rounds / after long fight / respect</td><td><span class="bp2">P2</span></td></tr></table>
+
+<h4>Noa -- Medic Ninja (8)</h4>
+<table><tr><th>Expression</th><th>Usage</th><th>Priority</th></tr>
+<tr><td>idle, healing, encouraging</td><td>Gentle default / correcting error / retrying</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>happy, concerned, celebrating</td><td>Error rate down / high errors / error-free lesson</td><td><span class="bp1">P1</span></td></tr>
+<tr><td>working, proud</td><td>Boss battle healing / difficult key mastered</td><td><span class="bp2">P2</span></td></tr></table>
+
+<h4>Sensei Zen -- Wise Turtle (8)</h4>
+<table><tr><th>Expression</th><th>Usage</th><th>Priority</th></tr>
+<tr><td>idle, teaching, wise</td><td>Meditation pose / lesson intro / giving proverb</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>proud, thoughtful, laughing</td><td>Lesson complete / loading screen / funny mistake</td><td><span class="bp1">P1</span></td></tr>
+<tr><td>mysterious, emotional</td><td>Foreshadowing / final boss victory tears</td><td><span class="bp2">P2</span></td></tr></table>
+
+<h4>Pixel -- Robot Data (8)</h4>
+<table><tr><th>Expression</th><th>Usage</th><th>Priority</th></tr>
+<tr><td>idle, analyzing, happy</td><td>Floating hover / processing stats / good data</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>alert, scanning, celebrating</td><td>Record broken / searching data / personal best</td><td><span class="bp1">P1</span></td></tr>
+<tr><td>sad-face, glitching</td><td>Negative trend / near Glitch events</td><td><span class="bp2">P2</span></td></tr></table>
+<p><strong>Note:</strong> Pixel emotions show as pixel art on screen face: :) happy, :/ concerned, ! alert, &lt;3 celebrating</p>
+
+<h4>Rex -- Dino Ninja (8)</h4>
+<table><tr><th>Expression</th><th>Usage</th><th>Priority</th></tr>
+<tr><td>idle, excited, cheering</td><td>Big goofy grin / game started / player scores</td><td><span class="bp0">P0</span></td></tr>
+<tr><td>trying, laughing, celebrating</td><td>Tiny arms reaching / funny moment / high score</td><td><span class="bp1">P1</span></td></tr>
+<tr><td>sleeping, stomping</td><td>Idle in games hub / entrance animation</td><td><span class="bp2">P2</span></td></tr></table>
+
+<h4>Battle Rivals (6 each x 3 = 18 total)</h4>
+<table><tr><th>Rival</th><th>Expressions (6 each)</th></tr>
+<tr><td><strong>Shadow</strong> (Cat)</td><td>idle (crouching, purple eyes), stalking, attacking (pounce), defeated (dignified sit), victory (tail swish), respect (bow)</td></tr>
+<tr><td><strong>Storm</strong> (Fox)</td><td>idle (lightning crackling), charging, attacking (lightning strike), defeated (static discharge), victory (howl), respect (nod)</td></tr>
+<tr><td><strong>Blaze</strong> (Dragon)</td><td>idle (fire aura, gold armor), powering-up (wings spread), attacking (fire breath), defeated (flame dims, bow), victory (flies up), respect (flame gift)</td></tr></table>
+</div>
+
+<h2 id="art-poses">3. Character Pose Sheets</h2>
+<div class="card ca">
+<h4>Ki -- 6 Poses</h4>
+<table><tr><th>Pose</th><th>Usage</th></tr>
+<tr><td>Standing ready</td><td>Default full-body, home page hero</td></tr>
+<tr><td>Running</td><td>Speed test, transitions, world map movement</td></tr>
+<tr><td>Typing</td><td>During lessons, adjacent to typing area</td></tr>
+<tr><td>Victory</td><td>Post-boss, achievement screen</td></tr>
+<tr><td>Pointing forward</td><td>CTA moments, "Let us go!"</td></tr>
+<tr><td>Sitting cross-legged</td><td>Practice mode, calm moments</td></tr></table>
+
+<h4>Mika -- 4 Poses</h4>
+<table><tr><th>Pose</th><th>Usage</th></tr>
+<tr><td>Hacking stance</td><td>Wrist gauntlets active, holographic keyboard</td></tr>
+<tr><td>Challenge pose</td><td>Arms crossed, confident smirk</td></tr>
+<tr><td>Battle mode</td><td>Orange mask on, drone deployed</td></tr>
+<tr><td>Victory</td><td>Drone celebration dance</td></tr></table>
+
+<h4>Kai -- 4 Poses</h4>
+<table><tr><th>Pose</th><th>Usage</th></tr>
+<tr><td>Fighting stance</td><td>Battle arena default</td></tr>
+<tr><td>Power punch</td><td>Combo hit visual</td></tr>
+<tr><td>Defending</td><td>Shield pose, protecting team</td></tr>
+<tr><td>Saluting</td><td>Post-battle respect</td></tr></table>
+
+<h4>Other Characters -- 2 Poses Each</h4>
+<table><tr><th>Character</th><th>Pose 1</th><th>Pose 2</th></tr>
+<tr><td>Yuki</td><td>Racing start (crouched, ready)</td><td>Speed burst (motion blur)</td></tr>
+<tr><td>Luna</td><td>Meditating (lotus position)</td><td>Moon casting (hands up, moonlight)</td></tr>
+<tr><td>Noa</td><td>Healing (hands glowing green)</td><td>Welcoming (open arms, gentle)</td></tr>
+<tr><td>Sensei Zen</td><td>Teaching (pointing at scroll)</td><td>Meditating (eyes closed, floating)</td></tr>
+<tr><td>Pixel</td><td>Scanning (laser from eye)</td><td>Presenting data (hologram display)</td></tr>
+<tr><td>Rex</td><td>Gaming (tiny controller)</td><td>Celebrating (jumping, arms up)</td></tr></table>
+</div>
+
+<h2 id="art-backgrounds">4. Full-Size Character Backgrounds</h2>
+<div class="card cr">
+<p><strong>KEY REQUIREMENT:</strong> Characters should be BIG and prominent in backgrounds -- not small bubbles. These are widescreen (16:9 or 3:1) backgrounds with the character taking up 40-60% of the composition.</p>
+</div>
+
+<table>
+<tr><th>Page</th><th>Character (BIG)</th><th>Background Scene</th><th>Aspect</th><th>Filename</th></tr>
+<tr><td><strong>Home Screen</strong></td><td>Ki (large center, welcoming pose)</td><td>Keyboard Village entrance, glowing dojo in background, cherry blossoms</td><td>16:9</td><td>bg-home-ki.jpg</td></tr>
+<tr><td><strong>Lessons</strong></td><td>Sensei Zen (large, teaching pose)</td><td>Training Dojo interior, ancient keyboard on pedestal, scrolls on walls</td><td>16:9</td><td>bg-lessons-sensei.jpg</td></tr>
+<tr><td><strong>Battle Arena</strong></td><td>Kai (large, fighting stance)</td><td>Battle Colosseum, flame torches, arena floor, crowd silhouettes</td><td>16:9</td><td>bg-battle-kai.jpg</td></tr>
+<tr><td><strong>Speed Test</strong></td><td>Yuki (large, racing pose)</td><td>Speed Arena, race track with motion lines, neon clock, wind effects</td><td>16:9</td><td>bg-speed-yuki.jpg</td></tr>
+<tr><td><strong>Games Hub</strong></td><td>Rex (large, excited gaming pose)</td><td>Games Arcade, neon signs, arcade machines, pixel art decorations</td><td>16:9</td><td>bg-games-rex.jpg</td></tr>
+<tr><td><strong>Shortcuts</strong></td><td>Mika (large, hacking stance)</td><td>Cyber Lab, holographic keyboards, circuit patterns, drone flying</td><td>16:9</td><td>bg-shortcuts-mika.jpg</td></tr>
+<tr><td><strong>Practice</strong></td><td>Luna (large, meditating)</td><td>Moonlit Garden, silver moonlight, floating petals, serene pond</td><td>16:9</td><td>bg-practice-luna.jpg</td></tr>
+<tr><td><strong>Statistics</strong></td><td>Pixel (large, data mode)</td><td>Data Overlay environment, holographic graphs, floating numbers</td><td>16:9</td><td>bg-stats-pixel.jpg</td></tr>
+<tr><td><strong>World Map</strong></td><td>Ki (small traveler) + map</td><td>Full world map: Village &gt; Forest &gt; Mountain &gt; Tower &gt; Maze &gt; Palace</td><td>3:1</td><td>bg-worldmap.jpg</td></tr>
+</table>
+
+<h4>Gemini Prompt Template for Backgrounds</h4>
+<div class="prompt">
+<strong>PROMPT FOR GEMINI (each background):</strong>
+
+Full-width background illustration for "[PAGE NAME]" page of a kids typing game.
+
+STYLE: Brawl Stars + anime art style. Colorful, vibrant, dark gaming aesthetic.
+Same style as the attached reference characters [attach model sheet as reference].
+
+COMPOSITION: [CHARACTER NAME] takes up 40-60% of the image, positioned [LEFT/CENTER/RIGHT].
+Character is in [SPECIFIC POSE] facing the viewer.
+Background is [SPECIFIC ENVIRONMENT DESCRIPTION].
+
+COLORS: Dark gaming base (#0d0b1a), [CHARACTER ACCENT COLORS], vibrant highlights.
+ASPECT RATIO: 16:9 (1920x1080)
+MOOD: [Epic / Calm / Energetic / Mysterious]
+
+OUTPUT: Single illustration, high detail, game-ready, NO text overlays.
+</div>
+</div>
+
+<h2 id="art-bosses">5. Boss Battle Splash Screens</h2>
+<div class="card cr">
+<table>
+<tr><th>Boss</th><th>Lesson</th><th>Scene Description</th><th>Characters Present</th><th>Aspect</th><th>Filename</th></tr>
+<tr><td><strong>Bug the Small</strong></td><td>7</td><td>Bug puffs up in center, Ki and Mika flanking in battle poses. Home Row Forest backdrop. Green pixels flying. Text: first boss encounter energy.</td><td>Bug (center), Ki (right), Mika (left)</td><td>16:9</td><td>splash-boss-bug-small.jpg</td></tr>
+<tr><td><strong>Bug + Glitch</strong></td><td>15</td><td>Bug and Glitch side by side at center. All heroes in a V-formation behind Ki. Split-screen effect: green (Bug side) vs pink/blue (Glitch side). Glitch Cave / Bug Den overlap.</td><td>Bug, Glitch (center), ALL heroes (formation)</td><td>16:9</td><td>splash-boss-bug-glitch.jpg</td></tr>
+<tr><td><strong>Bug King</strong></td><td>20</td><td>Bug King on corrupted digital throne, tiny crown gleaming, code cape flowing. ALL heroes charging forward in epic pose. Purple/green glitch palace backdrop. Most dramatic art in the game.</td><td>Bug King (throne), ALL 9 heroes (charging)</td><td>16:9</td><td>splash-boss-bug-king.jpg</td></tr>
+</table>
+
+<h4>Gemini Prompt for Bug King Splash</h4>
+<div class="prompt">
+<strong>PROMPT:</strong>
+
+Epic boss battle splash screen for "Bug King" final boss in a kids typing game.
+
+STYLE: Brawl Stars + anime, dramatic lighting, dark gaming aesthetic.
+Match style of attached character references.
+
+SCENE: Split composition.
+LEFT SIDE: 9 hero characters charging forward in a V-formation.
+  - Ki (center front, determined expression, purple headband flowing)
+  - Mika (beside Ki, wrist gauntlets glowing, orange mask on)
+  - Kai (flames on fists), Yuki (speed lines), Luna (moon glow)
+  - Noa (green healing aura), Sensei Zen (wise calm), Rex (tiny arms pumping), Pixel (screen showing !)
+RIGHT SIDE: Bug King on a corrupted digital throne.
+  - Same cute beetle but 1.5x size
+  - Tiny ornate golden crown with red gem
+  - Cape made of glitching code fragments
+  - Surrounded by floating error messages and scrambled Hebrew letters
+  - Still CUTE even as the final boss
+
+BACKGROUND: Bug King Palace - corrupted digital throne room, purple (#6C5CE7) and green (#00FF41) glitch aesthetic, floating data fragments, epic scale.
+
+MOOD: Epic showdown but kid-friendly. Dramatic but NOT scary.
+ASPECT RATIO: 16:9 (1920x1080)
+ABSOLUTELY NO: Blood, weapons, scary elements, dark horror aesthetics.
+
+OUTPUT: Single cinematic illustration, high detail, game-ready splash screen.
+</div>
+</div>
+
+<h2 id="art-unlocks">6. Character Unlock Art</h2>
+<div class="card cgo">
+<p>Each character unlock plays a 3-second animation. We need full-body entrance pose art for each.</p>
+<table>
+<tr><th>Character</th><th>Entrance Animation</th><th>Greeting Line</th><th>Filename</th></tr>
+<tr><td>Mika</td><td>Slides in from right, holographic gauntlets flash</td><td>Together we are unstoppable!</td><td>unlock-mika.jpg</td></tr>
+<tr><td>Sensei Zen</td><td>Fades in with golden glow, bows</td><td>Patience, students. It all starts here.</td><td>unlock-sensei.jpg</td></tr>
+<tr><td>Yuki</td><td>Speed blur entrance, cat ears bounce</td><td>Fastest in the dojo -- until now!</td><td>unlock-yuki.jpg</td></tr>
+<tr><td>Luna</td><td>Descends from above with moonlight particles</td><td>Breathe, focus, then... perfect typing.</td><td>unlock-luna.jpg</td></tr>
+<tr><td>Kai</td><td>Bursts in with flame particle effects</td><td>Fire in the fingers! Let us fight!</td><td>unlock-kai.jpg</td></tr>
+<tr><td>Noa</td><td>Walks in gently, green healing sparkles</td><td>I am here, it is okay to make mistakes!</td><td>unlock-noa.jpg</td></tr>
+<tr><td>Rex</td><td>Stomps in, tiny arms waving</td><td>Even with tiny hands -- I am here!</td><td>unlock-rex.jpg</td></tr>
+<tr><td>Shadow</td><td>Materializes from darkness, purple eyes glow</td><td>Shadow appears. Prepare your fingers.</td><td>unlock-shadow.jpg</td></tr>
+<tr><td>Storm</td><td>Lightning flash, then appears</td><td>Lightning! Ready for your fate?</td><td>unlock-storm.jpg</td></tr>
+<tr><td>Blaze</td><td>Fire circle, then steps through</td><td>Sacred fire! Only the worthy survive!</td><td>unlock-blaze.jpg</td></tr>
+</table>
+</div>
+
+<h2 id="art-seasonal">7. Seasonal Skin Art</h2>
+<div class="card cgo">
+<table>
+<tr><th>Event</th><th>Characters with Skins</th><th>Skin Description</th><th>Assets Needed</th></tr>
+<tr><td><strong>Hanukkah</strong></td><td>Ki, Mika</td><td>Ki: Menorah headband, blue/white. Mika: Dreidel hologram drone.</td><td>2 skins</td></tr>
+<tr><td><strong>Purim</strong></td><td>ALL (Ki, Mika, Bug, Rex priority)</td><td>Ki as clown, Mika as robot, Rex as chicken, Bug gets BEST costume.</td><td>4 priority skins</td></tr>
+<tr><td><strong>Tu BiShvat</strong></td><td>Noa, Rex</td><td>Noa: flower crown, vine patterns. Rex: tree costume.</td><td>2 skins</td></tr>
+<tr><td><strong>Hebrew Week</strong></td><td>Sensei Zen</td><td>Traditional scribe outfit, quill accessory.</td><td>1 skin</td></tr>
+<tr><td><strong>Book Week</strong></td><td>Luna, Ki</td><td>Luna: book pages flowing. Ki: bookworm glasses.</td><td>2 skins</td></tr>
+<tr><td><strong>Summer</strong></td><td>Ki, Yuki</td><td>Ki: beach shorts, surfboard. Yuki: swimming goggles, water splash.</td><td>2 skins</td></tr>
+<tr><td><strong>Cyber Week</strong></td><td>Mika, Pixel</td><td>Mika: enhanced cyberpunk armor, dual drones. Pixel: red alert mode.</td><td>2 skins</td></tr>
+<tr><td><strong>Back to School</strong></td><td>Ki, Sensei Zen</td><td>Ki: backpack, pencil. Sensei: blackboard pointer.</td><td>2 skins</td></tr>
+</table>
+<p><strong>Total seasonal skins needed: ~17 skin variants</strong></p>
+</div>
+
+<h2 id="animation-spec">8. Animation Always ON -- Updated Spec</h2>
+<div class="card ca">
+<h4>Policy Change</h4>
+<p><strong>OLD:</strong> Characters were hidden/static for older age themes (Anaf 12-14, Tzameret 14-16+).</p>
+<p><strong>NEW:</strong> Characters are ALWAYS animated at ALL age levels. The difference is controlled by a <strong>Settings toggle</strong>, not by age theme automatically.</p>
+
+<h4>Updated Age Matrix</h4>
+<table>
+<tr><th>Age Theme</th><th>Character Size</th><th>Animation</th><th>Dialogue</th></tr>
+<tr><td>Shatil (6-8)</td><td>LARGE 120px</td><td>Full animation, reactions to every keystroke</td><td>Full bubbles, max 5 words</td></tr>
+<tr><td>Nevet (8-10)</td><td>MEDIUM 80px</td><td>Full animation, subtle idle</td><td>Full bubbles, max 8 words</td></tr>
+<tr><td>Geza (10-12)</td><td>SMALL 48px</td><td>Full animation, minimal idle</td><td>Full bubbles, 10+ words</td></tr>
+<tr><td>Anaf (12-14)</td><td>SMALL 36px</td><td><strong>Full animation (NEW! was static)</strong></td><td>Short tooltips</td></tr>
+<tr><td>Tzameret (14-16+)</td><td>SMALL 28px</td><td><strong>Full animation (NEW! was hidden)</strong></td><td>Minimal / optional</td></tr>
+</table>
+
+<h4>What Changes</h4>
+<ul>
+<li>All ages get animated characters by default -- no more auto-hiding</li>
+<li>Older ages get SMALLER characters but they are still animated and present</li>
+<li>A Settings page controls graphics level (see Section 9 below)</li>
+<li>The user decides how much graphics to show, not the age theme</li>
+<li>Teacher view remains professional (Sensei Zen + Pixel only, small)</li>
+</ul>
+
+<h4>Animation Performance Rules</h4>
+<ul>
+<li>All animations use transform/opacity ONLY (no width/height/top/left)</li>
+<li>Idle animations: CSS-based, &lt; 3KB per character</li>
+<li>Reaction animations: Framer Motion, max 200ms for feedback</li>
+<li>Expression changes: crossfade via opacity, 150ms transition</li>
+<li>Lazy-load: only the active page character loads full assets</li>
+</ul>
+</div>
+
+<h2 id="settings-ui">9. Graphics Settings UI</h2>
+<div class="card cg">
+<h4>Settings &gt; Appearance &gt; Graphics Level</h4>
+<div class="wf">
+<p class="wf-label">WIREFRAME: Graphics Settings Panel</p>
+<br>
+<pre style="color:var(--cyan);font-family:monospace;font-size:12px;direction:ltr;text-align:left">
++--------------------------------------------------+
+|  SETTINGS > APPEARANCE > GRAPHICS                 |
+|                                                    |
+|  Graphics Level:                                   |
+|  +----+--------+--------+--------+--------+       |
+|  | 1  |   2    |   3    |   4    |   5    |       |
+|  | Min| Light  |Standard|  Full  | Ultra  |       |
+|  +----+--------+--------+--------+--------+       |
+|                                                    |
+|  Level 1 - Minimal:                                |
+|    - No character art (text-only indicators)       |
+|    - No animations                                 |
+|    - Data displays only (WPM, accuracy numbers)    |
+|    - Best for: distraction-free typing practice    |
+|                                                    |
+|  Level 2 - Light:                                  |
+|    - Small character icons (28px)                  |
+|    - No idle animations                            |
+|    - Reaction animations on milestones only        |
+|    - Best for: teens who want focus                |
+|                                                    |
+|  Level 3 - Standard (DEFAULT):                     |
+|    - Medium characters (48-80px by age)            |
+|    - Subtle idle animations                        |
+|    - Full reaction animations                      |
+|    - Speech bubbles on key moments                 |
+|    - Best for: balanced experience                 |
+|                                                    |
+|  Level 4 - Full:                                   |
+|    - Large characters (80-120px)                   |
+|    - Full idle + reaction animations               |
+|    - All speech bubbles and dialogue               |
+|    - Background characters cycling                 |
+|    - Best for: immersive story experience          |
+|                                                    |
+|  Level 5 - Ultra:                                  |
+|    - Everything in Full PLUS:                      |
+|    - Particle effects (sparkles, flames, pixels)   |
+|    - Sound effects on character reactions           |
+|    - Full narrative cutscenes between lessons      |
+|    - Background environment animations             |
+|    - Best for: maximum gaming experience           |
+|                                                    |
+|  [x] Show character in sidebar                     |
+|  [x] Show companion reactions during typing        |
+|  [x] Show story dialogue bubbles                   |
+|  [ ] Reduce motion (accessibility)                 |
+|                                                    |
+|  Preview: [Ki waves at current settings level]     |
++--------------------------------------------------+
+</pre>
+</div>
+
+<h4>Implementation Notes</h4>
+<ul>
+<li>Store graphics level in settings-store (1-5, default 3)</li>
+<li>CSS custom property: <code>--graphics-level: 1|2|3|4|5</code></li>
+<li>Characters read graphics level and adjust: size, animation, dialogue visibility</li>
+<li>Age theme sets the DEFAULT graphics level but user can override</li>
+<li>Default by age: Shatil=5, Nevet=4, Geza=3, Anaf=2, Tzameret=1</li>
+<li>User override persists and takes priority over age default</li>
+<li>"Reduce motion" toggle respects <code>prefers-reduced-motion</code> media query</li>
+</ul>
+</div>
+
+<h2 id="totals">10. Total Asset Count</h2>
+
+<div class="sbox">
+<div class="bn">~180</div>
+<p>Total unique art assets needed (estimated)</p>
+</div>
+
+<div class="card cgo">
+<table>
+<tr><th>Category</th><th>Count</th><th>Details</th></tr>
+<tr><td><strong>Expression Sheets</strong></td><td>14</td><td>1 sheet per character (each sheet = 1 Gemini image with grid of expressions)</td></tr>
+<tr><td><strong>Individual Expressions</strong></td><td>~120</td><td>Ki(12) + Mika(10) + Bug(10) + Kai(10) + Yuki(8) + Luna(8) + Noa(8) + Sensei(8) + Pixel(8) + Rex(8) + Glitch(8) + Shadow(6) + Storm(6) + Blaze(6) = 126</td></tr>
+<tr><td><strong>Pose Sheets</strong></td><td>4</td><td>Ki(6 poses), Mika(4), Kai(4), others(2 each x 6 = 12 on shared sheets)</td></tr>
+<tr><td><strong>Full Backgrounds</strong></td><td>9</td><td>Home, Lessons, Battle, Speed, Games, Shortcuts, Practice, Stats, World Map</td></tr>
+<tr><td><strong>Boss Splash Screens</strong></td><td>3</td><td>Bug Small (L7), Bug+Glitch (L15), Bug King (L20)</td></tr>
+<tr><td><strong>Unlock Celebration Art</strong></td><td>10</td><td>Mika, Sensei, Yuki, Luna, Kai, Noa, Rex, Shadow, Storm, Blaze</td></tr>
+<tr><td><strong>Seasonal Skins</strong></td><td>17</td><td>Hanukkah(2), Purim(4), Tu BiShvat(2), Hebrew Week(1), Book Week(2), Summer(2), Cyber(2), School(2)</td></tr>
+<tr><td><strong>Future Villain Art</strong></td><td>3</td><td>SPAM model sheet, VIRUS model sheet, Phantom (secret rival)</td></tr>
+<tr><td><strong>Bug/Glitch Model Sheets</strong></td><td>2</td><td>Bug villain + Glitch entity (currently missing)</td></tr>
+<tr><td><strong>Bug King Portrait</strong></td><td>1</td><td>Standalone Bug King boss portrait</td></tr>
+</table>
+
+<h4>Generation Priority</h4>
+<table>
+<tr><th>Priority</th><th>Assets</th><th>Count</th><th>Rationale</th></tr>
+<tr><td><span class="bp0">P0 - Immediate</span></td><td>Bug + Glitch model sheets</td><td>2</td><td>Required for narrative (currently no art exists)</td></tr>
+<tr><td><span class="bp0">P0 - Immediate</span></td><td>Bug King portrait</td><td>1</td><td>Final boss needs art</td></tr>
+<tr><td><span class="bp0">P0 - Immediate</span></td><td>P0 expressions (3 per character x 14)</td><td>14 sheets</td><td>Core gameplay expressions</td></tr>
+<tr><td><span class="bp1">P1 - Sprint</span></td><td>9 full backgrounds (characters BIG)</td><td>9</td><td>User specifically requested large character backgrounds</td></tr>
+<tr><td><span class="bp1">P1 - Sprint</span></td><td>3 boss splash screens</td><td>3</td><td>Boss encounters need drama</td></tr>
+<tr><td><span class="bp1">P1 - Sprint</span></td><td>10 unlock celebration art</td><td>10</td><td>Character unlock is a key moment</td></tr>
+<tr><td><span class="bp2">P2 - Backlog</span></td><td>P1+P2 expressions</td><td>~80 more</td><td>Extended expression range</td></tr>
+<tr><td><span class="bp2">P2 - Backlog</span></td><td>Pose sheets</td><td>4</td><td>Needed for full-body scenes</td></tr>
+<tr><td><span class="bp3">P3 - Future</span></td><td>Seasonal skins</td><td>17</td><td>Only needed when seasonal events launch</td></tr>
+<tr><td><span class="bp3">P3 - Future</span></td><td>Future villain art (SPAM, VIRUS, Phantom)</td><td>3</td><td>Only needed for Act 4+</td></tr>
+</table>
+</div>
+
+<h4>Gemini Generation Workflow</h4>
+<div class="card ca">
+<ol>
+<li><strong>Reference Image:</strong> Always attach an existing model sheet (e.g., ki-boy-v2.jpg) as style reference</li>
+<li><strong>Batch by Character:</strong> Generate all expressions for one character in a single session for style consistency</li>
+<li><strong>Aspect Ratios:</strong> Expression sheets = 3:2, Backgrounds = 16:9, Boss splash = 16:9, Portraits = 1:1, Unlock art = 2:3</li>
+<li><strong>Output Path:</strong> <code>public/images/characters/expressions/[character]-expressions.jpg</code></li>
+<li><strong>Quality Check:</strong> Verify consistent style, correct colors, appropriate expressions before integration</li>
+<li><strong>Tool:</strong> <code>cd ~/.claude/skills/nano-banana-poster/scripts &amp;&amp; node --loader ts-node/esm generate_poster.ts --aspect [ratio] "[prompt]"</code></li>
+</ol>
+</div>
+
+<hr style="border-color:var(--border);margin:48px 0">
+<p style="text-align:center;color:var(--text-dim);font-size:13px">
+Ninja Keyboard -- Post-Game &amp; Art Requirements v1.0<br>
+Generated: March 2026<br>
+Document covers: post-game content design, character expression/pose matrices, full background specs, boss splash screens, seasonal skin art, animation-always-on policy, and graphics settings UI wireframe.
+</p>
+
+</div><!-- /container -->
+</body>
+</html>
