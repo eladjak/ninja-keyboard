@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>נינג'ה מקלדת - סקירת איטרציה V4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0d0b1a;
+  --bg-card: #1a1730;
+  --bg-card-hover: #231f3e;
+  --primary: #6C5CE7;
+  --primary-glow: rgba(108, 92, 231, 0.3);
+  --secondary: #00B894;
+  --secondary-glow: rgba(0, 184, 148, 0.3);
+  --accent-pink: #fd79a8;
+  --accent-orange: #e17055;
+  --accent-yellow: #ffeaa7;
+  --accent-blue: #74b9ff;
+  --accent-red: #ff6b6b;
+  --text: #e0e0e0;
+  --text-dim: #8a8a9a;
+  --text-bright: #ffffff;
+  --border: #2d2a4a;
+  --success: #00b894;
+  --warning: #fdcb6e;
+  --danger: #e17055;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Heebo', sans-serif; background: var(--bg-primary); color: var(--text); line-height: 1.7; min-height: 100vh; }
+
+/* Nav */
+nav { position: sticky; top: 0; z-index: 100; background: rgba(13,11,26,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; }
+nav a { color: var(--text-dim); text-decoration: none; font-size: 13px; padding: 6px 14px; border-radius: 20px; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+nav a:hover { color: var(--primary); border-color: var(--primary); background: var(--primary-glow); }
+
+/* Hero */
+.hero { text-align: center; padding: 60px 20px 40px; background: linear-gradient(135deg, rgba(108,92,231,0.15), rgba(0,184,148,0.1)); }
+.hero h1 { font-size: 2.5rem; font-weight: 900; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
+.hero .subtitle { color: var(--text-dim); font-size: 1.1rem; }
+.hero .date { color: var(--accent-yellow); font-size: 0.9rem; margin-top: 8px; }
+
+/* Container */
+.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+/* Sections */
+section { margin-bottom: 40px; }
+section h2 { font-size: 1.6rem; font-weight: 700; color: var(--text-bright); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--primary); display: flex; align-items: center; gap: 10px; }
+section h2 .icon { font-size: 1.8rem; }
+section h3 { font-size: 1.2rem; color: var(--primary); margin: 20px 0 10px; }
+
+/* Cards */
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; transition: all 0.2s; }
+.card:hover { border-color: var(--primary); background: var(--bg-card-hover); }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+/* Stats */
+.stat-row { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
+.stat-box { flex: 1; min-width: 140px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; }
+.stat-box .number { font-size: 2rem; font-weight: 900; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.stat-box .label { font-size: 0.85rem; color: var(--text-dim); margin-top: 4px; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.9rem; }
+th { background: rgba(108,92,231,0.12); color: var(--accent-blue); padding: 10px 12px; text-align: right; font-weight: 700; }
+td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+tr:hover td { background: rgba(108,92,231,0.05); }
+
+/* Tags */
+.tag { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; }
+.tag-done { background: rgba(0,184,148,0.15); color: var(--success); }
+.tag-wait { background: rgba(253,203,110,0.15); color: var(--warning); }
+.tag-todo { background: rgba(116,185,255,0.15); color: var(--accent-blue); }
+.tag-new { background: rgba(108,92,231,0.2); color: var(--primary); }
+
+/* Progress */
+.progress-bar { background: rgba(255,255,255,0.06); border-radius: 8px; height: 10px; overflow: hidden; margin: 8px 0; }
+.progress-fill { height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.5s; }
+
+/* Audio */
+audio { width: 100%; max-width: 300px; height: 36px; border-radius: 8px; margin: 4px 0; }
+
+/* File tree */
+.file-tree { background: rgba(0,0,0,0.3); border-radius: 8px; padding: 16px; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.5; color: var(--text-dim); overflow-x: auto; }
+.file-tree .dir { color: var(--accent-blue); }
+.file-tree .new { color: var(--success); }
+.file-tree .modified { color: var(--accent-yellow); }
+
+/* Action cards */
+.action-card { background: linear-gradient(135deg, rgba(108,92,231,0.1), rgba(0,184,148,0.05)); border: 1px solid var(--primary); border-radius: 12px; padding: 20px; margin-bottom: 12px; }
+.action-card h4 { color: var(--accent-yellow); font-size: 1.1rem; margin-bottom: 8px; }
+.action-card p { color: var(--text); font-size: 0.95rem; }
+.action-card .priority { font-weight: 700; }
+.priority-high { color: var(--accent-red); }
+.priority-medium { color: var(--warning); }
+.priority-low { color: var(--accent-blue); }
+
+/* Image grid */
+.img-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin: 12px 0; }
+.img-grid img { width: 100%; border-radius: 10px; border: 2px solid var(--border); transition: border-color 0.2s; }
+.img-grid img:hover { border-color: var(--primary); }
+.img-grid .img-label { font-size: 0.8rem; color: var(--text-dim); text-align: center; margin-top: 4px; }
+
+/* Lists */
+ul { list-style: none; padding: 0; }
+ul li { padding: 4px 0; padding-right: 1.5em; position: relative; }
+ul li::before { content: ''; position: absolute; right: 0; top: 12px; width: 8px; height: 8px; border-radius: 50%; background: var(--primary); }
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 1.8rem; }
+  .stat-row { gap: 8px; }
+  .stat-box { min-width: 100px; padding: 12px; }
+  .stat-box .number { font-size: 1.5rem; }
+  .card-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#summary">סיכום</a>
+  <a href="#stats">מספרים</a>
+  <a href="#voices">קולות V4</a>
+  <a href="#sfx">אפקטים קוליים</a>
+  <a href="#art">אומנות</a>
+  <a href="#docs">מסמכים</a>
+  <a href="#code">שינויי קוד</a>
+  <a href="#listen">מה צריך ממך</a>
+  <a href="#next">צעדים הבאים</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <h1>סקירת איטרציה V4</h1>
+  <div class="subtitle">Character World Expansion - סיכום ביניים</div>
+  <div class="date">5 במרץ 2026 | איטרציות 3-4</div>
+</div>
+
+<div class="container">
+
+<!-- ═══ SUMMARY ═══ -->
+<section id="summary">
+  <h2><span class="icon">📋</span> סיכום מצב</h2>
+  <div class="card">
+    <p style="font-size:1.05rem;">
+      עולם הדמויות של נינג'ה מקלדת נבנה בצורה מאסיבית: <strong>14 דמויות עם model sheets</strong>,
+      <strong>36 קווי קול בעברית</strong> (Voice Design V4), <strong>16 אפקטים קוליים AI</strong> משולבים במשחק,
+      <strong>תוכנית פסקול 48 טראקים</strong>, מסמכי תכנון מקיפים, ו-<strong>1093 טסטים עוברים</strong>.
+    </p>
+    <div class="progress-bar" style="margin-top:16px;">
+      <div class="progress-fill" style="width: 65%"></div>
+    </div>
+    <div style="display:flex; justify-content:space-between; font-size:0.85rem; color:var(--text-dim);">
+      <span>התקדמות כללית של הספרינט</span>
+      <span style="color:var(--primary); font-weight:700;">~65%</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS ═══ -->
+<section id="stats">
+  <h2><span class="icon">📊</span> מספרים</h2>
+  <div class="stat-row">
+    <div class="stat-box"><div class="number">1093</div><div class="label">טסטים עוברים</div></div>
+    <div class="stat-box"><div class="number">14</div><div class="label">דמויות עם Model Sheet</div></div>
+    <div class="stat-box"><div class="number">36</div><div class="label">קווי קול V4 בעברית</div></div>
+    <div class="stat-box"><div class="number">16</div><div class="label">אפקטים קוליים AI</div></div>
+  </div>
+  <div class="stat-row">
+    <div class="stat-box"><div class="number">27</div><div class="label">תצוגות מקדימות קול</div></div>
+    <div class="stat-box"><div class="number">6</div><div class="label">דפי הבעות (8 רגשות)</div></div>
+    <div class="stat-box"><div class="number">15</div><div class="label">רקעי סביבה</div></div>
+    <div class="stat-box"><div class="number">48</div><div class="label">טראקים מתוכננים</div></div>
+  </div>
+  <div class="stat-row">
+    <div class="stat-box"><div class="number">9</div><div class="label">Commits בספרינט</div></div>
+    <div class="stat-box"><div class="number">62</div><div class="label">Test Suites</div></div>
+    <div class="stat-box"><div class="number">25+</div><div class="label">דפים באפליקציה</div></div>
+    <div class="stat-box"><div class="number">9</div><div class="label">קולות שמורים ב-ElevenLabs</div></div>
+  </div>
+</section>
+
+<!-- ═══ VOICES ═══ -->
+<section id="voices">
+  <h2><span class="icon">🎤</span> קולות V4 - Voice Design בעברית</h2>
+
+  <div class="card">
+    <h3>הגישה: Voice Design &rarr; שמירה &rarr; TTS בעברית</h3>
+    <p>גילינו שה-API של Voice Design יוצר <strong>אופי קולי</strong> (גוון, גיל, אנרגיה) אבל לא תומך בבחירת שפה.
+    הפתרון: ליצור את הקול &rarr; לשמור לחשבון &rarr; להשתמש ב-TTS עם <code>language_code='he'</code> + <code>eleven_v3</code>.</p>
+  </div>
+
+  <div class="card">
+    <h3>9 דמויות &times; קווי קול</h3>
+    <table>
+      <tr><th>דמות</th><th>Voice ID</th><th>קווים</th><th>אפקט נוסף</th><th>סטטוס</th></tr>
+      <tr><td>קי (Ki)</td><td><code>NMBKTss...</code></td><td>8</td><td>-</td><td><span class="tag tag-wait">ממתין לאישור</span></td></tr>
+      <tr><td>מיקה (Mika)</td><td><code>uRf8wGg...</code></td><td>5</td><td>-</td><td><span class="tag tag-wait">ממתין לאישור</span></td></tr>
+      <tr><td>יוקי (Yuki)</td><td><code>fKkRcWv...</code></td><td>3</td><td>-</td><td><span class="tag tag-wait">ממתין לאישור</span></td></tr>
+      <tr><td>לונה (Luna)</td><td><code>ADtiHOI...</code></td><td>3</td><td>-</td><td><span class="tag tag-wait">ממתין לאישור</span></td></tr>
+      <tr><td>נועה (Noa)</td><td><code>6LuAOBf...</code></td><td>3</td><td>-</td><td><span class="tag tag-wait">ממתין לאישור</span></td></tr>
+      <tr><td>קאי (Kai)</td><td><code>UGEE2us...</code></td><td>3</td><td>-</td><td><span class="tag tag-wait">ממתין לאישור</span></td></tr>
+      <tr><td>רקס (Rex)</td><td><code>qHFOWjm...</code></td><td>2</td><td>Pitch-down 10%</td><td><span class="tag tag-wait">ממתין לאישור</span></td></tr>
+      <tr><td>באג (Bug)</td><td><code>TfmOzsW...</code></td><td>5</td><td>Pitch-down 8% + echo</td><td><span class="tag tag-wait">ממתין לאישור</span></td></tr>
+      <tr><td>גליץ' (Glitch)</td><td><code>NEkvFUJ...</code></td><td>4</td><td>Tremolo + echo</td><td><span class="tag tag-wait">ממתין לאישור</span></td></tr>
+    </table>
+  </div>
+
+  <div class="action-card">
+    <h4>מה צריך ממך - קולות</h4>
+    <p>שמע את הקבצים בתיקייה <code>public/audio/voices/</code> (כל דמות בתיקייה נפרדת).
+    לכל דמות יש קובץ אחד או יותר עם משפטים בעברית.</p>
+    <p style="margin-top:8px;"><strong>שאלות:</strong></p>
+    <ul>
+      <li>האם הקולות מתאימים לדמויות?</li>
+      <li>האם הבאג נשמע גדול ומפחיד מספיק?</li>
+      <li>האם קי נשמע אמיתי ולא תינוקי?</li>
+      <li>האם הרגש מספיק חזק?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══ SFX ═══ -->
+<section id="sfx">
+  <h2><span class="icon">🔊</span> אפקטים קוליים AI - משולבים במשחק!</h2>
+
+  <div class="card">
+    <h3>16 אפקטים מ-ElevenLabs - עכשיו חיים באפליקציה</h3>
+    <p>ה-<code>SoundManager</code> שודרג: קבצי MP3 כראשיים, Web Audio synthesis כגיבוי אוטומטי.</p>
+    <table>
+      <tr><th>אפקט</th><th>קובץ</th><th>היכן משולב</th></tr>
+      <tr><td>לחיצת מקש</td><td>keyboard-click.mp3</td><td>כל דפי ההקלדה</td></tr>
+      <tr><td>תשובה נכונה</td><td>correct-answer.mp3</td><td>שיעורים, תרגול, מבחנים</td></tr>
+      <tr><td>תשובה שגויה</td><td>wrong-answer.mp3</td><td>שיעורים, תרגול, מבחנים</td></tr>
+      <tr><td>עלייה בשלב</td><td>level-up.mp3</td><td>סיום שיעור, סיום משחק</td></tr>
+      <tr><td>קומבו מקלדת</td><td>keyboard-combo.mp3</td><td>רצף הקלדה</td></tr>
+      <tr><td>פתיחת הישג</td><td>achievement-unlock.mp3</td><td>הישגים</td></tr>
+      <tr><td>פתיחת דמות</td><td>character-unlock.mp3</td><td>פתיחת תגים</td></tr>
+      <tr><td>חיתוך נינג'ה</td><td>ninja-slash.mp3</td><td><span class="tag tag-new">חדש!</span> משחק Ninja Slice</td></tr>
+      <tr><td>הופעת באג</td><td>bug-appear.mp3</td><td>זירת קרב</td></tr>
+      <tr><td>עיוות גליץ'</td><td>glitch-warp.mp3</td><td>אפקטים מיוחדים</td></tr>
+      <tr><td>רצף אש</td><td>streak-fire.mp3</td><td><span class="tag tag-new">חדש!</span> קומבו x3+ בגשם מילים</td></tr>
+      <tr><td>תריעות ניצחון</td><td>victory-cheers.mp3</td><td><span class="tag tag-new">חדש!</span> ניצחון בקרב</td></tr>
+      <tr><td>ביפ ספירה לאחור</td><td>countdown-beep.mp3</td><td>ספירה לאחור בקרב</td></tr>
+      <tr><td>GO!</td><td>countdown-go.mp3</td><td>התחלת קרב</td></tr>
+      <tr><td>כוכב נרכש</td><td>star-earn.mp3</td><td>תוצאות שיעור</td></tr>
+      <tr><td>XP נרכש</td><td>xp-gain.mp3</td><td>כל רכישת XP</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ ART ═══ -->
+<section id="art">
+  <h2><span class="icon">🎨</span> אומנות ודמויות</h2>
+
+  <div class="card">
+    <h3>Model Sheets - 14/14 מוכנים</h3>
+    <p>כל 14 הדמויות עם דפי מודל מלאים בסגנון Brawl Stars + Anime Chibi.</p>
+    <div class="img-grid">
+      <div><img src="../public/images/characters/model-sheets/ki-boy-v2.jpg" alt="Ki"><div class="img-label">קי</div></div>
+      <div><img src="../public/images/characters/model-sheets/mika-girl.jpg" alt="Mika"><div class="img-label">מיקה</div></div>
+      <div><img src="../public/images/characters/model-sheets/yuki-runner.jpg" alt="Yuki"><div class="img-label">יוקי</div></div>
+      <div><img src="../public/images/characters/model-sheets/kai-fighter.jpg" alt="Kai"><div class="img-label">קאי</div></div>
+      <div><img src="../public/images/characters/model-sheets/luna-dreamer.jpg" alt="Luna"><div class="img-label">לונה</div></div>
+      <div><img src="../public/images/characters/model-sheets/noa-healer.jpg" alt="Noa"><div class="img-label">נועה</div></div>
+      <div><img src="../public/images/characters/model-sheets/rex-dino.jpg" alt="Rex"><div class="img-label">רקס</div></div>
+      <div><img src="../public/images/characters/model-sheets/pixel-bot.jpg" alt="Pixel"><div class="img-label">פיקסל</div></div>
+      <div><img src="../public/images/characters/model-sheets/sensei-zen.jpg" alt="Sensei Zen"><div class="img-label">סנסאי זן</div></div>
+      <div><img src="../public/images/characters/model-sheets/shadow-cat.jpg" alt="Shadow"><div class="img-label">שאדו</div></div>
+      <div><img src="../public/images/characters/model-sheets/storm-fox.jpg" alt="Storm"><div class="img-label">סטורם</div></div>
+      <div><img src="../public/images/characters/model-sheets/blaze-dragon.jpg" alt="Blaze"><div class="img-label">בלייז</div></div>
+      <div><img src="../public/images/characters/model-sheets/bug-model-sheet.jpg" alt="Bug"><div class="img-label">באג <span class="tag tag-new">חדש!</span></div></div>
+      <div><img src="../public/images/characters/model-sheets/glitch-model-sheet.jpg" alt="Glitch"><div class="img-label">גליץ' <span class="tag tag-new">חדש!</span></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>דפי הבעות - 6 דמויות &times; 8 רגשות</h3>
+    <p>שמח, עצוב, כועס, מופתע, מפוחד, נחוש, חושב, צוחק</p>
+    <div class="img-grid">
+      <div><img src="../public/images/characters/expressions/ki-expressions.jpg" alt="Ki expressions"><div class="img-label">קי - 8 הבעות</div></div>
+      <div><img src="../public/images/characters/expressions/mika-expressions.jpg" alt="Mika expressions"><div class="img-label">מיקה - 8 הבעות</div></div>
+      <div><img src="../public/images/characters/expressions/yuki-expressions.jpg" alt="Yuki expressions"><div class="img-label">יוקי - 8 הבעות</div></div>
+      <div><img src="../public/images/characters/expressions/kai-expressions.jpg" alt="Kai expressions"><div class="img-label">קאי - 8 הבעות</div></div>
+      <div><img src="../public/images/characters/expressions/luna-expressions.jpg" alt="Luna expressions"><div class="img-label">לונה - 8 הבעות</div></div>
+      <div><img src="../public/images/characters/expressions/noa-expressions.jpg" alt="Noa expressions"><div class="img-label">נועה - 8 הבעות</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>רקעי סביבה - 15 רקעים</h3>
+    <p>כל דף באפליקציה עם רקע ייחודי. 6 רקעים חדשים עם דמויות נוספו:</p>
+    <table>
+      <tr><th>דף</th><th>רקע</th><th>דמות ראשית</th></tr>
+      <tr><td>דף הבית</td><td>home-background.jpg + hero-bg.jpg</td><td>קי</td></tr>
+      <tr><td>שיעורים</td><td>lessons-background.jpg + dojo-bg.jpg</td><td>סנסאי זן</td></tr>
+      <tr><td>זירת קרב</td><td>battle-background.jpg + battle-bg.jpg</td><td>קי נגד באג</td></tr>
+      <tr><td>מבחן מהירות</td><td>speed-test-background.jpg + speed-arena-bg.jpg</td><td>יוקי</td></tr>
+      <tr><td>משחקים</td><td>games-hub-background.jpg + games-bg.jpg</td><td>רקס + פיקסל + נועה</td></tr>
+      <tr><td>פרופיל</td><td>profile-background.jpg</td><td>קי הולוגרפי</td></tr>
+      <tr><td>תרגול</td><td>moonlit-garden-bg.jpg</td><td>לונה</td></tr>
+      <tr><td>קיצורים</td><td>cyber-lab-bg.jpg</td><td>מיקה</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ DOCS ═══ -->
+<section id="docs">
+  <h2><span class="icon">📄</span> מסמכי תכנון</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>תוכנית פסקול</h3>
+      <p><code>docs/soundtrack-master-plan.html</code></p>
+      <p>48 טראקים ב-8 סקציות: תפריט, משחקיות, קרב, אירועים, נושאי דמויות, עולמות גיל, SFX.</p>
+      <p>מערכת Jukebox, 15 טראקים לפתיחה כהישגים.</p>
+      <span class="tag tag-done">מוכן</span>
+    </div>
+    <div class="card">
+      <h3>סקינים לחגים</h3>
+      <p><code>docs/israeli-holiday-skins.html</code></p>
+      <p>15 סקציות: 12 חגים + סקיני גיבורי אמת. טיפול מכובד ביום השואה ויום הזיכרון.</p>
+      <span class="tag tag-done">מוכן</span>
+    </div>
+    <div class="card">
+      <h3>הרחבת סיפור</h3>
+      <p><code>docs/story-mode-expansion.html</code></p>
+      <p>מעשים 4-5, 9 סיפורי צד (אחד לכל דמות), אירועים עונתיים, 3 קרבות בוס, מערכת יחסים.</p>
+      <span class="tag tag-done">מוכן</span>
+    </div>
+    <div class="card">
+      <h3>תצוגת קולות V4</h3>
+      <p><code>docs/voice-preview-v4.html</code></p>
+      <p>השוואה V3 מול V4 עם נגני אודיו, ממשק בחירת קול מועדף.</p>
+      <span class="tag tag-done">מוכן</span>
+    </div>
+    <div class="card">
+      <h3>ביבליית דמויות</h3>
+      <p><code>docs/character-bible-merged.md</code></p>
+      <p>14 דמויות עם כל הפרטים: אופי, צבעים, תפקיד, קווי קול, אומנות.</p>
+      <span class="tag tag-done">מוכן</span>
+    </div>
+    <div class="card">
+      <h3>מחקר ElevenLabs Creator</h3>
+      <p><code>docs/elevenlabs-creator-research.md</code></p>
+      <p>587 שורות: Voice Design v3, Instant Clone, Audio Tags, SFX API.</p>
+      <span class="tag tag-done">מוכן</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CODE ═══ -->
+<section id="code">
+  <h2><span class="icon">💻</span> שינויי קוד</h2>
+
+  <div class="card">
+    <h3>SoundManager - שדרוג ל-MP3 + Web Audio</h3>
+    <p><code>src/lib/audio/sound-manager.ts</code></p>
+    <ul>
+      <li>16 קבצי MP3 ממופים לצלילים קיימים</li>
+      <li>5 צלילים חדשים: streakFire, victoryCheers, ninjaSlash, bugAppear, glitchWarp</li>
+      <li>טעינה מוקדמת (preload) באתחול האפליקציה</li>
+      <li>Web Audio synthesis כגיבוי אוטומטי</li>
+      <li>סנכרון עוצמת שמע לכל הקבצים</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>שילובי צלילים חדשים</h3>
+    <table>
+      <tr><th>קובץ</th><th>שינוי</th></tr>
+      <tr><td>battle-arena.tsx</td><td><span class="tag tag-new">victoryCheers</span> על ניצחון בקרב</td></tr>
+      <tr><td>ninja-slice/page.tsx</td><td><span class="tag tag-new">ninjaSlash</span> על חיתוך + <span class="tag tag-new">levelComplete</span> בסיום + סנכרון הגדרות</td></tr>
+      <tr><td>word-rain/page.tsx</td><td><span class="tag tag-new">streakFire</span> על קומבו x3+</td></tr>
+      <tr><td>profile-client.tsx</td><td>הוספת רקע profile-background.jpg</td></tr>
+      <tr><td>app-providers.tsx</td><td>preload() של SFX באתחול</td></tr>
+    </table>
+  </div>
+
+  <div class="card" style="border-color: var(--success);">
+    <h3 style="color: var(--success);">בריאות הפרויקט</h3>
+    <table>
+      <tr><td>TypeScript</td><td style="color:var(--success); font-weight:700;">נקי - 0 שגיאות</td></tr>
+      <tr><td>טסטים</td><td style="color:var(--success); font-weight:700;">1093/1093 עוברים (62 suites)</td></tr>
+      <tr><td>Build</td><td style="color:var(--success); font-weight:700;">מצליח - 25+ דפים</td></tr>
+      <tr><td>Commits בספרינט</td><td>9 commits</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ LISTEN ═══ -->
+<section id="listen">
+  <h2><span class="icon">👂</span> מה צריך ממך עכשיו</h2>
+
+  <div class="action-card">
+    <h4><span class="priority priority-high">עדיפות גבוהה</span> - שמע את הקולות V4</h4>
+    <p>פתח את התיקיות הבאות ושמע את הקבצים:</p>
+    <div class="file-tree">
+<span class="dir">public/audio/voices/</span>
+├── <span class="dir">ki/</span>          ← 8 קבצים (גיבור ראשי)
+├── <span class="dir">mika/</span>        ← 5 קבצים
+├── <span class="dir">yuki/</span>        ← 3 קבצים
+├── <span class="dir">luna/</span>        ← 3 קבצים
+├── <span class="dir">noa/</span>         ← 3 קבצים
+├── <span class="dir">kai/</span>         ← 3 קבצים
+├── <span class="dir">rex/</span>         ← 2 קבצים (קול עמוק)
+├── <span class="dir">bug/</span>         ← 5 קבצים (קול מפחיד)
+└── <span class="dir">glitch/</span>      ← 4 קבצים (קול מעוות)
+    </div>
+    <p style="margin-top:12px;">אפשר גם לפתוח את <code>docs/voice-preview-v4.html</code> בדפדפן להשוואה V3 מול V4.</p>
+    <p style="margin-top:8px; color:var(--accent-yellow);">ספר לי: מה מתאים? מה צריך שינוי? מה לזרוק?</p>
+  </div>
+
+  <div class="action-card">
+    <h4><span class="priority priority-medium">עדיפות בינונית</span> - סקור את המסמכים</h4>
+    <p>פתח בדפדפן ובדוק:</p>
+    <ul>
+      <li><code>docs/story-mode-expansion.html</code> - הסיפור מתאים? חסר משהו?</li>
+      <li><code>docs/israeli-holiday-skins.html</code> - הסקינים נכונים? רגישות תרבותית בסדר?</li>
+      <li><code>docs/soundtrack-master-plan.html</code> - סדר העדיפויות של המוזיקה נכון?</li>
+    </ul>
+  </div>
+
+  <div class="action-card">
+    <h4><span class="priority priority-low">עדיפות נמוכה</span> - בדוק את האומנות</h4>
+    <p>סקור את התמונות החדשות:</p>
+    <ul>
+      <li><code>public/images/characters/model-sheets/bug-*.jpg</code> + <code>glitch-*.jpg</code></li>
+      <li><code>public/images/characters/expressions/</code> - 6 דפי הבעות</li>
+      <li><code>public/images/backgrounds/</code> - 6 רקעים חדשים עם דמויות</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══ NEXT ═══ -->
+<section id="next">
+  <h2><span class="icon">🚀</span> צעדים הבאים</h2>
+
+  <table>
+    <tr><th>#</th><th>משימה</th><th>תלוי ב-</th><th>סטטוס</th></tr>
+    <tr><td>1</td><td><strong>אישור קולות V4</strong> - שמע ואשר/שנה</td><td>אתה</td><td><span class="tag tag-wait">ממתין לך</span></td></tr>
+    <tr><td>2</td><td><strong>יצירת מוזיקה</strong> - 8 טראקים ראשונים עם Suno</td><td>אישור מוזיקה</td><td><span class="tag tag-todo">בתור</span></td></tr>
+    <tr><td>3</td><td><strong>אנימציות idle</strong> - CSS keyframes תמידיות לדמויות</td><td>-</td><td><span class="tag tag-todo">בתור</span></td></tr>
+    <tr><td>4</td><td><strong>כפתורים Brawl Stars</strong> - עיצוב א-סימטרי</td><td>-</td><td><span class="tag tag-todo">בתור</span></td></tr>
+    <tr><td>5</td><td><strong>מערכת מוזיקה</strong> - השמעה לפי אזור + Jukebox</td><td>מוזיקה</td><td><span class="tag tag-todo">בתור</span></td></tr>
+    <tr><td>6</td><td><strong>מיגרציית CSS variables</strong> - צבעי dark theme ב-variables</td><td>-</td><td><span class="tag tag-todo">בתור</span></td></tr>
+    <tr><td>7</td><td><strong>הבעות באג + גליץ'</strong> - רק לגיבורים יש דפי הבעות</td><td>-</td><td><span class="tag tag-todo">בתור</span></td></tr>
+  </table>
+
+  <div class="card" style="margin-top:20px; border-color:var(--accent-yellow); background:rgba(253,203,110,0.05);">
+    <p style="font-size:1.05rem; color:var(--accent-yellow); font-weight:700;">החוסם העיקרי: אישור הקולות V4</p>
+    <p>ברגע שתשמע ותאשר (או תבקש שינויים), אני יכול להמשיך הלאה עם משימות 3-7 במקביל.</p>
+  </div>
+</section>
+
+<div style="text-align:center; padding:40px; color:var(--text-dim); font-size:0.85rem;">
+  נינג'ה מקלדת - סקירת איטרציה V4 | 5 במרץ 2026
+</div>
+
+</div>
+</body>
+</html>
