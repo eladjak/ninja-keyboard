@@ -1,0 +1,128 @@
+{
+  "bug": [
+    {
+      "generated_voice_id": "Z5W8ttSmHaM6a042aNzj",
+      "index": 0
+    },
+    {
+      "generated_voice_id": "0OGbRbLG3rWVAFJZUBRG",
+      "index": 1
+    },
+    {
+      "generated_voice_id": "0X0TQc0ZY1AzWdBQTWJE",
+      "index": 2
+    }
+  ],
+  "glitch": [
+    {
+      "generated_voice_id": "BTJ1aCIEOcLmymPciSX0",
+      "index": 0
+    },
+    {
+      "generated_voice_id": "aysFutusfNp2qEZHJeuO",
+      "index": 1
+    },
+    {
+      "generated_voice_id": "fEHL8KFXKiVGrjJwOOPM",
+      "index": 2
+    }
+  ],
+  "rex": [
+    {
+      "generated_voice_id": "AXEy5hAbJS5ytSRDTiaG",
+      "index": 0
+    },
+    {
+      "generated_voice_id": "2wkO9YAMX4hBvSjn6xoC",
+      "index": 1
+    },
+    {
+      "generated_voice_id": "5YdWAbN5DoEVOizT6Sxx",
+      "index": 2
+    }
+  ],
+  "ki": [
+    {
+      "generated_voice_id": "UYW3M82v951Aur2yYplT",
+      "index": 0
+    },
+    {
+      "generated_voice_id": "XoIiZ7yagVYKMgH4rIGD",
+      "index": 1
+    },
+    {
+      "generated_voice_id": "6sbRKxInvD4f1drKu6e1",
+      "index": 2
+    }
+  ],
+  "mika": [
+    {
+      "generated_voice_id": "psxEsacEHWB3dbtxSUrK",
+      "index": 0
+    },
+    {
+      "generated_voice_id": "J93Om3OarLGjQUVAfMUh",
+      "index": 1
+    },
+    {
+      "generated_voice_id": "N7vELMB48x0atg9VBB7L",
+      "index": 2
+    }
+  ],
+  "kai": [
+    {
+      "generated_voice_id": "KOieJrPBSsDHyy1pKJj0",
+      "index": 0
+    },
+    {
+      "generated_voice_id": "mfNd723FtFxvkAu5ZRMn",
+      "index": 1
+    },
+    {
+      "generated_voice_id": "FMuEdetOJbHerXehbpZw",
+      "index": 2
+    }
+  ],
+  "yuki": [
+    {
+      "generated_voice_id": "yqHk9lKr3F6LTw1IGTBf",
+      "index": 0
+    },
+    {
+      "generated_voice_id": "Tsx6FOKa9yufw9NliawU",
+      "index": 1
+    },
+    {
+      "generated_voice_id": "iNNUPi78ouq8BCyO1kul",
+      "index": 2
+    }
+  ],
+  "luna": [
+    {
+      "generated_voice_id": "VTuI23v7cnIbiHFkAGwB",
+      "index": 0
+    },
+    {
+      "generated_voice_id": "anuIB5Ff3hBgGUalixJm",
+      "index": 1
+    },
+    {
+      "generated_voice_id": "rmjILePb5Qq6DAOZnEHS",
+      "index": 2
+    }
+  ],
+  "noa": [
+    {
+      "generated_voice_id": "yMpAC46y7jKxqI6oT7mq",
+      "index": 0
+    },
+    {
+      "generated_voice_id": "N6jefAxKnm7OSutVS71U",
+      "index": 1
+    },
+    {
+      "generated_voice_id": "QlZ6EebMZh4plx8gROMS",
+      "index": 2
+    }
+  ]
+}

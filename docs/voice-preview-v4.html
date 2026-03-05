@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>נינג'ה מקלדת - השמעת קולות V4</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: #0d0b1a;
+      color: #e0e0e0;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #6C5CE7, #00B894);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #888;
+      margin-bottom: 30px;
+      font-size: 1rem;
+    }
+    .instructions {
+      background: rgba(108, 92, 231, 0.15);
+      border: 1px solid rgba(108, 92, 231, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 30px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .instructions h3 { color: #6C5CE7; margin-bottom: 8px; }
+    .instructions p { color: #aaa; font-size: 0.9rem; line-height: 1.6; }
+    .character-section {
+      background: rgba(255,255,255,0.04);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .character-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .character-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+    .character-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+    .character-desc {
+      font-size: 0.85rem;
+      color: #888;
+      margin-top: 4px;
+    }
+    .character-text {
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+      color: #ccc;
+      border-right: 3px solid;
+    }
+    .previews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .preview-card {
+      background: rgba(0,0,0,0.3);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .preview-card:hover {
+      border-color: rgba(108, 92, 231, 0.5);
+      background: rgba(108, 92, 231, 0.1);
+    }
+    .preview-card.selected {
+      border-color: #00B894;
+      background: rgba(0, 184, 148, 0.1);
+    }
+    .preview-label {
+      font-weight: 700;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+    .preview-id {
+      font-size: 0.7rem;
+      color: #666;
+      margin-bottom: 10px;
+      word-break: break-all;
+    }
+    audio {
+      width: 100%;
+      height: 36px;
+      margin-top: 8px;
+    }
+    .btn-play {
+      background: linear-gradient(135deg, #6C5CE7, #a29bfe);
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Heebo', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      transition: all 0.2s;
+    }
+    .btn-play:hover { transform: scale(1.05); }
+    .btn-select {
+      background: linear-gradient(135deg, #00B894, #55efc4);
+      border: none;
+      color: #0d0b1a;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Heebo', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-top: 8px;
+      transition: all 0.2s;
+    }
+    .btn-select:hover { transform: scale(1.05); }
+    .selected-summary {
+      position: sticky;
+      bottom: 0;
+      background: rgba(13, 11, 26, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(108, 92, 231, 0.3);
+      padding: 16px 20px;
+      margin: 0 -20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+    }
+    .selected-badge {
+      background: rgba(0, 184, 148, 0.2);
+      border: 1px solid #00B894;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.8rem;
+      color: #00B894;
+    }
+    .compare-section {
+      background: rgba(255, 215, 0, 0.08);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .compare-section h3 {
+      color: #ffd700;
+      margin-bottom: 12px;
+    }
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .compare-card {
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .compare-card h4 {
+      font-size: 0.85rem;
+      color: #ffd700;
+      margin-bottom: 8px;
+    }
+    .version-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    .v3-tag { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; }
+    .v4-tag { background: rgba(0, 184, 148, 0.2); color: #00B894; }
+
+    @media (max-width: 600px) {
+      .previews-grid { grid-template-columns: 1fr; }
+      .compare-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <h1>🎤 נינג'ה מקלדת - קולות V4</h1>
+  <p class="subtitle">Voice Design v3 - קולות מותאמים אישית | ElevenLabs Creator Tier</p>
+
+  <div class="instructions">
+    <h3>📋 הוראות</h3>
+    <p>
+      לכל דמות יש 3 תצוגות מקדימות (previews) שנוצרו עם Voice Design v3 של ElevenLabs.<br>
+      האזן לכל שלושת הקולות ובחר את הטוב ביותר. הקולות המותאמים נוצרו מתיאור טקסטואלי של הדמות.<br>
+      <strong>חדש ב-V4:</strong> קולות מותאמים אישית (לא קולות מוכנים מראש!), עברית אותנטית ישראלית.
+    </p>
+  </div>
+
+  <div id="characters"></div>
+
+  <div class="selected-summary" id="summary">
+    <strong style="color: #6C5CE7;">נבחרו:</strong>
+    <span id="selected-count" style="color: #888;">0/9 דמויות</span>
+  </div>
+
+  <script>
+    const basePath = '../public/audio/voices';
+
+    const characters = [
+      {
+        id: 'ki',
+        name: 'קי (Ki)',
+        desc: 'ילד סקרן ואמיץ - הגיבור הראשי',
+        icon: '⚡',
+        color: '#6C5CE7',
+        text: 'וואו! גיליתי מקש חדש! בואו נראה מה הוא עושה! אני כל כך מתרגש! ביחד אנחנו צוות בלתי מנוצח! קדימה חברים, בואו נלמד להקליד כמו נינג׳ות אמיתיות!',
+        previews: [
+          { id: 'UYW3M82v951Aur2yYplT', file: 'ki-preview-0.mp3' },
+          { id: 'XoIiZ7yagVYKMgH4rIGD', file: 'ki-preview-1.mp3' },
+          { id: '6sbRKxInvD4f1drKu6e1', file: 'ki-preview-2.mp3' }
+        ],
+        v3File: 'ki/ki-discovery.mp3'
+      },
+      {
+        id: 'mika',
+        name: 'מיקה (Mika)',
+        desc: 'ילדה ביטחונית וטכנולוגית',
+        icon: '💻',
+        color: '#00cec9',
+        text: 'שלום! אני מיקה. אם זה דיגיטלי, אני יודעת לפרוץ אותו. קיצורי מקלדת הם כוח-על אמיתי! בואי נפרוץ את המערכת ונראה מה בפנים. קונטרול זד מציל חיים!',
+        previews: [
+          { id: 'psxEsacEHWB3dbtxSUrK', file: 'mika-preview-0.mp3' },
+          { id: 'J93Om3OarLGjQUVAfMUh', file: 'mika-preview-1.mp3' },
+          { id: 'N7vELMB48x0atg9VBB7L', file: 'mika-preview-2.mp3' }
+        ],
+        v3File: 'mika/mika-intro.mp3'
+      },
+      {
+        id: 'kai',
+        name: 'קאי (Kai)',
+        desc: 'לוחם חם-מזג ואמיץ',
+        icon: '🔥',
+        color: '#e17055',
+        text: 'יאללה! בואו נילחם! האצבעות שלי מוכנות לכל אתגר! אני לא מפחד משום דבר! תנו לי את הבוס הכי חזק שיש! ניצחון!',
+        previews: [
+          { id: 'KOieJrPBSsDHyy1pKJj0', file: 'kai-preview-0.mp3' },
+          { id: 'mfNd723FtFxvkAu5ZRMn', file: 'kai-preview-1.mp3' },
+          { id: 'FMuEdetOJbHerXehbpZw', file: 'kai-preview-2.mp3' }
+        ],
+        v3File: 'kai/kai-fight.mp3'
+      },
+      {
+        id: 'yuki',
+        name: 'יוקי (Yuki)',
+        desc: 'ילדה מהירה ותחרותית',
+        icon: '💨',
+        color: '#74b9ff',
+        text: 'מי יכול להקליד מהר ממני? אתגר אותי! אני הכי מהירה בדוג׳ו! מהר יותר! עוד יותר מהר!',
+        previews: [
+          { id: 'yqHk9lKr3F6LTw1IGTBf', file: 'yuki-preview-0.mp3' },
+          { id: 'Tsx6FOKa9yufw9NliawU', file: 'yuki-preview-1.mp3' },
+          { id: 'iNNUPi78ouq8BCyO1kul', file: 'yuki-preview-2.mp3' }
+        ],
+        v3File: 'yuki/yuki-challenge.mp3'
+      },
+      {
+        id: 'luna',
+        name: 'לונה (Luna)',
+        desc: 'ילדה עדינה וחולמנית',
+        icon: '🌙',
+        color: '#a29bfe',
+        text: 'נשמי עמוק... כל אות שמקלידים היא כמו ציור קטן על המסך. דמיינו שכל מילה שמקלידים הופכת לכוכב בשמיים...',
+        previews: [
+          { id: 'VTuI23v7cnIbiHFkAGwB', file: 'luna-preview-0.mp3' },
+          { id: 'anuIB5Ff3hBgGUalixJm', file: 'luna-preview-1.mp3' },
+          { id: 'rmjILePb5Qq6DAOZnEHS', file: 'luna-preview-2.mp3' }
+        ],
+        v3File: 'luna/luna-breathe.mp3'
+      },
+      {
+        id: 'noa',
+        name: 'נועה (Noa)',
+        desc: 'ילדה מרפאה ואכפתית',
+        icon: '💚',
+        color: '#55efc4',
+        text: 'הכל בסדר! כולם טועים. בוא ננסה ביחד, לאט לאט. אני כאן בשבילך. כל כך גאה בך! ראית כמה התקדמת?',
+        previews: [
+          { id: 'yMpAC46y7jKxqI6oT7mq', file: 'noa-preview-0.mp3' },
+          { id: 'N6jefAxKnm7OSutVS71U', file: 'noa-preview-1.mp3' },
+          { id: 'QlZ6EebMZh4plx8gROMS', file: 'noa-preview-2.mp3' }
+        ],
+        v3File: 'noa/noa-heal.mp3'
+      },
+      {
+        id: 'bug',
+        name: 'באג (Bug)',
+        desc: 'חיפושית נבלית שובבה',
+        icon: '🐛',
+        color: '#ff6b6b',
+        text: 'הא הא הא! אני הבאג הגדול! אני אערבב לכם את כל המקשים! אני מלך הבאגים ולעולם לא תנצחו אותי!',
+        previews: [
+          { id: 'Z5W8ttSmHaM6a042aNzj', file: 'bug-preview-0.mp3' },
+          { id: '0OGbRbLG3rWVAFJZUBRG', file: 'bug-preview-1.mp3' },
+          { id: '0X0TQc0ZY1AzWdBQTWJE', file: 'bug-preview-2.mp3' }
+        ],
+        v3File: 'bug/bug-scramble.mp3'
+      },
+      {
+        id: 'glitch',
+        name: 'גליץ׳ (Glitch)',
+        desc: 'ישות דיגיטלית כאוטית',
+        icon: '👾',
+        color: '#fd79a8',
+        text: 'אני... לא... יציב... אני גליץ׳... והעולם שלכם... מתפורר... הכל מתהפך! למעלה למטה!',
+        previews: [
+          { id: 'BTJ1aCIEOcLmymPciSX0', file: 'glitch-preview-0.mp3' },
+          { id: 'aysFutusfNp2qEZHJeuO', file: 'glitch-preview-1.mp3' },
+          { id: 'fEHL8KFXKiVGrjJwOOPM', file: 'glitch-preview-2.mp3' }
+        ],
+        v3File: 'glitch/glitch-intro.mp3'
+      },
+      {
+        id: 'rex',
+        name: 'רקס (Rex)',
+        desc: 'דינוזאור שובב ומשעשע',
+        icon: '🦕',
+        color: '#fdcb6e',
+        text: 'יש! בואו נשחק! אני אוהב משחקים! גם עם ידיים קטנות, אני פה בשבילכם! זה כל כך כיף!',
+        previews: [
+          { id: 'AXEy5hAbJS5ytSRDTiaG', file: 'rex-preview-0.mp3' },
+          { id: '2wkO9YAMX4hBvSjn6xoC', file: 'rex-preview-1.mp3' },
+          { id: '5YdWAbN5DoEVOizT6Sxx', file: 'rex-preview-2.mp3' }
+        ],
+        v3File: 'rex/rex-play.mp3'
+      }
+    ];
+
+    const selections = {};
+
+    function renderCharacters() {
+      const container = document.getElementById('characters');
+      container.innerHTML = '';
+
+      for (const char of characters) {
+        const section = document.createElement('div');
+        section.className = 'character-section';
+        section.innerHTML = `
+          <div class="character-header">
+            <div class="character-icon" style="background: ${char.color}22; border: 2px solid ${char.color}">${char.icon}</div>
+            <div>
+              <div class="character-name" style="color: ${char.color}">${char.name}</div>
+              <div class="character-desc">${char.desc}</div>
+            </div>
+          </div>
+          <div class="character-text" style="border-color: ${char.color}">
+            <strong>טקסט:</strong> ${char.text}
+          </div>
+          ${char.v3File ? `
+          <div class="compare-section" style="margin-bottom: 16px; background: rgba(255,107,107,0.08); border-color: rgba(255,107,107,0.2);">
+            <h4 style="color: #ff6b6b; font-size: 0.9rem; margin-bottom: 8px;">
+              <span class="version-tag v3-tag">V3</span> הקול הקודם (להשוואה)
+            </h4>
+            <audio controls preload="none" src="${basePath}/${char.v3File}"></audio>
+          </div>` : ''}
+          <h4 style="color: ${char.color}; margin-bottom: 12px;">
+            <span class="version-tag v4-tag">V4</span> קולות חדשים - Voice Design
+          </h4>
+          <div class="previews-grid">
+            ${char.previews.map((p, i) => `
+              <div class="preview-card" id="card-${char.id}-${i}" onclick="selectVoice('${char.id}', ${i}, '${p.id}')">
+                <div class="preview-label">אפשרות ${i + 1}</div>
+                <div class="preview-id">${p.id.slice(0, 12)}...</div>
+                <audio controls preload="none" src="${basePath}/voice-design-previews/${p.file}"></audio>
+                <br>
+                <button class="btn-select" onclick="event.stopPropagation(); selectVoice('${char.id}', ${i}, '${p.id}')">
+                  ✅ בחר קול זה
+                </button>
+              </div>
+            `).join('')}
+          </div>
+        `;
+        container.appendChild(section);
+      }
+    }
+
+    function selectVoice(charId, index, voiceId) {
+      // Deselect all cards for this character
+      const char = characters.find(c => c.id === charId);
+      char.previews.forEach((_, i) => {
+        document.getElementById(`card-${charId}-${i}`).classList.remove('selected');
+      });
+
+      // Select this card
+      document.getElementById(`card-${charId}-${index}`).classList.add('selected');
+      selections[charId] = { index, voiceId };
+
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const count = Object.keys(selections).length;
+      document.getElementById('selected-count').textContent = `${count}/9 דמויות`;
+
+      if (count === 9) {
+        const summary = document.getElementById('summary');
+        summary.innerHTML = `
+          <strong style="color: #00B894;">✅ כל הקולות נבחרו!</strong>
+          <div style="margin-top: 8px; font-size: 0.8rem; color: #888;">
+            ${Object.entries(selections).map(([char, s]) => {
+              const c = characters.find(ch => ch.id === char);
+              return `<span class="selected-badge">${c.icon} ${c.name}: אפשרות ${s.index + 1}</span>`;
+            }).join(' ')}
+          </div>
+          <div style="margin-top: 12px;">
+            <button class="btn-play" onclick="copySelections()" style="background: linear-gradient(135deg, #00B894, #55efc4); color: #0d0b1a;">
+              📋 העתק voice IDs
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    function copySelections() {
+      const result = {};
+      for (const [char, s] of Object.entries(selections)) {
+        result[char] = s.voiceId;
+      }
+      const text = JSON.stringify(result, null, 2);
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Voice IDs הועתקו! הדבק בסקריפט voice-design-v4.mjs');
+      });
+    }
+
+    renderCharacters();
+  </script>
+</body>
+</html>
