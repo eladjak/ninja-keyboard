@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ninja Keyboard - סקינים לחגי ישראל</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --bg:#0d0b1a; --bg2:#080618; --card:#0c0a20; --elevated:#13102a;
+    --border:rgba(108,92,231,0.18); --purple:#6C5CE7; --green:#00B894;
+    --pink:#FD79A8; --orange:#FDCB6E; --red:#FF6B6B; --blue:#74B9FF;
+    --cyan:#00CEC9; --gold:#F9CA24; --text:#E8E6F0; --dim:#8B86A6;
+    --glow:0 0 22px rgba(108,92,231,0.35);
+  }
+  body { font-family:'Heebo',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; font-size:14px; }
+
+  nav {
+    position:sticky; top:0; z-index:100;
+    background:rgba(13,11,26,0.97); backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--border);
+    padding:8px 16px; display:flex; gap:4px; flex-wrap:wrap; align-items:center;
+  }
+  nav .logo { font-size:16px; font-weight:900; color:var(--purple); margin-left:10px; white-space:nowrap; }
+  nav a {
+    color:var(--dim); text-decoration:none; padding:4px 10px; border-radius:16px;
+    font-size:11px; font-weight:500; border:1px solid transparent; transition:all .15s;
+    white-space:nowrap;
+  }
+  nav a:hover { color:var(--purple); background:rgba(108,92,231,0.1); border-color:rgba(108,92,231,0.3); }
+
+  .hero {
+    text-align:center; padding:48px 24px 32px;
+    background:linear-gradient(180deg,rgba(108,92,231,0.09) 0%,transparent 100%);
+  }
+  .hero h1 {
+    font-size:36px; font-weight:900;
+    background:linear-gradient(135deg,var(--purple),var(--green));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:8px;
+  }
+  .hero p { color:var(--dim); font-size:15px; max-width:580px; margin:0 auto 16px; }
+  .hero .badge {
+    display:inline-block; padding:6px 18px;
+    background:rgba(108,92,231,0.12); border:1px solid rgba(108,92,231,0.35);
+    border-radius:20px; font-size:12px; color:var(--purple); font-weight:700;
+  }
+
+  .section { max-width:1060px; margin:0 auto; padding:32px 20px 8px; }
+  .section-header {
+    display:flex; align-items:center; gap:12px;
+    margin-bottom:16px; padding-bottom:12px;
+    border-bottom:2px solid var(--border);
+  }
+  .section-header .emoji { font-size:30px; }
+  .section-header h2 { font-size:22px; font-weight:900; }
+  .section-header .sub { font-size:12px; color:var(--dim); margin-top:2px; }
+  .tag {
+    margin-right:auto; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:700;
+  }
+  .tag-joy { background:rgba(253,203,110,0.15); color:var(--orange); border:1px solid rgba(253,203,110,0.3); }
+  .tag-solemn { background:rgba(116,185,255,0.1); color:var(--blue); border:1px solid rgba(116,185,255,0.25); }
+  .tag-hero { background:rgba(255,107,107,0.12); color:var(--red); border:1px solid rgba(255,107,107,0.28); }
+  .tag-nature { background:rgba(0,184,148,0.12); color:var(--green); border:1px solid rgba(0,184,148,0.28); }
+  .tag-memorial { background:rgba(116,185,255,0.07); color:#a8c8f8; border:1px solid rgba(116,185,255,0.2); }
+
+  .holiday-meta {
+    display:flex; gap:16px; flex-wrap:wrap; margin-bottom:14px;
+    background:var(--card); border:1px solid var(--border); border-radius:10px;
+    padding:12px 16px; font-size:13px; color:var(--dim);
+  }
+  .holiday-meta span { display:flex; align-items:center; gap:5px; }
+  .holiday-meta strong { color:var(--text); }
+
+  /* SKIN TABLE */
+  .skin-table { width:100%; border-collapse:collapse; margin-bottom:16px; }
+  .skin-table th {
+    background:var(--elevated); color:var(--purple); font-size:12px; font-weight:700;
+    padding:8px 12px; border:1px solid var(--border); text-align:right;
+  }
+  .skin-table td {
+    padding:8px 12px; border:1px solid var(--border); background:var(--card);
+    font-size:13px; vertical-align:top; color:var(--text);
+  }
+  .skin-table tr:nth-child(even) td { background:rgba(19,16,42,0.7); }
+  .skin-table tr:hover td { background:rgba(108,92,231,0.06); }
+  .char { font-weight:700; white-space:nowrap; }
+  .swatches { display:flex; gap:4px; margin-top:4px; flex-wrap:wrap; }
+  .sw { width:14px; height:14px; border-radius:50%; border:1px solid rgba(255,255,255,0.2); display:inline-block; flex-shrink:0; }
+  .effect-tag {
+    display:inline-block; padding:2px 8px; border-radius:8px; font-size:11px; font-weight:600;
+    background:rgba(108,92,231,0.15); color:var(--purple); border:1px solid rgba(108,92,231,0.25);
+    white-space:nowrap;
+  }
+
+  .notice {
+    background:rgba(116,185,255,0.07); border:1px solid rgba(116,185,255,0.2);
+    border-radius:10px; padding:12px 16px; margin-bottom:16px;
+    font-size:13px; color:var(--blue); display:flex; gap:10px; align-items:flex-start;
+  }
+  .notice .icon { font-size:20px; flex-shrink:0; }
+
+  hr { border:none; border-top:1px solid var(--border); margin:8px 0 24px; }
+
+  /* UNLOCK TABLE */
+  .unlock-table { width:100%; border-collapse:collapse; margin-bottom:10px; }
+  .unlock-table th {
+    background:var(--elevated); color:var(--green); font-size:12px; font-weight:700;
+    padding:7px 12px; border:1px solid var(--border); text-align:right;
+  }
+  .unlock-table td {
+    padding:7px 12px; border:1px solid var(--border); background:var(--card);
+    font-size:12px; color:var(--dim); vertical-align:top;
+  }
+  .unlock-table tr:nth-child(even) td { background:rgba(19,16,42,0.7); }
+  .unlock-table td:first-child { color:var(--text); font-weight:600; }
+
+  /* HERO SKINS TABLE */
+  .hero-table { width:100%; border-collapse:collapse; margin-bottom:16px; }
+  .hero-table th {
+    background:var(--elevated); color:var(--red); font-size:12px; font-weight:700;
+    padding:8px 12px; border:1px solid var(--border); text-align:right;
+  }
+  .hero-table td {
+    padding:8px 12px; border:1px solid var(--border); background:var(--card);
+    font-size:13px; vertical-align:top; color:var(--text);
+  }
+  .hero-table tr:nth-child(even) td { background:rgba(19,16,42,0.7); }
+
+  footer {
+    text-align:center; padding:32px 20px; color:var(--dim); font-size:12px;
+    border-top:1px solid var(--border); margin-top:32px;
+  }
+  .toc-grid {
+    max-width:1060px; margin:0 auto; padding:0 20px 24px;
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:8px;
+  }
+  .toc-card {
+    background:var(--card); border:1px solid var(--border); border-radius:10px;
+    padding:10px 14px; text-decoration:none; color:var(--text);
+    display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600;
+    transition:all .15s;
+  }
+  .toc-card:hover { background:var(--elevated); border-color:var(--purple); color:var(--purple); }
+  .toc-card .e { font-size:20px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">⌨️ Ninja Keyboard</span>
+  <a href="#rosh-hashana">ראש השנה</a>
+  <a href="#yom-kippur">יום כיפור</a>
+  <a href="#sukkot">סוכות</a>
+  <a href="#simchat-torah">שמחת תורה</a>
+  <a href="#hanukkah">חנוכה</a>
+  <a href="#tu-bishvat">ט"ו בשבט</a>
+  <a href="#purim">פורים</a>
+  <a href="#pesach">פסח</a>
+  <a href="#yom-hazikaron">יום הזיכרון</a>
+  <a href="#yom-haatzmaut">יום העצמאות</a>
+  <a href="#lag-baomer">ל"ג בעומר</a>
+  <a href="#shavuot">שבועות</a>
+  <a href="#real-heroes">גיבורי אמת</a>
+  <a href="#unlock">פתיחת סקינים</a>
+</nav>
+
+<div class="hero">
+  <h1>🇮🇱 סקינים לחגי ישראל</h1>
+  <p>מפה מלאה של סקינים עונתיים לכל דמויות Ninja Keyboard — Ki, Mika, Yuki, Luna, Noa, Kai, Rex, Bug, Glitch, Sensei Zen</p>
+  <div class="badge">12 חגים · 10 דמויות · גיבורי אמת · מערכת פתיחה עונתית</div>
+</div>
+
+<!-- TOC GRID -->
+<div class="toc-grid">
+  <a class="toc-card" href="#rosh-hashana"><span class="e">🍎</span>ראש השנה</a>
+  <a class="toc-card" href="#yom-kippur"><span class="e">🕊️</span>יום כיפור</a>
+  <a class="toc-card" href="#sukkot"><span class="e">🌿</span>סוכות</a>
+  <a class="toc-card" href="#simchat-torah"><span class="e">📜</span>שמחת תורה</a>
+  <a class="toc-card" href="#hanukkah"><span class="e">🕎</span>חנוכה</a>
+  <a class="toc-card" href="#tu-bishvat"><span class="e">🌳</span>ט"ו בשבט</a>
+  <a class="toc-card" href="#purim"><span class="e">🎭</span>פורים</a>
+  <a class="toc-card" href="#pesach"><span class="e">🫓</span>פסח</a>
+  <a class="toc-card" href="#yom-hazikaron"><span class="e">🕯️</span>יום הזיכרון</a>
+  <a class="toc-card" href="#yom-haatzmaut"><span class="e">🎆</span>יום העצמאות</a>
+  <a class="toc-card" href="#lag-baomer"><span class="e">🔥</span>ל"ג בעומר</a>
+  <a class="toc-card" href="#shavuot"><span class="e">🌾</span>שבועות</a>
+  <a class="toc-card" href="#real-heroes"><span class="e">🛡️</span>גיבורי אמת</a>
+  <a class="toc-card" href="#unlock"><span class="e">🔓</span>מערכת פתיחה</a>
+</div>
+
+<!-- ===== ראש השנה ===== -->
+<div class="section" id="rosh-hashana">
+  <div class="section-header">
+    <span class="emoji">🍎</span>
+    <div><h2>ראש השנה</h2><div class="sub">ספטמבר–אוקטובר · ימים נוראים</div></div>
+    <span class="tag tag-joy">חגיגי</span>
+  </div>
+  <div class="holiday-meta">
+    <span>🎨 <strong>צבעים:</strong> לבן, זהב, אדום-רימון, צהוב-דבש</span>
+    <span>✨ <strong>סמלים:</strong> שופר, תפוח, דבש, רימון</span>
+    <span>🌙 <strong>תאריך עברי:</strong> א'-ב' תשרי</span>
+  </div>
+  <table class="skin-table">
+    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="char">🥷 Ki</td>
+        <td>שנה טובה Ki</td>
+        <td>גלימת נינג'ה לבנה עם ריקמת רימונים זהובים; שופר מיניאטורי בחגורה; מחזיק תפוח ודבש</td>
+        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#8B0000"></span><span class="sw" style="background:#FFC107"></span></div></td>
+        <td><span class="effect-tag">✨ ניצוצות זהובים</span></td>
+      </tr>
+      <tr>
+        <td class="char">⚡ Mika</td>
+        <td>מיקה השופרית</td>
+        <td>חליפה לבנה-כסופה; שיר קלועים לבנים; גאנטלט עם ספרות עבריות; מנגנת שופר</td>
+        <td><div class="swatches"><span class="sw" style="background:#E8E6F0"></span><span class="sw" style="background:#C0C0C0"></span><span class="sw" style="background:#4a0080"></span></div></td>
+        <td><span class="effect-tag">🎵 גלי קול מהשופר</span></td>
+      </tr>
+      <tr>
+        <td class="char">🦊 Yuki</td>
+        <td>סערת ראש השנה</td>
+        <td>גלימת ברק לבנה-כסופה; ברקים שמסתיימים ברימונים; זנב מקושט בלבן</td>
+        <td><div class="swatches"><span class="sw" style="background:#E8E6F0"></span><span class="sw" style="background:#74B9FF"></span><span class="sw" style="background:#8B0000"></span></div></td>
+        <td><span class="effect-tag">⚡ ברקים לבנים</span></td>
+      </tr>
+      <tr>
+        <td class="char">🐢 Sensei Zen</td>
+        <td>הרב הזקן</td>
+        <td>קיטל לבן חגיגי עם כתר זהב; משקפי זהב; יושב במדיטציה על קלידת עץ עתיקה</td>
+        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#6B4F00"></span></div></td>
+        <td><span class="effect-tag">🌟 אור זהוב פולס</span></td>
+      </tr>
+      <tr>
+        <td class="char">🦋 Luna</td>
+        <td>לונה הלילה הקדוש</td>
+        <td>גלימת כוכבים לבנה-סגולה; כוכבי דוד מוזהבים משובצים בבד; שרביט עם שופר בקצה</td>
+        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#6C5CE7"></span><span class="sw" style="background:#F9CA24"></span></div></td>
+        <td><span class="effect-tag">⭐ כוכבים נופלים</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
+
+<!-- ===== יום כיפור ===== -->
+<div class="section" id="yom-kippur">
+  <div class="section-header">
+    <span class="emoji">🕊️</span>
+    <div><h2>יום כיפור</h2><div class="sub">10 תשרי · יום הכיפורים</div></div>
+    <span class="tag tag-solemn">מכובד</span>
+  </div>
+  <div class="holiday-meta">
+    <span>🎨 <strong>צבעים:</strong> לבן טהור, כסף, תכלת עדין</span>
+    <span>✨ <strong>סמלים:</strong> יונה, נר, ספר החיים</span>
+  </div>
+  <div class="notice"><span class="icon">🕊️</span> עיצוב מינימליסטי, ללא אפקטים מרעישים. רוח של חרטה, טהרה ותקווה.</div>
+  <table class="skin-table">
+    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="char">🥷 Ki</td>
+        <td>Ki הטהור</td>
+        <td>גלימה לבנה חלקה ללא קישוטים; אין נשק; ידיים מונחות בשלווה; הבעת פנים מכוונת</td>
+        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#E8E6F0"></span><span class="sw" style="background:#C0C0C0"></span></div></td>
+        <td><span class="effect-tag">🕊️ יונה לבנה מעל הראש</span></td>
+      </tr>
+      <tr>
+        <td class="char">⚡ Mika</td>
+        <td>מיקה הנסלחת</td>
+        <td>חלוק לבן פשוט; גאנטלט כבוי; עיניה עצומות בחצי; מחזיקה נר דולק</td>
+        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#F0EFFF"></span><span class="sw" style="background:#87CEEB"></span></div></td>
+        <td><span class="effect-tag">🕯️ אור נר רוטט</span></td>
+      </tr>
+      <tr>
+        <td class="char">🐢 Sensei Zen</td>
+        <td>זן ביום הדין</td>
+        <td>גלימה לבנה-ארוכה; ספר פתוח (ספר החיים) בידיו; הבעה של חוכמה עמוקה</td>
+        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#F9CA24"></span></div></td>
+        <td><span class="effect-tag">📖 ספר זוהר</span></td>
+      </tr>
+      <tr>
+        <td class="char">🦎 Rex</td>
+        <td>Rex השקט</td>
+        <td>חלוק לבן גדול (קצת קומי); פרצוף שקט ורציני לראשונה; מחזיק נר בזהירות</td>
+        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#D4D4D4"></span></div></td>
+        <td><span class="effect-tag">✨ ניצוצות לבנים</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
+
+<!-- ===== סוכות ===== -->
+<div class="section" id="sukkot">
+  <div class="section-header">
+    <span class="emoji">🌿</span>
+    <div><h2>סוכות</h2><div class="sub">15 תשרי · חג האסיף</div></div>
+    <span class="tag tag-joy">חגיגי</span>
+  </div>
+  <div class="holiday-meta">
+    <span>🎨 <strong>צבעים:</strong> ירוק טבעי, צהוב-ליים, חום-עץ, כתום-אתרוג</span>
+    <span>✨ <strong>סמלים:</strong> לולב, אתרוג, הדס, ערבה, סוכה</span>
+  </div>
+  <table class="skin-table">
+    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="char">🥷 Ki</td>
+        <td>Ki הלולב</td>
+        <td>גלימה ירוקה-כהה עם עיטורי ענפים; לולב ענק על הגב כנשק; ציץ אתרוג בחגורה</td>
+        <td><div class="swatches"><span class="sw" style="background:#2D8A4E"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#8B6914"></span></div></td>
+        <td><span class="effect-tag">🌿 עלים מרחפים</span></td>
+      </tr>
+      <tr>
+        <td class="char">🦋 Luna</td>
+        <td>לונה הסוכה</td>
+        <td>גלימה מחופת ענפי הדס; כתר של ענבים ורימונים; ידיה מנופפות כאתרוג</td>
+        <td><div class="swatches"><span class="sw" style="background:#4CAF50"></span><span class="sw" style="background:#FF8C00"></span><span class="sw" style="background:#8B4513"></span></div></td>
+        <td><span class="effect-tag">🍊 אתרוגים מסתובבים</span></td>
+      </tr>
+      <tr>
+        <td class="char">🦎 Rex</td>
+        <td>Rex בונה הסוכה</td>
+        <td>חגורת כלים עם ענפים ומסמרים; כובע מחומר ועלים; נושא קורות עץ על כתפיו</td>
+        <td><div class="swatches"><span class="sw" style="background:#8B6914"></span><span class="sw" style="background:#228B22"></span><span class="sw" style="background:#DAA520"></span></div></td>
+        <td><span class="effect-tag">🔨 ניצוצות בנייה</span></td>
+      </tr>
+      <tr>
+        <td class="char">🐛 Bug</td>
+        <td>Bug ה"ארבעת המינים"</td>
+        <td>גוף מצויר כאתרוג צהוב; רגליים בצורת ערבה; כנפיים-הדס; פרצוף שמח-אתרוגי</td>
+        <td><div class="swatches"><span class="sw" style="background:#FFD700"></span><span class="sw" style="background:#7CFC00"></span><span class="sw" style="background:#32CD32"></span></div></td>
+        <td><span class="effect-tag">🌟 זוהר אתרוג</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
+
+<!-- ===== שמחת תורה ===== -->
+<div class="section" id="simchat-torah">
+  <div class="section-header">
+    <span class="emoji">📜</span>
+    <div><h2>שמחת תורה</h2><div class="sub">22–23 תשרי · ריקוד עם הספרים</div></div>
+    <span class="tag tag-joy">חגיגי</span>
+  </div>
+  <div class="holiday-meta">
+    <span>🎨 <strong>צבעים:</strong> אדום כהה, זהב, ויולט-סגול, לבן</span>
+    <span>✨ <strong>סמלים:</strong> ספר תורה, כתר, ריקוד, דגל</span>
+  </div>
+  <table class="skin-table">
+    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="char">🥷 Ki</td>
+        <td>Ki הרוקד</td>
+        <td>גלימה אדומה-זהובה; אוחז ספר תורה ממוזהב בשתי הידיים; כתר זהב על הראש; בפוז ריקוד</td>
+        <td><div class="swatches"><span class="sw" style="background:#8B0000"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#6C5CE7"></span></div></td>
+        <td><span class="effect-tag">🎊 קונפטי ספרות עבריות</span></td>
+      </tr>
+      <tr>
+        <td class="char">🐢 Sensei Zen</td>
+        <td>זן ספר התורה</td>
+        <td>גלימת חכם עם ספר תורה ענק; ריקוד עדין ומכובד; כתר חכמים זהוב</td>
+        <td><div class="swatches"><span class="sw" style="background:#8B0000"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#FFFFFF"></span></div></td>
+        <td><span class="effect-tag">✨ זהב פולס מהספר</span></td>
+      </tr>
+      <tr>
+        <td class="char">🧪 Glitch</td>
+        <td>Glitch הפרצוף</td>
+        <td>גוף פיקסלי בצבעי תורה; ספרות עבריות גליצ'ות סביבו; מנסה לרקוד אבל גליצ'</td>
+        <td><div class="swatches"><span class="sw" style="background:#8B0000"></span><span class="sw" style="background:#00FF41"></span><span class="sw" style="background:#F9CA24"></span></div></td>
+        <td><span class="effect-tag">💾 גליצ' אלפ"א-בית</span></td>
+      </tr>
+      <tr>
+        <td class="char">👧 Noa</td>
+        <td>נועה דגל שמחה</td>
+        <td>שמלה חגיגית אדומה; מנופפת דגל-מיני עם ספר תורה מצויר; ריקוד שמח</td>
+        <td><div class="swatches"><span class="sw" style="background:#CC0000"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#FFFFFF"></span></div></td>
+        <td><span class="effect-tag">🎉 כוכבים מרקדים</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
+
+<!-- ===== חנוכה ===== -->
+<div class="section" id="hanukkah">
+  <div class="section-header">
+    <span class="emoji">🕎</span>
+    <div><h2>חנוכה</h2><div class="sub">25 כסלו · חג האורות</div></div>
+    <span class="tag tag-joy">חגיגי</span>
+  </div>
+  <div class="holiday-meta">
+    <span>🎨 <strong>צבעים:</strong> כחול, כסף, זהב-אש, כתום-להבה</span>
+    <span>✨ <strong>סמלים:</strong> חנוכיה, סביבון, לביבה, שמן</span>
+  </div>
+  <table class="skin-table">
+    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="char">🥷 Ki</td>
+        <td>Ki האש</td>
+        <td>גלימה כחולה-כהה עם להבות כסופות; חרב-שמש (ייצוג מכבי); חנוכיה על החגורה</td>
+        <td><div class="swatches"><span class="sw" style="background:#00008B"></span><span class="sw" style="background:#C0C0C0"></span><span class="sw" style="background:#FF8C00"></span></div></td>
+        <td><span class="effect-tag">🔥 להבות כחולות</span></td>
+      </tr>
+      <tr>
+        <td class="char">⚡ Mika</td>
+        <td>מיקה הסביבון</td>
+        <td>חליפה מסתובבת כסביבון; ד-ה-נ-ג מוטבעים על הגוף; מסתובבת במהירות</td>
+        <td><div class="swatches"><span class="sw" style="background:#1E90FF"></span><span class="sw" style="background:#C0C0C0"></span><span class="sw" style="background:#F9CA24"></span></div></td>
+        <td><span class="effect-tag">🌀 אפקט סיבוב</span></td>
+      </tr>
+      <tr>
+        <td class="char">🦎 Rex</td>
+        <td>Rex הלביבה</td>
+        <td>גוף צבוע כלביבה ענקית; תרמיל שמן זית; מגיש לביבה בכל ניצחון</td>
+        <td><div class="swatches"><span class="sw" style="background:#DAA520"></span><span class="sw" style="background:#D2691E"></span><span class="sw" style="background:#228B22"></span></div></td>
+        <td><span class="effect-tag">🥞 לביבות נופלות</span></td>
+      </tr>
+      <tr>
+        <td class="char">🧪 Glitch</td>
+        <td>Glitch שמן הנס</td>
+        <td>גוף דולק בפיקסלים זהובים-כתומים; שמן גליצ'י זורם; כל bug הופך ללהבה</td>
+        <td><div class="swatches"><span class="sw" style="background:#FF8C00"></span><span class="sw" style="background:#FFD700"></span><span class="sw" style="background:#FF4500"></span></div></td>
+        <td><span class="effect-tag">🔥 גליצ' אש פיקסלי</span></td>
+      </tr>
+      <tr>
+        <td class="char">🐢 Sensei Zen</td>
+        <td>זן החנוכיה</td>
+        <td>גלימה כחולה עמוקה עם 9 נרות רקומים; מחזיק שמש מוזהבת; הוראה בשקט</td>
+        <td><div class="swatches"><span class="sw" style="background:#000080"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#C0C0C0"></span></div></td>
+        <td><span class="effect-tag">✨ 9 נרות מאירים</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
+
+<!-- ===== ט"ו בשבט ===== -->
+<div class="section" id="tu-bishvat">
+  <div class="section-header">
+    <span class="emoji">🌳</span>
+    <div><h2>ט"ו בשבט</h2><div class="sub">15 שבט · ראש השנה לאילנות</div></div>
+    <span class="tag tag-nature">טבע</span>
+  </div>
+  <div class="holiday-meta">
+    <span>🎨 <strong>צבעים:</strong> ירוק-עץ, חום-קליפה, ורוד-שקד, כחול-שמיים</span>
+    <span>✨ <strong>סמלים:</strong> שקדייה, פירות שבעת המינים, נטיעות</span>
+  </div>
+  <table class="skin-table">
+    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="char">🥷 Ki</td>
+        <td>Ki הנוטע</td>
+        <td>גלימה ירוקה-אדמתית; ענפי שקדייה מפריחים יוצאים מהשרוולים; שרביט-כלי-נטיעה</td>
+        <td><div class="swatches"><span class="sw" style="background:#228B22"></span><span class="sw" style="background:#8B4513"></span><span class="sw" style="background:#FFB6C1"></span></div></td>
+        <td><span class="effect-tag">🌸 פריחת שקדייה</span></td>
+      </tr>
+      <tr>
+        <td class="char">🦋 Luna</td>
+        <td>לונה הגן</td>
+        <td>שמלת פרחים עם שבעת המינים מרוקמים; כתר ענפי זית; אוחזת גרגרי חיטה</td>
+        <td><div class="swatches"><span class="sw" style="background:#4CAF50"></span><span class="sw" style="background:#DAA520"></span><span class="sw" style="background:#9370DB"></span></div></td>
+        <td><span class="effect-tag">🍀 עלים נופלים</span></td>
+      </tr>
+      <tr>
+        <td class="char">🐛 Bug</td>
+        <td>Bug הפרפר</td>
+        <td>כנפי פרפר ירוק-צהובות; גוף עם ניצני עץ; מרחף בין פרחים</td>
+        <td><div class="swatches"><span class="sw" style="background:#7CFC00"></span><span class="sw" style="background:#FFD700"></span><span class="sw" style="background:#FF69B4"></span></div></td>
+        <td><span class="effect-tag">🦋 אבקת פרחים</span></td>
+      </tr>
+      <tr>
+        <td class="char">🐢 Sensei Zen</td>
+        <td>זן האילן</td>
+        <td>גלימה עם טקסטורת קליפת עץ; שורשים ויזואלים מתחת רגליו; חכמת עצים עתיקה</td>
+        <td><div class="swatches"><span class="sw" style="background:#8B4513"></span><span class="sw" style="background:#228B22"></span><span class="sw" style="background:#D2B48C"></span></div></td>
+        <td><span class="effect-tag">🌱 ניצנים צומחים</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
+
+<!-- ===== פורים ===== -->
+<div class="section" id="purim">
+  <div class="section-header">
+    <span class="emoji">🎭</span>
+    <div><h2>פורים</h2><div class="sub">14 אדר · חג התחפושות</div></div>
+    <span class="tag tag-joy">שמחה!</span>
+  </div>
+  <div class="holiday-meta">
+    <span>🎨 <strong>צבעים:</strong> כל הצבעים, קרנבל, ססגוניות</span>
+    <span>✨ <strong>סמלים:</strong> אוזן-המן, גרגרן, תחפושת, מגילה, רעשן</span>
+  </div>
+  <table class="skin-table">
+    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="char">🥷 Ki</td>
+        <td>Ki המלך אחשוורוש</td>
+        <td>גלימת מלכות סגולה-זהובה; כתר ענק (קצת מגוחך); שרביט; עושה פוז מלכותי מוגזם</td>
+        <td><div class="swatches"><span class="sw" style="background:#6C5CE7"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#8B0000"></span></div></td>
+        <td><span class="effect-tag">🎊 קונפטי צבעוני</span></td>
+      </tr>
+      <tr>
+        <td class="char">⚡ Mika</td>
+        <td>מיקה המלכה אסתר</td>
+        <td>גלימת מלכה כחולה-זהובה; עיטורי כוכבים; כתר אסתר; רעשן בצורת מקלדת</td>
+        <td><div class="swatches"><span class="sw" style="background:#1E90FF"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#E8E6F0"></span></div></td>
+        <td><span class="effect-tag">⭐ כוכבים מסביב</span></td>
+      </tr>
+      <tr>
+        <td class="char">🦊 Yuki</td>
+        <td>Yuki המרגלת</td>
+        <td>תחפושת ליצן (מבדר) עם צבעים בוהקים; רעשן אלקטרוני; מסכה שמסתירה זהות</td>
+        <td><div class="swatches"><span class="sw" style="background:#FF1493"></span><span class="sw" style="background:#FFD700"></span><span class="sw" style="background:#00CED1"></span></div></td>
+        <td><span class="effect-tag">🎭 מסכות מרחפות</span></td>
+      </tr>
+      <tr>
+        <td class="char">🦎 Rex</td>
+        <td>Rex ה"גרגרן"</td>
+        <td>תחפושת אוזן-המן ענקית על הראש; פה תמיד פתוח; שקיות אוזני-המן מסביב</td>
+        <td><div class="swatches"><span class="sw" style="background:#D2691E"></span><span class="sw" style="background:#DAA520"></span><span class="sw" style="background:#FF6B6B"></span></div></td>
+        <td><span class="effect-tag">🍪 אוזני-המן נופלות</span></td>
+      </tr>
+      <tr>
+        <td class="char">🧪 Glitch</td>
+        <td>Glitch "מי אני?"</td>
+        <td>כל frame מראה תחפושת שונה (גליצ'); פרצוף מבולבל ומשועשע; מגילה פיקסלית</td>
+        <td><div class="swatches"><span class="sw" style="background:#FF00FF"></span><span class="sw" style="background:#00FF41"></span><span class="sw" style="background:#FFD700"></span></div></td>
+        <td><span class="effect-tag">🌈 גליצ' תחפושות</span></td>
+      </tr>
+      <tr>
+        <td class="char">🐢 Sensei Zen</td>
+        <td>זן מרדכי</td>
+        <td>חלוק שקים (בסגנון מרדכי); אבל עם שלט "לא כועס"; קריאת מגילה עם קול דרמטי</td>
+        <td><div class="swatches"><span class="sw" style="background:#8B6914"></span><span class="sw" style="background:#D3D3D3"></span></div></td>
+        <td><span class="effect-tag">📜 מגילה נפרשת</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
+
+<!-- ===== פסח ===== -->
+<div class="section" id="pesach">
+  <div class="section-header">
+    <span class="emoji">🫓</span>
+    <div><h2>פסח</h2><div class="sub">15 ניסן · חג החרות</div></div>
+    <span class="tag tag-joy">חרות!</span>
+  </div>
+  <div class="holiday-meta">
+    <span>🎨 <strong>צבעים:</strong> כחול-ים, חול-מדבר, זהב-ים סוף, לבן-מצה</span>
+    <span>✨ <strong>סמלים:</strong> מצה, כוס אליהו, ים נקרע, ד' כוסות, חופש</span>
+  </div>
+  <table class="skin-table">
+    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="char">🥷 Ki</td>
+        <td>Ki משה הנינג'ה</td>
+        <td>גלימת מדבר חומה-כחולה; מטה ענק בצד ימין; סנדלים; עיניים עם אש חרות</td>
+        <td><div class="swatches"><span class="sw" style="background:#1E90FF"></span><span class="sw" style="background:#D2B48C"></span><span class="sw" style="background:#F9CA24"></span></div></td>
+        <td><span class="effect-tag">🌊 גלי ים נפרדים</span></td>
+      </tr>
+      <tr>
+        <td class="char">⚡ Mika</td>
+        <td>מיקה הים</td>
+        <td>גלימה בצבעי ים כחול-ירוק; גלי מים דיגיטליים סביבה; קוד כתוב כמים</td>
+        <td><div class="swatches"><span class="sw" style="background:#006994"></span><span class="sw" style="background:#00CED1"></span><span class="sw" style="background:#87CEEB"></span></div></td>
+        <td><span class="effect-tag">🌊 אפקט ים נקרע</span></td>
+      </tr>
+      <tr>
+        <td class="char">🦎 Rex</td>
+        <td>Rex ה"עבד החופשי"</td>
+        <td>שרשראות שבורות על הידיים; גלימת עבד → גלימת חירות; מחזיק מצה ושמח</td>
+        <td><div class="swatches"><span class="sw" style="background:#8B4513"></span><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#FFD700"></span></div></td>
+        <td><span class="effect-tag">⛓️ שרשראות נשברות</span></td>
+      </tr>
+      <tr>
+        <td class="char">🐛 Bug</td>
+        <td>Bug הצפרדע</td>
+        <td>תחפושת צפרדע ירוקה (מכת הצפרדעים); עיניים קופצות; שמח בצורה מוזרה</td>
+        <td><div class="swatches"><span class="sw" style="background:#228B22"></span><span class="sw" style="background:#7CFC00"></span><span class="sw" style="background:#FFD700"></span></div></td>
+        <td><span class="effect-tag">🐸 צפרדעים קופצות</span></td>
+      </tr>
+      <tr>
+        <td class="char">🐢 Sensei Zen</td>
+        <td>זן ה"הגדה"</td>
+        <td>גלימת חכם עתיק; מגילת הגדה בידיו; יושב בראש שולחן הסדר; פרשת עשרת המכות</td>
+        <td><div class="swatches"><span class="sw" style="background:#8B0000"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#FFFFFF"></span></div></td>
+        <td><span class="effect-tag">📖 10 מכות פיקסל</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
+
+<!-- ===== יום הזיכרון ===== -->
+<div class="section" id="yom-hazikaron">
+  <div class="section-header">
+    <span class="emoji">🕯️</span>
+    <div><h2>יום הזיכרון</h2><div class="sub">ד' אייר · יום הזיכרון לחללי צה"ל</div></div>
+    <span class="tag tag-memorial">מכובד</span>
+  </div>
+  <div class="notice"><span class="icon">🕯️</span> עיצוב שקט ומכובד. ללא אפקטים חגיגיים. צבעים: שחור, לבן, אדום. הדמויות עומדות בדומייה.</div>
+  <table class="skin-table">
+    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="char">🥷 Ki</td>
+        <td>Ki הנושא</td>
+        <td>גלימה שחורה עם סרט אדום; ראש מורכן; נר קטן בידיו; ריבוע ריק (זכרון) על החזה</td>
+        <td><div class="swatches"><span class="sw" style="background:#1a1a1a"></span><span class="sw" style="background:#CC0000"></span><span class="sw" style="background:#FFFFFF"></span></div></td>
+        <td><span class="effect-tag">🕯️ אור נר בלבד</span></td>
+      </tr>
+      <tr>
+        <td class="char">🐢 Sensei Zen</td>
+        <td>זן הזיכרון</td>
+        <td>גלימה שחורה-כהה עמוקה; עיניים עצומות; יד על הלב; אפס קישוטים</td>
+        <td><div class="swatches"><span class="sw" style="background:#1a1a1a"></span><span class="sw" style="background:#333333"></span></div></td>
+        <td><span class="effect-tag">🌑 ללא אפקטים</span></td>
+      </tr>
+      <tr>
+        <td class="char">👧 Noa</td>
+        <td>נועה הדומייה</td>
+        <td>שמלה שחורה-לבנה; פרח אדום יחיד בידה; ראש מורכן; הבעה שקטה ומכובדת</td>
+        <td><div class="swatches"><span class="sw" style="background:#1a1a1a"></span><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#CC0000"></span></div></td>
+        <td><span class="effect-tag">🌹 פרח מרחף</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
+
+<!-- ===== יום העצמאות ===== -->
+<div class="section" id="yom-haatzmaut">
+  <div class="section-header">
+    <span class="emoji">🎆</span>
+    <div><h2>יום העצמאות</h2><div class="sub">ה' אייר · 76 שנה למדינת ישראל</div></div>
+    <span class="tag tag-hero">גאווה!</span>
+  </div>
+  <div class="holiday-meta">
+    <span>🎨 <strong>צבעים:</strong> כחול-לבן-תכלת ישראלי</span>
+    <span>✨ <strong>סמלים:</strong> דגל, מנורה, זיקוקים, מגן דוד</span>
+  </div>
+  <table class="skin-table">
+    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="char">🥷 Ki</td>
+        <td>Ki הלוחם</td>
+        <td>גלימה בצבעי דגל ישראל; מגן דוד על החזה; דגל ישראל מתנוסס מאחוריו</td>
+        <td><div class="swatches"><span class="sw" style="background:#003087"></span><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#0038A8"></span></div></td>
+        <td><span class="effect-tag">🎆 זיקוקים כחול-לבן</span></td>
+      </tr>
+      <tr>
+        <td class="char">⚡ Mika</td>
+        <td>מיקה העצמאות</td>
+        <td>חליפה כחולה-לבנה; גאנטלט עם מנורה; שיר קלועים בצבעי ישראל</td>
+        <td><div class="swatches"><span class="sw" style="background:#0038A8"></span><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#F9CA24"></span></div></td>
+        <td><span class="effect-tag">🕎 מנורה מזהירה</span></td>
+      </tr>
+      <tr>
+        <td class="char">🦊 Yuki</td>
+        <td>Yuki הסערה הכחולה</td>
+        <td>גלימת ברק בכחול ישראלי עמוק; ברקי מגן-דוד; זנב עם דגלון ישראל</td>
+        <td><div class="swatches"><span class="sw" style="background:#003087"></span><span class="sw" style="background:#87CEEB"></span><span class="sw" style="background:#FFFFFF"></span></div></td>
+        <td><span class="effect-tag">⚡ ברקים כחולים</span></td>
+      </tr>
+      <tr>
+        <td class="char">🦎 Rex</td>
+        <td>Rex חגיגה</td>
+        <td>גלימה עם שרשרת דגלוני ישראל; מנגל מיניאטורי בחגורה; חוגג בקולי קולות</td>
+        <td><div class="swatches"><span class="sw" style="background:#0038A8"></span><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#FF6B6B"></span></div></td>
+        <td><span class="effect-tag">🎊 קונפטי כחול-לבן</span></td>
+      </tr>
+      <tr>
+        <td class="char">👧 Noa</td>
+        <td>נועה גאווה</td>
+        <td>שמלה כחולה עם מגן דוד; מנופפת בשני דגלים; חיוך גדול ושמח</td>
+        <td><div class="swatches"><span class="sw" style="background:#0038A8"></span><span class="sw" style="background:#FFFFFF"></span></div></td>
+        <td><span class="effect-tag">🇮🇱 דגלים מרחפים</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
+
+<!-- ===== ל"ג בעומר ===== -->
+<div class="section" id="lag-baomer">
+  <div class="section-header">
+    <span class="emoji">🔥</span>
+    <div><h2>ל"ג בעומר</h2><div class="sub">18 אייר · מדורות ורשב"י</div></div>
+    <span class="tag tag-joy">אש!</span>
+  </div>
+  <div class="holiday-meta">
+    <span>🎨 <strong>צבעים:</strong> כתום-אש, אדום-גחלים, שחור-עשן, צהוב-להבה</span>
+    <span>✨ <strong>סמלים:</strong> מדורה, קשת-וחץ, בר-כוכבא, זוהר</span>
+  </div>
+  <table class="skin-table">
+    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="char">🥷 Ki</td>
+        <td>Ki הקשת</td>
+        <td>גלימה חומה-אדמתית; קשת ענקית על הגב; חץ בוער על הקשת; פנים של לוחם</td>
+        <td><div class="swatches"><span class="sw" style="background:#8B4513"></span><span class="sw" style="background:#FF4500"></span><span class="sw" style="background:#FFD700"></span></div></td>
+        <td><span class="effect-tag">🔥 חץ אש</span></td>
+      </tr>
+      <tr>
+        <td class="char">🦊 Yuki</td>
+        <td>Yuki האש</td>
+        <td>זנב הבוער בלהבות כתומות; עיניים בוערות; גלימה בצבעי גחלים</td>
+        <td><div class="swatches"><span class="sw" style="background:#FF4500"></span><span class="sw" style="background:#FF8C00"></span><span class="sw" style="background:#FFD700"></span></div></td>
+        <td><span class="effect-tag">🔥 אש מהזנב</span></td>
+      </tr>
+      <tr>
+        <td class="char">🦎 Rex</td>
+        <td>Rex המדורה</td>
+        <td>גוף ממש עשוי מקורות עץ בוערות; עיניים כגחלים; עשן קל עולה מהראש</td>
+        <td><div class="swatches"><span class="sw" style="background:#8B4513"></span><span class="sw" style="background:#FF4500"></span><span class="sw" style="background:#1a1a1a"></span></div></td>
+        <td><span class="effect-tag">💨 עשן עולה</span></td>
+      </tr>
+      <tr>
+        <td class="char">🧪 Glitch</td>
+        <td>Glitch רשב"י</td>
+        <td>גלימת מסתורין כהה; ספר הזוהר גליצ'י; אש פיקסלית מכל כיוון; עיניים לוחשות</td>
+        <td><div class="swatches"><span class="sw" style="background:#FF4500"></span><span class="sw" style="background:#00FF41"></span><span class="sw" style="background:#1a1a1a"></span></div></td>
+        <td><span class="effect-tag">✨ גליצ' זוהר</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
+
+<!-- ===== שבועות ===== -->
+<div class="section" id="shavuot">
+  <div class="section-header">
+    <span class="emoji">🌾</span>
+    <div><h2>שבועות</h2><div class="sub">6 סיון · מתן תורה וביכורים</div></div>
+    <span class="tag tag-nature">קציר!</span>
+  </div>
+  <div class="holiday-meta">
+    <span>🎨 <strong>צבעים:</strong> ירוק-חיטה, לבן-גבינה, זהב-שיבולים, צהוב-חמאה</span>
+    <span>✨ <strong>סמלים:</strong> לוחות הברית, שיבולים, חלב ודבש, ביכורים</span>
+  </div>
+  <table class="skin-table">
+    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="char">🥷 Ki</td>
+        <td>Ki הלוחות</td>
+        <td>גלימה לבנה עם עשרת הדיברות רקומים; נושא לוחות אבן בידיו; כתר שיבולים זהוב</td>
+        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#228B22"></span></div></td>
+        <td><span class="effect-tag">⚡ ברק מהלוחות</span></td>
+      </tr>
+      <tr>
+        <td class="char">🦋 Luna</td>
+        <td>לונה הביכורים</td>
+        <td>גלימת קציר ירוקה-זהובה; סל ביכורים מרחף; כתר שיבולי חיטה</td>
+        <td><div class="swatches"><span class="sw" style="background:#228B22"></span><span class="sw" style="background:#DAA520"></span><span class="sw" style="background:#FFFACD"></span></div></td>
+        <td><span class="effect-tag">🌾 שיבולים מרחפות</span></td>
+      </tr>
+      <tr>
+        <td class="char">🦎 Rex</td>
+        <td>Rex גבינה</td>
+        <td>גוף עם כתמי גבינה צהובים; מחזיק גלגל גבינה ענק; מחויך רחב</td>
+        <td><div class="swatches"><span class="sw" style="background:#FFD700"></span><span class="sw" style="background:#FFFACD"></span><span class="sw" style="background:#F5F5DC"></span></div></td>
+        <td><span class="effect-tag">🧀 גבינות נופלות</span></td>
+      </tr>
+      <tr>
+        <td class="char">🐢 Sensei Zen</td>
+        <td>זן מתן תורה</td>
+        <td>גלימת כהן גדול עם אפוד; מחזיק לוחות הברית; הוד מלכותי-קדוש</td>
+        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#00008B"></span></div></td>
+        <td><span class="effect-tag">✨ אור קדוש</span></td>
+      </tr>
+      <tr>
+        <td class="char">🐛 Bug</td>
+        <td>Bug הדבורה</td>
+        <td>תחפושת דבורה ענקית; מוצאת פרחים ומייצרת דבש-קוד; זמזום מתמיד</td>
+        <td><div class="swatches"><span class="sw" style="background:#FFD700"></span><span class="sw" style="background:#1a1a1a"></span><span class="sw" style="background:#FF8C00"></span></div></td>
+        <td><span class="effect-tag">🍯 דבש זורם</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
+
+<!-- ===== גיבורי אמת ===== -->
+<div class="section" id="real-heroes">
+  <div class="section-header">
+    <span class="emoji">🛡️</span>
+    <div><h2>גיבורי אמת — סקיני כבוד</h2><div class="sub">לימים הלאומיים: יום הזיכרון ויום העצמאות</div></div>
+    <span class="tag tag-hero">גיבורים</span>
+  </div>
+  <div class="notice"><span class="icon">🛡️</span> סקינים אלה מוצגים בימי יום הזיכרון ויום העצמאות בלבד. הם מכובדים, אותנטיים ומדויקים. הדמויות מאמצות את מדי הגיבורים עם כבוד.</div>
+  <table class="hero-table">
+    <thead><tr><th>גיבור</th><th>סקין לדמות</th><th>מדים ופרטים</th><th>צבעים</th><th>הודעה מיוחדת</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>🪖 חייל צה"ל</td>
+        <td><strong>Ki</strong> — Ki הלוחם</td>
+        <td>מדי כחול-ירוק (מדי ב'); כומתה ירוקה; מגן עם דגל ישראל; עמידת כבוד</td>
+        <td><div class="swatches"><span class="sw" style="background:#4B5320"></span><span class="sw" style="background:#556B2F"></span><span class="sw" style="background:#0038A8"></span></div></td>
+        <td>"שמור על ישראל בקלידות ובשדה"</td>
+      </tr>
+      <tr>
+        <td>👮 שוטר ישראלי</td>
+        <td><strong>Yuki</strong> — Yuki הכחולה</td>
+        <td>מדי משטרה כחולים; כומתה כחולה; אפודה "משטרה"; סמל הקציר על הכתף</td>
+        <td><div class="swatches"><span class="sw" style="background:#003087"></span><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#87CEEB"></span></div></td>
+        <td>"לשמור על הסדר — כמו לשמור על הקצב"</td>
+      </tr>
+      <tr>
+        <td>🚒 כבאי</td>
+        <td><strong>Rex</strong> — Rex הכבאי</td>
+        <td>חליפת כיבוי אש כתומה-אדומה; קסדה כבאים; שרוולי עמידה לחום; מיכל מים</td>
+        <td><div class="swatches"><span class="sw" style="background:#FF4500"></span><span class="sw" style="background:#FF8C00"></span><span class="sw" style="background:#FFD700"></span></div></td>
+        <td>"ריצה לתוך האש דורשת אומץ אמיתי"</td>
+      </tr>
+      <tr>
+        <td>🚑 פרמדיק מד"א</td>
+        <td><strong>Luna</strong> — לונה המציל</td>
+        <td>מדי מד"א לבן-ירוק; מגן דוד אדום על החזה; ערכת עזרה ראשונה; שלווה תחת לחץ</td>
+        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#009900"></span><span class="sw" style="background:#CC0000"></span></div></td>
+        <td>"כל שנייה חשובה — כמו כל הקשה"</td>
+      </tr>
+      <tr>
+        <td>🟡 מתנדב הצלה</td>
+        <td><strong>Kai</strong> — Kai הצלה</td>
+        <td>אפודת הצלה צהובה-ניאון; כובע "הצלה"; שרוולי זוהר; מכשיר קשר; מחויך</td>
+        <td><div class="swatches"><span class="sw" style="background:#FFD700"></span><span class="sw" style="background:#FF8C00"></span><span class="sw" style="background:#FFFFFF"></span></div></td>
+        <td>"גיבור אמת לא חייב מדים רשמיים"</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
+
+<!-- ===== מערכת פתיחה ===== -->
+<div class="section" id="unlock">
+  <div class="section-header">
+    <span class="emoji">🔓</span>
+    <div><h2>מערכת פתיחה עונתית</h2><div class="sub">כיצד פותחים סקינים</div></div>
+    <span class="tag tag-joy">גיימיפיקציה</span>
+  </div>
+
+  <h3 style="color:var(--purple);margin-bottom:12px;font-size:16px;">שיטות פתיחה</h3>
+  <table class="unlock-table">
+    <thead><tr><th>שיטה</th><th>כיצד פותחים</th><th>זמינות</th></tr></thead>
+    <tbody>
+      <tr><td>⏰ עונתי</td><td>מופיע אוטומטית ב-7 ימים לפני החג ועד 3 ימים אחריו</td><td>כל המשתמשים</td></tr>
+      <tr><td>⚡ מהירות</td><td>השג WPM מינימלי (לפי גיל) בתוך חלון החג</td><td>כל המשתמשים</td></tr>
+      <tr><td>🎯 דיוק</td><td>96%+ דיוק ב-3 שיעורים רצופים בתקופת החג</td><td>כל המשתמשים</td></tr>
+      <tr><td>🏆 אתגר מיוחד</td><td>השלם אתגר ייעודי לכל חג (ראה טבלה מטה)</td><td>כל המשתמשים</td></tr>
+      <tr><td>👑 פרמיום</td><td>גישה מידית לכל סקיני הגיבורים ב-יום הזיכרון/עצמאות</td><td>מנויי פרמיום</td></tr>
+      <tr><td>🎓 מורה</td><td>מורה מעניק לכיתה; כל הכיתה פותחת יחד</td><td>חשבונות מורה</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="color:var(--green);margin-bottom:12px;margin-top:20px;font-size:16px;">אתגרי חג (פתיחה מיוחדת)</h3>
+  <table class="unlock-table">
+    <thead><tr><th>חג</th><th>אתגר</th><th>פרס</th></tr></thead>
+    <tbody>
+      <tr><td>🍎 ראש השנה</td><td>הקלד 365 מילים נכונות ברצף — שנה שלמה של מילים!</td><td>Ki הזהוב (סקין נדיר)</td></tr>
+      <tr><td>🕊️ יום כיפור</td><td>שעה של הקלדה ב-98%+ דיוק ללא שגיאות</td><td>Ki הטהור (אפקט שקט)</td></tr>
+      <tr><td>🕎 חנוכה</td><td>8 ימי אש — שיעור אחד ביום במשך 8 ימי חנוכה</td><td>Mika הסביבון (אפקט ספין)</td></tr>
+      <tr><td>🎭 פורים</td><td>הקלד מגילת אסתר — כל הפרק הראשון (בעברית)</td><td>Glitch "מי אני" (גליצ' מלא)</td></tr>
+      <tr><td>🫓 פסח</td><td>40 שיעורים — 40 שנות המדבר ב-40 שיעורים!</td><td>Ki משה (אפקט ים נקרע)</td></tr>
+      <tr><td>🇮🇱 יום העצמאות</td><td>הקלד את הצהרת העצמאות כולה ב-95%+ דיוק</td><td>כל 5 גיבורי אמת + Badge מיוחד</td></tr>
+      <tr><td>🔥 ל"ג בעומר</td><td>WPM אחיד — אותו מספר WPM ±2 ב-3 שיעורים</td><td>Yuki האש (להבות פרמיום)</td></tr>
+      <tr><td>🌾 שבועות</td><td>מצטיין ב-10 שיעורי מקלדת נגיעה (touch typing)</td><td>Sensei זן מתן תורה</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="color:var(--orange);margin-bottom:12px;margin-top:20px;font-size:16px;">WPM מינימלי לפי גיל</h3>
+  <table class="unlock-table">
+    <thead><tr><th>קבוצת גיל</th><th>WPM נדרש</th><th>עולם</th></tr></thead>
+    <tbody>
+      <tr><td>6–8</td><td>15 WPM</td><td>שתיל (Shatil)</td></tr>
+      <tr><td>8–10</td><td>25 WPM</td><td>נבט (Nevet)</td></tr>
+      <tr><td>10–12</td><td>35 WPM</td><td>גזע (Geza)</td></tr>
+      <tr><td>12–14</td><td>50 WPM</td><td>ענף (Anaf)</td></tr>
+      <tr><td>14+</td><td>65 WPM</td><td>צמרת (Tzameret)</td></tr>
+    </tbody>
+  </table>
+</div>
+<hr>
+
+<footer>
+  <div style="font-size:22px;margin-bottom:8px;">⌨️ 🇮🇱</div>
+  <strong style="color:var(--text)">Ninja Keyboard — נינג'ה מקלדת</strong><br>
+  מסמך עיצוב פנימי · סקינים עונתיים לחגי ישראל<br>
+  <span style="color:var(--purple)">10 דמויות · 12 חגים · 5 גיבורי אמת · מערכת פתיחה עונתית</span>
+</footer>
+
+</body>
+</html>
