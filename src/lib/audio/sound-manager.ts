@@ -74,7 +74,10 @@ class SoundManager {
       // Clone for overlapping plays
       const clone = cached.cloneNode() as HTMLAudioElement
       clone.volume = this.volume
-      void clone.play().catch(() => {})
+      // Clean up clone after playback ends to avoid memory leaks
+      clone.addEventListener('ended', () => { clone.remove() }, { once: true })
+      clone.addEventListener('error', () => { clone.remove() }, { once: true })
+      void clone.play().catch(() => { clone.remove() })
       return true
     } catch {
       return false

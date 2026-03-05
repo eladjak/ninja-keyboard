@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>נינג'ה מקלדת - סקירת V4.1 | יישום משוב + תוכנית פעולה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0d0b1a;
+  --bg-card: #1a1730;
+  --bg-card-hover: #231f3e;
+  --primary: #6C5CE7;
+  --primary-glow: rgba(108, 92, 231, 0.3);
+  --secondary: #00B894;
+  --secondary-glow: rgba(0, 184, 148, 0.3);
+  --accent-pink: #fd79a8;
+  --accent-orange: #e17055;
+  --accent-yellow: #ffeaa7;
+  --accent-blue: #74b9ff;
+  --accent-red: #ff6b6b;
+  --text: #e0e0e0;
+  --text-dim: #8a8a9a;
+  --text-bright: #ffffff;
+  --border: #2d2a4a;
+  --success: #00b894;
+  --warning: #fdcb6e;
+  --danger: #e17055;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Heebo', sans-serif; background: var(--bg-primary); color: var(--text); line-height: 1.7; min-height: 100vh; }
+
+nav { position: sticky; top: 0; z-index: 100; background: rgba(13,11,26,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; }
+nav a { color: var(--text-dim); text-decoration: none; font-size: 13px; padding: 6px 14px; border-radius: 20px; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+nav a:hover { color: var(--primary); border-color: var(--primary); background: var(--primary-glow); }
+
+.hero { text-align: center; padding: 60px 20px 40px; background: linear-gradient(135deg, rgba(108,92,231,0.15), rgba(0,184,148,0.1)); }
+.hero h1 { font-size: 2.5rem; font-weight: 900; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
+.hero .subtitle { color: var(--text-dim); font-size: 1.1rem; }
+.hero .date { color: var(--accent-yellow); font-size: 0.9rem; margin-top: 8px; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+section { margin-bottom: 40px; }
+section h2 { font-size: 1.6rem; font-weight: 700; color: var(--text-bright); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--primary); display: flex; align-items: center; gap: 10px; }
+.icon { font-size: 1.4rem; }
+
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; transition: border-color 0.2s; }
+.card:hover { border-color: var(--primary); }
+.card h3 { color: var(--primary); font-size: 1.15rem; margin-bottom: 12px; }
+.card h4 { color: var(--accent-blue); margin-bottom: 8px; }
+.card p { margin-bottom: 8px; }
+.card ul { padding-right: 20px; margin-bottom: 8px; }
+.card li { margin-bottom: 4px; }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+
+table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+th, td { padding: 10px 14px; text-align: right; border-bottom: 1px solid var(--border); }
+th { color: var(--accent-blue); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; }
+
+.tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; }
+.tag-done { background: rgba(0,184,148,0.15); color: var(--success); }
+.tag-wip { background: rgba(108,92,231,0.15); color: var(--primary); }
+.tag-wait { background: rgba(253,203,110,0.15); color: var(--warning); }
+.tag-new { background: rgba(116,185,255,0.15); color: var(--accent-blue); }
+.tag-fix { background: rgba(225,112,85,0.15); color: var(--danger); }
+.tag-approved { background: rgba(0,184,148,0.25); color: var(--success); border: 1px solid var(--success); }
+.tag-rejected { background: rgba(255,107,107,0.15); color: var(--accent-red); border: 1px solid var(--accent-red); }
+
+.feedback-card { background: var(--bg-card); border: 1px solid var(--warning); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+.feedback-card h4 { color: var(--accent-yellow); margin-bottom: 8px; }
+
+.decision-card { background: var(--bg-card); border: 2px solid var(--success); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+.decision-card h4 { color: var(--success); margin-bottom: 8px; font-size: 1.1rem; }
+
+.progress-bar { background: var(--border); border-radius: 8px; height: 8px; margin: 8px 0; overflow: hidden; }
+.progress-bar .fill { height: 100%; border-radius: 8px; transition: width 0.3s; }
+.fill-green { background: var(--success); }
+.fill-yellow { background: var(--warning); }
+.fill-purple { background: var(--primary); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#feedback">משוב</a>
+  <a href="#decisions">החלטות</a>
+  <a href="#voices">קולות V5</a>
+  <a href="#art">אומנות</a>
+  <a href="#plan">תוכנית פעולה</a>
+  <a href="#status">סטטוס</a>
+</nav>
+
+<div class="hero">
+  <h1>סקירת V4.1 - יישום משוב</h1>
+  <p class="subtitle">סיכום המשוב שלך, ההחלטות שהתקבלו, ותוכנית הפעולה</p>
+  <p class="date">5 במרץ 2026</p>
+</div>
+
+<div class="container">
+
+<!-- ═══ FEEDBACK SUMMARY ═══ -->
+<section id="feedback">
+  <h2><span class="icon">📝</span> סיכום המשוב שלך</h2>
+
+  <div class="card">
+    <h3>דירוג קולות V4</h3>
+    <table>
+      <tr><th>דמות</th><th>דירוג</th><th>משוב</th><th>פעולה</th></tr>
+      <tr>
+        <td><strong>מלך הבאגים</strong></td>
+        <td style="color:var(--success);">הכי טוב!</td>
+        <td>מצוין! רק להעמיק את הקול עוד יותר</td>
+        <td><span class="tag tag-wip">מפריד ל-V5</span></td>
+      </tr>
+      <tr>
+        <td><strong>באג (רגיל)</strong></td>
+        <td style="color:var(--danger);">הולך לאיבוד</td>
+        <td>צריך להיות קטן, ייצורי, שונה לגמרי ממלך הבאגים</td>
+        <td><span class="tag tag-fix">דמות חדשה</span></td>
+      </tr>
+      <tr>
+        <td><strong>גליץ'</strong></td>
+        <td style="color:var(--accent-red);">לא טוב</td>
+        <td>קול של אישה חלש = לא הכיוון. צריך קול ייצורי עם רעשים סטטיים חייזריים</td>
+        <td><span class="tag tag-fix">שינוי מלא</span></td>
+      </tr>
+      <tr>
+        <td><strong>קי (גיבור)</strong></td>
+        <td style="color:var(--warning);">צריך שיפור</td>
+        <td>חלש, לא דומיננטי, מכאני מדי. צריך רגש, לבגר טיפה</td>
+        <td><span class="tag tag-fix">שיפור V5</span></td>
+      </tr>
+      <tr>
+        <td><strong>קאי</strong></td>
+        <td style="color:var(--accent-blue);">מתקרב!</td>
+        <td>פספוסים קלים בניואנסים. צריך לבגר מעט</td>
+        <td><span class="tag tag-wip">עדכון V5</span></td>
+      </tr>
+      <tr>
+        <td><strong>לונה</strong></td>
+        <td style="color:var(--warning);">צריך שיפור</td>
+        <td>מכנית מדי. צריך אווירית יותר אבל מקורקעת. צעירה יותר</td>
+        <td><span class="tag tag-fix">שיפור V5</span></td>
+      </tr>
+      <tr>
+        <td><strong>מיקה</strong></td>
+        <td style="color:var(--success);">כמעט מושלם!</td>
+        <td>הכריזמה עוברת! רק לדייק רגש וניגון</td>
+        <td><span class="tag tag-wip">דיוק קל</span></td>
+      </tr>
+      <tr>
+        <td><strong>נועה</strong></td>
+        <td style="color:var(--success);">מעולה!</td>
+        <td>איזון מושלם! הרגש עובר! דיוק ניואנסים קל</td>
+        <td><span class="tag tag-wip">דיוק קל</span></td>
+      </tr>
+      <tr>
+        <td><strong>רקס</strong></td>
+        <td style="color:var(--accent-blue);">חמוד!</td>
+        <td>טונציה מעולה! צעיר יותר + סטייל "גולש"</td>
+        <td><span class="tag tag-wip">עדכון V5</span></td>
+      </tr>
+      <tr>
+        <td><strong>סנסאי זן</strong></td>
+        <td style="color:var(--success);">מצוין!</td>
+        <td>אולי קול ישראלי יותר ולא אמריקאי, אבל לא חובה</td>
+        <td><span class="tag tag-done">נשאר V4</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="feedback-card">
+    <h4>משוב על SFX</h4>
+    <p>אפקטים טובים! לוודא שהסאונדים נשמעים <strong>שלמים ולא חתוכים</strong> כי זה מורגש במשחקים בזמן אמת.</p>
+  </div>
+
+  <div class="feedback-card">
+    <h4>משוב על אומנות</h4>
+    <ul>
+      <li>חלק מהתמונות במסמך V4 היו שבורות - <span class="tag tag-done">תוקן!</span></li>
+      <li>רק מעט דפי הבעות קיימים (6 גיבורים, 0 מנגדים)</li>
+      <li>עיצוב קי מתנגש בין שתי איטרציות (מסכה מלאה vs. פנים גלויות)</li>
+      <li>רקעים יפים אבל לא עקביים עם הדמויות כי לא עבדנו נכון</li>
+      <li><strong>הסדר הנכון:</strong> לסיים דמויות → רק אז רקעים</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══ DECISIONS ═══ -->
+<section id="decisions">
+  <h2><span class="icon">✅</span> החלטות שהתקבלו</h2>
+
+  <div class="decision-card">
+    <h4>1. קי - עיצוב מודרני (פנים גלויות)</h4>
+    <p>החלטה סופית: <strong>קי ייראה עם פנים גלויות</strong>, לא עם כיסוי מלא ורק עיניים. זהו הקו העיצובי הסופי.</p>
+    <p style="color:var(--text-dim); margin-top:8px;">כל האומנות תיוצר מחדש לפי הגרסה המודרנית.</p>
+  </div>
+
+  <div class="decision-card">
+    <h4>2. באג מתפצל לשתי דמויות</h4>
+    <p><strong>באג רגיל</strong> = ייצור קטן, חרקי, מעצבן, מהיר. קול גבוה ורוטט.</p>
+    <p><strong>מלך הבאגים</strong> = הבוס הגדול, עמוק ומאיים, תיאטרלי. קול הכי עמוק שיש.</p>
+  </div>
+
+  <div class="decision-card">
+    <h4>3. גליץ' = ייצור דיגיטלי, לא אישה</h4>
+    <p>הקול חייב להישמע כמו <strong>גליץ' אמיתי</strong> - עם רעשי סטטיקה, עיוותים חייזריים, שינויי תדר פתאומיים. ייצורי ומוזר.</p>
+  </div>
+
+  <div class="decision-card">
+    <h4>4. קו עיצובי אחיד</h4>
+    <p>צריך לבחור <strong>סגנון עיצובי אחד</strong> ולהיצמד אליו: דמויות מוגדרות → רקעים → אקסטרות. כרגע יש איורים סותרים.</p>
+    <p style="color:var(--text-dim); margin-top:8px;">התהליך: לגמר דמויות → ליצור רקעים עם הדמויות → להוסיף אקסטרות.</p>
+  </div>
+</section>
+
+<!-- ═══ VOICES V5 ═══ -->
+<section id="voices">
+  <h2><span class="icon">🎤</span> קולות V5 - שינויים שבוצעו</h2>
+
+  <div class="card">
+    <h3>סקריפט עודכן: voice-generate-all-hebrew.mjs</h3>
+    <p>תיאורי הקולות עודכנו לפי המשוב. שמות V5 חדשים ל-7 דמויות שצריכות שינוי:</p>
+
+    <table>
+      <tr><th>דמות</th><th>שינוי עיקרי</th><th>סטטוס</th></tr>
+      <tr>
+        <td><strong>קי</strong></td>
+        <td>דומיננטי, רגשי, בוגר יותר, לא מכאני. "אנימה פרוטגוניסט"</td>
+        <td><span class="tag tag-new">V5 חדש</span></td>
+      </tr>
+      <tr>
+        <td><strong>באג (רגיל)</strong></td>
+        <td>דמות חדשה! קטן, ייצורי, חרקי, מהיר. Pitch UP + vibrato</td>
+        <td><span class="tag tag-new">דמות חדשה!</span></td>
+      </tr>
+      <tr>
+        <td><strong>מלך הבאגים</strong></td>
+        <td>הכי עמוק שאפשר. Pitch down 85% + echo חזק יותר</td>
+        <td><span class="tag tag-new">V5 חדש</span></td>
+      </tr>
+      <tr>
+        <td><strong>גליץ'</strong></td>
+        <td>ייצור דיגיטלי עם סטטיקה. Tremolo חזק + bandpass לאפקט רדיו</td>
+        <td><span class="tag tag-new">V5 חדש</span></td>
+      </tr>
+      <tr>
+        <td><strong>לונה</strong></td>
+        <td>אווירית + מקורקעת + צעירה. לא מכנית. "אחות גדולה רגועה"</td>
+        <td><span class="tag tag-new">V5 חדש</span></td>
+      </tr>
+      <tr>
+        <td><strong>קאי</strong></td>
+        <td>בוגר יותר, ניואנסים מדויקים, קצב ישראלי</td>
+        <td><span class="tag tag-new">V5 חדש</span></td>
+      </tr>
+      <tr>
+        <td><strong>רקס</strong></td>
+        <td>צעיר יותר, סגנון "גולש", פחות pitch-down (95% במקום 90%)</td>
+        <td><span class="tag tag-new">V5 חדש</span></td>
+      </tr>
+      <tr>
+        <td><strong>מיקה</strong></td>
+        <td>ניואנסי רגש מדויקים יותר בכל משפט</td>
+        <td><span class="tag tag-done">שומר V4 (כמעט מושלם)</span></td>
+      </tr>
+      <tr>
+        <td><strong>נועה</strong></td>
+        <td>דיוק ניואנסים קל</td>
+        <td><span class="tag tag-done">שומר V4 (מעולה)</span></td>
+      </tr>
+      <tr>
+        <td><strong>סנסאי זן</strong></td>
+        <td>ללא שינוי</td>
+        <td><span class="tag tag-done">שומר V4 (מצוין)</span></td>
+      </tr>
+      <tr>
+        <td><strong>יוקי</strong></td>
+        <td>ללא שינוי</td>
+        <td><span class="tag tag-done">שומר V4</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>אפקטי פוסט-עיבוד (ffmpeg)</h3>
+    <table>
+      <tr><th>דמות</th><th>אפקט V4</th><th>אפקט V5</th></tr>
+      <tr><td>באג (רגיל)</td><td>Pitch down + echo</td><td><strong>Pitch UP 115% + vibrato</strong> (ייצור קטן)</td></tr>
+      <tr><td>מלך הבאגים</td><td>-</td><td><strong>Pitch down 85% + echo חזק</strong> (בוס ענק)</td></tr>
+      <tr><td>גליץ'</td><td>Tremolo + echo</td><td><strong>Tremolo חזק + echo + bandpass + noise reduction</strong> (רדיו שבור)</td></tr>
+      <tr><td>רקס</td><td>Pitch down 90%</td><td><strong>Pitch down 95%</strong> (פחות עמוק, יותר צעיר)</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ ART ═══ -->
+<section id="art">
+  <h2><span class="icon">🎨</span> תוכנית אומנות - עקביות עיצובית</h2>
+
+  <div class="card" style="border-color: var(--warning);">
+    <h3>הבעיה שזוהתה</h3>
+    <p>עבדנו בסדר הלא נכון: יצרנו רקעים לפני שסיימנו דמויות → קיבלנו איורים סותרים של אותן דמויות.</p>
+    <p style="margin-top:8px;">בנוסף, לקי יש שתי גרסאות (מסכה מלאה vs פנים גלויות) שמתנגשות.</p>
+  </div>
+
+  <div class="card" style="border-color: var(--success);">
+    <h3>התהליך הנכון (מעכשיו)</h3>
+    <ol style="padding-right: 20px;">
+      <li><strong>שלב 1:</strong> סיום כל 14 דפי מודל בסגנון אחיד (קי = פנים גלויות)</li>
+      <li><strong>שלב 2:</strong> יצירת דפי הבעות ל-8 דמויות נוספות (מנגדים + משניים)</li>
+      <li><strong>שלב 3:</strong> יצירה מחדש של רקעים עם הדמויות הסופיות</li>
+      <li><strong>שלב 4:</strong> אקסטרות (סקינים, אביזרים, אנימציות)</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>מצב נוכחי</h3>
+    <table>
+      <tr><th>קטגוריה</th><th>יש</th><th>צריך</th><th>סטטוס</th></tr>
+      <tr><td>דפי מודל</td><td>21 קבצים</td><td>14 דמויות (אחיד)</td><td><span class="tag tag-wip">צריך עקביות</span></td></tr>
+      <tr><td>דפי הבעות</td><td>6 (גיבורים)</td><td>14 (כל הדמויות)</td><td><span class="tag tag-fix">חסרים 8</span></td></tr>
+      <tr><td>רקעים</td><td>15</td><td>~15</td><td><span class="tag tag-wip">צריך עדכון עם דמויות</span></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ ACTION PLAN ═══ -->
+<section id="plan">
+  <h2><span class="icon">🗺️</span> תוכנית פעולה</h2>
+
+  <div class="card-grid">
+    <div class="card" style="border-color: var(--accent-red);">
+      <h3>שלב 1: קולות V5</h3>
+      <p>הרצת הסקריפט המעודכן ליצירת 7 קולות חדשים + מלך הבאגים כדמות נפרדת.</p>
+      <div class="progress-bar"><div class="fill fill-yellow" style="width: 40%;"></div></div>
+      <p style="font-size:0.85rem; color:var(--text-dim);">40% - תיאורים עודכנו, ממתין להרצה</p>
+    </div>
+
+    <div class="card" style="border-color: var(--accent-orange);">
+      <h3>שלב 2: אומנות אחידה</h3>
+      <p>יצירת כל דפי המודל מחדש בסגנון אחיד. קי = פנים גלויות.</p>
+      <div class="progress-bar"><div class="fill fill-purple" style="width: 10%;"></div></div>
+      <p style="font-size:0.85rem; color:var(--text-dim);">10% - תכנון, טרם התחיל</p>
+    </div>
+
+    <div class="card" style="border-color: var(--accent-blue);">
+      <h3>שלב 3: דפי הבעות</h3>
+      <p>8 דפי הבעות חדשים לדמויות שחסרות (מנגדים + משניים).</p>
+      <div class="progress-bar"><div class="fill fill-purple" style="width: 0%;"></div></div>
+      <p style="font-size:0.85rem; color:var(--text-dim);">0% - ממתין לשלב 2</p>
+    </div>
+
+    <div class="card" style="border-color: var(--primary);">
+      <h3>שלב 4: רקעים מעודכנים</h3>
+      <p>רקעים חדשים עם הדמויות הסופיות.</p>
+      <div class="progress-bar"><div class="fill fill-purple" style="width: 0%;"></div></div>
+      <p style="font-size:0.85rem; color:var(--text-dim);">0% - ממתין לשלבים 2+3</p>
+    </div>
+
+    <div class="card" style="border-color: var(--secondary);">
+      <h3>שלב 5: SFX תיקונים</h3>
+      <p>לוודא שכל הצלילים נשמעים שלמים ולא חתוכים בזמן אמת.</p>
+      <div class="progress-bar"><div class="fill fill-green" style="width: 0%;"></div></div>
+      <p style="font-size:0.85rem; color:var(--text-dim);">0% - בדיקה ותיקון</p>
+    </div>
+
+    <div class="card" style="border-color: var(--accent-pink);">
+      <h3>שלב 6: מוזיקה + אנימציות</h3>
+      <p>8 טראקים עם Suno, CSS idle animations, כפתורים Brawl Stars.</p>
+      <div class="progress-bar"><div class="fill fill-purple" style="width: 0%;"></div></div>
+      <p style="font-size:0.85rem; color:var(--text-dim);">0% - טרם התחיל</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATUS ═══ -->
+<section id="status">
+  <h2><span class="icon">📊</span> סטטוס פרויקט</h2>
+
+  <div class="card" style="border-color: var(--success);">
+    <h3 style="color: var(--success);">בריאות טכנית</h3>
+    <table>
+      <tr><td>TypeScript</td><td style="color:var(--success); font-weight:700;">נקי - 0 שגיאות</td></tr>
+      <tr><td>טסטים</td><td style="color:var(--success); font-weight:700;">1093/1093 עוברים</td></tr>
+      <tr><td>Build</td><td style="color:var(--success); font-weight:700;">מצליח - 25+ דפים</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>סה"כ נכסים</h3>
+    <table>
+      <tr><td>קבצי קול</td><td>36 קבצי MP3 (9 דמויות)</td></tr>
+      <tr><td>אפקטים</td><td>16 SFX משולבים באפליקציה</td></tr>
+      <tr><td>דפי מודל</td><td>21 תמונות (14 דמויות + וריאציות)</td></tr>
+      <tr><td>דפי הבעות</td><td>6 (גיבורים בלבד)</td></tr>
+      <tr><td>רקעים</td><td>15 רקעי סביבה</td></tr>
+      <tr><td>מסמכי תכנון</td><td>8 מסמכים (6 HTML + 2 MD)</td></tr>
+    </table>
+  </div>
+
+  <div class="card" style="border-color:var(--accent-yellow); background:rgba(253,203,110,0.05);">
+    <h4 style="color:var(--accent-yellow);">מה קורה עכשיו</h4>
+    <ul>
+      <li>סקריפט קולות V5 מוכן להרצה - 7 קולות חדשים + מלך הבאגים</li>
+      <li>תמונות שבורות במסמך V4 תוקנו</li>
+      <li>תוכנית אומנות אחידה מוגדרת - ממתין ליצירה</li>
+      <li>בדיקת SFX חתוכים - בתכנון</li>
+    </ul>
+  </div>
+</section>
+
+<div style="text-align:center; padding:40px; color:var(--text-dim); font-size:0.85rem;">
+  נינג'ה מקלדת - סקירת V4.1 | 5 במרץ 2026
+</div>
+
+</div>
+</body>
+</html>

@@ -5,9 +5,44 @@
 ## Sprint: Character World Expansion (IN PROGRESS)
 
 ## Current State
-Massive character world built: 14 characters with model sheets + expression sheets, Voice V4 Hebrew lines (36 lines, 9 characters), 16 AI SFX integrated into sound system (MP3 with Web Audio fallback), 48-track soundtrack plan, comprehensive planning docs, Israeli holiday skins complete, story mode expansion in progress.
+Voice V5 complete: 10 characters with custom ElevenLabs voices, 40 Hebrew voice lines, ffmpeg post-processing for Rex/Bug/BugKing/Glitch. 15 V5 character model sheets (all characters including villains + rivals). 16 AI SFX integrated. Bug split into Bug (minion) + Bug King (boss). Glitch redesigned as digital creature. Ki modern design (full face). All using unified Brawl Stars × Anime art style.
 
-## What Was Done This Session (Iteration 4 - Continuation)
+## What Was Done This Session (Iteration 4.1 - V5 Polish)
+
+### 1. Voice V5 Overhaul (COMPLETE)
+- [x] Ki V5: Dominant, emotional, anime protagonist voice
+- [x] Luna V5: Airy but grounded, younger, natural
+- [x] Kai V5: Slightly more mature, precise nuances
+- [x] Rex V5: Younger surfer style, pitch down 95% (was 90%)
+- [x] Bug V5: NEW creature voice - pitch UP 115% + vibrato (small insect minion)
+- [x] Bug King V5: NEW separate character - deepest voice, pitch down 85% + heavy echo
+- [x] Glitch V5: Creature with static - tremolo + echo + bandpass filter (200-3000Hz)
+- [x] Mika V4 kept (almost perfect, tweaked description)
+- [x] Noa V4 kept (excellent)
+- [x] Yuki V4 kept
+- [x] 40 Hebrew voice lines generated across 10 characters
+- [x] ffmpeg post-processing completed for Rex (2), Bug (4), BugKing (5), Glitch (4)
+
+### 2. V5 Character Art - Full Cast (COMPLETE)
+- [x] Ki boy V5 (modern, full face visible - style reference for all)
+- [x] Mika girl V5, Luna girl V5, Noa girl V5, Yuki girl V5, Sensei Zen V5
+- [x] Kai boy V5 (red/orange fighter)
+- [x] Rex dino V5 (cute green T-Rex with ninja headband)
+- [x] Bug creature V5 (small cockroach minion)
+- [x] BugKing boss V5 (massive armored beetle king)
+- [x] Glitch entity V5 (corrupted digital creature)
+- [x] Pixel robot V5 (floating robot with screen face)
+- [x] Shadow cat V5 (stealthy black cat ninja - easy rival)
+- [x] Storm fox V5 (electric blue fox - medium rival)
+- [x] Blaze dragon V5 (fire dragon ninja - hard rival)
+- [x] Total: 15 V5 model sheets, all using Ki V5 as style reference
+
+### 3. Code Fixes (COMPLETE)
+- [x] SoundManager clone cleanup (memory leak prevention)
+- [x] Fixed 6 broken image paths in iteration-review-v4.html
+- [x] Created iteration-review-v4.1.html with full feedback integration
+
+## What Was Done Previous Session (Iteration 4)
 
 ### 1. SFX Integration into Game (COMPLETE)
 - [x] Upgraded `SoundManager` to support AI-generated MP3 SFX files

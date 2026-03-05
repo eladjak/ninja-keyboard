@@ -23,11 +23,11 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
 const CHARACTERS = {
   ki: {
-    designDesc: 'A young Israeli boy voice with bright energy and genuine emotion. Not too childish - sounds brave, curious, and adventurous. Medium pitch, clear articulation, natural warmth. Think animated movie hero - expressive, enthusiastic, but not babyish. Strong personality.',
-    accountName: 'NK-Ki-Hero-V4',
-    accountDesc: 'Young Israeli boy hero - brave, curious, emotional',
+    designDesc: 'A dominant confident Israeli boy hero voice - the MAIN character kids identify with. NOT mechanical or flat - must overflow with genuine emotion, excitement, and warmth. Slightly more mature than a small child but still youthful. Clear strong voice that commands attention. Think anime protagonist - brave, passionate, inspiring. Every line should make you FEEL something. Natural Israeli Hebrew cadence with expressive intonation.',
+    accountName: 'NK-Ki-Hero-V5',
+    accountDesc: 'Dominant Israeli boy hero - emotional, inspiring, confident',
     previewText: 'וואו! גיליתי מקש חדש! בואו נראה מה הוא עושה! אני כל כך מתרגש! ביחד אנחנו צוות בלתי מנוצח! קדימה חברים, נלמד להקליד כמו נינג׳ות!',
-    ttsSettings: { stability: 0.75, similarity_boost: 0.92, style: 0.65, use_speaker_boost: true },
+    ttsSettings: { stability: 0.70, similarity_boost: 0.92, style: 0.75, use_speaker_boost: true },
     lines: [
       { id: 'ki-discovery', text: 'וואו! גיליתי מקש חדש! בואו נראה מה הוא עושה!' },
       { id: 'ki-team', text: 'ביחד אנחנו צוות בלתי מנוצח! קדימה חברים!' },
@@ -40,9 +40,9 @@ const CHARACTERS = {
     ]
   },
   mika: {
-    designDesc: 'A young Israeli girl voice, confident and sharp. Tech-savvy personality with quick wit and slight sarcasm. Clear, assertive speech with natural Israeli Hebrew rhythm. Medium-high pitch, smart and cool. Not sweet or girly - more like a hacker with attitude.',
-    accountName: 'NK-Mika-Tech-V4',
-    accountDesc: 'Young Israeli tech girl - confident, smart, sarcastic',
+    designDesc: 'A young Israeli girl voice, confident and sharp with incredible charisma. Tech-savvy personality with quick wit and slight sarcasm. Clear assertive speech with natural Israeli Hebrew rhythm and precise emotional nuances in every sentence. Medium-high pitch, smart and cool. NOT sweet or girly - more like a hacker with attitude. Each sentence should have the RIGHT intonation and emotion - not flat, but expressive with personality.',
+    accountName: 'NK-Mika-Tech-V5',
+    accountDesc: 'Charismatic Israeli tech girl - confident, expressive, precise nuances',
     previewText: 'שלום! אני מיקה. אם זה דיגיטלי, אני יודעת לפרוץ אותו. קיצורי מקלדת הם כוח-על אמיתי! בואי נפרוץ את המערכת ונראה מה בפנים!',
     ttsSettings: { stability: 0.80, similarity_boost: 0.95, style: 0.65, use_speaker_boost: true },
     lines: [
@@ -66,11 +66,11 @@ const CHARACTERS = {
     ]
   },
   luna: {
-    designDesc: 'A young Israeli girl voice, gentle dreamy creative soul. Slow melodic speech with thoughtful pauses. Warm, slightly breathy, imaginative. Speaks like she is painting with words. Calm, serene, poetic. Soft but not weak - has inner depth.',
-    accountName: 'NK-Luna-Dream-V4',
-    accountDesc: 'Young Israeli dreamy girl - gentle, creative, poetic',
+    designDesc: 'A young Israeli girl voice with an airy, soothing quality - she calms and reassures the user. NOT mechanical or robotic - must sound natural and warm with real emotion. Slightly younger sounding. Breathy and gentle but still GROUNDED - she is a guide, not a fairy. Has depth and wisdom behind the softness. Think of a caring older sister who speaks calmly. Natural Israeli Hebrew rhythm, not American. Melodic but present.',
+    accountName: 'NK-Luna-Dream-V5',
+    accountDesc: 'Airy Israeli guide girl - soothing, grounded, young, emotional',
     previewText: 'נשמי עמוק... כל אות שמקלידים היא כמו ציור קטן על המסך. דמיינו שכל מילה שמקלידים הופכת לכוכב בשמיים... לאט, בנחת. אין צורך למהר. כל תו בזמנו.',
-    ttsSettings: { stability: 0.85, similarity_boost: 0.90, style: 0.30, use_speaker_boost: true },
+    ttsSettings: { stability: 0.80, similarity_boost: 0.90, style: 0.45, use_speaker_boost: true },
     lines: [
       { id: 'luna-breathe', text: 'נשמי עמוק... כל אות שמקלידים היא כמו ציור קטן על המסך.' },
       { id: 'luna-create', text: 'דמיינו שכל מילה שמקלידים הופכת לכוכב בשמיים...' },
@@ -78,9 +78,9 @@ const CHARACTERS = {
     ]
   },
   noa: {
-    designDesc: 'A young Israeli girl voice, gentle caring healer. Calm, warm, reassuring like a nurturing friend. Medium pitch, slower pace, comforting and empathetic. Speaks with genuine care and support. Not patronizing - genuinely kind and encouraging.',
-    accountName: 'NK-Noa-Healer-V4',
-    accountDesc: 'Young Israeli healer girl - warm, caring, supportive',
+    designDesc: 'A young Israeli girl voice, the ultimate healer and supporter. Calm, warm, reassuring - perfectly balanced between gentle and strong. Medium pitch, slower pace, deeply empathetic with precise emotional nuances in every word. NOT patronizing - genuinely kind with real feeling. The emotion MUST come through clearly. Like a best friend who always knows the right thing to say. Natural Israeli cadence.',
+    accountName: 'NK-Noa-Healer-V5',
+    accountDesc: 'Israeli healer girl - warm, emotionally precise, perfectly balanced',
     previewText: 'הכל בסדר! כולם טועים. בוא ננסה ביחד, לאט לאט. אני כאן בשבילך. נתרגל עוד פעם עד שתרגיש בטוח. כל כך גאה בך! ראית כמה התקדמת?',
     ttsSettings: { stability: 0.72, similarity_boost: 0.90, style: 0.50, use_speaker_boost: true },
     lines: [
@@ -90,11 +90,11 @@ const CHARACTERS = {
     ]
   },
   kai: {
-    designDesc: 'A young Israeli boy voice, hot-headed brave warrior. Energetic, passionate, intense. Medium pitch with an aggressive edge. Speaks fast with fiery determination. Bold, confident, competitive. Like a young action hero ready for battle.',
-    accountName: 'NK-Kai-Warrior-V4',
-    accountDesc: 'Young Israeli warrior boy - fierce, passionate, bold',
+    designDesc: 'A slightly more mature Israeli boy voice, hot-headed brave warrior. Energetic, passionate, intense. Medium pitch with fiery determination. Bold, confident, competitive. NOT too childish - he should sound like someone kids look up to. Slightly deeper and more seasoned than Ki. Precise speech nuances and natural Israeli rhythm. Think young action hero who has been through some battles.',
+    accountName: 'NK-Kai-Warrior-V5',
+    accountDesc: 'Mature Israeli warrior boy - fierce, passionate, seasoned',
     previewText: 'יאללה! בואו נילחם! האצבעות שלי מוכנות לכל אתגר! אני לא מפחד משום דבר! תנו לי את הבוס הכי חזק שיש! ניצחון! ידעתי שאני הלוחם הכי חזק!',
-    ttsSettings: { stability: 0.70, similarity_boost: 0.88, style: 0.80, use_speaker_boost: true },
+    ttsSettings: { stability: 0.72, similarity_boost: 0.90, style: 0.75, use_speaker_boost: true },
     lines: [
       { id: 'kai-fight', text: 'יאללה! בואו נילחם! האצבעות שלי מוכנות!' },
       { id: 'kai-challenge', text: 'אני לא מפחד משום אתגר! תנו לי את הבוס הכי חזק!' },
@@ -102,45 +102,59 @@ const CHARACTERS = {
     ]
   },
   rex: {
-    designDesc: 'A friendly dinosaur character voice. Slightly deep but playful and goofy. Enthusiastic, silly, loves games. Has a warm rumbling quality but still fun and approachable. Think cartoon dinosaur sidekick - lovable and funny.',
-    accountName: 'NK-Rex-Dino-V4',
-    accountDesc: 'Playful dinosaur friend - goofy, warm, enthusiastic',
+    designDesc: 'A young, cute, surfer-style dinosaur voice. Slightly higher and younger-sounding than before. Playful, goofy, super enthusiastic - like a young surfer dude who loves games. Think "dude, that was awesome!" energy. Warm, bubbly, infectious excitement. NOT too deep - keep it young and fun. Has that laid-back surfer vibe mixed with extreme enthusiasm.',
+    accountName: 'NK-Rex-Dino-V5',
+    accountDesc: 'Young surfer dino - cute, goofy, enthusiastic, younger',
     previewText: 'יש! בואו נשחק! אני אוהב משחקים! גם עם ידיים קטנות, אני פה בשבילכם! זה כל כך כיף! עוד פעם! עוד פעם! אני רקס ואני הכי אוהב לעזור!',
-    ttsSettings: { stability: 0.70, similarity_boost: 0.90, style: 0.80, use_speaker_boost: true },
+    ttsSettings: { stability: 0.68, similarity_boost: 0.90, style: 0.85, use_speaker_boost: true },
     lines: [
       { id: 'rex-play', text: 'יש! בואו נשחק! אני אוהב משחקים!' },
       { id: 'rex-fun', text: 'זה כל כך כיף! עוד פעם! עוד פעם!' },
     ],
-    postFx: 'asetrate=48000*0.90,aresample=48000' // Pitch down 10%
+    postFx: 'asetrate=48000*0.95,aresample=48000' // Slight pitch down (less than before)
   },
   bug: {
-    designDesc: 'A deep imposing villain voice with dramatic flair. Booming, theatrical, over-the-top evil. Low pitch, powerful presence. Think classic cartoon supervillain - big, menacing but also funny. Must sound LARGE and intimidating, not like a child or woman.',
-    accountName: 'NK-Bug-Boss-V4',
-    accountDesc: 'Imposing bug villain - deep, dramatic, theatrical evil',
-    previewText: 'הא הא הא! אני הבאג הגדול! אני אערבב לכם את כל המקשים! נראה אתכם מקלידים עכשיו! טעות! ועוד טעות! אתם מזינים אותי! אני מלך הבאגים!',
-    ttsSettings: { stability: 0.50, similarity_boost: 0.85, style: 0.90, use_speaker_boost: true },
+    designDesc: 'A small mischievous creature voice - the regular bug minion, NOT the king. Should sound small, sneaky, creature-like with chittering insect quality. Higher pitched, fast and twitchy. Think of a tiny annoying pest - buzzing, clicking, skittering. Alien-insectoid vibe. Definitely NOT a big boss voice - this is the little bug that causes small problems. Impish, pesky, annoying.',
+    accountName: 'NK-Bug-Minion-V5',
+    accountDesc: 'Small creature bug - twitchy, insectoid, mischievous pest',
+    previewText: 'בזז! אני באג קטן! אני מתחבא בין המקשים שלכם! לא תתפסו אותי! טעות קטנה פה, טעות קטנה שם! ג׳יג׳יג׳י! אני מהיר מדי בשבילכם!',
+    ttsSettings: { stability: 0.40, similarity_boost: 0.85, style: 0.90, use_speaker_boost: true },
     lines: [
-      { id: 'bug-scramble', text: 'הא הא הא! אני אערבב לכם את כל המקשים! נראה אתכם מקלידים עכשיו!' },
-      { id: 'bug-boss', text: 'אני הבאג הגדול! אף אחד לא יכול לתקן אותי!' },
-      { id: 'bug-king', text: 'אני מלך הבאגים! השגיאות שלי הן אומנות!' },
-      { id: 'bug-defeat', text: 'לא הוגן! אתם יותר מדי מהירים! אני אחזור!' },
-      { id: 'bug-taunt', text: 'טעות! ועוד טעות! אתם מזינים אותי!' },
+      { id: 'bug-buzz', text: 'בזז! אני מתחבא בין המקשים שלכם! לא תתפסו אותי!' },
+      { id: 'bug-pest', text: 'טעות קטנה פה, טעות קטנה שם! ג׳יג׳יג׳י!' },
+      { id: 'bug-scatter', text: 'אנחנו בכל מקום! באגים קטנים לא נעלמים!' },
+      { id: 'bug-scared', text: 'אוי לא! הם מקלידים מהר מדי! בורחים!' },
     ],
-    postFx: 'asetrate=48000*0.92,aresample=48000,aecho=0.8:0.7:80:0.5' // Pitch down + echo
+    postFx: 'asetrate=48000*1.15,aresample=48000,vibrato=f=8:d=0.3' // Pitch UP + vibrato for creature effect
+  },
+  bugKing: {
+    designDesc: 'The DEEPEST, most imposing villain voice possible. Bug King - the ultimate boss. Even deeper than V4. Booming, theatrical, magnificent evil. Extremely low pitch with massive presence. MUST sound enormous and intimidating. Think final boss of a video game. Rich bass, dramatic pauses, evil grandeur with effects.',
+    accountName: 'NK-BugKing-Boss-V5',
+    accountDesc: 'Bug King - deepest voice, ultimate boss, theatrical evil',
+    previewText: 'הא הא הא! אני מלך הבאגים! אני אערבב לכם את כל המקשים! נראה אתכם מקלידים עכשיו! טעות! ועוד טעות! אתם מזינים אותי! אני השליט העליון של השגיאות!',
+    ttsSettings: { stability: 0.45, similarity_boost: 0.85, style: 0.90, use_speaker_boost: true },
+    lines: [
+      { id: 'bugking-scramble', text: 'הא הא הא! אני אערבב לכם את כל המקשים! נראה אתכם מקלידים עכשיו!' },
+      { id: 'bugking-boss', text: 'אני מלך הבאגים! אף אחד לא יכול לתקן אותי!' },
+      { id: 'bugking-crown', text: 'אני מלך הבאגים! השגיאות שלי הן אומנות!' },
+      { id: 'bugking-defeat', text: 'לא הוגן! אתם יותר מדי מהירים! אני אחזור חזק יותר!' },
+      { id: 'bugking-taunt', text: 'טעות! ועוד טעות! אתם מזינים אותי!' },
+    ],
+    postFx: 'asetrate=48000*0.85,aresample=48000,aecho=0.8:0.7:100:0.6' // Even deeper pitch down + stronger echo
   },
   glitch: {
-    designDesc: 'A chaotic unstable digital entity voice. Shifts between whispers and shouts unpredictably. Eerie, unsettling, fragmented. Has a haunting digital quality. Not human-sounding - more like corrupted data trying to speak. Young but otherworldly.',
-    accountName: 'NK-Glitch-Chaos-V4',
-    accountDesc: 'Chaotic digital entity - unstable, eerie, fragmented',
+    designDesc: 'A creature voice that sounds GLITCHED and corrupted - NOT a woman, NOT weak. Must sound like a digital alien entity mixed with static noise. Deep-ish, raspy, broken - as if the voice itself is malfunctioning and glitching. Think corrupted robot meets alien creature with signal interference. Shifts unpredictably. Has buzzing, crackling quality. Strong and unsettling, not soft or feminine. A CREATURE that IS a glitch.',
+    accountName: 'NK-Glitch-Creature-V5',
+    accountDesc: 'Digital creature - glitchy, static, alien, strong, corrupted',
     previewText: 'אני... לא... יציב... אני גליץ׳... והעולם שלכם... מתפורר... הכל מתהפך! למעלה למטה! שמאל ימין! אולי... אולי אני לא חייב להיות הנבל.',
-    ttsSettings: { stability: 0.25, similarity_boost: 0.85, style: 0.60, use_speaker_boost: true },
+    ttsSettings: { stability: 0.20, similarity_boost: 0.80, style: 0.70, use_speaker_boost: true },
     lines: [
       { id: 'glitch-intro', text: 'אני... לא... יציב... אני גליץ׳... והעולם שלכם... מתפורר...' },
       { id: 'glitch-redemption', text: 'אולי... אולי אני לא חייב להיות הנבל. אולי אני יכול לעזור?' },
       { id: 'glitch-thanks', text: 'תודה... שלא ויתרתם עליי. אולי... אולי אני יכול להשתנות.' },
       { id: 'glitch-chaos', text: 'הכל מתהפך! למעלה למטה! שמאל ימין! כיף!' },
     ],
-    postFx: 'tremolo=f=8:d=0.6,aecho=0.8:0.5:25:0.3' // Tremolo + echo
+    postFx: 'tremolo=f=12:d=0.7,aecho=0.8:0.5:15:0.4,highpass=f=200,lowpass=f=3000,afftdn=nr=10' // Heavy tremolo + echo + bandpass for radio-static effect
   }
 };
 
