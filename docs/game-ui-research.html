@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מחקר UI גיימינג - Ninja Keyboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Assistant:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0b1a;
+    --bg2: #13102a;
+    --bg3: #1a1735;
+    --primary: #6C5CE7;
+    --primary-light: #8B7EF8;
+    --primary-dark: #4a3cb0;
+    --secondary: #00B894;
+    --secondary-light: #00d4a8;
+    --accent1: #fd79a8;
+    --accent2: #fdcb6e;
+    --accent3: #e17055;
+    --text: #e8e6f0;
+    --text-muted: #9990bb;
+    --border: #2a2550;
+    --card: #16132e;
+    --card2: #1e1a3d;
+    --glow-primary: 0 0 20px rgba(108,92,231,0.4);
+    --glow-secondary: 0 0 20px rgba(0,184,148,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Heebo', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; direction: rtl; }
+
+  /* STICKY NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,11,26,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 1rem;
+    height: 60px; overflow-x: auto;
+  }
+  nav a { color: var(--text-muted); text-decoration: none; font-size: 0.82rem; font-weight: 500; white-space: nowrap; padding: 0.35rem 0.75rem; border-radius: 6px; transition: all 0.15s; }
+  nav a:hover { color: var(--primary-light); background: rgba(108,92,231,0.12); }
+  nav .brand { font-weight: 900; font-size: 1rem; background: linear-gradient(135deg, var(--primary-light), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-left: auto; flex-shrink: 0; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 50%, rgba(108,92,231,0.08) 100%); border-bottom: 1px solid var(--border); padding: 4rem 2rem 3rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(108,92,231,0.15) 0%, transparent 70%); pointer-events: none; }
+  .hero h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; background: linear-gradient(135deg, #fff 0%, var(--primary-light) 50%, var(--secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+  .hero p { color: var(--text-muted); font-size: 1.05rem; max-width: 640px; margin: 0 auto 1.5rem; }
+  .hero-badges { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
+
+  /* BADGES */
+  .badge { display: inline-flex; align-items: center; gap: 0.3rem; background: var(--card2); border: 1px solid var(--border); border-radius: 20px; padding: 0.3rem 0.85rem; font-size: 0.78rem; color: var(--text-muted); }
+  .badge.primary { border-color: var(--primary); color: var(--primary-light); background: rgba(108,92,231,0.1); }
+  .badge.secondary { border-color: var(--secondary); color: var(--secondary); background: rgba(0,184,148,0.1); }
+  .badge.accent { border-color: var(--accent1); color: var(--accent1); background: rgba(253,121,168,0.1); }
+
+  /* MAIN */
+  main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  section { margin-bottom: 3rem; }
+
+  /* SECTION HEADER */
+  .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; cursor: pointer; user-select: none; }
+  .section-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+  .section-icon.purple { background: rgba(108,92,231,0.2); border: 1px solid rgba(108,92,231,0.4); }
+  .section-icon.green  { background: rgba(0,184,148,0.2);  border: 1px solid rgba(0,184,148,0.4); }
+  .section-icon.pink   { background: rgba(253,121,168,0.2); border: 1px solid rgba(253,121,168,0.4); }
+  .section-icon.yellow { background: rgba(253,203,110,0.2); border: 1px solid rgba(253,203,110,0.4); }
+  .section-icon.orange { background: rgba(225,112,85,0.2);  border: 1px solid rgba(225,112,85,0.4); }
+  .section-icon.blue   { background: rgba(116,185,255,0.2); border: 1px solid rgba(116,185,255,0.4); }
+  .section-title { flex: 1; }
+  .section-title h2 { font-size: 1.4rem; font-weight: 700; color: var(--text); }
+  .section-title p { color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem; }
+  .toggle-btn { background: var(--card2); border: 1px solid var(--border); color: var(--text-muted); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; font-size: 1rem; flex-shrink: 0; }
+  .section-content { overflow: hidden; transition: max-height 0.35s ease; }
+  .section-content.collapsed { max-height: 0 !important; }
+
+  /* CARDS */
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; margin-bottom: 1.25rem; transition: border-color 0.2s; }
+  .card:hover { border-color: rgba(108,92,231,0.35); }
+  .card-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 1.25rem; }
+
+  /* PROP ROWS */
+  .prop-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .prop-row { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.55rem 0.75rem; background: var(--bg2); border-radius: 8px; border: 1px solid var(--border); font-size: 0.88rem; }
+  .prop-key { color: var(--text-muted); min-width: 130px; font-size: 0.82rem; flex-shrink: 0; }
+  .prop-val { color: var(--text); font-weight: 500; }
+
+  /* CODE BLOCKS */
+  pre { background: #080612; border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem 1.4rem; overflow-x: auto; font-size: 0.82rem; line-height: 1.65; margin: 0.75rem 0; direction: ltr; text-align: left; }
+  code { font-family: 'Fira Code', 'Courier New', monospace; }
+  .code-label { font-size: 0.72rem; color: var(--text-muted); background: var(--bg2); display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px 4px 0 0; margin-bottom: -1px; border: 1px solid var(--border); border-bottom: none; direction: ltr; }
+
+  /* COLOR SWATCHES */
+  .swatch-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.5rem 0; }
+  .swatch { display: flex; align-items: center; gap: 0.5rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 0.35rem 0.7rem; font-size: 0.78rem; font-family: 'Fira Code', monospace; }
+  .swatch-dot { width: 18px; height: 18px; border-radius: 4px; flex-shrink: 0; }
+
+  /* HIGHLIGHT BOXES */
+  .highlight-box { border-radius: 12px; padding: 1.1rem 1.25rem; margin: 0.75rem 0; font-size: 0.9rem; border: 1px solid; }
+  .highlight-box.purple { background: rgba(108,92,231,0.08); border-color: rgba(108,92,231,0.3); }
+  .highlight-box.green  { background: rgba(0,184,148,0.08);  border-color: rgba(0,184,148,0.3); }
+  .highlight-box.yellow { background: rgba(253,203,110,0.08); border-color: rgba(253,203,110,0.3); }
+  .highlight-box.pink   { background: rgba(253,121,168,0.08); border-color: rgba(253,121,168,0.3); }
+  .highlight-box.orange { background: rgba(225,112,85,0.08);  border-color: rgba(225,112,85,0.3); }
+  .highlight-box h4 { font-size: 0.9rem; margin-bottom: 0.4rem; font-weight: 700; }
+
+  /* DEMO BUTTONS */
+  .demo-button-container { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; padding: 1.5rem; background: var(--bg2); border-radius: 10px; border: 1px solid var(--border); margin: 0.75rem 0; }
+  .demo-btn { padding: 0.7rem 1.6rem; border: none; font-family: 'Heebo', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: transform 0.12s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.12s; position: relative; }
+  .demo-btn:active { transform: scale(0.93) translateY(2px) !important; }
+  .demo-btn.primary-btn { background: linear-gradient(135deg, #6C5CE7, #8B7EF8); color: white; box-shadow: 0 4px 20px rgba(108,92,231,0.5), 0 3px 0 #4a3cb0, inset 0 1px 0 rgba(255,255,255,0.2); border-radius: 14px 10px 14px 10px; }
+  .demo-btn.primary-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 28px rgba(108,92,231,0.7), 0 3px 0 #4a3cb0, inset 0 1px 0 rgba(255,255,255,0.2); }
+  .demo-btn.secondary-btn { background: linear-gradient(135deg, #00B894, #00d4a8); color: white; box-shadow: 0 4px 20px rgba(0,184,148,0.5), 0 3px 0 #007d65; border-radius: 10px 16px 10px 16px; }
+  .demo-btn.secondary-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 28px rgba(0,184,148,0.7), 0 3px 0 #007d65; }
+  .demo-btn.asymm-btn { background: linear-gradient(135deg, #fd79a8, #e84393); color: white; box-shadow: 0 4px 20px rgba(253,121,168,0.5), 0 3px 0 #9e1b5b; border-radius: 20px 8px 20px 8px; padding: 0.7rem 2rem; }
+  .demo-btn.asymm-btn:hover { transform: translateY(-3px) rotate(-1deg); box-shadow: 0 6px 28px rgba(253,121,168,0.7), 0 3px 0 #9e1b5b; }
+
+  /* XP BARS */
+  .xp-bar-demo { background: var(--bg2); border-radius: 10px; padding: 1rem 1.25rem; border: 1px solid var(--border); margin: 0.75rem 0; }
+  .xp-label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+  .xp-track { height: 12px; background: var(--bg); border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
+  .xp-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--primary), var(--primary-light)); box-shadow: 0 0 10px rgba(108,92,231,0.6); position: relative; }
+  .xp-fill::after { content: ''; position: absolute; top: 2px; left: 8px; right: 8px; height: 3px; background: rgba(255,255,255,0.3); border-radius: 2px; }
+
+  /* SOUND TABLE */
+  .sound-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .sound-table th { background: var(--bg2); color: var(--text-muted); padding: 0.6rem 0.9rem; text-align: right; border-bottom: 1px solid var(--border); font-weight: 600; }
+  .sound-table td { padding: 0.55rem 0.9rem; border-bottom: 1px solid rgba(42,37,80,0.5); vertical-align: middle; }
+  .sound-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .sound-tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.72rem; font-weight: 600; }
+  .sound-tag.positive { background: rgba(0,184,148,0.15); color: var(--secondary); }
+  .sound-tag.neutral  { background: rgba(108,92,231,0.15); color: var(--primary-light); }
+  .sound-tag.negative { background: rgba(225,112,85,0.15); color: var(--accent3); }
+  .sound-tag.special  { background: rgba(253,203,110,0.15); color: var(--accent2); }
+
+  /* RECOMMENDATION CARDS */
+  .rec-card { background: var(--card2); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; border-right: 4px solid var(--primary); }
+  .rec-card.green-accent  { border-right-color: var(--secondary); }
+  .rec-card.pink-accent   { border-right-color: var(--accent1); }
+  .rec-card.yellow-accent { border-right-color: var(--accent2); }
+  .rec-card.orange-accent { border-right-color: var(--accent3); }
+  .rec-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem; }
+  .rec-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.35rem; }
+  .rec-card li { font-size: 0.88rem; color: var(--text-muted); padding-right: 1rem; position: relative; }
+  .rec-card li::before { content: '◆'; position: absolute; right: 0; color: var(--primary); font-size: 0.5rem; top: 0.35em; }
+  .rec-card.green-accent li::before  { color: var(--secondary); }
+  .rec-card.pink-accent li::before   { color: var(--accent1); }
+  .rec-card.yellow-accent li::before { color: var(--accent2); }
+  .rec-card.orange-accent li::before { color: var(--accent3); }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 2.5rem 0; }
+
+  /* SOURCES */
+  .sources-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.75rem; }
+  .sources-list li a { color: var(--primary-light); text-decoration: none; font-size: 0.82rem; }
+  .sources-list li a:hover { text-decoration: underline; }
+
+  @media (max-width: 600px) {
+    .card-grid { grid-template-columns: 1fr; }
+    .prop-key { min-width: 100px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">&#129399; Ninja Keyboard</span>
+  <a href="#brawl">Brawl Stars</a>
+  <a href="#clash">Clash Royale</a>
+  <a href="#duolingo">Duolingo</a>
+  <a href="#fun">Among Us / Fall Guys</a>
+  <a href="#recommendations">המלצות</a>
+  <a href="#sounds">צלילים</a>
+  <a href="#code">קוד</a>
+</nav>
+
+<div class="hero">
+  <h1>מחקר UI גיימינג למשחקים מובילים</h1>
+  <p>ניתוח מעמיק של דפוסי UI מ-Brawl Stars, Clash Royale, Duolingo ועוד — עם המלצות מיישום ל-Ninja Keyboard</p>
+  <div class="hero-badges">
+    <span class="badge primary">Next.js 15 + Tailwind CSS 4</span>
+    <span class="badge secondary">Framer Motion</span>
+    <span class="badge accent">RTL Hebrew First</span>
+    <span class="badge">מחקר 2025</span>
+    <span class="badge">#0d0b1a Dark Gaming</span>
+  </div>
+</div>
+
+<main>
+
+<!-- ============================================================ -->
+<!-- SECTION 1: BRAWL STARS                                       -->
+<!-- ============================================================ -->
+<section id="brawl">
+  <div class="section-header" onclick="toggleSection('brawl-content', this)">
+    <div class="section-icon purple">&#9889;</div>
+    <div class="section-title">
+      <h2>Brawl Stars &#8212; ניתוח UI מלא</h2>
+      <p>עיצוב כפתורים, מבנה תפריטים, הצגת דמויות, אנימציות ומערכת ניקוד</p>
+    </div>
+    <div class="toggle-btn">&#9650;</div>
+  </div>
+  <div class="section-content" id="brawl-content">
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">&#127918; עיצוב כפתורים</div>
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">צורה</span><span class="prop-val">אסימטרית — פינות שונות בכל צד, יוצר תחושת אנרגיה</span></div>
+          <div class="prop-row"><span class="prop-key">גרדיאנט</span><span class="prop-val">135deg, בהיר למעלה-שמאל, כהה למטה-ימין (סימולציית אור)</span></div>
+          <div class="prop-row"><span class="prop-key">Glow Effect</span><span class="prop-val">box-shadow עם צבע הכפתור ב-40-60% שקיפות, spread 8-16px</span></div>
+          <div class="prop-row"><span class="prop-key">3D Depth</span><span class="prop-val">border-bottom 3-4px בצבע כהה יותר — מדמה הגבהה פיזית</span></div>
+          <div class="prop-row"><span class="prop-key">Inset Highlight</span><span class="prop-val">border-top 1px rgba(255,255,255,0.25) — זוהר פנימי עדין</span></div>
+          <div class="prop-row"><span class="prop-key">לחיצה :active</span><span class="prop-val">scale(0.93) + translateY(2px), מבטל את ה-border-bottom</span></div>
+          <div class="prop-row"><span class="prop-key">Hover</span><span class="prop-val">translateY(-3px), glow מוגבר, brightness +10-15%</span></div>
+          <div class="prop-row"><span class="prop-key">גודל מינימלי</span><span class="prop-val">48x48px לפי WCAG AA accessibility</span></div>
+          <div class="prop-row"><span class="prop-key">Spring Physics</span><span class="prop-val">stiffness 400, damping 15 — לא transition רגיל!</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">&#128241; מבנה תפריט ראשי</div>
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">מרכז המסך</span><span class="prop-val">הדמות הנבחרת — גדולה, אנימטיבית, מוצגת עם Rank</span></div>
+          <div class="prop-row"><span class="prop-key">ניווט עליון</span><span class="prop-val">Trophy Road, Quests, Events — אייקונים ברורים</span></div>
+          <div class="prop-row"><span class="prop-key">ניווט תחתון</span><span class="prop-val">Play / Brawlers / Shop / Club — 4 tabs ראשיים</span></div>
+          <div class="prop-row"><span class="prop-key">עומק ניווט</span><span class="prop-val">מקסימום 2 רמות — הכל נגיש בנגיעה אחת או שתיים</span></div>
+          <div class="prop-row"><span class="prop-key">עיצוב Landscape</span><span class="prop-val">Joystick שמאל, פעולות ימין — תואם thumb placement</span></div>
+          <div class="prop-row"><span class="prop-key">פידבק מיידי</span><span class="prop-val">ספרות נזק מעל אויבים, haptic, צבעים לתוצאות</span></div>
+          <div class="prop-row"><span class="prop-key">Home Balance</span><span class="prop-val">balance בין engagement ל-clutter — בעיה ידועה בגרסאות חדשות</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#129488; הצגת דמויות בתפריטים — Character Presence</div>
+      <div class="highlight-box purple">
+        <h4>עקרון ה-CHARACTER PRESENCE</h4>
+        הדמות אינה פשוט sprite קטן — היא <strong>השחקן עצמו</strong>. Brawl Stars מציגה את ה-Brawler הנבחר במרכז המסך הראשי בגודל 40-50% מרוחב המסך. החלפת דמות — יש אנימציית כניסה מרשימה. לחיצה על הדמות — תגובה ייחודית.
+      </div>
+      <div class="prop-list">
+        <div class="prop-row"><span class="prop-key">גודל בתפריט</span><span class="prop-val">LARGE — 40-50% מרוחב המסך. לא thumbnail. לא icon. ממשית.</span></div>
+        <div class="prop-row"><span class="prop-key">Idle Animation</span><span class="prop-val">breathing / floating subtle loop, מחזור 3-4 שניות, amplitude קטן</span></div>
+        <div class="prop-row"><span class="prop-key">תגובה לנגיעה</span><span class="prop-val">tap על הדמות — emote / קול / אנימציה ייחודית לאותה דמות</span></div>
+        <div class="prop-row"><span class="prop-key">Ground Shadow</span><span class="prop-val">צל רדיאלי מתחת לדמות — מייצר ground connection וממשות</span></div>
+        <div class="prop-row"><span class="prop-key">Power Level</span><span class="prop-val">מוצג בסמוך לדמות כ-Stars — מידע רלוונטי תמיד גלוי</span></div>
+        <div class="prop-row"><span class="prop-key">Transition In</span><span class="prop-val">כניסת דמות מהצד + scale מ-0.7 ל-1.0, spring physics</span></div>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">&#127912; פלטת צבעים</div>
+        <div class="swatch-row">
+          <div class="swatch"><div class="swatch-dot" style="background:#1a0a2e"></div>#1a0a2e</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#FFD700"></div>#FFD700</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#FF4B6E"></div>#FF4B6E</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#00C8FF"></div>#00C8FF</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#FF8C00"></div>#FF8C00</div>
+        </div>
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">Background</span><span class="prop-val">כחול-סגול כהה #1a0a2e</span></div>
+          <div class="prop-row"><span class="prop-key">CTA Primary</span><span class="prop-val">זהב #FFD700 — action buttons בולטים</span></div>
+          <div class="prop-row"><span class="prop-key">Danger / Enemy</span><span class="prop-val">אדום-ורוד #FF4B6E</span></div>
+          <div class="prop-row"><span class="prop-key">Info / Friendly</span><span class="prop-val">כחול-ציאן #00C8FF</span></div>
+          <div class="prop-row"><span class="prop-key">Trophy / Gold</span><span class="prop-val">כתום-זהב #FF8C00</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">&#127942; Trophy Road Progression</div>
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">ויזואל</span><span class="prop-val">דרך מפלסית עם תחנות ממוספרות, themed sections</span></div>
+          <div class="prop-row"><span class="prop-key">Character Trios</span><span class="prop-val">3 Brawlers מקושרים לכל milestone — חיזוק ויזואלי</span></div>
+          <div class="prop-row"><span class="prop-key">Unlock Animation</span><span class="prop-val">burst + glow + שמע מיוחד כשמגיעים ל-milestone</span></div>
+          <div class="prop-row"><span class="prop-key">Progress Fill</span><span class="prop-val">animated fill עם sparkle particle effect</span></div>
+          <div class="prop-row"><span class="prop-key">Position Clarity</span><span class="prop-val">תמיד ברור איפה אתה ומה הצעד הבא</span></div>
+          <div class="prop-row"><span class="prop-key">Visual Overhaul</span><span class="prop-val">trophy icons עוצבו מחדש לבהירות מיקום</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#10024; דפוסי אנימציה — Animation Patterns</div>
+      <div class="card-grid" style="margin:0">
+        <div>
+          <div class="highlight-box purple">
+            <h4>Button Press Spring</h4>
+            scale: 0.92 &#8594; 1.08 &#8594; 1.0 עם spring physics. Duration 200ms. stiffness גבוהה, damping נמוך. אף פעם לא linear!
+          </div>
+          <div class="highlight-box green">
+            <h4>Screen Transition</h4>
+            slide-in מ-30% opacity + translateX(20px), duration 180ms ease-out. אף פעם לא fade בלבד — תמיד יש תנועה.
+          </div>
+        </div>
+        <div>
+          <div class="highlight-box yellow">
+            <h4>Victory Celebration</h4>
+            confetti burst + character dance animation + XP float מהתחתית + ring animation סביב הדמות + fanfare sound.
+          </div>
+          <div class="highlight-box pink">
+            <h4>Error / Defeat</h4>
+            shake animation (±5px x3) + color flash אדום קצר (80ms) + character sad pose + constructive message.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: CLASH ROYALE                                      -->
+<!-- ============================================================ -->
+<section id="clash">
+  <div class="section-header" onclick="toggleSection('clash-content', this)">
+    <div class="section-icon green">&#128081;</div>
+    <div class="section-title">
+      <h2>Clash Royale &#8212; Card-Based UI</h2>
+      <p>מערכת קלפים, chest animations, progress bars ו-shop design</p>
+    </div>
+    <div class="toggle-btn">&#9650;</div>
+  </div>
+  <div class="section-content" id="clash-content">
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">&#127183; מערכת הקלפים</div>
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">גריד קלפים</span><span class="prop-val">4 קלפים בשורה תחתית, תמיד גלויים בזמן קרב</span></div>
+          <div class="prop-row"><span class="prop-key">Cost Badge</span><span class="prop-val">מספר Elixir cost — תמיד גלוי בפינת כל קלף</span></div>
+          <div class="prop-row"><span class="prop-key">Drag to Play</span><span class="prop-val">drag-and-drop על הזירה — interactivity מיידי</span></div>
+          <div class="prop-row"><span class="prop-key">Cooldown UI</span><span class="prop-val">גלגל שעון (arc) overlay מעל קלף בשימוש</span></div>
+          <div class="prop-row"><span class="prop-key">Rarity Colors</span><span class="prop-val">Common=אפור, Rare=כחול, Epic=סגול, Legendary=כתום-זהב</span></div>
+          <div class="prop-row"><span class="prop-key">Range Indicator</span><span class="prop-val">circle כחול מופיע כשגוררים קלף — clarity</span></div>
+          <div class="prop-row"><span class="prop-key">Elixir Bar</span><span class="prop-val">סגול, animated fill בזמן אמת — תמיד גלוי</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">&#128230; Chest Opening Animation</div>
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">שלב 1: Anticipation</span><span class="prop-val">chest shaking + particles sparks סביב הקופסה</span></div>
+          <div class="prop-row"><span class="prop-key">שלב 2: Break</span><span class="prop-val">white flash + scale-up מהיר (100ms) — peak moment</span></div>
+          <div class="prop-row"><span class="prop-key">שלב 3: Reveal</span><span class="prop-val">קלפים עפים מהמרכז לפינות + card flip animation</span></div>
+          <div class="prop-row"><span class="prop-key">שלב 4: Reward</span><span class="prop-val">gold coins scatter + sparkle particles + sound</span></div>
+          <div class="prop-row"><span class="prop-key">Legendary Reveal</span><span class="prop-val">golden light beam מהשמיים + slow dramatic reveal</span></div>
+          <div class="prop-row"><span class="prop-key">Total Duration</span><span class="prop-val">2.5-4 שניות — anticipation חיוני לחוויה!</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128202; Progress Bars &#8212; XP ורמות</div>
+      <div class="xp-bar-demo">
+        <div class="xp-label"><span>רמה 8</span><span>2,340 / 3,000 XP</span></div>
+        <div class="xp-track"><div class="xp-fill" style="width:78%"></div></div>
+      </div>
+      <div class="xp-bar-demo">
+        <div class="xp-label"><span>&#127942; Trophy Road</span><span>4,200 / 5,000</span></div>
+        <div class="xp-track"><div class="xp-fill" style="width:84%;background:linear-gradient(90deg,#FFD700,#FFA500);box-shadow:0 0 10px rgba(255,215,0,0.6)"></div></div>
+      </div>
+      <div class="prop-list" style="margin-top:0.75rem">
+        <div class="prop-row"><span class="prop-key">גובה</span><span class="prop-val">8-14px — גלוי ומרשים אך לא מסיח</span></div>
+        <div class="prop-row"><span class="prop-key">Glow</span><span class="prop-val">box-shadow צבעוני תואם ל-fill color</span></div>
+        <div class="prop-row"><span class="prop-key">Shine Effect</span><span class="prop-val">pseudo-element לבן שקוף בחלק העליון</span></div>
+        <div class="prop-row"><span class="prop-key">Level Up Event</span><span class="prop-val">fill ל-100% &#8594; flash &#8594; reset + fanfare + number float</span></div>
+        <div class="prop-row"><span class="prop-key">XP Float</span><span class="prop-val">"+150 XP" עולה ונעלם, duration 600ms, ease-out</span></div>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">&#127947; Shop UI Design</div>
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">ריבוד</span><span class="prop-val">free daily &#8594; special offers &#8594; gems &#8594; pass royale</span></div>
+          <div class="prop-row"><span class="prop-key">Free Daily</span><span class="prop-val">TIMER countdown בולט, ירוק — urgent feel</span></div>
+          <div class="prop-row"><span class="prop-key">Sale Tags</span><span class="prop-val">ribbon אלכסוני אדום "SALE" על offers</span></div>
+          <div class="prop-row"><span class="prop-key">Legendary BG</span><span class="prop-val">legendary items — glowing special background</span></div>
+          <div class="prop-row"><span class="prop-key">Currency Display</span><span class="prop-val">gem icon + ספרה, לא "$" — universal language</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">&#127919; Visual Feedback System</div>
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">Damage Numbers</span><span class="prop-val">ספרות מעל אויבים, float + fade, 400ms</span></div>
+          <div class="prop-row"><span class="prop-key">Positive Action</span><span class="prop-val">glow ירוק קצר סביב האלמנט שהופעל</span></div>
+          <div class="prop-row"><span class="prop-key">Negative/Danger</span><span class="prop-val">flash אדום + screen edge red vignette</span></div>
+          <div class="prop-row"><span class="prop-key">Placement Delay</span><span class="prop-val">clock icon + loading arc overlay על הקלף</span></div>
+          <div class="prop-row"><span class="prop-key">Sound per Action</span><span class="prop-val">כל פעולה — צליל ייחודי. אין silence.</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: DUOLINGO                                          -->
+<!-- ============================================================ -->
+<section id="duolingo">
+  <div class="section-header" onclick="toggleSection('duolingo-content', this)">
+    <div class="section-icon yellow">&#129417;</div>
+    <div class="section-title">
+      <h2>Duolingo &#8212; Gamification ולמידה</h2>
+      <p>Streak mechanics, XP animations, character integration, teacher dashboard</p>
+    </div>
+    <div class="toggle-btn">&#9650;</div>
+  </div>
+  <div class="section-content" id="duolingo-content">
+
+    <div class="card">
+      <div class="card-title">&#128293; Streak System &#8212; מנוע ה-Engagement</div>
+      <div class="highlight-box yellow">
+        <h4>נתונים: Streaks = 60% יותר מחויבות</h4>
+        מחקרי Duolingo מראים: streaks מגדילים מחויבות יומית ב-60%. XP leaderboards מגדילים engagement ב-40%. ה-streak flame הוא אחד מאלמנטי ה-UI המזוהים ביותר בכל האפליקציות בעולם.
+      </div>
+      <div class="card-grid" style="margin:0.75rem 0 0">
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">ויזואל</span><span class="prop-val">&#128293; + מספר ימים, תמיד גלוי ב-header</span></div>
+          <div class="prop-row"><span class="prop-key">Home Screen Widget</span><span class="prop-val">Live tracker על מסך הבית — תמיד מזכיר</span></div>
+          <div class="prop-row"><span class="prop-key">Milestone Animation</span><span class="prop-val">phoenix imagery — מצב רגיל &#8594; פיניקס בגרסאות 7/30/100/365 יום</span></div>
+          <div class="prop-row"><span class="prop-key">Streak Freeze</span><span class="prop-val">shield icon — ניתן לרכוש הגנה ליום אחד (ירידת חרדה)</span></div>
+        </div>
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">Animation Craft</span><span class="prop-val">multiple rough animation passes לפני refinement — rhythm ואנרגיה</span></div>
+          <div class="prop-row"><span class="prop-key">Social Pressure</span><span class="prop-val">חברים רואים את ה-streak שלך — accountability</span></div>
+          <div class="prop-row"><span class="prop-key">Guilt Mechanic</span><span class="prop-val">Duo בוכה כשמפספסים — users feel responsibility</span></div>
+          <div class="prop-row"><span class="prop-key">Push Reminder</span><span class="prop-val">notification כשstreak בסכנה — urgent, friendly</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">&#127881; Lesson Completion Celebrations</div>
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">XP Float</span><span class="prop-val">"+10 XP" מהתחתית, bounce up + fade, 800ms</span></div>
+          <div class="prop-row"><span class="prop-key">Confetti Burst</span><span class="prop-val">multi-color burst מהמרכז, canvas-confetti</span></div>
+          <div class="prop-row"><span class="prop-key">Character React</span><span class="prop-val">Duo עושה dance / heart eyes / &#128079;</span></div>
+          <div class="prop-row"><span class="prop-key">Sound</span><span class="prop-val">ascending chord (Bb-D-F-Bb) ~440-880Hz</span></div>
+          <div class="prop-row"><span class="prop-key">Badge Unlock</span><span class="prop-val">badge flip + glow + "Achievement Unlocked!" banner</span></div>
+          <div class="prop-row"><span class="prop-key">Streak Add</span><span class="prop-val">flame animation מגדולה לnormal עם +1</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">&#129417; Duo Character Integration</div>
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">עיצוב</span><span class="prop-val">Geometry פשוטה — cylinder + half-circle wings. מתאים לכל גודל.</span></div>
+          <div class="prop-row"><span class="prop-key">Emotions</span><span class="prop-val">8+ מצבי פנים: happy, sad, excited, proud, angry, sleeping, heart-eyes, wink</span></div>
+          <div class="prop-row"><span class="prop-key">Persistence</span><span class="prop-val">Duo מופיע בכל שלבי הלמידה — מוכר כאישיות</span></div>
+          <div class="prop-row"><span class="prop-key">Guilt Mechanic</span><span class="prop-val">Duo בוכה כשמפספסים — users feel responsibility</span></div>
+          <div class="prop-row"><span class="prop-key">Mid-Lesson Pop</span><span class="prop-val">Duo מגיח לעידוד — "כמעט שם!" במחצית</span></div>
+          <div class="prop-row"><span class="prop-key">Tap Reaction</span><span class="prop-val">לחיצה על Duo — emote אקראי מהמאגר</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#127795; Skill Tree &#8212; מסך הבית</div>
+      <div class="card-grid" style="margin:0">
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">ויזואל עץ</span><span class="prop-val">path יורדת למטה, nodes עגולים עם icons</span></div>
+          <div class="prop-row"><span class="prop-key">Locked State</span><span class="prop-val">lock icon + grayscale + opacity 50%</span></div>
+          <div class="prop-row"><span class="prop-key">Current Node</span><span class="prop-val">pulse animation + bright + glowing border</span></div>
+          <div class="prop-row"><span class="prop-key">Completed</span><span class="prop-val">golden fill + checkmark + star rating (0-3)</span></div>
+        </div>
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">Stars System</span><span class="prop-val">0-3 כוכבים לכל שיעור — מעודד שיפור</span></div>
+          <div class="prop-row"><span class="prop-key">Crown</span><span class="prop-val">כותרת זהב כשכל השיעורים ב-3 כוכבים</span></div>
+          <div class="prop-row"><span class="prop-key">Daily Goal Ring</span><span class="prop-val">progress ring ב-header, תמיד גלוי</span></div>
+          <div class="prop-row"><span class="prop-key">Currency Display</span><span class="prop-val">Gems + Hearts תמיד ב-header</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128104;&#8205;&#128187; Teacher Dashboard (Duolingo for Schools)</div>
+      <div class="highlight-box green">
+        <h4>הפרדת ממשק מורה-תלמיד — דבר קריטי</h4>
+        Duolingo for Schools נותן למורים ממשק נפרד לחלוטין. המורה רואה: roster, progress reports, assignments, standards-aligned data. התלמיד רואה את חוויית הלמידה הרגילה — לא overloaded.
+      </div>
+      <div class="card-grid" style="margin:0.75rem 0 0">
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">Roster View</span><span class="prop-val">רשימת תלמידים עם progress indicators לכל אחד</span></div>
+          <div class="prop-row"><span class="prop-key">Assignments</span><span class="prop-val">יצירת מטלות, deadline, completion tracking</span></div>
+          <div class="prop-row"><span class="prop-key">Reports</span><span class="prop-val">standards-aligned progress לכל תלמיד — printable</span></div>
+          <div class="prop-row"><span class="prop-key">Drill-down</span><span class="prop-val">לחיצה על תלמיד &#8594; פרטי התקדמות מלאים</span></div>
+        </div>
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">Under-13 Safety</span><span class="prop-val">chat disabled, global leaderboard off, COPPA compliant</span></div>
+          <div class="prop-row"><span class="prop-key">Family Dashboard</span><span class="prop-val">הורים עוקבים אחרי ילדים — progress monitoring</span></div>
+          <div class="prop-row"><span class="prop-key">Language Control</span><span class="prop-val">מורה בוחר אילו תכנים זמינים לתלמידים</span></div>
+          <div class="prop-row"><span class="prop-key">Reminders</span><span class="prop-val">מורה שולח תזכורות לכל הכיתה</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: AMONG US / FALL GUYS                             -->
+<!-- ============================================================ -->
+<section id="fun">
+  <div class="section-header" onclick="toggleSection('fun-content', this)">
+    <div class="section-icon pink">&#127881;</div>
+    <div class="section-title">
+      <h2>Among Us &amp; Fall Guys &#8212; Fun Factor</h2>
+      <p>פלטות שובבות, התאמת דמות, lobby design, מסכי תוצאות</p>
+    </div>
+    <div class="toggle-btn">&#9650;</div>
+  </div>
+  <div class="section-content" id="fun-content">
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">&#11044; Among Us &#8212; פלטה וממשק</div>
+        <div class="swatch-row">
+          <div class="swatch"><div class="swatch-dot" style="background:#1F1F2E"></div>#1F1F2E</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#FF0000"></div>#FF0000</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#1D8BD1"></div>#1D8BD1</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#19A848"></div>#19A848</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#FFC400"></div>#FFC400</div>
+        </div>
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">Identity Colors</span><span class="prop-val">12 צבעי דמות — כל צבע = זהות שחקן ייחודית</span></div>
+          <div class="prop-row"><span class="prop-key">Customization</span><span class="prop-val">hat, skin, visor, pet — Wardrobe screen נפרד</span></div>
+          <div class="prop-row"><span class="prop-key">Lobby Feel</span><span class="prop-val">crewmates מסתובבים, casual, waiting idle animations</span></div>
+          <div class="prop-row"><span class="prop-key">Tasks UI</span><span class="prop-val">checklist פשוט + progress bar כללי לכל הצוות</span></div>
+          <div class="prop-row"><span class="prop-key">Vote Screen</span><span class="prop-val">פנלים עם תמונות שחקנים, dramatic countdown timer</span></div>
+          <div class="prop-row"><span class="prop-key">Result Screen</span><span class="prop-val">Crew Win / Impostor Win + bold text + celebration/defeat</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">&#127939; Fall Guys &#8212; שמחה ואנרגיה</div>
+        <div class="swatch-row">
+          <div class="swatch"><div class="swatch-dot" style="background:#FF5FAD"></div>#FF5FAD</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#FFD429"></div>#FFD429</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#00D8D6"></div>#00D8D6</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#7B61FF"></div>#7B61FF</div>
+        </div>
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">Aesthetic</span><span class="prop-val">jelly bean characters — עגולים, פשוטים, אקספרסיביים מאוד</span></div>
+          <div class="prop-row"><span class="prop-key">Lobby Energy</span><span class="prop-val">characters bouncing, floating, celebrating — תמיד בתנועה</span></div>
+          <div class="prop-row"><span class="prop-key">Cosmetics</span><span class="prop-val">top/bottom outfit separation — variety עצום</span></div>
+          <div class="prop-row"><span class="prop-key">UI Language</span><span class="prop-val">bubbly fonts, rounded corners everywhere, thick outlines</span></div>
+          <div class="prop-row"><span class="prop-key">Results Screen</span><span class="prop-val">confetti + character dancing + YOUR POSITION בענק</span></div>
+          <div class="prop-row"><span class="prop-key">Defeat Grace</span><span class="prop-val">הפסד = כיף בכל זאת — humor, never punishment</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128208; עקרונות Design משותפים — Fun Factor Formula</div>
+      <div class="card-grid" style="margin:0">
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">Rounded Everything</span><span class="prop-val">radius 16-24px בכל מקום — אין קצוות חדים</span></div>
+          <div class="prop-row"><span class="prop-key">Bold Saturated Colors</span><span class="prop-val">high-contrast, accessible AND fun — לא muted</span></div>
+          <div class="prop-row"><span class="prop-key">Thick Outlines</span><span class="prop-val">stroke על elements — cartoon aesthetic</span></div>
+          <div class="prop-row"><span class="prop-key">Character First</span><span class="prop-val">הדמות שלך תמיד גלויה ב-lobby screens</span></div>
+        </div>
+        <div class="prop-list">
+          <div class="prop-row"><span class="prop-key">No Boring Waits</span><span class="prop-val">אף פעם לא spinner סתמי — תמיד animated character</span></div>
+          <div class="prop-row"><span class="prop-key">Sound Everywhere</span><span class="prop-val">כל כפתור, כל אינטראקציה — יש צליל. אין silence.</span></div>
+          <div class="prop-row"><span class="prop-key">Big Celebrations</span><span class="prop-val">ניצחון = EXPLOSION של אנימציה. לא subtle.</span></div>
+          <div class="prop-row"><span class="prop-key">Failure with Humor</span><span class="prop-val">הפסד = כיף — humor instead of punishment</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: RECOMMENDATIONS FOR NINJA KEYBOARD               -->
+<!-- ============================================================ -->
+<section id="recommendations">
+  <div class="section-header" onclick="toggleSection('rec-content', this)">
+    <div class="section-icon orange">&#129399;</div>
+    <div class="section-title">
+      <h2>המלצות ספציפיות ל-Ninja Keyboard</h2>
+      <p>כפתורים, ניווט, חגיגות, אסימטריה, loading screens, settings, typography</p>
+    </div>
+    <div class="toggle-btn">&#9650;</div>
+  </div>
+  <div class="section-content" id="rec-content">
+
+    <div class="rec-card">
+      <h4>&#9889; כפתורים — Brawl Stars Style (מיישם מייד)</h4>
+      <ul>
+        <li>Gradient 135deg: מ-primary #6C5CE7 ל-primary-light #8B7EF8</li>
+        <li>box-shadow: 0 4px 20px rgba(108,92,231,0.5), 0 3px 0 #4a3cb0 — ה-3D depth האמיתי</li>
+        <li>inset highlight: inset 0 1px 0 rgba(255,255,255,0.2) — זוהר עדין מעליון</li>
+        <li>border-radius אסימטרי: 14px 10px 14px 10px — לא אחיד, נותן game feel</li>
+        <li>hover: translateY(-3px) + box-shadow מוגבר + filter brightness(1.1)</li>
+        <li>active/tap: scale(0.93) translateY(2px) — כפתור "שוקע" בלחיצה</li>
+        <li>Spring animation ב-Framer Motion: type "spring", stiffness 400, damping 15</li>
+        <li>minimum size: 48px height — WCAG AA accessibility</li>
+      </ul>
+    </div>
+
+    <div class="demo-button-container">
+      <button class="demo-btn primary-btn">&#129399; התחל שיעור</button>
+      <button class="demo-btn secondary-btn">&#9989; המשך</button>
+      <button class="demo-btn asymm-btn">&#127942; אתגר יומי</button>
+    </div>
+
+    <div class="rec-card green-accent">
+      <h4>&#128506; ניווט — Character-Presence Tab System</h4>
+      <ul>
+        <li>Tab bar תחתון: 5 icons — בית / שיעורים / Battle / התקדמות / פרופיל</li>
+        <li>Tab פעיל — הדמות הרלוונטית לsection "מציצה" מעל ה-tab (peek animation, translateY -10px)</li>
+        <li>מעבר בין tabs: slide horizontal + character walks in from corresponding direction</li>
+        <li>עומק ניווט מקסימלי: 2 רמות — הכל נגיש ב-2 נגיעות</li>
+        <li>Header: Ki mascot ב-idle breathing animation + streak flame + XP display תמיד גלוי</li>
+        <li>Character mapping: Sensei Zen&#8594;שיעורים, Yuki&#8594;speed-test, Luna&#8594;practice, Rex&#8594;games</li>
+        <li>Transition animation: 180ms slide, לא fade בלבד — תמיד יש תנועה</li>
+      </ul>
+    </div>
+
+    <div class="rec-card pink-accent">
+      <h4>&#127881; חגיגות — Multi-Layer Celebration System</h4>
+      <ul>
+        <li>WPM Personal Best: confetti burst + "+XX WPM" float + Ki dance animation + jingle</li>
+        <li>Lesson Complete: XP float &#8592; streak +1 animation &#8592; character thumbs up — sequential</li>
+        <li>Level Up: full-screen flash &#8594; character big celebration &#8594; level badge reveal &#8594; fanfare</li>
+        <li>Streak Milestone (7/30/100 ימים): phoenix-style animation + special title + push notification</li>
+        <li>Perfect Accuracy: gold stars burst + "מושלם!" text scale-up (backOut ease) + special jingle</li>
+        <li>Keyboard Shortcut Mastered: ninja throw animation + "shortcut unlocked" badge</li>
+        <li>Defeat/Error: character sad reaction (not angry) + constructive message + retry — never shame</li>
+      </ul>
+    </div>
+
+    <div class="rec-card yellow-accent">
+      <h4>&#128208; עיצוב אסימטרי — Game Feel Rules</h4>
+      <ul>
+        <li>Cards: border-radius שונה בכל פינה, e.g. 20px 12px 20px 12px — לא 12px אחיד</li>
+        <li>Score display: rotate(-1.5deg) קל + bold + glow — לא centered ב-grid רגיל</li>
+        <li>Bento layout: sections בגדלים שונים, לא grid אחיד — dynamic composition</li>
+        <li>Character placement: לא centered — חצי מחוץ ל-frame, overlap על content</li>
+        <li>Buttons: vary radius per type — action (14px 10px), nav (round), utility (8px)</li>
+        <li>Typography mixing: Heebo 900 לkeywords, 400 לtext — contrast בין weights</li>
+        <li>Background: subtle noise texture על #0d0b1a — לא flat color בלבד</li>
+      </ul>
+    </div>
+
+    <div class="rec-card orange-accent">
+      <h4>&#9203; Loading Screens — Character Tips System</h4>
+      <ul>
+        <li>Spinner: Ki spinning + breathing — לא spinner קלאסי. הדמות היא ה-loader.</li>
+        <li>Tips רוטציה: "&#128161; טיפ: טיפוס מהיר מתחיל מהאצבע האמצעית על K" — fact per character</li>
+        <li>Character rotation: כל load — דמות אחרת מוצגת עם tip ייחודי לה</li>
+        <li>Themed progress bar: גרדיאנטית בצבע ה-section, עם glow מתאים</li>
+        <li>Max duration: לא יותר מ-3 שניות — אחרי כן skeleton content במקום</li>
+        <li>Transition out: character waves goodbye &#8594; content slides in from behind character</li>
+        <li>Loading percentage: מספרים אמיתיים, לא fake — builds trust</li>
+      </ul>
+    </div>
+
+    <div class="rec-card">
+      <h4>&#9881;&#65039; Settings — הפרדת תלמיד / הורה / מורה</h4>
+      <ul>
+        <li>תלמיד: avatar customization, sound on/off, theme (age-adaptive), keyboard layout preference</li>
+        <li>הורה: content filters, daily time limit (30/60/90 min), progress reports, notification control</li>
+        <li>מורה: class management, assignment creation, student progress dashboard, export CSV/PDF</li>
+        <li>גישת הורה: PIN-protected (4 ספרות) — מונע גישת ילדים להגדרות מגבילות</li>
+        <li>Under-13 safe: global leaderboard disabled, chat off, parent approval לfeatures חדשים</li>
+        <li>Teacher portal: URL /teacher/, ממשק data-focused, לא game-themed — professional feel</li>
+        <li>Student age-themes: shatil (6-8) cute &#8594; geza (10-12) gaming &#8594; tzameret (14-16) minimal</li>
+      </ul>
+    </div>
+
+    <div class="rec-card green-accent">
+      <h4>&#128292; Typography — Hebrew Game Fonts</h4>
+      <ul>
+        <li>Heebo Black (900): כותרות, scores, level numbers, WPM display — bold game feel</li>
+        <li>Heebo Bold (700): כפתורים, nav labels — readable and punchy</li>
+        <li>Assistant (600): body text, explanations, lesson content — accessible, comfortable</li>
+        <li>Inter (600): מספרים, WPM stats, timers — monospace-feel for data clarity</li>
+        <li>Font-size scale: 3rem hero &#8594; 1.5rem section &#8594; 1rem body &#8594; 0.8rem label</li>
+        <li>letter-spacing: -0.02em על כותרות גדולות — gaming tightness</li>
+        <li>Avoid decorative fonts in Hebrew — readability &gt; aesthetics for learning apps</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================ -->
+<!-- SECTION 6: SOUNDS                                            -->
+<!-- ============================================================ -->
+<section id="sounds">
+  <div class="section-header" onclick="toggleSection('sounds-content', this)">
+    <div class="section-icon blue">&#128266;</div>
+    <div class="section-title">
+      <h2>מערכת צלילים — 22 הצעות ספציפיות</h2>
+      <p>תדרים, Web Audio API synthesis, עקרונות עיצוב קולי</p>
+    </div>
+    <div class="toggle-btn">&#9650;</div>
+  </div>
+  <div class="section-content" id="sounds-content">
+
+    <div class="highlight-box purple">
+      <h4>עקרון ה-Sound Design — אל תחזור על אותו צליל</h4>
+      הסיבה מספר 1 שמשתמשים מכבים צלילי keyboard: repetition. כל צליל צריך 3-4 variations של pitch/volume/timing. טווח קריטי ל-mobile speakers: 2kHz-5kHz (21% יותר intelligibility). Bass מתחת ל-100Hz לא נשמע דרך רמקולי נייד — הימנע. Tailored sound cues מגדילים learning speed ב-34%.
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#127929; טבלת צלילים — Web Audio API Synthesis</div>
+      <table class="sound-table">
+        <thead>
+          <tr><th>#</th><th>אירוע</th><th>תדר (Hz)</th><th>Duration</th><th>Waveform</th><th>סוג</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>keystroke רגיל</td><td>800-1200 (random)</td><td>50ms</td><td>sine</td><td><span class="sound-tag neutral">neutral</span></td></tr>
+          <tr><td>2</td><td>keystroke נכון</td><td>880 (A5)</td><td>80ms</td><td>triangle</td><td><span class="sound-tag positive">positive</span></td></tr>
+          <tr><td>3</td><td>keystroke שגוי</td><td>200&#8594;100 (descend)</td><td>150ms</td><td>sawtooth</td><td><span class="sound-tag negative">negative</span></td></tr>
+          <tr><td>4</td><td>מילה מושלמת</td><td>523&#8594;659&#8594;784 (C-E-G)</td><td>300ms</td><td>sine+square</td><td><span class="sound-tag positive">positive</span></td></tr>
+          <tr><td>5</td><td>שיעור הושלם</td><td>523&#8594;659&#8594;784&#8594;1047</td><td>800ms</td><td>sine smooth</td><td><span class="sound-tag special">special</span></td></tr>
+          <tr><td>6</td><td>Level Up</td><td>arpeggio 262&#8594;330&#8594;392&#8594;523&#8594;784</td><td>1200ms</td><td>sine+tremolo</td><td><span class="sound-tag special">special</span></td></tr>
+          <tr><td>7</td><td>badge unlock</td><td>659&#8594;880&#8594;1046 rapid</td><td>400ms</td><td>square&#8594;sine</td><td><span class="sound-tag special">special</span></td></tr>
+          <tr><td>8</td><td>streak +1</td><td>880&#8594;1108 (A5&#8594;C#6)</td><td>250ms</td><td>triangle</td><td><span class="sound-tag positive">positive</span></td></tr>
+          <tr><td>9</td><td>streak break</td><td>440&#8594;220&#8594;110 (sad)</td><td>600ms</td><td>sawtooth</td><td><span class="sound-tag negative">negative</span></td></tr>
+          <tr><td>10</td><td>כפתור nav</td><td>440 (A4)</td><td>60ms</td><td>sine</td><td><span class="sound-tag neutral">neutral</span></td></tr>
+          <tr><td>11</td><td>כפתור action</td><td>523 (C5), bright</td><td>80ms</td><td>triangle</td><td><span class="sound-tag neutral">neutral</span></td></tr>
+          <tr><td>12</td><td>victory / חגיגה</td><td>multi-chord fanfare</td><td>2000ms</td><td>orchestra sim</td><td><span class="sound-tag special">special</span></td></tr>
+          <tr><td>13</td><td>XP float</td><td>880&#8594;1108, soft</td><td>200ms</td><td>sine, low vol</td><td><span class="sound-tag positive">positive</span></td></tr>
+          <tr><td>14</td><td>timer tick</td><td>1000 (soft click)</td><td>30ms</td><td>sine</td><td><span class="sound-tag neutral">neutral</span></td></tr>
+          <tr><td>15</td><td>timer warning</td><td>880, faster tick x5</td><td>30ms x5</td><td>square</td><td><span class="sound-tag negative">negative</span></td></tr>
+          <tr><td>16</td><td>confetti pop</td><td>1200&#8594;900 random</td><td>100ms xN</td><td>noise burst</td><td><span class="sound-tag special">special</span></td></tr>
+          <tr><td>17</td><td>character tap</td><td>ייחודי לכל דמות</td><td>150ms</td><td>varies</td><td><span class="sound-tag neutral">neutral</span></td></tr>
+          <tr><td>18</td><td>תשובה נכונה</td><td>659&#8594;880 (bright)</td><td>200ms</td><td>sine</td><td><span class="sound-tag positive">positive</span></td></tr>
+          <tr><td>19</td><td>תשובה שגויה</td><td>220&#8594;196 (sad)</td><td>400ms</td><td>triangle</td><td><span class="sound-tag negative">negative</span></td></tr>
+          <tr><td>20</td><td>login / חיבור</td><td>523&#8594;659&#8594;784 welcome</td><td>500ms</td><td>sine smooth</td><td><span class="sound-tag special">special</span></td></tr>
+          <tr><td>21</td><td>modal open</td><td>392 (G4), whoosh</td><td>120ms</td><td>sine+noise</td><td><span class="sound-tag neutral">neutral</span></td></tr>
+          <tr><td>22</td><td>modal close</td><td>330 (E4), softer</td><td>100ms</td><td>sine</td><td><span class="sound-tag neutral">neutral</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128187; Web Audio API &#8212; Sound Engine</div>
+      <div class="code-label">TypeScript — src/lib/sound-engine.ts</div>
+<pre><code>// Ninja Keyboard Sound Engine — Web Audio API Synthesis
+// No external files needed — pure synthesis
+
+let audioCtx: AudioContext | null = null;
+
+function getAudioCtx(): AudioContext {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext ||
+      (window as any).webkitAudioContext)();
+  }
+  return audioCtx;
+}
+
+interface ToneOptions {
+  frequency: number;
+  duration?: number;       // ms
+  type?: OscillatorType;
+  volume?: number;         // 0-1
+  pitchEnd?: number;       // for pitch bend
+  delay?: number;          // ms before starting
+}
+
+function playTone({
+  frequency, duration = 100, type = 'sine',
+  volume = 0.3, pitchEnd, delay = 0,
+}: ToneOptions): void {
+  const ctx = getAudioCtx();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.type = type;
+
+  const startTime = ctx.currentTime + delay / 1000;
+  const endTime = startTime + duration / 1000;
+
+  osc.frequency.setValueAtTime(frequency, startTime);
+  if (pitchEnd !== undefined) {
+    osc.frequency.linearRampToValueAtTime(pitchEnd, endTime);
+  }
+
+  // ADSR envelope
+  gain.gain.setValueAtTime(0, startTime);
+  gain.gain.linearRampToValueAtTime(volume, startTime + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.001, endTime);
+
+  osc.start(startTime);
+  osc.stop(endTime + 0.05);
+}
+
+// Variation: prevents repetition fatigue
+function withVariation(freq: number, range = 40): number {
+  return freq + (Math.random() - 0.5) * range;
+}
+
+// ===== PUBLIC SOUND API =====
+
+export const Sounds = {
+  keystroke: (correct: boolean) => {
+    if (correct) {
+      playTone({ frequency: withVariation(880, 80), duration: 80, type: 'triangle', volume: 0.25 });
+    } else {
+      playTone({ frequency: 200, duration: 150, type: 'sawtooth', volume: 0.2, pitchEnd: 100 });
+    }
+  },
+
+  wordComplete: () => {
+    [523, 659, 784].forEach((freq, i) =>
+      playTone({ frequency: freq, duration: 200, type: 'sine', volume: 0.25, delay: i * 70 })
+    );
+  },
+
+  lessonComplete: () => {
+    [523, 659, 784, 1047].forEach((freq, i) =>
+      playTone({ frequency: freq, duration: 600, type: 'sine', volume: 0.2, delay: i * 100 })
+    );
+  },
+
+  levelUp: () => {
+    [262, 330, 392, 523, 784].forEach((freq, i) =>
+      playTone({ frequency: freq, duration: 200, type: 'sine', volume: 0.4, delay: i * 120 })
+    );
+  },
+
+  streakAdd: () => {
+    playTone({ frequency: 880, duration: 120, type: 'triangle', volume: 0.3 });
+    playTone({ frequency: 1108, duration: 200, type: 'triangle', volume: 0.3, delay: 120 });
+  },
+
+  streakBreak: () => {
+    [440, 220, 110].forEach((freq, i) =>
+      playTone({ frequency: freq, duration: 250, type: 'sawtooth', volume: 0.25, delay: i * 180 })
+    );
+  },
+
+  button: () => playTone({ frequency: 440, duration: 60, type: 'sine', volume: 0.2 }),
+
+  buttonAction: () => playTone({ frequency: 523, duration: 80, type: 'triangle', volume: 0.25 }),
+
+  xpFloat: () => playTone({ frequency: 880, duration: 200, type: 'sine', volume: 0.15, pitchEnd: 1108 }),
+
+  timerWarning: () => {
+    for (let i = 0; i < 5; i++) {
+      playTone({ frequency: 880, duration: 30, type: 'square', volume: 0.3, delay: i * 200 });
+    }
+  },
+
+  victory: () => {
+    const chord = [523, 659, 784, 1047];
+    chord.forEach(f => playTone({ frequency: f, duration: 1500, type: 'sine', volume: 0.2 }));
+    // Add sparkle on top
+    setTimeout(() => playTone({ frequency: 2093, duration: 300, type: 'triangle', volume: 0.15 }), 500);
+  },
+};</code></pre>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================ -->
+<!-- SECTION 7: CODE PATTERNS                                     -->
+<!-- ============================================================ -->
+<section id="code">
+  <div class="section-header" onclick="toggleSection('code-content', this)">
+    <div class="section-icon purple">&#128187;</div>
+    <div class="section-title">
+      <h2>קוד &#8212; Next.js + Tailwind + Framer Motion</h2>
+      <p>דפוסי implementation מוכנים לשימוש ב-Ninja Keyboard</p>
+    </div>
+    <div class="toggle-btn">&#9650;</div>
+  </div>
+  <div class="section-content" id="code-content">
+
+    <div class="card">
+      <div class="card-title">&#127918; GameButton Component</div>
+      <div class="code-label">TSX — src/components/ui/GameButton.tsx</div>
+<pre><code>'use client';
+import { motion } from 'framer-motion';
+import { Sounds } from '@/lib/sound-engine';
+
+type Variant = 'primary' | 'secondary' | 'danger' | 'ghost';
+
+const VARIANTS: Record&lt;Variant, {
+  gradient: string; shadow: string; hoverShadow: string; depth: string;
+}&gt; = {
+  primary: {
+    gradient: 'from-[#6C5CE7] to-[#8B7EF8]',
+    shadow: '0 4px 20px rgba(108,92,231,0.5), 0 3px 0 #4a3cb0, inset 0 1px 0 rgba(255,255,255,0.2)',
+    hoverShadow: '0 6px 28px rgba(108,92,231,0.7), 0 3px 0 #4a3cb0',
+    depth: '#4a3cb0',
+  },
+  secondary: {
+    gradient: 'from-[#00B894] to-[#00d4a8]',
+    shadow: '0 4px 20px rgba(0,184,148,0.5), 0 3px 0 #007d65, inset 0 1px 0 rgba(255,255,255,0.2)',
+    hoverShadow: '0 6px 28px rgba(0,184,148,0.7), 0 3px 0 #007d65',
+    depth: '#007d65',
+  },
+  danger: {
+    gradient: 'from-[#e17055] to-[#fd79a8]',
+    shadow: '0 4px 20px rgba(225,112,85,0.5), 0 3px 0 #8b3a2a',
+    hoverShadow: '0 6px 28px rgba(225,112,85,0.7), 0 3px 0 #8b3a2a',
+    depth: '#8b3a2a',
+  },
+  ghost: {
+    gradient: '',
+    shadow: '0 0 0 1px rgba(108,92,231,0.4)',
+    hoverShadow: '0 0 0 2px rgba(108,92,231,0.6), 0 4px 16px rgba(108,92,231,0.2)',
+    depth: 'transparent',
+  },
+};
+
+interface GameButtonProps {
+  children: React.ReactNode;
+  variant?: Variant;
+  onClick?: () => void;
+  disabled?: boolean;
+  className?: string;
+  playSound?: boolean;
+}
+
+export function GameButton({
+  children, variant = 'primary', onClick, disabled, className = '', playSound = true,
+}: GameButtonProps) {
+  const v = VARIANTS[variant];
+
+  return (
+    &lt;motion.button
+      disabled={disabled}
+      className={`
+        relative px-6 py-3 text-white font-bold font-heebo
+        bg-gradient-to-br ${v.gradient}
+        select-none border-none outline-none
+        disabled:opacity-50 disabled:cursor-not-allowed
+        ${className}
+      `}
+      style={{
+        boxShadow: v.shadow,
+        borderRadius: '14px 10px 14px 10px', // asymmetric!
+      }}
+      whileHover={!disabled ? {
+        y: -3,
+        boxShadow: v.hoverShadow,
+        filter: 'brightness(1.1)',
+      } : {}}
+      whileTap={!disabled ? { scale: 0.93, y: 2 } : {}}
+      transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+      onClick={() => {
+        if (playSound) Sounds.buttonAction();
+        onClick?.();
+      }}
+    &gt;
+      {/* Top highlight */}
+      &lt;span className="absolute inset-x-2 top-0 h-px bg-white/20 rounded-full" /&gt;
+      {children}
+    &lt;/motion.button&gt;
+  );
+}</code></pre>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#10024; XP Float + Celebration System</div>
+      <div class="code-label">TSX — src/components/game/CelebrationSystem.tsx</div>
+<pre><code>'use client';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useCallback, useEffect } from 'react';
+
+// XP floating numbers
+interface FloatItem { id: number; amount: number; x: number; }
+
+export function useXpFloat() {
+  const [floats, setFloats] = useState&lt;FloatItem[]&gt;([]);
+
+  const triggerXp = useCallback((amount: number) => {
+    const id = Date.now() + Math.random();
+    const x = 40 + Math.random() * 20; // 40-60% from left
+    setFloats(prev =&gt; [...prev, { id, amount, x }]);
+    setTimeout(() =&gt; setFloats(prev =&gt; prev.filter(f =&gt; f.id !== id)), 1100);
+  }, []);
+
+  return { floats, triggerXp };
+}
+
+export function XpFloatLayer({ floats }: { floats: FloatItem[] }) {
+  return (
+    &lt;div className="pointer-events-none fixed inset-0 z-50" aria-hidden&gt;
+      &lt;AnimatePresence&gt;
+        {floats.map(f =&gt; (
+          &lt;motion.div
+            key={f.id}
+            className="absolute font-black text-xl text-[#fdcb6e]"
+            style={{ left: `${f.x}%`, bottom: '25%' }}
+            initial={{ opacity: 0, y: 0, scale: 0.7 }}
+            animate={{ opacity: [0, 1, 1, 0], y: -90, scale: [0.7, 1.15, 1.05, 1] }}
+            exit={{}}
+            transition={{ duration: 1.0, ease: 'easeOut' }}
+          &gt;
+            +{f.amount} XP &#11088;
+          &lt;/motion.div&gt;
+        ))}
+      &lt;/AnimatePresence&gt;
+    &lt;/div&gt;
+  );
+}
+
+// Celebration overlay
+type CelebLevel = 'good' | 'great' | 'perfect' | 'levelup';
+
+const CONFIGS = {
+  good:    { emoji: '&#128077;', text: 'כל הכבוד!', color: '#74b9ff' },
+  great:   { emoji: '&#128293;', text: 'מצוין!',   color: '#00B894' },
+  perfect: { emoji: '&#11088;', text: 'מושלם!',    color: '#6C5CE7' },
+  levelup: { emoji: '&#127942;', text: 'עלית רמה!', color: '#fdcb6e' },
+};
+
+export function CelebrationOverlay({
+  level, show, onDone,
+}: { level: CelebLevel; show: boolean; onDone: () => void }) {
+  const cfg = CONFIGS[level];
+
+  useEffect(() =&gt; {
+    if (show) {
+      // Lazy import canvas-confetti
+      import('canvas-confetti').then(({ default: confetti }) =&gt; {
+        confetti({
+          particleCount: level === 'levelup' ? 200 : 80,
+          spread: 70,
+          origin: { y: 0.55 },
+        });
+      });
+      const t = setTimeout(onDone, 2200);
+      return () =&gt; clearTimeout(t);
+    }
+  }, [show, level, onDone]);
+
+  return (
+    &lt;AnimatePresence&gt;
+      {show &amp;&amp; (
+        &lt;motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0, transition: { delay: 1.5 } }}
+        &gt;
+          &lt;motion.div
+            className="text-center"
+            initial={{ scale: 0.3, y: 60 }}
+            animate={{ scale: [0.3, 1.25, 1.0], y: 0 }}
+            transition={{ duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
+          &gt;
+            &lt;div className="text-8xl mb-4"&gt;{cfg.emoji}&lt;/div&gt;
+            &lt;div
+              className="text-5xl font-black"
+              style={{ color: cfg.color, textShadow: `0 0 40px ${cfg.color}` }}
+            &gt;
+              {cfg.text}
+            &lt;/div&gt;
+          &lt;/motion.div&gt;
+        &lt;/motion.div&gt;
+      )}
+    &lt;/AnimatePresence&gt;
+  );
+}</code></pre>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128293; Streak Display + CSS Utilities</div>
+      <div class="code-label">TSX — StreakDisplay.tsx</div>
+<pre><code>'use client';
+import { motion } from 'framer-motion';
+
+interface StreakDisplayProps {
+  count: number;
+  isAtRisk?: boolean;  // true when not practiced today
+}
+
+export function StreakDisplay({ count, isAtRisk = false }: StreakDisplayProps) {
+  return (
+    &lt;motion.div
+      className="flex items-center gap-2 px-3 py-1.5 rounded-full cursor-default"
+      style={{
+        background: isAtRisk ? 'rgba(225,112,85,0.15)' : 'rgba(253,203,110,0.15)',
+        border: `1px solid ${isAtRisk ? 'rgba(225,112,85,0.4)' : 'rgba(253,203,110,0.4)'}`,
+      }}
+      // Pulse when at risk
+      animate={isAtRisk ? { scale: [1, 1.06, 1] } : {}}
+      transition={isAtRisk ? { repeat: Infinity, duration: 1.8, ease: 'easeInOut' } : {}}
+    &gt;
+      &lt;motion.span
+        className="text-xl leading-none"
+        animate={isAtRisk ? { rotate: [-6, 6, -6] } : {}}
+        transition={isAtRisk ? { repeat: Infinity, duration: 0.6 } : {}}
+      &gt;
+        &#128293;
+      &lt;/motion.span&gt;
+      &lt;span
+        className="font-black text-base tabular-nums"
+        style={{ color: isAtRisk ? '#e17055' : '#fdcb6e' }}
+      &gt;
+        {count}
+      &lt;/span&gt;
+    &lt;/motion.div&gt;
+  );
+}</code></pre>
+      <div class="code-label" style="margin-top:1rem">CSS — globals.css additions</div>
+<pre><code>/* ===== Game Feel Utilities ===== */
+
+/* Asymmetric button radii */
+.btn-game       { border-radius: 14px 10px 14px 10px; }
+.btn-game-alt   { border-radius: 10px 18px 10px 18px; }
+.btn-game-round { border-radius: 50px; }
+
+/* Glow system */
+.glow-primary   { box-shadow: 0 0 20px rgba(108,92,231,0.5); }
+.glow-secondary { box-shadow: 0 0 20px rgba(0,184,148,0.5); }
+.glow-gold      { box-shadow: 0 0 20px rgba(253,203,110,0.5); }
+.glow-danger    { box-shadow: 0 0 20px rgba(225,112,85,0.5); }
+
+/* 3D button depth */
+.btn-3d-purple { box-shadow: 0 4px 0 #4a3cb0, 0 6px 20px rgba(108,92,231,0.4); }
+.btn-3d-green  { box-shadow: 0 4px 0 #007d65, 0 6px 20px rgba(0,184,148,0.4); }
+.btn-3d-gold   { box-shadow: 0 4px 0 #a07c00, 0 6px 20px rgba(253,203,110,0.4); }
+
+/* Gradient text hero */
+.text-game-hero {
+  background: linear-gradient(135deg, #fff 0%, #8B7EF8 50%, #00B894 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Character floating shadow */
+.character-shadow {
+  filter: drop-shadow(0 20px 30px rgba(108,92,231,0.4))
+          drop-shadow(0 8px 12px rgba(0,0,0,0.5));
+}
+
+/* Spring hover utility */
+.hover-spring {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.2s ease;
+}
+.hover-spring:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* XP bar with shine */
+.xp-bar-fill {
+  background: linear-gradient(90deg, #6C5CE7, #8B7EF8);
+  box-shadow: 0 0 12px rgba(108,92,231,0.6);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.xp-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 2px; inset-inline-start: 8px; inset-inline-end: 8px;
+  height: 3px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 2px;
+}
+
+/* Subtle noise texture on dark bg */
+.bg-noise {
+  background-image: url("data:image/svg+xml,..."); /* SVG noise */
+  background-blend-mode: overlay;
+  opacity: 0.03;
+}</code></pre>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SOURCES -->
+<section>
+  <div class="card">
+    <div class="card-title">&#128218; מקורות מחקר</div>
+    <ul class="sources-list">
+      <li><a href="https://ixd.prattsi.org/2025/02/design-critique-brawl-stars/" target="_blank">Design Critique: Brawl Stars &#8211; IXD@Pratt (2025)</a></li>
+      <li><a href="https://medium.com/@matt.sullivan28/a-brief-look-brawl-stars-ux-ui-562f6225b7e3" target="_blank">A Brief Look: Brawl Stars UX/UI &#8211; Medium</a></li>
+      <li><a href="https://www.emmachipperfield.com/brawl-stars-ux" target="_blank">Brawl Stars UX &#8212; Emma Chipperfield</a></li>
+      <li><a href="https://www.behance.net/gallery/239453593/Brawl-Stars-UIUX-2025" target="_blank">Brawl Stars UI/UX 2025 &#8211; Gonzalo Vazquez (Behance)</a></li>
+      <li><a href="https://sis.binus.ac.id/2025/06/26/analysis-towards-ui-ux-of-clash-royale-towards-the-gameplay/" target="_blank">Analysis: UI/UX of Clash Royale &#8211; Binus University (2025)</a></li>
+      <li><a href="https://discover.therookies.co/2020/02/24/game-design-ux-best-practices-detailed-breakdown-of-clash-royale/" target="_blank">UX Best Practices: Clash Royale &#8211; The Rookies</a></li>
+      <li><a href="https://medium.com/@salamprem49/duolingo-streak-system-detailed-breakdown-design-flow-886f591c953f" target="_blank">Duolingo Streak System Detailed Breakdown &#8211; Medium</a></li>
+      <li><a href="https://blog.duolingo.com/streak-milestone-design-animation/" target="_blank">Animating the Duolingo Streak &#8211; Duolingo Blog</a></li>
+      <li><a href="https://www.orizon.co/blog/duolingos-gamification-secrets" target="_blank">Duolingo's Gamification Secrets: Streaks &amp; XP &#8211; Orizon</a></li>
+      <li><a href="https://www.uinkits.com/blog-post/how-to-design-like-duolingo-gamification-engagement" target="_blank">How to Design Like Duolingo &#8211; UIKits</a></li>
+      <li><a href="https://raw.studio/blog/how-duolingo-utilises-gamification/" target="_blank">How Duolingo Utilises Gamification &#8211; Raw.Studio</a></li>
+      <li><a href="https://duolingoschools.zendesk.com/hc/en-us/articles/11167849068941" target="_blank">Teacher Guide to Duolingo for Schools</a></li>
+      <li><a href="https://pixune.com/blog/best-examples-mobile-game-ui-design/" target="_blank">Best Examples in Mobile Game UI Designs (2025) &#8211; Pixune</a></li>
+      <li><a href="https://bambamtastic.com/mobile-game-ui-design/" target="_blank">Mobile Game UI Design Best Practices &#8211; BamBamTastic</a></li>
+      <li><a href="https://www.gameanalytics.com/blog/9-sound-design-tips-to-improve-your-games-audio" target="_blank">9 Sound Design Tips &#8211; GameAnalytics</a></li>
+      <li><a href="https://medium.com/@fernando1lins/lessons-learned-in-audio-feedback-for-game-and-app-design-e4818c9b72fd" target="_blank">Audio Feedback for Game and App Design &#8211; Medium</a></li>
+      <li><a href="https://www.yeti.co/lab-case-studies/framer-motion-confetti-effects" target="_blank">Framer Motion Confetti Effects &#8211; Yeti</a></li>
+      <li><a href="https://www.joshwcomeau.com/animation/3d-button/" target="_blank">Building a Magical 3D Button &#8211; Josh W. Comeau</a></li>
+      <li><a href="https://felixrunquist.com/posts/designing-spring-animations-for-the-web" target="_blank">Designing Spring Animations for the Web &#8211; Felix Runquist</a></li>
+      <li><a href="https://www.gameuidatabase.com/gameData.php?id=465" target="_blank">Game UI Database &#8211; Brawl Stars</a></li>
+      <li><a href="https://www.gameuidatabase.com/gameData.php?id=1299" target="_blank">Game UI Database &#8211; Clash Royale</a></li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer style="text-align:center;padding:2rem;color:#9990bb;font-size:0.8rem;border-top:1px solid #2a2550;margin-top:2rem">
+  מחקר UI גיימינג &#8212; Ninja Keyboard 2025 | Next.js 15 + Tailwind CSS 4 + Framer Motion
+</footer>
+
+<script>
+  function toggleSection(id, header) {
+    var content = document.getElementById(id);
+    var btn = header.querySelector('.toggle-btn');
+    if (!content) return;
+    if (content.classList.contains('collapsed')) {
+      content.style.maxHeight = content.scrollHeight + 'px';
+      content.classList.remove('collapsed');
+      btn.innerHTML = '&#9650;';
+    } else {
+      content.style.maxHeight = content.scrollHeight + 'px';
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          content.classList.add('collapsed');
+          btn.innerHTML = '&#9660;';
+        });
+      });
+    }
+  }
+
+  // Set initial heights
+  document.querySelectorAll('.section-content').forEach(function(el) {
+    el.style.maxHeight = el.scrollHeight + 'px';
+  });
+</script>
+
+</body>
+</html>
