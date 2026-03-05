@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>נינג'ה מקלדת - סקירת איטרציה V2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0d0b1a;
+  --bg-card: #1a1730;
+  --bg-card-hover: #231f3e;
+  --primary: #6C5CE7;
+  --primary-glow: rgba(108, 92, 231, 0.3);
+  --secondary: #00B894;
+  --secondary-glow: rgba(0, 184, 148, 0.3);
+  --accent-pink: #fd79a8;
+  --accent-orange: #e17055;
+  --accent-yellow: #ffeaa7;
+  --accent-blue: #74b9ff;
+  --accent-red: #ff6b6b;
+  --text: #e0e0e0;
+  --text-dim: #8a8a9a;
+  --text-bright: #ffffff;
+  --border: #2d2a4a;
+  --success: #00b894;
+  --warning: #fdcb6e;
+  --danger: #e17055;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Heebo', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text);
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* Sticky Nav */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13, 11, 26, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+nav a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+nav a:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+  background: var(--primary-glow);
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 60px 20px 40px;
+  background: linear-gradient(135deg, rgba(108,92,231,0.15), rgba(0,184,148,0.1));
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.hero .subtitle {
+  color: var(--text-dim);
+  font-size: 1.1rem;
+}
+
+.hero .date {
+  color: var(--accent-yellow);
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Section */
+section {
+  margin-bottom: 40px;
+}
+
+section h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+section h2 .icon {
+  font-size: 1.8rem;
+}
+
+section h3 {
+  font-size: 1.2rem;
+  color: var(--primary);
+  margin: 20px 0 10px;
+}
+
+section h4 {
+  font-size: 1rem;
+  color: var(--secondary);
+  margin: 15px 0 8px;
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  transition: all 0.2s;
+}
+
+.card:hover {
+  border-color: var(--primary);
+  background: var(--bg-card-hover);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+/* Status badges */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.badge-done { background: rgba(0,184,148,0.2); color: var(--success); border: 1px solid var(--success); }
+.badge-progress { background: rgba(108,92,231,0.2); color: var(--primary); border: 1px solid var(--primary); }
+.badge-todo { background: rgba(225,112,85,0.2); color: var(--danger); border: 1px solid var(--danger); }
+.badge-new { background: rgba(253,121,168,0.2); color: var(--accent-pink); border: 1px solid var(--accent-pink); }
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+th {
+  background: var(--bg-card);
+  color: var(--primary);
+  padding: 10px 12px;
+  text-align: right;
+  border-bottom: 2px solid var(--primary);
+  font-weight: 700;
+}
+
+td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+tr:hover td {
+  background: rgba(108,92,231,0.05);
+}
+
+/* Audio player */
+.audio-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  border: 1px solid var(--border);
+}
+
+.audio-row .label {
+  min-width: 160px;
+  font-weight: 500;
+  color: var(--text-bright);
+}
+
+.audio-row .version {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.audio-row audio {
+  flex: 1;
+  height: 32px;
+}
+
+/* Progress bar */
+.progress-bar {
+  height: 8px;
+  background: var(--bg-card);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s;
+}
+
+.progress-fill.green { background: linear-gradient(90deg, var(--secondary), #55efc4); }
+.progress-fill.purple { background: linear-gradient(90deg, var(--primary), var(--accent-pink)); }
+.progress-fill.orange { background: linear-gradient(90deg, var(--accent-orange), var(--accent-yellow)); }
+
+/* Checklist */
+.checklist {
+  list-style: none;
+  padding: 0;
+}
+
+.checklist li {
+  padding: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checklist .done { color: var(--success); }
+.checklist .todo { color: var(--danger); }
+
+/* Collapsible */
+details {
+  margin: 10px 0;
+}
+
+summary {
+  cursor: pointer;
+  padding: 12px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-weight: 500;
+  color: var(--text-bright);
+  transition: all 0.2s;
+  list-style: none;
+}
+
+summary::-webkit-details-marker { display: none; }
+summary::before { content: '▸ '; color: var(--primary); }
+details[open] summary::before { content: '▾ '; }
+details[open] summary { border-radius: 8px 8px 0 0; border-bottom-color: var(--primary); }
+
+details > div {
+  padding: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Stats grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.stat-card .number {
+  font-size: 2rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stat-card .label {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+/* Character card */
+.char-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+
+.char-card img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--primary);
+  margin-bottom: 10px;
+}
+
+.char-card .name {
+  font-weight: 700;
+  color: var(--text-bright);
+}
+
+.char-card .role {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+/* Highlight box */
+.highlight {
+  padding: 16px 20px;
+  border-radius: 10px;
+  margin: 16px 0;
+}
+
+.highlight.purple {
+  background: rgba(108,92,231,0.1);
+  border: 1px solid rgba(108,92,231,0.3);
+}
+
+.highlight.green {
+  background: rgba(0,184,148,0.1);
+  border: 1px solid rgba(0,184,148,0.3);
+}
+
+.highlight.orange {
+  background: rgba(225,112,85,0.1);
+  border: 1px solid rgba(225,112,85,0.3);
+}
+
+.highlight.yellow {
+  background: rgba(255,234,167,0.1);
+  border: 1px solid rgba(255,234,167,0.3);
+}
+
+/* Timeline */
+.timeline-item {
+  display: flex;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.timeline-item .time {
+  min-width: 80px;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.timeline-item .content {
+  flex: 1;
+}
+
+/* Art checklist grid */
+.art-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+}
+
+.art-item {
+  padding: 8px 12px;
+  background: var(--bg-card);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.art-item.done { border-color: var(--success); }
+.art-item.todo { border-color: var(--danger); }
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 1.8rem; }
+  .card-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  nav { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#summary">סיכום</a>
+  <a href="#voices">קולות V3</a>
+  <a href="#suno">Suno חיבור</a>
+  <a href="#post-narrative">אחרי הנרטיב</a>
+  <a href="#art-plan">תוכנית אמנות</a>
+  <a href="#characters-in-menus">דמויות בתפריטים</a>
+  <a href="#animation">הנפשה תמידית</a>
+  <a href="#ui-research">מחקר UI</a>
+  <a href="#voice-cloning">שיבוט קול</a>
+  <a href="#music">מוסיקה</a>
+  <a href="#next-steps">צעדים הבאים</a>
+</nav>
+
+<div class="hero">
+  <h1>נינג'ה מקלדת - סקירת איטרציה V2</h1>
+  <div class="subtitle">קולות V3, חיבור Suno ישיר, תוכנית אמנות מלאה, תוכן אחרי-נרטיב</div>
+  <div class="date">5 במרץ 2026</div>
+</div>
+
+<div class="container">
+
+<!-- Summary Stats -->
+<section id="summary">
+  <h2><span class="icon">📊</span> סיכום מצב הפרויקט</h2>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="number">14</div>
+      <div class="label">דמויות</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">22</div>
+      <div class="label">קווי קול (V3)</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">4</div>
+      <div class="label">שירים (MP3)</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">12</div>
+      <div class="label">מודל שיטס</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">8</div>
+      <div class="label">רקעים</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">1093</div>
+      <div class="label">טסטים (עוברים)</div>
+    </div>
+  </div>
+
+  <div class="highlight green">
+    <strong>מה הושלם באיטרציה הזו:</strong>
+    <ul style="margin-top:8px; padding-right:20px;">
+      <li>קולות V3 עם <code>language_code: 'he'</code> - עברית אותנטית יותר</li>
+      <li>ניתוח Gemini Vision לכל דמות (60KB מסמך מפורט)</li>
+      <li>הגדרת חיבור Suno ישיר (Playwright) - בלי תשלום כפול!</li>
+      <li>גיבוי V1 ו-V2 בתיקיות משנה</li>
+      <li>סקריפט generate-voices-v3.mjs מוכן להרצה חוזרת</li>
+    </ul>
+  </div>
+
+  <div class="highlight orange">
+    <strong>מה נשאר לעשות:</strong>
+    <ul style="margin-top:8px; padding-right:20px;">
+      <li>קולות - עדיין צריך שיפור (ElevenLabs מוגבל בעברית)</li>
+      <li>3 שירים חסרים (Practice Mode, Victory, Character Unlock)</li>
+      <li>מודל שיטס - חסרים הבעות פנים, פוזות, סקינים</li>
+      <li>דמויות בתפריטים - רקעים גדולים עם דמויות</li>
+      <li>הנפשה תמידית - idle animations לכל דמות</li>
+      <li>UI כמו משחק אמיתי - כפתורים, אנימציות, צלילים</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Voices V3 -->
+<section id="voices">
+  <h2><span class="icon">🎤</span> קולות V3 - שיפור עברית</h2>
+
+  <div class="highlight purple">
+    <strong>שיפורים מרכזיים ב-V3:</strong>
+    <table style="margin-top:10px;">
+      <tr><th>פרמטר</th><th>V2</th><th>V3</th><th>למה</th></tr>
+      <tr><td>language_code</td><td>לא היה</td><td><code>he</code></td><td>מכריח עיבוד פונטי עברי</td></tr>
+      <tr><td>stability</td><td>0.18-0.70</td><td>0.25-0.85</td><td>שומר על קדנציה עברית</td></tr>
+      <tr><td>similarity_boost</td><td>0.65-0.85</td><td>0.82-0.95</td><td>שומר על גרוניות (ר,ח,ע)</td></tr>
+      <tr><td>style</td><td>לא בשימוש</td><td>0.30-0.90</td><td>ביטויים לפי דמות</td></tr>
+      <tr><td>speaker_boost</td><td>כבוי</td><td>דלוק</td><td>ביטוי עברי ברור יותר</td></tr>
+    </table>
+  </div>
+
+  <h3>גיבורים (ילדים 9-12)</h3>
+
+  <div class="audio-row">
+    <span class="label">קי - גילוי</span>
+    <span class="version">V3 | Will</span>
+    <audio controls preload="none" src="../public/audio/voices/ki/ki-discovery.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">קי - צוות</span>
+    <span class="version">V3 | Will</span>
+    <audio controls preload="none" src="../public/audio/voices/ki/ki-team.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">קי - ניצחון</span>
+    <span class="version">V3 | Will</span>
+    <audio controls preload="none" src="../public/audio/voices/ki/ki-victory.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">קי - גמר</span>
+    <span class="version">V3 | Will</span>
+    <audio controls preload="none" src="../public/audio/voices/ki/ki-final.mp3"></audio>
+  </div>
+
+  <div class="audio-row">
+    <span class="label">מיקה - היכרות</span>
+    <span class="version">V3 | Sarah</span>
+    <audio controls preload="none" src="../public/audio/voices/mika/mika-intro.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">מיקה - קרב</span>
+    <span class="version">V3 | Sarah</span>
+    <audio controls preload="none" src="../public/audio/voices/mika/mika-fight.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">מיקה - פריצה</span>
+    <span class="version">V3 | Sarah</span>
+    <audio controls preload="none" src="../public/audio/voices/mika/mika-hack.mp3"></audio>
+  </div>
+
+  <div class="audio-row">
+    <span class="label">יוקי - אתגר</span>
+    <span class="version">V3 | Aria</span>
+    <audio controls preload="none" src="../public/audio/voices/yuki/yuki-challenge.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">לונה - נשימה</span>
+    <span class="version">V3 | Charlotte</span>
+    <audio controls preload="none" src="../public/audio/voices/luna/luna-breathe.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">נועה - ריפוי</span>
+    <span class="version">V3 | Alice</span>
+    <audio controls preload="none" src="../public/audio/voices/noa/noa-heal.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">קאי - קרב</span>
+    <span class="version">V3 | George</span>
+    <audio controls preload="none" src="../public/audio/voices/kai/kai-fight.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">רקס - משחק</span>
+    <span class="version">V3 | Daniel + pitch</span>
+    <audio controls preload="none" src="../public/audio/voices/rex/rex-play.mp3"></audio>
+  </div>
+
+  <h3>סנסיי זן (לא השתנה - מאושר!)</h3>
+  <div class="audio-row">
+    <span class="label">סנסיי - סבלנות</span>
+    <span class="version">מקורי</span>
+    <audio controls preload="none" src="../public/audio/voices/sensei-zen/sensei-patience.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">סנסיי - מסע</span>
+    <span class="version">מקורי</span>
+    <audio controls preload="none" src="../public/audio/voices/sensei-zen/sensei-journey.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">סנסיי - סיום</span>
+    <span class="version">מקורי</span>
+    <audio controls preload="none" src="../public/audio/voices/sensei-zen/sensei-final.mp3"></audio>
+  </div>
+
+  <h3>נבלים (עם אפקטים)</h3>
+  <div class="audio-row">
+    <span class="label">באג - שיבוש</span>
+    <span class="version">V3 | Liam + pitch + echo</span>
+    <audio controls preload="none" src="../public/audio/voices/bug/bug-scramble.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">באג - בוס</span>
+    <span class="version">V3 | Liam + pitch + echo</span>
+    <audio controls preload="none" src="../public/audio/voices/bug/bug-boss.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">באג - מלך</span>
+    <span class="version">V3 | Callum + echo</span>
+    <audio controls preload="none" src="../public/audio/voices/bug/bug-king.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">באג - תבוסה</span>
+    <span class="version">V3 | Liam + pitch + echo</span>
+    <audio controls preload="none" src="../public/audio/voices/bug/bug-defeat.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">גליץ' - היכרות</span>
+    <span class="version">V3 | Aria + tremolo</span>
+    <audio controls preload="none" src="../public/audio/voices/glitch/glitch-intro.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">גליץ' - גאולה</span>
+    <span class="version">V3 | Aria + tremolo</span>
+    <audio controls preload="none" src="../public/audio/voices/glitch/glitch-redemption.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">גליץ' - תודה</span>
+    <span class="version">V3 | Aria + tremolo</span>
+    <audio controls preload="none" src="../public/audio/voices/glitch/glitch-thanks.mp3"></audio>
+  </div>
+
+  <h3>ניתוח Gemini Vision</h3>
+  <div class="highlight yellow">
+    <strong>מה Gemini אמר:</strong>
+    <p style="margin-top:8px;">ג'מיני ניתח את כל תמונות המודל שיטס ויצר המלצות קול מפורטות עבור כל דמות. הניתוח כולל:</p>
+    <ul style="padding-right:20px; margin-top:8px;">
+      <li>גובה קול (pitch) - לפי גיל ואופי</li>
+      <li>רמת אנרגיה - לפי אישיות</li>
+      <li>מהירות דיבור - לפי סגנון דמות</li>
+      <li>דפוסי דיבור ישראליים - ר' גרונית, ח' חזקה, ע' גרונית</li>
+      <li>הגדרות ElevenLabs ספציפיות (stability, similarity, speed, style)</li>
+    </ul>
+    <p style="margin-top:8px;"><strong>קובץ מלא:</strong> <code>public/audio/voices/_gemini-voice-analysis.md</code> (60KB)</p>
+  </div>
+</section>
+
+<!-- Suno Direct Connection -->
+<section id="suno">
+  <h2><span class="icon">🎵</span> חיבור Suno ישיר</h2>
+
+  <div class="highlight green">
+    <strong>נפתר! אין יותר תשלום כפול</strong>
+    <p style="margin-top:8px;">במקום sunoapi.org (פרוקסי צד שלישי שגובה בנפרד), מותקן עכשיו <strong>suno-mcp-direct</strong> - חיבור ישיר לחשבון Suno שלך דרך Playwright.</p>
+  </div>
+
+  <div class="card">
+    <h4>מה שהיה (sunoapi.org)</h4>
+    <ul style="padding-right:20px; color: var(--accent-red);">
+      <li>פרוקסי צד שלישי עם מערכת קרדיטים נפרדת</li>
+      <li>עלות נוספת מעבר למנוי Suno</li>
+      <li>נגמרו הקרדיטים אחרי 2 שירים</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>מה שיש עכשיו (suno-mcp-direct)</h4>
+    <ul style="padding-right:20px; color: var(--success);">
+      <li>חיבור ישיר לחשבון Suno שלך</li>
+      <li>משתמש ב-Playwright לאוטומציה של הדפדפן</li>
+      <li>ללא עלות נוספת - רק המנוי הרגיל</li>
+      <li>6 כלים בסיסיים: open, login, generate, download, status, close</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>מה צריך לעשות</h4>
+    <ol style="padding-right:20px;">
+      <li>ב-Session הבא של Claude Code, ה-MCP ייטען אוטומטית</li>
+      <li>תספק אימייל+סיסמה של Suno כשתרצה ליצור שיר</li>
+      <li>Playwright יפתח דפדפן, יתחבר, וייצר את השיר ישירות</li>
+    </ol>
+    <p style="margin-top:10px; color: var(--text-dim); font-size:13px;">
+      <strong>מיקום:</strong> <code>C:\Users\eladj\suno-mcp-direct</code><br>
+      <strong>הגדרה:</strong> <code>~/.claude/.mcp.json</code> → suno entry
+    </p>
+  </div>
+
+  <h3>שירים קיימים</h3>
+  <div class="audio-row">
+    <span class="label">Main Theme V1</span>
+    <span class="version">3:33 | Chiptune</span>
+    <audio controls preload="none" src="../public/audio/music/main-theme.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">Main Theme V2</span>
+    <span class="version">3:37 | Chiptune</span>
+    <audio controls preload="none" src="../public/audio/music/main-theme-v2.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">Boss Battle V1</span>
+    <span class="version">4:52 | Orchestral</span>
+    <audio controls preload="none" src="../public/audio/music/boss-battle.mp3"></audio>
+  </div>
+  <div class="audio-row">
+    <span class="label">Boss Battle V2</span>
+    <span class="version">3:49 | Orchestral</span>
+    <audio controls preload="none" src="../public/audio/music/boss-battle-v2.mp3"></audio>
+  </div>
+
+  <h4>שירים חסרים (ייוצרו עם חיבור Suno ישיר)</h4>
+  <table>
+    <tr><th>שיר</th><th>סגנון</th><th>שימוש</th><th>סטטוס</th></tr>
+    <tr><td>Practice Mode</td><td>Lo-fi, ambient chiptune</td><td>רקע בתרגול</td><td><span class="badge badge-todo">ממתין</span></td></tr>
+    <tr><td>Victory Fanfare</td><td>Triumphant, 8-bit orchestra</td><td>סיום שיעור מוצלח</td><td><span class="badge badge-todo">ממתין</span></td></tr>
+    <tr><td>Character Unlock</td><td>Magical chime, exciting</td><td>פתיחת דמות חדשה</td><td><span class="badge badge-todo">ממתין</span></td></tr>
+  </table>
+</section>
+
+<!-- Post-Narrative Content -->
+<section id="post-narrative">
+  <h2><span class="icon">🏆</span> מה קורה אחרי 20 השיעורים?</h2>
+
+  <div class="highlight purple">
+    <strong>הנרטיב מסתיים - המשחק ממשיך!</strong>
+    <p style="margin-top:8px;">אחרי שהשחקן מסיים את 20 השיעורים ומביס את באג בגמר הגדול, נפתח עולם שלם של תוכן מתמשך.</p>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4 style="color:var(--accent-red);">Boss Rush Mode</h4>
+      <p>קרב בוסים ברצף! כל הבוסים מהסיפור, אחד אחרי השני, עם טיימר. טבלת שיאים עולמית.</p>
+      <ul style="padding-right:16px; font-size:14px; color:var(--text-dim);">
+        <li>באג מערכה 1 → באג מערכה 2 → באג מערכה 3 → גליץ'</li>
+        <li>מצב "Nightmare" - בלי טעויות!</li>
+        <li>פרסים: סקינים בלעדיים</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 style="color:var(--accent-yellow);">אירועים עונתיים</h4>
+      <p>כל חודש אירוע מיוחד עם סקינים, אתגרים ותגמולים בלעדיים.</p>
+      <ul style="padding-right:16px; font-size:14px; color:var(--text-dim);">
+        <li>פסטיבל הנינג'ה הקיצי (יולי-אוגוסט)</li>
+        <li>ליל כל באגים - Halloween (אוקטובר)</li>
+        <li>מרתון הקלדה של חנוכה (דצמבר)</li>
+        <li>טורניר פורים - תחפושות לדמויות (מרץ)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 style="color:var(--secondary);">אתגרים שבועיים</h4>
+      <p>3 אתגרים חדשים כל שבוע עם מכפילי XP.</p>
+      <ul style="padding-right:16px; font-size:14px; color:var(--text-dim);">
+        <li>אתגר מהירות: 60 מ"ד בדקה</li>
+        <li>אתגר דיוק: 99% ללא שגיאות</li>
+        <li>אתגר סיבולת: 30 דקות ברצף</li>
+        <li>אתגר דמות: שחק כ-[דמות] למשך שבוע</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 style="color:var(--primary);">מומחיות דמות</h4>
+      <p>לכל דמות 100 רמות מומחיות עם יכולות ייחודיות.</p>
+      <ul style="padding-right:16px; font-size:14px; color:var(--text-dim);">
+        <li>רמה 10: סקין ראשון</li>
+        <li>רמה 25: אפקט מיוחד</li>
+        <li>רמה 50: כותרת ייחודית</li>
+        <li>רמה 100: סקין אגדי + אנימציה</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 style="color:var(--accent-blue);">קרבות קהילתיים</h4>
+      <p>כיתה מול כיתה! תחרויות הקלדה בזמן אמת.</p>
+      <ul style="padding-right:16px; font-size:14px; color:var(--text-dim);">
+        <li>טורניר כיתתי שבועי</li>
+        <li>טבלת הובלה בית-ספרית</li>
+        <li>גביע בין-בתי-ספר חודשי</li>
+        <li>פרסי כבוד לכיתה מנצחת</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 style="color:var(--accent-pink);">תרגול אינסופי</h4>
+      <p>אתגרי הקלדה שנוצרים אוטומטית ברמת קושי עולה.</p>
+      <ul style="padding-right:16px; font-size:14px; color:var(--text-dim);">
+        <li>טקסטים מותאמים לרמה</li>
+        <li>ז'אנרים: סיפור, מדע, חדשות, שירה</li>
+        <li>קומבו streaks למומנטום</li>
+        <li>שיאים אישיים ועולמיים</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 style="color:var(--accent-orange);">הישגים (100+)</h4>
+      <p>מערכת הישגים ענקית שחוצה את כל מצבי המשחק.</p>
+      <ul style="padding-right:16px; font-size:14px; color:var(--text-dim);">
+        <li>הישגי מהירות: "נינג'ה הבזק" (80+ מ"ד)</li>
+        <li>הישגי דיוק: "מושלם" (100% בשיעור)</li>
+        <li>הישגי התמדה: "לוחם יום-יומי" (30 ימים ברצף)</li>
+        <li>הישגי סיפור: "מביס באגים" (ניצחון בכל בוסים)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 style="color:var(--accent-yellow);">הדוג'ו של סנסיי זן</h4>
+      <p>אימון מתקדם - טכניקות עיוורות, שיאי מהירות, אימון חצי-עיוור.</p>
+      <ul style="padding-right:16px; font-size:14px; color:var(--text-dim);">
+        <li>הקלדה עיוורת מלאה</li>
+        <li>אימון 10 אצבעות מתקדם</li>
+        <li>קיצורי מקלדת מתקדמים</li>
+        <li>תחרויות מהירות עם סנסיי</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h4 style="color:var(--secondary);">סיפורי דמויות</h4>
+      <p>פרקי רקע נפתחים עבור כל דמות. 14 סיפורים קצרים.</p>
+      <ul style="padding-right:16px; font-size:14px; color:var(--text-dim);">
+        <li>איך קי הפך לנינג'ה</li>
+        <li>מיקה והמחשב הראשון</li>
+        <li>באג לפני שהפך לנבל</li>
+        <li>נפתחים ברמות מומחיות</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Art Plan -->
+<section id="art-plan">
+  <h2><span class="icon">🎨</span> תוכנית אמנות מלאה</h2>
+
+  <div class="highlight purple">
+    <strong>לכל דמות צריך הרבה יותר מ-model sheet אחד!</strong>
+    <p style="margin-top:8px;">להלן הרשימה המלאה של נכסים ויזואליים נדרשים עבור כל 14 הדמויות.</p>
+  </div>
+
+  <h3>מטריצת נכסים לכל דמות</h3>
+  <table>
+    <tr>
+      <th>נכס</th>
+      <th>תיאור</th>
+      <th>גודל</th>
+      <th>קי</th><th>מיקה</th><th>יוקי</th><th>לונה</th><th>נועה</th><th>קאי</th>
+      <th>סנסיי</th><th>פיקסל</th><th>רקס</th><th>שאדו</th><th>סטורם</th><th>בלייז</th>
+      <th>באג</th><th>גליץ'</th>
+    </tr>
+    <tr>
+      <td>Model Sheet</td><td>חזית/צד/גב</td><td>1024px</td>
+      <td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td>
+      <td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td>
+      <td>❌</td><td>❌</td>
+    </tr>
+    <tr>
+      <td>Expression Sheet</td><td>8 הבעות פנים</td><td>512px</td>
+      <td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td>
+      <td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td>
+      <td>❌</td><td>❌</td>
+    </tr>
+    <tr>
+      <td>Pose Sheet</td><td>7 תנוחות</td><td>512px</td>
+      <td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td>
+      <td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td>
+      <td>❌</td><td>❌</td>
+    </tr>
+    <tr>
+      <td>Mini Avatar</td><td>אייקון UI</td><td>48px</td>
+      <td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td>
+      <td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td>
+      <td>❌</td><td>❌</td>
+    </tr>
+    <tr>
+      <td>Full Portrait</td><td>תפריטים</td><td>256px</td>
+      <td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td>
+      <td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td>
+      <td>❌</td><td>❌</td>
+    </tr>
+    <tr>
+      <td>Battle Stance</td><td>תנוחת קרב</td><td>512px</td>
+      <td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td>
+      <td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td>
+      <td>❌</td><td>❌</td>
+    </tr>
+    <tr>
+      <td>Victory Pose</td><td>ניצחון</td><td>512px</td>
+      <td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td>
+      <td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td>
+      <td>❌</td><td>❌</td>
+    </tr>
+    <tr>
+      <td>Companion</td><td>דמות קטנה צפה</td><td>64px</td>
+      <td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td>
+      <td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td>
+      <td>❌</td><td>❌</td>
+    </tr>
+    <tr>
+      <td>Summer Skin</td><td>סקין קיץ</td><td>512px</td>
+      <td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td>
+      <td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td>
+      <td>❌</td><td>❌</td>
+    </tr>
+  </table>
+  <p style="margin-top:10px; color: var(--text-dim); font-size:13px;">
+    <strong>סה"כ נכסים נדרשים:</strong> 14 דמויות × 9 סוגים = <strong style="color:var(--accent-red);">126 נכסים</strong> (12 מושלמים, 114 חסרים)
+  </p>
+
+  <div class="progress-bar">
+    <div class="progress-fill green" style="width: 9.5%"></div>
+  </div>
+  <p style="font-size:13px; color:var(--text-dim);">12/126 נכסים (9.5%)</p>
+
+  <h3>רקעים נדרשים</h3>
+  <table>
+    <tr><th>רקע</th><th>שימוש</th><th>סגנון</th><th>סטטוס</th></tr>
+    <tr><td>בית - Menu BG</td><td>דף הבית</td><td>קי במרכז, עם שדה כוכבים ניאון</td><td><span class="badge badge-todo">חסר</span></td></tr>
+    <tr><td>שיעורים - Menu BG</td><td>דף שיעורים</td><td>סנסיי זן גדול בצד, דוג'ו</td><td><span class="badge badge-todo">חסר</span></td></tr>
+    <tr><td>קרב - Menu BG</td><td>דף קרב</td><td>זירה עם VS splash</td><td><span class="badge badge-todo">חסר</span></td></tr>
+    <tr><td>התקדמות - Menu BG</td><td>דף התקדמות</td><td>עץ שרשומות עם דמויות</td><td><span class="badge badge-todo">חסר</span></td></tr>
+    <tr><td>משחקים - Menu BG</td><td>דף משחקים</td><td>רקס ושאר דמויות במשחק</td><td><span class="badge badge-todo">חסר</span></td></tr>
+    <tr><td>פרופיל - Menu BG</td><td>דף פרופיל</td><td>שלט הישגים אישי</td><td><span class="badge badge-todo">חסר</span></td></tr>
+    <tr><td>שתיל (6-8)</td><td>עולם גיל</td><td>גן פלאות צבעוני</td><td>✅ קיים</td></tr>
+    <tr><td>נבט (8-10)</td><td>עולם גיל</td><td>יער הרפתקאות</td><td>✅ קיים</td></tr>
+    <tr><td>גזע (10-12)</td><td>עולם גיל</td><td>עיר ניאון עתידנית</td><td>✅ קיים</td></tr>
+    <tr><td>ענף (12-14)</td><td>עולם גיל</td><td>מרחב דיגיטלי</td><td>✅ קיים</td></tr>
+    <tr><td>צמרת (14-16)</td><td>עולם גיל</td><td>סטודיו מקצועי מודרני</td><td>✅ קיים</td></tr>
+    <tr><td>זירת קרב - קלה</td><td>Battle Easy</td><td>שאדו בצללים</td><td><span class="badge badge-todo">חסר</span></td></tr>
+    <tr><td>זירת קרב - בינונית</td><td>Battle Medium</td><td>סטורם עם ברקים</td><td><span class="badge badge-todo">חסר</span></td></tr>
+    <tr><td>זירת קרב - קשה</td><td>Battle Hard</td><td>בלייז עם אש</td><td><span class="badge badge-todo">חסר</span></td></tr>
+    <tr><td>בוס - באג מערכה 1</td><td>Boss Battle</td><td>חדר שרתים חשוך</td><td><span class="badge badge-todo">חסר</span></td></tr>
+    <tr><td>בוס - באג מערכה 2</td><td>Boss Battle</td><td>מפעל באגים</td><td><span class="badge badge-todo">חסר</span></td></tr>
+    <tr><td>בוס - באג מערכה 3</td><td>Boss Battle</td><td>ארמון באג הענק</td><td><span class="badge badge-todo">חסר</span></td></tr>
+    <tr><td>בוס - גליץ'</td><td>Boss Battle</td><td>מטריקס דיגיטלי מתמוסס</td><td><span class="badge badge-todo">חסר</span></td></tr>
+  </table>
+  <p style="margin-top:10px; color: var(--text-dim); font-size:13px;">
+    <strong>סה"כ רקעים:</strong> 18 (5 קיימים, <strong style="color:var(--accent-red);">13 חסרים</strong>)
+  </p>
+</section>
+
+<!-- Characters in Menus -->
+<section id="characters-in-menus">
+  <h2><span class="icon">🖼️</span> דמויות גדולות בתפריטים</h2>
+
+  <div class="highlight yellow">
+    <strong>עיקרון מפתח:</strong> הדמויות לא צריכות להיות בועות קטנות - הן צריכות לתפוס מקום משמעותי ברקע התפריטים, כמו ב-Brawl Stars!
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4 style="color:var(--primary);">🏠 דף הבית</h4>
+      <p><strong>דמות:</strong> קי (מרכז)</p>
+      <p>קי מופיע גדול במרכז עם ברכה יומית. אנימציית idle - נשימה, מצמוץ, תנועת סרט ראש.</p>
+      <p style="font-size:13px; color:var(--text-dim);">גודל: 40% מגובה המסך</p>
+    </div>
+
+    <div class="card">
+      <h4 style="color:var(--secondary);">📚 דף שיעורים</h4>
+      <p><strong>דמות:</strong> סנסיי זן (צד ימין)</p>
+      <p>סנסיי זן גדול בצד ימין, יושב במנוחה. הדמות של השיעור הנוכחי מופיעה ליד הכרטיסייה.</p>
+      <p style="font-size:13px; color:var(--text-dim);">גודל: 35% מגובה המסך</p>
+    </div>
+
+    <div class="card">
+      <h4 style="color:var(--accent-red);">⚔️ דף קרב</h4>
+      <p><strong>דמות:</strong> שחקן VS יריב</p>
+      <p>דמות השחקן מצד ימין, דמות היריב משמאל, "VS" גדול במרכז עם אפקט splash.</p>
+      <p style="font-size:13px; color:var(--text-dim);">גודל: 50% מגובה המסך</p>
+    </div>
+
+    <div class="card">
+      <h4 style="color:var(--accent-yellow);">📈 דף התקדמות</h4>
+      <p><strong>דמות:</strong> קי (גדל!)</p>
+      <p>ויזואליזציה של צמיחה - קי קטן (רמה 1) עד קי גדול (רמה מקסימלית). מראה את ההתקדמות בפועל.</p>
+      <p style="font-size:13px; color:var(--text-dim);">גודל: דינמי לפי רמה</p>
+    </div>
+
+    <div class="card">
+      <h4 style="color:var(--accent-pink);">🎮 דף משחקים</h4>
+      <p><strong>דמויות:</strong> רקס + חברים</p>
+      <p>רקס הדינוזאור במרכז, מוקף בדמויות במצבים שובבים. סידור אסימטרי, הרבה אנרגיה.</p>
+      <p style="font-size:13px; color:var(--text-dim);">גודל: 30% + קבוצתי</p>
+    </div>
+
+    <div class="card">
+      <h4 style="color:var(--accent-blue);">⚙️ דף הגדרות</h4>
+      <p><strong>דמות:</strong> פיקסל (רובוט)</p>
+      <p>פיקסל הרובוט כעוזר הגדרות. מגיב לשינויים (שמחה כששומרים, חושב כשמעדכנים).</p>
+      <p style="font-size:13px; color:var(--text-dim);">גודל: 25% מגובה המסך</p>
+    </div>
+  </div>
+</section>
+
+<!-- Animation -->
+<section id="animation">
+  <h2><span class="icon">✨</span> הנפשה תמידית</h2>
+
+  <div class="highlight green">
+    <strong>הדמויות תמיד מונפשות!</strong> עם אפשרות למשתמש לבחור רמת גרפיקה.
+  </div>
+
+  <h3>רמות גרפיקה</h3>
+  <table>
+    <tr><th>רמה</th><th>תיאור</th><th>אנימציות</th><th>ביצועים</th></tr>
+    <tr>
+      <td><span class="badge badge-done">גבוהה</span></td>
+      <td>כל האנימציות + אפקטים</td>
+      <td>idle, hover, click, particles, glow</td>
+      <td>60 FPS, GPU מלא</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-progress">בינונית</span></td>
+      <td>אנימציות בסיסיות</td>
+      <td>idle, hover, click</td>
+      <td>30 FPS, GPU קל</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-todo">נמוכה</span></td>
+      <td>מינימליסטית</td>
+      <td>idle בלבד (נשימה)</td>
+      <td>CSS בלבד, ללא JS</td>
+    </tr>
+  </table>
+
+  <h3>סוגי אנימציה לכל דמות</h3>
+  <table>
+    <tr><th>אנימציה</th><th>תיאור</th><th>טכנולוגיה</th><th>משך</th></tr>
+    <tr><td>Idle - נשימה</td><td>תנועת גוף עדינה למעלה/למטה</td><td>CSS transform: translateY</td><td>3s loop</td></tr>
+    <tr><td>Idle - מצמוץ</td><td>מצמוץ עיניים רנדומלי</td><td>CSS opacity + scaleY</td><td>150ms כל 4-8s</td></tr>
+    <tr><td>Idle - סרט ראש</td><td>תנועת סרט ראש ברוח (קי)</td><td>CSS transform: rotate</td><td>2s loop</td></tr>
+    <tr><td>Hover - התרגשות</td><td>קפיצה קלה + הגדלה</td><td>Framer Motion scale</td><td>200ms</td></tr>
+    <tr><td>Click - פעולה</td><td>תנוחת התקפה/שמחה</td><td>Framer Motion variants</td><td>300ms</td></tr>
+    <tr><td>Enter - כניסה</td><td>slide + fade in</td><td>Framer Motion AnimatePresence</td><td>400ms</td></tr>
+    <tr><td>Exit - יציאה</td><td>slide + fade out</td><td>Framer Motion AnimatePresence</td><td>300ms</td></tr>
+    <tr><td>Particles</td><td>ניצוצות, כוכבים (רמה גבוהה)</td><td>CSS @keyframes</td><td>continuous</td></tr>
+  </table>
+
+  <div class="highlight purple">
+    <strong>כלל טכני:</strong> כל האנימציות משתמשות אך ורק ב-<code>transform</code> ו-<code>opacity</code>.
+    אף פעם לא מנפישים width/height/top/left. Framer Motion לאינטראקטיביות, CSS keyframes ל-idle.
+  </div>
+</section>
+
+<!-- UI Research -->
+<section id="ui-research">
+  <h2><span class="icon">🎮</span> מחקר UI - דפוסי משחק</h2>
+
+  <div class="highlight purple">
+    <strong>מקורות השראה:</strong> Brawl Stars, Clash Royale, Duolingo, Among Us
+  </div>
+
+  <h3>כפתורים בסגנון Brawl Stars</h3>
+  <div class="card">
+    <p>ב-Brawl Stars, כל כפתור הוא יצירה:</p>
+    <ul style="padding-right:20px;">
+      <li><strong>צורות א-סימטריות</strong> - לא מלבנים רגילים, אלא צורות מעוגלות עם פינות מוטות</li>
+      <li><strong>גרדיאנטים</strong> - מעבר צבע מלמעלה ללמטה (בהיר→כהה)</li>
+      <li><strong>גלואו</strong> - זוהר סביב הכפתור בצבע הדומיננטי</li>
+      <li><strong>עומק 3D</strong> - צל כהה בתחתית יוצר תחושת לחצן בולט</li>
+      <li><strong>אנימציית לחיצה</strong> - הכפתור "נדחק" למטה ומחזיר ב-bounce</li>
+      <li><strong>צליל</strong> - כל כפתור מפיק צליל ייחודי</li>
+    </ul>
+  </div>
+
+  <h3>חגיגות כמו Duolingo</h3>
+  <div class="card">
+    <ul style="padding-right:20px;">
+      <li><strong>Confetti burst</strong> בסיום שיעור מוצלח</li>
+      <li><strong>XP float</strong> - מספר XP צף למעלה ונעלם</li>
+      <li><strong>Character reaction</strong> - דמות קופצת/שמחה</li>
+      <li><strong>Streak animation</strong> - אש streak כשיש רצף ימים</li>
+      <li><strong>Star rating</strong> - כוכבים נכנסים אחד אחד עם סאונד</li>
+      <li><strong>Progress bar fill</strong> - מילוי אנימטי עם גרדיאנט זוהר</li>
+    </ul>
+  </div>
+
+  <h3>ניווט בסגנון Clash Royale</h3>
+  <div class="card">
+    <ul style="padding-right:20px;">
+      <li><strong>Tab bar עם bouncing icons</strong> - אייקון קופץ כשנבחר</li>
+      <li><strong>Card flip</strong> - כרטיסיות מתהפכות לחשוף תוכן</li>
+      <li><strong>Chest opening</strong> - אנימציה של פתיחת תיבה (לפתיחת דמות/הישג)</li>
+      <li><strong>Trophy counter</strong> - מונה גביעים עם אנימציה של עלייה</li>
+    </ul>
+  </div>
+
+  <h3>המלצות ליישום</h3>
+  <div class="card-grid">
+    <div class="card">
+      <h4>כפתורים</h4>
+      <p style="font-size:13px;">צורות א-סימטריות עם clip-path, גרדיאנט, glow, press effect. כל כפתור עם צליל ייחודי.</p>
+    </div>
+    <div class="card">
+      <h4>ניווט</h4>
+      <p style="font-size:13px;">Tab bar עם spring bounce, דמות קטנה ליד הטאב הנבחר, navigate sound.</p>
+    </div>
+    <div class="card">
+      <h4>חגיגות</h4>
+      <p style="font-size:13px;">Confetti + XP float + character reaction + star rating animation + progress fill.</p>
+    </div>
+    <div class="card">
+      <h4>הגדרות כפולות</h4>
+      <p style="font-size:13px;">Tab "תלמיד" (גרפיקה, סאונד, דמות) + Tab "מורה/הורה" (נתונים, הגבלות, דוחות).</p>
+    </div>
+  </div>
+</section>
+
+<!-- Voice Cloning -->
+<section id="voice-cloning">
+  <h2><span class="icon">🎙️</span> שיבוט קול - אפשרויות</h2>
+
+  <div class="highlight yellow">
+    <strong>אלעד הוא מדובב מקצועי!</strong> יש כאן הזדמנות ייחודית.
+  </div>
+
+  <div class="card">
+    <h4>אפשרות 1: ElevenLabs Voice Cloning</h4>
+    <ul style="padding-right:20px;">
+      <li>הקלט דוגמה של 30 שניות לכל דמות</li>
+      <li>ElevenLabs ישכפל את הקול וייצור וריאציות</li>
+      <li>דורש Creator tier plan ($22/חודש)</li>
+      <li><strong>יתרון:</strong> שליטה מלאה על הקול</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>אפשרות 2: קולות קהילתיים בעברית</h4>
+    <ul style="padding-right:20px;">
+      <li>יש 200+ קולות בעברית ב-ElevenLabs Voice Library</li>
+      <li>דורש Creator tier plan</li>
+      <li><strong>יתרון:</strong> מהיר, ללא הקלטה</li>
+      <li><strong>חסרון:</strong> פחות שליטה</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>אפשרות 3: הקלטה ידנית</h4>
+    <ul style="padding-right:20px;">
+      <li>אלעד מקליט את כל 14 הדמויות בעצמו</li>
+      <li>22 קווי קול × ממוצע 5 שניות = ~2 דקות סה"כ</li>
+      <li><strong>יתרון:</strong> הכי אותנטי, חינם, מיידי</li>
+      <li><strong>חסרון:</strong> צריך זמן הקלטה</li>
+    </ul>
+  </div>
+
+  <div class="highlight green">
+    <strong>המלצה:</strong> אפשרות 3 (הקלטה ידנית) + ElevenLabs post-processing לאפקטים (Bug echo, Glitch tremolo).
+    אלעד מדובב מקצועי - הקולות שלו יהיו הכי טובים!
+  </div>
+</section>
+
+<!-- Music -->
+<section id="music">
+  <h2><span class="icon">🎵</span> מוזיקה - סטטוס ותוכנית</h2>
+
+  <table>
+    <tr><th>שיר</th><th>סטטוס</th><th>אורך</th><th>סגנון</th></tr>
+    <tr><td>Main Theme</td><td><span class="badge badge-done">מוכן (2 גרסאות)</span></td><td>3:33 / 3:37</td><td>Chiptune 8-bit</td></tr>
+    <tr><td>Boss Battle</td><td><span class="badge badge-done">מוכן (2 גרסאות)</span></td><td>4:52 / 3:49</td><td>Orchestral Epic</td></tr>
+    <tr><td>Practice Mode</td><td><span class="badge badge-todo">ממתין ל-Suno</span></td><td>~3:00</td><td>Lo-fi ambient</td></tr>
+    <tr><td>Victory Fanfare</td><td><span class="badge badge-todo">ממתין ל-Suno</span></td><td>~0:15</td><td>Triumphant 8-bit</td></tr>
+    <tr><td>Character Unlock</td><td><span class="badge badge-todo">ממתין ל-Suno</span></td><td>~0:10</td><td>Magical chime</td></tr>
+  </table>
+
+  <div class="progress-bar">
+    <div class="progress-fill purple" style="width: 40%"></div>
+  </div>
+  <p style="font-size:13px; color:var(--text-dim);">2/5 שירים (40%)</p>
+</section>
+
+<!-- Next Steps -->
+<section id="next-steps">
+  <h2><span class="icon">🚀</span> צעדים הבאים</h2>
+
+  <div class="card">
+    <h4 style="color:var(--accent-red);">עדיפות גבוהה</h4>
+    <ol style="padding-right:20px;">
+      <li><strong>האזנה לקולות V3</strong> - האם language_code='he' שיפר את המבטא?</li>
+      <li><strong>החלטה על קולות</strong> - הקלטה ידנית / שיבוט / קהילתי?</li>
+      <li><strong>יצירת 3 שירים חסרים</strong> עם Suno ישיר</li>
+      <li><strong>יצירת Bug + Glitch model sheets</strong> (2 חסרים מ-14)</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h4 style="color:var(--accent-yellow);">עדיפות בינונית</h4>
+    <ol style="padding-right:20px;">
+      <li>יצירת Expression Sheets (8 הבעות × 14 דמויות)</li>
+      <li>יצירת רקעי תפריטים עם דמויות גדולות (6 רקעים)</li>
+      <li>מימוש idle animations (CSS keyframes)</li>
+      <li>עיצוב כפתורים בסגנון Brawl Stars</li>
+      <li>הוספת הגדרות גרפיקה (High/Medium/Low)</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h4 style="color:var(--text-dim);">עדיפות נמוכה</h4>
+    <ol style="padding-right:20px;">
+      <li>יצירת Pose Sheets (7 פוזות × 14 דמויות)</li>
+      <li>יצירת Seasonal Skins (4 סקינים × 14 דמויות)</li>
+      <li>מימוש מערכת פתיחת דמויות (Zustand store)</li>
+      <li>מימוש Boss Rush Mode</li>
+      <li>יצירת רקעי קרב בוסים (4 רקעים)</li>
+    </ol>
+  </div>
+
+  <div class="highlight green" style="margin-top:20px;">
+    <strong>קבצים לסקירה:</strong>
+    <ul style="padding-right:20px; margin-top:8px;">
+      <li><code>docs/game-bible-dashboard.html</code> - דשבורד תנ"ך המשחק (V1)</li>
+      <li><code>docs/iteration-review-v2.html</code> - המסמך הזה!</li>
+      <li><code>public/audio/voices/_gemini-voice-analysis.md</code> - ניתוח Gemini מפורט</li>
+      <li><code>public/audio/voices/VOICE-SETTINGS-V3.md</code> - הגדרות V3</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+
+<footer style="text-align:center; padding:40px 20px; color:var(--text-dim); font-size:13px; border-top:1px solid var(--border);">
+  נינג'ה מקלדת - סקירת איטרציה V2 | 5 במרץ 2026 | נוצר על ידי Claude Code
+</footer>
+
+</body>
+</html>
