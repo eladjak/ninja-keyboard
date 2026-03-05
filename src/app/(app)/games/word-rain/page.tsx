@@ -91,6 +91,9 @@ export default function WordRainPage() {
       const next = processInput(prev, value)
       if (next.wordsTyped > prev.wordsTyped) {
         soundManager.playCorrect()
+        if (next.combo >= 3 && next.combo > prev.combo) {
+          soundManager.playStreakFire()
+        }
       }
       return next
     })

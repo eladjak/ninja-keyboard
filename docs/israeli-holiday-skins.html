@@ -14,135 +14,80 @@
     --cyan:#00CEC9; --gold:#F9CA24; --text:#E8E6F0; --dim:#8B86A6;
     --glow:0 0 22px rgba(108,92,231,0.35);
   }
-  body { font-family:'Heebo',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; font-size:14px; }
-
+  body { font-family:'Heebo',sans-serif; background:var(--bg); color:var(--text); line-height:1.75; }
   nav {
     position:sticky; top:0; z-index:100;
-    background:rgba(13,11,26,0.97); backdrop-filter:blur(18px);
+    background:rgba(13,11,26,0.96); backdrop-filter:blur(18px);
     border-bottom:1px solid var(--border);
-    padding:8px 16px; display:flex; gap:4px; flex-wrap:wrap; align-items:center;
+    padding:10px 20px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;
   }
-  nav .logo { font-size:16px; font-weight:900; color:var(--purple); margin-left:10px; white-space:nowrap; }
-  nav a {
-    color:var(--dim); text-decoration:none; padding:4px 10px; border-radius:16px;
-    font-size:11px; font-weight:500; border:1px solid transparent; transition:all .15s;
-    white-space:nowrap;
-  }
+  nav .logo { font-size:17px; font-weight:900; color:var(--purple); margin-left:14px; }
+  nav a { color:var(--dim); text-decoration:none; padding:5px 12px; border-radius:18px;
+    font-size:12px; font-weight:500; border:1px solid transparent; transition:all .18s; }
   nav a:hover { color:var(--purple); background:rgba(108,92,231,0.1); border-color:rgba(108,92,231,0.3); }
-
-  .hero {
-    text-align:center; padding:48px 24px 32px;
-    background:linear-gradient(180deg,rgba(108,92,231,0.09) 0%,transparent 100%);
-  }
-  .hero h1 {
-    font-size:36px; font-weight:900;
+  .hero { text-align:center; padding:56px 24px 36px;
+    background:linear-gradient(180deg,rgba(108,92,231,0.09) 0%,transparent 100%); }
+  .hero h1 { font-size:40px; font-weight:900;
     background:linear-gradient(135deg,var(--purple),var(--green));
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:8px;
-  }
-  .hero p { color:var(--dim); font-size:15px; max-width:580px; margin:0 auto 16px; }
-  .hero .badge {
-    display:inline-block; padding:6px 18px;
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:10px; }
+  .hero p { color:var(--dim); font-size:17px; max-width:620px; margin:0 auto; }
+  .hero .badge { display:inline-block; margin-top:20px; padding:8px 20px;
     background:rgba(108,92,231,0.12); border:1px solid rgba(108,92,231,0.35);
-    border-radius:20px; font-size:12px; color:var(--purple); font-weight:700;
-  }
-
-  .section { max-width:1060px; margin:0 auto; padding:32px 20px 8px; }
-  .section-header {
-    display:flex; align-items:center; gap:12px;
-    margin-bottom:16px; padding-bottom:12px;
-    border-bottom:2px solid var(--border);
-  }
-  .section-header .emoji { font-size:30px; }
-  .section-header h2 { font-size:22px; font-weight:900; }
-  .section-header .sub { font-size:12px; color:var(--dim); margin-top:2px; }
-  .tag {
-    margin-right:auto; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:700;
-  }
-  .tag-joy { background:rgba(253,203,110,0.15); color:var(--orange); border:1px solid rgba(253,203,110,0.3); }
+    border-radius:24px; font-size:13px; color:var(--purple); font-weight:600; }
+  .section { max-width:1100px; margin:0 auto; padding:40px 20px; }
+  .section-header { display:flex; align-items:center; gap:14px; margin-bottom:28px;
+    padding-bottom:14px; border-bottom:1px solid var(--border); }
+  .section-header .emoji { font-size:36px; }
+  .section-header h2 { font-size:26px; font-weight:900; }
+  .section-header .sub { font-size:14px; color:var(--dim); margin-top:3px; }
+  .section-header .tag { margin-right:auto; padding:4px 12px; border-radius:14px; font-size:12px; font-weight:700; }
+  .tag-joy { background:rgba(249,202,36,0.15); color:var(--gold); border:1px solid rgba(249,202,36,0.3); }
   .tag-solemn { background:rgba(116,185,255,0.1); color:var(--blue); border:1px solid rgba(116,185,255,0.25); }
   .tag-hero { background:rgba(255,107,107,0.12); color:var(--red); border:1px solid rgba(255,107,107,0.28); }
   .tag-nature { background:rgba(0,184,148,0.12); color:var(--green); border:1px solid rgba(0,184,148,0.28); }
-  .tag-memorial { background:rgba(116,185,255,0.07); color:#a8c8f8; border:1px solid rgba(116,185,255,0.2); }
-
-  .holiday-meta {
-    display:flex; gap:16px; flex-wrap:wrap; margin-bottom:14px;
-    background:var(--card); border:1px solid var(--border); border-radius:10px;
-    padding:12px 16px; font-size:13px; color:var(--dim);
-  }
-  .holiday-meta span { display:flex; align-items:center; gap:5px; }
-  .holiday-meta strong { color:var(--text); }
-
-  /* SKIN TABLE */
-  .skin-table { width:100%; border-collapse:collapse; margin-bottom:16px; }
-  .skin-table th {
-    background:var(--elevated); color:var(--purple); font-size:12px; font-weight:700;
-    padding:8px 12px; border:1px solid var(--border); text-align:right;
-  }
-  .skin-table td {
-    padding:8px 12px; border:1px solid var(--border); background:var(--card);
-    font-size:13px; vertical-align:top; color:var(--text);
-  }
-  .skin-table tr:nth-child(even) td { background:rgba(19,16,42,0.7); }
-  .skin-table tr:hover td { background:rgba(108,92,231,0.06); }
-  .char { font-weight:700; white-space:nowrap; }
-  .swatches { display:flex; gap:4px; margin-top:4px; flex-wrap:wrap; }
-  .sw { width:14px; height:14px; border-radius:50%; border:1px solid rgba(255,255,255,0.2); display:inline-block; flex-shrink:0; }
-  .effect-tag {
-    display:inline-block; padding:2px 8px; border-radius:8px; font-size:11px; font-weight:600;
-    background:rgba(108,92,231,0.15); color:var(--purple); border:1px solid rgba(108,92,231,0.25);
-    white-space:nowrap;
-  }
-
-  .notice {
-    background:rgba(116,185,255,0.07); border:1px solid rgba(116,185,255,0.2);
-    border-radius:10px; padding:12px 16px; margin-bottom:16px;
-    font-size:13px; color:var(--blue); display:flex; gap:10px; align-items:flex-start;
-  }
-  .notice .icon { font-size:20px; flex-shrink:0; }
-
-  hr { border:none; border-top:1px solid var(--border); margin:8px 0 24px; }
-
-  /* UNLOCK TABLE */
-  .unlock-table { width:100%; border-collapse:collapse; margin-bottom:10px; }
-  .unlock-table th {
-    background:var(--elevated); color:var(--green); font-size:12px; font-weight:700;
-    padding:7px 12px; border:1px solid var(--border); text-align:right;
-  }
-  .unlock-table td {
-    padding:7px 12px; border:1px solid var(--border); background:var(--card);
-    font-size:12px; color:var(--dim); vertical-align:top;
-  }
-  .unlock-table tr:nth-child(even) td { background:rgba(19,16,42,0.7); }
-  .unlock-table td:first-child { color:var(--text); font-weight:600; }
-
-  /* HERO SKINS TABLE */
-  .hero-table { width:100%; border-collapse:collapse; margin-bottom:16px; }
-  .hero-table th {
-    background:var(--elevated); color:var(--red); font-size:12px; font-weight:700;
-    padding:8px 12px; border:1px solid var(--border); text-align:right;
-  }
-  .hero-table td {
-    padding:8px 12px; border:1px solid var(--border); background:var(--card);
-    font-size:13px; vertical-align:top; color:var(--text);
-  }
-  .hero-table tr:nth-child(even) td { background:rgba(19,16,42,0.7); }
-
-  footer {
-    text-align:center; padding:32px 20px; color:var(--dim); font-size:12px;
-    border-top:1px solid var(--border); margin-top:32px;
-  }
-  .toc-grid {
-    max-width:1060px; margin:0 auto; padding:0 20px 24px;
-    display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:8px;
-  }
-  .toc-card {
-    background:var(--card); border:1px solid var(--border); border-radius:10px;
-    padding:10px 14px; text-decoration:none; color:var(--text);
-    display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600;
-    transition:all .15s;
-  }
-  .toc-card:hover { background:var(--elevated); border-color:var(--purple); color:var(--purple); }
-  .toc-card .e { font-size:20px; }
+  .holiday-info { background:var(--card); border:1px solid var(--border); border-radius:14px;
+    padding:18px 22px; margin-bottom:22px; font-size:14px; color:var(--dim); line-height:1.8; }
+  .holiday-info strong { color:var(--text); }
+  .holiday-info .symbols { margin-top:8px; font-size:20px; letter-spacing:4px; }
+  .skin-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(245px,1fr)); gap:16px; margin-bottom:14px; }
+  .skin-card { background:var(--elevated); border:1px solid var(--border); border-radius:16px;
+    overflow:hidden; transition:transform .2s,box-shadow .2s; }
+  .skin-card:hover { transform:translateY(-4px); box-shadow:var(--glow); }
+  .skin-card .card-top { padding:18px 18px 14px; display:flex; align-items:flex-start; gap:12px; }
+  .avatar { width:54px; height:54px; border-radius:50%; display:flex; align-items:center;
+    justify-content:center; font-size:26px; flex-shrink:0; border:2px solid rgba(255,255,255,0.1); }
+  .char-name { font-size:17px; font-weight:700; }
+  .skin-name { font-size:12px; color:var(--dim); margin-top:2px; }
+  .card-body { padding:0 18px 16px; font-size:13px; color:var(--dim); line-height:1.75; }
+  .card-body p { margin-bottom:8px; }
+  .card-body strong { color:var(--text); }
+  .anim-tag { display:inline-block; margin-top:4px; padding:3px 10px; border-radius:10px;
+    font-size:11px; font-weight:600; background:rgba(108,92,231,0.15); color:var(--purple);
+    border:1px solid rgba(108,92,231,0.25); }
+  .card-footer { padding:10px 18px; border-top:1px solid var(--border);
+    font-size:11px; color:var(--dim); font-style:italic; }
+  .color-row { display:flex; gap:5px; margin-top:6px; flex-wrap:wrap; }
+  .swatch { width:18px; height:18px; border-radius:50%; border:1px solid rgba(255,255,255,0.15); display:inline-block; }
+  .notice { background:rgba(116,185,255,0.07); border:1px solid rgba(116,185,255,0.2);
+    border-radius:12px; padding:16px 20px; margin-bottom:24px;
+    font-size:13.5px; color:var(--blue); display:flex; gap:12px; align-items:flex-start; }
+  .notice .icon { font-size:22px; flex-shrink:0; }
+  .hero-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:16px; }
+  .hero-card { background:var(--elevated); border:1px solid var(--border); border-radius:16px;
+    padding:20px; transition:transform .2s,box-shadow .2s; }
+  .hero-card:hover { transform:translateY(-3px); box-shadow:var(--glow); }
+  .hero-card .hc-top { display:flex; align-items:center; gap:14px; margin-bottom:12px; }
+  .hero-card .hc-icon { font-size:38px; }
+  .hero-card .hc-title { font-size:18px; font-weight:800; }
+  .hero-card .hc-sub { font-size:12px; color:var(--dim); margin-top:2px; }
+  .hero-card .hc-body { font-size:13px; color:var(--dim); line-height:1.8; }
+  .hero-card .hc-body strong { color:var(--text); }
+  .char-list { margin-top:10px; display:flex; flex-wrap:wrap; gap:6px; }
+  .char-chip { padding:4px 12px; border-radius:12px; font-size:12px; font-weight:600;
+    background:rgba(108,92,231,0.12); border:1px solid rgba(108,92,231,0.25); color:var(--purple); }
+  hr.div { border:none; border-top:1px solid var(--border); margin:8px 0 28px; }
+  footer { text-align:center; padding:40px 20px; color:var(--dim); font-size:13px;
+    border-top:1px solid var(--border); margin-top:40px; }
 </style>
 </head>
 <body>
@@ -157,750 +102,923 @@
   <a href="#tu-bishvat">ט"ו בשבט</a>
   <a href="#purim">פורים</a>
   <a href="#pesach">פסח</a>
+  <a href="#yom-hashoah">יום השואה</a>
   <a href="#yom-hazikaron">יום הזיכרון</a>
   <a href="#yom-haatzmaut">יום העצמאות</a>
+  <a href="#yom-yerushalayim">יום ירושלים</a>
   <a href="#lag-baomer">ל"ג בעומר</a>
   <a href="#shavuot">שבועות</a>
   <a href="#real-heroes">גיבורי אמת</a>
-  <a href="#unlock">פתיחת סקינים</a>
 </nav>
-
 <div class="hero">
-  <h1>🇮🇱 סקינים לחגי ישראל</h1>
-  <p>מפה מלאה של סקינים עונתיים לכל דמויות Ninja Keyboard — Ki, Mika, Yuki, Luna, Noa, Kai, Rex, Bug, Glitch, Sensei Zen</p>
-  <div class="badge">12 חגים · 10 דמויות · גיבורי אמת · מערכת פתיחה עונתית</div>
+  <h1>סקינים לחגי ישראל 🇮🇱</h1>
+  <p>עיצוב מפורט של סקינים עונתיים לכל 14 הדמויות של Ninja Keyboard, בהשראת חגי ישראל והתרבות היהודית</p>
+  <div class="badge">14 חגים · 14 דמויות · גיבורי אמת · עיצוב מלא</div>
 </div>
 
-<!-- TOC GRID -->
-<div class="toc-grid">
-  <a class="toc-card" href="#rosh-hashana"><span class="e">🍎</span>ראש השנה</a>
-  <a class="toc-card" href="#yom-kippur"><span class="e">🕊️</span>יום כיפור</a>
-  <a class="toc-card" href="#sukkot"><span class="e">🌿</span>סוכות</a>
-  <a class="toc-card" href="#simchat-torah"><span class="e">📜</span>שמחת תורה</a>
-  <a class="toc-card" href="#hanukkah"><span class="e">🕎</span>חנוכה</a>
-  <a class="toc-card" href="#tu-bishvat"><span class="e">🌳</span>ט"ו בשבט</a>
-  <a class="toc-card" href="#purim"><span class="e">🎭</span>פורים</a>
-  <a class="toc-card" href="#pesach"><span class="e">🫓</span>פסח</a>
-  <a class="toc-card" href="#yom-hazikaron"><span class="e">🕯️</span>יום הזיכרון</a>
-  <a class="toc-card" href="#yom-haatzmaut"><span class="e">🎆</span>יום העצמאות</a>
-  <a class="toc-card" href="#lag-baomer"><span class="e">🔥</span>ל"ג בעומר</a>
-  <a class="toc-card" href="#shavuot"><span class="e">🌾</span>שבועות</a>
-  <a class="toc-card" href="#real-heroes"><span class="e">🛡️</span>גיבורי אמת</a>
-  <a class="toc-card" href="#unlock"><span class="e">🔓</span>מערכת פתיחה</a>
-</div>
-
-<!-- ===== ראש השנה ===== -->
 <div class="section" id="rosh-hashana">
   <div class="section-header">
     <span class="emoji">🍎</span>
-    <div><h2>ראש השנה</h2><div class="sub">ספטמבר–אוקטובר · ימים נוראים</div></div>
+    <div><h2>ראש השנה</h2><div class="sub">ספטמבר/אוקטובר | ימים נוראים</div></div>
     <span class="tag tag-joy">חגיגי</span>
   </div>
-  <div class="holiday-meta">
-    <span>🎨 <strong>צבעים:</strong> לבן, זהב, אדום-רימון, צהוב-דבש</span>
-    <span>✨ <strong>סמלים:</strong> שופר, תפוח, דבש, רימון</span>
-    <span>🌙 <strong>תאריך עברי:</strong> א'-ב' תשרי</span>
+  <div class="holiday-info"><strong>עיקר החג:</strong> ראש השנה הוא יום הדין ותחילת שנה חדשה. תפילות, תקיעת שופר, תפוח בדבש לסמל שנה מתוקה. הרימון מסמל 613 מצוות. החג נמשך יומיים.<br><strong>צבעים:</strong> לבן, זהב, אדום רימון, צהוב דבש<div class='symbols'>🍎🍯🎺🌙✨🌟</div></div>
+  <div class="skin-grid">
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#8B0000,#FF6B6B)">🥷</div>
+        <div><div class="char-name">קי</div><div class="skin-name">✨ קי של שנה טובה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> גלימת נינג'ה לבנה מבריקה עם ריקמת רימונים זהובים. סרט ראש לבן-זהב. על חגורתו שופר מיניאטורי זהוב.</p>
+        <p><strong>פוז:</strong> מחזיק תפוח אדום ביד אחת וצנצנת דבש ביד שנייה, מחייך חיוך רחב.</p>
+        <div class="color-row"><span class="swatch" style="background:#FFFFFF"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#8B0000"></span><span class="swatch" style="background:#FFC107"></span></div>
+        <div class="anim-tag">✨ ניצוצות זהובים מסביב לדמות</div>
+      </div>
+      <div class="card-footer">טקסט הפעלה: 'שנה טובה ומתוקה! בואו נפתח שנה חדשה של הקלדה מעולה!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a0080,#FD79A8)">🥷</div>
+        <div><div class="char-name">מיקה</div><div class="skin-name">🎺 מיקה השופרית</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> חליפת נינג'ה לבנה עם נגיעות כסף. שיערה קשור בקלועים לבנים. גאנטלט הולוגרמי עם ספרות עבריות שמתחלפות.</p>
+        <p><strong>פוז:</strong> מחזיקה שופר ומנסה לנגן בו — פרצוף ריכוז מוגזם ומצחיק.</p>
+        <div class="color-row"><span class="swatch" style="background:#E8E6F0"></span><span class="swatch" style="background:#C0C0C0"></span><span class="swatch" style="background:#4a0080"></span></div>
+        <div class="anim-tag">🎵 גלי קול מצוירים יוצאים מהשופר</div>
+      </div>
+      <div class="card-footer">טקסט: 'תקיעה = הקלדה מדויקת. בואי נשלח את השנה הישנה בסטייל!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a5f3a,#00B894)">🐢</div>
+        <div><div class="char-name">סנסאי זן</div><div class="skin-name">📜 הרב הזקן</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> קיטל לבן חגיגי עם כתר זהוב קטן. משקפיים ממוסגרים בזהב. מחרוזת תפילה עם רימון מוזהב.</p>
+        <p><strong>פוז:</strong> יושב במדיטציה על קלידת עץ עתיקה, עיניים עצומות בשלווה.</p>
+        <div class="color-row"><span class="swatch" style="background:#FFFFFF"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#6B4F00"></span></div>
+        <div class="anim-tag">✨ אור רך מוזהב פולס סביבו</div>
+      </div>
+      <div class="card-footer">חכמה: 'כל מסע מתחיל בלחיצה אחת. כמו כל שנה — מתחילה ברגע אחד.'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a3a5c,#74B9FF)">🦊</div>
+        <div><div class="char-name">סערה</div><div class="skin-name">🌙 סערה של ליל שנה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> גלימת ברק לבנה-כסופה עם ברקי ברק שמסתיימים בגרגרי רימון. זנבה מקושט בקלועי לבן.</p>
+        <p><strong>פוז:</strong> עומדת עם ידיים שלובות, פנים רציניות אבל מחייכת בפינת הפה.</p>
+        <div class="color-row"><span class="swatch" style="background:#E8E6F0"></span><span class="swatch" style="background:#74B9FF"></span><span class="swatch" style="background:#8B0000"></span></div>
+        <div class="anim-tag">⚡ ברקים לבנים (לא כחולים) סביב גופה</div>
+      </div>
+      <div class="card-footer">ציטוט תבוסה: '...שנה טובה. הפעם ניצחת — אבל השנה הבאה?'</div>
+    </div>
   </div>
-  <table class="skin-table">
-    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
-    <tbody>
-      <tr>
-        <td class="char">🥷 Ki</td>
-        <td>שנה טובה Ki</td>
-        <td>גלימת נינג'ה לבנה עם ריקמת רימונים זהובים; שופר מיניאטורי בחגורה; מחזיק תפוח ודבש</td>
-        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#8B0000"></span><span class="sw" style="background:#FFC107"></span></div></td>
-        <td><span class="effect-tag">✨ ניצוצות זהובים</span></td>
-      </tr>
-      <tr>
-        <td class="char">⚡ Mika</td>
-        <td>מיקה השופרית</td>
-        <td>חליפה לבנה-כסופה; שיר קלועים לבנים; גאנטלט עם ספרות עבריות; מנגנת שופר</td>
-        <td><div class="swatches"><span class="sw" style="background:#E8E6F0"></span><span class="sw" style="background:#C0C0C0"></span><span class="sw" style="background:#4a0080"></span></div></td>
-        <td><span class="effect-tag">🎵 גלי קול מהשופר</span></td>
-      </tr>
-      <tr>
-        <td class="char">🦊 Yuki</td>
-        <td>סערת ראש השנה</td>
-        <td>גלימת ברק לבנה-כסופה; ברקים שמסתיימים ברימונים; זנב מקושט בלבן</td>
-        <td><div class="swatches"><span class="sw" style="background:#E8E6F0"></span><span class="sw" style="background:#74B9FF"></span><span class="sw" style="background:#8B0000"></span></div></td>
-        <td><span class="effect-tag">⚡ ברקים לבנים</span></td>
-      </tr>
-      <tr>
-        <td class="char">🐢 Sensei Zen</td>
-        <td>הרב הזקן</td>
-        <td>קיטל לבן חגיגי עם כתר זהב; משקפי זהב; יושב במדיטציה על קלידת עץ עתיקה</td>
-        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#6B4F00"></span></div></td>
-        <td><span class="effect-tag">🌟 אור זהוב פולס</span></td>
-      </tr>
-      <tr>
-        <td class="char">🦋 Luna</td>
-        <td>לונה הלילה הקדוש</td>
-        <td>גלימת כוכבים לבנה-סגולה; כוכבי דוד מוזהבים משובצים בבד; שרביט עם שופר בקצה</td>
-        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#6C5CE7"></span><span class="sw" style="background:#F9CA24"></span></div></td>
-        <td><span class="effect-tag">⭐ כוכבים נופלים</span></td>
-      </tr>
-    </tbody>
-  </table>
 </div>
-<hr>
+<hr class='div'>
 
-<!-- ===== יום כיפור ===== -->
 <div class="section" id="yom-kippur">
   <div class="section-header">
     <span class="emoji">🕊️</span>
-    <div><h2>יום כיפור</h2><div class="sub">10 תשרי · יום הכיפורים</div></div>
+    <div><h2>יום כיפור</h2><div class="sub">ספטמבר/אוקטובר | הקדוש ביותר</div></div>
     <span class="tag tag-solemn">מכובד</span>
   </div>
-  <div class="holiday-meta">
-    <span>🎨 <strong>צבעים:</strong> לבן טהור, כסף, תכלת עדין</span>
-    <span>✨ <strong>סמלים:</strong> יונה, נר, ספר החיים</span>
+  <div class="holiday-info"><strong>עיקר החג:</strong> יום הצום, התפילה וחשבון הנפש — הקדוש בלוח היהודי. הכל לבוש בלבן. אין קניות, אין נסיעות. יום של שקט מוחלט.<br><strong>צבעים:</strong> לבן, כסף, אפור רך בלבד<div class='symbols'>🕊️⚪🕯️📖🌿</div></div>
+  <div class="skin-grid"><div class="notice"><span class="icon">🕊️</span><div>יום כיפור הוא יום הקדוש ביותר בלוח היהודי. הסקינים לחג זה יהיו <strong>לבנים, שקטים, מכובדים</strong>. אין קונפטי, אין ניצוצות צבעוניים — רק גוונים לבנים ואור רך. האנימציות יהיו נשימה איטית בלבד.</div></div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#2a2a4a,#E8E6F0)">🥷</div>
+        <div><div class="char-name">קי</div><div class="skin-name">🕊️ קי הצח</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> חלוק נינג'ה לבן נקי לחלוטין ללא עיטורים. סרט ראש לבן פשוט. ידיים מקופלות. פנים רגועות.</p>
+        <p><strong>פוז:</strong> עומד זקוף עם ידיים מקופלות על החזה, עיניים מעט עצומות — כמו תפילה שקטה.</p>
+        <div class="color-row"><span class="swatch" style="background:#FFFFFF"></span><span class="swatch" style="background:#F0EEF8"></span><span class="swatch" style="background:#C0C0C0"></span></div>
+        <div class="anim-tag">🌬️ נשימה איטית — קי מתנדנד קלות</div>
+      </div>
+      <div class="card-footer">הודעה: 'יום כיפור — יום חשבון נפש. גם בהקלדה, כדאי לעצור ולחשוב.'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a1a2e,#E8E6F0)">🥷</div>
+        <div><div class="char-name">לונה</div><div class="skin-name">✨ לונה המתפללת</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> שמלת נינג'ה לבנה ארוכה ואלגנטית. שיערה הכסוף קלוע בצמה עם ריבון לבן. סיכת ירח בכסף טהור, לא זוהר.</p>
+        <p><strong>פוז:</strong> יושבת על ברכיה, ראש מוטה קדימה, עיניים עצומות — תפילת כוונה שקטה.</p>
+        <div class="color-row"><span class="swatch" style="background:#FFFFFF"></span><span class="swatch" style="background:#E8E6F0"></span><span class="swatch" style="background:#808080"></span></div>
+        <div class="anim-tag">💫 אור כסוף עדין פולס לאט סביבה</div>
+      </div>
+      <div class="card-footer">לונה מתאימה מאוד — אופי שקט ורגוע. 'נשימה עמוקה, ואז מתחילים מחדש.'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a3a5c,#E8E6F0)">🤖</div>
+        <div><div class="char-name">פיקסל</div><div class="skin-name">📊 פיקסל חשבון הנפש</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> ציפוי לבן-מט חלק. המסך מציג גרף שנה חולפת בשחור-לבן בלבד. כתר קטן 'חשבון נפש' על האנטנה.</p>
+        <p><strong>פוז:</strong> מרחף בשקט, מציג: 'שגיאות: 1,247 → תיקונים: 1,247 → איזון: ✓'</p>
+        <div class="color-row"><span class="swatch" style="background:#E8E6F0"></span><span class="swatch" style="background:#808080"></span><span class="swatch" style="background:#C0C0C0"></span></div>
+        <div class="anim-tag">📊 נתוני שנה חולפים לאט על גופו</div>
+      </div>
+      <div class="card-footer">פיקסל: 'ניתוח שנה חלפה: שיפור 340%. מוכן לשנה חדשה.'</div>
+    </div>
   </div>
-  <div class="notice"><span class="icon">🕊️</span> עיצוב מינימליסטי, ללא אפקטים מרעישים. רוח של חרטה, טהרה ותקווה.</div>
-  <table class="skin-table">
-    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
-    <tbody>
-      <tr>
-        <td class="char">🥷 Ki</td>
-        <td>Ki הטהור</td>
-        <td>גלימה לבנה חלקה ללא קישוטים; אין נשק; ידיים מונחות בשלווה; הבעת פנים מכוונת</td>
-        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#E8E6F0"></span><span class="sw" style="background:#C0C0C0"></span></div></td>
-        <td><span class="effect-tag">🕊️ יונה לבנה מעל הראש</span></td>
-      </tr>
-      <tr>
-        <td class="char">⚡ Mika</td>
-        <td>מיקה הנסלחת</td>
-        <td>חלוק לבן פשוט; גאנטלט כבוי; עיניה עצומות בחצי; מחזיקה נר דולק</td>
-        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#F0EFFF"></span><span class="sw" style="background:#87CEEB"></span></div></td>
-        <td><span class="effect-tag">🕯️ אור נר רוטט</span></td>
-      </tr>
-      <tr>
-        <td class="char">🐢 Sensei Zen</td>
-        <td>זן ביום הדין</td>
-        <td>גלימה לבנה-ארוכה; ספר פתוח (ספר החיים) בידיו; הבעה של חוכמה עמוקה</td>
-        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#F9CA24"></span></div></td>
-        <td><span class="effect-tag">📖 ספר זוהר</span></td>
-      </tr>
-      <tr>
-        <td class="char">🦎 Rex</td>
-        <td>Rex השקט</td>
-        <td>חלוק לבן גדול (קצת קומי); פרצוף שקט ורציני לראשונה; מחזיק נר בזהירות</td>
-        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#D4D4D4"></span></div></td>
-        <td><span class="effect-tag">✨ ניצוצות לבנים</span></td>
-      </tr>
-    </tbody>
-  </table>
 </div>
-<hr>
+<hr class='div'>
 
-<!-- ===== סוכות ===== -->
 <div class="section" id="sukkot">
   <div class="section-header">
     <span class="emoji">🌿</span>
-    <div><h2>סוכות</h2><div class="sub">15 תשרי · חג האסיף</div></div>
+    <div><h2>סוכות</h2><div class="sub">אוקטובר | חג האסיף</div></div>
     <span class="tag tag-joy">חגיגי</span>
   </div>
-  <div class="holiday-meta">
-    <span>🎨 <strong>צבעים:</strong> ירוק טבעי, צהוב-ליים, חום-עץ, כתום-אתרוג</span>
-    <span>✨ <strong>סמלים:</strong> לולב, אתרוג, הדס, ערבה, סוכה</span>
+  <div class="holiday-info"><strong>עיקר החג:</strong> חג האסיף ואחד משלושת הרגלים. גרים בסוכה, מנענעים ארבעת המינים: לולב, אתרוג, הדס וערבה.<br><strong>צבעים:</strong> ירוק טבעי, צהוב אתרוג, חום עץ, תכלת שמים<div class='symbols'>🌿🍋🌾🏠🌳🍇</div></div>
+  <div class="skin-grid">
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a4a1a,#00B894)">🦕</div>
+        <div><div class="char-name">רקס</div><div class="skin-name">🌿 רקס הסוכות</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> על גב רקס — סוכה מיניאטורית עם סכך! חליפה ירוקה מעוטרת בעלים ופירות. ידיו הקטנות מנסות להחזיק לולב.</p>
+        <p><strong>פוז:</strong> מנסה לנענע לולב בידיים הקטנטנות — פרצוף מאמץ מצחיק מאוד.</p>
+        <div class="color-row"><span class="swatch" style="background:#1a4a1a"></span><span class="swatch" style="background:#00B894"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#8B4513"></span></div>
+        <div class="anim-tag">🍃 עלים נושרים ומסתובבים סביב רקס</div>
+      </div>
+      <div class="card-footer">רקס: 'גם עם ידיים קטנות... אפשר לנענע לולב! ...כמעט.'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a5f3a,#4CAF50)">🥷</div>
+        <div><div class="char-name">נועה</div><div class="skin-name">🌾 נועה הקוצרת</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> חליפת נינג'ה ירוקה-טבעית עם שזורים בה ענפי הדס וערבה. צמת השיער הירוקה מחוזקת בריבוני עלים.</p>
+        <p><strong>פוז:</strong> מחזיקה סלסלת קציר עם תפוחים, ענבים ותאנים — מחייכת חיוך חם.</p>
+        <div class="color-row"><span class="swatch" style="background:#1a5f3a"></span><span class="swatch" style="background:#4CAF50"></span><span class="swatch" style="background:#8BC34A"></span></div>
+        <div class="anim-tag">🌿 עלים ופרחים צצים סביבה</div>
+      </div>
+      <div class="card-footer">נועה: 'ארבעת המינים יחד — כמו ארבעת האצבעות שמקלידות יחד!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a3000,#F9CA24)">🐢</div>
+        <div><div class="char-name">סנסאי זן</div><div class="skin-name">🏠 הסנסאי שבסוכה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> גב הצב הפך לסוכה! מקושט בדלועים וענבים. חלוק חום-ירוק עם עיטורי ארבעת המינים. כובע קש עם ענפים.</p>
+        <p><strong>פוז:</strong> יושב מתחת לסוכה על גבו, עיניים עצומות, קלידת עץ מולו.</p>
+        <div class="color-row"><span class="swatch" style="background:#8B4513"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#4CAF50"></span></div>
+        <div class="anim-tag">⭐ כוכבים נראים 'דרך הסכך' שעל גבו</div>
+      </div>
+      <div class="card-footer">חכמה: 'שבעת ימים בסוכה — הזמניות מלמדת להכיל את הקבוע.'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a4a3a,#00CEC9)">🥷</div>
+        <div><div class="char-name">קאי</div><div class="skin-name">🌿 קאי הלולב</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> קאי מחזיק לולב כמו חרב! חליפת לוחם ירוק-יער עם פסי עלים במקום פסי אש. קישוט ראש של עלי דקל.</p>
+        <p><strong>פוז:</strong> תנוחת קרב קלאסית — אבל הלולב הוא נשקו. פנים רציניות לגמרי.</p>
+        <div class="color-row"><span class="swatch" style="background:#1a4a3a"></span><span class="swatch" style="background:#2E7D32"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">🍃 עלי דקל מסתחררים בנקישות</div>
+      </div>
+      <div class="card-footer">קאי: 'הלולב — נשק הטבע! שבעה כיוונים = שבע טכניקות נינג'ה!'</div>
+    </div>
   </div>
-  <table class="skin-table">
-    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
-    <tbody>
-      <tr>
-        <td class="char">🥷 Ki</td>
-        <td>Ki הלולב</td>
-        <td>גלימה ירוקה-כהה עם עיטורי ענפים; לולב ענק על הגב כנשק; ציץ אתרוג בחגורה</td>
-        <td><div class="swatches"><span class="sw" style="background:#2D8A4E"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#8B6914"></span></div></td>
-        <td><span class="effect-tag">🌿 עלים מרחפים</span></td>
-      </tr>
-      <tr>
-        <td class="char">🦋 Luna</td>
-        <td>לונה הסוכה</td>
-        <td>גלימה מחופת ענפי הדס; כתר של ענבים ורימונים; ידיה מנופפות כאתרוג</td>
-        <td><div class="swatches"><span class="sw" style="background:#4CAF50"></span><span class="sw" style="background:#FF8C00"></span><span class="sw" style="background:#8B4513"></span></div></td>
-        <td><span class="effect-tag">🍊 אתרוגים מסתובבים</span></td>
-      </tr>
-      <tr>
-        <td class="char">🦎 Rex</td>
-        <td>Rex בונה הסוכה</td>
-        <td>חגורת כלים עם ענפים ומסמרים; כובע מחומר ועלים; נושא קורות עץ על כתפיו</td>
-        <td><div class="swatches"><span class="sw" style="background:#8B6914"></span><span class="sw" style="background:#228B22"></span><span class="sw" style="background:#DAA520"></span></div></td>
-        <td><span class="effect-tag">🔨 ניצוצות בנייה</span></td>
-      </tr>
-      <tr>
-        <td class="char">🐛 Bug</td>
-        <td>Bug ה"ארבעת המינים"</td>
-        <td>גוף מצויר כאתרוג צהוב; רגליים בצורת ערבה; כנפיים-הדס; פרצוף שמח-אתרוגי</td>
-        <td><div class="swatches"><span class="sw" style="background:#FFD700"></span><span class="sw" style="background:#7CFC00"></span><span class="sw" style="background:#32CD32"></span></div></td>
-        <td><span class="effect-tag">🌟 זוהר אתרוג</span></td>
-      </tr>
-    </tbody>
-  </table>
 </div>
-<hr>
+<hr class='div'>
 
-<!-- ===== שמחת תורה ===== -->
 <div class="section" id="simchat-torah">
   <div class="section-header">
     <span class="emoji">📜</span>
-    <div><h2>שמחת תורה</h2><div class="sub">22–23 תשרי · ריקוד עם הספרים</div></div>
+    <div><h2>שמחת תורה</h2><div class="sub">אוקטובר | הקפות ושמחה</div></div>
     <span class="tag tag-joy">חגיגי</span>
   </div>
-  <div class="holiday-meta">
-    <span>🎨 <strong>צבעים:</strong> אדום כהה, זהב, ויולט-סגול, לבן</span>
-    <span>✨ <strong>סמלים:</strong> ספר תורה, כתר, ריקוד, דגל</span>
+  <div class="holiday-info"><strong>עיקר החג:</strong> חגיגת סיום קריאת התורה ותחילתה מחדש. ריקוד עם ספרי תורה (הקפות), דגלים צבעוניים, שמחה מפרצת. ילדים מקבלים ממתקים.<br><strong>צבעים:</strong> כחול, לבן, זהב, ססגוניות עליזה<div class='symbols'>📜🎉🕍🎊🏳️🌈</div></div>
+  <div class="skin-grid">
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a3a8f,#6C5CE7)">🥷</div>
+        <div><div class="char-name">קי</div><div class="skin-name">🎉 קי הרוקד</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> חליפת נינג'ה כחולה-לבנה עם פסי זהב. מחזיק ספר תורה מיניאטורי בידו הרמה. על ראשו דגלון ישראל קטן.</p>
+        <p><strong>פוז:</strong> ריקוד הקפות עם ספר תורה מורם מעל הראש, רגל אחת מורמת, הבעת שמחה מוחלטת.</p>
+        <div class="color-row"><span class="swatch" style="background:#1a3a8f"></span><span class="swatch" style="background:#E8E6F0"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">🎊 קונפטי כחול-לבן מסביב</div>
+      </div>
+      <div class="card-footer">קי: 'הקפות! שבע פעמים — כמו שבע טכניקות הנינג'ה! יאללה!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a0080,#FD79A8)">🥷</div>
+        <div><div class="char-name">מיקה</div><div class="skin-name">📖 מיקה הקוראת</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> חליפת נינג'ה עם ריקמת אותיות עבריות זוהרות. שיערה מקושט בסרטי דגלים קטנים. גאנטלט עם קוד עברי.</p>
+        <p><strong>פוז:</strong> מחזיקה ספר תורה פתוח ולומדת ממנו — אבל הגאנטלט שלה מקרין את הטקסט כהולוגרמה.</p>
+        <div class="color-row"><span class="swatch" style="background:#4a0080"></span><span class="swatch" style="background:#FD79A8"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">✨ אותיות עבריות עפות מהספר</div>
+      </div>
+      <div class="card-footer">מיקה: 'התורה — קוד המקור של כל הקודים. 304,805 אותיות!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a4a1a,#F9CA24)">🦕</div>
+        <div><div class="char-name">רקס</div><div class="skin-name">🎊 רקס הרוקד</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> רקס עם דגלון בכל יד (ארבע ידיים?) — מנסה לרקוד הקפות ונופל. חליפה ססגונית עם קישוטי שמחה.</p>
+        <p><strong>פוז:</strong> נופל בעת ריקוד ועולה שוב — שוב ושוב — עם חיוך ענק. ידיים קטנות מניפות דגלונים.</p>
+        <div class="color-row"><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#FF6B6B"></span><span class="swatch" style="background:#00B894"></span><span class="swatch" style="background:#74B9FF"></span></div>
+        <div class="anim-tag">🎉 דגלונים טסים, רקס מסתובב</div>
+      </div>
+      <div class="card-footer">רקס: 'רר-רר-ריקוד! אני... אפל. אני קם. ממשיך!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0057FF,#FF007F)">👾</div>
+        <div><div class="char-name">גליץ'</div><div class="skin-name">💫 גליץ' הבלתי יציב</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> גליץ' מנסה להתחפש לספר תורה — אבל גופו ממשיך להשתנות צורה! פיקסלים של אותיות עבריות עפים ממנו.</p>
+        <p><strong>פוז:</strong> מנסה לשמור על צורת ספר תורה — אבל בכל שנייה מחצי הדמות משתנה לצורה אחרת.</p>
+        <div class="color-row"><span class="swatch" style="background:#0057FF"></span><span class="swatch" style="background:#FF007F"></span><span class="swatch" style="background:#00FF41"></span></div>
+        <div class="anim-tag">🌀 גוף שמשתנה בלי הפסקה</div>
+      </div>
+      <div class="card-footer">גליץ': 'א-א-אני ס-ס-ספר תורה! ...כ-כמעט...'</div>
+    </div>
   </div>
-  <table class="skin-table">
-    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
-    <tbody>
-      <tr>
-        <td class="char">🥷 Ki</td>
-        <td>Ki הרוקד</td>
-        <td>גלימה אדומה-זהובה; אוחז ספר תורה ממוזהב בשתי הידיים; כתר זהב על הראש; בפוז ריקוד</td>
-        <td><div class="swatches"><span class="sw" style="background:#8B0000"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#6C5CE7"></span></div></td>
-        <td><span class="effect-tag">🎊 קונפטי ספרות עבריות</span></td>
-      </tr>
-      <tr>
-        <td class="char">🐢 Sensei Zen</td>
-        <td>זן ספר התורה</td>
-        <td>גלימת חכם עם ספר תורה ענק; ריקוד עדין ומכובד; כתר חכמים זהוב</td>
-        <td><div class="swatches"><span class="sw" style="background:#8B0000"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#FFFFFF"></span></div></td>
-        <td><span class="effect-tag">✨ זהב פולס מהספר</span></td>
-      </tr>
-      <tr>
-        <td class="char">🧪 Glitch</td>
-        <td>Glitch הפרצוף</td>
-        <td>גוף פיקסלי בצבעי תורה; ספרות עבריות גליצ'ות סביבו; מנסה לרקוד אבל גליצ'</td>
-        <td><div class="swatches"><span class="sw" style="background:#8B0000"></span><span class="sw" style="background:#00FF41"></span><span class="sw" style="background:#F9CA24"></span></div></td>
-        <td><span class="effect-tag">💾 גליצ' אלפ"א-בית</span></td>
-      </tr>
-      <tr>
-        <td class="char">👧 Noa</td>
-        <td>נועה דגל שמחה</td>
-        <td>שמלה חגיגית אדומה; מנופפת דגל-מיני עם ספר תורה מצויר; ריקוד שמח</td>
-        <td><div class="swatches"><span class="sw" style="background:#CC0000"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#FFFFFF"></span></div></td>
-        <td><span class="effect-tag">🎉 כוכבים מרקדים</span></td>
-      </tr>
-    </tbody>
-  </table>
 </div>
-<hr>
+<hr class='div'>
 
-<!-- ===== חנוכה ===== -->
 <div class="section" id="hanukkah">
   <div class="section-header">
     <span class="emoji">🕎</span>
-    <div><h2>חנוכה</h2><div class="sub">25 כסלו · חג האורות</div></div>
+    <div><h2>חנוכה</h2><div class="sub">נובמבר/דצמבר | חג האורות</div></div>
     <span class="tag tag-joy">חגיגי</span>
   </div>
-  <div class="holiday-meta">
-    <span>🎨 <strong>צבעים:</strong> כחול, כסף, זהב-אש, כתום-להבה</span>
-    <span>✨ <strong>סמלים:</strong> חנוכיה, סביבון, לביבה, שמן</span>
+  <div class="holiday-info"><strong>עיקר החג:</strong> חנוכה מציין את ניצחון המכבים ונס פך השמן. מדליקים חנוכייה שמונה ימים, מסתובבים סביבון, אוכלים סופגניות ולביבות.<br><strong>צבעים:</strong> כחול, כסף, זהב, אור נרות<div class='symbols'>🕎🍩🌀🔵⭐</div></div>
+  <div class="skin-grid">
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a3a8f,#74B9FF)">🥷</div>
+        <div><div class="char-name">קי</div><div class="skin-name">🕎 קי המכבי</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> קי לובש שריון מכבים מיניאטורי על חליפת הנינג'ה הרגילה. על ראשו קסדת מכבים עם עיטור של מנורה. על גבו סביבון ענק כנשק.</p>
+        <p><strong>פוז:</strong> תנוחת לחימה עם הסביבון כנשק מסתובב — 'מדרגות גיבל' — נ-ג-ה-פ.</p>
+        <div class="color-row"><span class="swatch" style="background:#1a3a8f"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#C0C0C0"></span></div>
+        <div class="anim-tag">🌀 אות נ-ג-ה-פ מסתובבות סביבו</div>
+      </div>
+      <div class="card-footer">קי: 'נס גדול היה פה! ולי היה שיא חדש ב-WPM!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a3a,#74B9FF)">🥷</div>
+        <div><div class="char-name">מיקה</div><div class="skin-name">💡 מיקה האלקטרית</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> חליפת נינג'ה כחולה-כהה עם 8 נקודות אור על השרוולים — כמו שמונת נרות החנוכייה. גאנטלט מקרין חנוכייה הולוגרמית.</p>
+        <p><strong>פוז:</strong> מקישה על לחצן בגאנטלט — נר נוסף מואר בחנוכייה ההולוגרמית.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a3a"></span><span class="swatch" style="background:#74B9FF"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">💡 נר נוסף נדלק בכל אינטראקציה</div>
+      </div>
+      <div class="card-footer">מיקה: 'שמונה ימים × שמונה אצבעות = שלמות הנינג'ה!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a0a3a,#F9CA24)">🥷</div>
+        <div><div class="char-name">לונה</div><div class="skin-name">🌟 לונה אור הנרות</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> גלימת נינג'ה כחולה-כהה עם עיטורי נרות מוזהבים. שיערה הכסוף קשור סביב כתר קטן של מנורה זהובה.</p>
+        <p><strong>פוז:</strong> עומדת שקטה ומחזיקה חנוכייה קטנה מוזהבת, אורות הנרות מואירים פניה הרגועות.</p>
+        <div class="color-row"><span class="swatch" style="background:#1a0a3a"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#74B9FF"></span></div>
+        <div class="anim-tag">🕯️ אור נרות עדין מאיר את הסביבה</div>
+      </div>
+      <div class="card-footer">לונה: 'כל נר קטן מנצח את החושך כולו. כמו כל מקש — בסוף מרכיב מילה.'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#2a1a00,#F9CA24)">🐢</div>
+        <div><div class="char-name">סנסאי זן</div><div class="skin-name">🏺 הסנסאי עם פך השמן</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> סנסאי זן מחזיק פך שמן עתיק קטן — 'מספיק לשמונה ימים!' חלוקו מקושט בעיטורי מנורת המקדש.</p>
+        <p><strong>פוז:</strong> מחזיק את הפך בידיו הקטנות, עיניים עצומות, כמו מתפלל שהנס יקרה שוב.</p>
+        <div class="color-row"><span class="swatch" style="background:#2a1a00"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#8B4513"></span></div>
+        <div class="anim-tag">✨ אור זהוב עז פורץ מהפך</div>
+      </div>
+      <div class="card-footer">חכמה: 'נס לא מתרחש למי שמוותר. תמשיכו להקליד.'</div>
+    </div>
   </div>
-  <table class="skin-table">
-    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
-    <tbody>
-      <tr>
-        <td class="char">🥷 Ki</td>
-        <td>Ki האש</td>
-        <td>גלימה כחולה-כהה עם להבות כסופות; חרב-שמש (ייצוג מכבי); חנוכיה על החגורה</td>
-        <td><div class="swatches"><span class="sw" style="background:#00008B"></span><span class="sw" style="background:#C0C0C0"></span><span class="sw" style="background:#FF8C00"></span></div></td>
-        <td><span class="effect-tag">🔥 להבות כחולות</span></td>
-      </tr>
-      <tr>
-        <td class="char">⚡ Mika</td>
-        <td>מיקה הסביבון</td>
-        <td>חליפה מסתובבת כסביבון; ד-ה-נ-ג מוטבעים על הגוף; מסתובבת במהירות</td>
-        <td><div class="swatches"><span class="sw" style="background:#1E90FF"></span><span class="sw" style="background:#C0C0C0"></span><span class="sw" style="background:#F9CA24"></span></div></td>
-        <td><span class="effect-tag">🌀 אפקט סיבוב</span></td>
-      </tr>
-      <tr>
-        <td class="char">🦎 Rex</td>
-        <td>Rex הלביבה</td>
-        <td>גוף צבוע כלביבה ענקית; תרמיל שמן זית; מגיש לביבה בכל ניצחון</td>
-        <td><div class="swatches"><span class="sw" style="background:#DAA520"></span><span class="sw" style="background:#D2691E"></span><span class="sw" style="background:#228B22"></span></div></td>
-        <td><span class="effect-tag">🥞 לביבות נופלות</span></td>
-      </tr>
-      <tr>
-        <td class="char">🧪 Glitch</td>
-        <td>Glitch שמן הנס</td>
-        <td>גוף דולק בפיקסלים זהובים-כתומים; שמן גליצ'י זורם; כל bug הופך ללהבה</td>
-        <td><div class="swatches"><span class="sw" style="background:#FF8C00"></span><span class="sw" style="background:#FFD700"></span><span class="sw" style="background:#FF4500"></span></div></td>
-        <td><span class="effect-tag">🔥 גליצ' אש פיקסלי</span></td>
-      </tr>
-      <tr>
-        <td class="char">🐢 Sensei Zen</td>
-        <td>זן החנוכיה</td>
-        <td>גלימה כחולה עמוקה עם 9 נרות רקומים; מחזיק שמש מוזהבת; הוראה בשקט</td>
-        <td><div class="swatches"><span class="sw" style="background:#000080"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#C0C0C0"></span></div></td>
-        <td><span class="effect-tag">✨ 9 נרות מאירים</span></td>
-      </tr>
-    </tbody>
-  </table>
 </div>
-<hr>
+<hr class='div'>
 
-<!-- ===== ט"ו בשבט ===== -->
 <div class="section" id="tu-bishvat">
   <div class="section-header">
     <span class="emoji">🌳</span>
-    <div><h2>ט"ו בשבט</h2><div class="sub">15 שבט · ראש השנה לאילנות</div></div>
+    <div><h2>ט"ו בשבט</h2><div class="sub">ינואר/פברואר | ראש השנה לאילנות</div></div>
     <span class="tag tag-nature">טבע</span>
   </div>
-  <div class="holiday-meta">
-    <span>🎨 <strong>צבעים:</strong> ירוק-עץ, חום-קליפה, ורוד-שקד, כחול-שמיים</span>
-    <span>✨ <strong>סמלים:</strong> שקדייה, פירות שבעת המינים, נטיעות</span>
+  <div class="holiday-info"><strong>עיקר החג:</strong> ראש השנה לאילנות — יום הטבע של ישראל. נוטעים עצים, אוכלים שבעת המינים: חיטה, שעורה, גפן, תאנה, רימון, זית, תמר. ציונות וחיבור לאדמה.<br><strong>צבעים:</strong> ירוק עז, חום אדמה, סגול ענבים, כתום תמר<div class='symbols'>🌳🍇🌿🫒🌱🍊🌾</div></div>
+  <div class="skin-grid">
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a4a1a,#4CAF50)">🥷</div>
+        <div><div class="char-name">קי</div><div class="skin-name">🌱 קי הנוטע</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> קי לובש חליפת נינג'ה ירוקה עם כפפות אדמה. על גבו תרמיל עם עץ שתיל קטן. מגפיים עם בוץ.</p>
+        <p><strong>פוז:</strong> שוכן וחופר בידיו, שתיל קטן ביד אחת — פנים רציניות של מישהו שמבין שהוא עושה משהו חשוב.</p>
+        <div class="color-row"><span class="swatch" style="background:#1a4a1a"></span><span class="swatch" style="background:#4CAF50"></span><span class="swatch" style="background:#8B4513"></span></div>
+        <div class="anim-tag">🌱 העץ צומח ומתרומם לאט</div>
+      </div>
+      <div class="card-footer">קי: 'כל עץ שנטעתי — כמו כל מיומנות הקלדה. גדל לאט, נשאר לנצח!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a3a1a,#00B894)">🥷</div>
+        <div><div class="char-name">נועה</div><div class="skin-name">🌿 נועה גן העדן</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> נועה בחליפת נינג'ה ירוקה-צמחית. שיערה הירוק שזור בפרחים ועלים אמיתיים. תיק מרפא מלא בזרעים ועלי מרפא.</p>
+        <p><strong>פוז:</strong> מרחפת בין עצים, מחזיקה שבעה פירות שונים — כל אחד מאיר בצבע אחר.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a3a1a"></span><span class="swatch" style="background:#00B894"></span><span class="swatch" style="background:#4CAF50"></span><span class="swatch" style="background:#8BC34A"></span></div>
+        <div class="anim-tag">🌸 פרחים פורחים בכל מקום שנועה עוברת</div>
+      </div>
+      <div class="card-footer">נועה: 'שבעת המינים — שבע מקבוצות המקלדת. כל קבוצה חשובה!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a3a1a,#00CEC9)">🤖</div>
+        <div><div class="char-name">פיקסל</div><div class="skin-name">📊 פיקסל הסביבתי</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> פיקסל מקבל ציפוי ירוק-עשב. המסך מציג מפת יערות ישראל עם אחוזי כיסוי עצים. עציץ קטן צומח על אנטנתו.</p>
+        <p><strong>פוז:</strong> מרחף ומציג נתוני עצים: 'עצים שנטעו היום: 1,247,890 — מאז הקמת המדינה: 200M!'</p>
+        <div class="color-row"><span class="swatch" style="background:#0a3a1a"></span><span class="swatch" style="background:#00CEC9"></span><span class="swatch" style="background:#4CAF50"></span></div>
+        <div class="anim-tag">🌍 מפת ירוק ישראל מתרחבת על גופו</div>
+      </div>
+      <div class="card-footer">פיקסל: 'כל קשר Shift+Enter = עוד מיליגרם פחמן נספג. המדע.'</div>
+    </div>
   </div>
-  <table class="skin-table">
-    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
-    <tbody>
-      <tr>
-        <td class="char">🥷 Ki</td>
-        <td>Ki הנוטע</td>
-        <td>גלימה ירוקה-אדמתית; ענפי שקדייה מפריחים יוצאים מהשרוולים; שרביט-כלי-נטיעה</td>
-        <td><div class="swatches"><span class="sw" style="background:#228B22"></span><span class="sw" style="background:#8B4513"></span><span class="sw" style="background:#FFB6C1"></span></div></td>
-        <td><span class="effect-tag">🌸 פריחת שקדייה</span></td>
-      </tr>
-      <tr>
-        <td class="char">🦋 Luna</td>
-        <td>לונה הגן</td>
-        <td>שמלת פרחים עם שבעת המינים מרוקמים; כתר ענפי זית; אוחזת גרגרי חיטה</td>
-        <td><div class="swatches"><span class="sw" style="background:#4CAF50"></span><span class="sw" style="background:#DAA520"></span><span class="sw" style="background:#9370DB"></span></div></td>
-        <td><span class="effect-tag">🍀 עלים נופלים</span></td>
-      </tr>
-      <tr>
-        <td class="char">🐛 Bug</td>
-        <td>Bug הפרפר</td>
-        <td>כנפי פרפר ירוק-צהובות; גוף עם ניצני עץ; מרחף בין פרחים</td>
-        <td><div class="swatches"><span class="sw" style="background:#7CFC00"></span><span class="sw" style="background:#FFD700"></span><span class="sw" style="background:#FF69B4"></span></div></td>
-        <td><span class="effect-tag">🦋 אבקת פרחים</span></td>
-      </tr>
-      <tr>
-        <td class="char">🐢 Sensei Zen</td>
-        <td>זן האילן</td>
-        <td>גלימה עם טקסטורת קליפת עץ; שורשים ויזואלים מתחת רגליו; חכמת עצים עתיקה</td>
-        <td><div class="swatches"><span class="sw" style="background:#8B4513"></span><span class="sw" style="background:#228B22"></span><span class="sw" style="background:#D2B48C"></span></div></td>
-        <td><span class="effect-tag">🌱 ניצנים צומחים</span></td>
-      </tr>
-    </tbody>
-  </table>
 </div>
-<hr>
+<hr class='div'>
 
-<!-- ===== פורים ===== -->
 <div class="section" id="purim">
   <div class="section-header">
     <span class="emoji">🎭</span>
-    <div><h2>פורים</h2><div class="sub">14 אדר · חג התחפושות</div></div>
-    <span class="tag tag-joy">שמחה!</span>
+    <div><h2>פורים</h2><div class="sub">פברואר/מרץ | חג התחפושות</div></div>
+    <span class="tag tag-joy">קרנבל</span>
   </div>
-  <div class="holiday-meta">
-    <span>🎨 <strong>צבעים:</strong> כל הצבעים, קרנבל, ססגוניות</span>
-    <span>✨ <strong>סמלים:</strong> אוזן-המן, גרגרן, תחפושת, מגילה, רעשן</span>
+  <div class="holiday-info"><strong>עיקר החג:</strong> חג הקרנבל היהודי — תחפושות, מגילת אסתר, משלוח מנות, מסכות, אומן. הכי שמח ורועש בלוח! גם גליץ' מצוין לחג הזה.<br><strong>צבעים:</strong> סגול, צהוב, אדום, כל הצבעים הססגוניים<div class='symbols'>🎭🎊🎪🃏🎉🃏🍪</div></div>
+  <div class="skin-grid">
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a0080,#FD79A8)">🥷</div>
+        <div><div class="char-name">קי</div><div class="skin-name">🃏 קי הג'וקר</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> קי מתחפש לג'וקר — בגדי ליצן צבעוניים מעל חליפת הנינג'ה. פנים צבועות, כובע פעמונים. אבל כפפות הנינג'ה נשארות.</p>
+        <p><strong>פוז:</strong> עומד עם ידיים פרושות, חיוך מוגזם, כובע צלצולים — 'גם בפורים, הנינג'ה לא מוותר!'</p>
+        <div class="color-row"><span class="swatch" style="background:#4a0080"></span><span class="swatch" style="background:#FD79A8"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#FF6B6B"></span></div>
+        <div class="anim-tag">🎊 קונפטי ססגוני פורח ממנו</div>
+      </div>
+      <div class="card-footer">קי: 'פורים! היום מותר לי להיות מוגזם. תמיד! כן, גם היום!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0057FF,#FF007F)">👾</div>
+        <div><div class="char-name">גליץ'</div><div class="skin-name">🌀 גליץ' המסכה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> גליץ' הוא הסקין המושלם לפורים! גופו המשתנה מקבל כמה מסכות בו-זמנית — כל שנייה מסכה אחרת! מסכת אסתר, מסכת מרדכי, מסכת המן...</p>
+        <p><strong>פוז:</strong> מסכות מחליפות בפרקי שנייה — לפעמים שתי מסכות בו-זמנית על פנים אחד. בלבול מוחלט.</p>
+        <div class="color-row"><span class="swatch" style="background:#0057FF"></span><span class="swatch" style="background:#FF007F"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#00FF41"></span></div>
+        <div class="anim-tag">🎭 מסכות מתחלפות כל שנייה</div>
+      </div>
+      <div class="card-footer">גליץ': 'פ-פ-פורים! ה-ה-היום כולם מ-מ-מסתתרים כמוני!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a0080,#9B59B6)">🥷</div>
+        <div><div class="char-name">מיקה</div><div class="skin-name">💜 מיקה כאסתר המלכה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> מיקה מתחפשת לאסתר — כתר מלכותי, שמלה סגולה מהודרת מעל חליפת הנינג'ה. אבל הגאנטלט הטכנולוגי עדיין על ידה.</p>
+        <p><strong>פוז:</strong> תנוחת מלכה עם כתר — אבל ביד אחת מגילת אסתר, ובשנייה גאנטלט הולוגרמי. 'גם כמלכה — הטכנולוגיה שלי!'</p>
+        <div class="color-row"><span class="swatch" style="background:#4a0080"></span><span class="swatch" style="background:#9B59B6"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#E8E6F0"></span></div>
+        <div class="anim-tag">👑 אור כתר מוזהב פולס</div>
+      </div>
+      <div class="card-footer">מיקה: 'אסתר ידעה לשמור סוד. גם אני יודעת — Ctrl+C, Ctrl+V!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a4a1a,#FF6B6B)">🐛</div>
+        <div><div class="char-name">באג</div><div class="skin-name">🎪 באג המהולל</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> באג מתחפש — לנינג'ה! לובש חליפת נינג'ה קטנטנה בגודל חרק עם סרט ראש, מנסה להיראות מאיים אבל נראה מתוק מדי.</p>
+        <p><strong>פוז:</strong> עומד בתנוחת נינג'ה — אבל הרגליים הקטנות שלו רועדות. מסכת נינג'ה עם שפם מפוחל.</p>
+        <div class="color-row"><span class="swatch" style="background:#00FF41"></span><span class="swatch" style="background:#FF6B6B"></span><span class="swatch" style="background:#1a4a1a"></span></div>
+        <div class="anim-tag">🎭 מסכת נינג'ה נופלת ממנו כל שנייה</div>
+      </div>
+      <div class="card-footer">באג: 'אני... נינג'ה! פחד ממני! ...למה אתם צוחקים?'</div>
+    </div>
   </div>
-  <table class="skin-table">
-    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
-    <tbody>
-      <tr>
-        <td class="char">🥷 Ki</td>
-        <td>Ki המלך אחשוורוש</td>
-        <td>גלימת מלכות סגולה-זהובה; כתר ענק (קצת מגוחך); שרביט; עושה פוז מלכותי מוגזם</td>
-        <td><div class="swatches"><span class="sw" style="background:#6C5CE7"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#8B0000"></span></div></td>
-        <td><span class="effect-tag">🎊 קונפטי צבעוני</span></td>
-      </tr>
-      <tr>
-        <td class="char">⚡ Mika</td>
-        <td>מיקה המלכה אסתר</td>
-        <td>גלימת מלכה כחולה-זהובה; עיטורי כוכבים; כתר אסתר; רעשן בצורת מקלדת</td>
-        <td><div class="swatches"><span class="sw" style="background:#1E90FF"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#E8E6F0"></span></div></td>
-        <td><span class="effect-tag">⭐ כוכבים מסביב</span></td>
-      </tr>
-      <tr>
-        <td class="char">🦊 Yuki</td>
-        <td>Yuki המרגלת</td>
-        <td>תחפושת ליצן (מבדר) עם צבעים בוהקים; רעשן אלקטרוני; מסכה שמסתירה זהות</td>
-        <td><div class="swatches"><span class="sw" style="background:#FF1493"></span><span class="sw" style="background:#FFD700"></span><span class="sw" style="background:#00CED1"></span></div></td>
-        <td><span class="effect-tag">🎭 מסכות מרחפות</span></td>
-      </tr>
-      <tr>
-        <td class="char">🦎 Rex</td>
-        <td>Rex ה"גרגרן"</td>
-        <td>תחפושת אוזן-המן ענקית על הראש; פה תמיד פתוח; שקיות אוזני-המן מסביב</td>
-        <td><div class="swatches"><span class="sw" style="background:#D2691E"></span><span class="sw" style="background:#DAA520"></span><span class="sw" style="background:#FF6B6B"></span></div></td>
-        <td><span class="effect-tag">🍪 אוזני-המן נופלות</span></td>
-      </tr>
-      <tr>
-        <td class="char">🧪 Glitch</td>
-        <td>Glitch "מי אני?"</td>
-        <td>כל frame מראה תחפושת שונה (גליצ'); פרצוף מבולבל ומשועשע; מגילה פיקסלית</td>
-        <td><div class="swatches"><span class="sw" style="background:#FF00FF"></span><span class="sw" style="background:#00FF41"></span><span class="sw" style="background:#FFD700"></span></div></td>
-        <td><span class="effect-tag">🌈 גליצ' תחפושות</span></td>
-      </tr>
-      <tr>
-        <td class="char">🐢 Sensei Zen</td>
-        <td>זן מרדכי</td>
-        <td>חלוק שקים (בסגנון מרדכי); אבל עם שלט "לא כועס"; קריאת מגילה עם קול דרמטי</td>
-        <td><div class="swatches"><span class="sw" style="background:#8B6914"></span><span class="sw" style="background:#D3D3D3"></span></div></td>
-        <td><span class="effect-tag">📜 מגילה נפרשת</span></td>
-      </tr>
-    </tbody>
-  </table>
 </div>
-<hr>
+<hr class='div'>
 
-<!-- ===== פסח ===== -->
 <div class="section" id="pesach">
   <div class="section-header">
     <span class="emoji">🫓</span>
-    <div><h2>פסח</h2><div class="sub">15 ניסן · חג החרות</div></div>
-    <span class="tag tag-joy">חרות!</span>
+    <div><h2>פסח</h2><div class="sub">מרץ/אפריל | חג החרות</div></div>
+    <span class="tag tag-joy">חגיגי</span>
   </div>
-  <div class="holiday-meta">
-    <span>🎨 <strong>צבעים:</strong> כחול-ים, חול-מדבר, זהב-ים סוף, לבן-מצה</span>
-    <span>✨ <strong>סמלים:</strong> מצה, כוס אליהו, ים נקרע, ד' כוסות, חופש</span>
+  <div class="holiday-info"><strong>עיקר החג:</strong> פסח מציין את יציאת מצרים — חרות העם היהודי. סדר פסח עם ההגדה, מצה, ארבע כוסות, חיפוש חמץ, שיר חד גדיא.<br><strong>צבעים:</strong> כחול-ים, חום מצה, אדום יין, זהב<div class='symbols'>🫓🍷🌊⛓️🕊️🐑🌿</div></div>
+  <div class="skin-grid">
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a4a6a,#74B9FF)">🥷</div>
+        <div><div class="char-name">קי</div><div class="skin-name">🕊️ קי הבן החופשי</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> קי לובש חליפת נינג'ה בגוון ים-תיכוני עם שרשרת שבורה (שנשברה) כסמל חרות. על ראשו כיפה של ים סוף. על חגורתו — מצה מיניאטורית.</p>
+        <p><strong>פוז:</strong> עומד עם ידיים פרושות לאוויר — גוף פתוח לחלוטין, שרשרת שבורה מנפנפת.</p>
+        <div class="color-row"><span class="swatch" style="background:#1a4a6a"></span><span class="swatch" style="background:#74B9FF"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">⛓️ שרשרות נשברות ונופלות</div>
+      </div>
+      <div class="card-footer">קי: 'יציאת מצרים! גם מהקלדה לאט — אפשר לצאת לחרות של WPM גבוה!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a0a0a,#FF6B6B)">🥷</div>
+        <div><div class="char-name">מיקה</div><div class="skin-name">⚡ מיקה עשר המכות</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> מיקה בחליפה כהה עם 10 אמוג'י מכות על שרוולים — דם, צפרדע, כינים ועוד. גאנטלט מקרין את ההגדה הדיגיטלית.</p>
+        <p><strong>פוז:</strong> מציגה על הגאנטלט את עשר המכות כ-10 Ctrl-shortcuts — 'Ctrl+1 = דם, Ctrl+2 = צפרדע...'</p>
+        <div class="color-row"><span class="swatch" style="background:#4a0a0a"></span><span class="swatch" style="background:#FF6B6B"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">🔴 עשר המכות מסתובבות סביבה</div>
+      </div>
+      <div class="card-footer">מיקה: 'עשר מכות = עשר קיצורי מקלדת. ידי פרעה נשברה על ה-Enter!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#2a1a00,#FDCB6E)">🐢</div>
+        <div><div class="char-name">סנסאי זן</div><div class="skin-name">📖 סנסאי מגיד ההגדה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> סנסאי זן בגדי פסח חגיגיים, נשען על כרית הסבה מפוארת. על שולחנו לפניו — ההגדה הפתוחה עם הקלידה שלו בצד.</p>
+        <p><strong>פוז:</strong> מסב בנינג'ה-שלווה על הכרית, ספל יין לפניו, הגדה פתוחה. עיניים חצי עצומות של חכם.</p>
+        <div class="color-row"><span class="swatch" style="background:#2a1a00"></span><span class="swatch" style="background:#FDCB6E"></span><span class="swatch" style="background:#8B0000"></span></div>
+        <div class="anim-tag">📜 אותיות ההגדה עפות מהספר</div>
+      </div>
+      <div class="card-footer">חכמה: 'בכל דור ודור — חייב אדם לראות את עצמו כאילו הוא יצא ממצרים. ומהאצבעות הכבדות.'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a3a6a,#00CEC9)">🥷</div>
+        <div><div class="char-name">יוקי</div><div class="skin-name">💨 יוקי כמשה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> יוקי מתחפשת למשה! מטה עץ ענק (כמעט כגובהה), גלימה לבנה, שיערה הטורקיז קשור בצמה גדולה. עיניים נחושות.</p>
+        <p><strong>פוז:</strong> מחזיקה מטה ביד ורצה מהר מאוד — פנים של מי שמוביל עם מהירות. 'יצאנו!'</p>
+        <div class="color-row"><span class="swatch" style="background:#1a3a6a"></span><span class="swatch" style="background:#00CEC9"></span><span class="swatch" style="background:#E8E6F0"></span></div>
+        <div class="anim-tag">🌊 גלי ים נפתחים לשני הצדדים</div>
+      </div>
+      <div class="card-footer">יוקי: 'ים סוף! נחצה אותו בסיבוב אחד של 60 WPM!'</div>
+    </div>
   </div>
-  <table class="skin-table">
-    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
-    <tbody>
-      <tr>
-        <td class="char">🥷 Ki</td>
-        <td>Ki משה הנינג'ה</td>
-        <td>גלימת מדבר חומה-כחולה; מטה ענק בצד ימין; סנדלים; עיניים עם אש חרות</td>
-        <td><div class="swatches"><span class="sw" style="background:#1E90FF"></span><span class="sw" style="background:#D2B48C"></span><span class="sw" style="background:#F9CA24"></span></div></td>
-        <td><span class="effect-tag">🌊 גלי ים נפרדים</span></td>
-      </tr>
-      <tr>
-        <td class="char">⚡ Mika</td>
-        <td>מיקה הים</td>
-        <td>גלימה בצבעי ים כחול-ירוק; גלי מים דיגיטליים סביבה; קוד כתוב כמים</td>
-        <td><div class="swatches"><span class="sw" style="background:#006994"></span><span class="sw" style="background:#00CED1"></span><span class="sw" style="background:#87CEEB"></span></div></td>
-        <td><span class="effect-tag">🌊 אפקט ים נקרע</span></td>
-      </tr>
-      <tr>
-        <td class="char">🦎 Rex</td>
-        <td>Rex ה"עבד החופשי"</td>
-        <td>שרשראות שבורות על הידיים; גלימת עבד → גלימת חירות; מחזיק מצה ושמח</td>
-        <td><div class="swatches"><span class="sw" style="background:#8B4513"></span><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#FFD700"></span></div></td>
-        <td><span class="effect-tag">⛓️ שרשראות נשברות</span></td>
-      </tr>
-      <tr>
-        <td class="char">🐛 Bug</td>
-        <td>Bug הצפרדע</td>
-        <td>תחפושת צפרדע ירוקה (מכת הצפרדעים); עיניים קופצות; שמח בצורה מוזרה</td>
-        <td><div class="swatches"><span class="sw" style="background:#228B22"></span><span class="sw" style="background:#7CFC00"></span><span class="sw" style="background:#FFD700"></span></div></td>
-        <td><span class="effect-tag">🐸 צפרדעים קופצות</span></td>
-      </tr>
-      <tr>
-        <td class="char">🐢 Sensei Zen</td>
-        <td>זן ה"הגדה"</td>
-        <td>גלימת חכם עתיק; מגילת הגדה בידיו; יושב בראש שולחן הסדר; פרשת עשרת המכות</td>
-        <td><div class="swatches"><span class="sw" style="background:#8B0000"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#FFFFFF"></span></div></td>
-        <td><span class="effect-tag">📖 10 מכות פיקסל</span></td>
-      </tr>
-    </tbody>
-  </table>
 </div>
-<hr>
+<hr class='div'>
 
-<!-- ===== יום הזיכרון ===== -->
-<div class="section" id="yom-hazikaron">
+<div class="section" id="yom-hashoah">
   <div class="section-header">
     <span class="emoji">🕯️</span>
-    <div><h2>יום הזיכרון</h2><div class="sub">ד' אייר · יום הזיכרון לחללי צה"ל</div></div>
-    <span class="tag tag-memorial">מכובד</span>
+    <div><h2>יום השואה</h2><div class="sub">אפריל | יום הזיכרון לשואה ולגבורה</div></div>
+    <span class="tag tag-solemn">מכובד ונכבד</span>
   </div>
-  <div class="notice"><span class="icon">🕯️</span> עיצוב שקט ומכובד. ללא אפקטים חגיגיים. צבעים: שחור, לבן, אדום. הדמויות עומדות בדומייה.</div>
-  <table class="skin-table">
-    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
-    <tbody>
-      <tr>
-        <td class="char">🥷 Ki</td>
-        <td>Ki הנושא</td>
-        <td>גלימה שחורה עם סרט אדום; ראש מורכן; נר קטן בידיו; ריבוע ריק (זכרון) על החזה</td>
-        <td><div class="swatches"><span class="sw" style="background:#1a1a1a"></span><span class="sw" style="background:#CC0000"></span><span class="sw" style="background:#FFFFFF"></span></div></td>
-        <td><span class="effect-tag">🕯️ אור נר בלבד</span></td>
-      </tr>
-      <tr>
-        <td class="char">🐢 Sensei Zen</td>
-        <td>זן הזיכרון</td>
-        <td>גלימה שחורה-כהה עמוקה; עיניים עצומות; יד על הלב; אפס קישוטים</td>
-        <td><div class="swatches"><span class="sw" style="background:#1a1a1a"></span><span class="sw" style="background:#333333"></span></div></td>
-        <td><span class="effect-tag">🌑 ללא אפקטים</span></td>
-      </tr>
-      <tr>
-        <td class="char">👧 Noa</td>
-        <td>נועה הדומייה</td>
-        <td>שמלה שחורה-לבנה; פרח אדום יחיד בידה; ראש מורכן; הבעה שקטה ומכובדת</td>
-        <td><div class="swatches"><span class="sw" style="background:#1a1a1a"></span><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#CC0000"></span></div></td>
-        <td><span class="effect-tag">🌹 פרח מרחף</span></td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="holiday-info"><strong>עיקר היום:</strong> יום הזיכרון לשישה מיליון יהודים שנרצחו בשואה. צפירה, הדלקת נרות זיכרון, שמות הנספים. יום של קדושה, כבוד וזיכרון.<br><strong>צבעים:</strong> שחור, לבן, צהוב עדין בלבד<div class='symbols'>🕯️🌼🌟⭐🌹</div></div>
+  <div class="skin-grid"><div class="notice"><span class="icon">🕯️</span><div><strong>כלל עיצובי מחייב:</strong> סקינים ליום השואה יהיו <strong>חסכניים, שקטים, מכובדים ביותר</strong>. אין אנימציות שמחות. אין צבעים בוהקים. רק שחור, לבן, ופרח צהוב עדין. הדמויות יהיו ב<strong>תנוחות זיכרון</strong> בלבד — ראש מורכן, יד על לב, נר בוהק. כל שימוש בסקינים אלה מלוּוה בהודעת הסבר לילדים.</div></div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a0a,#2a2a2a)">🥷</div>
+        <div><div class="char-name">קי</div><div class="skin-name">🕯️ קי הזוכר</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> קי לובש חליפת נינג'ה שחורה פשוטה לחלוטין. על חזהו — פרח כלנית קטן בצהוב עדין. ידיו מחזיקות נר לבן.</p>
+        <p><strong>פוז:</strong> ראש מורכן, ידיים אוחזות נר. אין נשק, אין אקשן — רק זיכרון.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a0a"></span><span class="swatch" style="background:#2a2a2a"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">🕯️ אור נר מהבהב עדין בלבד</div>
+      </div>
+      <div class="card-footer">הודעה: 'זכור. לא נשכח ולא נסלח. שישה מיליון שמות.'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a0a,#1a3a1a)">🥷</div>
+        <div><div class="char-name">נועה</div><div class="skin-name">🌼 נועה המרפאת את הזיכרון</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> נועה לובשת חליפה שחורה-לבנה. על ידה — כף פרחי כלניות צהובות. שיערה הירוק קשור בפשטות.</p>
+        <p><strong>פוז:</strong> עומדת עם ראש מורכן, מחזיקה זר כלניות, עיניים עצומות.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a0a"></span><span class="swatch" style="background:#1a3a1a"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">🌼 פרחי כלנית נופלים לאט</div>
+      </div>
+      <div class="card-footer">נועה: 'הכלנית — ילדי ישראל שלא הספיקו לפרוח. זוכרים.'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a0a,#1a1a2a)">🐢</div>
+        <div><div class="char-name">סנסאי זן</div><div class="skin-name">📖 סנסאי מספר את הסיפור</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> סנסאי זן לובש גלימה שחורה פשוטה. על השריון שלו — מגן דוד קטן. מחזיק ספר זיכרון.</p>
+        <p><strong>פוז:</strong> יושב בשקט מוחלט, הספר פתוח לפניו, ראש מורכן. לא מדבר — רק זוכר.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a0a"></span><span class="swatch" style="background:#1a1a2a"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">📖 שמות גולשים לאט בדף</div>
+      </div>
+      <div class="card-footer">ביום זה סנסאי זן אינו אומר חכמות. הוא יושב בדממה ומחזיק את הזיכרון.</div>
+    </div>
+  </div>
 </div>
-<hr>
+<hr class='div'>
 
-<!-- ===== יום העצמאות ===== -->
+<div class="section" id="yom-hazikaron">
+  <div class="section-header">
+    <span class="emoji">🌹</span>
+    <div><h2>יום הזיכרון</h2><div class="sub">אפריל/מאי | יום הזיכרון לחללי מערכות ישראל</div></div>
+    <span class="tag tag-solemn">מכובד</span>
+  </div>
+  <div class="holiday-info"><strong>עיקר היום:</strong> יום הזיכרון לחיילי צה'ל שנפלו ולנפגעי פעולות האיבה. צפירה, טקסי זיכרון, קבר החייל הלא נודע. הפרג האדום כסמל.<br><strong>צבעים:</strong> כחול כהה, לבן, אדום פרג<div class='symbols'>🌹🇮🇱🕯️🌺💙</div></div>
+  <div class="skin-grid"><div class="notice"><span class="icon">🌹</span><div><strong>כלל עיצובי מחייב:</strong> יום הזיכרון הוא יום קדוש ורציני. הסקינים יהיו <strong>בגוון כחול-לבן עם פרג אדום בלבד</strong>. אין פעולות קרב, אין נשק שלוף — רק יד על לב ופרג על החזה. גיבורי אמת מוצגים בפירוט בסעיף הבא.</div></div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a3a,#1a1a6a)">🥷</div>
+        <div><div class="char-name">קי</div><div class="skin-name">🌺 קי שומר הזיכרון</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> קי לובש חליפת נינג'ה כחולה-כהה עם סמל פרג אדום על כתפו. שרוכי הסרט הראש קשורים בצורה של פרג. אין נשק.</p>
+        <p><strong>פוז:</strong> עומד זקוף עם יד על לב, ראש מורכן קלות — כמו בצפירה.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a3a"></span><span class="swatch" style="background:#1a1a6a"></span><span class="swatch" style="background:#CC2200"></span></div>
+        <div class="anim-tag">🌺 פרג אדום עדין מסתובב</div>
+      </div>
+      <div class="card-footer">קי שקט. ביום הזה הוא לא מעודד ולא מתלוצץ. הוא זוכר.</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a3a,#2a2a8a)">🥷</div>
+        <div><div class="char-name">קאי</div><div class="skin-name">💙 קאי הלוחם הנכבד</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> קאי לובש מדי צה'ל מעל חליפת הנינג'ה — כחול-לבן עם אות שחורה. פרח פרג על כיסו. ידיו מחזיקות קסדה.</p>
+        <p><strong>פוז:</strong> עומד בצבאיות עם קסדה בידיו, ראש מורכן בכבוד.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a3a"></span><span class="swatch" style="background:#2a2a8a"></span><span class="swatch" style="background:#CC2200"></span><span class="swatch" style="background:#E8E6F0"></span></div>
+        <div class="anim-tag">💙 כחול-לבן עדין מסביבו</div>
+      </div>
+      <div class="card-footer">קאי: 'הם נפלו למען כולנו. לא נשכח.'</div>
+    </div>
+  </div>
+</div>
+<hr class='div'>
+
 <div class="section" id="yom-haatzmaut">
   <div class="section-header">
-    <span class="emoji">🎆</span>
-    <div><h2>יום העצמאות</h2><div class="sub">ה' אייר · 76 שנה למדינת ישראל</div></div>
-    <span class="tag tag-hero">גאווה!</span>
+    <span class="emoji">🇮🇱</span>
+    <div><h2>יום העצמאות</h2><div class="sub">אפריל/מאי | 76 שנות מדינה</div></div>
+    <span class="tag tag-joy">חגיגי</span>
   </div>
-  <div class="holiday-meta">
-    <span>🎨 <strong>צבעים:</strong> כחול-לבן-תכלת ישראלי</span>
-    <span>✨ <strong>סמלים:</strong> דגל, מנורה, זיקוקים, מגן דוד</span>
+  <div class="holiday-info"><strong>עיקר החג:</strong> יום הולדת מדינת ישראל. מנגלים, דגלים, מופעי אש, ריקודי עם, הצגת חיל האוויר. הכי ישראלי שיש!<br><strong>צבעים:</strong> כחול, לבן, כחול-לבן, כחול-לבן ועוד כחול-לבן<div class='symbols'>🇮🇱🎆🔵⚪🎉✈️</div></div>
+  <div class="skin-grid">
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a3a8a,#74B9FF)">🥷</div>
+        <div><div class="char-name">קי</div><div class="skin-name">🇮🇱 קי הציוני</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> קי לובש חליפת נינג'ה כחולה-לבנה מושלמת. דגל ישראל קטן כגלימה מאחוריה. מגן דוד כסוף על החזה. על ראשו — תרבוש עם דגלון.</p>
+        <p><strong>פוז:</strong> קופץ באוויר עם שתי ידיים מורמות ועם שני דגלוני ישראל — שמחה מוחלטת.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a3a8a"></span><span class="swatch" style="background:#E8E6F0"></span><span class="swatch" style="background:#74B9FF"></span></div>
+        <div class="anim-tag">🎆 זיקוקים כחולים-לבנים מאחוריו</div>
+      </div>
+      <div class="card-footer">קי: 'יום הולדת ישראל! עצמאות! חרות! ו-100 WPM!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a1a4a,#74B9FF)">🥷</div>
+        <div><div class="char-name">מיקה</div><div class="skin-name">⭐ מיקה חיל האוויר</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> מיקה בחליפת טייסת של חיל האוויר הישראלי — כחול כהה עם עיטורי כנפיים. קסדת טייס עם ויזר הולוגרמי. גאנטלט עם מפה אווירית.</p>
+        <p><strong>פוז:</strong> בתנוחת טייסת — ויזר למעלה, מגניבה, עם גאנטלט מציג מסלולי טיסה.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a1a4a"></span><span class="swatch" style="background:#74B9FF"></span><span class="swatch" style="background:#C0C0C0"></span></div>
+        <div class="anim-tag">✈️ מטוסי חיל האוויר עוברים ברקע</div>
+      </div>
+      <div class="card-footer">מיקה: 'F-35 טס ב-Mach 1.6. אני מקלידה ב-Ctrl+Speed.'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a3a0a,#F9CA24)">🐢</div>
+        <div><div class="char-name">סנסאי זן</div><div class="skin-name">🏛️ סנסאי אב המדינה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> סנסאי זן בחליפת מייסד מדינה — פסטינג לבן עם עניבה. נושא בידיו גלילת מגילת העצמאות. על גבו — ארכיון ישן.</p>
+        <p><strong>פוז:</strong> יושב על כסא של חוכמה, קורא את מגילת העצמאות בקול — עיניים לוהטות.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a3a0a"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#E8E6F0"></span></div>
+        <div class="anim-tag">📜 מגילת העצמאות פורשת מסביבו</div>
+      </div>
+      <div class="card-footer">חכמה: 'העם היהודי... הקים מחדש את מדינתו. כמו מי שחוזר להקליד אחרי הפסקה ארוכה.'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a0a0a,#F9CA24)">🐉</div>
+        <div><div class="char-name">להבה</div><div class="skin-name">🔥 להבה ושריון 8200</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> להבה הדרקון לובש שריון קרבי של יחידה 8200 — טכנולוגי-סייברי. פסי להבה מוחלפים בפסי קוד. עיניו בוהקות בגאווה.</p>
+        <p><strong>פוז:</strong> תנוחת לחימה נכבדת — אש ישראלית מסביב, דגל כחול-לבן ברקע.</p>
+        <div class="color-row"><span class="swatch" style="background:#4a0a0a"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#0a3a8a"></span></div>
+        <div class="anim-tag">🔥 אש כחולה-לבנה מסביבו</div>
+      </div>
+      <div class="card-footer">להבה: 'אש קדושה ישראלית! לוחם ראוי למדינה ראויה!'</div>
+    </div>
   </div>
-  <table class="skin-table">
-    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
-    <tbody>
-      <tr>
-        <td class="char">🥷 Ki</td>
-        <td>Ki הלוחם</td>
-        <td>גלימה בצבעי דגל ישראל; מגן דוד על החזה; דגל ישראל מתנוסס מאחוריו</td>
-        <td><div class="swatches"><span class="sw" style="background:#003087"></span><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#0038A8"></span></div></td>
-        <td><span class="effect-tag">🎆 זיקוקים כחול-לבן</span></td>
-      </tr>
-      <tr>
-        <td class="char">⚡ Mika</td>
-        <td>מיקה העצמאות</td>
-        <td>חליפה כחולה-לבנה; גאנטלט עם מנורה; שיר קלועים בצבעי ישראל</td>
-        <td><div class="swatches"><span class="sw" style="background:#0038A8"></span><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#F9CA24"></span></div></td>
-        <td><span class="effect-tag">🕎 מנורה מזהירה</span></td>
-      </tr>
-      <tr>
-        <td class="char">🦊 Yuki</td>
-        <td>Yuki הסערה הכחולה</td>
-        <td>גלימת ברק בכחול ישראלי עמוק; ברקי מגן-דוד; זנב עם דגלון ישראל</td>
-        <td><div class="swatches"><span class="sw" style="background:#003087"></span><span class="sw" style="background:#87CEEB"></span><span class="sw" style="background:#FFFFFF"></span></div></td>
-        <td><span class="effect-tag">⚡ ברקים כחולים</span></td>
-      </tr>
-      <tr>
-        <td class="char">🦎 Rex</td>
-        <td>Rex חגיגה</td>
-        <td>גלימה עם שרשרת דגלוני ישראל; מנגל מיניאטורי בחגורה; חוגג בקולי קולות</td>
-        <td><div class="swatches"><span class="sw" style="background:#0038A8"></span><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#FF6B6B"></span></div></td>
-        <td><span class="effect-tag">🎊 קונפטי כחול-לבן</span></td>
-      </tr>
-      <tr>
-        <td class="char">👧 Noa</td>
-        <td>נועה גאווה</td>
-        <td>שמלה כחולה עם מגן דוד; מנופפת בשני דגלים; חיוך גדול ושמח</td>
-        <td><div class="swatches"><span class="sw" style="background:#0038A8"></span><span class="sw" style="background:#FFFFFF"></span></div></td>
-        <td><span class="effect-tag">🇮🇱 דגלים מרחפים</span></td>
-      </tr>
-    </tbody>
-  </table>
 </div>
-<hr>
+<hr class='div'>
 
-<!-- ===== ל"ג בעומר ===== -->
+<div class="section" id="yom-yerushalayim">
+  <div class="section-header">
+    <span class="emoji">🏛️</span>
+    <div><h2>יום ירושלים</h2><div class="sub">מאי/יוני | 57 שנות איחוד ירושלים</div></div>
+    <span class="tag tag-joy">חגיגי</span>
+  </div>
+  <div class="holiday-info"><strong>עיקר החג:</strong> יום איחוד ירושלים ב-1967. הכותל המערבי, נשיקת האבנים, ירושלים של זהב. עיר הנצח.<br><strong>צבעים:</strong> זהב ירושלמי, לבן-שנהב, כחול שמים<div class='symbols'>🏛️🕌🌟💛🏰✡️</div></div>
+  <div class="skin-grid">
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#3a2a00,#F9CA24)">🐢</div>
+        <div><div class="char-name">סנסאי זן</div><div class="skin-name">🏛️ סנסאי הכותל</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> סנסאי זן לובש גלימה בגוון אבני ירושלים — שנהב-זהוב. על גבו — ספר תפילה קטן. מעמד של חכם שעמד ליד הכותל אלף שנה.</p>
+        <p><strong>פוז:</strong> עומד ליד קיר אבנים מצוייר, יד נוגעת באבן, עיניים עצומות — רגע של קשר.</p>
+        <div class="color-row"><span class="swatch" style="background:#3a2a00"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#E8E6F0"></span></div>
+        <div class="anim-tag">💫 קרני שמש זהובות מאירות</div>
+      </div>
+      <div class="card-footer">חכמה: 'ירושלים של זהב — כמו מקש הזהב שעוד לא לחצת עליו. כשתגיע — תדע.'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a0a3a,#F9CA24)">🥷</div>
+        <div><div class="char-name">לונה</div><div class="skin-name">🌙 לונה ירושלים של לילה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> לונה בגלימה כחולה-כהה המבריקה כשמי ירושלים בלילה. גוון שיערה הכסוף משתנה לזהוב ירושלמי. על גבה — כיפת הסלע.</p>
+        <p><strong>פוז:</strong> עומדת מתחת לשמי ירושלים הזהובים, ראש מורם למעלה, עיניים פקוחות לרווחה.</p>
+        <div class="color-row"><span class="swatch" style="background:#1a0a3a"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#74B9FF"></span></div>
+        <div class="anim-tag">✨ כוכבי ירושלים מנצנצים מסביבה</div>
+      </div>
+      <div class="card-footer">לונה: 'ירושלים — עיר שבה הזמן עומד. אני מרגישה אותו.'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a1a6a,#F9CA24)">🥷</div>
+        <div><div class="char-name">קי</div><div class="skin-name">✡️ קי מזמר ירושלים של זהב</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> קי לובש גלימת כחול-זהב מהודרת עם מגן דוד. על כתפו — כינור קטן (מגדלות של זהב, כינור ימלל). עיניים נוצצות.</p>
+        <p><strong>פוז:</strong> שר עם ידיים פרושות — מגזים בפנים של שחקן — אבל ברור שזה בא מהלב.</p>
+        <div class="color-row"><span class="swatch" style="background:#1a1a6a"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#E8E6F0"></span></div>
+        <div class="anim-tag">🌟 ירושלים של זהב כתובה ברקע</div>
+      </div>
+      <div class="card-footer">קי: 'ירושלים של זהב! של נחושת! ושל אוווור! ...אני לא יודע לשיר אבל לא אכפת לי!'</div>
+    </div>
+  </div>
+</div>
+<hr class='div'>
+
 <div class="section" id="lag-baomer">
   <div class="section-header">
     <span class="emoji">🔥</span>
-    <div><h2>ל"ג בעומר</h2><div class="sub">18 אייר · מדורות ורשב"י</div></div>
-    <span class="tag tag-joy">אש!</span>
+    <div><h2>ל"ג בעומר</h2><div class="sub">מאי | יום המדורה</div></div>
+    <span class="tag tag-joy">חגיגי</span>
   </div>
-  <div class="holiday-meta">
-    <span>🎨 <strong>צבעים:</strong> כתום-אש, אדום-גחלים, שחור-עשן, צהוב-להבה</span>
-    <span>✨ <strong>סמלים:</strong> מדורה, קשת-וחץ, בר-כוכבא, זוהר</span>
+  <div class="holiday-info"><strong>עיקר החג:</strong> יום שמחה בין ספירת העומר — מדורות ענק, קשת וחץ (זכר לבר כוכבא), חינוכם הראשון של ילדים. הצטלמות חייב ליד מדורה.<br><strong>צבעים:</strong> כתום אש, אדום, צהוב, חום עצים<div class='symbols'>🔥🏹🌲🪵🎯🎪</div></div>
+  <div class="skin-grid">
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a1a00,#FF6B6B)">🥷</div>
+        <div><div class="char-name">קאי</div><div class="skin-name">🔥 קאי אש הקרב</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> קאי לובש ארמור קרב עם תוספת מדורה — פסי האש שלו עכשיו ממש אש! מחזיק קשת וחץ מהודרת. שיערו הסמוק בוהק.</p>
+        <p><strong>פוז:</strong> תנוחת קשת — מתוח מלא, קשת כוונת, עיני צייד נוקבות.</p>
+        <div class="color-row"><span class="swatch" style="background:#4a1a00"></span><span class="swatch" style="background:#FF6B6B"></span><span class="swatch" style="background:#FDCB6E"></span></div>
+        <div class="anim-tag">🔥 אלות אש ומדורה בוהקת ברקע</div>
+      </div>
+      <div class="card-footer">קאי: 'קשת וחץ — נשק של לוחמי בר כוכבא! ומנינג'ה!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a1a00,#FDCB6E)">🥷</div>
+        <div><div class="char-name">קי</div><div class="skin-name">🎯 קי המדורה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> קי ב'חליפת מדורה' — גוונים כתומים-כהים עם עיטורי להבות. מחזיק מקל גדול לדחיפת גזרי עץ. על ראשו כיפה שרופה-סגנון.</p>
+        <p><strong>פוז:</strong> מסביב למדורה ענקית — בידיו מקל, פניו מאוירות באור האש.</p>
+        <div class="color-row"><span class="swatch" style="background:#4a1a00"></span><span class="swatch" style="background:#FDCB6E"></span><span class="swatch" style="background:#FF6B6B"></span></div>
+        <div class="anim-tag">🔥 מדורה בוהקת מסביב</div>
+      </div>
+      <div class="card-footer">קי: 'ל'ג בעומר! מדורות! קשת! ולנגן ג'מבה ג'מבה!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a0a0a,#FF6B6B)">🐉</div>
+        <div><div class="char-name">להבה</div><div class="skin-name">🐉 להבה מלך האש</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> להבה הדרקון ב'מצב מדורה' — מאיץ את כוחו פי עשר. הכנפיים שלו כעת מלאות אש ממשית. סביב גופו 7 מדורות.</p>
+        <p><strong>פוז:</strong> עף מעל מדורות, פולט אש מהפה, מואר לחלוטין — שיא הדרמה.</p>
+        <div class="color-row"><span class="swatch" style="background:#4a0a0a"></span><span class="swatch" style="background:#FF6B6B"></span><span class="swatch" style="background:#FDCB6E"></span></div>
+        <div class="anim-tag">🔥🔥🔥 אש בכל מקום — מדורה ל'ג בעומר</div>
+      </div>
+      <div class="card-footer">להבה: 'ל'ג בעומר! יום שבו גם הדרקונים מציתים מדורות בהצלחה!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#3a2a00,#FDCB6E)">🦕</div>
+        <div><div class="char-name">רקס</div><div class="skin-name">🪵 רקס מאסף עצים</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> רקס מנסה לאסוף גזרי עץ לבניית מדורה — אבל ידיו הקטנות לא מגיעות. על גבו — ערמה של עצים גדולה מגובהו.</p>
+        <p><strong>פוז:</strong> מנסה לסחוב ענף ענק פי 3 מגודלו — כמובן שנופל. קם. מנסה שוב.</p>
+        <div class="color-row"><span class="swatch" style="background:#3a2a00"></span><span class="swatch" style="background:#FDCB6E"></span><span class="swatch" style="background:#8B4513"></span></div>
+        <div class="anim-tag">🪵 עצים נופלים, רקס קם שוב</div>
+      </div>
+      <div class="card-footer">רקס: 'מ-מ-מדורה! ר-ר-רקס לא מוותר! ...הענף גדול יותר ממני.'</div>
+    </div>
   </div>
-  <table class="skin-table">
-    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
-    <tbody>
-      <tr>
-        <td class="char">🥷 Ki</td>
-        <td>Ki הקשת</td>
-        <td>גלימה חומה-אדמתית; קשת ענקית על הגב; חץ בוער על הקשת; פנים של לוחם</td>
-        <td><div class="swatches"><span class="sw" style="background:#8B4513"></span><span class="sw" style="background:#FF4500"></span><span class="sw" style="background:#FFD700"></span></div></td>
-        <td><span class="effect-tag">🔥 חץ אש</span></td>
-      </tr>
-      <tr>
-        <td class="char">🦊 Yuki</td>
-        <td>Yuki האש</td>
-        <td>זנב הבוער בלהבות כתומות; עיניים בוערות; גלימה בצבעי גחלים</td>
-        <td><div class="swatches"><span class="sw" style="background:#FF4500"></span><span class="sw" style="background:#FF8C00"></span><span class="sw" style="background:#FFD700"></span></div></td>
-        <td><span class="effect-tag">🔥 אש מהזנב</span></td>
-      </tr>
-      <tr>
-        <td class="char">🦎 Rex</td>
-        <td>Rex המדורה</td>
-        <td>גוף ממש עשוי מקורות עץ בוערות; עיניים כגחלים; עשן קל עולה מהראש</td>
-        <td><div class="swatches"><span class="sw" style="background:#8B4513"></span><span class="sw" style="background:#FF4500"></span><span class="sw" style="background:#1a1a1a"></span></div></td>
-        <td><span class="effect-tag">💨 עשן עולה</span></td>
-      </tr>
-      <tr>
-        <td class="char">🧪 Glitch</td>
-        <td>Glitch רשב"י</td>
-        <td>גלימת מסתורין כהה; ספר הזוהר גליצ'י; אש פיקסלית מכל כיוון; עיניים לוחשות</td>
-        <td><div class="swatches"><span class="sw" style="background:#FF4500"></span><span class="sw" style="background:#00FF41"></span><span class="sw" style="background:#1a1a1a"></span></div></td>
-        <td><span class="effect-tag">✨ גליצ' זוהר</span></td>
-      </tr>
-    </tbody>
-  </table>
 </div>
-<hr>
+<hr class='div'>
 
-<!-- ===== שבועות ===== -->
 <div class="section" id="shavuot">
   <div class="section-header">
-    <span class="emoji">🌾</span>
-    <div><h2>שבועות</h2><div class="sub">6 סיון · מתן תורה וביכורים</div></div>
-    <span class="tag tag-nature">קציר!</span>
+    <span class="emoji">🌸</span>
+    <div><h2>שבועות</h2><div class="sub">מאי/יוני | חג מתן תורה</div></div>
+    <span class="tag tag-joy">חגיגי</span>
   </div>
-  <div class="holiday-meta">
-    <span>🎨 <strong>צבעים:</strong> ירוק-חיטה, לבן-גבינה, זהב-שיבולים, צהוב-חמאה</span>
-    <span>✨ <strong>סמלים:</strong> לוחות הברית, שיבולים, חלב ודבש, ביכורים</span>
+  <div class="holiday-info"><strong>עיקר החג:</strong> שבועות מציין את מתן תורה בהר סיני. אוכלים מאכלי חלב, מתחפשים (לפעמים), קוראים מגילת רות, מקשטים בפרחים.<br><strong>צבעים:</strong> לבן, ירוק, כחול שמים, ורוד פרחים<div class='symbols'>🌸🌿🍰🌾📜🌻</div></div>
+  <div class="skin-grid">
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a1a3a,#FD79A8)">🥷</div>
+        <div><div class="char-name">לונה</div><div class="skin-name">🌸 לונה פסגת סיני</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> לונה בגלימת לבן-ורוד-ירוק — 'פרח מהר סיני'. שיערה הכסוף מקושט בפרחי בר. על גבה — לוחות אבן קטנים שנוצצים.</p>
+        <p><strong>פוז:</strong> עומדת בפסגת הר, גלימה מתנפנפת, לוחות אבן בידיה — שקט הר.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a1a3a"></span><span class="swatch" style="background:#FD79A8"></span><span class="swatch" style="background:#E8E6F0"></span></div>
+        <div class="anim-tag">🌸 פרחים נושרים מהשמים</div>
+      </div>
+      <div class="card-footer">לונה: 'בהר סיני הכל היה שקט. ואז — עשרת הדיברות. כמו עשר אצבעות על מקלדת.'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a3a1a,#FD79A8)">🥷</div>
+        <div><div class="char-name">נועה</div><div class="skin-name">🌿 נועה כרות</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> נועה מתחפשת לרות — שמלת כפרית ירוקה-לבנה, מגל בידה (קטן ומתוק), קלועות שיבולים בשיערה הירוק.</p>
+        <p><strong>פוז:</strong> עומדת בשדה חיטה, מחזיקה שיבולים, מחייכת בחיוך של מי שמצאה את מקומה.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a3a1a"></span><span class="swatch" style="background:#FD79A8"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">🌾 שיבולים מתנועעות בזפיר</div>
+      </div>
+      <div class="card-footer">נועה: 'אשר תלכי אלך! רות לא עזבה. גם אני לא עוזבת תלמיד שמתקשה.'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a1a4a,#00CEC9)">🥷</div>
+        <div><div class="char-name">מיקה</div><div class="skin-name">💻 מיקה מתן התורה הדיגיטלית</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> מיקה בגלימה לבנה-ירוקה עם קוד שנגזר מהשמים. גאנטלט מציג את עשרת הדיברות כ-10 Keyboard Shortcuts. ענן עם קוד מסביב לראשה.</p>
+        <p><strong>פוז:</strong> מרימה ידיים לשמים, קוד יורד עליה מהעננים ישר לגאנטלט.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a1a4a"></span><span class="swatch" style="background:#00CEC9"></span><span class="swatch" style="background:#E8E6F0"></span></div>
+        <div class="anim-tag">⚡ קוד יורד מהשמים לגאנטלט</div>
+      </div>
+      <div class="card-footer">מיקה: 'עשרת הדיברות = עשרת ה-shortcuts הכי חשובים. אנחנו יהודים, אנחנו אוהבים קיצורי דרך!'</div>
+    </div>
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a1a3a,#FD79A8)">🐢</div>
+        <div><div class="char-name">סנסאי זן</div><div class="skin-name">🍰 סנסאי עוגת הגבינה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> סנסאי זן מחזיק עוגת גבינה ענקית — גדולה כמעט כגופו! מקושטת בלוחות אבן מסוכר ועלי הדס. פרצוף שמח במיוחד.</p>
+        <p><strong>פוז:</strong> מציג את העוגה בגאווה, עיניים ברקות, כיפה מוטה — 'עשיתי לבד!'</p>
+        <div class="color-row"><span class="swatch" style="background:#1a1a3a"></span><span class="swatch" style="background:#FD79A8"></span><span class="swatch" style="background:#E8E6F0"></span></div>
+        <div class="anim-tag">🍰 קרם גבינה טס, פרחים נופלים</div>
+      </div>
+      <div class="card-footer">סנסאי זן: 'תורה ניתנה מהשמים. עוגת גבינה — עשיתי אני. שניהם חשובים.'</div>
+    </div>
   </div>
-  <table class="skin-table">
-    <thead><tr><th>דמות</th><th>שם סקין</th><th>תיאור מראה</th><th>צבעים</th><th>אפקט מיוחד</th></tr></thead>
-    <tbody>
-      <tr>
-        <td class="char">🥷 Ki</td>
-        <td>Ki הלוחות</td>
-        <td>גלימה לבנה עם עשרת הדיברות רקומים; נושא לוחות אבן בידיו; כתר שיבולים זהוב</td>
-        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#228B22"></span></div></td>
-        <td><span class="effect-tag">⚡ ברק מהלוחות</span></td>
-      </tr>
-      <tr>
-        <td class="char">🦋 Luna</td>
-        <td>לונה הביכורים</td>
-        <td>גלימת קציר ירוקה-זהובה; סל ביכורים מרחף; כתר שיבולי חיטה</td>
-        <td><div class="swatches"><span class="sw" style="background:#228B22"></span><span class="sw" style="background:#DAA520"></span><span class="sw" style="background:#FFFACD"></span></div></td>
-        <td><span class="effect-tag">🌾 שיבולים מרחפות</span></td>
-      </tr>
-      <tr>
-        <td class="char">🦎 Rex</td>
-        <td>Rex גבינה</td>
-        <td>גוף עם כתמי גבינה צהובים; מחזיק גלגל גבינה ענק; מחויך רחב</td>
-        <td><div class="swatches"><span class="sw" style="background:#FFD700"></span><span class="sw" style="background:#FFFACD"></span><span class="sw" style="background:#F5F5DC"></span></div></td>
-        <td><span class="effect-tag">🧀 גבינות נופלות</span></td>
-      </tr>
-      <tr>
-        <td class="char">🐢 Sensei Zen</td>
-        <td>זן מתן תורה</td>
-        <td>גלימת כהן גדול עם אפוד; מחזיק לוחות הברית; הוד מלכותי-קדוש</td>
-        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#F9CA24"></span><span class="sw" style="background:#00008B"></span></div></td>
-        <td><span class="effect-tag">✨ אור קדוש</span></td>
-      </tr>
-      <tr>
-        <td class="char">🐛 Bug</td>
-        <td>Bug הדבורה</td>
-        <td>תחפושת דבורה ענקית; מוצאת פרחים ומייצרת דבש-קוד; זמזום מתמיד</td>
-        <td><div class="swatches"><span class="sw" style="background:#FFD700"></span><span class="sw" style="background:#1a1a1a"></span><span class="sw" style="background:#FF8C00"></span></div></td>
-        <td><span class="effect-tag">🍯 דבש זורם</span></td>
-      </tr>
-    </tbody>
-  </table>
 </div>
-<hr>
+<hr class='div'>
 
-<!-- ===== גיבורי אמת ===== -->
 <div class="section" id="real-heroes">
   <div class="section-header">
-    <span class="emoji">🛡️</span>
-    <div><h2>גיבורי אמת — סקיני כבוד</h2><div class="sub">לימים הלאומיים: יום הזיכרון ויום העצמאות</div></div>
-    <span class="tag tag-hero">גיבורים</span>
+    <span class="emoji">🦺</span>
+    <div><h2>גיבורי אמת — סקינים לאנשי שירות</h2>
+    <div class="sub">יום הזיכרון, יום העצמאות, ואורך השנה</div></div>
+    <span class="tag tag-hero">גיבורי אמת</span>
   </div>
-  <div class="notice"><span class="icon">🛡️</span> סקינים אלה מוצגים בימי יום הזיכרון ויום העצמאות בלבד. הם מכובדים, אותנטיים ומדויקים. הדמויות מאמצות את מדי הגיבורים עם כבוד.</div>
-  <table class="hero-table">
-    <thead><tr><th>גיבור</th><th>סקין לדמות</th><th>מדים ופרטים</th><th>צבעים</th><th>הודעה מיוחדת</th></tr></thead>
-    <tbody>
-      <tr>
-        <td>🪖 חייל צה"ל</td>
-        <td><strong>Ki</strong> — Ki הלוחם</td>
-        <td>מדי כחול-ירוק (מדי ב'); כומתה ירוקה; מגן עם דגל ישראל; עמידת כבוד</td>
-        <td><div class="swatches"><span class="sw" style="background:#4B5320"></span><span class="sw" style="background:#556B2F"></span><span class="sw" style="background:#0038A8"></span></div></td>
-        <td>"שמור על ישראל בקלידות ובשדה"</td>
-      </tr>
-      <tr>
-        <td>👮 שוטר ישראלי</td>
-        <td><strong>Yuki</strong> — Yuki הכחולה</td>
-        <td>מדי משטרה כחולים; כומתה כחולה; אפודה "משטרה"; סמל הקציר על הכתף</td>
-        <td><div class="swatches"><span class="sw" style="background:#003087"></span><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#87CEEB"></span></div></td>
-        <td>"לשמור על הסדר — כמו לשמור על הקצב"</td>
-      </tr>
-      <tr>
-        <td>🚒 כבאי</td>
-        <td><strong>Rex</strong> — Rex הכבאי</td>
-        <td>חליפת כיבוי אש כתומה-אדומה; קסדה כבאים; שרוולי עמידה לחום; מיכל מים</td>
-        <td><div class="swatches"><span class="sw" style="background:#FF4500"></span><span class="sw" style="background:#FF8C00"></span><span class="sw" style="background:#FFD700"></span></div></td>
-        <td>"ריצה לתוך האש דורשת אומץ אמיתי"</td>
-      </tr>
-      <tr>
-        <td>🚑 פרמדיק מד"א</td>
-        <td><strong>Luna</strong> — לונה המציל</td>
-        <td>מדי מד"א לבן-ירוק; מגן דוד אדום על החזה; ערכת עזרה ראשונה; שלווה תחת לחץ</td>
-        <td><div class="swatches"><span class="sw" style="background:#FFFFFF"></span><span class="sw" style="background:#009900"></span><span class="sw" style="background:#CC0000"></span></div></td>
-        <td>"כל שנייה חשובה — כמו כל הקשה"</td>
-      </tr>
-      <tr>
-        <td>🟡 מתנדב הצלה</td>
-        <td><strong>Kai</strong> — Kai הצלה</td>
-        <td>אפודת הצלה צהובה-ניאון; כובע "הצלה"; שרוולי זוהר; מכשיר קשר; מחויך</td>
-        <td><div class="swatches"><span class="sw" style="background:#FFD700"></span><span class="sw" style="background:#FF8C00"></span><span class="sw" style="background:#FFFFFF"></span></div></td>
-        <td>"גיבור אמת לא חייב מדים רשמיים"</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<hr>
-
-<!-- ===== מערכת פתיחה ===== -->
-<div class="section" id="unlock">
-  <div class="section-header">
-    <span class="emoji">🔓</span>
-    <div><h2>מערכת פתיחה עונתית</h2><div class="sub">כיצד פותחים סקינים</div></div>
-    <span class="tag tag-joy">גיימיפיקציה</span>
+  <div class="holiday-info">
+    <strong>תפיסת העיצוב:</strong> לכל אחד מגיבורי האמת הישראלים — לוחמים, מגינים, מצילים — מוצמד הדמות המתאימה ביותר מהפנתיאון של Ninja Keyboard. כל שיוך מחזק את הקשר בין דמות המשחק לגיבור האמת. הסקינים זמינים לאורך כל השנה, עם בולטות מיוחדת ביום הזיכרון וביום העצמאות.
+    <div class="symbols">🪖🚒🚑🛡️⚕️🔬</div>
   </div>
+  <div class="hero-grid">
 
-  <h3 style="color:var(--purple);margin-bottom:12px;font-size:16px;">שיטות פתיחה</h3>
-  <table class="unlock-table">
-    <thead><tr><th>שיטה</th><th>כיצד פותחים</th><th>זמינות</th></tr></thead>
-    <tbody>
-      <tr><td>⏰ עונתי</td><td>מופיע אוטומטית ב-7 ימים לפני החג ועד 3 ימים אחריו</td><td>כל המשתמשים</td></tr>
-      <tr><td>⚡ מהירות</td><td>השג WPM מינימלי (לפי גיל) בתוך חלון החג</td><td>כל המשתמשים</td></tr>
-      <tr><td>🎯 דיוק</td><td>96%+ דיוק ב-3 שיעורים רצופים בתקופת החג</td><td>כל המשתמשים</td></tr>
-      <tr><td>🏆 אתגר מיוחד</td><td>השלם אתגר ייעודי לכל חג (ראה טבלה מטה)</td><td>כל המשתמשים</td></tr>
-      <tr><td>👑 פרמיום</td><td>גישה מידית לכל סקיני הגיבורים ב-יום הזיכרון/עצמאות</td><td>מנויי פרמיום</td></tr>
-      <tr><td>🎓 מורה</td><td>מורה מעניק לכיתה; כל הכיתה פותחת יחד</td><td>חשבונות מורה</td></tr>
-    </tbody>
-  </table>
-
-  <h3 style="color:var(--green);margin-bottom:12px;margin-top:20px;font-size:16px;">אתגרי חג (פתיחה מיוחדת)</h3>
-  <table class="unlock-table">
-    <thead><tr><th>חג</th><th>אתגר</th><th>פרס</th></tr></thead>
-    <tbody>
-      <tr><td>🍎 ראש השנה</td><td>הקלד 365 מילים נכונות ברצף — שנה שלמה של מילים!</td><td>Ki הזהוב (סקין נדיר)</td></tr>
-      <tr><td>🕊️ יום כיפור</td><td>שעה של הקלדה ב-98%+ דיוק ללא שגיאות</td><td>Ki הטהור (אפקט שקט)</td></tr>
-      <tr><td>🕎 חנוכה</td><td>8 ימי אש — שיעור אחד ביום במשך 8 ימי חנוכה</td><td>Mika הסביבון (אפקט ספין)</td></tr>
-      <tr><td>🎭 פורים</td><td>הקלד מגילת אסתר — כל הפרק הראשון (בעברית)</td><td>Glitch "מי אני" (גליצ' מלא)</td></tr>
-      <tr><td>🫓 פסח</td><td>40 שיעורים — 40 שנות המדבר ב-40 שיעורים!</td><td>Ki משה (אפקט ים נקרע)</td></tr>
-      <tr><td>🇮🇱 יום העצמאות</td><td>הקלד את הצהרת העצמאות כולה ב-95%+ דיוק</td><td>כל 5 גיבורי אמת + Badge מיוחד</td></tr>
-      <tr><td>🔥 ל"ג בעומר</td><td>WPM אחיד — אותו מספר WPM ±2 ב-3 שיעורים</td><td>Yuki האש (להבות פרמיום)</td></tr>
-      <tr><td>🌾 שבועות</td><td>מצטיין ב-10 שיעורי מקלדת נגיעה (touch typing)</td><td>Sensei זן מתן תורה</td></tr>
-    </tbody>
-  </table>
-
-  <h3 style="color:var(--orange);margin-bottom:12px;margin-top:20px;font-size:16px;">WPM מינימלי לפי גיל</h3>
-  <table class="unlock-table">
-    <thead><tr><th>קבוצת גיל</th><th>WPM נדרש</th><th>עולם</th></tr></thead>
-    <tbody>
-      <tr><td>6–8</td><td>15 WPM</td><td>שתיל (Shatil)</td></tr>
-      <tr><td>8–10</td><td>25 WPM</td><td>נבט (Nevet)</td></tr>
-      <tr><td>10–12</td><td>35 WPM</td><td>גזע (Geza)</td></tr>
-      <tr><td>12–14</td><td>50 WPM</td><td>ענף (Anaf)</td></tr>
-      <tr><td>14+</td><td>65 WPM</td><td>צמרת (Tzameret)</td></tr>
-    </tbody>
-  </table>
+    <div class="hero-card">
+      <div class="hc-top"><span class="hc-icon">🪖</span>
+        <div><div class="hc-title">חיילי צה'ל</div><div class="hc-sub">מדי קרב ומדי שרד</div></div>
+      </div>
+      <div class="hc-body"><strong>עיצוב:</strong> מדי אוליב/כחול-לבן עם סמל יחידה. נשק סגנוני (לא אמיתי) על הגב. דרגות — ממ'מ עד אלוף — על כתפיים.<br><strong>גרסאות:</strong> מדי שטח (ירוק כהה), מדי חיל האוויר (כחול כהה), מדי חיל הים (כחול ים).<br><strong>הודעה:</strong> 'גיבורי ישראל — מגנים עלינו כדי שנוכל ללמוד, לשחק ולהתפתח.'
+        <div class="char-list"><span class="char-chip">קאי (לוחם קרבי)</span><span class="char-chip">קי (חייל שדה)</span><span class="char-chip">להבה (מדי מחלקת שריון)</span></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-top"><span class="hc-icon">🌹</span>
+        <div><div class="hc-title">קצינות ולוחמות צה'ל</div><div class="hc-sub">כוח, חכמה, אומץ</div></div>
+      </div>
+      <div class="hc-body"><strong>עיצוב:</strong> מדי קרב עם עיטורי דרגה. קסדה עם ויזר. נשק טכנולוגי על הגב.<br><strong>ייחוד:</strong> כל דמות שומרת על אישיותה — מיקה מקבלת מדי מודיעין, יוקי מקבלת מדי סייבר, נועה מקבלת מדי 'לוחם רפואה'.
+        <div class="char-list"><span class="char-chip">מיקה (מודיעין וסייבר)</span><span class="char-chip">יוקי (לוחמת סייבר)</span><span class="char-chip">נועה (חובשת לוחמת)</span></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-top"><span class="hc-icon">🚒</span>
+        <div><div class="hc-title">כבאים ומציאות</div><div class="hc-sub">אש, עשן, גבורה</div></div>
+      </div>
+      <div class="hc-body"><strong>עיצוב:</strong> חליפת כיבוי אדומה-כהה עם פסים פלואורסנטיים. קסדת כבאי. מאסק אמצעי נשימה מורם על המצח.<br><strong>ייחוד:</strong> קאי 'בן הלהבות' עם חליפת כיבוי — אירוני ומגניב. להבה הדרקון בחליפת כיבאות = הומור מצוין.
+        <div class="char-list"><span class="char-chip">קאי (קצין כיבוי)</span><span class="char-chip">להבה (דרקון כבאי — אירוני!)</span><span class="char-chip">רקס (מתמחה כבאות)</span></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-top"><span class="hc-icon">🚑</span>
+        <div><div class="hc-title">מגן דוד אדום</div><div class="hc-sub">חיים במוקד</div></div>
+      </div>
+      <div class="hc-body"><strong>עיצוב:</strong> מדי MDA לבן עם מגן דוד אדום. ציוד עזרה ראשונה. לא 'מגניב' — מקצועי ורציני.<br><strong>ייחוד:</strong> נועה היא הבחירה המושלמת — הרופאת/חובשת של הצוות. מדי MDA ושקית רפואה עם ציוד.<br><strong>הודעה:</strong> 'כל שנייה חשובה. כמו כל הקשה — מהירות מצילת חיים.'
+        <div class="char-list"><span class="char-chip">נועה (חובשת MDA)</span><span class="char-chip">לונה (פסיכולוג שדה)</span><span class="char-chip">פיקסל (ניטור מטופל)</span></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-top"><span class="hc-icon">🟡</span>
+        <div><div class="hc-title">איחוד הצלה</div><div class="hc-sub">מגיעים ראשונים</div></div>
+      </div>
+      <div class="hc-body"><strong>עיצוב:</strong> ווסט צהוב-כתום בולט עם לוגו איחוד הצלה. ציוד נשיאה. אופנוע הצלה ברקע.<br><strong>ייחוד:</strong> קי על אופנוע הצלה — דחופיות ומהירות. 'כשהמחשב קורס — קי מגיע ראשון!'
+        <div class="char-list"><span class="char-chip">קי (רוכב הצלה)</span><span class="char-chip">סנסאי זן (קצין זקן של איחוד)</span><span class="char-chip">סערה (סייר הצלה)</span></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-top"><span class="hc-icon">⚕️</span>
+        <div><div class="hc-title">רופאים ואחיות</div><div class="hc-sub">עבודת הגדולים</div></div>
+      </div>
+      <div class="hc-body"><strong>עיצוב:</strong> חלוק לבן עם סמל ה-Caduceus (נחשים). תג שם. ציוד רפואי. מחשב לוח לתיאום.<br><strong>ייחוד:</strong> נועה ברופאה — זה הנבואה שלה! לונה כרופאת נפש/פסיכיאטרית. פיקסל כ-AI רפואי שמנטר נתונים.
+        <div class="char-list"><span class="char-chip">נועה (רופאת ילדים)</span><span class="char-chip">לונה (פסיכיאטרית)</span><span class="char-chip">פיקסל (מערכת ניטור AI)</span></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-top"><span class="hc-icon">👮</span>
+        <div><div class="hc-title">שוטרים ושוטרות</div><div class="hc-sub">חוק וסדר</div></div>
+      </div>
+      <div class="hc-body"><strong>עיצוב:</strong> מדי משטרה כחול-כהה עם שלט 'משטרת ישראל'. אפודת מגן. מכשיר קשר על הכתף.<br><strong>ייחוד:</strong> מיקה כבלשת סייבר — מדי רגיל עם גאנטלט ייחודי לחקירות. סנסאי זן כשוטר ותיק שרואה הכל.
+        <div class="char-list"><span class="char-chip">מיקה (בלשת סייבר)</span><span class="char-chip">סנסאי זן (שוטר ותיק)</span><span class="char-chip">קאי (יחידת ייחוד)</span></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-top"><span class="hc-icon">🔬</span>
+        <div><div class="hc-title">מדענים וחוקרים</div><div class="hc-sub">עתיד ישראל</div></div>
+      </div>
+      <div class="hc-body"><strong>עיצוב:</strong> חלוק מעבדה לבן עם כתמי ניסויים צבעוניים. משקפי מגן. ציוד מחקר. לפטופ עם נוסחאות.<br><strong>ייחוד:</strong> פיקסל כ-AI מחקרי — בחליפת מדען. מיקה כהאקרית-חוקרת בשיתוף פעולה.
+        <div class="char-list"><span class="char-chip">פיקסל (AI מחקרי)</span><span class="char-chip">מיקה (חוקרת סייבר)</span><span class="char-chip">לונה (חוקרת מוח)</span></div>
+      </div>
+    </div>
+  </div>
 </div>
-<hr>
+<hr class='div'>
 
 <footer>
-  <div style="font-size:22px;margin-bottom:8px;">⌨️ 🇮🇱</div>
-  <strong style="color:var(--text)">Ninja Keyboard — נינג'ה מקלדת</strong><br>
-  מסמך עיצוב פנימי · סקינים עונתיים לחגי ישראל<br>
-  <span style="color:var(--purple)">10 דמויות · 12 חגים · 5 גיבורי אמת · מערכת פתיחה עונתית</span>
+  <p>Ninja Keyboard — סקינים לחגי ישראל · עיצוב: Claude Sonnet 4.6 · מרץ 2026</p>
+  <p style="margin-top:8px;font-size:11px;">כל הסקינים נועדו לחיזוק הזהות היהודית-ישראלית ולמידה בדרך של שמחה.<br>
+  יום השואה ויום הזיכרון מטופלים בכובד ראש מלא.</p>
 </footer>
-
 </body>
 </html>

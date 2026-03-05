@@ -5,56 +5,55 @@
 ## Sprint: Character World Expansion (IN PROGRESS)
 
 ## Current State
-Massive character world built: 14 characters with model sheets, Voice Design V4 previews (27 custom voices for user selection), 16 AI-generated game SFX, 48-track soundtrack master plan, comprehensive planning docs, Israeli holiday skins doc in progress.
+Massive character world built: 14 characters with model sheets + expression sheets, Voice V4 Hebrew lines (36 lines, 9 characters), 16 AI SFX integrated into sound system (MP3 with Web Audio fallback), 48-track soundtrack plan, comprehensive planning docs, Israeli holiday skins complete, story mode expansion in progress.
 
-## What Was Done This Session (Iteration 3)
+## What Was Done This Session (Iteration 4 - Continuation)
 
-### 1. Voice Design V4 - Custom Voices (COMPLETE)
-- [x] ElevenLabs Creator tier confirmed: 108K chars/month, 30 voice slots, instant cloning
-- [x] Voice Library search: Hebrew community voices very limited (API returns ~0 for Hebrew filter)
-- [x] Voice Design v3 API: `/v1/text-to-voice/create-previews` endpoint discovered
-- [x] Safety filter workaround: removed age references from descriptions (ElevenLabs blocks "10-year-old" etc.)
-- [x] 9 characters × 3 voice previews = **27 custom voice MP3s** generated
-- [x] Preview HTML: `docs/voice-preview-v4.html` with side-by-side V3 vs V4 comparison
-- [x] Voice IDs saved: `public/audio/voices/voice-design-previews/results.json`
-- [x] Scripts: `scripts/voice-design-v4.mjs`, `scripts/voice-design-heroes.mjs`, `scripts/voice-design-test.mjs`
-- [ ] **WAITING**: User to listen and select best voice per character
+### 1. SFX Integration into Game (COMPLETE)
+- [x] Upgraded `SoundManager` to support AI-generated MP3 SFX files
+- [x] MP3 files play as primary, Web Audio synthesis as fallback
+- [x] 16 SFX mapped: keyboard-click, correct-answer, wrong-answer, level-up, xp-gain, countdown-beep, countdown-go, keyboard-combo, achievement-unlock, character-unlock, star-earn, streak-fire, victory-cheers, ninja-slash, bug-appear, glitch-warp
+- [x] 5 new sound methods: `playStreakFire()`, `playVictoryCheers()`, `playNinjaSlash()`, `playBugAppear()`, `playGlitchWarp()`
+- [x] Preloading in `AppProviders` on app mount
+- [x] Victory cheers integrated into battle arena win
+- [x] All 1093 tests pass, build clean
 
-### 2. Game Sound Effects (COMPLETE)
+### 2. Profile Background (COMPLETE)
+- [x] Added profile-background.jpg to profile page
+
+### 3. Story Mode Expansion (IN PROGRESS)
+- [ ] `docs/story-mode-expansion.html` - agent running
+
+## What Was Done Previous Session (Iteration 3)
+
+### Voice Design V4 - Custom Voices + Hebrew Lines (COMPLETE)
+- [x] 27 custom voice previews via Voice Design v3 API
+- [x] 9 voices saved to ElevenLabs account
+- [x] 36 Hebrew voice lines generated with `language_code:'he'` + eleven_v3
+- [x] ffmpeg post-processing: Rex (pitch-down), Bug (pitch-down+echo), Glitch (tremolo+echo)
+- [x] Account voice IDs: `public/audio/voices/voice-design-previews/account-voices-v4.json`
+- [ ] **WAITING**: User to listen to V4 Hebrew voices and confirm quality
+
+### Game Sound Effects (COMPLETE)
 - [x] 16 AI-generated SFX via ElevenLabs Sound Generation API
 - [x] Saved to `public/audio/sfx/`
-- [x] Effects: keyboard-click, keyboard-combo, level-up, achievement-unlock, character-unlock, ninja-slash, bug-appear, glitch-warp, correct-answer, wrong-answer, streak-fire, victory-cheers, countdown-beep, countdown-go, star-earn, xp-gain
 
-### 3. Soundtrack Master Plan (COMPLETE)
-- [x] `docs/soundtrack-master-plan.html` - 48 tracks across 8 sections (90KB)
-- [x] Sections: Menu (6), Gameplay (5), Battle (9), Events (8), Character Themes (8), Age Worlds (5), SFX (7)
-- [x] Music gamification: unlock tracks as achievements (15 unlockable tracks)
-- [x] Jukebox system: per-zone music selection
-- [x] Generation priority tiers with Batch 1 recommendation (8 tracks first)
-- [x] Full Suno MCP workflow documented
+### Soundtrack Master Plan (COMPLETE)
+- [x] `docs/soundtrack-master-plan.html` - 48 tracks across 8 sections
 
-### 4. ElevenLabs Creator Research (COMPLETE - previous session)
-- [x] `docs/elevenlabs-creator-research.md` - 587 lines
-- [x] Voice Design v3, Instant Voice Clone, Audio Tags, Sound Effects API
-- [x] Hebrew only supported in eleven_v3
+### Character Art (COMPLETE)
+- [x] 14/14 model sheets (Bug + Glitch added)
+- [x] 6 expression sheets (Ki, Mika, Kai, Yuki, Luna, Noa × 8 emotions)
+- [x] 6 menu backgrounds (home, lessons, battle, speed-test, games-hub, profile)
 
-### 5. 3D Character Research (COMPLETE - previous session)
-- [x] `docs/3d-character-tools-research.md` - free pipeline identified
-- [x] VRoid Studio → Mixamo → Blender → GLB → React Three Fiber
-- [x] Meshy AI for 2D→3D conversion (200 free credits/month)
-
-### 6. Israeli Holiday Skins (IN PROGRESS)
-- [ ] `docs/israeli-holiday-skins.html` - agent running in background
-- [ ] All Jewish holidays + real-life hero skins
-- [ ] Character-specific skins with color palettes and unlock conditions
-
-### 7. Post-Game Hebrew Translation (COMPLETE - previous session)
-- [x] `docs/post-game-and-art-requirements.html` translated from English to Hebrew
+### Israeli Holiday Skins (COMPLETE)
+- [x] `docs/israeli-holiday-skins.html` - 15 sections, 12 holidays + hero skins
+- [x] Character-specific skins with color palettes and unlock conditions
+- [x] Respectful treatment of memorial days (Yom HaShoah, Yom HaZikaron)
 
 ## Previously Completed (Iteration 2)
 - Voice V3: 19 voices with `language_code:'he'`, Gemini-tuned settings
 - Suno Direct Connection (Playwright-based, user's own subscription)
-- Iteration Review V2 HTML
 - Post-Narrative Content Design (Boss Rush, Seasonal Events, etc.)
 - Art Asset Checklist (14 chars × 9 types = 126 needed)
 
@@ -62,42 +61,35 @@ Massive character world built: 14 characters with model sheets, Voice Design V4 
 - 12 character model sheets (Brawl Stars + anime chibi)
 - 22 voice lines V1→V2→V3 (ElevenLabs eleven_v3)
 - 2 music tracks × 2 versions (Suno)
-- Game Bible Dashboard HTML
-- Character integration map, progression system, voice profiles
-- Bug + Glitch villain art, CSS variable migration
-- Story mode foundation, Character Bible, Age-adaptive UX spec
-- 8 environment backgrounds
+- Game Bible Dashboard, Character Bible, Age-adaptive UX spec
+- 8 environment backgrounds, Dark gaming theme
 
 ## Voice Version History
 - V1: Initial ElevenLabs generation (American accent)
 - V2: Young voices, ffmpeg effects for villains (still American)
 - V3: `language_code:'he'`, Gemini-tuned settings, speaker boost
-- V4: Voice Design v3 custom voices from text descriptions (current previews)
+- V4: Voice Design v3 → Save to account → Hebrew TTS (current, 36 lines)
 - Sensei Zen: Original voice, approved by user, never changed
 
 ## Next Steps
-1. **Listen to V4 voice previews** - open `docs/voice-preview-v4.html` in browser
-2. **Select best voice per character** → save to ElevenLabs account → generate all lines
+1. **Listen to V4 Hebrew voices** - user to confirm quality
+2. **Story mode expansion** - agent completing doc
 3. **Generate remaining music** with Suno direct (8 priority tracks in Batch 1)
-4. **Israeli holiday skins** - review when agent completes
-5. **Create Bug + Glitch model sheets** (2 missing from 14)
-6. **Create expression sheets** for all characters (8 emotions each)
-7. **Create menu backgrounds** with large character art (6 needed)
-8. **Implement idle animations** (CSS keyframes, always-on)
-9. **Implement game-style buttons** (Brawl Stars asymmetric design)
-10. **Integrate SFX** into game (replace Web Audio synthesis with AI SFX)
-11. **Implement music system** (zone-based, with Jukebox unlock)
+4. **Implement idle animations** (CSS keyframes, always-on)
+5. **Implement game-style buttons** (Brawl Stars asymmetric design)
+6. **Implement music system** (zone-based, with Jukebox unlock)
+7. **CSS variable migration** - replace hardcoded dark theme colors
+8. **Create Bug + Glitch villain expressions** (only heroes have expression sheets)
 
 ## Key Files
-- `docs/voice-preview-v4.html` - **LISTEN TO VOICE PREVIEWS HERE!**
+- `docs/voice-preview-v4.html` - Voice preview comparison page
 - `docs/soundtrack-master-plan.html` - 48-track soundtrack plan
-- `docs/iteration-review-v2.html` - Iteration 2 review
-- `docs/elevenlabs-creator-research.md` - Creator tier capabilities
-- `docs/3d-character-tools-research.md` - 3D pipeline research
-- `docs/game-bible-dashboard.html` - Game Bible with all media
-- `docs/character-integration-map.md` - Master narrative plan
-- `public/audio/voices/voice-design-previews/` - **27 V4 voice previews**
+- `docs/israeli-holiday-skins.html` - 15 holiday/hero skin sections
+- `docs/story-mode-expansion.html` - Narrative expansion (in progress)
+- `src/lib/audio/sound-manager.ts` - **Upgraded: MP3 SFX + Web Audio fallback**
 - `public/audio/sfx/` - **16 AI-generated sound effects**
-- `public/audio/voices/` - 22 V3 voice MP3s
-- `public/audio/music/` - 4 music MP3s (2 tracks × 2 versions)
-- `scripts/voice-design-v4.mjs` - V4 voice script (all Creator features)
+- `public/audio/voices/` - V4 Hebrew voice lines (36 files across 9 characters)
+- `public/images/characters/expressions/` - 6 expression sheets
+- `public/images/characters/model-sheets/` - 14 model sheets (all complete)
+- `public/images/backgrounds/` - 15 backgrounds
+- `scripts/voice-generate-all-hebrew.mjs` - Full Hebrew voice pipeline

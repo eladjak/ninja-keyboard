@@ -16,6 +16,8 @@ import {
   SLICE_DIFFICULTY_CONFIG,
 } from '@/lib/games/ninja-slice'
 import type { SliceDifficulty, NinjaSliceState } from '@/lib/games/ninja-slice'
+import { soundManager } from '@/lib/audio/sound-manager'
+import { useSettingsStore } from '@/stores/settings-store'
 import { cn } from '@/lib/utils'
 
 const TICK_INTERVAL = 50
@@ -37,6 +39,12 @@ export default function NinjaSlicePage() {
   const [selectedDifficulty, setSelectedDifficulty] = useState<SliceDifficulty>('easy')
   const [sliceEffect, setSliceEffect] = useState<string | null>(null)
   const xpStore = useXpStore()
+  const { soundEnabled, soundVolume } = useSettingsStore()
+
+  useEffect(() => {
+    soundManager.setEnabled(soundEnabled)
+    soundManager.setVolume(soundVolume)
+  }, [soundEnabled, soundVolume])
 
   const inputRef = useRef<HTMLInputElement>(null)
   const tickRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -85,6 +93,7 @@ export default function NinjaSlicePage() {
       const xp = getXpReward(finalScore.totalScore)
       xpStore.addXp(xp)
       xpStore.updateStreak()
+      soundManager.playLevelComplete()
     }
   }, [state.phase, clearAllTimers, xpStore]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -93,6 +102,7 @@ export default function NinjaSlicePage() {
     setState((prev) => {
       const next = processInput(prev, value)
       if (next.targetsSliced > prev.targetsSliced) {
+        soundManager.playNinjaSlash()
         // Show a brief slice effect
         setSliceEffect(value)
         setTimeout(() => setSliceEffect(null), 400)

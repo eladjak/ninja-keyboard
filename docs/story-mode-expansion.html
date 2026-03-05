@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ninja Keyboard - הרחבת מצב סיפור</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: #0d0b1a;
+    color: #e0e0e0;
+    line-height: 1.7;
+    padding: 2rem;
+  }
+  h1 { font-size: 2.5rem; font-weight: 900; background: linear-gradient(135deg, #6C5CE7, #00B894); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.8rem; font-weight: 700; color: #6C5CE7; border-bottom: 2px solid #6C5CE7; padding-bottom: 0.5rem; margin: 2rem 0 1rem; }
+  h3 { font-size: 1.3rem; font-weight: 700; color: #00B894; margin: 1.5rem 0 0.5rem; }
+  h4 { font-size: 1.1rem; color: #a78bfa; margin: 1rem 0 0.3rem; }
+  .container { max-width: 900px; margin: 0 auto; }
+  .subtitle { text-align: center; color: #888; margin-bottom: 2rem; font-size: 1.1rem; }
+  .card { background: rgba(108, 92, 231, 0.08); border: 1px solid rgba(108, 92, 231, 0.2); border-radius: 12px; padding: 1.5rem; margin: 1rem 0; }
+  .card-green { background: rgba(0, 184, 148, 0.08); border-color: rgba(0, 184, 148, 0.2); }
+  .card-red { background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.2); }
+  .card-amber { background: rgba(245, 158, 11, 0.08); border-color: rgba(245, 158, 11, 0.2); }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.95rem; }
+  th { background: rgba(108, 92, 231, 0.15); color: #a78bfa; padding: 0.6rem; text-align: right; }
+  td { padding: 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  tr:hover td { background: rgba(108, 92, 231, 0.05); }
+  .emoji { font-size: 1.5rem; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; }
+  .tag-act { background: #6C5CE7; color: white; }
+  .tag-side { background: #00B894; color: white; }
+  .tag-boss { background: #ef4444; color: white; }
+  .tag-event { background: #f59e0b; color: #1a1a1a; }
+  .phase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0; }
+  .phase-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 1rem; text-align: center; }
+  .phase-card .emoji { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+  .skill-badge { display: inline-block; background: rgba(0,184,148,0.15); color: #00B894; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; margin: 2px; }
+  .relationship { display: flex; align-items: center; gap: 0.5rem; margin: 0.3rem 0; }
+  .rel-arrow { color: #6C5CE7; font-weight: 700; }
+  nav { position: sticky; top: 0; background: rgba(13,11,26,0.95); backdrop-filter: blur(8px); padding: 1rem; border-radius: 12px; margin-bottom: 2rem; z-index: 10; }
+  nav a { color: #a78bfa; text-decoration: none; margin-left: 1rem; font-size: 0.9rem; }
+  nav a:hover { color: #6C5CE7; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>הרחבת מצב סיפור</h1>
+<p class="subtitle">Ninja Keyboard - מעבר לדוג'ו: מעשים 4-5, סיפורי צד, אירועים עונתיים וקרבות בוס</p>
+
+<nav>
+  <a href="#act4">מעשה 4</a>
+  <a href="#act5">מעשה 5</a>
+  <a href="#side-stories">סיפורי צד</a>
+  <a href="#seasonal">אירועים עונתיים</a>
+  <a href="#boss-battles">קרבות בוס</a>
+  <a href="#relationships">מערכת יחסים</a>
+  <a href="#skill-integration">שילוב מיומנויות</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<h2 id="act4">מעשה 4: מעבר לדוג'ו <span class="tag tag-act">ACT 4</span></h2>
+
+<p>לאחר ניצחון על מלך הבאגים (מעשה 3), קי ומיקה מגלים שהעולם הדיגיטלי רחב הרבה יותר מהדוג'ו. קיבלו הזמנה מסתורית מ"אקדמיית הסייבר" - בית ספר עילית למקלדנים.</p>
+
+<div class="card">
+<h3>פרק 4.1 - ההזמנה</h3>
+<table>
+  <tr><th>סצנה</th><th>מיקום</th><th>דמויות</th><th>מיומנות הקלדה</th></tr>
+  <tr><td>הודעה מוצפנת מגיעה לדוג'ו</td><td>דוג'ו של סנסאי זן</td><td>קי, מיקה, סנסאי זן</td><td class="skill-badge">פענוח טקסט</td></tr>
+  <tr><td>מיקה פורצת את ההצפנה בעזרת קיצורי מקלדת</td><td>מעבדת הסייבר</td><td>מיקה</td><td class="skill-badge">קיצורי מקלדת</td></tr>
+  <tr><td>סנסאי זן מספר על תחרות הנינג'ות הגדולה</td><td>דוג'ו</td><td>סנסאי זן, כולם</td><td class="skill-badge">האזנה + הקלדה</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>פרק 4.2 - עולם האינטרנט</h3>
+<p>הצוות יוצא מהדוג'ו לראשונה ומגלה את "עולם האינטרנט" - עולם פתוח עם אזורים שונים.</p>
+
+<div class="phase-grid">
+  <div class="phase-card"><span class="emoji">🏙️</span><strong>עיר הדפדפן</strong><br>חיפוש, כתובות URL, ניווט</div>
+  <div class="phase-card"><span class="emoji">☁️</span><strong>ענני הענן</strong><br>שמירת קבצים, גיבוי, סנכרון</div>
+  <div class="phase-card"><span class="emoji">🔒</span><strong>מבצר האבטחה</strong><br>סיסמאות חזקות, הגנה</div>
+  <div class="phase-card"><span class="emoji">🎨</span><strong>גלריית הקוד</strong><br>HTML בסיסי, עיצוב טקסט</div>
+</div>
+</div>
+
+<div class="card">
+<h3>פרק 4.3 - הנבל החדש: וירוס</h3>
+<p>באזור המבצר, הצוות פוגש נבל חדש - <strong>וירוס</strong>, תוכנה זדונית שמנסה להשתלט על עולם האינטרנט. הוא חזק יותר מהבאג - הוא לא רק מערבב מקשים, הוא <em>מוחק</em> אותם.</p>
+<table>
+  <tr><th>תכונה</th><th>באג (מעשה 1-3)</th><th>וירוס (מעשה 4)</th></tr>
+  <tr><td>יכולת</td><td>מערבב מקשים</td><td>מוחק מקשים</td></tr>
+  <tr><td>קושי</td><td>הקלדה עם שגיאות</td><td>הקלדה עם מקשים חסרים</td></tr>
+  <tr><td>חולשה</td><td>הקלדה מהירה</td><td>קיצורי מקלדת + דיוק</td></tr>
+  <tr><td>בעל ברית</td><td>גליץ'</td><td>ספאם-בוט, פישינג</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>פרק 4.4 - גליץ' עוברת צד</h3>
+<p>גליץ', שנחשפה ככלי בידי הבאג הגדול, מתחילה לחקור את העולם בעצמה. כשהיא פוגשת את וירוס, היא מבינה שהוא מסוכן באמת ומחליטה לעזור לקי - אבל בדרך שלה, מאחורי הקלעים.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<h2 id="act5">מעשה 5: הטורניר הדיגיטלי <span class="tag tag-act">ACT 5</span></h2>
+
+<div class="card">
+<h3>פרק 5.1 - הזמנה לטורניר</h3>
+<p>כל הדוג'ואים בעולם מוזמנים ל<strong>טורניר נינג'ות המקלדת הגדול</strong>. קי וחבריו מייצגים את דוג'ו סנסאי זן. הם צריכים לעבור 4 סבבים:</p>
+
+<table>
+  <tr><th>סבב</th><th>אתגר</th><th>יריב</th><th>מיומנות</th></tr>
+  <tr><td>1. סבב ההקלדה</td><td>מבחן מהירות קבוצתי</td><td>דוג'ו הברק</td><td class="skill-badge">מהירות הקלדה</td></tr>
+  <tr><td>2. סבב הדיוק</td><td>הקלדה ללא שגיאות</td><td>דוג'ו הדיוק</td><td class="skill-badge">דיוק 100%</td></tr>
+  <tr><td>3. סבב הקיצורים</td><td>פתרון משימות עם קיצורים</td><td>דוג'ו הסייבר</td><td class="skill-badge">קיצורי מקלדת</td></tr>
+  <tr><td>4. גמר</td><td>כל המיומנויות</td><td>???</td><td class="skill-badge">מאסטר</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>פרק 5.2 - צוות מאוחד</h3>
+<p>כל דמות מקבלת רגע להזריח בתחום המומחיות שלה:</p>
+<table>
+  <tr><th>דמות</th><th>תפקיד בטורניר</th><th>רגע שיא</th></tr>
+  <tr><td>קי</td><td>קפטן ומוטיבטור</td><td>נאום מעורר לפני הגמר</td></tr>
+  <tr><td>מיקה</td><td>אסטרטגית + קיצורים</td><td>פורצת את מערכת הנבל בסבב 3</td></tr>
+  <tr><td>יוקי</td><td>ספרינטרית - סבב 1</td><td>שוברת שיא מהירות עולמי</td></tr>
+  <tr><td>קאי</td><td>לוחם - מובילה את סבב 2</td><td>דיוק מושלם תחת לחץ</td></tr>
+  <tr><td>לונה</td><td>יוצרת - עיצוב אסטרטגיה</td><td>מציירת תוכנית המשחק</td></tr>
+  <tr><td>נועה</td><td>מרפאה - תמיכה רגשית</td><td>מחזירה ביטחון לקי אחרי הפסד</td></tr>
+  <tr><td>רקס</td><td>בדרן - שומר על מורל</td><td>משחק מילים מצחיק שמפיג מתח</td></tr>
+  <tr><td>פיקסל</td><td>צלם - מתעד את הטורניר</td><td>מצלם ראיות נגד הרמאות</td></tr>
+</table>
+</div>
+
+<div class="card card-red">
+<h3>פרק 5.3 - הגמר</h3>
+<p>בגמר מתגלה שהיריב הוא... <strong>וירוס בתחפושת</strong>! הוא השתלט על דוג'ו אחר והשתמש בו כדי להגיע לגמר. הקרב הסופי הוא כולם נגד וירוס - כל דמות תורמת את הכוח שלה.</p>
+<p><strong>סיום:</strong> וירוס מנוטרל, גליץ' חוזרת רשמית לצד הטוב, קי מקבל את התואר "מאסטר מקלדת", וכולם חוזרים לדוג'ו כגיבורים.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<h2 id="side-stories">סיפורי צד <span class="tag tag-side">SIDE</span></h2>
+
+<p>כל סיפור צד הוא שרשרת של 3-5 שלבים, כל שלב עם אתגר הקלדה ייחודי.</p>
+
+<div class="card">
+<h4>קי: המקלדת של אבא</h4>
+<p>קי מוצא במחסן הדוג'ו מקלדת ישנה עם חריטה "לנינג'ה הקטן שלי". הוא מגלה שאביו היה גם מאסטר מקלדת. דרך תרגולים ישנים שנשמרו במקלדת, קי לומד טכניקות חדשות ומתקרב לזכר אביו.</p>
+<table>
+  <tr><th>שלב</th><th>אתגר</th><th>מיומנות</th></tr>
+  <tr><td>1. מציאת המקלדת</td><td>ניקוי טקסט ישן</td><td class="skill-badge">שורת בית</td></tr>
+  <tr><td>2. פענוח ההודעה</td><td>הקלדת טקסט מוצפן</td><td class="skill-badge">מספרים + סימנים</td></tr>
+  <tr><td>3. תרגול אבא</td><td>השלמת תרגיל שאבא יצר</td><td class="skill-badge">הקלדה מהירה</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h4>מיקה: תחרות הפריצה</h4>
+<p>מיקה מוזמנת ל-CTF (Capture The Flag) וירטואלי. היא צריכה לנצח בתחרות נגד האקרים מכל העולם, כולל גליץ' שמתחרה מהצד השני. מי שתפענח את הדגל הסופי ראשונה - מנצחת.</p>
+<table>
+  <tr><th>שלב</th><th>אתגר</th><th>מיומנות</th></tr>
+  <tr><td>1. הרשמה</td><td>יצירת סיסמה חזקה</td><td class="skill-badge">סימנים מיוחדים</td></tr>
+  <tr><td>2. פענוח שלב 1</td><td>קיצורי עריכת טקסט</td><td class="skill-badge">Ctrl+X/C/V</td></tr>
+  <tr><td>3. פענוח שלב 2</td><td>ניווט בין חלונות</td><td class="skill-badge">Alt+Tab</td></tr>
+  <tr><td>4. הדגל הסופי</td><td>הקלדה מהירה של קוד</td><td class="skill-badge">מהירות + דיוק</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h4>קאי: טורניר הלוחמים</h4>
+<p>קאי מגלה שיש דוג'ואים סריים - שמשתמשים בהקלדה לרע (ספאם, פישינג). הוא נכנס לטורניר לוחמים כדי להוכיח שהדרך הנכונה חזקה יותר.</p>
+<table>
+  <tr><th>שלב</th><th>יריב</th><th>מיומנות</th></tr>
+  <tr><td>1. סבב ראשון</td><td>נינג'ת הספאם</td><td class="skill-badge">הקלדה מדויקת (לא ספאם)</td></tr>
+  <tr><td>2. חצי גמר</td><td>נינג'ת הפישינג</td><td class="skill-badge">זיהוי טעויות בטקסט</td></tr>
+  <tr><td>3. גמר</td><td>Shadow (יריב קרב)</td><td class="skill-badge">מהירות + דיוק</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h4>יוקי: שיא עולמי</h4>
+<p>יוקי שומעת על שיא עולמי בהקלדה - 200 מילים לדקה. היא מחליטה לשבור אותו. סיפור על התמדה, כישלון, ולמידה שמהירות בלי דיוק היא חסרת ערך.</p>
+<table>
+  <tr><th>שלב</th><th>WPM יעד</th><th>לקח</th></tr>
+  <tr><td>1. תרגול</td><td>80 WPM</td><td>בסיס חזק</td></tr>
+  <tr><td>2. ניסיון ראשון</td><td>120 WPM (נכשלת - שגיאות)</td><td>מהירות ≠ הצלחה</td></tr>
+  <tr><td>3. אימון עם סנסאי</td><td>100 WPM + 95% דיוק</td><td>איזון מהירות-דיוק</td></tr>
+  <tr><td>4. השיא!</td><td>150 WPM + 98% דיוק</td><td>שיא אישי &gt; שיא עולמי</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h4>לונה: גלריית האמנות הדיגיטלית</h4>
+<p>לונה מגלה שאפשר ליצור אמנות עם טקסט (ASCII Art). היא מחליטה לפתוח גלריה דיגיטלית ומזמינה את כל הדמויות לתרום יצירות.</p>
+<table>
+  <tr><th>שלב</th><th>אתגר</th><th>מיומנות</th></tr>
+  <tr><td>1. ציור ראשון</td><td>העתקת ASCII Art</td><td class="skill-badge">סימנים מיוחדים</td></tr>
+  <tr><td>2. הזמנות</td><td>כתיבת הזמנות לגלריה</td><td class="skill-badge">הקלדה חופשית</td></tr>
+  <tr><td>3. הפתיחה</td><td>יצירת ASCII Art מקורי</td><td class="skill-badge">יצירתיות + סימנים</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h4>נועה: יער הקוד המושחת</h4>
+<p>באגים השתלטו על "יער הקוד" - אזור שבו הטקסט גדל כמו עצים. נועה, בתור מרפאה, צריכה "לרפא" את הטקסטים המושחתים אות אחרי אות.</p>
+<table>
+  <tr><th>שלב</th><th>אתגר</th><th>מיומנות</th></tr>
+  <tr><td>1. אבחון</td><td>זיהוי שגיאות בטקסט</td><td class="skill-badge">קריאת הגהה</td></tr>
+  <tr><td>2. ריפוי</td><td>תיקון שגיאות הקלדה</td><td class="skill-badge">Backspace + תיקון</td></tr>
+  <tr><td>3. שיקום</td><td>הקלדה מחדש של טקסטים שלמים</td><td class="skill-badge">הקלדה מדויקת</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h4>רקס: הרפתקת פיתוח משחקים</h4>
+<p>רקס מחליט ליצור משחק משלו! הוא צריך לכתוב דיאלוגים, תפריטים, והוראות. הרפתקה מצחיקה על כמה קשה ליצור משחק (מטה-הומור).</p>
+<table>
+  <tr><th>שלב</th><th>אתגר</th><th>מיומנות</th></tr>
+  <tr><td>1. רעיון</td><td>הקלדת תיאור המשחק</td><td class="skill-badge">הקלדה חופשית</td></tr>
+  <tr><td>2. דיאלוגים</td><td>כתיבת שיחות בין דמויות</td><td class="skill-badge">סימני פיסוק</td></tr>
+  <tr><td>3. באג במשחק!</td><td>תיקון באגים בטקסט</td><td class="skill-badge">עריכה מהירה</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h4>פיקסל: תחרות הצילום</h4>
+<p>פיקסל נרשם לתחרות צילום דיגיטלית. הוא צריך לצלם (לתעד) את כל העולמות ולכתוב תיאורים מושלמים לכל תמונה.</p>
+<table>
+  <tr><th>שלב</th><th>אתגר</th><th>מיומנות</th></tr>
+  <tr><td>1. דוג'ו</td><td>תיאור מקום מוכר</td><td class="skill-badge">שורת בית</td></tr>
+  <tr><td>2. יער הקוד</td><td>תיאור מפורט</td><td class="skill-badge">הקלדה ארוכה</td></tr>
+  <tr><td>3. עיר הדפדפן</td><td>תיאור מהיר (זמן מוגבל)</td><td class="skill-badge">מהירות</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h4>סנסאי זן: סיפור המקור</h4>
+<p>בלילה שקט, סנסאי זן מספר לקי איך הפך למאסטר. פעם הוא היה תלמיד רגיל שלא ידע להקליד בכלל. המורה שלו - סנסאי ביט (בן-דוד של סנסאי זן, צב קשיש יותר) - לימד אותו שסבלנות היא הכוח האמיתי.</p>
+<table>
+  <tr><th>שלב</th><th>זמן</th><th>אתגר</th><th>לקח</th></tr>
+  <tr><td>1. פלאשבק</td><td>לפני 30 שנה</td><td>הקלדה באצבע אחת</td><td>כולם מתחילים מאפס</td></tr>
+  <tr><td>2. האימון</td><td>לפני 20 שנה</td><td>תרגול שורת בית בלבד</td><td>סבלנות מביאה שליטה</td></tr>
+  <tr><td>3. ההגנה</td><td>לפני 10 שנה</td><td>מלחמה נגד באג ראשון</td><td>הקלדה היא כוח-על</td></tr>
+</table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<h2 id="seasonal">אירועים עונתיים <span class="tag tag-event">SEASONAL</span></h2>
+
+<table>
+  <tr><th>חג</th><th>שם האירוע</th><th>מכניקה</th><th>פרס</th></tr>
+  <tr><td>ראש השנה</td><td>שנה של הקלדה</td><td>אתגר 7 ימים - יעד WPM עולה כל יום. "שנה טובה ומהירה!"</td><td>סקין זהב לקי</td></tr>
+  <tr><td>חנוכה</td><td>8 לילות, 8 בוסים</td><td>בוס חדש כל ערב. כל בוס מייצג "חושך" אחר (שגיאות, איטיות, חוסר דיוק...). הדלקת נר = ניצחון.</td><td>חנוכיית נינג'ה + 8 תגים</td></tr>
+  <tr><td>פורים</td><td>פסטיבל התחפושות</td><td>כל דמות מתחפשת לדמות אחרת! הקלד כמו הדמות שהתחפשת אליה (מהירות של יוקי, דיוק של מיקה...)</td><td>3 סקינים של תחפושות</td></tr>
+  <tr><td>פסח</td><td>חירות מהבאג</td><td>10 שלבים = 10 מכות. בכל שלב הבאג מנסה "להשתעבד" במקלדת ואתה משתחרר דרך הקלדה.</td><td>סקין "משה" לסנסאי זן</td></tr>
+  <tr><td>יום העצמאות</td><td>בונים מדינה</td><td>אתגר שיתופי - כל השחקנים מקלידים ביחד לבנות "מגילת עצמאות דיגיטלית"</td><td>סקין כחול-לבן</td></tr>
+</table>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<h2 id="boss-battles">קרבות בוס <span class="tag tag-boss">BOSS</span></h2>
+
+<div class="card card-red">
+<h3>באג הגדול - קרב 3 שלבים</h3>
+<table>
+  <tr><th>שלב</th><th>מכניקה</th><th>קושי</th><th>מיומנות</th></tr>
+  <tr><td><strong>1. נחיל הבאגים</strong><br>באגים קטנים מציפים את המסך</td><td>הקלד מילים נכונות כדי "לרסס" באגים. 30 באגים ב-60 שניות.</td><td>בינוני</td><td class="skill-badge">מהירות</td></tr>
+  <tr><td><strong>2. מערבולת המקשים</strong><br>באג מערבב את פריסת המקלדת</td><td>הקלד בזמן שהמקשים מוחלפים (A↔ש, B↔נ...). צריך לדעת איפה כל מקש בלי להסתכל.</td><td>קשה</td><td class="skill-badge">הקלדה עיוורת</td></tr>
+  <tr><td><strong>3. מלך הבאגים</strong><br>באג בגרסה הענקית שלו</td><td>התמודדות אחד-על-אחד: הוא "תוקף" עם מילים ארוכות ומסובכות, אתה צריך להקליד אותן מושלם.</td><td>קשה מאוד</td><td class="skill-badge">דיוק מושלם</td></tr>
+</table>
+<p><strong>מנגנון ריפוי:</strong> נועה נותנת "מילת ריפוי" פעם ב-30 שניות - מילה קצרה שמחזירה חיים.</p>
+</div>
+
+<div class="card card-red">
+<h3>גליץ' - קרב 2 שלבים + בחירה</h3>
+<table>
+  <tr><th>שלב</th><th>מכניקה</th><th>מיומנות</th></tr>
+  <tr><td><strong>1. מבוך הגליץ'ים</strong></td><td>הטקסט "קופץ" ומשתבש. צריך להקליד את הגרסה הנכונה למרות הרעש הויזואלי.</td><td class="skill-badge">ריכוז + דיוק</td></tr>
+  <tr><td><strong>2. שיחה או קרב</strong></td><td>השחקן בוחר: ללחום (קרב הקלדה) או לדבר (הקלדת משפטי שכנוע). שני הנתיבים מובילים לניצחון אבל עם סיומות שונות.</td><td class="skill-badge">בחירה + הקלדה חופשית</td></tr>
+</table>
+<p><strong>נתיב שכנוע:</strong> גליץ' מתגלה כדמות שנתפסה בלופ של שגיאות. השחקן "מרפא" אותה דרך הקלדה מדויקת → היא הופכת לבת ברית.</p>
+</div>
+
+<div class="card card-red">
+<h3>וירוס - קרב סופי (מעשה 4)</h3>
+<table>
+  <tr><th>שלב</th><th>מכניקה</th><th>דמות עוזרת</th></tr>
+  <tr><td><strong>1. חומת אש</strong><br>וירוס מוגן בחומת אש</td><td>מיקה פורצת את החומה - השחקן מקליד קיצורי מקלדת ברצף מהיר</td><td>מיקה</td></tr>
+  <tr><td><strong>2. התקפת הזבל</strong><br>וירוס שולח ספאם</td><td>הקלד רק את המילים "הנקיות" בין הספאם. מבחן דיוק.</td><td>קאי</td></tr>
+  <tr><td><strong>3. מחיקה</strong><br>וירוס מוחק אותיות בזמן אמת</td><td>השלם מילים חסרות. כל שנייה אות נמחקת - הקלד מהר!</td><td>יוקי</td></tr>
+  <tr><td><strong>4. ריפוי הקוד</strong><br>נטרול סופי</td><td>גליץ' + נועה מספקות "קוד ריפוי" - הקלד אותו מושלם פעם אחת</td><td>גליץ' + נועה</td></tr>
+</table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<h2 id="relationships">מערכת יחסים בין דמויות</h2>
+
+<div class="card card-green">
+<h3>רשת קשרים</h3>
+<table>
+  <tr><th>דמות א'</th><th>קשר</th><th>דמות ב'</th><th>תיאור</th></tr>
+  <tr><td>קי</td><td>🤝 שותפים שווים</td><td>מיקה</td><td>שני גיבורים שמשלימים זה את זו. קי = מהירות, מיקה = דיוק+טכנולוגיה</td></tr>
+  <tr><td>קי</td><td>🔥 יריבות ידידותית</td><td>קאי</td><td>שניהם תחרותיים, דוחפים אחד את השני להיות טובים יותר</td></tr>
+  <tr><td>קי</td><td>🐢 רב-תלמיד</td><td>סנסאי זן</td><td>סנסאי מלמד סבלנות, קי מלמד את סנסאי על הדור החדש</td></tr>
+  <tr><td>מיקה</td><td>⚡ יריבות טכנולוגית</td><td>גליץ'</td><td>שתיהן גאוניות טכנולוגיה, מתחרות מי יותר חכמה</td></tr>
+  <tr><td>יוקי</td><td>🏃 שותפות אימון</td><td>קאי</td><td>שתיהם אוהבים תחרויות ואימונים</td></tr>
+  <tr><td>לונה</td><td>🌙 חברות קרובה</td><td>נועה</td><td>שתי נשמות רכות שמאזנות את האנרגיה הגבוהה של השאר</td></tr>
+  <tr><td>רקס</td><td>🎮 חבר משחקים</td><td>פיקסל</td><td>רקס ממציא משחקים, פיקסל מתעד אותם</td></tr>
+  <tr><td>באג</td><td>😈 שולט ב-</td><td>גליץ'</td><td>באג יצר את גליץ' ככלי, אבל היא מתפתחת מעבר לשליטתו</td></tr>
+  <tr><td>גליץ'</td><td>💚 גאולה</td><td>קי + נועה</td><td>קי מאמין בה, נועה עוזרת לה להשתחרר מהלופ</td></tr>
+  <tr><td>Shadow</td><td>⚔️ יריב קרב</td><td>קאי</td><td>יריב ראוי שמכבד את קאי</td></tr>
+</table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<h2 id="skill-integration">שילוב מיומנויות הקלדה</h2>
+
+<p>כל רגע בסיפור מלמד מיומנות הקלדה ספציפית. הטבלה מסכמת:</p>
+
+<div class="card">
+<table>
+  <tr><th>מיומנות</th><th>מעשה</th><th>דמויות</th><th>דוגמאות מהסיפור</th></tr>
+  <tr><td class="skill-badge">שורת בית</td><td>1</td><td>קי, סנסאי</td><td>אימון בסיסי בדוג'ו, פלאשבק סנסאי</td></tr>
+  <tr><td class="skill-badge">מהירות הקלדה</td><td>1-5</td><td>יוקי, קי</td><td>מבחני מהירות, שיא עולמי של יוקי, סבב 1 בטורניר</td></tr>
+  <tr><td class="skill-badge">דיוק</td><td>2-5</td><td>מיקה, נועה</td><td>קרב גליץ', ריפוי יער הקוד, סבב 2 בטורניר</td></tr>
+  <tr><td class="skill-badge">קיצורי מקלדת</td><td>3-5</td><td>מיקה</td><td>פריצת CTF, שלב 1 של קרב וירוס, סבב 3 בטורניר</td></tr>
+  <tr><td class="skill-badge">הקלדה עיוורת</td><td>3</td><td>קי</td><td>קרב מלך הבאגים שלב 2 - מקשים מוחלפים</td></tr>
+  <tr><td class="skill-badge">סימנים מיוחדים</td><td>4</td><td>לונה, מיקה</td><td>ASCII Art, סיסמאות חזקות</td></tr>
+  <tr><td class="skill-badge">עריכת טקסט</td><td>4</td><td>רקס, נועה</td><td>כתיבת דיאלוגים, תיקון באגים, הגהה</td></tr>
+  <tr><td class="skill-badge">הקלדה חופשית</td><td>5</td><td>כולם</td><td>כתיבה חופשית, מגילת עצמאות, גמר הטורניר</td></tr>
+</table>
+</div>
+
+<div class="card card-amber">
+<h3>עקרון מנחה: "לומדים בלי להרגיש"</h3>
+<p>הסיפור הוא הכלי - המיומנות היא המטרה. כל אתגר בסיפור צריך:</p>
+<ul style="margin-top:0.5rem">
+  <li>להרגיש כמו הרפתקה, לא כמו שיעורי בית</li>
+  <li>להתאים לדמות (מיקה = טכנולוגיה, לונה = יצירתיות)</li>
+  <li>להעלות רמת קושי בהדרגה</li>
+  <li>לתת פידבק מיידי ומעודד (נועה תמיד שם)</li>
+  <li>לאפשר חזרה בלי תחושת כישלון</li>
+</ul>
+</div>
+
+<p style="text-align:center; color:#666; margin-top:3rem; font-size:0.85rem;">
+  Ninja Keyboard - Story Mode Expansion v1.0 | 2026
+</p>
+
+</div>
+</body>
+</html>

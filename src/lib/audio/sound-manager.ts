@@ -1,14 +1,49 @@
 /**
- * SoundManager — synthesizes all sounds via Web Audio API.
- * No external audio files required.
- * Safe for Next.js SSR: AudioContext is only created in the browser.
+ * SoundManager — plays AI-generated SFX (MP3) with Web Audio synthesis fallback.
+ * MP3 files are preloaded from /audio/sfx/ and cached as HTMLAudioElement.
+ * If an MP3 isn't available or fails, the original Web Audio oscillator plays.
+ * Safe for Next.js SSR: Audio elements and AudioContext are only created in the browser.
  */
 import { SOUNDS, type SoundConfig } from './sounds'
+
+/** Maps sound keys to their MP3 file paths in /audio/sfx/. */
+const SFX_FILES: Record<string, string> = {
+  keyClick: '/audio/sfx/keyboard-click.mp3',
+  correct: '/audio/sfx/correct-answer.mp3',
+  error: '/audio/sfx/wrong-answer.mp3',
+  levelComplete: '/audio/sfx/level-up.mp3',
+  xpGain: '/audio/sfx/xp-gain.mp3',
+  countdownBeep: '/audio/sfx/countdown-beep.mp3',
+  countdownGo: '/audio/sfx/countdown-go.mp3',
+  comboHit: '/audio/sfx/keyboard-combo.mp3',
+  achievementFanfare: '/audio/sfx/achievement-unlock.mp3',
+  badgeUnlock: '/audio/sfx/character-unlock.mp3',
+  starEarned: '/audio/sfx/star-earn.mp3',
+  streakFire: '/audio/sfx/streak-fire.mp3',
+  victoryCheers: '/audio/sfx/victory-cheers.mp3',
+  ninjaSlash: '/audio/sfx/ninja-slash.mp3',
+  bugAppear: '/audio/sfx/bug-appear.mp3',
+  glitchWarp: '/audio/sfx/glitch-warp.mp3',
+}
 
 class SoundManager {
   private context: AudioContext | null = null
   private enabled = true
   private volume = 0.7
+  private audioCache = new Map<string, HTMLAudioElement>()
+  private preloaded = false
+
+  /** Preload all MP3 SFX files into cache (browser only). */
+  preload(): void {
+    if (typeof window === 'undefined' || this.preloaded) return
+    this.preloaded = true
+    for (const [key, path] of Object.entries(SFX_FILES)) {
+      const audio = new Audio(path)
+      audio.preload = 'auto'
+      audio.volume = this.volume
+      this.audioCache.set(key, audio)
+    }
+  }
 
   /** Lazily create the AudioContext on first use (browser only). */
   private getContext(): AudioContext | null {
@@ -27,9 +62,33 @@ class SoundManager {
     return this.context
   }
 
-  /** Play a sound defined in SOUNDS. */
+  /** Try playing MP3, return true if successful. */
+  private playMp3(key: string): boolean {
+    if (typeof window === 'undefined') return false
+    if (!this.preloaded) this.preload()
+
+    const cached = this.audioCache.get(key)
+    if (!cached) return false
+
+    try {
+      // Clone for overlapping plays
+      const clone = cached.cloneNode() as HTMLAudioElement
+      clone.volume = this.volume
+      void clone.play().catch(() => {})
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  /** Play a sound: try MP3 first, fall back to Web Audio synthesis. */
   private play(config: SoundConfig): void {
     if (!this.enabled) return
+
+    // Try MP3 first
+    if (this.playMp3(config.name)) return
+
+    // Fallback: Web Audio synthesis
     const ctx = this.getContext()
     if (!ctx) return
 
@@ -61,6 +120,12 @@ class SoundManager {
 
       offset += stepDuration
     }
+  }
+
+  /** Play an MP3-only sound (no Web Audio fallback). */
+  private playMp3Only(key: string): void {
+    if (!this.enabled) return
+    this.playMp3(key)
   }
 
   /** Short tick on every keystroke. */
@@ -138,6 +203,31 @@ class SoundManager {
     this.play(SOUNDS.battleStart)
   }
 
+  /** Fire streak combo sound. */
+  playStreakFire(): void {
+    this.playMp3Only('streakFire')
+  }
+
+  /** Victory celebration sound. */
+  playVictoryCheers(): void {
+    this.playMp3Only('victoryCheers')
+  }
+
+  /** Ninja slash attack sound. */
+  playNinjaSlash(): void {
+    this.playMp3Only('ninjaSlash')
+  }
+
+  /** Bug enemy appearance sound. */
+  playBugAppear(): void {
+    this.playMp3Only('bugAppear')
+  }
+
+  /** Glitch warp/teleport sound. */
+  playGlitchWarp(): void {
+    this.playMp3Only('glitchWarp')
+  }
+
   /** Sync enabled state from settings store. */
   setEnabled(enabled: boolean): void {
     this.enabled = enabled
@@ -146,6 +236,10 @@ class SoundManager {
   /** Sync volume from settings store (0-1). */
   setVolume(volume: number): void {
     this.volume = Math.max(0, Math.min(1, volume))
+    // Update cached audio elements
+    for (const audio of this.audioCache.values()) {
+      audio.volume = this.volume
+    }
   }
 }
 

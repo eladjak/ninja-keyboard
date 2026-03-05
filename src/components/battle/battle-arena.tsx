@@ -168,6 +168,9 @@ export function BattleArena() {
       setXpEarned(xp)
       addXp(xp)
       setPhase('results')
+      if (w === 'player') {
+        soundManager.playVictoryCheers()
+      }
 
       if (aiIntervalRef.current) {
         clearInterval(aiIntervalRef.current)
