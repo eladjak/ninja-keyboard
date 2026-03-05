@@ -54,11 +54,11 @@ const CHARACTERS = {
     ]
   },
   yuki: {
-    designDesc: 'A young Israeli girl voice, extremely energetic and competitive. Fast talker, breathless excitement. Higher pitch with staccato delivery. Sports announcer energy - always pumped, always ready to race. Speaks like every word is a sprint.',
-    accountName: 'NK-Yuki-Speed-V4',
-    accountDesc: 'Young Israeli speed girl - fast, competitive, energetic',
+    designDesc: 'The FASTEST voice in the game. A young Israeli girl who talks like The Flash - rapid-fire delivery, breathlessly quick, words tumbling out in excitement. HIGHER pitch than before, YOUNGER sounding, like a 10-year-old who just drank three energy drinks. Every sentence should feel like a sprint - fast, precise, staccato. NOT just energetic - she must sound genuinely FAST, like she is racing against time itself. Precise nuances on every syllable despite the speed. Think anime speedster character. Natural Israeli Hebrew but RAPID cadence.',
+    accountName: 'NK-Yuki-Speed-V6',
+    accountDesc: 'Lightning-fast Israeli girl - rapid-fire, highest pitch, youngest, Flash-like',
     previewText: 'מי יכול להקליד מהר ממני? אתגר אותי! אני הכי מהירה בדוג׳ו! מהר יותר! עוד יותר מהר! שבור את השיא! ניצחתי! אף אחד לא מהיר ממני!',
-    ttsSettings: { stability: 0.68, similarity_boost: 0.90, style: 0.80, use_speaker_boost: true },
+    ttsSettings: { stability: 0.60, similarity_boost: 0.92, style: 0.90, use_speaker_boost: true },
     lines: [
       { id: 'yuki-challenge', text: 'מי יכול להקליד מהר ממני? אתגר אותי!' },
       { id: 'yuki-speed', text: 'מהר יותר! עוד יותר מהר! שבור את השיא!' },
