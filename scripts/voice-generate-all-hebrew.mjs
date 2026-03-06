@@ -54,11 +54,11 @@ const CHARACTERS = {
     ]
   },
   yuki: {
-    designDesc: 'The FASTEST voice in the game. A young Israeli girl who talks like The Flash - rapid-fire delivery, breathlessly quick, words tumbling out in excitement. HIGHER pitch than before, YOUNGER sounding, like a 10-year-old who just drank three energy drinks. Every sentence should feel like a sprint - fast, precise, staccato. NOT just energetic - she must sound genuinely FAST, like she is racing against time itself. Precise nuances on every syllable despite the speed. Think anime speedster character. Natural Israeli Hebrew but RAPID cadence.',
-    accountName: 'NK-Yuki-Speed-V6',
-    accountDesc: 'Lightning-fast Israeli girl - rapid-fire, highest pitch, youngest, Flash-like',
-    previewText: 'מי יכול להקליד מהר ממני? אתגר אותי! אני הכי מהירה בדוג׳ו! מהר יותר! עוד יותר מהר! שבור את השיא! ניצחתי! אף אחד לא מהיר ממני!',
-    ttsSettings: { stability: 0.60, similarity_boost: 0.92, style: 0.90, use_speaker_boost: true },
+    designDesc: 'A native Israeli Sabra woman with a warm Mediterranean Hebrew accent. NOT Eastern European and NOT Russian accent at all. Pure Israeli pronunciation with natural guttural R and warm vowels. Her speech is extremely rapid — the fastest talker in any room — words tumbling out breathlessly with barely a pause. Higher pitch, youthful energy, bright and cheerful. Every sentence is a sprint. Staccato rhythm, infectious enthusiasm, competitive fire. She sounds like an anime speedster character who speaks Hebrew natively. Bubbly, fierce, unstoppable rapid delivery.',
+    accountName: 'NK-Yuki-Speed-V7',
+    accountDesc: 'Fastest Israeli sabra girl - pure Hebrew accent, ultra-rapid, no Russian tone',
+    previewText: 'מי יכול להקליד מהר ממני? בואו תתחרו בי! אני הכי מהירה פה! מהר מהר מהר! עוד יותר מהר! תשברו את השיא שלכם! ניצחתי אתכם! אף אחד לא מהיר כמוני! יאללה עוד סיבוב!',
+    ttsSettings: { stability: 0.50, similarity_boost: 0.95, style: 0.95, use_speaker_boost: true },
     lines: [
       { id: 'yuki-challenge', text: 'מי יכול להקליד מהר ממני? אתגר אותי!' },
       { id: 'yuki-speed', text: 'מהר יותר! עוד יותר מהר! שבור את השיא!' },

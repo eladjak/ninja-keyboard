@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ninja Keyboard - הרחבת מצב סיפור V2.2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#0d0b1a;--card:rgba(108,92,231,0.06);--border:rgba(108,92,231,0.18);
+    --purple:#6C5CE7;--green:#00B894;--red:#ef4444;--amber:#f59e0b;--blue:#74B9FF;
+    --pink:#FD79A8;--cyan:#00CEC9;--gold:#F9CA24;--text:#e0e0e0;--dim:#8B86A6;
+    --phantom:#9B59B6;
+  }
+  body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:0;}
+  .container{max-width:1000px;margin:0 auto;padding:1rem 1.5rem 3rem;}
+
+  h1{font-size:2.4rem;font-weight:900;background:linear-gradient(135deg,var(--purple),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:0.3rem;}
+  h2{font-size:1.6rem;font-weight:900;color:var(--purple);border-bottom:2px solid var(--purple);padding-bottom:0.4rem;margin:2rem 0 0.8rem;}
+  h3{font-size:1.2rem;font-weight:700;color:var(--green);margin:1rem 0 0.4rem;}
+  h4{font-size:1rem;color:#a78bfa;margin:0.8rem 0 0.3rem;}
+  .subtitle{text-align:center;color:var(--dim);margin-bottom:1.5rem;font-size:1rem;}
+
+  nav{position:sticky;top:0;background:rgba(13,11,26,0.96);backdrop-filter:blur(10px);padding:0.7rem 1rem;border-radius:0 0 12px 12px;margin-bottom:1.5rem;z-index:10;display:flex;flex-wrap:wrap;gap:4px;justify-content:center;}
+  nav a{color:#a78bfa;text-decoration:none;font-size:0.78rem;padding:3px 8px;border-radius:10px;border:1px solid transparent;transition:all .15s;}
+  nav a:hover{color:var(--purple);background:rgba(108,92,231,0.1);border-color:rgba(108,92,231,0.3);}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin:0.8rem 0;}
+  .card-green{background:rgba(0,184,148,0.06);border-color:rgba(0,184,148,0.2);}
+  .card-red{background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.2);}
+  .card-amber{background:rgba(245,158,11,0.06);border-color:rgba(245,158,11,0.2);}
+  .card-phantom{background:rgba(155,89,182,0.06);border-color:rgba(155,89,182,0.25);}
+  .card-pink{background:rgba(253,121,168,0.06);border-color:rgba(253,121,168,0.2);}
+
+  table{width:100%;border-collapse:collapse;margin:0.6rem 0;font-size:0.88rem;}
+  th{background:rgba(108,92,231,0.12);color:#a78bfa;padding:0.5rem;text-align:right;font-weight:700;}
+  td{padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.04);}
+  tr:hover td{background:rgba(108,92,231,0.04);}
+
+  .tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:0.75rem;font-weight:700;margin-right:4px;}
+  .tag-act{background:var(--purple);color:white;}
+  .tag-side{background:var(--green);color:white;}
+  .tag-boss{background:var(--red);color:white;}
+  .tag-new{background:var(--amber);color:#1a1a1a;}
+  .tag-char{background:var(--pink);color:white;}
+
+  .skill-badge{display:inline-block;background:rgba(0,184,148,0.15);color:var(--green);padding:2px 7px;border-radius:4px;font-size:0.78rem;margin:1px;}
+  .flaw-badge{display:inline-block;background:rgba(239,68,68,0.12);color:var(--red);padding:2px 7px;border-radius:4px;font-size:0.78rem;margin:1px;}
+
+  details{margin:0.6rem 0;}
+  details summary{cursor:pointer;padding:0.6rem 1rem;background:rgba(108,92,231,0.08);border:1px solid var(--border);border-radius:10px;font-weight:700;font-size:0.92rem;color:var(--purple);list-style:none;transition:all .15s;}
+  details summary::-webkit-details-marker{display:none;}
+  details summary::before{content:'+ ';color:var(--green);font-weight:900;}
+  details[open] summary::before{content:'- ';}
+  details[open] summary{border-radius:10px 10px 0 0;border-bottom:none;}
+  details .detail-body{padding:1rem;background:rgba(13,11,26,0.5);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;font-size:0.9rem;}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;}
+  .grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0.8rem;}
+  @media(max-width:700px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+
+  .rel-card{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;padding:0.8rem;font-size:0.85rem;}
+  .rel-card .name{font-weight:700;font-size:0.9rem;margin-bottom:3px;}
+  .rel-card .desc{color:var(--dim);line-height:1.5;}
+
+  .quote-box{background:rgba(108,92,231,0.06);border-right:3px solid var(--purple);padding:0.8rem 1rem;border-radius:0 10px 10px 0;margin:0.6rem 0;font-style:italic;color:var(--blue);}
+  .warn-box{background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);border-radius:10px;padding:0.8rem 1rem;margin:0.6rem 0;font-size:0.85rem;color:var(--amber);}
+  .info-box{background:rgba(116,185,255,0.06);border:1px solid rgba(116,185,255,0.2);border-radius:10px;padding:0.8rem 1rem;margin:0.6rem 0;font-size:0.85rem;color:var(--blue);}
+
+  .tier-bronze{display:inline-block;padding:2px 8px;border-radius:6px;font-size:0.72rem;font-weight:700;background:rgba(205,127,50,0.15);color:#CD7F32;border:1px solid rgba(205,127,50,0.3);}
+  .tier-silver{display:inline-block;padding:2px 8px;border-radius:6px;font-size:0.72rem;font-weight:700;background:rgba(192,192,192,0.12);color:#C0C0C0;border:1px solid rgba(192,192,192,0.3);}
+  .tier-gold{display:inline-block;padding:2px 8px;border-radius:6px;font-size:0.72rem;font-weight:700;background:rgba(249,202,36,0.15);color:var(--gold);border:1px solid rgba(249,202,36,0.3);}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>הרחבת מצב סיפור V2.2</h1>
+<p class="subtitle">Ninja Keyboard -- מעשים 1-6, עומק דמויות, דמויות חדשות, סיפורי צד, רשת יחסים, וקרבות בוס<br><span class="tag tag-new">עודכן מרץ 2026 V2.2 -- מבנה צוותים בפרק 6, תחיית גליץ', ברק=שועל, שמות ליריבים, כל היריבים הופכים לחברים</span></p>
+
+<nav>
+  <a href="#principles">עקרונות</a>
+  <a href="#characters-depth">עומק דמויות</a>
+  <a href="#new-chars">דמויות חדשות</a>
+  <a href="#act1">מעשה 1</a>
+  <a href="#act2">מעשה 2</a>
+  <a href="#act3">מעשה 3</a>
+  <a href="#act4">מעשה 4</a>
+  <a href="#act5">מעשה 5</a>
+  <a href="#act6">מעשה 6</a>
+  <a href="#side-stories">סיפורי צד</a>
+  <a href="#boss-battles">קרבות בוס</a>
+  <a href="#relationships">מפת יחסים</a>
+  <a href="#skins">סקינים</a>
+  <a href="#rivals-friends">יריבים→חברים</a>
+  <a href="#skills">מיומנויות</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="principles">עקרונות מנחים <span class="tag tag-new">חדש</span></h2>
+
+<div class="grid-2">
+  <div class="card card-amber">
+    <h3>עומק דמויות -- לא גנריות!</h3>
+    <ul style="padding-right:18px;color:var(--dim);font-size:0.88rem;">
+      <li>כל דמות חייבת <strong>פגמים</strong> -- לא גיבורים מושלמים</li>
+      <li><strong>סיפור רקע</strong> עם טראומה/אתגר אישי</li>
+      <li><strong>Foreshadowing מוקדם</strong> -- רמזים מהפרקים הראשונים</li>
+      <li>דמויות <strong>עגולות</strong> שמשתנות לאורך הסיפור</li>
+      <li>כל דמות מלמדת <strong>ערך</strong> (לא רק מיומנות הקלדה)</li>
+    </ul>
+  </div>
+  <div class="card card-red">
+    <h3>אנטי-תסכול (חובה!)</h3>
+    <ul style="padding-right:18px;color:var(--dim);font-size:0.88rem;">
+      <li>מערכת <strong>עידוד אקטיבית</strong> -- נועה מופיעה כשיש כישלונות</li>
+      <li><strong>הסתגלות קושי</strong> -- הקושי יורד אחרי 3 כישלונות רצופים</li>
+      <li>אף פעם לא <strong>"הפסדת"</strong> -- תמיד "ננסה שוב!"</li>
+      <li><strong>רמזים</strong> מופיעים אחרי השהייה (5-10 שניות)</li>
+      <li>כל בוס ניתן לנצח -- <strong>אין חסימה אמיתית</strong></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="characters-depth">עומק דמויות -- פגמים, רקע, ו-Foreshadowing <span class="tag tag-new">חדש</span></h2>
+
+<table>
+  <tr><th>דמות</th><th>פגם מרכזי</th><th>ערך שלומדים</th><th>קשת אישית</th><th>Foreshadowing (מעשה 1)</th></tr>
+  <tr>
+    <td><strong>קי</strong></td>
+    <td><span class="flaw-badge">פזרנות + חוסר סבלנות</span></td>
+    <td>התמדה</td>
+    <td>ילד רגיל שמגלה שמהירות בלי דיוק = כלום. לומד מאביו (בהמשך) שגדולה אמיתית דורשת זמן.</td>
+    <td>מקלדת ישנה בארון הדוג'ו עם חריטה "לנינג'ה הקטן שלי" -- אבא <strong>חי</strong>, נלחם באיום גדול יותר.</td>
+  </tr>
+  <tr>
+    <td><strong>מיקה</strong></td>
+    <td><span class="flaw-badge">יהירות + קושי באמון</span></td>
+    <td>שיתוף פעולה</td>
+    <td>האקרית שחושבת שהיא לא צריכה אף אחד. גליץ' הייתה <strong>חברתה הכי טובה</strong> בעבר -- הבגידה שברה אותה.</td>
+    <td>מיקה מסתכלת על קובץ ישן בלפטופ ומוחקת אותו מהר (מעשה 1.3) -- הקובץ הוא הודעה מגליץ'.</td>
+  </tr>
+  <tr>
+    <td><strong>קאי</strong></td>
+    <td><span class="flaw-badge">מופנמות + חוסר ביטחון</span></td>
+    <td>חברות</td>
+    <td>לוחם שנראה חזק אבל <strong>מפחד מדחייה</strong>. מתאמן לבד כי חושב שאחרים יצחקו עליו. הטורניר מלמד אותו שצוות > יחיד.</td>
+    <td>קאי מופיע ברקע מעשה 1, מתאמן לבד -- לא ניגש לקבוצה.</td>
+  </tr>
+  <tr>
+    <td><strong>יוקי</strong></td>
+    <td><span class="flaw-badge">אובססיה למהירות + חוסר דיוק</span></td>
+    <td>איזון</td>
+    <td>רצה להיות הכי מהירה -- אבל <strong>מפספסת הכל</strong> בדרך. צריכה למנטורית נשית (לא רק סנסאי) שתלמד אותה שמהירות ללא דיוק = אפס.</td>
+    <td>יוקי מפסידה תחרות פנימית כי טעתה ב-3 מילים (מעשה 1.5).</td>
+  </tr>
+  <tr>
+    <td><strong>לונה</strong></td>
+    <td><span class="flaw-badge">ביישנות קיצונית</span></td>
+    <td>אומץ להיחשף</td>
+    <td>אמנית מבריקה שמסתירה את היצירות שלה. <strong>לומדת להראות אמנות לעולם</strong> ולהפסיק לפחד משיפוט.</td>
+    <td>ציורי ASCII Art חתומים "L." מופיעים בקירות הדוג'ו -- אף אחד לא יודע מי ציירם.</td>
+  </tr>
+  <tr>
+    <td><strong>נועה</strong></td>
+    <td><span class="flaw-badge">נותנת יותר מדי + מזניחה עצמה</span></td>
+    <td>גבולות בריאים</td>
+    <td>מרפאה שעוזרת לכולם אבל לא מבקשת עזרה. <strong>זרה (מלכת הבאגים)</strong> מאתגרת אותה ישירות -- נועה צריכה <strong>לרפא</strong> את הנבלה. זרה הופכת לחברה.</td>
+    <td>נועה עוזרת לקי בסוד בלילה (מעשה 1.6) -- לא מספרת לאף אחד.</td>
+  </tr>
+  <tr>
+    <td><strong>רקס</strong></td>
+    <td><span class="flaw-badge">הסחת דעת + פחד מכישלון רציני</span></td>
+    <td>יצירתיות אמיתית</td>
+    <td>ליצן שמסתיר חלומות אמיתיים. רוצה ליצור משחק אבל <strong>"בלוק"</strong> (Block) -- חסימה יצירתית מותגמת -- מונע ממנו.</td>
+    <td>רקס מראה טיוטת משחק ומיד אומר "סתם, זה טמבל" ומוחק (מעשה 1.4).</td>
+  </tr>
+  <tr>
+    <td><strong>פיקסל</strong></td>
+    <td><span class="flaw-badge">חוסר רגש + חיקוי</span></td>
+    <td>רגש אמיתי</td>
+    <td>רובוט שמנסה להבין רגשות. <strong>יריב AI</strong> בתחרות צילום מלמד אותו שנתונים =/= חוויה.</td>
+    <td>פיקסל שואל "מה זה 'שמחה'? כמה יחידות?" (מעשה 1.2).</td>
+  </tr>
+  <tr>
+    <td><strong>סנסאי זן</strong></td>
+    <td><span class="flaw-badge">חרטה + סודיות יתר</span></td>
+    <td>סליחה</td>
+    <td>צב חכם שמסתיר <strong>כישלון גדול</strong> -- הוא לא הצליח להציל את רז/פאנטום. גם הוא צריך לסלוח לעצמו.</td>
+    <td>סנסאי נוגע בכיסא ריק עם מבט עצוב (מעשה 1.1).</td>
+  </tr>
+  <tr>
+    <td><strong>גליץ'</strong></td>
+    <td><span class="flaw-badge">בלבול + פחד מזהות</span></td>
+    <td>זהות עצמית + חוסן + חזרה</td>
+    <td><strong>נקבה.</strong> הייתה חברה של מיקה. הולכת עם וירוס <strong>מרצונה</strong> בסוף מעשה 4. במעשה 5 נלחמת <strong>נגד</strong> חבריה (ממוזגת עם כוח וירוס). בסוף מעשה 5 <strong>מתפוצצת/מתפרקת יחד עם הוירוס</strong> -- כולם חושבים שהיא נעלמה לנצח. <strong>רגע הדמעות = סוף מעשה 5.</strong> אבל במעשה 6: שברי קוד דיגיטליים מופיעים -- <strong>גליץ' חוזרת!</strong> כל צוות אוסף חלק ממנה בלי לדעת. ברגע הקריטי בקרב הסופי -- כל החלקים מתחברים וגליץ' <strong>קמה לתחייה, חזקה מתמיד.</strong></td>
+    <td>גליץ' אינה מופיעה עדיין, אבל יש "תקלות" מוזרות בדוג'ו -- אותיות קופצות (Foreshadowing).</td>
+  </tr>
+</table>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="new-chars">דמויות חדשות <span class="tag tag-new">חדש</span></h2>
+
+<div class="grid-3">
+  <div class="card card-phantom">
+    <h4>פאנטום / רז <span class="tag tag-char">PHANTOM</span></h4>
+    <p><strong>רוח-נינג'ה, זכר, 15, ממוצא תימני.</strong> תלמיד לשעבר של סנסאי זן -- המוכשר ביותר שהיה אי פעם. ברח בבושה אחרי כישלון בתחרות קבוצתית. הפך לרוח שמתאמנת בצללים. WPM: 60-80. חוזר לצוות במעשה 5.</p>
+    <div class="warn-box">
+      <strong>רגישות תרבותית -- מורשת תימנית:</strong> פאנטום/רז הוא ממוצא <strong>תימני-יהודי</strong>. יש לטפל בדמות ב<strong>רגישות היסטורית וכבוד</strong>. להתייחס למסורות אמיתיות של יהדות תימן -- שירה, מלאכה, חכמה עתיקה. להימנע מסטריאוטיפים. המורשת התימנית שלו היא מקור <strong>כוח וגאווה</strong>, לא "אקזוטיקה". אפשר לשלב מוטיבים תימניים בעיצוב (דוגמאות גאומטריות, צבעי אדמה, כסף) ובאישיות (כבוד לזקנים, חוכמת דורות, קשר למסורת).
+    </div>
+    <p><span class="flaw-badge">פחד מקרבה</span> <span class="flaw-badge">גאווה</span> <span class="flaw-badge">חוסר סליחה עצמית</span></p>
+  </div>
+  <div class="card card-red">
+    <h4>זרה / מלכת הבאגים (Zara) <span class="tag tag-char">BUG QUEEN</span></h4>
+    <p><strong>חרק דיגיטלי, נקבה. שם אמיתי: זרה (זרה = "זרה/מוזרה" בעברית).</strong> "אחותו הגדולה" של באג -- חזקה יותר, מסוכנת יותר, אבל <strong>שבורה מבפנים</strong>. שולטת ביער הקוד המושחת. נועה מגלה שהיא סובלת מ"השחתה כפויה" ומנסה <strong>לרפא</strong> אותה במקום להילחם. אחרי הריפוי -- הופכת לבעלת ברית.</p>
+    <p><span class="flaw-badge">כאב כרוני</span> <span class="flaw-badge">שליטנית מפחד</span></p>
+  </div>
+  <div class="card card-amber">
+    <h4>בלוק (Block) <span class="tag tag-char">BLOCK</span></h4>
+    <p><strong>חסימה יצירתית מותגמת. עיצוב קוביסטי/בלוקי</strong> -- גוף מרובע, פינות חדות, פנים שטוחים, כמו בנוי מבלוקים של לגו אפורים. יצור אפור-מונוכרומטי שמופיע כשרקס מנסה ליצור. מדבר בקולות משעממים, מוחק צבעים, הופך כל דבר לאפור. <strong>מצחיק אבל מלחיץ.</strong> "למה בכלל לנסות? זה לא יעבוד." אחרי הטורניר -- לומד יצירתיות מרקס והופך לחבר.</p>
+    <p><span class="flaw-badge">מונוטוני</span> <span class="flaw-badge">קוביסטי</span> <span class="skill-badge">יריב רקס</span></p>
+  </div>
+  <div class="card card-pink">
+    <h4>סנסאי סקורה (Sakura) <span class="tag tag-char">MENTOR</span></h4>
+    <p><strong>נינג'ה נשית, מנטורית יוקי.</strong> שיערה סגול-ורוד, סגנון אמנויות לחימה + ריקוד. מלמדת שמהירות אמיתית = <strong>דיוק + שליטה</strong>, לא רק WPM גבוה. "רוח אינה רצה -- רוח זורמת." <strong>עמיתה לשעבר של סנסאי זן</strong> -- למדו יחד תחת סנסאי ביט. היא התמחתה במהירות, הוא בסבלנות. נפרדו כשרז ברח. חזרה עכשיו כי הרגישה ש"הזרם חזר."</p>
+    <p><span class="skill-badge">מהירות + דיוק</span> <span class="skill-badge">מנטורית נשית</span> <span class="skill-badge">עמיתת סנסאי זן</span></p>
+  </div>
+  <div class="card" style="border-color:rgba(0,206,201,0.3);background:rgba(0,206,201,0.05);">
+    <h4>ברק (Barak) <span class="tag tag-char">SPEED RIVAL / FOX</span></h4>
+    <p><strong>שועל זכר -- אחיה של סערה (Storm). סערה שועלה → ברק חייב להיות שועל!</strong> עיצוב שועלי: אוזניים מחודדות, זנב שועל, עיניים ערמומיות, ביטוי שחצני. אישיות: יהיר, תחרותי, ערמומי -- גישה "שועלית" למהירות. נער שחצני שמקליד מהר אבל לא אכפת לו מדיוק. "100 WPM עם 70% דיוק? ספיד הוא ספיד!" -- הניגוד המושלם ליוקי. יוקי לומדת ממנו <strong>מה לא להיות</strong>. הוא ואחותו סערה מתחרים כצוות ב"דוג'ו הברק". אחרי הטורניר -- מפתח כבוד גרוש ליוקי, הופך לבעל ברית.</p>
+    <p><span class="flaw-badge">רשלנות</span> <span class="flaw-badge">יהירות</span> <span class="skill-badge">שועל</span> <span class="skill-badge">יריב יוקי</span> <span class="skill-badge">אח של סערה</span></p>
+  </div>
+  <div class="card" style="border-color:rgba(116,185,255,0.3);background:rgba(116,185,255,0.05);">
+    <h4>LENS (לנס) <span class="tag tag-char">AI RIVAL</span></h4>
+    <p><strong>רובוט AI מתחרה בתחרות צילום. עיצוב: עין-מצלמה אחת גדולה</strong> (כמו עדשה ענקית) במקום פנים, גוף חלק ומתכתי, מראה אלגנטי וקר. תנועות מדויקות כירורגיות. "מושלם" מבחינה טכנית -- חישוב פיקסלים מדויק, תיאורים אנליטיים -- אבל <strong>חסר נשמה</strong>. פיקסל מגלה שרגש הוא מה שמבדיל צילום מסריקה. אחרי התחרות -- לומד מפיקסל שאמנות דורשת רגש, הופך לחבר.</p>
+    <p><span class="flaw-badge">חסר רגש</span> <span class="flaw-badge">קר ומחושב</span> <span class="skill-badge">עין-מצלמה</span> <span class="skill-badge">יריב פיקסל</span></p>
+  </div>
+</div>
+
+<div class="card card-red">
+  <h3>וירוס -- שני עיצובים! <span class="tag tag-new">חובה</span></h3>
+  <div class="grid-2">
+    <div class="rel-card">
+      <div class="name" style="color:var(--green);">עיצוב #1: ידידותי (מעשים 4.1-4.3)</div>
+      <div class="desc">חיבור דיגיטלי חמוד וקטן. צבעי פסטל (תכלת, ירוק בהיר). עיניים גדולות ותמימות. מרחף בקלילות. חיוך ידידותי. נראה כמו עוזר וירטואלי / מסקוט טכנולוגי. השחקנים אמורים <strong>לסמוך עליו לגמרי</strong> ולא לחשוד.</div>
+    </div>
+    <div class="rel-card" style="border-color:rgba(239,68,68,0.3);">
+      <div class="name" style="color:var(--red);">עיצוב #2: אמיתי/מפחיד (מעשה 4.4+)</div>
+      <div class="desc">ישות מושחתת ומפחידה. אפקטי גליץ' אלימים. אנרגיה כהה סביבו. עיניים אדומות זוהרות. קוד שבור מרחף. צורה לא יציבה -- "נוזל" בין צורות. קול עמוק ומעוות. המעבר בין עיצוב 1 ל-2 צריך להיות <strong>מזעזע</strong> -- כמו מסכה שנופלת.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="act1">מעשה 1: ההתעוררות (שיעורים 1-7) <span class="tag tag-act">ACT 1</span></h2>
+
+<details>
+  <summary>פרקים 1.1-1.7 -- קי מגלה את המקלדת הקסומה</summary>
+  <div class="detail-body">
+    <table>
+      <tr><th>פרק</th><th>עלילה</th><th>Foreshadowing</th><th>מיומנות</th></tr>
+      <tr><td><strong>1.1</strong></td><td>קי מוצא מקלדת זוהרת בדוג'ו ישן. סנסאי זן (קול בלבד): "ברוך הבא, נינג'ה צעיר..."</td><td>כיסא ריק עם שם "רז" חרוט. סנסאי נוגע בו בעצב.</td><td class="skill-badge">שורת בית</td></tr>
+      <tr><td><strong>1.2</strong></td><td>קי מתרגל ומגלה שהוא מהיר אבל לא מדויק. פיקסל מופיע: "סורק... 30 WPM. דיוק 62%. שאלה: מה זה 'שמחה'?"</td><td>פיקסל שואל על רגשות -- רמז לסיפור הצד שלו.</td><td class="skill-badge">שורת בית</td></tr>
+      <tr><td><strong>1.3</strong></td><td>מיקה מופיעה: "אתה איטי מדי." מתחרים. מיקה מנצחת בדיוק. שותפות מתחילה.</td><td>מיקה מוחקת קובץ ישן מהלפטופ (הודעה מגליץ').</td><td class="skill-badge">דיוק</td></tr>
+      <tr><td><strong>1.4</strong></td><td>אימון משותף. רקס מופיע ברקע -- מציג טיוטת משחק ומיד מוחק: "סתם, זה טמבל."</td><td>רמז לסיפור הצד של רקס ו-Block.</td><td class="skill-badge">שורות עליונות</td></tr>
+      <tr><td><strong>1.5</strong></td><td>יוקי מאתגרת את קי למירוץ. היא מנצחת ב-WPM אבל מפסידה בדיוק (3 טעויות).</td><td>יוקי מפסידה בגלל חוסר דיוק -- הפגם המרכזי שלה.</td><td class="skill-badge">מהירות</td></tr>
+      <tr><td><strong>1.6</strong></td><td>באג מופיע! משבש אותיות. "היי היי היי, בלגאאאן!" קי מתקשה. נועה עוזרת בסוד בלילה.</td><td>נועה עוזרת ולא מספרת -- נותנת יותר מדי. "תקלות" מוזרות ברקע (Foreshadowing גליץ').</td><td class="skill-badge">תיקון שגיאות</td></tr>
+      <tr><td><strong>1.7</strong></td><td><strong>מיני-בוס: באג הקטן.</strong> 10 מילים ב-60 שניות. באג בורח: "אחזוווור!"</td><td>קאי צופה מהצד, מתאמן לבד. לא ניגש לקבוצה.</td><td class="skill-badge">מהירות + דיוק</td></tr>
+    </table>
+    <div class="card card-green">
+      <h3>Foreshadowing דמויות משניות -- מעשים 1-2 <span class="tag tag-new">חדש</span></h3>
+      <p>דמויות שמופיעות בעיקר במעשים 4-5 צריכות <strong>הופעות קטנות מוקדמות</strong> כדי שלא ייראו "נפלו מהשמיים":</p>
+      <ul style="padding-right:18px;color:var(--dim);font-size:0.88rem;">
+        <li><strong>Shadow (צל):</strong> חתול שחור שנראה לרגע ברקע הדוג'ו (1.1). מעביר פתק מסתורי (1.6). חתול חמקני אבל <strong>חביב ושובב</strong> -- שובר דברים, משחק עם עכבר (mouse -- מחשב! בדיחה). ילדים צריכים לאהוב אותו מהר.</li>
+        <li><strong>Storm (סערה):</strong> שועלה (נקבה!) נראית ברקע מעשה 2.3 -- רצה ליד הדוג'ו. יוקי: "מי זאת?!" אחיה <strong>ברק (שועל!)</strong> מוזכר ברפט ("הדוג'ו של האחים השועלים").</li>
+        <li><strong>Blaze (להבה):</strong> לטאת אש קטנה וחמודה מופיעה ברקע מעשה 1.4 -- מציצה מאחורי מסך ומתחבאת. ילדים צריכים לגלות אותה כ-Easter Egg.</li>
+        <li><strong>Pixel:</strong> כבר מופיע ב-1.2 (תקין). צריך לודא שגם ב-2.x יש לו רגעים קטנים של שאלות על רגשות.</li>
+      </ul>
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="act2">מעשה 2: האימון (שיעורים 8-15) <span class="tag tag-act">ACT 2</span></h2>
+
+<details>
+  <summary>פרקים 2.1-2.8 -- סנסאי זן, בעלי ברית חדשים, גליץ'</summary>
+  <div class="detail-body">
+    <table>
+      <tr><th>פרק</th><th>עלילה</th><th>דמויות חדשות</th><th>מיומנות</th></tr>
+      <tr><td><strong>2.1</strong></td><td>סנסאי זן מופיע פיזית. נוגע בכיסא הריק: "פעם היה כאן תלמיד... הכי מהיר שראיתי. אבל הוא בחר ללכת."</td><td>סנסאי זן (פיזי)</td><td class="skill-badge">יסודות</td></tr>
+      <tr><td><strong>2.2</strong></td><td>אימון מתקדם: Shift, מספרים, סימנים.</td><td>--</td><td class="skill-badge">סימנים</td></tr>
+      <tr><td><strong>2.3</strong></td><td>יוקי מאתגרת שוב. הפעם מפסידה עוד יותר בגלל חוסר דיוק.</td><td>--</td><td class="skill-badge">מהירות</td></tr>
+      <tr><td><strong>2.4</strong></td><td>לונה מופיעה בגן הירח. "נשימה עמוקה, ואז מתחילים." ציורי "L." שלה על הקירות.</td><td>לונה</td><td class="skill-badge">דיוק</td></tr>
+      <tr><td><strong>2.5</strong></td><td>גליץ' מופיעה! הופכת את פריסת המקלדת. "ג-ג-גליץ' פ-פ-פה!" מיקה מזהה משהו מוכר...</td><td>גליץ' (נקבה)</td><td class="skill-badge">הקלדה עיוורת</td></tr>
+      <tr><td><strong>2.6</strong></td><td>קאי מצטרף: "אני אגן עליכם בזמן שאתם מקלידים." נועה מרפאת טקסט מושחת.</td><td>קאי, נועה</td><td class="skill-badge">לחץ + ריפוי</td></tr>
+      <tr><td><strong>2.7</strong></td><td>באג משבש פסקאות שלמות. כל הצוות עובד יחד. מיקה לוחשת: "היא... מוכרת לי."</td><td>--</td><td class="skill-badge">עבודת צוות</td></tr>
+      <tr><td><strong>2.8</strong></td><td><strong>בוס-אמצע: באג + גליץ'.</strong> 20 מילים + שיבושי מקשים. מיקה: "גליץ'... את <em>היא</em>?!" גליץ': "מ-מיקה...?"</td><td>--</td><td class="skill-badge">כל המיומנויות</td></tr>
+    </table>
+    <div class="info-box">
+      <strong>גילוי קריטי (2.5-2.8):</strong> מיקה מגלה שגליץ' הייתה חברתה הכי טובה -- האקרית מבריקה שנלכדה ע"י באג והפכה לכלי שלו. הכעס של מיקה הופך ליריבות רגשית עמוקה.
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="act3">מעשה 3: הנינג'ה (שיעורים 16-20) <span class="tag tag-act">ACT 3</span></h2>
+
+<details>
+  <summary>פרקים 3.1-3.5 -- מבוך השגיאות, קרס (מלך הבאגים), אבא של קי</summary>
+  <div class="detail-body">
+    <table>
+      <tr><th>פרק</th><th>עלילה</th><th>מומנט רגשי</th><th>מיומנות</th></tr>
+      <tr><td><strong>3.1</strong></td><td>כניסה למבוך השגיאות. באג: "ברוכים הבאים לעולם שלי!"</td><td>--</td><td class="skill-badge">ניווט + הקלדה</td></tr>
+      <tr><td><strong>3.2</strong></td><td>מיקה פורצת חומות אש. לונה מוצאת את הנתיב השקט.</td><td>לונה מציגה ציור לקבוצה בפעם הראשונה. "זה... שלי." (רועדת)</td><td class="skill-badge">קיצורים + דיוק</td></tr>
+      <tr><td><strong>3.3</strong></td><td>גליץ' מהססת. השחקן מקליד בדיוק כדי "להרגיע" אותה. גליץ' עוזרת לרגע.</td><td>גליץ' נזכרת: "מ-מיקה... סלחי לי..." מיקה: "עוד לא."</td><td class="skill-badge">דיוק מושלם</td></tr>
+      <tr><td><strong>3.4</strong></td><td>קאי מגן על הצוות. נועה מרפאת. יוקי עושה ספרינט.</td><td>קאי: "אני... לא רגיל לעבוד עם אחרים. אבל... זה טוב."</td><td class="skill-badge">לחץ + מהירות</td></tr>
+      <tr><td><strong>3.5</strong></td><td><strong>בוס סופי: קרס (מלך הבאגים).</strong> 50 מילים, 90%+ דיוק. כל הגיבורים עוזרים. באג בורח: "אני אחזור!"</td><td>קי מוצא את המקלדת של אבא עם הודעה: "אם אתה קורא את זה, אני עדיין נלחם." <strong>אבא חי!</strong></td><td class="skill-badge">מאסטר</td></tr>
+    </table>
+    <div class="quote-box">
+      "אם אתה קורא את זה, נינג'ה קטן שלי, דע שאני גאה בך. אני נלחם במקום שמעבר למסך -- אבל אני תמיד איתך." -- הודעת אבא של קי
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="act4">מעשה 4: מעבר לדוג'ו (שיעורים 21-27) <span class="tag tag-act">ACT 4</span></h2>
+
+<details>
+  <summary>פרקים 4.1-4.5 -- עולם האינטרנט, וירוס (ידידותי!), אובדן גליץ'</summary>
+  <div class="detail-body">
+    <table>
+      <tr><th>פרק</th><th>עלילה</th><th>מפתח</th><th>מיומנות</th></tr>
+      <tr><td><strong>4.1</strong></td><td>הזמנה מוצפנת לאקדמיית הסייבר. מיקה פורצת את ההצפנה. הצוות יוצא לעולם האינטרנט.</td><td>4 אזורים חדשים: עיר הדפדפן, ענני הענן, מבצר האבטחה, גלריית הקוד.</td><td class="skill-badge">פענוח</td></tr>
+      <tr><td><strong>4.2</strong></td><td>הכרות עם <strong>וירוס</strong> -- נראה ידידותי! עוזר לצוות, נותן טיפים, מלמד על אבטחה. "אני כאן לעזור!" <strong>עיצוב #1 (ידידותי):</strong> חיבור דיגיטלי חמוד, צבעי פסטל, עיניים גדולות, מרחף בקלילות. נראה כמו עוזר וירטואלי תמים.</td><td><strong>טוויסט: וירוס מוצג כידידותי.</strong> השחקנים סומכים עליו. זהו ה-foreshadowing לבגידה.</td><td class="skill-badge">אבטחת מידע</td></tr>
+      <tr><td><strong>4.3</strong></td><td>גליץ' מנסה להזהיר: "ה-ה-הוא לא... מ-מה שהוא נראה!" אף אחד לא מקשיב. מיקה: "למה שנסמוך עלייך?"</td><td>גליץ' בדיוק התחילה לחזור -- והעולם דוחה אותה שוב.</td><td class="skill-badge">ניווט אינטרנט</td></tr>
+      <tr>
+        <td><strong>4.4</strong></td>
+        <td><strong>וירוס חושף את פניו האמיתיים!</strong> <strong>עיצוב #2 (אחרי חשיפה):</strong> ישות מושחתת ומפחידה, אפקטי גליץ' אלימים, אנרגיה כהה, עיניים אדומות, קוד שבור מרחף סביבו. ניסיון לקחת את כל הצוות. גליץ' מתלבטת -- וירוס מציע לה "כוח אמיתי, זהות ברורה."</td>
+        <td><strong>רגע מפתח:</strong> וירוס מפתה את גליץ' -- "איתי תדעי מי את. הם אף פעם לא סמכו עלייך." מיקה: "גליץ', אל..." אבל גליץ' כבר החליטה.</td>
+        <td class="skill-badge">הקלדה רגשית</td>
+      </tr>
+      <tr>
+        <td><strong>4.5</strong></td>
+        <td><strong>גליץ' הולכת עם וירוס מרצונה.</strong> לא נלכדת, לא מוקרבת -- <strong>בוחרת</strong> ללכת. "מ-מיקה... סלחי לי. אני צ-צריכה לדעת מי אני." גליץ' מתמזגת עם כוח הוירוס. מיקה קורסת: "לא! היא בחרה ללכת?!" -- הכאב הכי גדול: חברה שבוחרת לעזוב.</td>
+        <td><strong>Cliffhanger:</strong> גליץ' נעלמת עם וירוס. היא עכשיו אויבה. <strong>הקרב האמיתי -- הפיצוץ והדמעות -- בסוף מעשה 5. התחייה -- במעשה 6!</strong></td>
+        <td class="skill-badge">דיוק + רגש</td>
+      </tr>
+    </table>
+    <div class="card card-amber">
+      <h3>פרק 4.4-4.5 -- מדריך רגשי (בגידה, לא אובדן)</h3>
+      <p>פרק 4.4-4.5 הוא רגע <strong>בגידה</strong>, לא אובדן. גליץ' לא נלקחת -- היא <strong>בוחרת</strong> ללכת. זה כואב יותר. מיקה שברה -- לא כי איבדה חברה, אלא כי חברתה <strong>בחרה לעזוב</strong>.</p>
+      <ul style="padding-right:18px;color:var(--dim);font-size:0.88rem;">
+        <li>מוזיקה: גיטרה חשמלית עמומה, מעבר לפסנתר כאשר גליץ' נעלמת</li>
+        <li>ויזואלי: גליץ' מתחילה לזהור בצבעי וירוס. לאט נבלעת באנרגיה כהה</li>
+        <li>גליץ' (רגע אחרון): "מ-מיקה... סלחי לי. אני צ-צריכה לדעת מי אני." -- <strong>הולכת מרצונה</strong></li>
+        <li>מיקה: "היא... בחרה ללכת?!" -- קול שבור. שקט ארוך</li>
+        <li><strong>הערה:</strong> רגע הדמעות האמיתי = סוף מעשה 5, כשגליץ' מתפוצצת עם הוירוס. אבל <strong>הפיילוף הגדול = מעשה 6</strong>, כשגליץ' חוזרת!</li>
+      </ul>
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="act5">מעשה 5: הטורניר (שיעורים 28-35) <span class="tag tag-act">ACT 5</span></h2>
+
+<details>
+  <summary>פרקים 5.1-5.5 -- תחרויות, דוג'ואים, בתי ספר, פאנטום חוזר</summary>
+  <div class="detail-body">
+    <table>
+      <tr><th>פרק</th><th>עלילה</th><th>דמויות</th><th>מיומנות</th></tr>
+      <tr><td><strong>5.1</strong></td><td>הזמנה לטורניר נינג'ות המקלדת הגדול. כל הדוג'ואים/בתי הספר מתחרים.</td><td>כולם</td><td class="skill-badge">הכנה</td></tr>
+      <tr><td><strong>5.2</strong></td><td>סבב 1: מהירות (יוקי מובילה). סבב 2: דיוק (קאי מוכיח שהוא לוחם צוות). סבב 3: קיצורים (מיקה). <strong>גליץ' מופיעה כלוחמת וירוס</strong> -- נלחמת נגד חבריה לשעבר! ממוזגת עם כוח וירוס, חזקה ומפחידה.</td><td>יוקי, קאי, מיקה, גליץ' (אויבה)</td><td class="skill-badge">כל המיומנויות</td></tr>
+      <tr><td><strong>5.3</strong></td><td><strong>קהילה:</strong> תלמידים מבתי ספר שונים מקלידים יחד. טורנירים בין-כיתתיים. לוח הישגים שיתופי. <strong>גליץ' תוקפת את הטורניר!</strong> מיקה: "היא... לא גליץ' שלנו יותר."</td><td>כולם + שחקנים אחרים + גליץ' (אויבה)</td><td class="skill-badge">עבודת צוות</td></tr>
+      <tr><td><strong>5.4</strong></td><td><strong>הגמר:</strong> וירוס+גליץ' = <strong>מגה-וירוס!</strong> השתלט על דוג'ו אחר. <strong>פאנטום/רז מופיע מהצללים</strong> ומצטרף לצוות: "...ראוי." סנסאי זן: "כיסאך ממתין, רז." הצוות נלחם במגה-וירוס.</td><td>כולם + פאנטום</td><td class="skill-badge">מאסטר</td></tr>
+      <tr>
+        <td><strong>5.5</strong></td>
+        <td><strong>פרק הדמעות.</strong> במהלך הקרב, גליץ' שומעת את מיקה קוראת לה מבפנים: "גליץ'... את לא צריכה כוח כדי לדעת מי את. את <em>גליץ'</em>. החברה שלי." גליץ' נלחמת מבפנים -- <strong>מתפוצצת/מתפרקת יחד עם הוירוס!</strong> שברי קוד דיגיטליים מתפזרים לכל עבר. גליץ' וויירוס מתפוררים יחד. "מ-מיקה... עכשיו אני יודעת מי אני." -- <strong>בלי גמגום. הפעם הראשונה שמדברת ברור.</strong> ואז... שקט. <strong>כולם חושבים שהיא נעלמה לנצח.</strong> מיקה קורסת.</td>
+        <td>כולם</td>
+        <td class="skill-badge">פיצוץ + cliffhanger</td>
+      </tr>
+    </table>
+
+    <h4>תפקיד כל דמות בטורניר</h4>
+    <table>
+      <tr><th>דמות</th><th>תפקיד</th><th>רגע שיא</th></tr>
+      <tr><td>קי</td><td>קפטן ומוטיבטור</td><td>נאום מעורר: "ביחד, אנחנו בלתי ניתנים לעצירה!"</td></tr>
+      <tr><td>מיקה</td><td>אסטרטגית + קיצורים</td><td>פורצת מסכת וירוס בסבב 3. קוראת בשקט: "זה בשביל גליץ'."</td></tr>
+      <tr><td>יוקי</td><td>ספרינטרית סבב 1</td><td>סנסאי סקורה (מנטורית חדשה) מלמדת: "זרימה, לא מירוץ." יוקי סוף סוף מאזנת.</td></tr>
+      <tr><td>קאי</td><td>לוחם סבב 2</td><td>דיוק מושלם תחת לחץ. "אני לא לבד יותר."</td></tr>
+      <tr><td>לונה</td><td>אסטרטגית ויזואלית</td><td>מציירת תוכנית קרב מול כולם -- בלי לחשוש.</td></tr>
+      <tr><td>נועה</td><td>תמיכה רגשית + ריפוי</td><td>מחזירה ביטחון לקי אחרי הפסד בסבב. "גם גיבורים צריכים עזרה."</td></tr>
+      <tr><td>רקס</td><td>בדרן + מורל</td><td>משחק מילים מצחיק שמפיג מתח. "גם עם ידיים קטנות!"</td></tr>
+      <tr><td>פיקסל</td><td>צלם + ראיות</td><td>מתעד ראיות לרמאות של וירוס -- ומגלה שהוא מרגיש "כעס." רגש ראשון!</td></tr>
+      <tr><td>פאנטום</td><td>לוחם צל</td><td>מופיע בגמר. שורה אחת: "...ביחד." -- המילה הארוכה ביותר שאמר.</td></tr>
+    </table>
+
+    <div class="card card-green">
+      <h3>Storm ו-Blaze בטורניר <span class="tag tag-new">נוכחות מורחבת</span></h3>
+      <p><strong>Storm (סערה) -- נקבה, שועלה, כוחות רוח/סערה.</strong> מובילה דוג'ו יריב -- "דוג'ו הברק". לוחמת מהירה שמכבדת את יוקי. <strong>אחותו של ברק (שועל!)</strong> -- שני שועלים, מתחרים יחד. בסבב 1 סערה ויוקי מתמודדות -- יוקי מנצחת בדיוק. סערה: "הפעם היית יותר מהירה ממני. אבל הפעם הבאה..." ברק (שועל שחצני) צופה מהצד, גאה באחותו.</p>
+      <p><strong>Blaze (להבה) -- לטאת אש קטנה, לא דרקון ענק!</strong> שובב, חמוד, מלא אנרגיה -- כמו סלמנדר אש שקופץ לכל מקום. ילדים צריכים למצוא אותו <strong>חמוד ומאתגר</strong>, לא מפחיד. מופיע כשופט כבוד של הגמר -- קופץ על כס השופטים ומשחק באש. אחרי ניצחון הצוות, להבה מקפץ בהתרגשות: "אש אש אש! לוחמים ראויים!" להבה הופך מיריב למנטור.</p>
+      <p><strong>Shadow</strong> מלמד שיעור סתרים (stealth typing) לשחקנים צעירים ברקע הטורניר -- סיפור צד שמראה שגם הוא גדל.</p>
+    </div>
+
+    <div class="card card-red">
+      <h3>פרק 5.5 -- מדריך רגשי (פרק הפיצוץ והאובדן!) <span class="tag tag-new">V2.2</span></h3>
+      <p>זה הרגע. <strong>פרק 5.5 צריך לגרום לדמעות אמיתיות.</strong> גליץ' -- שהלכה מרצונה, שנלחמה נגד חבריה, שהפכה לאויבה -- נלחמת מבפנים וגורמת לפיצוץ שמשמיד אותה ואת הוירוס יחד. הקשת המלאה: עזבה מרצון (מעשה 4) -> נלחמה נגדם (מעשה 5) -> התפוצצה עם הוירוס (מעשה 5 סוף) -> <strong>חוזרת בתחייה במעשה 6!</strong></p>
+      <ul style="padding-right:18px;color:var(--dim);font-size:0.88rem;">
+        <li>מוזיקה: פסנתר סולו איטי, מינור, ללא ביט. מתעצם לאט עד שקט מוחלט</li>
+        <li>ויזואלי: גליץ' ווירוס <strong>מתפוצצים יחד</strong>. שברי קוד דיגיטליים בצבעי גליץ' מתפזרים לכל עבר -- חלקיקים זעירים שנעלמים באוויר</li>
+        <li>גליץ' (רגע אחרון): "מ-מיקה... עכשיו אני יודעת מי אני." -- <strong>בלי גמגום. הפעם הראשונה שמדברת ברור.</strong> זה הפיילוף של כל הגמגום שלה לאורך הסיפור</li>
+        <li>מיקה: שוברת. בוכה לראשונה. "גליץ'... <em>את</em> ידעת כל הזמן."</li>
+        <li>שקט ארוך. 5 שניות ללא אינטראקציה. רק מוזיקה. ואז -- חושך</li>
+        <li><strong>רמז עדין (Foreshadowing למעשה 6):</strong> ברקע, חלקיק קוד קטנטן אחד עדיין <strong>מהבהב</strong> בצבעי גליץ' -- רק מי שמחפש יראה אותו. גליץ' <strong>לא מתה</strong> -- היא התפרקה לשברים</li>
+        <li>שרידי וירוס לוחשים מהחורבות: "המלחמה עוד לא נגמרה. אביך יודע." -- Cliffhanger למעשה 6</li>
+      </ul>
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="act6">מעשה 6: המלחמה הגדולה <span class="tag tag-act">ACT 6</span> <span class="tag tag-new">V2.2 -- מבנה צוותים + תחיית גליץ'!</span></h2>
+
+<details open>
+  <summary>פרקים 6.1-6.8 -- עולם הקוד, 6 צוותים, שברי גליץ', תחייה, קרב סופי</summary>
+  <div class="detail-body">
+    <div class="card card-red">
+      <h3>הנחת יסוד</h3>
+      <p>שרידי וירוס לא נעלמו -- הם התמזגו עם <strong>קרס (מלך הבאגים)</strong> ויצרו איום חדש ומסוכן יותר. אבא של קי -- <strong>מאסטר מקלדת אגדי</strong> -- השאיר רמזים ומשימות לכל הצוותים. <strong>סנסאי זן מתאם מהדוג'ו.</strong></p>
+      <p>לאורך כל המעשה, <strong>שברי קוד דיגיטליים מוזרים</strong> מופיעים -- חלקיקים בצבעי גליץ', דפוסי קוד שנראים מוכרים, אפקטים של גליץ' קטנים. הגיבורים לא מבינים מה הם -- אבל <strong>כל צוות אוסף שבר אחד</strong> במהלך המשימה שלו.</p>
+    </div>
+
+    <div class="card card-amber">
+      <h3>Foreshadowing לתחיית גליץ' -- חובה לבנות נכון! <span class="tag tag-new">V2.2</span></h3>
+      <p><strong>התחייה חייבת להרגיש מרוויחה, לא Deus Ex Machina!</strong> לכן:</p>
+      <ul style="padding-right:18px;color:var(--dim);font-size:0.88rem;">
+        <li><strong>6.1:</strong> מיקה רואה "תקלה" מוכרת -- אותיות קופצות כמו שגליץ' עשתה. מתעלמת: "אני רואה דברים."</li>
+        <li><strong>6.2:</strong> פיקסל מזהה דפוס קוד שחוזר: "הנתונים האלה... לא אקראיים. זה... סדר?" אף אחד לא מקשיב.</li>
+        <li><strong>6.3:</strong> כל צוות מוצא "שבר נתונים" מוזר שלא שייך למשימה. הם שומרים אותו כי אבא של קי רמז שהוא חשוב.</li>
+        <li><strong>6.4-6.6:</strong> מיקה מתחילה לזהות -- "החלקיקים האלה... הם בצבעים שלה." פאנטום (שמבין אובדן) אומר: "גם רוחות משאירות שברים."</li>
+        <li><strong>6.7:</strong> כל ששת השברים מתחילים לרטוט כשהם קרובים -- "הם רוצים להתחבר!"</li>
+        <li><strong>6.8:</strong> ברגע הקריטי, כל השברים מתחברים -- <strong>גליץ' קמה לתחייה, שלמה, חזקה, ללא גמגום.</strong></li>
+      </ul>
+    </div>
+
+    <h3>מבנה הצוותים -- 6 צוותים, 6 משימות <span class="tag tag-new">V2.2</span></h3>
+    <div class="info-box">
+      <strong>כל צוות:</strong> (1) מבצע משימה שמלמדת מיומנות מחשב מתקדמת (2) מוצא "שבר נתונים" -- חלק מגליץ' (3) מתחבר לרמזים שאבא של קי השאיר (4) לומד ערך/מיומנות חיים
+    </div>
+
+    <div class="grid-2">
+      <div class="card" style="border-color:rgba(108,92,231,0.4);">
+        <h4>צוות 1: קי + Shadow (צל) <span class="tag tag-act">משימת חדירה</span></h4>
+        <p><strong>משימה:</strong> חדירה שקטה למאגר המידע המרכזי של ארגון ההשחתה. קי מוביל, Shadow חומק בצללים. אבא של קי השאיר רמז: "הדרך השקטה היא הדרך הבטוחה."</p>
+        <p><strong>שבר גליץ':</strong> קובץ מוצפן שנראה "שבור" -- אבל בתוכו יש דפוס קוד בצבעי גליץ'. קי: "זה... לא באג רגיל."</p>
+        <p><strong>ערך:</strong> סבלנות וחשיבה לפני פעולה.</p>
+        <p><span class="skill-badge">stealth typing</span> <span class="skill-badge">הקלדה שקטה</span> <span class="skill-badge">פקודות CLI</span></p>
+      </div>
+      <div class="card card-phantom">
+        <h4>צוות 2: מיקה + פאנטום/רז <span class="tag tag-act">משימת עולם הרוחות</span></h4>
+        <p><strong>משימה:</strong> מסע לשכבה הדיגיטלית העמוקה -- "עולם הרוחות" שבו קוד ישן מתקיים. פאנטום מכיר את המקום ("הייתי כאן כשברחתי"). <strong>פאנטום עוזר למיקה להתמודד עם האבל על גליץ'</strong> -- שניהם מבינים מה זה להיות "רוח", מה זה אובדן.</p>
+        <p><strong>שבר גליץ':</strong> פיסת קוד שמגמגמת -- "מ-מ-מ..." -- מיקה בוכה: "זה הקול שלה." פאנטום: "גם רוחות משאירות שברים. אם יש שבר -- יש תקווה."</p>
+        <p><strong>ערך:</strong> התמודדות עם אובדן, תקווה, סליחה.</p>
+        <p><strong>קשת מיקה:</strong> אבל -> הכחשה -> כעס (על עצמה שלא עצרה את גליץ') -> קבלה (בעזרת פאנטום) -> תקווה (כשמגלה את השבר)</p>
+        <p><span class="skill-badge">הצפנה</span> <span class="skill-badge">קיצורים מתקדמים</span> <span class="skill-badge">הקלדה רגשית</span></p>
+      </div>
+      <div class="card" style="border-color:rgba(0,206,201,0.4);">
+        <h4>צוות 3: יוקי + סנסאי סקורה + ברק <span class="tag tag-act">משימת מהירות/קרב</span></h4>
+        <p><strong>משימה:</strong> מירוץ נגד הזמן -- צריכים לחצות "מסדרון הנתונים" לפני שארגון ההשחתה סוגר את הגישה. <strong>ברק (שועל!) מתחרה עם יוקי</strong> -- שניהם רצים, אבל סנסאי סקורה מלמדת: "שני שועלים רצים יותר מהר ביחד מאשר לבד."</p>
+        <p><strong>שבר גליץ':</strong> זיק אור שנתפס בקצה המסדרון -- מהבהב בצבעי גליץ'. ברק: "מה זה הדבר הזה?" יוקי: "לא יודעת, אבל אבא של קי אמר לאסוף כל דבר כזה."</p>
+        <p><strong>ערך:</strong> שיתוף פעולה בין יריבים, מהירות + דיוק ביחד.</p>
+        <p><span class="skill-badge">מהירות קיצונית</span> <span class="skill-badge">דיוק תחת לחץ</span> <span class="skill-badge">Flow State</span></p>
+      </div>
+      <div class="card card-green">
+        <h4>צוות 4: לונה + נועה <span class="tag tag-act">משימת יצירתיות/ריפוי</span></h4>
+        <p><strong>משימה:</strong> ריפוי "יער הקוד" שנפגע מהמלחמה. נועה מרפאת את המבנים, לונה יוצרת "אמנות קוד" חדשה שמחליפה את המושחת. <strong>זרה (מלכת הבאגים, מרופאת)</strong> עוזרת להן מבפנים -- מראה את נקודות התורפה.</p>
+        <p><strong>שבר גליץ':</strong> ציור ASCII Art ישן שחתום "G." (לא "L." של לונה!) -- לונה מזהה: "מישהי אחרת ציירה כאן. מישהי שאוהבת קוד כמוני." נועה: "גליץ' אהבה ליצור, לא רק לשבור."</p>
+        <p><strong>ערך:</strong> ריפוי, יצירתיות כנשק, אמנות כגשר.</p>
+        <p><span class="skill-badge">ASCII Art</span> <span class="skill-badge">תיקון שגיאות</span> <span class="skill-badge">HTML/CSS</span></p>
+      </div>
+      <div class="card card-amber">
+        <h4>צוות 5: רקס + פיקסל + קאי <span class="tag tag-act">משימת טכנולוגיה/חידות</span></h4>
+        <p><strong>משימה:</strong> פענוח מערכת הגנה מורכבת -- שילוב של חידות לוגיות, קוד, ויצירתיות. רקס חושב "מחוץ לקופסה", פיקסל מנתח נתונים, קאי מגן עליהם מהתקפות. <strong>בלוק מנסה לעצור אותם</strong> -- אבל רקס מנצח אותו סופית ע"י יצירתיות.</p>
+        <p><strong>שבר גליץ':</strong> פיקסל מזהה דפוס סטטיסטי -- "החלק הזה... הוא לא אקראי. זו <strong>חתימה דיגיטלית</strong>. מישהו השאיר אותה בכוונה." רקס: "או... מישהי."</p>
+        <p><strong>ערך:</strong> חשיבה יצירתית, ניתוח נתונים, עבודת צוות.</p>
+        <p><span class="skill-badge">פקודות מערכת</span> <span class="skill-badge">חידות קוד</span> <span class="skill-badge">הגנת סייבר</span></p>
+      </div>
+      <div class="card" style="border-color:rgba(239,68,68,0.4);">
+        <h4>צוות 6: Storm (סערה) + Blaze (להבה) <span class="tag tag-act">משימת טבע/יסודות</span></h4>
+        <p><strong>משימה:</strong> שחזור "שרת הטבע" -- המקום שבו אלמנטים דיגיטליים של רוח ואש שולטים. סערה (שועלה) משתמשת ברוח, להבה (לטאת אש) משתמש באש. יחד הם מנקים השחתה עמוקה.</p>
+        <p><strong>שבר גליץ':</strong> גחלת דיגיטלית שמהבהבת בצבעי גליץ' -- להבה מרגיש אותה: "אש... שלא שלי. אש של מישהי אחרת." סערה: "היא לא כבתה. היא רק מחכה."</p>
+        <p><strong>ערך:</strong> כוחות הטבע, איזון, שחזור.</p>
+        <p><span class="skill-badge">קיצורי מערכת מתקדמים</span> <span class="skill-badge">ניהול קבצים</span> <span class="skill-badge">אוטומציה</span></p>
+      </div>
+    </div>
+
+    <div class="warn-box">
+      <strong>סנסאי זן מתאם מהדוג'ו:</strong> מקבל דיווחים מכל צוות, רואה את התמונה הגדולה. הוא הראשון שמבין שהשברים קשורים -- אבל שומר את הגילוי לעצמו עד שכולם מוכנים. "כשהזרם נכון... הכל מתחבר."
+    </div>
+
+    <table>
+      <tr><th>פרק</th><th>עלילה</th><th>מיומנויות מתקדמות</th></tr>
+      <tr><td><strong>6.1</strong></td><td>הודעה חדשה מאבא: "בואו לעולם הקוד. אני צריך אתכם." הצוות נכנס ל<strong>עולם הקוד</strong>. מיקה רואה "תקלה" מוכרת ומתעלמת. סנסאי זן מחלק את כולם ל-6 צוותים.</td><td class="skill-badge">HTML בסיסי</td></tr>
+      <tr><td><strong>6.2</strong></td><td>גילוי קרס (מלך הבאגים) + שרידי וירוס -- חזקים יותר מאי פעם. <strong>זרה (מלכת הבאגים)</strong> מופיעה כשומרת סף. פיקסל מזהה דפוס קוד מוזר.</td><td class="skill-badge">CSS בסיסי</td></tr>
+      <tr><td><strong>6.3</strong></td><td><strong>הצוותים יוצאים למשימות!</strong> כל צוות מקבל רמז מאבא של קי ויוצא לדרך. נועה מגלה שזרה (מלכת הבאגים) <strong>סובלת</strong> -- מרפאת אותה (סיפור צד מתממש).</td><td class="skill-badge">פקודות מערכת</td></tr>
+      <tr><td><strong>6.4</strong></td><td>צוותים 1-3 בפעולה: קי+Shadow חודרים, מיקה+פאנטום מגלים "עולם הרוחות" (פאנטום עוזר למיקה עם האבל), יוקי+ברק+סקורה רצים. <strong>כל צוות מוצא שבר גליץ'.</strong></td><td class="skill-badge">קיצורי מערכת מתקדמים</td></tr>
+      <tr><td><strong>6.5</strong></td><td>צוותים 4-6 בפעולה: לונה+נועה מרפאות את יער הקוד, רקס+פיקסל+קאי פותרים חידות (רקס מנצח את בלוק סופית!), Storm+Blaze מנקים את שרת הטבע. <strong>עוד 3 שברים נמצאים.</strong> קי פוגש את אבא! רגע רגשי עצום.</td><td class="skill-badge">Flow State מושלם</td></tr>
+      <tr><td><strong>6.6</strong></td><td>כל הצוותים חוזרים לדוג'ו. <strong>6 שברים מרטטים ביחד.</strong> מיקה מבינה: "אלה... חלקים שלה. גליץ' לא מתה -- היא התפרקה!" פיקסל: "החתימות הדיגיטליות... הן שלה." אבא של קי: "ידעתי. המשימות שלי הובילו אתכם אליה."</td><td class="skill-badge">שילוב מיומנויות</td></tr>
+      <tr><td><strong>6.7</strong></td><td><strong>קרב סופי מתחיל!</strong> קרס (מלך הבאגים) + שרידי וירוס + ארגון ההשחתה. הצוות נלחם -- אבל האויב חזק מדי. <strong>ברגע הקריטי</strong> -- מיקה אוחזת ב-6 השברים ומקלידה: "גליץ'... חזרי הביתה." כל השברים מתחברים -- <strong>פיצוץ אור!</strong></td><td class="skill-badge">הקלדה רגשית</td></tr>
+      <tr><td><strong>6.8</strong></td><td><strong>גליץ' קמה לתחייה!</strong> שלמה, חזקה, <strong>ללא גמגום.</strong> "מיקה. תודה שלא ויתרת עליי." גליץ' מצטרפת לקרב -- חזקה מתמיד, עם כוחות חדשים. <strong>כל הצוות + אבא + פאנטום + Storm + Blaze + Shadow + זרה (מרופאת!) + ברק + בלוק (נצחה יצירתיות) + לנס</strong> -- כולם ביחד מנצחים. <strong>מיקה ממררת בבכי משמחה.</strong></td><td class="skill-badge">מאסטר מוחלט</td></tr>
+    </table>
+
+    <div class="card card-pink">
+      <h3>רגע התחייה -- מדריך רגשי <span class="tag tag-new">V2.2</span></h3>
+      <p><strong>זה הרגע הגדול ביותר בסיפור.</strong> לא רגע הדמעות (זה 5.5) -- אלא רגע <strong>השמחה, האור, התקווה.</strong> גליץ' חוזרת -- ומיקה סוף סוף יכולה לנשום.</p>
+      <ul style="padding-right:18px;color:var(--dim);font-size:0.88rem;">
+        <li>מוזיקה: שקט מוחלט -> צליל פסנתר אחד -> מנגינת גליץ' חוזרת -> תזמורת מלאה. מהפסנתר העצוב של 5.5 לסימפוניה של תקווה</li>
+        <li>ויזואלי: 6 שברים מרחפים -> מתחברים -> פיצוץ אור בצבעי גליץ' -> צללית של גליץ' מתגבשת -> גליץ' חדשה, שלמה, זוהרת</li>
+        <li>גליץ' (חוזרת): "מיקה. תודה שלא ויתרת עליי." -- <strong>ללא גמגום. ברורה. שלמה.</strong></li>
+        <li>מיקה: בוכה. הפעם לא מדמעות כאב (כמו 5.5) אלא מדמעות <strong>שמחה</strong>. "גליץ'... חשבתי ש... חשבתי ש..." לא יכולה לסיים את המשפט.</li>
+        <li>כל הצוות: עוצר. רגע של שקט מרגש. ואז -- קרב!</li>
+        <li><strong>למה זה עובד (לא Deus Ex Machina):</strong> Foreshadowing מ-6.1 (תקלות מוכרות), אבא של קי תכנן את המשימות, כל צוות מצא שבר, פיקסל זיהה חתימה דיגיטלית, פאנטום רמז ("גם רוחות משאירות שברים"), מיקה פעלה מתוך אהבה ואמונה -- לא קסם</li>
+      </ul>
+    </div>
+
+    <div class="card card-phantom">
+      <h3>קשת מיקה במעשה 6 -- אבל, תקווה, שמחה <span class="tag tag-new">V2.2</span></h3>
+      <p><strong>פאנטום/רז כמנטור לאבל:</strong> פאנטום הוא "רוח" -- מי שברח, מי שנעלם. הוא מבין מה זה להיות "נעדר" יותר מכולם. לכן הוא המנטור המושלם למיקה.</p>
+      <table>
+        <tr><th>שלב</th><th>מצב רגשי</th><th>פאנטום אומר</th></tr>
+        <tr><td>6.1-6.2</td><td><strong>הכחשה:</strong> "אני בסדר. בואו נתמקד במשימה."</td><td>"גם אני אמרתי ככה. כשברחתי."</td></tr>
+        <tr><td>6.3</td><td><strong>כעס:</strong> "למה לא עצרתי אותה?! למה נתתי לה ללכת?!"</td><td>"כעס הוא חלק מהדרך. אבל הוא לא הסוף."</td></tr>
+        <tr><td>6.4</td><td><strong>כאב:</strong> מוצאת את שבר גליץ'. בוכה: "זה הקול שלה."</td><td>"גם רוחות משאירות שברים. אם יש שבר -- יש תקווה."</td></tr>
+        <tr><td>6.5-6.6</td><td><strong>תקווה:</strong> מבינה שהשברים הם חלקים של גליץ'.</td><td>"אני חזרתי. אולי גם היא יכולה."</td></tr>
+        <tr><td>6.7-6.8</td><td><strong>שמחה:</strong> גליץ' חוזרת. מיקה שוברת מבכי של שמחה.</td><td>פאנטום מחייך -- בפעם הראשונה. "ביחד."</td></tr>
+      </table>
+    </div>
+
+    <div class="quote-box">
+      "אבא... אני כאן." -- קי, פרק 6.5<br>
+      "אני יודע, נינג'ה קטן שלי. עכשיו אתה גדול." -- אבא של קי<br><br>
+      "מיקה. תודה שלא ויתרת עליי." -- גליץ', פרק 6.8<br>
+      "גליץ'... חשבתי ש... חשבתי ש..." -- מיקה, פרק 6.8 (לא מסיימת. בוכה משמחה)
+    </div>
+
+    <div class="warn-box">
+      <strong>סיום פתוח:</strong> ארגון ההשחתה מנוטרל, אבל יש רמז שזה רק סניף אחד. "יש עוד מסכים. עוד עולמות. עוד מקלדות שמחכות לנינג'ות." -- Setup ל-Chapter 7+ בעתיד. גליץ' חוזרת כחברת צוות מלאה -- <strong>חזקה יותר, שלמה יותר, ללא גמגום.</strong>
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="side-stories">סיפורי צד <span class="tag tag-side">SIDE</span> <span class="tag tag-new">מעודכן</span></h2>
+
+<p style="color:var(--dim);font-size:0.88rem;">כל סיפור צד מלמד מיומנויות מחשב אמיתיות, 3-5 שלבים.</p>
+
+<div class="grid-2">
+  <div class="card">
+    <h4>קי: המקלדת של אבא</h4>
+    <p>מקלדת ישנה עם חריטה. קי מגלה תרגולים של אבא -- ואת ההודעה שאבא <strong>חי ונלחם</strong>. מלמד: התמדה, ירושה, ביטחון עצמי.</p>
+    <p><span class="skill-badge">שורת בית</span> <span class="skill-badge">מספרים</span> <span class="skill-badge">הקלדה מהירה</span></p>
+  </div>
+  <div class="card card-pink">
+    <h4>מיקה: תחרות ההאקרים (CTF) <span class="tag tag-new">V2.2</span></h4>
+    <p>מיקה מתחרה ב-CTF. <strong>גליץ' מתחרה מהצד השני</strong> -- חברתה לשעבר. הריבאלרי רגשי, לא טכני. מיקה צריכה להתמודד עם רגשות בגידה ולהחליט: נקמה או סליחה? <strong>הערה:</strong> סיפור צד זה מתרחש לפני מעשה 5 (לפני הפיצוץ). אחרי תחיית גליץ' במעשה 6 -- מיקה וגליץ' חוזרות להיות חברות אמיתיות.</p>
+    <p><span class="skill-badge">Ctrl+X/C/V</span> <span class="skill-badge">Alt+Tab</span> <span class="skill-badge">סיסמאות</span></p>
+  </div>
+  <div class="card">
+    <h4>קאי: טורניר הלוחמים <span class="tag tag-new">מעודכן</span></h4>
+    <p>קאי נכנס לטורניר לבד. נכשל בסבב הקבוצתי כי <strong>סירב לשתף פעולה</strong>. חוזר, מבקש עזרה מהצוות. לומד: <strong>חברות > כוח</strong>.</p>
+    <p><span class="skill-badge">דיוק תחת לחץ</span> <span class="skill-badge">עבודת צוות</span></p>
+  </div>
+  <div class="card">
+    <h4>יוקי: שיא עולמי <span class="tag tag-new">מעודכן</span></h4>
+    <p>יוקי מנסה לשבור שיא 200 WPM. <strong>נכשלת פעמיים</strong> -- יותר מדי שגיאות. <strong>סנסאי סקורה</strong> (מנטורית נשית חדשה) מלמדת: "רוח אינה רצה -- רוח זורמת." <strong>ברק</strong> (יריב) מראה מה קורה כשרודפים רק אחרי מהירות.</p>
+    <p><span class="skill-badge">מהירות</span> <span class="skill-badge">דיוק</span> <span class="skill-badge">איזון</span></p>
+  </div>
+  <div class="card">
+    <h4>לונה: גלריית האמנות <span class="tag tag-new">מעודכן</span></h4>
+    <p>לונה ביישנית עד כאב. יוצרת ASCII Art מדהים אבל מסתירה. הצוות מגלה שהציורים ב-"L." הם שלה. <strong>לונה צריכה ללמוד להראות אמנות לעולם</strong> ולהפסיק לפחד. הרגע שהיא פותחת גלריה = נצחון אישי.</p>
+    <p><span class="skill-badge">סימנים מיוחדים</span> <span class="skill-badge">הקלדה חופשית</span> <span class="skill-badge">יצירתיות</span></p>
+  </div>
+  <div class="card card-green">
+    <h4>נועה: יער הקוד + זרה (מלכת הבאגים) <span class="tag tag-new">V2.2</span></h4>
+    <p>באגים השתלטו על יער הקוד. נועה מגלה שהשורש = <strong>זרה (מלכת הבאגים)</strong> -- ישות שסובלת מ"השחתה כפויה." במקום ללחום, נועה <strong>מרפאת</strong> אותה. זרה הופכת לבעלת ברית. מלמד: ריפוי > כוח. גבולות בריאים (גם נועה צריכה עזרה).</p>
+    <p><span class="skill-badge">תיקון שגיאות</span> <span class="skill-badge">הגהה</span> <span class="skill-badge">ריפוי</span></p>
+  </div>
+  <div class="card card-amber">
+    <h4>רקס: פיתוח משחקים + Block <span class="tag tag-new">מעודכן</span></h4>
+    <p>רקס מנסה ליצור משחק. <strong>בלוק (Block)</strong> מופיע -- יצור אפור שמוחק צבעים ואומר "למה בכלל לנסות?" רקס צריך לנצח את בלוק ע"י <strong>יצירתיות</strong>, לא כוח. <strong>מצחיק</strong> -- בלוק מדבר בקולות משעממים, מוציא אפור, הופך כל דבר למשעמם.</p>
+    <p><span class="skill-badge">הקלדה חופשית</span> <span class="skill-badge">סימני פיסוק</span> <span class="skill-badge">עריכה</span></p>
+  </div>
+  <div class="card">
+    <h4>פיקסל: תחרות הצילום + LENS <span class="tag tag-new">מעודכן</span></h4>
+    <p>פיקסל מתחרה בתחרות צילום דיגיטלית. <strong>LENS</strong> (רובוט AI) -- "מושלם" טכנית אבל חסר נשמה. פיקסל מגלה שתיאור עם <strong>רגש</strong> שווה יותר מתיאור מדויק. הרגע שפיקסל כותב "יפה" במקום "1920x1080 RGB" = פריצת דרך.</p>
+    <p><span class="skill-badge">הקלדה ארוכה</span> <span class="skill-badge">מהירות</span> <span class="skill-badge">ביטוי עצמי</span></p>
+  </div>
+  <div class="card card-phantom">
+    <h4>סנסאי זן: סיפור המקור (צב!) <span class="tag tag-new">מעודכן</span></h4>
+    <p>סנסאי זן מספר איך היה <strong>צב קטן</strong> שלא ידע להקליד. המורה שלו -- סנסאי ביט (צב קשיש יותר) -- לימד אותו סבלנות. אבל גם: <strong>הכישלון שלו עם רז/פאנטום</strong>. "הקלדתי מהר מדי... ולא שמתי לב שתלמידי סובל."</p>
+    <p><span class="skill-badge">שורת בית</span> <span class="skill-badge">סבלנות</span> <span class="skill-badge">סליחה</span></p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="boss-battles">קרבות בוס <span class="tag tag-boss">BOSS</span></h2>
+
+<details>
+  <summary>כל קרבות הבוס -- מעשים 1-6</summary>
+  <div class="detail-body">
+    <table>
+      <tr><th>מעשה</th><th>בוס</th><th>מכניקה</th><th>דמויות עוזרות</th></tr>
+      <tr><td>1 (ש' 7)</td><td>באג הקטן</td><td>10 מילים / 60 שניות</td><td>קי, מיקה</td></tr>
+      <tr><td>2 (ש' 15)</td><td>באג + גליץ'</td><td>20 מילים + שיבושי מקשים</td><td>כל הגיבורים</td></tr>
+      <tr><td>3 (ש' 20)</td><td>קרס (מלך הבאגים)</td><td>50 מילים / 2 דקות / 90%+ דיוק</td><td>כולם. קומבו: קי=מהירות, מיקה=דיוק, יוקי=ספרינט, נועה=ריפוי</td></tr>
+      <tr><td>4 (ש' 27)</td><td>וירוס (חשיפה)</td><td>וירוס חושף פנים אמיתיים. גליץ' הולכת מרצונה. הצוות צריך לשרוד. לא ניצחון -- <strong>הפסד רגשי.</strong></td><td>כולם (ללא גליץ')</td></tr>
+      <tr><td>5 (ש' 35)</td><td>מגה-וירוס (וירוס+גליץ') + גליץ' כאויבה</td><td>גליץ' נלחמת נגד חבריה! הצוות צריך לנצח את מגה-וירוס. גליץ' <strong>מתפוצצת יחד עם הוירוס</strong> -- שניהם מתפרקים. <strong>משפטי זיכרון</strong> מיקה-גליץ' = מפתח. דיוק 95%+. <strong>גליץ' "נעלמת" אבל שברי קוד שלה נשארים.</strong></td><td>כולם + פאנטום + סערה + להבה</td></tr>
+      <tr><td>6 (ש' 40)</td><td>קרס (מלך הבאגים) + שרידי וירוס + ארגון ההשחתה</td><td>6 צוותים אוספים שברי גליץ'. קרב סופי -- <strong>גליץ' קמה לתחייה ברגע הקריטי!</strong> שילוב מושלם: מהירות + דיוק + קיצורים + HTML/CSS + פקודות + Flow State.</td><td>כולם + אבא + זרה (מרופאת) + גליץ' (חוזרת!) + ברק + בלוק + לנס</td></tr>
+    </table>
+
+    <h4>קרב וירוס (מעשה 4) -- חשיפה ובריחה</h4>
+    <table>
+      <tr><th>שלב</th><th>מכניקה</th><th>דמות עוזרת</th></tr>
+      <tr><td>1. חומת אש</td><td>מיקה פורצת -- קיצורי מקלדת ברצף מהיר</td><td>מיקה</td></tr>
+      <tr><td>2. חשיפת וירוס</td><td>וירוס חושף פנים אמיתיים. עיצוב משתנה מחמוד למפחיד!</td><td>כולם</td></tr>
+      <tr><td>3. פיתוי גליץ'</td><td>גליץ' מהססת. השחקן מקליד מהר כדי "לשכנע" אותה להישאר</td><td>מיקה + נועה</td></tr>
+      <tr><td>4. אובדן</td><td>גליץ' הולכת מרצונה. <strong>אי אפשר לנצח כאן</strong> -- הפסד מתוכנן.</td><td>כולם (שבורים)</td></tr>
+    </table>
+
+    <h4>קרב מגה-וירוס (מעשה 5) -- הקרב האמיתי <span class="tag tag-new">חדש</span></h4>
+    <table>
+      <tr><th>שלב</th><th>מכניקה</th><th>דמות עוזרת</th></tr>
+      <tr><td>1. גליץ' תוקפת</td><td>גליץ' נלחמת נגד הצוות! שיבושי מקשים אגרסיביים</td><td>קאי (מגן)</td></tr>
+      <tr><td>2. מגה-וירוס</td><td>וירוס+גליץ' מתמזגים. התקפות כפולות -- ספאם + שיבוש</td><td>כולם + פאנטום</td></tr>
+      <tr><td>3. זיכרונות</td><td>מיקה מקלידה "משפטי זיכרון" (מיקה-גליץ') -- דיוק 95%+ חובה</td><td>מיקה (מובילה)</td></tr>
+      <tr><td>4. הפיצוץ</td><td>גליץ' נלחמת מבפנים. השחקן מקליד מילות עידוד. <strong>גליץ' מתפוצצת יחד עם הוירוס!</strong> שניהם מתפרקים לשברי קוד. שברי גליץ' מתפזרים (רמז: הם ישובו במעשה 6).</td><td>מיקה + נועה + כולם</td></tr>
+    </table>
+
+    <h4>Phantom -- יריב סודי (Battle Arena)</h4>
+    <table>
+      <tr><th>שלב</th><th>מכניקה</th><th>קושי</th></tr>
+      <tr><td>0-20 שניות</td><td>הקלדה רגילה (חימום)</td><td>גבוה</td></tr>
+      <tr><td>20-40 שניות</td><td>מילים נעלמות אחרי 2 שניות -- צריך לזכור</td><td>גבוה מאוד</td></tr>
+      <tr><td>40-60 שניות</td><td>המסך מחשיך -- רק אודיו</td><td>סיוט</td></tr>
+      <tr><td>60-90 שניות</td><td>שקט + חושך מוחלט -- הקלדה מזיכרון</td><td>אגדי</td></tr>
+    </table>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="relationships">מפת יחסים בין דמויות <span class="tag tag-new">מעודכן</span></h2>
+
+<div class="card card-green">
+  <h3>רשת קשרים מרכזית</h3>
+  <table>
+    <tr><th>דמות א'</th><th>סוג קשר</th><th>דמות ב'</th><th>תיאור</th></tr>
+    <tr><td>קי</td><td>שותפים שווים</td><td>מיקה</td><td>מהירות מול דיוק+טכנולוגיה. משלימים זה את זו.</td></tr>
+    <tr><td>קי</td><td>יריבות ידידותית</td><td>קאי</td><td>שניהם תחרותיים, דוחפים אחד את השני.</td></tr>
+    <tr><td>קי</td><td>רב-תלמיד</td><td>סנסאי זן</td><td>סנסאי מלמד סבלנות, קי מלמד על הדור החדש.</td></tr>
+    <tr><td>קי</td><td>אב-בן</td><td>אבא של קי</td><td>אבא <strong>חי</strong>, נלחם מעבר למסך. מתאחדים בפרק 6.</td></tr>
+    <tr><td>קי</td><td>מראה</td><td>פאנטום/רז</td><td>פאנטום רואה בקי את עצמו הצעיר -- מה שהוא יכול היה להיות.</td></tr>
+    <tr style="background:rgba(253,121,168,0.08);">
+      <td><strong>מיקה</strong></td><td><strong>יריבות רגשית</strong></td><td><strong>גליץ'</strong></td>
+      <td><strong>חברות לשעבר! האקריות שהתחילו יחד. בגידה, כאב, סליחה.</strong></td>
+    </tr>
+    <tr><td>יוקי</td><td>רבה-תלמידה</td><td>סנסאי סקורה</td><td>מנטורית נשית שמלמדת זרימה ולא מירוץ.</td></tr>
+    <tr><td>יוקי</td><td>יריבות מהירות</td><td>ברק</td><td>ברק = מה שיוקי לא רוצה להיות (מהיר בלי דיוק).</td></tr>
+    <tr><td>יוקי</td><td>שותפות אימון</td><td>קאי</td><td>שניהם אוהבים תחרויות.</td></tr>
+    <tr><td>לונה</td><td>חברות קרובה</td><td>נועה</td><td>שתי נשמות רכות שמאזנות את האנרגיה הגבוהה של השאר.</td></tr>
+    <tr><td>לונה</td><td>נשמות שקטות</td><td>פאנטום</td><td>היחידה שמבינה את השקט שלו. לא מנסה לגרום לו לדבר.</td></tr>
+    <tr style="background:rgba(0,184,148,0.08);">
+      <td><strong>נועה</strong></td><td><strong>מרפאה-נבלה</strong></td><td><strong>זרה (מלכת הבאגים)</strong></td>
+      <td><strong>נועה מרפאת את זרה (מלכת הבאגים) במקום להילחם. ריפוי > כוח. זרה הופכת לבעלת ברית.</strong></td>
+    </tr>
+    <tr style="background:rgba(245,158,11,0.08);">
+      <td><strong>רקס</strong></td><td><strong>יוצר-חסימה</strong></td><td><strong>בלוק (Block)</strong></td>
+      <td><strong>בלוק = חסימה יצירתית מותגמת. רקס מנצח ע"י יצירתיות, לא כוח. מצחיק!</strong></td>
+    </tr>
+    <tr><td>רקס</td><td>חבר משחקים</td><td>פיקסל</td><td>רקס ממציא משחקים, פיקסל מתעד אותם.</td></tr>
+    <tr style="background:rgba(116,185,255,0.08);">
+      <td><strong>פיקסל</strong></td><td><strong>נתונים מול רגש</strong></td><td><strong>LENS (רובוט AI)</strong></td>
+      <td><strong>LENS = "מושלם" טכנית אבל חסר נשמה. פיקסל לומד שרגש > נתונים.</strong></td>
+    </tr>
+    <tr><td>סנסאי זן</td><td>עמיתים לשעבר</td><td>סנסאי סקורה</td><td>למדו יחד תחת סנסאי ביט. הוא = סבלנות, היא = מהירות. נפרדו כשרז ברח. חזרה עכשיו.</td></tr>
+    <tr><td>סנסאי זן</td><td>אב שנטש</td><td>פאנטום/רז</td><td>הקשר הכי עמוק. חרטה הדדית, סליחה הדרגתית.</td></tr>
+    <tr><td>Shadow (צל)</td><td>חיקוי + שובבות</td><td>פאנטום</td><td><strong>חתול חמקני אבל חביב!</strong> מנסה לחקות את פאנטום אבל הצד השובב שלו תמיד נחשף. מגניב בחוץ, שעשועי בפנים. אהוב מהר.</td></tr>
+    <tr><td>Storm (סערה)</td><td>כבוד הדדי</td><td>יוקי</td><td><strong>נקבה, שועלה.</strong> יריבות מהירות בטורניר. כבוד הדדי.</td></tr>
+    <tr><td>Storm (סערה)</td><td>אחים (שועלים!)</td><td>ברק (שועל)</td><td><strong>אחות שועלה ואח שועל.</strong> מתחרים יחד ב"דוג'ו הברק". היא הבכורה והמובילה.</td></tr>
+    <tr><td>Blaze (להבה)</td><td>שובבות + כבוד</td><td>פאנטום</td><td><strong>לטאת אש קטנה וחמודה</strong>, לא דרקון ענק! שובב ומלא אנרגיה. "אש אש אש!"</td></tr>
+    <tr><td>באג</td><td>שליטה</td><td>גליץ'</td><td>באג יצר את גליץ' ככלי. היא גדלה מעבר לשליטתו.</td></tr>
+    <tr><td>וירוס</td><td>פיתוי + מיזוג</td><td>גליץ'</td><td>וירוס מפתה את גליץ' (4.4) -- היא הולכת <strong>מרצונה</strong>. מתמזגת עם כוחו (מעשה 5). נלחמת נגד חבריה. <strong>מתפוצצת יחד עם הוירוס בסוף מעשה 5.</strong> שברי הקוד שלה נאספים ע"י הצוותים במעשה 6 -- <strong>גליץ' קמה לתחייה!</strong></td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h3>תרשים יחסים ויזואלי</h3>
+  <pre style="font-size:0.8rem;color:var(--dim);line-height:1.8;direction:ltr;text-align:left;">
+                         SENSEI ZEN (Turtle)
+                        /        |         \
+                   mentor     regret    colleague
+                  /            |              \
+               KI ----equal--- MIKA        SENSEI SAKURA -- PHANTOM/RAZ
+              / | \              |  \          |     \         |
+         rival friend dad   ex-friend  hacker  yuki   mirror  respect
+          /    |     \        |         \     mentor  /        \
+       KAI  YUKI   DAD    GLITCH    CTF rival      KI       BLAZE(small!)
+        |     |              |
+      team  speed    goes willingly(4.5)
+        |   mentor\          |
+      alone? SAKURA  BARAK  VIRUS
+               \     / (FOX)|      |
+              balance  sis   betrayal+temptation
+                       |        |
+                     STORM(F)  GLITCH explodes with VIRUS(5.5) -> TEARS!
+                     (fox)       |
+                              FRAGMENTS scatter -> Ch6 teams collect
+                                 |
+                              GLITCH RETURNS! (6.8) -> JOY!
+
+    NOA ---heals--- ZARA(Bug Queen)  REX ---creates--- vs BLOCK(blocky!)
+     |                -> becomes ally      |        -> becomes friend
+   boundaries                         PIXEL ---competes--- vs LENS(camera-eye)
+     |                                                  -> becomes friend
+    LUNA (shy -> brave)
+
+    SHADOW (cat, sneaky+playful, quickly beloved)
+    BARAK (FOX! Storm's brother, arrogant -> grudging respect)
+    ALL RIVALS -> FRIENDS after tournament arc!
+    BATTLE RIVALS: Shadow -> Storm(F) -> Blaze(small) -> Phantom (progression)
+  </pre>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="skins">סקינים -- ברונזה/כסף/זהב <span class="tag tag-new">חדש</span></h2>
+
+<div class="card card-amber">
+  <h3>מערכת דרגות לכל הדמויות</h3>
+  <table>
+    <tr><th>דרגה</th><th>תנאי כללי</th><th>שינוי ויזואלי</th></tr>
+    <tr><td><span class="tier-bronze">ברונזה</span></td><td>השלמת סיפור צד / ניצחון ראשון על יריב</td><td>גוון ברונזה על אביזרים, כיתוב ברונזה על חליפה</td></tr>
+    <tr><td><span class="tier-silver">כסף</span></td><td>3 ניצחונות + 95%+ דיוק</td><td>אפקטים כסופים, פרטי עיצוב מתקדמים, אביזר ייחודי</td></tr>
+    <tr><td><span class="tier-gold">זהב</span></td><td>5 ניצחונות + WPM גבוה + 98%+ דיוק</td><td>הילה זהובה, חליפה מושלמת, אייקון זוהר. <strong>זו הגרסה הטובה ביותר של הדמות.</strong></td></tr>
+  </table>
+  <div class="info-box">
+    <strong>דוגמת פאנטום:</strong> ברונזה = רוח שקופה | כסף = מתגבש, מדליון שלם | זהב = <strong>לא שקוף יותר -- סוף סוף "רז" ולא "Phantom"</strong>. משמעות נרטיבית: חזרה לעצמו.
+  </div>
+</div>
+
+<details>
+  <summary>דוגמאות סקינים לפי דמות</summary>
+  <div class="detail-body">
+    <table>
+      <tr><th>דמות</th><th>ברונזה</th><th>כסף</th><th>זהב</th></tr>
+      <tr><td>קי</td><td>סרט ראש ברונזה</td><td>שוריקנים כסופים</td><td>חליפה זהובה + הילה, "מאסטר מקלדת"</td></tr>
+      <tr><td>מיקה</td><td>כפפות ברונזה</td><td>הולוגרמה כסופה</td><td>חליפת סייבר זהובה + מסכה כתומה (Easter egg)</td></tr>
+      <tr><td>יוקי</td><td>סרטים ורודים ברונזה</td><td>אפקט רוח כסוף</td><td>שיער זוהר + ברקים זהובים</td></tr>
+      <tr><td>קאי</td><td>כפפות לחימה ברונזה</td><td>שריון כסוף</td><td>שריון זהוב + סמל אש זהוב</td></tr>
+      <tr><td>לונה</td><td>סיכת ירח ברונזה</td><td>חלקיקי ירח כסופים</td><td>שמלת אור ירח זהובה</td></tr>
+      <tr><td>נועה</td><td>צמיד ריפוי ברונזה</td><td>הילה ירוקה-כסופה</td><td>חליפת ריפוי זהובה + כנפיים</td></tr>
+      <tr><td>רקס</td><td>כובע ברונזה</td><td>זנב כסוף</td><td>כתר דינוזאור זהוב + כנפיים (אירוני!)</td></tr>
+      <tr><td>פיקסל</td><td>אנטנה ברונזה</td><td>מסך כסוף</td><td>גוף זהוב + אפקט קשת</td></tr>
+    </table>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="rivals-friends">כל היריבים הופכים לחברים! <span class="tag tag-new">V2.2</span></h2>
+
+<div class="card card-green">
+  <h3>עקרון מרכזי: אחרי קשת הטורניר -- כל יריב יכול להפוך לחבר</h3>
+  <p>אף דמות לא נשארת "רעה" לנצח. כל יריב עובר מסע שמוביל לכבוד, הבנה, וחברות. <strong>כולם נכנסים למערכת היחסים, מקבלים סקינים של חגים, ויכולים להשתתף בתוכן עתידי.</strong></p>
+</div>
+
+<table>
+  <tr><th>יריב</th><th>יריב של</th><th>מה קרה</th><th>איך הופך לחבר</th><th>תפקיד במעשה 6</th></tr>
+  <tr>
+    <td><strong>Shadow (צל)</strong></td><td>פאנטום (מוקדם)</td>
+    <td>חתול שובב שחיקה את פאנטום</td>
+    <td>כבר בתהליך -- מראה נאמנות. חביב ושובב.</td>
+    <td>צוות 1 עם קי (משימת חדירה)</td>
+  </tr>
+  <tr>
+    <td><strong>Storm (סערה)</strong></td><td>יוקי</td>
+    <td>שועלה, מובילת "דוג'ו הברק"</td>
+    <td>כבוד הדדי אחרי הטורניר. שתיהן לוחמות מהירות שמכבדות אחת את השנייה.</td>
+    <td>צוות 6 עם Blaze (משימת טבע/יסודות)</td>
+  </tr>
+  <tr>
+    <td><strong>Blaze (להבה)</strong></td><td>פאנטום (מאוחר)</td>
+    <td>לטאת אש שובבה, שופט הגמר</td>
+    <td>כבוד אחרי הטורניר. "אש אש אש! לוחמים ראויים!" הופך ממאתגר למנטור.</td>
+    <td>צוות 6 עם Storm (משימת טבע/יסודות)</td>
+  </tr>
+  <tr style="background:rgba(0,206,201,0.06);">
+    <td><strong>ברק (שועל!)</strong></td><td>יוקי</td>
+    <td>שועל שחצני, אחיה של סערה. מהיר בלי דיוק.</td>
+    <td><strong>כבוד גרוש ליוקי</strong> -- מגלה שמהירות בלי דיוק = כלום. סנסאי סקורה מלמדת אותו גם. "שני שועלים רצים יותר מהר ביחד."</td>
+    <td>צוות 3 עם יוקי + סנסאי סקורה (משימת מהירות)</td>
+  </tr>
+  <tr style="background:rgba(245,158,11,0.06);">
+    <td><strong>בלוק (Block)</strong></td><td>רקס</td>
+    <td>חסימה יצירתית מותגמת. קוביסטי, אפור, משעמם.</td>
+    <td><strong>רקס מנצח אותו ע"י יצירתיות.</strong> בלוק מגלה שיצירתיות שוברת חסימה. לומד צבעים מרקס. הופך ממשעמם למצחיק.</td>
+    <td>צוות 5 -- רקס מנצח אותו סופית</td>
+  </tr>
+  <tr style="background:rgba(116,185,255,0.06);">
+    <td><strong>לנס (LENS)</strong></td><td>פיקסל</td>
+    <td>רובוט AI, עין-מצלמה, מושלם טכנית אבל חסר נשמה.</td>
+    <td><strong>לומד מפיקסל שאמנות דורשת רגש.</strong> הצילום הראשון שלו "עם רגש" = פריצת דרך. "יפה" במקום "1920x1080."</td>
+    <td>משתתף בקרב הסופי (6.8)</td>
+  </tr>
+  <tr style="background:rgba(0,184,148,0.06);">
+    <td><strong>זרה (מלכת הבאגים)</strong></td><td>נועה</td>
+    <td>"אחותו הגדולה" של באג, שבורה מבפנים, השחתה כפויה.</td>
+    <td><strong>נועה מרפאת אותה.</strong> זרה מגלה שהיא לא חייבת להיות מושחתת. ריפוי > כוח.</td>
+    <td>צוות 4 -- עוזרת ללונה ונועה מבפנים (משימת ריפוי)</td>
+  </tr>
+  <tr style="background:rgba(253,121,168,0.06);">
+    <td><strong>גליץ'</strong></td><td>מיקה (מורכב!)</td>
+    <td>חברה לשעבר, הלכה עם וירוס, נלחמה נגד חבריה.</td>
+    <td><strong>התפוצצה עם הוירוס (5.5). קמה לתחייה (6.8).</strong> חזרה כחברת צוות מלאה -- שלמה, חזקה, ללא גמגום.</td>
+    <td>חוזרת ברגע הקריטי של הקרב הסופי!</td>
+  </tr>
+</table>
+
+<div class="info-box">
+  <strong>השלכות למערכת המשחק:</strong> כל יריב-שהפך-לחבר מקבל: (1) סקינים ברונזה/כסף/זהב (2) סקיני חגים ישראליים (3) יכולת להיות מלווה (companion) (4) שורות דיאלוג ייחודיות (5) משתתף בתוכן עתידי (Chapter 7+). <strong>זה מגדיל את מגוון הדמויות הזמינות לשחקן מ-8 ל-15+!</strong>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2 id="skills">שילוב מיומנויות הקלדה + מחשב <span class="tag tag-new">מעודכן</span></h2>
+
+<table>
+  <tr><th>מיומנות</th><th>מעשים</th><th>דמויות</th><th>דוגמאות מהסיפור</th></tr>
+  <tr><td class="skill-badge">שורת בית</td><td>1</td><td>קי, סנסאי</td><td>אימון בסיסי, פלאשבק סנסאי</td></tr>
+  <tr><td class="skill-badge">מהירות</td><td>1-6</td><td>יוקי, קי</td><td>מבחני מהירות, שיא יוקי, סבב 1 טורניר</td></tr>
+  <tr><td class="skill-badge">דיוק</td><td>2-6</td><td>מיקה, נועה, לונה</td><td>קרב גליץ', ריפוי יער הקוד, סבב 2 טורניר</td></tr>
+  <tr><td class="skill-badge">קיצורים</td><td>3-6</td><td>מיקה</td><td>CTF, פריצת וירוס, סבב 3 טורניר</td></tr>
+  <tr><td class="skill-badge">הקלדה עיוורת</td><td>3, Battle</td><td>קי, פאנטום</td><td>מקשים מוחלפים, קרב פאנטום (חושך מוחלט)</td></tr>
+  <tr><td class="skill-badge">סימנים מיוחדים</td><td>2, 4</td><td>לונה, מיקה</td><td>ASCII Art, סיסמאות חזקות</td></tr>
+  <tr><td class="skill-badge">עריכת טקסט</td><td>3-4</td><td>רקס, נועה</td><td>כתיבת דיאלוגים, תיקון באגים</td></tr>
+  <tr><td class="skill-badge">הקלדה חופשית</td><td>5-6</td><td>כולם</td><td>טורניר, מגילת עצמאות</td></tr>
+  <tr><td class="skill-badge">HTML/CSS בסיסי</td><td>6</td><td>מיקה, קי</td><td>עולם הקוד</td></tr>
+  <tr><td class="skill-badge">פקודות מערכת</td><td>6</td><td>פאנטום, מיקה</td><td>חדירה שקטה, פקודות CLI</td></tr>
+  <tr><td class="skill-badge">Flow State</td><td>Battle, 6</td><td>פאנטום</td><td>זרימה -- 10+ מילים ללא שגיאה = בונוס</td></tr>
+</table>
+
+<div class="card card-amber">
+  <h3>עקרון מנחה: "לומדים בלי להרגיש"</h3>
+  <ul style="padding-right:18px;color:var(--dim);font-size:0.88rem;">
+    <li>הסיפור הוא הכלי -- המיומנות היא המטרה</li>
+    <li>כל אתגר מתאים לדמות (מיקה = טכנולוגיה, לונה = יצירתיות, פאנטום = זרימה)</li>
+    <li>קושי עולה בהדרגה -- אף פעם לא קפיצה</li>
+    <li>פידבק מיידי ומעודד (נועה תמיד שם כשצריך)</li>
+    <li>חזרה בלי תחושת כישלון -- <strong>"ננסה שוב" ולא "נכשלת"</strong></li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="card" style="margin-top:2.5rem;text-align:center;border-color:rgba(108,92,231,0.3);">
+  <h3>סיכום שינויים מ-V1</h3>
+  <table>
+    <tr><th>נושא</th><th>V1</th><th>V2 (עודכן)</th></tr>
+    <tr><td>עומק דמויות</td><td>דמויות גנריות ללא פגמים</td><td>כל דמות עם פגמים, רקע, Foreshadowing מובנה</td></tr>
+    <tr><td>גליץ' -- מיקה</td><td>יריבות טכנולוגית</td><td><strong>חברות לשעבר שנשברה!</strong> יריבות רגשית עמוקה</td></tr>
+    <tr><td>גליץ' -- קשת מלאה</td><td>גליץ' מוקרבת בפרק 4.4</td><td><strong>V2.2:</strong> גליץ' הולכת מרצונה (4.5), נלחמת נגד חבריה (5.2-5.4), <strong>מתפוצצת עם הוירוס (5.5)</strong>. אבל <strong>לא מתה!</strong> שברי קוד נאספים ע"י 6 צוותים במעשה 6. <strong>קמה לתחייה ברגע הקריטי (6.8)!</strong></td></tr>
+    <tr><td>וירוס</td><td>נבל ישיר</td><td><strong>2 עיצובים:</strong> ידידותי (חמוד, פסטל) -> מפחיד (מושחת, אנרגיה כהה). <strong>מוצג כידידותי ואז בוגד!</strong></td></tr>
+    <tr><td>אבא של קי</td><td>לא מוזכר</td><td><strong>חי!</strong> נלחם מעבר למסך. מתאחדים בפרק 6. <strong>השאיר רמזים/משימות לכל הצוותים</strong></td></tr>
+    <tr><td>פרק 6</td><td>לא קיים</td><td><strong>V2.2: "המלחמה הגדולה"</strong> -- 6 צוותים, 6 משימות, שברי גליץ', <strong>תחיית גליץ'!</strong> קרס (מלך הבאגים) + שרידי וירוס</td></tr>
+    <tr><td>שמות יריבים</td><td>ללא שמות</td><td><strong>V2.2:</strong> מלכת הבאגים = <strong>זרה</strong>, מלך הבאגים = <strong>קרס</strong></td></tr>
+    <tr><td>ברק</td><td>נער רגיל</td><td><strong>V2.2: שועל!</strong> אחיה של סערה (שועלה) → ברק חייב להיות שועל. ערמומי, שחצני.</td></tr>
+    <tr><td>דמויות חדשות</td><td>0</td><td>6: פאנטום/רז (תימני!), זרה (מלכת הבאגים), בלוק (קוביסטי!), סנסאי סקורה (עמיתת זן), ברק (שועל! אח של סערה), לנס (עין-מצלמה)</td></tr>
+    <tr><td>Storm/Blaze/Shadow</td><td>יריבי קרב בלבד, מופיעים מאוחר</td><td>Storm=<strong>נקבה</strong> שועלה + אחות של ברק. Blaze=<strong>לטאת אש קטנה</strong> (לא דרקון!). Shadow=<strong>חתול שובב ואהוב</strong>. כולם מופיעים ב-foreshadowing ממעשה 1.</td></tr>
+    <tr><td>יריבים → חברים</td><td>יריבים נשארים יריבים</td><td><strong>V2.2: כל יריב הופך לחבר!</strong> Shadow, Storm, Blaze, ברק, בלוק, לנס, זרה, גליץ' -- כולם מקבלים סקינים, חגים, companion, ותוכן עתידי</td></tr>
+    <tr><td>סקינים</td><td>לא מוגדר</td><td>ברונזה/כסף/זהב לכל דמות (כולל יריבים שהפכו לחברים!)</td></tr>
+    <tr><td>קהילה</td><td>לא קיים</td><td>טורנירים בין בתי ספר/דוג'ואים</td></tr>
+  </table>
+</div>
+
+<p style="text-align:center;color:#555;margin-top:2rem;font-size:0.8rem;">
+  Ninja Keyboard -- Story Mode Expansion V2.2 | מרץ 2026 | מבנה צוותים Ch6, תחיית גליץ', ברק=שועל, שמות יריבים, כל היריבים→חברים
+</p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ninja Keyboard - Phantom (פאנטום) - חבילת דמות מלאה</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#0d0b1a;--bg2:#080618;--card:#0c0a20;--elevated:#13102a;
+    --border:rgba(108,92,231,0.18);--purple:#6C5CE7;--green:#00B894;
+    --pink:#FD79A8;--orange:#FDCB6E;--red:#FF6B6B;--blue:#74B9FF;
+    --cyan:#00CEC9;--gold:#F9CA24;--text:#E8E6F0;--dim:#8B86A6;
+    --phantom:#9B59B6;--phantom-dark:#7D3C98;--phantom-glow:rgba(155,89,182,0.4);
+    --ghost-blue:#A3C4F3;--shadow-gray:#4A4A6A;
+    --glow:0 0 22px var(--phantom-glow);
+  }
+  body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);line-height:1.75;}
+
+  nav{position:sticky;top:0;z-index:100;background:rgba(13,11,26,0.96);backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--border);padding:10px 20px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+  nav .logo{font-size:17px;font-weight:900;color:var(--phantom);margin-left:14px;}
+  nav a{color:var(--dim);text-decoration:none;padding:5px 12px;border-radius:18px;
+    font-size:12px;font-weight:500;border:1px solid transparent;transition:all .18s;}
+  nav a:hover{color:var(--phantom);background:rgba(155,89,182,0.1);border-color:rgba(155,89,182,0.3);}
+
+  .hero{text-align:center;padding:56px 24px 36px;
+    background:linear-gradient(180deg,rgba(155,89,182,0.12) 0%,transparent 100%);}
+  .hero h1{font-size:44px;font-weight:900;
+    background:linear-gradient(135deg,var(--phantom),var(--ghost-blue));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px;}
+  .hero p{color:var(--dim);font-size:17px;max-width:700px;margin:0 auto;}
+  .hero .badge{display:inline-block;margin-top:20px;padding:8px 20px;
+    background:rgba(155,89,182,0.12);border:1px solid rgba(155,89,182,0.35);
+    border-radius:24px;font-size:13px;color:var(--phantom);font-weight:600;}
+
+  .section{max-width:1100px;margin:0 auto;padding:40px 20px;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;
+    padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .section-header .emoji{font-size:36px;}
+  .section-header h2{font-size:26px;font-weight:900;}
+  .section-header .sub{font-size:14px;color:var(--dim);margin-top:3px;}
+  .tag{display:inline-block;padding:4px 12px;border-radius:14px;font-size:12px;font-weight:700;}
+  .tag-phantom{background:rgba(155,89,182,0.15);color:var(--phantom);border:1px solid rgba(155,89,182,0.3);}
+  .tag-green{background:rgba(0,184,148,0.12);color:var(--green);border:1px solid rgba(0,184,148,0.28);}
+  .tag-red{background:rgba(255,107,107,0.12);color:var(--red);border:1px solid rgba(255,107,107,0.28);}
+  .tag-gold{background:rgba(249,202,36,0.15);color:var(--gold);border:1px solid rgba(249,202,36,0.3);}
+  .tag-blue{background:rgba(116,185,255,0.1);color:var(--blue);border:1px solid rgba(116,185,255,0.25);}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;
+    padding:22px 24px;margin-bottom:20px;transition:transform .2s,box-shadow .2s;}
+  .card:hover{transform:translateY(-2px);box-shadow:var(--glow);}
+  .card h3{font-size:18px;font-weight:700;color:var(--phantom);margin-bottom:12px;}
+  .card h4{font-size:15px;font-weight:700;color:var(--green);margin:14px 0 8px;}
+  .card-green{border-color:rgba(0,184,148,0.25);background:rgba(0,184,148,0.04);}
+  .card-purple{border-color:rgba(155,89,182,0.3);background:rgba(155,89,182,0.06);}
+  .card-gold{border-color:rgba(249,202,36,0.25);background:rgba(249,202,36,0.04);}
+  .card-red{border-color:rgba(255,107,107,0.25);background:rgba(255,107,107,0.04);}
+
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.93rem;}
+  th{background:rgba(155,89,182,0.12);color:var(--phantom);padding:10px 12px;text-align:right;font-weight:700;}
+  td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);}
+  tr:hover td{background:rgba(155,89,182,0.04);}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+  @media(max-width:700px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+
+  .stat-row{display:flex;gap:16px;flex-wrap:wrap;margin:12px 0;}
+  .stat-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600;}
+  .stat-pill.purple{background:rgba(155,89,182,0.15);color:var(--phantom);border:1px solid rgba(155,89,182,0.3);}
+  .stat-pill.green{background:rgba(0,184,148,0.12);color:var(--green);border:1px solid rgba(0,184,148,0.25);}
+  .stat-pill.gold{background:rgba(249,202,36,0.12);color:var(--gold);border:1px solid rgba(249,202,36,0.25);}
+  .stat-pill.red{background:rgba(255,107,107,0.12);color:var(--red);border:1px solid rgba(255,107,107,0.25);}
+  .stat-pill.blue{background:rgba(116,185,255,0.08);color:var(--blue);border:1px solid rgba(116,185,255,0.2);}
+
+  .chip{display:inline-block;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:600;}
+  .chip-phantom{background:rgba(155,89,182,0.15);color:var(--phantom);border:1px solid rgba(155,89,182,0.25);}
+  .chip-green{background:rgba(0,184,148,0.15);color:var(--green);border:1px solid rgba(0,184,148,0.25);}
+
+  .swatch-row{display:flex;gap:8px;margin:8px 0;align-items:center;}
+  .swatch{width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,255,255,0.15);display:inline-block;}
+  .swatch-label{font-size:11px;color:var(--dim);text-align:center;margin-top:2px;}
+
+  .quote-box{background:rgba(155,89,182,0.08);border-right:4px solid var(--phantom);
+    padding:16px 20px;border-radius:0 12px 12px 0;margin:12px 0;font-style:italic;color:var(--ghost-blue);}
+
+  .voice-line{background:var(--elevated);border:1px solid var(--border);border-radius:10px;
+    padding:10px 16px;margin:6px 0;display:flex;justify-content:space-between;align-items:center;}
+  .voice-line .text{font-weight:600;color:var(--text);}
+  .voice-line .context{font-size:12px;color:var(--dim);}
+
+  .rel-card{background:var(--elevated);border:1px solid var(--border);border-radius:12px;
+    padding:14px 16px;transition:transform .15s;}
+  .rel-card:hover{transform:translateY(-2px);}
+  .rel-card .name{font-weight:700;font-size:15px;margin-bottom:4px;}
+  .rel-card .desc{font-size:13px;color:var(--dim);line-height:1.6;}
+  .rel-card .arrow{font-size:16px;margin-bottom:4px;}
+
+  .timeline{position:relative;padding-right:30px;}
+  .timeline::before{content:'';position:absolute;right:10px;top:0;bottom:0;width:3px;
+    background:linear-gradient(180deg,var(--phantom),var(--green),var(--gold));}
+  .tl-item{position:relative;margin-bottom:24px;padding-right:24px;}
+  .tl-item::before{content:'';position:absolute;right:-24px;top:8px;width:14px;height:14px;
+    border-radius:50%;background:var(--phantom);border:3px solid var(--bg);}
+  .tl-label{font-size:12px;color:var(--phantom);font-weight:700;margin-bottom:2px;}
+  .tl-title{font-size:15px;font-weight:700;color:var(--text);}
+  .tl-desc{font-size:13px;color:var(--dim);margin-top:2px;}
+
+  .skin-card{background:var(--elevated);border:1px solid var(--border);border-radius:14px;
+    padding:16px 18px;transition:transform .2s,box-shadow .2s;}
+  .skin-card:hover{transform:translateY(-3px);box-shadow:var(--glow);}
+  .skin-card .skin-name{font-weight:700;font-size:15px;margin-bottom:6px;}
+  .skin-card .skin-desc{font-size:13px;color:var(--dim);line-height:1.6;}
+  .skin-tier{display:inline-block;padding:2px 10px;border-radius:8px;font-size:11px;font-weight:700;margin-top:6px;}
+  .tier-bronze{background:rgba(205,127,50,0.15);color:#CD7F32;border:1px solid rgba(205,127,50,0.3);}
+  .tier-silver{background:rgba(192,192,192,0.12);color:#C0C0C0;border:1px solid rgba(192,192,192,0.3);}
+  .tier-gold{background:rgba(249,202,36,0.15);color:var(--gold);border:1px solid rgba(249,202,36,0.3);}
+
+  details{margin:10px 0;}
+  details summary{cursor:pointer;padding:10px 16px;background:var(--elevated);border:1px solid var(--border);
+    border-radius:10px;font-weight:600;font-size:14px;color:var(--phantom);transition:all .2s;list-style:none;}
+  details summary::-webkit-details-marker{display:none;}
+  details summary::before{content:'+ ';color:var(--green);}
+  details[open] summary::before{content:'- ';}
+  details[open] summary{border-radius:10px 10px 0 0;border-bottom:none;}
+  details .detail-body{padding:14px 16px;background:var(--card);border:1px solid var(--border);
+    border-top:none;border-radius:0 0 10px 10px;font-size:14px;}
+
+  .info-box{background:rgba(116,185,255,0.06);border:1px solid rgba(116,185,255,0.2);
+    border-radius:12px;padding:14px 18px;margin:14px 0;font-size:13.5px;color:var(--blue);}
+  .info-box strong{color:var(--text);}
+
+  .warn-box{background:rgba(253,203,110,0.06);border:1px solid rgba(253,203,110,0.2);
+    border-radius:12px;padding:14px 18px;margin:14px 0;font-size:13.5px;color:var(--orange);}
+
+  .gemini-prompt{background:rgba(0,0,0,0.4);border:1px solid rgba(155,89,182,0.3);
+    border-radius:10px;padding:16px;font-family:'Courier New',monospace;font-size:12.5px;
+    color:var(--ghost-blue);white-space:pre-wrap;line-height:1.6;margin:12px 0;}
+</style>
+</head>
+<body>
+
+<!-- ====== NAV ====== -->
+<nav>
+  <span class="logo">Phantom -- חבילת דמות</span>
+  <a href="#identity">זהות</a>
+  <a href="#design">עיצוב</a>
+  <a href="#voice">קול</a>
+  <a href="#music">מוזיקה</a>
+  <a href="#skills">מיומנויות</a>
+  <a href="#ui">ממשק</a>
+  <a href="#relationships">יחסים</a>
+  <a href="#narrative">נרטיב</a>
+  <a href="#skins">סקינים</a>
+  <a href="#gameplay">משחקיות</a>
+  <a href="#post-narrative">פוסט-נרטיב</a>
+  <a href="#connections">קישורים</a>
+</nav>
+
+<!-- ====== HERO ====== -->
+<div class="hero">
+  <h1>Phantom -- פאנטום</h1>
+  <p>רוח-נינג'ה אגדית. היריב הסודי של נינג'ה מקלדת. שקט כמו צל, מדויק כמו שעון, ומהיר כמו רוח רפאים.</p>
+  <div class="badge">Tier 5 -- יריב סודי | קושי: סיוט | WPM: 60-80</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- SECTION 1: IDENTITY                                     -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="section" id="identity">
+  <div class="section-header">
+    <span class="emoji">👻</span>
+    <div><h2>1. זהות בסיסית</h2><div class="sub">מי הוא פאנטום? מאיפה בא? ומה מניע אותו?</div></div>
+    <span class="tag tag-phantom">IDENTITY</span>
+  </div>
+
+  <div class="card card-purple">
+    <h3>כרטיס דמות</h3>
+    <table>
+      <tr><th style="width:160px">שדה</th><th>ערך</th></tr>
+      <tr><td><strong>שם</strong></td><td>Phantom -- פאנטום (פנטום)</td></tr>
+      <tr><td><strong>מין</strong></td><td>זכר</td></tr>
+      <tr><td><strong>גיל</strong></td><td>15 (נראה מבוגר יותר -- מסתורי, בוגר)</td></tr>
+      <tr><td><strong>סוג</strong></td><td>רוח-נינג'ה / Ghost Ninja -- ישות דיגיטלית חצי-שקופה</td></tr>
+      <tr><td><strong>מוצא</strong></td><td>ממוצא תימני-ישראלי -- עור כהה-חום חמים, תווי פנים חדים ויפהפיים</td></tr>
+      <tr><td><strong>צבעים</strong></td><td>סגול כהה (#7D3C98), אפור-כחלחל (#4A4A6A), לבן רפאים (#A3C4F3)</td></tr>
+      <tr><td><strong>דרגת קושי</strong></td><td>סיוט (Nightmare) -- הקשה ביותר במשחק</td></tr>
+      <tr><td><strong>טווח WPM</strong></td><td>60--80 מילים לדקה</td></tr>
+      <tr><td><strong>תפקיד</strong></td><td>יריב סודי (Secret Rival) -- ה-Boss האחרון של זירת הקרב</td></tr>
+    </table>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>אישיות</h3>
+      <p><strong>שקט מוחלט.</strong> פאנטום הוא הדמות הכי שקטה בכל המשחק. הוא לא מדבר -- הוא <em>נוכח</em>. כשהוא מופיע, הכל נשתק. הוא לא מתפאר, לא מאיים, לא מבטיח. הוא פשוט מקליד.</p>
+      <br>
+      <p><strong>תכונות מרכזיות:</strong></p>
+      <ul style="margin-top:8px;padding-right:20px;color:var(--dim);">
+        <li>מאופק ומדויק -- כל מילה (הבודדות שהוא אומר) נבחרת בקפידה</li>
+        <li>עמוק ומסתורי -- תמיד נראה שהוא יודע משהו שאחרים לא</li>
+        <li>כבוד שקט -- מכבד מי שמגיע אליו, כי רוב השחקנים לא מגיעים</li>
+        <li>בודד אבל לא עצוב -- בחר להיות לבד, לא נכפה עליו</li>
+        <li>נוסטלגי -- יש בו רמז של געגוע לזמנים שהיה חלק מקבוצה</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>פגמים (חובה!)</h3>
+      <p>פאנטום הוא לא מושלם. הפגמים שלו הם מה שהופך אותו למעניין:</p>
+      <ul style="margin-top:8px;padding-right:20px;color:var(--dim);">
+        <li><strong>פחד מקרבה:</strong> הוא ברח מהעולם כי נכשל בעבר. הוא מפחד ליצור קשרים כי הוא מפחד לאכזב שוב.</li>
+        <li><strong>גאווה סמויה:</strong> מתחת לשקט יש גאווה עצומה. הוא לא מודה שהוא צריך אחרים.</li>
+        <li><strong>חוסר יכולת לסלוח לעצמו:</strong> משהו קרה בעבר (ראו סיפור רקע) שהוא לא יכול לשכוח.</li>
+        <li><strong>הקפאה תחת לחץ רגשי:</strong> כשמשהו מרגש אותו באמת, הוא נעלם (ממש -- נהיה שקוף ובורח).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-purple">
+    <h3>סיפור רקע (Backstory)</h3>
+    <p>פאנטום לא תמיד היה רוח. פעם, הוא היה <strong>תלמיד אמיתי בדוג'ו של סנסאי זן</strong> -- התלמיד הכי מוכשר שהיה אי פעם. שמו האמיתי היה <strong>רז</strong> (רז, מלשון "סוד").</p>
+    <br>
+    <p>רז הגיע לדוג'ו כילד מופנם וביישן מרקע קשה -- משפחה גדולה ורועשת שבה הוא הרגיש בלתי נראה. בדוג'ו הוא מצא את עצמו דרך ההקלדה. הוא היה מהיר ומדויק באופן יוצא דופן, אבל <strong>סירב לעבוד בצוות</strong>.</p>
+    <br>
+    <p>כשסנסאי זן ארגן את "אתגר הנינג'ות הגדול" -- תחרות קבוצתית -- רז לחץ לבד. בשלב המכריע, הוא היה צריך לסמוך על שותף, אבל סירב. הוא נכשל. הבושה הייתה כל כך גדולה שרז <strong>נעלם מהדוג'ו באמצע הלילה</strong>.</p>
+    <br>
+    <p>מאז, הוא הפך ל-"Phantom" -- רוח שמתאמנת לבד בצללים. הוא הגיע לרמות הקלדה שאף אחד לא הגיע אליהן, אבל מעולם לא חזר. סנסאי זן עדיין משאיר את כיסא התרגול שלו פנוי בדוג'ו -- <strong>Foreshadowing: השחקן יראה את הכיסא הריק בשיעורים המוקדמים.</strong></p>
+
+    <div class="quote-box">
+      "הוא היה התלמיד הכי מבריק שלי. אבל הכי בודד." -- סנסאי זן, כשנשאל על הכיסא הריק
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>פחדים</h3>
+      <ul style="padding-right:20px;color:var(--dim);">
+        <li><strong>כישלון ציבורי:</strong> הטראומה מה"אתגר הגדול" עדיין חיה בו</li>
+        <li><strong>קרבה:</strong> לתת למישהו להתקרב = לתת לו כוח לפגוע</li>
+        <li><strong>להיות שקוף באמת:</strong> שאנשים יראו דרכו -- ימצאו את רז מתחת לפאנטום</li>
+        <li><strong>שסנסאי זן אכזב ממנו:</strong> הפחד הכי גדול שלו, שלעולם לא יודה בו</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>חלומות</h3>
+      <ul style="padding-right:20px;color:var(--dim);">
+        <li><strong>למצוא מישהו שמבין:</strong> מישהו שלא יראה בשקט שלו חולשה</li>
+        <li><strong>לחזור לדוג'ו:</strong> עמוק בפנים, הוא מתגעגע לבית</li>
+        <li><strong>להוכיח שהדרך שלו עובדת:</strong> שאפשר להיות האחד הכי טוב לבד</li>
+        <li><strong>לשמוע מסנסאי זן "אני גאה בך":</strong> גם אם לעולם לא יבקש את זה</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>Foreshadowing מובנה:</strong> לפני שפאנטום מתגלה, יש רמזים שהשחקן יפגוש:<br>
+    1. כיסא ריק בדוג'ו עם שם חרוט (שיעורים 1-7)<br>
+    2. סנסאי זן אומר "פעם היה כאן תלמיד..." (שיעור 8)<br>
+    3. צל חולף ברקע בזירת הקרב אחרי ניצחון על Blaze<br>
+    4. אחרי 3 ניצחונות על Blaze -- קטע סינמטי: "...מישהו חדש צופה מהצל"
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- SECTION 2: VISUAL DESIGN                                -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="section" id="design">
+  <div class="section-header">
+    <span class="emoji">🎨</span>
+    <div><h2>2. עיצוב ויזואלי</h2><div class="sub">מראה, פלטת צבעים, פריטים ייחודיים, הבעות</div></div>
+    <span class="tag tag-phantom">DESIGN</span>
+  </div>
+
+  <div class="card card-purple">
+    <h3>תיאור עיצוב מפורט</h3>
+    <p>פאנטום הוא נער גבוה ורזה עם נוכחות מלכותית ושקטה. הגוף שלו <strong>חצי-שקוף</strong> -- כמו הולוגרמה שמהבהבת. הצבעים שלו כהים ועמומים, בניגוד לצבעוניות העזה של שאר הדמויות.</p>
+    <br>
+    <ul style="padding-right:20px;color:var(--dim);line-height:2;">
+      <li><strong>שיער:</strong> שחור-כהה עם גוונים סגולים, ארוך יחסית, מכסה חלק מהעיניים. תמיד נע קלות כאילו יש רוח, גם כשאין.</li>
+      <li><strong>עיניים:</strong> כחול-אפור קרחוני (#A3C4F3) -- עיניים שנראות ישנות מגילו. בהירות במיוחד על רקע העור הכהה.</li>
+      <li><strong>עור:</strong> חום-כהה חמים (ממוצא תימני) -- אבל עם שקיפות דיגיטלית, כאילו הוא מתפוגג בקצוות.</li>
+      <li><strong>חליפה:</strong> חליפת נינג'ה כהה (#1a1528) עם עטיפות בד סגול-כהה (#7D3C98). אין פאר, אין אביזרים מיותרים -- מינימליזם מושלם.</li>
+      <li><strong>אפקט ייחודי:</strong> חלקיקי אנרגיה סגולים-כחולים מתפזרים מגופו, כאילו הוא "מתמוסס" בקצוות. האפקט מתחזק כשהוא מתרגש.</li>
+      <li><strong>מסכה:</strong> מסכת נינג'ה שקופה-למחצה שמכסה את החלק התחתון של הפנים. מתחתיה אפשר לראות בקושי את תווי הפנים.</li>
+      <li><strong>ידיים:</strong> כפפות שחורות ללא אצבעות, האצבעות שלו ארוכות ודקיקות -- ידיים של פסנתרן. כשהוא מקליד, האצבעות "זורמות" על המקלדת כמו מים.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>פלטת צבעים</h3>
+    <div class="swatch-row">
+      <div style="text-align:center">
+        <div class="swatch" style="background:#7D3C98;"></div>
+        <div class="swatch-label">#7D3C98<br>סגול כהה<br>(ראשי)</div>
+      </div>
+      <div style="text-align:center">
+        <div class="swatch" style="background:#4A4A6A;"></div>
+        <div class="swatch-label">#4A4A6A<br>אפור-צל<br>(משני)</div>
+      </div>
+      <div style="text-align:center">
+        <div class="swatch" style="background:#A3C4F3;"></div>
+        <div class="swatch-label">#A3C4F3<br>כחול רפאים<br>(עיניים/אפקטים)</div>
+      </div>
+      <div style="text-align:center">
+        <div class="swatch" style="background:#1a1528;"></div>
+        <div class="swatch-label">#1a1528<br>שחור-סגלגל<br>(חליפה)</div>
+      </div>
+      <div style="text-align:center">
+        <div class="swatch" style="background:#D4A574;"></div>
+        <div class="swatch-label">#D4A574<br>חום-חמים<br>(עור)</div>
+      </div>
+      <div style="text-align:center">
+        <div class="swatch" style="background:rgba(155,89,182,0.5);"></div>
+        <div class="swatch-label">rgba<br>שקיפות<br>(אפקט רפאים)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>פריטים ייחודיים (Signature Items)</h3>
+    <table>
+      <tr><th>פריט</th><th>תיאור</th><th>משמעות נרטיבית</th></tr>
+      <tr><td>שרשרת עם תליון שבור</td><td>חצי מדליון ישן -- החצי השני נשאר בדוג'ו</td><td>סנסאי זן נתן לו את זה. Foreshadowing לחזרה</td></tr>
+      <tr><td>מקלדת-צל</td><td>מקלדת שקופה שמופיעה מאוויר כשהוא מקליד</td><td>הוא לא צריך מקלדת פיזית -- הוא מעבר לזה</td></tr>
+      <tr><td>עטיפות יד סגולות</td><td>בדים ישנים ובלויים שעוטפים את זרועותיו</td><td>שריד מימיו בדוג'ו -- הדבר היחיד שהוא שמר</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>הבעות פנים (Expressions)</h3>
+    <table>
+      <tr><th>הבעה</th><th>תיאור</th><th>מתי מופיעה</th></tr>
+      <tr><td>idle</td><td>עיניים פקוחות למחצה, חלקיקים איטיים. שקט מוחלט.</td><td>מצב ברירת מחדל</td></tr>
+      <tr><td>observing</td><td>עיניים מצומצמות, ראש מוטה קלות. מעריך.</td><td>כשהשחקן מקליד</td></tr>
+      <tr><td>impressed</td><td>עיניים נפתחות, גבה מורמת בעדינות. חלקיקים מאיצים.</td><td>כשהשחקן מקליד במהירות גבוהה</td></tr>
+      <tr><td>defeated</td><td>עוצם עיניים לרגע, מנהן קלות (כבוד). נעלם באיטיות.</td><td>השחקן ניצח</td></tr>
+      <tr><td>victory</td><td>מסתובב, גב לשחקן, הולך לתוך הצללים.</td><td>פאנטום ניצח</td></tr>
+      <tr><td>memory</td><td>מבט רחוק, חצי חיוך עצוב. חלקיקים כמעט נעצרים.</td><td>כשהוא נזכר בדוג'ו (נרטיב)</td></tr>
+      <tr><td>fade</td><td>הגוף מתפזר לחלקיקים סגולים -- בורח.</td><td>כשרגע רגשי מדי</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-purple">
+    <h3>Gemini Art Generation Prompt</h3>
+    <div class="gemini-prompt">Character model sheet for "Phantom" (פאנטום), a ghost ninja secret rival for a kids' typing game.
+
+STYLE: Brawl Stars + anime chibi art style. Colorful, expressive, gaming aesthetic.
+Same style as the attached reference characters [attach ki-boy-v2.jpg as reference].
+
+DESIGN:
+- Tall, slim teenage boy ninja (age 15), semi-transparent/holographic body
+- Dark warm brown skin (Yemenite-Israeli heritage) with digital transparency at edges
+- Dark black-purple hair, long, covering one eye partially, flowing as if in wind
+- Piercing ice-blue eyes (#A3C4F3) that glow -- the most striking feature
+- Dark ninja outfit (#1a1528) with deep purple (#7D3C98) cloth wraps on arms
+- Semi-transparent mask covering lower face -- facial features barely visible underneath
+- Fingerless black gloves, long elegant pianist fingers
+- Scattered purple-blue energy particles dissolving from body edges
+- Broken half-medallion on a thin chain around neck
+- Old, worn purple arm wraps -- a relic from his past
+- Minimal design -- no unnecessary accessories, pure ninja aesthetics
+- Overall aura: mysterious, lonely, powerful, dignified
+
+POSES (model sheet, 4 views):
+1. Front view -- arms crossed, calm confident stance, semi-transparent edges dissolving
+2. Side view -- walking away into shadows, half-turned look back, one eye visible
+3. "Battle" -- hands positioned over a translucent floating keyboard, intense focus, particles accelerating
+4. "Defeated/Respect" -- eyes closed, slight nod, body beginning to dissolve into particles peacefully
+
+BACKGROUND: Dark gaming aesthetic (#0d0b1a), subtle purple glow, shadow atmosphere
+MOOD: Mysterious, dignified, lonely but powerful -- like a ghost of a great warrior
+DIVERSITY: Dark brown warm skin tone, Yemenite-Israeli features
+ABSOLUTELY NO: Blood, weapons, scary elements, horror aesthetics
+
+OUTPUT: Full character model sheet, multiple angles, consistent design, high detail</div>
+    <div class="stat-row">
+      <span class="stat-pill purple">Aspect Ratio: 3:2</span>
+      <span class="stat-pill green">Output: public/images/characters/model-sheets/phantom-ghost.jpg</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- SECTION 3: VOICE                                        -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="section" id="voice">
+  <div class="section-header">
+    <span class="emoji">🎙️</span>
+    <div><h2>3. קול ודיבור</h2><div class="sub">מאפייני קול, סגנון דיבור, שורות לדוגמה, פרמטרי ElevenLabs</div></div>
+    <span class="tag tag-phantom">VOICE</span>
+  </div>
+
+  <div class="card card-purple">
+    <h3>פרופיל קולי</h3>
+    <table>
+      <tr><th style="width:200px">שדה</th><th>ערך</th></tr>
+      <tr><td><strong>קול ElevenLabs</strong></td><td>Daniel (onwK4e9ZLuTAKqWW03F9) -- Deep, Authoritative, Calm</td></tr>
+      <tr><td><strong>מין/גיל</strong></td><td>Male, Young Adult</td></tr>
+      <tr><td><strong>גיל דמות</strong></td><td>15 שנים (נער בוגר)</td></tr>
+      <tr><td><strong>מהירות</strong></td><td>0.75 (איטי מאוד -- כל מילה היא אירוע)</td></tr>
+      <tr><td><strong>Stability</strong></td><td>0.8 (גבוה מאוד -- שליטה מוחלטת, אפס רעד)</td></tr>
+      <tr><td><strong>Similarity Boost</strong></td><td>0.75</td></tr>
+      <tr><td><strong>למה הקול הזה</strong></td><td>Daniel הוא הקול הכי עמוק והכי רגוע בקטלוג. המהירות האיטית ביותר (0.75) יוצרת תחושה של כוח מרוסן. Stability גבוה (0.8) -- אין רעד, אין היסוס. כל מילה כמו אבן שנופלת לבריכה שקטה.</td></tr>
+      <tr><td><strong>כיוון קולי</strong></td><td>עמוק, שקט, מלכותי. כמו רוח שלוחשת. הקול הכי נמוך במשחק -- ניגוד לכל הדמויות הצעירות והנמרצות. כשפאנטום מדבר, השחקן צריך לנוע קדימה כדי "לשמוע".</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>סגנון דיבור</h3>
+    <ul style="padding-right:20px;color:var(--dim);line-height:2;">
+      <li><strong>מילים בודדות:</strong> פאנטום אומר 1-3 מילים לכל היותר. לעולם לא משפטים שלמים.</li>
+      <li><strong>נקודות השהייה:</strong> כל משפט מתחיל ב-"..." -- כאילו הוא שוקל אם בכלל כדאי לדבר.</li>
+      <li><strong>אין סימני קריאה:</strong> לעולם לא "!" -- תמיד "." או "..." -- הוא לא מתרגש, הוא מתבונן.</li>
+      <li><strong>עברית גבוהה:</strong> משתמש במילים ספרותיות, לא סלנג. "ראוי" ולא "אחלה".</li>
+      <li><strong>קול כמעט לחישה:</strong> כמו מישהו שמדבר בספרייה -- מנומס, מרוסן, עמוק.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>שורות לדוגמה (Hebrew Voice Lines)</h3>
+
+    <div class="voice-line">
+      <div>
+        <div class="text">...ראוי.</div>
+        <div class="context">כשהשחקן מגיע אליו בפעם הראשונה (Reveal)</div>
+      </div>
+      <span class="chip chip-phantom">phantom/phantom-worthy.mp3</span>
+    </div>
+
+    <div class="voice-line">
+      <div>
+        <div class="text">...התחל.</div>
+        <div class="context">פתיחת קרב (Battle Start)</div>
+      </div>
+      <span class="chip chip-phantom">phantom/phantom-begin.mp3</span>
+    </div>
+
+    <div class="voice-line">
+      <div>
+        <div class="text">...לא רע.</div>
+        <div class="context">כשהשחקן מקליד במהירות גבוהה (Mid-battle Impressed)</div>
+      </div>
+      <span class="chip chip-phantom">phantom/phantom-notbad.mp3</span>
+    </div>
+
+    <div class="voice-line">
+      <div>
+        <div class="text">...עוד.</div>
+        <div class="context">כשהשחקן מפסיד (Player Defeated)</div>
+      </div>
+      <span class="chip chip-phantom">phantom/phantom-more.mp3</span>
+    </div>
+
+    <div class="voice-line">
+      <div>
+        <div class="text">...סנסאי.</div>
+        <div class="context">כשהשחקן מנצח (Phantom Defeated) -- לוחש את שם המורה שלו</div>
+      </div>
+      <span class="chip chip-phantom">phantom/phantom-sensei.mp3</span>
+    </div>
+
+    <div class="voice-line">
+      <div>
+        <div class="text">...חזור.</div>
+        <div class="context">אחרי הפסד -- מזמין את השחקן לחזור (Rematch Invitation)</div>
+      </div>
+      <span class="chip chip-phantom">phantom/phantom-return.mp3</span>
+    </div>
+
+    <div class="voice-line">
+      <div>
+        <div class="text">...רז.</div>
+        <div class="context">רגע פוסט-נרטיבי -- מגלה את שמו האמיתי (Post-narrative Reveal)</div>
+      </div>
+      <span class="chip chip-phantom">phantom/phantom-raz.mp3</span>
+    </div>
+
+    <div class="voice-line">
+      <div>
+        <div class="text">...הביתה.</div>
+        <div class="context">כשהוא חוזר לדוג'ו (Arc Resolution)</div>
+      </div>
+      <span class="chip chip-phantom">phantom/phantom-home.mp3</span>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <strong>חשוב -- ניגוד קולי:</strong> פאנטום הוא ה-0.75 speed בעולם של 1.0-1.2 speed. הניגוד הדרמטי בין הקול הלוחש שלו לבין Ki (1.1, נמרץ) או Yuki (1.2, מהיר) הוא מכוון. כשפאנטום מדבר, הכל נרגע -- זה עצמו הנשק שלו.
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- SECTION 4: MUSIC                                        -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="section" id="music">
+  <div class="section-header">
+    <span class="emoji">🎵</span>
+    <div><h2>4. מוזיקה</h2><div class="sub">ערכת נושא אישית, נושא קרב, נושא רגשי, כלים מזוהים</div></div>
+    <span class="tag tag-phantom">MUSIC</span>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>ערכת נושא אישית -- "Shadow Waltz"</h3>
+      <p><strong>סגנון:</strong> מינימליסטי, אמביינט כהה עם נגיעות יפניות</p>
+      <p><strong>כלים:</strong> שאקוהאצ'י (חליל יפני), פסנתר בודד, סינטיסייזר pad עמוק</p>
+      <p><strong>טמפו:</strong> 60 BPM (איטי, מדיטטיבי)</p>
+      <p><strong>אווירה:</strong> כמו הליכה בגן יפני בלילה. שקט, יפה, קצת עצוב.</p>
+      <br>
+      <div class="quote-box">
+        דמיינו: הנגינה מתחילה בשקט מוחלט. אחרי 3 שניות -- נשימת חליל בודדת. אחריה -- תו פסנתר יחיד, מהדהד. זה כל הנושא. פשטות שהיא עוצמה.
+      </div>
+    </div>
+    <div class="card">
+      <h3>נושא קרב -- "Phantom Strike"</h3>
+      <p><strong>סגנון:</strong> דראם אנד בייס עדין + כלי יפניים אלקטרוניים</p>
+      <p><strong>כלים:</strong> תופי טאיקו אלקטרוניים, synth bass עמוק, שאקוהאצ'י מעובד</p>
+      <p><strong>טמפו:</strong> 140 BPM (מהיר, אבל הביטים "רפאים" -- באים והולכים)</p>
+      <p><strong>אווירה:</strong> לא אגרסיבי כמו Blaze. יותר כמו ריקוד -- הקצב מופיע ונעלם, בדיוק כמו פאנטום.</p>
+      <p><strong>אפקט ייחודי:</strong> כל 8 תיבות הקצב "נעלם" לשנייה ואז חוזר -- כמו הדופק של רוח רפאים.</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>נושא רגשי -- "Raz's Memory"</h3>
+      <p><strong>סגנון:</strong> פסנתר סולו + strings</p>
+      <p><strong>כלים:</strong> פסנתר אקוסטי, כינור יחיד, cello רחוק</p>
+      <p><strong>טמפו:</strong> 50 BPM (rubato -- חופשי)</p>
+      <p><strong>אווירה:</strong> מנגנים את זה כשמגלים את סיפור הרקע של פאנטום. מלודיה פשוטה שחוזרת -- כמו זיכרון שלא מרפה.</p>
+      <p><strong>מילות מפתח ל-Suno:</strong> "solo piano, emotional, nostalgic, minor key, simple melody, child's memory, bittersweet"</p>
+    </div>
+    <div class="card">
+      <h3>כלים מזוהים עם פאנטום</h3>
+      <table>
+        <tr><th>כלי</th><th>למה</th></tr>
+        <tr><td>שאקוהאצ'י (חליל יפני)</td><td>בדידות, מסורת נינג'ה, אוויר/רוח</td></tr>
+        <tr><td>פסנתר בודד</td><td>דיוק, אלגנטיות, בודדות</td></tr>
+        <tr><td>סינטיסייזר pad</td><td>עולם דיגיטלי, שקיפות, אפקט רפאים</td></tr>
+        <tr><td>תופי טאיקו (מעובדים)</td><td>כוח מרוסן, מסורת, דופק לב</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- SECTION 5: TYPING SKILLS                                -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="section" id="skills">
+  <div class="section-header">
+    <span class="emoji">⌨️</span>
+    <div><h2>5. מיומנויות הקלדה</h2><div class="sub">מה פאנטום מלמד? מה ייחודי אצלו?</div></div>
+    <span class="tag tag-phantom">SKILLS</span>
+  </div>
+
+  <div class="card card-purple">
+    <h3>תחום ייחודי: הקלדה עיוורת מוחלטת (True Blind Typing)</h3>
+    <p>כל דמות במשחק מתמחה בתחום הקלדה שונה. פאנטום מייצג את <strong>הרמה הגבוהה ביותר</strong> -- הקלדה בלי לראות כלום.</p>
+
+    <div class="info-box">
+      <strong>מפת מיומנויות לפי דמות (ללא חפיפה):</strong><br>
+      Ki = מוטיבציה כללית | Mika = קיצורי מקלדת | Yuki = מהירות | Luna = דיוק ותרגול |
+      Kai = ביצוע תחת לחץ | Noa = תיקון שגיאות | Sensei Zen = יסודות |
+      Shadow/Storm/Blaze = רמות קושי הולכות וגדלות |<br>
+      <strong>Phantom = הקלדה עיוורת מוחלטת + זרימה (Flow State)</strong>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card">
+      <h4>הקלדה בחושך</h4>
+      <p>במהלך הקרב, המסך מחשיך בהדרגה. השחקן צריך להמשיך להקליד גם כשהוא לא רואה את המילים על המסך -- רק שומע אותן.</p>
+      <span class="chip chip-phantom">ייחודי לפאנטום</span>
+    </div>
+    <div class="card">
+      <h4>זרימה (Flow State)</h4>
+      <p>פאנטום מלמד על "הקלדה בזרימה" -- כשהשחקן מגיע לרצף ארוך בלי שגיאות, האפקטים הויזואליים משתנים ו"זרימת האנרגיה" הסגולה מגיעה למקסימום.</p>
+      <span class="chip chip-phantom">מכניקה ייחודית</span>
+    </div>
+    <div class="card">
+      <h4>הקלדה שקטה</h4>
+      <p>בקרב נגד פאנטום, אין סאונד של מקשים. השחקן מקליד בשקט מוחלט. זה יוצר חוויה שונה לחלוטין מכל קרב אחר.</p>
+      <span class="chip chip-phantom">חוויה אודיו</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>מכניקות הקלדה בקרב נגד פאנטום</h3>
+    <table>
+      <tr><th>שלב בקרב</th><th>מכניקה</th><th>קושי</th></tr>
+      <tr><td>0-20 שניות</td><td>הקלדה רגילה (כמו Blaze) -- חימום</td><td>גבוה</td></tr>
+      <tr><td>20-40 שניות</td><td>מילים מתחילות להיעלם אחרי 2 שניות -- צריך לזכור</td><td>גבוה מאוד</td></tr>
+      <tr><td>40-60 שניות</td><td>המסך מחשיך -- רק אודיו מנחה (המילה מוקראת, השחקן מקליד)</td><td>סיוט</td></tr>
+      <tr><td>60-90 שניות</td><td>שקט מוחלט + מסך חשוך -- הקלדה מזיכרון בלבד</td><td>אגדי</td></tr>
+    </table>
+    <div class="warn-box">
+      <strong>אנטי-תסכול (חובה!):</strong> אם השחקן נתקע יותר מ-5 שניות בשלב החשוך, רמז קטן מופיע (האות הראשונה של המילה זוהרת בסגול). אחרי 10 שניות, המסך חוזר לאור לרגע. אחרי 3 כישלונות ברציפות, פאנטום אומר "...נסה שוב" ומוריד את הקושי שלב אחד.
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- SECTION 6: UI INTEGRATION                               -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="section" id="ui">
+  <div class="section-header">
+    <span class="emoji">🖥️</span>
+    <div><h2>6. שילוב בממשק</h2><div class="sub">איפה פאנטום מופיע? מה התפקיד שלו ב-UI?</div></div>
+    <span class="tag tag-phantom">UI</span>
+  </div>
+
+  <div class="card">
+    <h3>מיפוי עמודים</h3>
+    <table>
+      <tr><th>עמוד / אזור</th><th>נוכחות</th><th>תיאור</th></tr>
+      <tr><td><strong>זירת קרב (Battle Arena)</strong></td><td>עיקרית</td><td>יריב סודי -- נפתח אחרי 3 ניצחונות על Blaze. מופיע כסימן "???" עד שנפתח.</td></tr>
+      <tr><td><strong>דוג'ו (Lessons)</strong></td><td>Foreshadowing</td><td>כיסא ריק עם שם חרוט -- רמז לקיומו עוד מהשיעור הראשון.</td></tr>
+      <tr><td><strong>סטטיסטיקות</strong></td><td>הישגים</td><td>Badge "צייד רוחות" (phantom-hunter) מופיע כאשר ננצח.</td></tr>
+      <tr><td><strong>פרופיל</strong></td><td>אווטאר</td><td>אחרי ניצחון -- אפשר לבחור את פאנטום כאווטאר פרופיל.</td></tr>
+      <tr><td><strong>Home Dashboard</strong></td><td>אירוע מיוחד</td><td>כשפאנטום נפתח, הוא מופיע לרגע ברקע ה-Dashboard ואז נעלם.</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>אינטראקציה עם ה-UI</h3>
+    <p>פאנטום הוא הדמות היחידה שמשפיעה על ה-UI עצמו:</p>
+    <ul style="padding-right:20px;color:var(--dim);line-height:2;">
+      <li>כשהוא מופיע, <strong>פלטת הצבעים של המסך משתנה</strong> לגוונים כהים יותר</li>
+      <li>האפקט שלו הוא <strong>החשכה הדרגתית</strong> -- המסך מתעמעם סביב הקצוות</li>
+      <li>סמל ה-"???" בזירת הקרב <strong>מהבהב בסגול כהה</strong> לפני שנפתח</li>
+      <li>אחרי ניצחון על פאנטום, <strong>חלקיקים סגולים</strong> מופיעים בכל עמודי המשחק למשך 24 שעות</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- SECTION 7: RELATIONSHIPS                                -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="section" id="relationships">
+  <div class="section-header">
+    <span class="emoji">🤝</span>
+    <div><h2>7. מערכות יחסים</h2><div class="sub">הקשר של פאנטום עם כל דמות קיימת במשחק</div></div>
+    <span class="tag tag-phantom">RELATIONSHIPS</span>
+  </div>
+
+  <div class="grid-3">
+    <div class="rel-card" style="border-right:3px solid var(--purple);">
+      <div class="arrow">Ki (קי)</div>
+      <div class="name" style="color:var(--purple);">מראה -- "מה שהייתי יכול להיות"</div>
+      <div class="desc">פאנטום רואה בקי את עצמו הצעיר -- מוכשר אבל עדיין מחובר לאחרים. הוא מקנא בו בשקט. בקרב, הוא מודד את קי -- לא כדי לנצח, אלא כדי לדעת אם קי באמת טוב יותר.</div>
+    </div>
+
+    <div class="rel-card" style="border-right:3px solid var(--pink);">
+      <div class="arrow">Mika (מיקה)</div>
+      <div class="name" style="color:var(--pink);">כבוד מקצועי שקט</div>
+      <div class="desc">מיקה היא היחידה שפאנטום לא מזלזל בה. היא פרצה את המערכת שלו פעם (ה-"???" ב-UI) וניסתה לגלות מי הוא. הוא מרשם מזה. "...חכמה."</div>
+    </div>
+
+    <div class="rel-card" style="border-right:3px solid var(--gold);">
+      <div class="arrow">Sensei Zen (סנסאי זן)</div>
+      <div class="name" style="color:var(--gold);">האב שנטש / המורה שלא שכח</div>
+      <div class="desc">הקשר הכי עמוק. סנסאי זן הוא האדם היחיד שפאנטום אוהב באמת -- ולכן הוא לא יכול לפגוש אותו. הבושה גדולה מדי. סנסאי זן יודע שפאנטום עדיין בסביבה ("הצל שלו ארוך יותר ממה שהוא חושב").</div>
+    </div>
+
+    <div class="rel-card" style="border-right:3px solid var(--cyan);">
+      <div class="arrow">Yuki (יוקי)</div>
+      <div class="name" style="color:var(--cyan);">התמודדות עם עליונות</div>
+      <div class="desc">יוקי חושבת שהיא הכי מהירה. כשהיא שומעת על פאנטום, היא רוצה להתמודד מולו. פאנטום אדיש לחלוטין -- מה שמשגע את יוקי. "הוא אפילו לא שם לב אליי?!"</div>
+    </div>
+
+    <div class="rel-card" style="border-right:3px solid #C0C0C0;">
+      <div class="arrow">Luna (לונה)</div>
+      <div class="name" style="color:#C0C0C0;">נשמות תאומות שקטות</div>
+      <div class="desc">לונה היא היחידה שמבינה את השקט של פאנטום. היא לא מנסה לגרום לו לדבר -- היא פשוט יושבת בשקט ליד המקום שהוא היה. פוטנציאל חברות אמיתית בפוסט-נרטיב.</div>
+    </div>
+
+    <div class="rel-card" style="border-right:3px solid var(--red);">
+      <div class="arrow">Kai (קאי)</div>
+      <div class="name" style="color:var(--red);">יריבות לוחמים</div>
+      <div class="desc">קאי רואה בפאנטום את האתגר האולטימטיבי. "אם אני יכול לנצח אותו, אני לוחם אמיתי." פאנטום מתעלם מקאי לחלוטין -- מה שפוגע בגאווה של קאי עמוקות.</div>
+    </div>
+
+    <div class="rel-card" style="border-right:3px solid var(--green);">
+      <div class="arrow">Noa (נועה)</div>
+      <div class="name" style="color:var(--green);">המרפאה שרוצה לרפא</div>
+      <div class="desc">נועה מרגישה שפאנטום "שבור" ורוצה לעזור לו. פאנטום מסרב לכל עזרה. "...אני לא צריך ריפוי." אבל בעומק -- הוא יודע שהיא צודקת.</div>
+    </div>
+
+    <div class="rel-card" style="border-right:3px solid var(--orange);">
+      <div class="arrow">Rex (רקס)</div>
+      <div class="name" style="color:var(--orange);">הומור מול רצינות</div>
+      <div class="desc">רקס לא מפחד מפאנטום. "מה, רוח רפאים? אני דינוזאור -- ראיתי דברים יותר מפחידים!" זו הדמות היחידה שגורמת לפאנטום כמעט לחייך (כמעט).</div>
+    </div>
+
+    <div class="rel-card" style="border-right:3px solid var(--cyan);">
+      <div class="arrow">Pixel (פיקסל)</div>
+      <div class="name" style="color:var(--cyan);">נתונים מול רגש</div>
+      <div class="desc">פיקסל הוא היחיד שיכול "למדוד" את פאנטום. "סורק... ישות לא מוכרת. WPM: לא ניתן לחישוב. שגיאה." פאנטום מטריד את פיקסל כי הוא לא מתאים לנתונים.</div>
+    </div>
+
+    <div class="rel-card" style="border-right:3px solid #333;">
+      <div class="arrow">Shadow (צל)</div>
+      <div class="name" style="color:#888;">תלמיד לשעבר</div>
+      <div class="desc">Shadow הוא חתול הנינג'ה ששמע אגדות על פאנטום ומנסה לחקות את סגנון הבידוד שלו. פאנטום מתעלם לחלוטין. Shadow מרגיש שפאנטום לא רואה אותו ראוי.</div>
+    </div>
+
+    <div class="rel-card" style="border-right:3px solid var(--blue);">
+      <div class="arrow">Storm (סערה)</div>
+      <div class="name" style="color:var(--blue);">כוח מול שקט</div>
+      <div class="desc">Storm, עם כל האנרגיה שלו, לא מצליח לזעזע את פאנטום. "ברק?! אפילו לא הבהבת?!" פאנטום לא מושפע מהרעש -- הוא מעבר לזה.</div>
+    </div>
+
+    <div class="rel-card" style="border-right:3px solid var(--red);">
+      <div class="arrow">Blaze (להבה)</div>
+      <div class="name" style="color:var(--red);">כבוד הדדי</div>
+      <div class="desc">הקשר הכי קרוב בין פאנטום ליריב אחר. Blaze הוא היחיד שפאנטום מכיר בו כלוחם אמיתי. שניהם שותקים, שניהם חזקים. "...דרקון כבוד." -- המחמאה הארוכה ביותר שפאנטום נתן ליריב.</div>
+    </div>
+
+    <div class="rel-card" style="border-right:3px solid #00FF41;">
+      <div class="arrow">Bug (באג)</div>
+      <div class="name" style="color:#00FF41;">אדישות מוחלטת</div>
+      <div class="desc">פאנטום לא מתרשם מהבאג. "שגיאות הקלדה? אין לי כאלה." באג מנסה להפריע לפאנטום ופשוט לא מצליח -- הדיוק של פאנטום מושלם מדי.</div>
+    </div>
+
+    <div class="rel-card" style="border-right:3px solid #00FF41;">
+      <div class="arrow">Bug King (מלך הבאגים)</div>
+      <div class="name" style="color:#00FF41;">בלתי רלוונטי</div>
+      <div class="desc">פאנטום קיים ברמה שמעבר ל-Bug King. "...מלך? של מה?" -- שורה שמדגישה שפאנטום הוא לגמרי מחוץ לנרטיב הראשי.</div>
+    </div>
+
+    <div class="rel-card" style="border-right:3px solid #FF007F;">
+      <div class="arrow">Glitch (גליץ')</div>
+      <div class="name" style="color:#FF007F;">הבנה מפתיעה</div>
+      <div class="desc">פאנטום מבין את גליץ' -- שניהם ישויות שלא מתאימות. "...גם את מחפשת מקום." הרגע הכי אנושי של פאנטום: הוא רואה בגליץ' מראה של עצמו.</div>
+    </div>
+
+    <div class="rel-card" style="border-right:3px solid #FF0000;">
+      <div class="arrow">Virus (וירוס)</div>
+      <div class="name" style="color:#FF0000;">שנאה שקטה</div>
+      <div class="desc">פאנטום שונא את וירוס -- כי וירוס משמיד, לא בונה. "...הרס בלי תכלית." פאנטום הוא בודד, אבל הוא לא הורסני. וירוס הוא הניגוד המוחלט שלו.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- SECTION 8: NARRATIVE                                    -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="section" id="narrative">
+  <div class="section-header">
+    <span class="emoji">📖</span>
+    <div><h2>8. נרטיב</h2><div class="sub">מתי פאנטום מופיע? מה האת שלו? איך הוא משתנה?</div></div>
+    <span class="tag tag-phantom">NARRATIVE</span>
+  </div>
+
+  <div class="card card-purple">
+    <h3>קשת דמות (Character Arc)</h3>
+    <p>פאנטום עובר מסע מ<strong>"בודד מבחירה"</strong> ל<strong>"בודד שמוצא חיבור"</strong>. זה לא קשת של "הנבל הופך טוב" -- זו קשת של "מי שברח מוצא סיבה לחזור".</p>
+    <div class="stat-row">
+      <span class="stat-pill purple">שלב 1: רמז</span>
+      <span class="stat-pill blue">שלב 2: גילוי</span>
+      <span class="stat-pill green">שלב 3: עימות</span>
+      <span class="stat-pill gold">שלב 4: חזרה</span>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-label">מעשה 1 -- רמזים (שיעורים 1-7)</div>
+      <div class="tl-title">הכיסא הריק</div>
+      <div class="tl-desc">בדוג'ו יש כיסא ריק עם שם חרוט: "רז". אף אחד לא מסביר. ברקע שיעור 3, צלו של מישהו חולף בחלון. Ki: "?מה זה היה" -- Sensei Zen: "...רוח."</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-label">מעשה 2 -- הסוד (שיעורים 8-15)</div>
+      <div class="tl-title">סנסאי זן מדבר</div>
+      <div class="tl-desc">שיעור 8: סנסאי זן שם את ידו על הכיסא הריק: "פעם היה כאן תלמיד... הכי מהיר שראיתי. אבל הוא בחר ללכת." שיעור 12: Mika מוצאת קובץ מוצפן בדוג'ו -- חצי מדליון דיגיטלי. "מי זה 'רז'?"</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-label">מעשה 3 -- הצל (שיעורים 16-20)</div>
+      <div class="tl-title">נוכחות ברקע</div>
+      <div class="tl-desc">בקרב הסופי נגד Bug King (שיעור 20), אם השחקן מגיע ל-90%+ דיוק, צל סגול מהבהב ברקע. Sensei Zen: "...הוא צופה." -- הרמז הישיר ביותר.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-label">פוסט-נרטיב -- הגילוי</div>
+      <div class="tl-title">3 ניצחונות על Blaze = Phantom נחשף</div>
+      <div class="tl-desc">קטע סינמטי: הצל יוצא מהחושך. עיניים כחולות-קרחוניות. "...ראוי." סמל ה-"???" הופך לאייקון של פאנטום. הקרב הסודי נפתח.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-label">קשת אישית -- ניצחון ראשון</div>
+      <div class="tl-title">קי מנצח את פאנטום</div>
+      <div class="tl-desc">פאנטום: "...סנסאי." עוצם עיניים, מנהן בכבוד. נעלם. בפעם הבאה שהשחקן נכנס לדוג'ו -- הכיסא הריק כבר לא ריק. חצי המדליון שם.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-label">קשת מורחבת -- ניצחון שלישי</div>
+      <div class="tl-title">רז חוזר</div>
+      <div class="tl-desc">אחרי 3 ניצחונות על פאנטום, קטע סינמטי מיוחד: פאנטום עומד מול הדוג'ו. סנסאי זן יוצא. שקט ארוך. סנסאי: "...כיסאך ממתין, רז." פאנטום: "...הביתה." הגוף שלו נהיה פחות שקוף -- הוא מתחיל לחזור להיות "אמיתי".</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>תפקיד בכל מעשה</h3>
+    <table>
+      <tr><th>מעשה</th><th>תפקיד</th><th>רמת נוכחות</th></tr>
+      <tr><td>מעשה 1 (שיעורים 1-7)</td><td>רמז בלבד -- כיסא ריק, צל חולף</td><td>0.5/5</td></tr>
+      <tr><td>מעשה 2 (שיעורים 8-15)</td><td>סיפור רקע מתגלה דרך סנסאי זן ומיקה</td><td>1/5</td></tr>
+      <tr><td>מעשה 3 (שיעורים 16-20)</td><td>צל ברקע בקרב הסופי</td><td>1.5/5</td></tr>
+      <tr><td>פוסט-נרטיב (Battle Arena)</td><td>יריב סודי -- נוכחות מלאה</td><td>5/5</td></tr>
+      <tr><td>מעשה 4 (שיעורים 21-27)</td><td>לוחם עצמאי נגד וירוס מהצללים</td><td>2/5</td></tr>
+      <tr><td>מעשה 5 (טורניר)</td><td>מצטרף לצוות בגמר -- רגע השיא</td><td>4/5</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- SECTION 9: SKINS                                        -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="section" id="skins">
+  <div class="section-header">
+    <span class="emoji">👘</span>
+    <div><h2>9. סקינים</h2><div class="sub">סקין בסיס, חגי ישראל, דרגות ברונזה/כסף/זהב</div></div>
+    <span class="tag tag-phantom">SKINS</span>
+  </div>
+
+  <div class="card card-purple">
+    <h3>סקין בסיס</h3>
+    <p>חליפת נינג'ה כהה, שקיפות דיגיטלית, חלקיקים סגולים, מסכה חצי-שקופה, חצי מדליון. הגירסה ה"רגילה" של פאנטום -- צבעים מעומעמים, אווירה מסתורית.</p>
+  </div>
+
+  <div class="grid-3">
+    <div class="skin-card">
+      <div style="padding:16px;">
+        <div class="skin-name">פאנטום חנוכיית אור</div>
+        <div class="skin-desc">
+          <strong>חג:</strong> חנוכה<br>
+          חלקיקי האנרגיה שלו הופכים ל<strong>להבות נר</strong> כחולות-לבנות. המסכה מעוטרת בדוגמת חנוכייה. כל ניצחון = נר נוסף נדלק.<br>
+          <strong>ציטוט:</strong> "...אור בחושך."
+        </div>
+        <span class="skin-tier tier-bronze">חנוכה</span>
+      </div>
+    </div>
+
+    <div class="skin-card">
+      <div style="padding:16px;">
+        <div class="skin-name">פאנטום פורים מסתורי</div>
+        <div class="skin-desc">
+          <strong>חג:</strong> פורים<br>
+          במקום שקיפות, פאנטום עוטה <strong>מסכת ונציה סגולה</strong> מלאה ומפוארת. הפעם הוא דווקא <em>פחות</em> שקוף -- "בפורים, אפילו רוחות מתחפשות."<br>
+          <strong>ציטוט:</strong> "...מי אני? מי אתה?"
+        </div>
+        <span class="skin-tier tier-bronze">פורים</span>
+      </div>
+    </div>
+
+    <div class="skin-card">
+      <div style="padding:16px;">
+        <div class="skin-name">פאנטום ליל הסדר</div>
+        <div class="skin-desc">
+          <strong>חג:</strong> פסח<br>
+          פאנטום עוטף עצמו ב<strong>טלית לבנה-סגולה</strong>. החלקיקים שלו מזכירים עמודי אש. "...מעבדות לחירות" -- כמו המסע שלו מבודדות חזרה לקהילה.<br>
+          <strong>ציטוט:</strong> "...חירות."
+        </div>
+        <span class="skin-tier tier-bronze">פסח</span>
+      </div>
+    </div>
+
+    <div class="skin-card">
+      <div style="padding:16px;">
+        <div class="skin-name">פאנטום יום הזיכרון</div>
+        <div class="skin-desc">
+          <strong>חג:</strong> יום הזיכרון<br>
+          סקין מיוחד ומכבד. החלקיקים שלו <strong>לבנים</strong> ואיטיים, כמו נרות זיכרון. שקט מוחלט -- גם המוזיקה שלו שקטה יותר.<br>
+          <strong>ציטוט:</strong> "...נזכור."
+        </div>
+        <span class="skin-tier tier-silver">יום הזיכרון</span>
+      </div>
+    </div>
+
+    <div class="skin-card">
+      <div style="padding:16px;">
+        <div class="skin-name">פאנטום לוחם צה"ל</div>
+        <div class="skin-desc">
+          <strong>חג:</strong> יום העצמאות<br>
+          חליפה עם <strong>עיטור צבאי ישראלי</strong> בגוון סגול-כהה. חרב מיניאטורית (קסר) על החגורה. כומתה סגולה (מצנחנים). החלקיקים שלו כחול-לבן.<br>
+          <strong>ציטוט:</strong> "...עצמאות."
+        </div>
+        <span class="skin-tier tier-silver">יום העצמאות</span>
+      </div>
+    </div>
+
+    <div class="skin-card">
+      <div style="padding:16px;">
+        <div class="skin-name">פאנטום סוכות</div>
+        <div class="skin-desc">
+          <strong>חג:</strong> סוכות<br>
+          פאנטום יושב <strong>בסוכה דיגיטלית</strong> -- גג ענפים שקופים עם כוכבים דיגיטליים. לולב סגול בידו. "...גם לרוח יש בית זמני."<br>
+          <strong>ציטוט:</strong> "...צל של סוכה."
+        </div>
+        <span class="skin-tier tier-bronze">סוכות</span>
+      </div>
+    </div>
+
+    <div class="skin-card">
+      <div style="padding:16px;">
+        <div class="skin-name">פאנטום ט"ו בשבט</div>
+        <div class="skin-desc">
+          <strong>חג:</strong> ט"ו בשבט<br>
+          החלקיקים הופכים ל<strong>עלים נושרים</strong> ירוקים-סגולים. עטיפות היד שלו הופכות לגפנים. "...גם עץ בודד צומח."<br>
+          <strong>ציטוט:</strong> "...שורשים."
+        </div>
+        <span class="skin-tier tier-bronze">ט"ו בשבט</span>
+      </div>
+    </div>
+
+    <div class="skin-card">
+      <div style="padding:16px;">
+        <div class="skin-name">פאנטום שבועות</div>
+        <div class="skin-desc">
+          <strong>חג:</strong> שבועות<br>
+          פאנטום אוחז <strong>מגילה דיגיטלית</strong> שזוהרת. החלקיקים שלו זהובים. "...התורה לא נלמדת לבד." -- רמז לקשת שלו.<br>
+          <strong>ציטוט:</strong> "...חוכמה."
+        </div>
+        <span class="skin-tier tier-bronze">שבועות</span>
+      </div>
+    </div>
+
+    <div class="skin-card">
+      <div style="padding:16px;">
+        <div class="skin-name">פאנטום ראש השנה</div>
+        <div class="skin-desc">
+          <strong>חג:</strong> ראש השנה<br>
+          עטיפות יד <strong>לבנות</strong> (תשובה). שופר דיגיטלי ברקע. החלקיקים זהובים ואיטיים. "...התחלה חדשה."<br>
+          <strong>ציטוט:</strong> "...שנה טובה."
+        </div>
+        <span class="skin-tier tier-bronze">ראש השנה</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-gold">
+    <h3>דרגות ברונזה / כסף / זהב</h3>
+    <table>
+      <tr><th>דרגה</th><th>תנאי</th><th>שינוי ויזואלי</th></tr>
+      <tr><td><span class="skin-tier tier-bronze">ברונזה</span></td><td>ניצחון ראשון על פאנטום</td><td>חלקיקי האנרגיה מקבלים גוון ברונזה. עטיפות יד ברונזה. כיתוב "Ghost Slayer" על הגב.</td></tr>
+      <tr><td><span class="skin-tier tier-silver">כסף</span></td><td>3 ניצחונות + דיוק 95%+</td><td>הגוף פחות שקוף -- הוא "מתגבש". חלקיקים כסופים. עיניים זוהרות בכסף. המדליון שלם (!).</td></tr>
+      <tr><td><span class="skin-tier tier-gold">זהב</span></td><td>5 ניצחונות + WPM 70+ + דיוק 98%</td><td>פאנטום <strong>לא שקוף יותר</strong> -- סוף סוף מוצק. חליפה סגולה-זהובה. הילה זהובה. האייקון שלו זוהר בזהב. שם: "רז" מופיע מתחת ל-Phantom.</td></tr>
+    </table>
+    <div class="info-box">
+      <strong>משמעות נרטיבית:</strong> הדרגות מספרות את הסיפור של פאנטום -- מרוח שקופה (ברונזה) דרך ריפוי הדרגתי (כסף) ועד חזרה לעצמו (זהב). סקין הזהב הוא למעשה "רז" -- התלמיד המקורי, לא עוד Phantom.
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- SECTION 10: GAMEPLAY                                    -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="section" id="gameplay">
+  <div class="section-header">
+    <span class="emoji">🎮</span>
+    <div><h2>10. משחקיות</h2><div class="sub">מכניקות קרב, יכולות מיוחדות, אתגרים, תנאי פתיחה</div></div>
+    <span class="tag tag-phantom">GAMEPLAY</span>
+  </div>
+
+  <div class="card card-purple">
+    <h3>תנאי פתיחה</h3>
+    <table>
+      <tr><th>שלב</th><th>תנאי</th><th>קוד</th></tr>
+      <tr><td>1. Shadow נפתח</td><td>זירת קרב נפתחת (שיעור 4+)</td><td><code>battleArenaUnlocked === true</code></td></tr>
+      <tr><td>2. Storm נפתח</td><td>3 ניצחונות על Shadow</td><td><code>rivalRecords.shadow.wins >= 3</code></td></tr>
+      <tr><td>3. Blaze נפתח</td><td>3 ניצחונות על Storm</td><td><code>rivalRecords.storm.wins >= 3</code></td></tr>
+      <tr><td>4. <strong>Phantom נפתח</strong></td><td>3 ניצחונות על Blaze</td><td><code>rivalRecords.blaze.wins >= 3</code></td></tr>
+    </table>
+    <p style="margin-top:10px;color:var(--dim);font-size:13px;">
+      <strong>Story Flag:</strong> <code>phantomRevealed: true</code> |
+      <strong>Badge:</strong> phantom-hunter -- "צייד רוחות" |
+      <strong>XP Reward:</strong> 200 XP (גילוי) + 500 XP (ניצחון ראשון)
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>מכניקות קרב ייחודיות</h3>
+    <table>
+      <tr><th>מכניקה</th><th>תיאור</th><th>אנטי-תסכול</th></tr>
+      <tr><td><strong>Fade Words</strong></td><td>מילים מופיעות ונעלמות אחרי 2-3 שניות. צריך לזכור ולהקליד מזיכרון.</td><td>אם 3 מילים ברצף נכשלות, זמן התצוגה עולה ל-5 שניות</td></tr>
+      <tr><td><strong>Dark Mode</strong></td><td>המסך מחשיך בהדרגה. בשלב האחרון -- חושך מוחלט.</td><td>רמזי אות ראשונה אחרי 5 שניות תקיעה</td></tr>
+      <tr><td><strong>Silent Battle</strong></td><td>אין צלילי מקלדת. שקט מוחלט. רק הצלחה/שגיאה ויזואלית.</td><td>אפשר להפעיל צלילים חזרה ב-Settings</td></tr>
+      <tr><td><strong>Ghost Typing</strong></td><td>פאנטום "מקליד" במקביל ואתה לא רואה מה הוא כותב. צריך להיות מהיר יותר.</td><td>פאנטום מאט ב-5% אחרי כל הפסד של השחקן</td></tr>
+      <tr><td><strong>Flow Combo</strong></td><td>רצף של 10+ מילים ללא שגיאה = "זרימת רוח" -- בונוס x2 לנזק</td><td>הבונוס נשמר גם אחרי שגיאה אחת (grace period)</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>יכולות מיוחדות של פאנטום (AI Rival)</h3>
+    <table>
+      <tr><th>יכולת</th><th>תיאור</th><th>תדירות</th></tr>
+      <tr><td>Phase Shift</td><td>פאנטום "נעלם" לרגע -- כל הנזק שעשית בשנייה האחרונה מתבטל</td><td>פעם ב-30 שניות</td></tr>
+      <tr><td>Echo</td><td>המילה האחרונה שהקלדת חוזרת -- צריך להקליד אותה שוב</td><td>פעם ב-20 שניות</td></tr>
+      <tr><td>Shadow Clone</td><td>שתי מילים מופיעות במקביל -- צריך להקליד את שתיהן</td><td>פעם ב-40 שניות</td></tr>
+      <tr><td>Silence</td><td>כל ה-UI נעלם לשנייה (אפילו ה-HP bar) -- טעינה עיוורת לגמרי</td><td>פעם ב-60 שניות</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-green">
+    <h3>אנטי-תסכול -- מערכת מפורטת</h3>
+    <p>פאנטום הוא הקרב הקשה ביותר. חובה שלא יגרום לילדים לוותר:</p>
+    <table>
+      <tr><th>מצב</th><th>תגובה</th></tr>
+      <tr><td>3 הפסדים ברצף</td><td>פאנטום אומר "...לא ויתרת. טוב." -- WPM שלו יורד ב-5</td></tr>
+      <tr><td>5 הפסדים ברצף</td><td>Sensei Zen מופיע: "סבלנות, תלמיד. גם פאנטום לא ניצח בפעם הראשונה." -- WPM יורד ב-10</td></tr>
+      <tr><td>שחקן עוזב באמצע</td><td>פאנטום אומר "...חזור כשתהיה מוכן." -- לא משדר ביקורת, רק הזמנה</td></tr>
+      <tr><td>שחקן חוזר אחרי הפסקה</td><td>פאנטום: "...חזרת." -- הכרה שקטה</td></tr>
+      <tr><td>ניצחון אחרי סדרת הפסדים</td><td>פאנטום מנהן לאט יותר מהרגיל. "...ראוי. באמת." -- מילה נוספת מהרגיל = מחמאה ענקית</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- SECTION 11: POST-NARRATIVE                              -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="section" id="post-narrative">
+  <div class="section-header">
+    <span class="emoji">🌅</span>
+    <div><h2>11. פוסט-נרטיב</h2><div class="sub">מה קורה אחרי הסיפור הראשי?</div></div>
+    <span class="tag tag-phantom">POST-NARRATIVE</span>
+  </div>
+
+  <div class="card card-purple">
+    <h3>קשת פוסט-נרטיבית</h3>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-label">שלב 1 -- יריב סודי</div>
+        <div class="tl-title">הקרב הסודי</div>
+        <div class="tl-desc">פאנטום הוא יריב בזירת הקרב. קרבות חוזרים. כל ניצחון מגלה חלק נוסף מהסיפור שלו.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-label">שלב 2 -- ניצחון x3</div>
+        <div class="tl-title">חזרה לדוג'ו</div>
+        <div class="tl-desc">רז חוזר לדוג'ו. הכיסא הריק מתמלא. סנסאי זן ופאנטום פוגשים. סצנה רגשית.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-label">שלב 3 -- מעשה 4-5</div>
+        <div class="tl-title">לוחם מהצללים</div>
+        <div class="tl-desc">במעשה 4, פאנטום נלחם בוירוס מאחורי הקלעים. הוא נותן רמזים לקי ("...מאחוריך"). במעשה 5 (טורניר), הוא מצטרף לצוות בגמר -- הרגע שבו הוא סוף סוף חלק מקבוצה.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-label">שלב 4 -- הסוף</div>
+        <div class="tl-title">"רז" נשאר בדוג'ו</div>
+        <div class="tl-desc">בסקין הזהב, פאנטום כבר לא שקוף. הוא "רז" -- תלמיד בדוג'ו. עדיין שקט, עדיין מסתורי, אבל לא עוד בודד. הוא הופך ל<strong>מנטור משני</strong> לשחקנים מתקדמים.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>תפקיד כמנטור (Post-Game)</h3>
+    <p>אחרי שפאנטום "חוזר", הוא הופך לדמות מנטור למתקדמים:</p>
+    <ul style="padding-right:20px;color:var(--dim);line-height:2;">
+      <li><strong>אתגר שבועי של פאנטום:</strong> כל שבוע, פאנטום נותן אתגר הקלדה ייחודי (הקלדה בחושך, הקלדה מזיכרון, Flow challenge)</li>
+      <li><strong>טיפי Pro:</strong> שורות קצרות על הקלדה עיוורת שמופיעות בעמוד הבית ("...העיניים מסיחות. תנו לאצבעות לדבר.")</li>
+      <li><strong>אתגר "Ghost Mode":</strong> מצב משחק מיוחד שנפתח -- הקלדה בחושך מוחלט כאימון קבוע</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Boss Rush -- תפקיד פאנטום</h3>
+    <p>במצב Boss Rush (NG+), פאנטום הוא שלב 7 מתוך 8:</p>
+    <table>
+      <tr><th>שלב</th><th>בוס</th><th>קושי</th></tr>
+      <tr><td>1</td><td>Shadow</td><td>קל</td></tr>
+      <tr><td>2</td><td>Storm</td><td>בינוני</td></tr>
+      <tr><td>3</td><td>Bug</td><td>בינוני</td></tr>
+      <tr><td>4</td><td>Bug + Glitch</td><td>קשה</td></tr>
+      <tr><td>5</td><td>Blaze</td><td>קשה</td></tr>
+      <tr><td>6</td><td>Bug King</td><td>קשה מאוד</td></tr>
+      <tr><td>7</td><td><strong>Phantom</strong></td><td>סיוט</td></tr>
+      <tr><td>8</td><td>SPAM (חדש)</td><td>אגדי</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- SECTION 12: CONNECTIONS                                 -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="section" id="connections">
+  <div class="section-header">
+    <span class="emoji">🔗</span>
+    <div><h2>12. קישורים למערכות קיימות</h2><div class="sub">איך פאנטום מתחבר לכל מערכת במשחק</div></div>
+    <span class="tag tag-phantom">CONNECTIONS</span>
+  </div>
+
+  <div class="card">
+    <h3>שילוב טכני</h3>
+    <table>
+      <tr><th>מערכת</th><th>שילוב</th><th>קובץ</th></tr>
+      <tr><td>Story Store</td><td><code>phantomRevealed: boolean</code> ב-StoryFlags</td><td><code>stores/story-store.ts</code></td></tr>
+      <tr><td>Battle Record Store</td><td><code>RivalId = 'shadow' | 'storm' | 'blaze' | 'phantom'</code></td><td><code>stores/battle-record-store.ts</code></td></tr>
+      <tr><td>Badge Store</td><td>badge: <code>phantom-hunter</code> (category: special)</td><td><code>stores/badge-store.ts</code></td></tr>
+      <tr><td>XP Store</td><td>200 XP (reveal) + 500 XP (first win)</td><td><code>stores/xp-store.ts</code></td></tr>
+      <tr><td>Character Config</td><td>הוספת Phantom ל-<code>RIVAL_CONFIGS</code></td><td><code>lib/characters/character-config.ts</code></td></tr>
+      <tr><td>Rival Ninja Component</td><td>גוון רפאים + אפקט שקיפות + Dark Mode battle</td><td><code>components/characters/rival-ninja.tsx</code></td></tr>
+      <tr><td>Sound Manager</td><td>8 voice lines + battle theme + personal theme</td><td><code>lib/audio/sound-manager.ts</code></td></tr>
+      <tr><td>Companion Store</td><td>אחרי Arc Resolution: Phantom כ-companion אפשרי</td><td><code>stores/companion-store.ts</code></td></tr>
+      <tr><td>Skin System</td><td>9 holiday skins + 3 tier skins (bronze/silver/gold)</td><td><code>lib/skins/skin-registry.ts</code></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>TypeScript Types</h3>
+    <div class="gemini-prompt">// Addition to types/story.ts
+interface StoryFlags {
+  // ... existing flags
+  phantomRevealed: boolean    // Secret rival discovered
+}
+
+// Addition to battle-record-store.ts
+export type RivalId = 'shadow' | 'storm' | 'blaze' | 'phantom'
+
+// New: Phantom rival config
+export const PHANTOM_CONFIG = {
+  id: 'phantom' as const,
+  nameHe: 'פאנטום',
+  nameEn: 'Phantom',
+  species: 'ghost-ninja',
+  difficulty: 'nightmare',
+  wpmRange: [60, 80] as const,
+  unlockCondition: {
+    type: 'rival_wins' as const,
+    rivalId: 'blaze' as const,
+    minWins: 3,
+  },
+  badge: {
+    id: 'phantom-hunter',
+    nameHe: 'צייד רוחות',
+    nameEn: 'Phantom Hunter',
+    emoji: '👻',
+  },
+  defeatQuote: '...ראוי.',
+  xpReward: { reveal: 200, firstWin: 500 },
+  specialMechanics: ['fadeWords', 'darkMode', 'silentBattle', 'ghostTyping', 'flowCombo'],
+} as const</div>
+  </div>
+
+  <div class="card">
+    <h3>רשימת אמנות נדרשת (Art Requirements)</h3>
+    <table>
+      <tr><th>פריט</th><th>סוג</th><th>קובץ יעד</th><th>עדיפות</th></tr>
+      <tr><td>Model Sheet (4 תנוחות)</td><td>Gemini 3:2</td><td><code>model-sheets/phantom-ghost.jpg</code></td><td><span class="stat-pill red">P0</span></td></tr>
+      <tr><td>Portrait (לזירת קרב)</td><td>Gemini 1:1</td><td><code>characters/phantom.jpg</code></td><td><span class="stat-pill red">P0</span></td></tr>
+      <tr><td>Reveal Cinematic Frame</td><td>Gemini 16:9</td><td><code>characters/phantom-reveal.jpg</code></td><td><span class="stat-pill purple">P1</span></td></tr>
+      <tr><td>Defeated Pose</td><td>Gemini 1:1</td><td><code>characters/phantom-defeated.jpg</code></td><td><span class="stat-pill purple">P1</span></td></tr>
+      <tr><td>Gold Skin ("Raz")</td><td>Gemini 1:1</td><td><code>characters/phantom-gold.jpg</code></td><td><span class="stat-pill blue">P2</span></td></tr>
+      <tr><td>Holiday Skins (9)</td><td>Gemini 1:1 x9</td><td><code>skins/phantom/*.jpg</code></td><td><span class="stat-pill green">P3</span></td></tr>
+    </table>
+  </div>
+
+  <div class="card card-green">
+    <h3>סיכום עדיפויות יישום</h3>
+    <table>
+      <tr><th>עדיפות</th><th>משימה</th><th>תלות</th></tr>
+      <tr><td><span class="stat-pill red">P0</span></td><td>Gemini Art: Model Sheet + Portrait</td><td>--</td></tr>
+      <tr><td><span class="stat-pill red">P0</span></td><td>הוספת <code>phantom</code> ל-RivalId ו-StoryFlags</td><td>--</td></tr>
+      <tr><td><span class="stat-pill red">P0</span></td><td>Rival config + unlock logic</td><td>Battle Record Store</td></tr>
+      <tr><td><span class="stat-pill purple">P1</span></td><td>ElevenLabs voice generation (8 lines)</td><td>Art</td></tr>
+      <tr><td><span class="stat-pill purple">P1</span></td><td>Battle mechanics (Fade Words, Dark Mode)</td><td>Config</td></tr>
+      <tr><td><span class="stat-pill purple">P1</span></td><td>Foreshadowing elements (empty chair, shadow)</td><td>--</td></tr>
+      <tr><td><span class="stat-pill blue">P2</span></td><td>Reveal cinematic + defeat animation</td><td>Art + Voice</td></tr>
+      <tr><td><span class="stat-pill blue">P2</span></td><td>Anti-frustration system</td><td>Battle mechanics</td></tr>
+      <tr><td><span class="stat-pill blue">P2</span></td><td>Suno music: 3 themes</td><td>--</td></tr>
+      <tr><td><span class="stat-pill green">P3</span></td><td>Holiday skins</td><td>Base skin</td></tr>
+      <tr><td><span class="stat-pill green">P3</span></td><td>Bronze/Silver/Gold tier skins</td><td>Base skin</td></tr>
+      <tr><td><span class="stat-pill green">P3</span></td><td>Post-narrative mentor role</td><td>Full arc</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ====== FOOTER ====== -->
+<div style="text-align:center;padding:40px 20px;color:var(--dim);font-size:13px;border-top:1px solid var(--border);margin-top:40px;">
+  <p style="font-size:18px;font-weight:700;color:var(--phantom);margin-bottom:8px;">Phantom (פאנטום) -- חבילת דמות מלאה</p>
+  <p>Ninja Keyboard | גרסה 1.0 | מרץ 2026</p>
+  <p style="margin-top:8px;">דמות #15 ביקום נינג'ה מקלדת | יריב סודי | קושי: סיוט</p>
+  <p style="margin-top:12px;color:var(--phantom);font-style:italic;">"...ראוי."</p>
+</div>
+
+</body>
+</html>

@@ -1,7 +1,26 @@
 {
   "ki": "xMeTinNQjjBeNZNX4pWQ",
   "mika": "uRf8wGgOAp2JX24IQYxo",
-  "yuki": "H7qe6aAmdqyBMVCXpREt",
+  "yuki": {
+    "active": "svFzGI0ewo7PyrO1RHP1",
+    "version": "V8-D",
+    "label": "Hyper Sabra Gamer",
+    "processing": "energized (atempo=1.12 + EQ boost 3kHz)",
+    "status": "winner",
+    "note": "V8-D Hyper Sabra Gamer - energized processing selected by user",
+    "backup": {
+      "voiceId": "HpMube8zlNeuLeOhkw5V",
+      "version": "V8-B",
+      "label": "Tel Aviv Sports Announcer"
+    },
+    "previous": "DqYFugy3IY1mQDDCV5zH",
+    "ttsSettings": {
+      "stability": 0.38,
+      "similarity_boost": 0.92,
+      "style": 1,
+      "use_speaker_boost": true
+    }
+  },
   "luna": "mAp3Nvz6JGs6nRvkGdPf",
   "noa": "6LuAOBfAURtLRuw23dx1",
   "kai": "cj3NyjKmWiZpmoAo08kC",

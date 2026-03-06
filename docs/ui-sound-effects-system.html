@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ninja Keyboard - מערכת אפקטי סאונד לממשק</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #0d0b1a;
+      --bg-card: #12102a;
+      --bg-card2: #1a1735;
+      --bg-card3: #1e1b3a;
+      --border: oklch(0.28 0.06 292);
+      --border-glow: oklch(0.45 0.2 292);
+      --purple: #6C5CE7;
+      --purple-light: #8B7CF8;
+      --green: #00B894;
+      --green-light: #00d4a4;
+      --yellow: #FDCB6E;
+      --orange: #E17055;
+      --red: #D63031;
+      --cyan: #00CEC9;
+      --pink: #fd79a8;
+      --text: #e8e3ff;
+      --text-muted: #9990cc;
+      --text-dim: #554f88;
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg-base);
+      color: var(--text);
+      line-height: 1.7;
+      direction: rtl;
+    }
+
+    /* ===== STICKY NAV ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13, 11, 26, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      height: 52px;
+    }
+    nav::-webkit-scrollbar { display: none; }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      white-space: nowrap;
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      transition: all 0.15s;
+    }
+    nav a:hover { color: var(--text); background: var(--bg-card2); }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+    /* ===== HEADER ===== */
+    .hero {
+      text-align: center;
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--purple-light), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+    /* ===== SECTIONS ===== */
+    .section { margin-bottom: 3rem; }
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--purple-light);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .section-title .num {
+      background: var(--purple);
+      color: #fff;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .card h3 {
+      color: var(--green);
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+    }
+    .card p, .card li { color: var(--text-muted); font-size: 0.95rem; }
+    .card ul { padding-right: 1.2rem; }
+    .card li { margin-bottom: 0.3rem; }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+
+    /* ===== TABLES ===== */
+    .table-wrap { overflow-x: auto; margin-bottom: 1.5rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    thead th {
+      background: var(--bg-card2);
+      color: var(--purple-light);
+      font-weight: 700;
+      padding: 0.7rem 0.9rem;
+      text-align: right;
+      border-bottom: 2px solid var(--border-glow);
+      white-space: nowrap;
+    }
+    tbody td {
+      padding: 0.6rem 0.9rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    tbody tr:hover { background: var(--bg-card); }
+
+    /* Priority badges */
+    .pri { padding: 2px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; white-space: nowrap; }
+    .pri-critical { background: rgba(214,48,49,0.2); color: var(--red); border: 1px solid var(--red); }
+    .pri-high { background: rgba(225,112,85,0.2); color: var(--orange); border: 1px solid var(--orange); }
+    .pri-medium { background: rgba(253,203,110,0.15); color: var(--yellow); border: 1px solid var(--yellow); }
+    .pri-low { background: rgba(0,206,201,0.12); color: var(--cyan); border: 1px solid var(--cyan); }
+
+    /* Status badges */
+    .status { padding: 2px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; }
+    .status-exists { background: rgba(0,184,148,0.2); color: var(--green); border: 1px solid var(--green); }
+    .status-new { background: rgba(108,92,231,0.2); color: var(--purple-light); border: 1px solid var(--purple); }
+    .status-upgrade { background: rgba(253,203,110,0.15); color: var(--yellow); border: 1px solid var(--yellow); }
+
+    /* Category headers in table */
+    .cat-row td {
+      background: var(--bg-card2);
+      color: var(--purple-light);
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 0.5rem 0.9rem;
+      border: none;
+    }
+
+    /* ===== CODE ===== */
+    pre {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.5rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      direction: ltr;
+      text-align: left;
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+    code {
+      font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', monospace;
+      color: var(--green-light);
+    }
+    pre code { color: var(--text); }
+    .kw { color: var(--purple-light); }
+    .fn { color: var(--yellow); }
+    .str { color: var(--green); }
+    .cm { color: var(--text-dim); }
+    .tp { color: var(--cyan); }
+    .num { color: var(--orange); }
+
+    /* ===== PHASE TIMELINE ===== */
+    .timeline { position: relative; padding-right: 2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      right: 0.5rem;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--purple), var(--green), var(--yellow), var(--cyan));
+      border-radius: 2px;
+    }
+    .phase {
+      position: relative;
+      margin-bottom: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+    }
+    .phase::before {
+      content: '';
+      position: absolute;
+      right: -2rem;
+      top: 1.5rem;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      border: 3px solid var(--purple);
+      background: var(--bg-base);
+    }
+    .phase h3 { color: var(--green); font-weight: 700; margin-bottom: 0.4rem; }
+    .phase .meta { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 0.5rem; }
+    .phase ul { padding-right: 1.2rem; }
+    .phase li { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.25rem; }
+
+    /* ===== STATS ROW ===== */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+    .stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      text-align: center;
+    }
+    .stat .val {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--purple-light);
+    }
+    .stat .lbl {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-top: 0.2rem;
+    }
+
+    /* ===== CALLOUT ===== */
+    .callout {
+      background: rgba(108,92,231,0.08);
+      border: 1px solid var(--border-glow);
+      border-right: 4px solid var(--purple);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+    }
+    .callout.warn {
+      background: rgba(253,203,110,0.06);
+      border-right-color: var(--yellow);
+    }
+    .callout.success {
+      background: rgba(0,184,148,0.06);
+      border-right-color: var(--green);
+    }
+    .callout strong { color: var(--text); }
+    .callout p { color: var(--text-muted); font-size: 0.92rem; }
+
+    /* ===== MISC ===== */
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-left: 4px;
+    }
+    .tag-synth { background: rgba(0,206,201,0.15); color: var(--cyan); }
+    .tag-mp3 { background: rgba(108,92,231,0.2); color: var(--purple-light); }
+    .tag-ai { background: rgba(253,121,168,0.2); color: var(--pink); }
+    .tag-voice { background: rgba(225,112,85,0.2); color: var(--orange); }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 1.8rem; }
+      .container { padding: 1rem; }
+      .card-grid { grid-template-columns: 1fr; }
+      nav { padding: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#philosophy">פילוסופיה</a>
+  <a href="#mapping">מיפוי אינטראקציות</a>
+  <a href="#creation">יצירת סאונד</a>
+  <a href="#technical">מערכת טכנית</a>
+  <a href="#integration">אינטגרציה</a>
+  <a href="#accessibility">נגישות</a>
+  <a href="#timeline">לוח זמנים</a>
+</nav>
+
+<div class="container">
+
+  <!-- ===== HERO ===== -->
+  <div class="hero">
+    <h1>מערכת אפקטי סאונד לממשק</h1>
+    <p>מפה מקיפה של כל אפקט קולי בנינג'ה מקלדת - מהקליק הכי קטן ועד הפאנפרה הכי אפית. כי כל אינטראקציה ראויה לסאונד.</p>
+  </div>
+
+  <!-- ===== STATS ===== -->
+  <div class="stats">
+    <div class="stat">
+      <div class="val">16</div>
+      <div class="lbl">סאונדים קיימים</div>
+    </div>
+    <div class="stat">
+      <div class="val">~55</div>
+      <div class="lbl">סאונדים חדשים נדרשים</div>
+    </div>
+    <div class="stat">
+      <div class="val">7</div>
+      <div class="lbl">קטגוריות אינטראקציה</div>
+    </div>
+    <div class="stat">
+      <div class="val">4</div>
+      <div class="lbl">שלבי פיתוח</div>
+    </div>
+    <div class="stat">
+      <div class="val">15</div>
+      <div class="lbl">Web Audio סינתזה</div>
+    </div>
+    <div class="stat">
+      <div class="val">~40</div>
+      <div class="lbl">קבצי MP3 חדשים</div>
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 1 ===================== -->
+  <div class="section" id="philosophy">
+    <div class="section-title">
+      <span class="num">1</span>
+      פילוסופיית סאונד
+    </div>
+
+    <div class="card">
+      <h3>העיקרון המנחה: כל אינטראקציה ראויה לתגובה קולית</h3>
+      <p>משחקי מובייל מובילים כמו Brawl Stars, Clash Royale ו-Genshin Impact מלמדים אותנו שסאונד הוא לא תוספת - הוא חלק בלתי נפרד מחוויית המשחק. כשלוחצים על כפתור ולא שומעים כלום, המשחק מרגיש "מת". כשכל קליק מלווה בסאונד עדין ומספק - המשחק מרגיש חי ומגיב.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>עדינות ושביעות רצון</h3>
+        <ul>
+          <li>סאונדים עדינים שלא מעצבנים בחזרות</li>
+          <li>מספקים - כל קליק צריך להרגיש "טוב"</li>
+          <li>קצרים - רוב הסאונדים 30-150ms</li>
+          <li>לא חוסמים - סאונד חדש לא ממתין לקודם</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>אופי ישראלי-גיימרי</h3>
+        <ul>
+          <li>תחושת נינג'ה: ווש, סלאש, שוריקן</li>
+          <li>טעם ישראלי: קליפי קול של הדמויות בעברית</li>
+          <li>אנרגיית משחק מובייל: סיפוק מיידי</li>
+          <li>השראה: Brawl Stars + Duolingo + Fruit Ninja</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>התאמת גיל</h3>
+        <ul>
+          <li><strong>שתיל (6-8):</strong> סאונדים שובבים, מנגינתיים, עליזים</li>
+          <li><strong>נבט (8-10):</strong> סאונדים אנרגטיים, הרפתקניים</li>
+          <li><strong>גזע (10-12):</strong> סאונדים מגניבים, ניניג'ה-אסקיים</li>
+          <li><strong>ענף (12-14):</strong> סאונדים חדים, מקצועיים</li>
+          <li><strong>צמרת (14-16+):</strong> סאונדים מינימליסטיים, אלגנטיים</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>בקרת ווליום מפורטת</h3>
+        <ul>
+          <li><strong>Master Volume:</strong> שליטה כללית על הכל</li>
+          <li><strong>SFX Volume:</strong> אפקטים קוליים (קליקים, הישגים)</li>
+          <li><strong>Music Volume:</strong> מוזיקת רקע (כבר קיים ב-MusicStore)</li>
+          <li><strong>Voice Volume:</strong> קליפי קול של דמויות</li>
+          <li>כל קטגוריה עם Mute toggle עצמאי</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>כלל הזהב:</strong>
+      <p>אם שחקן משחק שעה ולא מבחין בסאונד ספציפי - אבל מרגיש שמשהו חסר כשמכבים אותו - הסאונד הזה מושלם. סאונד UI טוב הוא תת-מודע.</p>
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 2 ===================== -->
+  <div class="section" id="mapping">
+    <div class="section-title">
+      <span class="num">2</span>
+      מיפוי אינטראקציות - טבלה מלאה
+    </div>
+
+    <div class="callout success">
+      <strong>מצב נוכחי:</strong>
+      <p>16 סאונדים קיימים ב-<code>public/audio/sfx/</code> עם Web Audio fallback ב-<code>sounds.ts</code>. הטבלה מראה מה קיים, מה צריך שדרוג ומה חדש לגמרי.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>אינטראקציה</th>
+            <th>פעולה ספציפית</th>
+            <th>סוג סאונד</th>
+            <th>שם מפתח</th>
+            <th>שיטה</th>
+            <th>עדיפות</th>
+            <th>סטטוס</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- NAVIGATION -->
+          <tr class="cat-row"><td colspan="7">ניווט (Navigation)</td></tr>
+          <tr>
+            <td>ניווט</td>
+            <td>מעבר בין דפים</td>
+            <td>ווש עדין</td>
+            <td><code>navigate</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>ניווט</td>
+            <td>החלפת טאב (תחתון)</td>
+            <td>קליק רך</td>
+            <td><code>tabSwitch</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>ניווט</td>
+            <td>פתיחת תפריט / Drawer</td>
+            <td>פופ-פתיחה</td>
+            <td><code>menuOpen</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>ניווט</td>
+            <td>סגירת תפריט / Drawer</td>
+            <td>פופ-סגירה</td>
+            <td><code>menuClose</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>ניווט</td>
+            <td>חזרה אחורה</td>
+            <td>ווש הפוך</td>
+            <td><code>navigateBack</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+
+          <!-- BUTTONS -->
+          <tr class="cat-row"><td colspan="7">כפתורים (Buttons)</td></tr>
+          <tr>
+            <td>כפתור</td>
+            <td>לחיצה ראשית (GameButton)</td>
+            <td>קליק מספק</td>
+            <td><code>buttonClick</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-critical">קריטי</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>כפתור</td>
+            <td>לחיצה משנית</td>
+            <td>טאפ רך</td>
+            <td><code>buttonSecondary</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>כפתור</td>
+            <td>Hover (ריחוף)</td>
+            <td>ריחוף עדין</td>
+            <td><code>buttonHover</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-low">נמוכה</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>כפתור</td>
+            <td>לחיצה על כפתור מושבת</td>
+            <td>טאק עמום</td>
+            <td><code>buttonDisabled</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>כפתור</td>
+            <td>Toggle (הפעלה/כיבוי)</td>
+            <td>קליק-מתג</td>
+            <td><code>toggleOn</code> / <code>toggleOff</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+
+          <!-- TYPING -->
+          <tr class="cat-row"><td colspan="7">הקלדה (Typing)</td></tr>
+          <tr>
+            <td>הקלדה</td>
+            <td>הקשה על מקש (נכון)</td>
+            <td>קליק מקלדת</td>
+            <td><code>keyClick</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-critical">קריטי</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>הקלדה</td>
+            <td>הקשה נכונה (פידבק)</td>
+            <td>צליל עולה קצר</td>
+            <td><code>correct</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-critical">קריטי</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>הקלדה</td>
+            <td>הקשה שגויה</td>
+            <td>באזז יורד</td>
+            <td><code>error</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-critical">קריטי</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>הקלדה</td>
+            <td>קומבו (רצף נכון)</td>
+            <td>נותות עולות מהירות</td>
+            <td><code>comboHit</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>הקלדה</td>
+            <td>התחלת שיעור</td>
+            <td>צ'יים מוכנות</td>
+            <td><code>lessonReady</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>הקלדה</td>
+            <td>השלמת שיעור</td>
+            <td>פאנפרה ניצחון</td>
+            <td><code>levelComplete</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-critical">קריטי</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>הקלדה</td>
+            <td>שיא WPM חדש!</td>
+            <td>הישג אפי</td>
+            <td><code>newRecord</code></td>
+            <td><span class="tag tag-mp3">MP3</span> <span class="tag tag-ai">AI</span></td>
+            <td><span class="pri pri-critical">קריטי</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>הקלדה</td>
+            <td>מילה שלמה הושלמה</td>
+            <td>פינג מילה</td>
+            <td><code>wordComplete</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>הקלדה</td>
+            <td>שורה שלמה הושלמה</td>
+            <td>צ'יים שורה</td>
+            <td><code>lineComplete</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+
+          <!-- PROGRESS & ACHIEVEMENTS -->
+          <tr class="cat-row"><td colspan="7">התקדמות והישגים (Progress & Achievements)</td></tr>
+          <tr>
+            <td>התקדמות</td>
+            <td>קבלת XP</td>
+            <td>מטבע (x כמות)</td>
+            <td><code>xpGain</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>התקדמות</td>
+            <td>עליית רמה</td>
+            <td>ג'ינגל עליית רמה</td>
+            <td><code>levelUp</code></td>
+            <td><span class="tag tag-mp3">MP3</span> <span class="tag tag-ai">AI</span></td>
+            <td><span class="pri pri-critical">קריטי</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>הישג</td>
+            <td>פתיחת תג/Badge</td>
+            <td>פאנפרת תג</td>
+            <td><code>badgeUnlock</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-critical">קריטי</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>הישג</td>
+            <td>פאנפרת הישג</td>
+            <td>פאנפרה חגיגית</td>
+            <td><code>achievementFanfare</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-critical">קריטי</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>הישג</td>
+            <td>כוכב בתוצאות שיעור</td>
+            <td>צ'יים כוכב</td>
+            <td><code>starEarned</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>רצף</td>
+            <td>שמירת סטריק יומי</td>
+            <td>טיק סטריק</td>
+            <td><code>streakMaintain</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-upgrade">שדרוג</span></td>
+          </tr>
+          <tr>
+            <td>רצף</td>
+            <td>סטריק אש (10+)</td>
+            <td>שביל אש</td>
+            <td><code>streakFire</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>התקדמות</td>
+            <td>פתיחת דמות חדשה</td>
+            <td>גילוי דמות</td>
+            <td><code>characterUnlock</code></td>
+            <td><span class="tag tag-mp3">MP3</span> <span class="tag tag-ai">AI</span></td>
+            <td><span class="pri pri-critical">קריטי</span></td>
+            <td><span class="status status-upgrade">שדרוג</span></td>
+          </tr>
+          <tr>
+            <td>התקדמות</td>
+            <td>פתיחת סקין חדש</td>
+            <td>סקין אנלוק</td>
+            <td><code>skinUnlock</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+
+          <!-- BATTLE -->
+          <tr class="cat-row"><td colspan="7">קרב (Battle)</td></tr>
+          <tr>
+            <td>קרב</td>
+            <td>התחלת קרב</td>
+            <td>שופר קרב</td>
+            <td><code>battleStart</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>קרב</td>
+            <td>ספירה לאחור 3-2-1</td>
+            <td>ביפ ספירה</td>
+            <td><code>countdownBeep</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-critical">קריטי</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>קרב</td>
+            <td>GO! - התחלה</td>
+            <td>צליל GO</td>
+            <td><code>countdownGo</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-critical">קריטי</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>קרב</td>
+            <td>נמצא יריב</td>
+            <td>צפצוף התאמה</td>
+            <td><code>matchFound</code></td>
+            <td><span class="tag tag-mp3">MP3</span> <span class="tag tag-ai">AI</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>קרב</td>
+            <td>ניצחון!</td>
+            <td>קהל שמח</td>
+            <td><code>victoryCheers</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-critical">קריטי</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>קרב</td>
+            <td>הפסד</td>
+            <td>הפסד עדין</td>
+            <td><code>battleDefeat</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>קרב</td>
+            <td>חיתוך נינג'ה (מכה)</td>
+            <td>סלאש נינג'ה</td>
+            <td><code>ninjaSlash</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>קרב</td>
+            <td>טיק טיימר (10 שניות אחרונות)</td>
+            <td>טיק מתקתק</td>
+            <td><code>timerTick</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>קרב</td>
+            <td>מתקפה מיוחדת הופעלה</td>
+            <td>פאוור-אפ</td>
+            <td><code>powerUp</code></td>
+            <td><span class="tag tag-mp3">MP3</span> <span class="tag tag-ai">AI</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+
+          <!-- SOCIAL -->
+          <tr class="cat-row"><td colspan="7">חברתי (Social)</td></tr>
+          <tr>
+            <td>חברתי</td>
+            <td>הודעה נכנסת</td>
+            <td>פינג התראה</td>
+            <td><code>notificationPing</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>חברתי</td>
+            <td>בקשת חברות</td>
+            <td>התראה מיוחדת</td>
+            <td><code>friendRequest</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>חברתי</td>
+            <td>הזמנה לקרב</td>
+            <td>אתגר נינג'ה</td>
+            <td><code>challengeReceived</code></td>
+            <td><span class="tag tag-mp3">MP3</span> <span class="tag tag-ai">AI</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>חברתי</td>
+            <td>הצטרפות לכיתה</td>
+            <td>ברוכים הבאים</td>
+            <td><code>classJoined</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+
+          <!-- STORY MODE -->
+          <tr class="cat-row"><td colspan="7">מצב סיפור (Story Mode)</td></tr>
+          <tr>
+            <td>סיפור</td>
+            <td>דיאלוג - קידום טקסט</td>
+            <td>בליפ טקסט</td>
+            <td><code>dialogAdvance</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>סיפור</td>
+            <td>בחירת אפשרות</td>
+            <td>טון אישור</td>
+            <td><code>choiceSelect</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>סיפור</td>
+            <td>השלמת פרק</td>
+            <td>פאנפרת פרק</td>
+            <td><code>chapterComplete</code></td>
+            <td><span class="tag tag-mp3">MP3</span> <span class="tag tag-ai">AI</span></td>
+            <td><span class="pri pri-critical">קריטי</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>סיפור</td>
+            <td>הופעת דמות חדשה</td>
+            <td>כניסת דמות</td>
+            <td><code>characterEntrance</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>סיפור</td>
+            <td>הופעת מפלצת/באג</td>
+            <td>הופעת אויב</td>
+            <td><code>bugAppear</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>סיפור</td>
+            <td>אפקט גליץ' (עיוות)</td>
+            <td>וורפ/גליץ'</td>
+            <td><code>glitchWarp</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>סיפור</td>
+            <td>רגע דרמטי / גילוי</td>
+            <td>סטינגר דרמטי</td>
+            <td><code>dramaticReveal</code></td>
+            <td><span class="tag tag-mp3">MP3</span> <span class="tag tag-ai">AI</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+
+          <!-- COMPANION/CHARACTER -->
+          <tr class="cat-row"><td colspan="7">דמות ומלווה (Character & Companion)</td></tr>
+          <tr>
+            <td>דמות</td>
+            <td>תגובת Ki (שמח)</td>
+            <td>קליפ קול Ki</td>
+            <td><code>kiHappy</code></td>
+            <td><span class="tag tag-voice">Voice</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>דמות</td>
+            <td>תגובת Ki (מעודד)</td>
+            <td>קליפ קול Ki</td>
+            <td><code>kiEncourage</code></td>
+            <td><span class="tag tag-voice">Voice</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>דמות</td>
+            <td>תגובת Ki (מופתע)</td>
+            <td>קליפ קול Ki</td>
+            <td><code>kiSurprised</code></td>
+            <td><span class="tag tag-voice">Voice</span></td>
+            <td><span class="pri pri-low">נמוכה</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>דמות</td>
+            <td>Sensei Zen - הנחיה</td>
+            <td>קליפ קול Zen</td>
+            <td><code>senseiGuide</code></td>
+            <td><span class="tag tag-voice">Voice</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>דמות</td>
+            <td>Yuki - אתגר מהירות</td>
+            <td>קליפ קול Yuki</td>
+            <td><code>yukiChallenge</code></td>
+            <td><span class="tag tag-voice">Voice</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+
+          <!-- ERRORS & SYSTEM -->
+          <tr class="cat-row"><td colspan="7">שגיאות ומערכת (Errors & System)</td></tr>
+          <tr>
+            <td>שגיאה</td>
+            <td>שגיאת טופס / ולידציה</td>
+            <td>באזז שגיאה</td>
+            <td><code>formError</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>שגיאה</td>
+            <td>שגיאת רשת / חיבור</td>
+            <td>צליל ניתוק</td>
+            <td><code>networkError</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>מערכת</td>
+            <td>Toast הצלחה</td>
+            <td>צ'יים הצלחה</td>
+            <td><code>toastSuccess</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>מערכת</td>
+            <td>Toast שגיאה</td>
+            <td>צ'יים שגיאה</td>
+            <td><code>toastError</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>מערכת</td>
+            <td>מודל/דיאלוג נפתח</td>
+            <td>פתיחה עמוקה</td>
+            <td><code>modalOpen</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-low">נמוכה</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>מערכת</td>
+            <td>מודל/דיאלוג נסגר</td>
+            <td>סגירה</td>
+            <td><code>modalClose</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-low">נמוכה</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+
+          <!-- MINI-GAMES -->
+          <tr class="cat-row"><td colspan="7">מיני-משחקים (Mini-Games)</td></tr>
+          <tr>
+            <td>משחק</td>
+            <td>Word Rain - מילה נתפסה</td>
+            <td>תפיסה</td>
+            <td><code>wordCatch</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>משחק</td>
+            <td>Word Rain - מילה נפלה</td>
+            <td>נפילה</td>
+            <td><code>wordMiss</code></td>
+            <td><span class="tag tag-synth">Synth</span></td>
+            <td><span class="pri pri-medium">בינונית</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+          <tr>
+            <td>משחק</td>
+            <td>Ninja Slice - חיתוך</td>
+            <td>סלאש</td>
+            <td><code>ninjaSlash</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-exists">קיים</span></td>
+          </tr>
+          <tr>
+            <td>משחק</td>
+            <td>Game Over</td>
+            <td>סיום משחק</td>
+            <td><code>gameOver</code></td>
+            <td><span class="tag tag-mp3">MP3</span></td>
+            <td><span class="pri pri-high">גבוהה</span></td>
+            <td><span class="status status-new">חדש</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn">
+      <strong>סיכום:</strong>
+      <p>16 סאונדים קיימים + ~40 חדשים + ~15 סינתזה חדשים = סה"כ ~71 אפקט קולי ייחודי. כ-15 מהם יכולים להיווצר ב-Web Audio (סינתזה), השאר דורשים קבצי MP3.</p>
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 3 ===================== -->
+  <div class="section" id="creation">
+    <div class="section-title">
+      <span class="num">3</span>
+      יצירת סאונד - תוכנית ייצור
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Web Audio API סינתזה (~15 סאונדים)</h3>
+        <p>סאונדים פשוטים שניתן לייצר בקוד:</p>
+        <ul>
+          <li>קליקים (כפתורים, טאבים, hover)</li>
+          <li>פופ פתיחה/סגירה (תפריט, מודל)</li>
+          <li>באזז שגיאה קצר</li>
+          <li>טיקים (טיימר, toggle)</li>
+          <li>בליפ טקסט (סיפור)</li>
+          <li>צ'יים toast</li>
+        </ul>
+        <p style="color: var(--green); margin-top: 0.5rem;"><strong>עלות: חינם. כבר יש תשתית ב-sounds.ts</strong></p>
+      </div>
+
+      <div class="card">
+        <h3>AI ייצור MP3 (~25 סאונדים)</h3>
+        <p>סאונדים מורכבים שדורשים הפקה:</p>
+        <ul>
+          <li><strong>Suno / Udio:</strong> ג'ינגלים מוזיקליים (level up, chapter complete, new record)</li>
+          <li><strong>ElevenLabs SFX:</strong> אפקטים (battle horn, power up, match found)</li>
+          <li><strong>freesound.org:</strong> בסיס לעיבוד (whoosh, slash, coins)</li>
+          <li><strong>ffmpeg post-processing:</strong> pitch, reverb, echo (כמו שעשינו ל-Rex ו-Bug)</li>
+        </ul>
+        <p style="color: var(--yellow); margin-top: 0.5rem;"><strong>עלות: ~$5-15 API credits</strong></p>
+      </div>
+
+      <div class="card">
+        <h3>קליפי קול דמויות (~10 קליפים)</h3>
+        <p>קליפי קול קצרים בעברית:</p>
+        <ul>
+          <li><strong>ElevenLabs Voice Design v3:</strong> שימוש בקולות שכבר יצרנו</li>
+          <li>Ki: 3 תגובות (שמח, מעודד, מופתע)</li>
+          <li>Sensei Zen: הנחיה קצרה</li>
+          <li>Yuki: כבר קיימים (challenge, speed, win)</li>
+          <li>דמויות נוספות: לפי הצורך</li>
+        </ul>
+        <p style="color: var(--orange); margin-top: 0.5rem;"><strong>עלות: ~$2-5 ElevenLabs credits</strong></p>
+      </div>
+
+      <div class="card">
+        <h3>כלי עבודה</h3>
+        <ul>
+          <li><strong>Audacity / ffmpeg:</strong> עריכה, חיתוך, נורמליזציה</li>
+          <li><strong>Node.js scripts:</strong> אוטומציה (כמו voice-generate-all-hebrew.mjs)</li>
+          <li><strong>פורמט:</strong> MP3, 44.1kHz, mono, 128kbps</li>
+          <li><strong>אורך מקסימלי:</strong> 2 שניות לסאונדים רגילים, 4 שניות לפאנפרות</li>
+          <li><strong>נורמליזציה:</strong> כל הקבצים ל-LUFS -16 (עקבי)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>מבנה קבצים מוצע:</strong>
+      <pre><code>public/audio/sfx/
+  ├── ui/              <span class="cm">// סאונדי ממשק (קליקים, ניווט, מודלים)</span>
+  │   ├── button-click.mp3
+  │   ├── button-secondary.mp3
+  │   ├── tab-switch.mp3
+  │   ├── menu-open.mp3
+  │   └── ...
+  ├── typing/          <span class="cm">// סאונדי הקלדה (כבר קיימים, מועברים)</span>
+  │   ├── keyboard-click.mp3
+  │   ├── correct-answer.mp3
+  │   └── ...
+  ├── progress/        <span class="cm">// סאונדי התקדמות והישגים</span>
+  │   ├── level-up.mp3
+  │   ├── xp-gain.mp3
+  │   └── ...
+  ├── battle/          <span class="cm">// סאונדי קרב</span>
+  │   ├── match-found.mp3
+  │   ├── battle-defeat.mp3
+  │   └── ...
+  ├── story/           <span class="cm">// סאונדי סיפור</span>
+  │   ├── chapter-complete.mp3
+  │   ├── dramatic-reveal.mp3
+  │   └── ...
+  └── social/          <span class="cm">// סאונדי התראות חברתיות</span>
+      ├── notification-ping.mp3
+      └── ...</code></pre>
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 4 ===================== -->
+  <div class="section" id="technical">
+    <div class="section-title">
+      <span class="num">4</span>
+      מערכת סאונד טכנית
+    </div>
+
+    <div class="card">
+      <h3>ארכיטקטורה - הרחבת SoundManager הקיים</h3>
+      <p>המערכת הקיימת כבר טובה - צריך להרחיב אותה עם קטגוריות, עדיפויות, ו-pooling:</p>
+    </div>
+
+    <pre><code><span class="cm">// src/lib/audio/sound-categories.ts</span>
+
+<span class="kw">export type</span> <span class="tp">SoundCategory</span> = <span class="str">'sfx'</span> | <span class="str">'music'</span> | <span class="str">'voice'</span> | <span class="str">'ui'</span>
+
+<span class="kw">export type</span> <span class="tp">SoundPriority</span> = <span class="str">'critical'</span> | <span class="str">'high'</span> | <span class="str">'medium'</span> | <span class="str">'low'</span>
+
+<span class="kw">export interface</span> <span class="tp">UISoundConfig</span> {
+  <span class="cm">/** Sound key for lookup */</span>
+  key: <span class="tp">string</span>
+  <span class="cm">/** MP3 file path (optional - will use synth fallback if missing) */</span>
+  mp3?: <span class="tp">string</span>
+  <span class="cm">/** Web Audio synthesis config (fallback) */</span>
+  synth?: <span class="tp">SoundConfig</span>
+  <span class="cm">/** Volume category for independent control */</span>
+  category: <span class="tp">SoundCategory</span>
+  <span class="cm">/** Playback priority (critical sounds never skipped) */</span>
+  priority: <span class="tp">SoundPriority</span>
+  <span class="cm">/** Preload strategy */</span>
+  preload: <span class="str">'eager'</span> | <span class="str">'lazy'</span> | <span class="str">'on-demand'</span>
+  <span class="cm">/** Max simultaneous plays (prevent sound spam) */</span>
+  maxConcurrent: <span class="tp">number</span>
+  <span class="cm">/** Cooldown in ms before sound can play again */</span>
+  cooldownMs: <span class="tp">number</span>
+}
+
+<span class="cm">// Registry of ALL UI sounds</span>
+<span class="kw">export const</span> <span class="fn">UI_SOUNDS</span>: <span class="tp">Record</span>&lt;<span class="tp">string</span>, <span class="tp">UISoundConfig</span>&gt; = {
+  <span class="cm">// === Navigation ===</span>
+  navigate:        { key: <span class="str">'navigate'</span>,        category: <span class="str">'ui'</span>,  priority: <span class="str">'high'</span>,     preload: <span class="str">'eager'</span>,  maxConcurrent: <span class="num">1</span>, cooldownMs: <span class="num">100</span> },
+  tabSwitch:       { key: <span class="str">'tabSwitch'</span>,       category: <span class="str">'ui'</span>,  priority: <span class="str">'high'</span>,     preload: <span class="str">'eager'</span>,  maxConcurrent: <span class="num">1</span>, cooldownMs: <span class="num">80</span>  },
+  menuOpen:        { key: <span class="str">'menuOpen'</span>,        category: <span class="str">'ui'</span>,  priority: <span class="str">'medium'</span>,   preload: <span class="str">'lazy'</span>,   maxConcurrent: <span class="num">1</span>, cooldownMs: <span class="num">150</span> },
+  menuClose:       { key: <span class="str">'menuClose'</span>,       category: <span class="str">'ui'</span>,  priority: <span class="str">'medium'</span>,   preload: <span class="str">'lazy'</span>,   maxConcurrent: <span class="num">1</span>, cooldownMs: <span class="num">150</span> },
+
+  <span class="cm">// === Buttons ===</span>
+  buttonClick:     { key: <span class="str">'buttonClick'</span>,     category: <span class="str">'ui'</span>,  priority: <span class="str">'critical'</span>, preload: <span class="str">'eager'</span>,  maxConcurrent: <span class="num">3</span>, cooldownMs: <span class="num">30</span>  },
+  buttonSecondary: { key: <span class="str">'buttonSecondary'</span>, category: <span class="str">'ui'</span>,  priority: <span class="str">'high'</span>,     preload: <span class="str">'eager'</span>,  maxConcurrent: <span class="num">2</span>, cooldownMs: <span class="num">50</span>  },
+  buttonHover:     { key: <span class="str">'buttonHover'</span>,     category: <span class="str">'ui'</span>,  priority: <span class="str">'low'</span>,      preload: <span class="str">'lazy'</span>,   maxConcurrent: <span class="num">1</span>, cooldownMs: <span class="num">60</span>  },
+
+  <span class="cm">// === Typing (critical) ===</span>
+  keyClick:        { key: <span class="str">'keyClick'</span>,        category: <span class="str">'sfx'</span>, priority: <span class="str">'critical'</span>, preload: <span class="str">'eager'</span>,  maxConcurrent: <span class="num">5</span>, cooldownMs: <span class="num">0</span>   },
+  correct:         { key: <span class="str">'correct'</span>,         category: <span class="str">'sfx'</span>, priority: <span class="str">'critical'</span>, preload: <span class="str">'eager'</span>,  maxConcurrent: <span class="num">3</span>, cooldownMs: <span class="num">20</span>  },
+  error:           { key: <span class="str">'error'</span>,           category: <span class="str">'sfx'</span>, priority: <span class="str">'critical'</span>, preload: <span class="str">'eager'</span>,  maxConcurrent: <span class="num">2</span>, cooldownMs: <span class="num">50</span>  },
+
+  <span class="cm">// === Progress ===</span>
+  levelUp:         { key: <span class="str">'levelUp'</span>,         category: <span class="str">'sfx'</span>, priority: <span class="str">'critical'</span>, preload: <span class="str">'lazy'</span>,   maxConcurrent: <span class="num">1</span>, cooldownMs: <span class="num">2000</span>},
+  achievementFanfare: { key: <span class="str">'achievementFanfare'</span>, category: <span class="str">'sfx'</span>, priority: <span class="str">'critical'</span>, preload: <span class="str">'lazy'</span>, maxConcurrent: <span class="num">1</span>, cooldownMs: <span class="num">3000</span>},
+
+  <span class="cm">// === Voice ===</span>
+  kiHappy:         { key: <span class="str">'kiHappy'</span>,         category: <span class="str">'voice'</span>, priority: <span class="str">'medium'</span>,  preload: <span class="str">'on-demand'</span>, maxConcurrent: <span class="num">1</span>, cooldownMs: <span class="num">5000</span>},
+  senseiGuide:     { key: <span class="str">'senseiGuide'</span>,     category: <span class="str">'voice'</span>, priority: <span class="str">'medium'</span>,  preload: <span class="str">'on-demand'</span>, maxConcurrent: <span class="num">1</span>, cooldownMs: <span class="num">5000</span>},
+}</code></pre>
+
+    <div class="card">
+      <h3>Audio Pool - מניעת עומס זיכרון</h3>
+      <p>במקום ליצור HTMLAudioElement חדש בכל play (כמו שהמערכת הנוכחית עושה עם cloneNode), ניצור Pool של אלמנטים מוכנים:</p>
+    </div>
+
+    <pre><code><span class="cm">// src/lib/audio/audio-pool.ts</span>
+
+<span class="kw">const</span> <span class="fn">POOL_SIZE</span> = <span class="num">8</span>  <span class="cm">// Max concurrent sounds per key</span>
+
+<span class="kw">class</span> <span class="tp">AudioPool</span> {
+  <span class="kw">private</span> pools = <span class="kw">new</span> <span class="tp">Map</span>&lt;<span class="tp">string</span>, <span class="tp">HTMLAudioElement</span>[]&gt;()
+  <span class="kw">private</span> index = <span class="kw">new</span> <span class="tp">Map</span>&lt;<span class="tp">string</span>, <span class="tp">number</span>&gt;()
+
+  <span class="cm">/** Pre-create a pool for a sound key. */</span>
+  <span class="fn">createPool</span>(key: <span class="tp">string</span>, src: <span class="tp">string</span>, size = <span class="fn">POOL_SIZE</span>): <span class="tp">void</span> {
+    <span class="kw">const</span> pool: <span class="tp">HTMLAudioElement</span>[] = []
+    <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; size; i++) {
+      <span class="kw">const</span> audio = <span class="kw">new</span> Audio(src)
+      audio.preload = <span class="str">'auto'</span>
+      pool.push(audio)
+    }
+    <span class="kw">this</span>.pools.set(key, pool)
+    <span class="kw">this</span>.index.set(key, <span class="num">0</span>)
+  }
+
+  <span class="cm">/** Play next available element from pool (round-robin). */</span>
+  <span class="fn">play</span>(key: <span class="tp">string</span>, volume: <span class="tp">number</span>): <span class="tp">boolean</span> {
+    <span class="kw">const</span> pool = <span class="kw">this</span>.pools.get(key)
+    <span class="kw">if</span> (!pool) <span class="kw">return false</span>
+
+    <span class="kw">const</span> idx = <span class="kw">this</span>.index.get(key) ?? <span class="num">0</span>
+    <span class="kw">const</span> audio = pool[idx]
+
+    audio.currentTime = <span class="num">0</span>
+    audio.volume = volume
+    audio.play().<span class="fn">catch</span>(() =&gt; {})
+
+    <span class="kw">this</span>.index.set(key, (idx + <span class="num">1</span>) % pool.length)
+    <span class="kw">return true</span>
+  }
+
+  <span class="cm">/** Release pool for a key (free memory). */</span>
+  <span class="fn">release</span>(key: <span class="tp">string</span>): <span class="tp">void</span> {
+    <span class="kw">this</span>.pools.delete(key)
+    <span class="kw">this</span>.index.delete(key)
+  }
+}</code></pre>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>אסטרטגיית טעינה</h3>
+        <ul>
+          <li><strong>eager (בטעינה):</strong> keyClick, correct, error, buttonClick, navigate, tabSwitch - סאונדים שמשתמשים בהם מיד</li>
+          <li><strong>lazy (ברקע):</strong> levelComplete, achievementFanfare, battleStart - סאונדים שמשתמשים בהם אחרי כמה דקות</li>
+          <li><strong>on-demand (בהזמנה):</strong> voice clips, story sounds - נטענים רק כשנכנסים לדף הרלוונטי</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>ביצועים - דרישות</h3>
+        <ul>
+          <li><strong>זמן השמעה:</strong> &lt;16ms (פריים אחד ב-60fps)</li>
+          <li><strong>AudioContext:</strong> singleton, resume on user gesture</li>
+          <li><strong>GainNode:</strong> אחד לכל קטגוריה (sfx, ui, voice, music)</li>
+          <li><strong>Cooldown:</strong> מניעת spam (למשל hover - 60ms min)</li>
+          <li><strong>maxConcurrent:</strong> הגבלת sounds חופפים (keyClick=5, levelUp=1)</li>
+          <li><strong>זיכרון:</strong> ~2-4MB לכל הסאונדים (MP3 128kbps, 1-4 שניות)</li>
+        </ul>
+      </div>
+    </div>
+
+    <pre><code><span class="cm">// src/lib/audio/volume-controller.ts</span>
+<span class="cm">// שליטה בווליום עם GainNode נפרד לכל קטגוריה</span>
+
+<span class="kw">class</span> <span class="tp">VolumeController</span> {
+  <span class="kw">private</span> ctx: <span class="tp">AudioContext</span>
+  <span class="kw">private</span> masterGain: <span class="tp">GainNode</span>
+  <span class="kw">private</span> categoryGains: <span class="tp">Map</span>&lt;<span class="tp">SoundCategory</span>, <span class="tp">GainNode</span>&gt;
+
+  <span class="fn">constructor</span>(ctx: <span class="tp">AudioContext</span>) {
+    <span class="kw">this</span>.ctx = ctx
+    <span class="kw">this</span>.masterGain = ctx.createGain()
+    <span class="kw">this</span>.masterGain.connect(ctx.destination)
+
+    <span class="kw">this</span>.categoryGains = <span class="kw">new</span> Map()
+    <span class="kw">for</span> (<span class="kw">const</span> cat <span class="kw">of</span> [<span class="str">'sfx'</span>, <span class="str">'music'</span>, <span class="str">'voice'</span>, <span class="str">'ui'</span>] <span class="kw">as const</span>) {
+      <span class="kw">const</span> gain = ctx.createGain()
+      gain.connect(<span class="kw">this</span>.masterGain)
+      <span class="kw">this</span>.categoryGains.set(cat, gain)
+    }
+  }
+
+  <span class="cm">/** Get the GainNode for a category (to connect sounds through). */</span>
+  <span class="fn">getOutput</span>(category: <span class="tp">SoundCategory</span>): <span class="tp">GainNode</span> {
+    <span class="kw">return this</span>.categoryGains.get(category) ?? <span class="kw">this</span>.masterGain
+  }
+
+  <span class="cm">/** Set volume for a category (0-1). */</span>
+  <span class="fn">setVolume</span>(category: <span class="tp">SoundCategory</span> | <span class="str">'master'</span>, volume: <span class="tp">number</span>): <span class="tp">void</span> {
+    <span class="kw">const</span> clamped = Math.max(<span class="num">0</span>, Math.min(<span class="num">1</span>, volume))
+    <span class="kw">if</span> (category === <span class="str">'master'</span>) {
+      <span class="kw">this</span>.masterGain.gain.setValueAtTime(clamped, <span class="kw">this</span>.ctx.currentTime)
+    } <span class="kw">else</span> {
+      <span class="kw">this</span>.categoryGains.get(category)?.gain.setValueAtTime(clamped, <span class="kw">this</span>.ctx.currentTime)
+    }
+  }
+
+  <span class="cm">/** Mute/unmute a category. */</span>
+  <span class="fn">setMuted</span>(category: <span class="tp">SoundCategory</span>, muted: <span class="tp">boolean</span>): <span class="tp">void</span> {
+    <span class="kw">const</span> gain = <span class="kw">this</span>.categoryGains.get(category)
+    <span class="kw">if</span> (gain) gain.gain.setValueAtTime(muted ? <span class="num">0</span> : <span class="num">1</span>, <span class="kw">this</span>.ctx.currentTime)
+  }
+}</code></pre>
+  </div>
+
+  <!-- ===================== SECTION 5 ===================== -->
+  <div class="section" id="integration">
+    <div class="section-title">
+      <span class="num">5</span>
+      אינטגרציה עם קומפוננטות
+    </div>
+
+    <div class="card">
+      <h3>useSoundEffect() Hook - ליבת האינטגרציה</h3>
+      <p>Hook שמאפשר לכל קומפוננטה לנגן סאונדים בקלות, עם בדיקת הגדרות אוטומטית:</p>
+    </div>
+
+    <pre><code><span class="cm">// src/hooks/use-sound-effect.ts</span>
+
+<span class="kw">import</span> { useCallback, useRef } <span class="kw">from</span> <span class="str">'react'</span>
+<span class="kw">import</span> { soundManager } <span class="kw">from</span> <span class="str">'@/lib/audio/sound-manager'</span>
+<span class="kw">import</span> { useSettingsStore } <span class="kw">from</span> <span class="str">'@/stores/settings-store'</span>
+
+<span class="kw">type</span> <span class="tp">SoundKey</span> =
+  | <span class="str">'buttonClick'</span> | <span class="str">'buttonSecondary'</span> | <span class="str">'buttonHover'</span>
+  | <span class="str">'navigate'</span> | <span class="str">'tabSwitch'</span> | <span class="str">'menuOpen'</span> | <span class="str">'menuClose'</span>
+  | <span class="str">'keyClick'</span> | <span class="str">'correct'</span> | <span class="str">'error'</span> | <span class="str">'comboHit'</span>
+  | <span class="str">'levelComplete'</span> | <span class="str">'xpGain'</span> | <span class="str">'badgeUnlock'</span>
+  | <span class="str">'formError'</span> | <span class="str">'toastSuccess'</span> | <span class="str">'toastError'</span>
+  <span class="cm">// ... all other sound keys</span>
+
+<span class="kw">interface</span> <span class="tp">UseSoundOptions</span> {
+  <span class="cm">/** Disable this specific sound (e.g. for reduced audio mode) */</span>
+  disabled?: <span class="tp">boolean</span>
+  <span class="cm">/** Override volume (0-1) */</span>
+  volume?: <span class="tp">number</span>
+}
+
+<span class="kw">export function</span> <span class="fn">useSoundEffect</span>(key: <span class="tp">SoundKey</span>, options?: <span class="tp">UseSoundOptions</span>) {
+  <span class="kw">const</span> soundEnabled = useSettingsStore((s) =&gt; s.soundEnabled)
+  <span class="kw">const</span> lastPlayed = useRef&lt;<span class="tp">number</span>&gt;(<span class="num">0</span>)
+
+  <span class="kw">const</span> play = <span class="fn">useCallback</span>(() =&gt; {
+    <span class="kw">if</span> (!soundEnabled || options?.disabled) <span class="kw">return</span>
+
+    <span class="cm">// Cooldown check</span>
+    <span class="kw">const</span> now = Date.now()
+    <span class="kw">const</span> config = UI_SOUNDS[key]
+    <span class="kw">if</span> (config &amp;&amp; now - lastPlayed.current &lt; config.cooldownMs) <span class="kw">return</span>
+    lastPlayed.current = now
+
+    soundManager.playSound(key, options?.volume)
+  }, [key, soundEnabled, options?.disabled, options?.volume])
+
+  <span class="kw">return</span> { play }
+}
+
+<span class="cm">// Shorthand for common patterns:</span>
+<span class="kw">export function</span> <span class="fn">useClickSound</span>() {
+  <span class="kw">return</span> useSoundEffect(<span class="str">'buttonClick'</span>)
+}
+
+<span class="kw">export function</span> <span class="fn">useNavigateSound</span>() {
+  <span class="kw">return</span> useSoundEffect(<span class="str">'navigate'</span>)
+}</code></pre>
+
+    <div class="card">
+      <h3>שימוש בקומפוננטות</h3>
+    </div>
+
+    <pre><code><span class="cm">// === שימוש ב-GameButton (כבר קיים, צריך שדרוג) ===</span>
+
+<span class="kw">export function</span> <span class="fn">GameButton</span>({ onClick, variant, ...props }) {
+  <span class="kw">const</span> { play: playClick } = useSoundEffect(
+    variant === <span class="str">'secondary'</span> ? <span class="str">'buttonSecondary'</span> : <span class="str">'buttonClick'</span>
+  )
+  <span class="kw">const</span> { play: playHover } = useSoundEffect(<span class="str">'buttonHover'</span>)
+
+  <span class="kw">return</span> (
+    &lt;<span class="tp">button</span>
+      onClick={() =&gt; { playClick(); onClick?.() }}
+      onMouseEnter={playHover}
+      {...props}
+    /&gt;
+  )
+}
+
+<span class="cm">// === שימוש ב-BottomTabs ===</span>
+
+<span class="kw">export function</span> <span class="fn">BottomTabs</span>() {
+  <span class="kw">const</span> { play: playTab } = useSoundEffect(<span class="str">'tabSwitch'</span>)
+
+  <span class="kw">return</span> (
+    &lt;<span class="tp">nav</span>&gt;
+      {tabs.map(tab =&gt; (
+        &lt;<span class="tp">Link</span> key={tab.path} href={tab.path} onClick={playTab}&gt;
+          {tab.label}
+        &lt;/<span class="tp">Link</span>&gt;
+      ))}
+    &lt;/<span class="tp">nav</span>&gt;
+  )
+}
+
+<span class="cm">// === שימוש עם אירועי התקדמות ===</span>
+
+<span class="kw">export function</span> <span class="fn">LessonResults</span>({ stars, xp, isNewRecord }) {
+  <span class="kw">const</span> { play: playStar } = useSoundEffect(<span class="str">'starEarned'</span>)
+  <span class="kw">const</span> { play: playXp } = useSoundEffect(<span class="str">'xpGain'</span>)
+  <span class="kw">const</span> { play: playRecord } = useSoundEffect(<span class="str">'newRecord'</span>)
+  <span class="kw">const</span> { play: playComplete } = useSoundEffect(<span class="str">'levelComplete'</span>)
+
+  useEffect(() =&gt; {
+    <span class="cm">// Stagger sounds for satisfying sequence</span>
+    playComplete()
+    setTimeout(() =&gt; { <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; stars; i++) setTimeout(playStar, i * <span class="num">300</span>) }, <span class="num">500</span>)
+    setTimeout(playXp, <span class="num">500</span> + stars * <span class="num">300</span> + <span class="num">200</span>)
+    <span class="kw">if</span> (isNewRecord) setTimeout(playRecord, <span class="num">500</span> + stars * <span class="num">300</span> + <span class="num">600</span>)
+  }, [])
+}</code></pre>
+
+    <div class="card">
+      <h3>SoundProvider - הפעלה אוטומטית למערכת</h3>
+    </div>
+
+    <pre><code><span class="cm">// src/components/providers/sound-provider.tsx</span>
+
+<span class="str">'use client'</span>
+
+<span class="kw">import</span> { useEffect } <span class="kw">from</span> <span class="str">'react'</span>
+<span class="kw">import</span> { soundManager } <span class="kw">from</span> <span class="str">'@/lib/audio/sound-manager'</span>
+<span class="kw">import</span> { useSettingsStore } <span class="kw">from</span> <span class="str">'@/stores/settings-store'</span>
+
+<span class="kw">export function</span> <span class="fn">SoundProvider</span>({ children }: { children: <span class="tp">React.ReactNode</span> }) {
+  <span class="kw">const</span> soundEnabled = useSettingsStore((s) =&gt; s.soundEnabled)
+  <span class="kw">const</span> soundVolume = useSettingsStore((s) =&gt; s.soundVolume)
+
+  useEffect(() =&gt; {
+    <span class="cm">// Preload critical sounds on mount</span>
+    soundManager.preload()
+
+    <span class="cm">// Resume AudioContext on first user interaction</span>
+    <span class="kw">const</span> resume = () =&gt; {
+      soundManager.resumeContext()
+      document.removeEventListener(<span class="str">'click'</span>, resume)
+      document.removeEventListener(<span class="str">'keydown'</span>, resume)
+    }
+    document.addEventListener(<span class="str">'click'</span>, resume, { once: <span class="kw">true</span> })
+    document.addEventListener(<span class="str">'keydown'</span>, resume, { once: <span class="kw">true</span> })
+
+    <span class="kw">return</span> () =&gt; {
+      document.removeEventListener(<span class="str">'click'</span>, resume)
+      document.removeEventListener(<span class="str">'keydown'</span>, resume)
+    }
+  }, [])
+
+  <span class="cm">// Sync settings store with sound manager</span>
+  useEffect(() =&gt; { soundManager.setEnabled(soundEnabled) }, [soundEnabled])
+  useEffect(() =&gt; { soundManager.setVolume(soundVolume) }, [soundVolume])
+
+  <span class="kw">return</span> &lt;&gt;{children}&lt;/&gt;
+}</code></pre>
+
+    <div class="callout success">
+      <strong>אינטגרציה קיימת:</strong>
+      <p>המערכת הנוכחית כבר טוענת ב-<code>app-providers.tsx</code> עם <code>soundManager.preload()</code>. ה-SoundProvider פשוט מחליף את הקריאה הנוכחית וגם מטפל ב-AudioContext resume ובסנכרון הגדרות.</p>
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 6 ===================== -->
+  <div class="section" id="accessibility">
+    <div class="section-title">
+      <span class="num">6</span>
+      נגישות והגדרות
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>סליידרי ווליום</h3>
+        <ul>
+          <li><strong>Master:</strong> שליטה על כל הסאונדים (0-100%)</li>
+          <li><strong>מוזיקה:</strong> מוזיקת רקע (כבר קיים ב-MusicStore)</li>
+          <li><strong>אפקטים:</strong> SFX + UI sounds</li>
+          <li><strong>קול:</strong> קליפי קול דמויות</li>
+          <li>כל סליידר עם כפתור mute/unmute</li>
+          <li>שמירה ב-localStorage דרך settings-store</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>מצבים מיוחדים</h3>
+        <ul>
+          <li><strong>מצב מופחת (Reduced Audio):</strong> רק סאונדים קריטיים (הקלדה, הישגים). בלי hover, ניווט, פופ</li>
+          <li><strong>מצב ויזואלי בלבד:</strong> כל הסאונדים כבויים, ויזואליזציות מחליפות (פלאש, רטט מסך)</li>
+          <li><strong>רטט (Haptic, מובייל):</strong> <code>navigator.vibrate()</code> כתוספת או תחליף לסאונד</li>
+          <li><strong>prefers-reduced-motion:</strong> בודק CSS media query ומפעיל מצב מופחת אוטומטית</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>נגישות לקוראי מסך</h3>
+        <ul>
+          <li>כל סאונד אינפורמטיבי (הישג, שגיאה) מלווה ב-<code>aria-live</code> region</li>
+          <li>הודעות הצלחה/שגיאה תמיד עם טקסט, לא רק סאונד</li>
+          <li>Toast notifications עם <code>role="alert"</code></li>
+          <li>סאונדים דקורטיביים (hover, ניווט) לא חוסמים שום מידע</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>הגדרות Zustand Store</h3>
+        <pre><code><span class="cm">// הרחבת settings-store</span>
+<span class="kw">interface</span> <span class="tp">SoundSettings</span> {
+  soundEnabled: <span class="tp">boolean</span>   <span class="cm">// קיים</span>
+  soundVolume: <span class="tp">number</span>     <span class="cm">// קיים</span>
+  sfxVolume: <span class="tp">number</span>       <span class="cm">// חדש</span>
+  uiVolume: <span class="tp">number</span>        <span class="cm">// חדש</span>
+  voiceVolume: <span class="tp">number</span>     <span class="cm">// חדש</span>
+  sfxMuted: <span class="tp">boolean</span>       <span class="cm">// חדש</span>
+  uiMuted: <span class="tp">boolean</span>        <span class="cm">// חדש</span>
+  voiceMuted: <span class="tp">boolean</span>     <span class="cm">// חדש</span>
+  reducedAudio: <span class="tp">boolean</span>   <span class="cm">// חדש</span>
+  hapticEnabled: <span class="tp">boolean</span>  <span class="cm">// חדש</span>
+}</code></pre>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <strong>WCAG 2.2 AA תאימות:</strong>
+      <p>כל סאונד שמעביר מידע חייב להיות מלווה באלטרנטיבה ויזואלית. שגיאות חייבות להיות מזוהות גם בצבע + טקסט + צורה, לא רק בסאונד. הישגים חייבים להופיע כ-toast עם טקסט ברור.</p>
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 7 ===================== -->
+  <div class="section" id="timeline">
+    <div class="section-title">
+      <span class="num">7</span>
+      לוח זמנים ועדיפויות
+    </div>
+
+    <div class="timeline">
+      <div class="phase" style="border-right-color: var(--red);">
+        <h3>שלב 1: קריטי - ליבת ההקלדה והכפתורים</h3>
+        <div class="meta">עדיפות: קריטי | ~2 ימי עבודה | 12 סאונדים</div>
+        <ul>
+          <li>שדרוג SoundManager עם קטגוריות ו-cooldown</li>
+          <li>יצירת <code>useSoundEffect</code> hook</li>
+          <li>אינטגרציית GameButton עם hover + click + disabled sounds</li>
+          <li>סאונדי הקלדה חדשים: lessonReady, newRecord, wordComplete</li>
+          <li>סאונדי הישגים: levelUp, characterUnlock (שדרוג MP3)</li>
+          <li>שדרוג settings-store עם volume per category</li>
+          <li>SoundProvider ב-app-providers</li>
+        </ul>
+        <p style="color: var(--green); font-size: 0.85rem; margin-top: 0.5rem;">סאונדים: keyClick, correct, error, buttonClick, buttonSecondary, buttonHover, buttonDisabled, levelComplete, newRecord, lessonReady, achievementFanfare, levelUp</p>
+      </div>
+
+      <div class="phase" style="border-right-color: var(--orange);">
+        <h3>שלב 2: גבוה - ניווט וקרב</h3>
+        <div class="meta">עדיפות: גבוהה | ~2 ימי עבודה | 15 סאונדים</div>
+        <ul>
+          <li>סאונדי ניווט: tabSwitch, menuOpen, menuClose, navigateBack</li>
+          <li>סאונדי קרב: matchFound, battleDefeat, powerUp</li>
+          <li>סאונדי התקדמות: skinUnlock, streakMaintain (שדרוג)</li>
+          <li>סאונדי שגיאות: formError, networkError</li>
+          <li>אינטגרציה ב-BottomTabs, navigation links</li>
+          <li>Audio Pool implementation</li>
+          <li>סאונדי משחקים: wordCatch, wordMiss, gameOver</li>
+        </ul>
+        <p style="color: var(--green); font-size: 0.85rem; margin-top: 0.5rem;">סאונדים: tabSwitch, menuOpen, menuClose, navigateBack, matchFound, battleDefeat, powerUp, skinUnlock, streakMaintain, formError, networkError, wordCatch, wordMiss, gameOver, toggleOn/Off</p>
+      </div>
+
+      <div class="phase" style="border-right-color: var(--yellow);">
+        <h3>שלב 3: בינוני - סיפור וחברתי</h3>
+        <div class="meta">עדיפות: בינונית | ~2 ימי עבודה | 12 סאונדים</div>
+        <ul>
+          <li>סאונדי סיפור: dialogAdvance, choiceSelect, chapterComplete, characterEntrance, dramaticReveal</li>
+          <li>סאונדי חברתי: notificationPing, friendRequest, challengeReceived, classJoined</li>
+          <li>סאונדי מערכת: toastSuccess, toastError, modalOpen, modalClose</li>
+          <li>אינטגרציה בדפי Story Mode</li>
+        </ul>
+        <p style="color: var(--green); font-size: 0.85rem; margin-top: 0.5rem;">סאונדים: dialogAdvance, choiceSelect, chapterComplete, characterEntrance, dramaticReveal, notificationPing, friendRequest, challengeReceived, classJoined, toastSuccess, toastError, lineComplete</p>
+      </div>
+
+      <div class="phase" style="border-right-color: var(--cyan);">
+        <h3>שלב 4: נמוך - קול דמויות ואווירה</h3>
+        <div class="meta">עדיפות: נמוכה | ~3 ימי עבודה | ~16 סאונדים</div>
+        <ul>
+          <li>קליפי קול: Ki (3 מצבים), Sensei Zen, דמויות נוספות</li>
+          <li>סאונדי hover עדינים (למסכים גדולים בלבד)</li>
+          <li>סאונדי מודל open/close</li>
+          <li>התאמת סאונדים לפי גיל (5 ערכות נושא קוליות)</li>
+          <li>Spatial audio לקרבות (panning)</li>
+          <li>Ambient sounds לדפים ספציפיים</li>
+          <li>Haptic feedback למובייל</li>
+        </ul>
+        <p style="color: var(--green); font-size: 0.85rem; margin-top: 0.5rem;">סאונדים: kiHappy, kiEncourage, kiSurprised, senseiGuide, yukiChallenge(שדרוג), modalOpen, modalClose, buttonHover(desktop), + age-variant sounds</p>
+      </div>
+    </div>
+
+    <div class="callout success">
+      <strong>סיכום תקציב:</strong>
+      <p>
+        <strong>סה"כ סאונדים חדשים:</strong> ~55 (כולל סינתזה + MP3 + קול)<br>
+        <strong>עלות משוערת:</strong> $7-20 (API credits ל-Suno, ElevenLabs, freesound)<br>
+        <strong>זמן פיתוח:</strong> ~9 ימי עבודה (4 שלבים)<br>
+        <strong>נפח אחסון:</strong> ~3-5MB נוספים (MP3 128kbps)
+      </p>
+    </div>
+
+    <!-- ===== ASSET LIST ===== -->
+    <div class="card" style="margin-top: 2rem;">
+      <h3>רשימת נכסי סאונד מלאה - לפי שיטת יצירה</h3>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>מפתח</th>
+            <th>שם קובץ</th>
+            <th>שיטה</th>
+            <th>אורך</th>
+            <th>שלב</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="cat-row"><td colspan="6">Web Audio סינתזה (אין צורך בקובץ MP3)</td></tr>
+          <tr><td>1</td><td><code>tabSwitch</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>20ms</td><td>2</td></tr>
+          <tr><td>2</td><td><code>menuOpen</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>60ms</td><td>2</td></tr>
+          <tr><td>3</td><td><code>menuClose</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>50ms</td><td>2</td></tr>
+          <tr><td>4</td><td><code>navigateBack</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>60ms</td><td>2</td></tr>
+          <tr><td>5</td><td><code>buttonSecondary</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>15ms</td><td>1</td></tr>
+          <tr><td>6</td><td><code>buttonHover</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>10ms</td><td>4</td></tr>
+          <tr><td>7</td><td><code>buttonDisabled</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>25ms</td><td>1</td></tr>
+          <tr><td>8</td><td><code>toggleOn</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>30ms</td><td>2</td></tr>
+          <tr><td>9</td><td><code>toggleOff</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>30ms</td><td>2</td></tr>
+          <tr><td>10</td><td><code>wordComplete</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>40ms</td><td>1</td></tr>
+          <tr><td>11</td><td><code>lineComplete</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>80ms</td><td>3</td></tr>
+          <tr><td>12</td><td><code>dialogAdvance</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>15ms</td><td>3</td></tr>
+          <tr><td>13</td><td><code>choiceSelect</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>40ms</td><td>3</td></tr>
+          <tr><td>14</td><td><code>formError</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>60ms</td><td>2</td></tr>
+          <tr><td>15</td><td><code>toastSuccess</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>80ms</td><td>3</td></tr>
+          <tr><td>16</td><td><code>toastError</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>60ms</td><td>3</td></tr>
+          <tr><td>17</td><td><code>modalOpen</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>80ms</td><td>4</td></tr>
+          <tr><td>18</td><td><code>modalClose</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>60ms</td><td>4</td></tr>
+          <tr><td>19</td><td><code>wordCatch</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>40ms</td><td>2</td></tr>
+          <tr><td>20</td><td><code>wordMiss</code></td><td>-</td><td><span class="tag tag-synth">Synth</span></td><td>50ms</td><td>2</td></tr>
+
+          <tr class="cat-row"><td colspan="6">MP3 קבצים חדשים (יצירה ב-AI / freesound / עריכה)</td></tr>
+          <tr><td>21</td><td><code>lessonReady</code></td><td>ui/lesson-ready.mp3</td><td><span class="tag tag-mp3">MP3</span></td><td>0.8s</td><td>1</td></tr>
+          <tr><td>22</td><td><code>newRecord</code></td><td>progress/new-record.mp3</td><td><span class="tag tag-ai">AI</span></td><td>2.0s</td><td>1</td></tr>
+          <tr><td>23</td><td><code>levelUp</code></td><td>progress/level-up-jingle.mp3</td><td><span class="tag tag-ai">AI</span></td><td>2.5s</td><td>1</td></tr>
+          <tr><td>24</td><td><code>characterUnlock</code></td><td>progress/character-unlock.mp3</td><td><span class="tag tag-ai">AI</span></td><td>3.0s</td><td>1</td></tr>
+          <tr><td>25</td><td><code>skinUnlock</code></td><td>progress/skin-unlock.mp3</td><td><span class="tag tag-mp3">MP3</span></td><td>1.5s</td><td>2</td></tr>
+          <tr><td>26</td><td><code>matchFound</code></td><td>battle/match-found.mp3</td><td><span class="tag tag-ai">AI</span></td><td>1.5s</td><td>2</td></tr>
+          <tr><td>27</td><td><code>battleDefeat</code></td><td>battle/battle-defeat.mp3</td><td><span class="tag tag-mp3">MP3</span></td><td>2.0s</td><td>2</td></tr>
+          <tr><td>28</td><td><code>powerUp</code></td><td>battle/power-up.mp3</td><td><span class="tag tag-ai">AI</span></td><td>1.0s</td><td>2</td></tr>
+          <tr><td>29</td><td><code>gameOver</code></td><td>battle/game-over.mp3</td><td><span class="tag tag-mp3">MP3</span></td><td>2.0s</td><td>2</td></tr>
+          <tr><td>30</td><td><code>networkError</code></td><td>ui/network-error.mp3</td><td><span class="tag tag-mp3">MP3</span></td><td>0.8s</td><td>2</td></tr>
+          <tr><td>31</td><td><code>chapterComplete</code></td><td>story/chapter-complete.mp3</td><td><span class="tag tag-ai">AI</span></td><td>3.5s</td><td>3</td></tr>
+          <tr><td>32</td><td><code>characterEntrance</code></td><td>story/character-entrance.mp3</td><td><span class="tag tag-mp3">MP3</span></td><td>1.5s</td><td>3</td></tr>
+          <tr><td>33</td><td><code>dramaticReveal</code></td><td>story/dramatic-reveal.mp3</td><td><span class="tag tag-ai">AI</span></td><td>2.5s</td><td>3</td></tr>
+          <tr><td>34</td><td><code>notificationPing</code></td><td>social/notification-ping.mp3</td><td><span class="tag tag-mp3">MP3</span></td><td>0.5s</td><td>3</td></tr>
+          <tr><td>35</td><td><code>friendRequest</code></td><td>social/friend-request.mp3</td><td><span class="tag tag-mp3">MP3</span></td><td>0.8s</td><td>3</td></tr>
+          <tr><td>36</td><td><code>challengeReceived</code></td><td>social/challenge-received.mp3</td><td><span class="tag tag-ai">AI</span></td><td>1.2s</td><td>3</td></tr>
+          <tr><td>37</td><td><code>classJoined</code></td><td>social/class-joined.mp3</td><td><span class="tag tag-mp3">MP3</span></td><td>1.0s</td><td>3</td></tr>
+
+          <tr class="cat-row"><td colspan="6">קליפי קול דמויות (ElevenLabs Voice Design v3)</td></tr>
+          <tr><td>38</td><td><code>kiHappy</code></td><td>voices/ki/ki-happy.mp3</td><td><span class="tag tag-voice">Voice</span></td><td>1.5s</td><td>4</td></tr>
+          <tr><td>39</td><td><code>kiEncourage</code></td><td>voices/ki/ki-encourage.mp3</td><td><span class="tag tag-voice">Voice</span></td><td>2.0s</td><td>4</td></tr>
+          <tr><td>40</td><td><code>kiSurprised</code></td><td>voices/ki/ki-surprised.mp3</td><td><span class="tag tag-voice">Voice</span></td><td>1.0s</td><td>4</td></tr>
+          <tr><td>41</td><td><code>senseiGuide</code></td><td>voices/sensei-zen/zen-guide.mp3</td><td><span class="tag tag-voice">Voice</span></td><td>3.0s</td><td>4</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+</body>
+</html>

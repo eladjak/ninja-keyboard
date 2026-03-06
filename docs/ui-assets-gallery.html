@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>נינג'ה מקלדת - גלריית נכסי UI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0d0b1a;
+      color: #e0e0e0;
+      font-family: 'Heebo', sans-serif;
+      direction: rtl;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1530 0%, #0d0b1a 50%, #1a1530 100%);
+      border-bottom: 2px solid #6C5CE7;
+      padding: 2rem 3rem;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #6C5CE7, #00B894);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .header p {
+      color: #a0a0b0;
+      font-size: 1.1rem;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      background: rgba(108, 92, 231, 0.15);
+      border: 1px solid rgba(108, 92, 231, 0.3);
+      border-radius: 12px;
+      padding: 0.5rem 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .stat strong {
+      color: #6C5CE7;
+    }
+
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(108, 92, 231, 0.3);
+    }
+
+    .section-header h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .section-header .badge-count {
+      background: #6C5CE7;
+      color: #fff;
+      border-radius: 20px;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .grid-badges {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+
+    .grid-ui {
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    }
+
+    .card {
+      background: rgba(26, 21, 48, 0.8);
+      border: 1px solid rgba(108, 92, 231, 0.2);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(108, 92, 231, 0.6);
+    }
+
+    .card-image {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-image.landscape {
+      aspect-ratio: 16/9;
+    }
+
+    .card-image.card-ratio {
+      aspect-ratio: 3/2;
+    }
+
+    .card-info {
+      padding: 1rem;
+    }
+
+    .card-info h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    .card-info p {
+      font-size: 0.85rem;
+      color: #a0a0b0;
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .card-path {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      color: #00B894;
+      background: rgba(0, 184, 148, 0.1);
+      border: 1px solid rgba(0, 184, 148, 0.2);
+      border-radius: 6px;
+      padding: 0.3rem 0.6rem;
+      display: inline-block;
+      direction: ltr;
+      text-align: left;
+      word-break: break-all;
+    }
+
+    .card-meta {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .meta-tag {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+
+    .meta-tag.size {
+      background: rgba(108, 92, 231, 0.15);
+      color: #6C5CE7;
+      border: 1px solid rgba(108, 92, 231, 0.3);
+    }
+
+    .meta-tag.ratio {
+      background: rgba(0, 184, 148, 0.15);
+      color: #00B894;
+      border: 1px solid rgba(0, 184, 148, 0.3);
+    }
+
+    .meta-tag.new {
+      background: rgba(255, 107, 107, 0.15);
+      color: #ff6b6b;
+      border: 1px solid rgba(255, 107, 107, 0.3);
+    }
+
+    .existing-note {
+      font-size: 0.75rem;
+      color: #888;
+      font-style: italic;
+      margin-top: 0.3rem;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: #555;
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(108, 92, 231, 0.15);
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 { font-size: 1.8rem; }
+      .grid-badges { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+      .grid-ui { grid-template-columns: 1fr; }
+      .content { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>גלריית נכסי UI - נינג'ה מקלדת</h1>
+    <p>כל התמונות שנוצרו עם Gemini (nano-banana-poster) למשחק</p>
+    <div class="stats-bar">
+      <div class="stat">תמונות חדשות: <strong>10</strong></div>
+      <div class="stat">תגים: <strong>8</strong></div>
+      <div class="stat">אלמנטי UI: <strong>2</strong></div>
+      <div class="stat">דרגות: <strong>3</strong></div>
+      <div class="stat">הישגים: <strong>5</strong></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Achievement Badges -->
+    <div class="section">
+      <div class="section-header">
+        <h2>תגי הישגים</h2>
+        <span class="badge-count">5 תגים</span>
+      </div>
+      <div class="grid grid-badges">
+
+        <div class="card">
+          <img class="card-image" src="../public/images/badges/badge-achievement-gold.jpg" alt="תג הישג זהב">
+          <div class="card-info">
+            <h3>הישג זהב</h3>
+            <p>כוכב שוריקן נינג'ה זהוב - להישגים מיוחדים במשחק</p>
+            <span class="card-path">public/images/badges/badge-achievement-gold.jpg</span>
+            <div class="card-meta">
+              <span class="meta-tag ratio">1:1</span>
+              <span class="meta-tag new">חדש</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <img class="card-image" src="../public/images/badges/badge-speed.jpg" alt="תג מהירות">
+          <div class="card-info">
+            <h3>מהירות</h3>
+            <p>ברק עם מקשי מקלדת - להישגי מהירות הקלדה</p>
+            <span class="card-path">public/images/badges/badge-speed.jpg</span>
+            <div class="card-meta">
+              <span class="meta-tag ratio">1:1</span>
+              <span class="meta-tag new">חדש</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <img class="card-image" src="../public/images/badges/badge-accuracy.jpg" alt="תג דיוק">
+          <div class="card-info">
+            <h3>דיוק</h3>
+            <p>מטרה עם כוכב נינג'ה - להישגי דיוק בהקלדה</p>
+            <span class="card-path">public/images/badges/badge-accuracy.jpg</span>
+            <div class="card-meta">
+              <span class="meta-tag ratio">1:1</span>
+              <span class="meta-tag new">חדש</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <img class="card-image" src="../public/images/badges/badge-streak.jpg" alt="תג רצף">
+          <div class="card-info">
+            <h3>רצף אש</h3>
+            <p>להבה עם מקלדת - לרצפי הקלדה ללא טעויות</p>
+            <span class="card-path">public/images/badges/badge-streak.jpg</span>
+            <div class="card-meta">
+              <span class="meta-tag ratio">1:1</span>
+              <span class="meta-tag new">חדש</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <img class="card-image" src="../public/images/badges/badge-level-up.jpg" alt="תג עליית רמה">
+          <div class="card-info">
+            <h3>עליית רמה</h3>
+            <p>חץ למעלה עם ניצוצות וכוכבים - לעליית רמה</p>
+            <span class="card-path">public/images/badges/badge-level-up.jpg</span>
+            <div class="card-meta">
+              <span class="meta-tag ratio">1:1</span>
+              <span class="meta-tag new">חדש</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Rank Badges -->
+    <div class="section">
+      <div class="section-header">
+        <h2>תגי דרגה</h2>
+        <span class="badge-count">3 דרגות</span>
+      </div>
+      <div class="grid grid-badges">
+
+        <div class="card">
+          <img class="card-image" src="../public/images/badges/rank-bronze.jpg" alt="דרגת ארד">
+          <div class="card-info">
+            <h3>ארד</h3>
+            <p>מדליית ארד עם סרט ראש נינג'ה - דרגת מתחיל</p>
+            <span class="card-path">public/images/badges/rank-bronze.jpg</span>
+            <div class="card-meta">
+              <span class="meta-tag ratio">1:1</span>
+              <span class="meta-tag new">חדש</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <img class="card-image" src="../public/images/badges/rank-silver.jpg" alt="דרגת כסף">
+          <div class="card-info">
+            <h3>כסף</h3>
+            <p>מדליית כסף עם כוכב נינג'ה - דרגת מתקדם</p>
+            <span class="card-path">public/images/badges/rank-silver.jpg</span>
+            <div class="card-meta">
+              <span class="meta-tag ratio">1:1</span>
+              <span class="meta-tag new">חדש</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <img class="card-image" src="../public/images/badges/rank-gold.jpg" alt="דרגת זהב">
+          <div class="card-info">
+            <h3>זהב</h3>
+            <p>מדליית זהב עם סמל דרקון זוהר - דרגת מאסטר</p>
+            <span class="card-path">public/images/badges/rank-gold.jpg</span>
+            <div class="card-meta">
+              <span class="meta-tag ratio">1:1</span>
+              <span class="meta-tag new">חדש</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- UI Elements -->
+    <div class="section">
+      <div class="section-header">
+        <h2>אלמנטי ממשק</h2>
+        <span class="badge-count">2 אלמנטים</span>
+      </div>
+      <div class="grid grid-ui">
+
+        <div class="card">
+          <img class="card-image landscape" src="../public/images/ui/loading-bg.jpg" alt="רקע מסך טעינה">
+          <div class="card-info">
+            <h3>רקע מסך טעינה</h3>
+            <p>דוג'ו נינג'ה חשוך עם אורות ניאון סגולים, כוכבים ופרחי דובדבן - רקע אטמוספרי למסך טעינה</p>
+            <span class="card-path">public/images/ui/loading-bg.jpg</span>
+            <div class="card-meta">
+              <span class="meta-tag ratio">16:9</span>
+              <span class="meta-tag new">חדש</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <img class="card-image card-ratio" src="../public/images/ui/empty-state.jpg" alt="מצב ריק">
+          <div class="card-info">
+            <h3>מצב ריק</h3>
+            <p>דמות נינג'ה חמודה מדיטציה - איור למצבים ריקים כשאין עדיין תוכן</p>
+            <span class="card-path">public/images/ui/empty-state.jpg</span>
+            <div class="card-meta">
+              <span class="meta-tag ratio">3:2</span>
+              <span class="meta-tag new">חדש</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Existing Assets -->
+    <div class="section">
+      <div class="section-header">
+        <h2>נכסים קיימים (לפני הפעלה זו)</h2>
+        <span class="badge-count">2 קיימים</span>
+      </div>
+      <div class="grid grid-badges">
+
+        <div class="card" style="opacity: 0.7;">
+          <img class="card-image" src="../public/images/badges/achievement-star.jpg" alt="כוכב הישג">
+          <div class="card-info">
+            <h3>כוכב הישג</h3>
+            <p>תג הישג בסיסי - נוצר קודם לכן</p>
+            <span class="card-path">public/images/badges/achievement-star.jpg</span>
+            <div class="card-meta">
+              <span class="meta-tag size">קיים</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="opacity: 0.7;">
+          <img class="card-image" src="../public/images/badges/trophy.jpg" alt="גביע">
+          <div class="card-info">
+            <h3>גביע</h3>
+            <p>תג גביע - נוצר קודם לכן</p>
+            <span class="card-path">public/images/badges/trophy.jpg</span>
+            <div class="card-meta">
+              <span class="meta-tag size">קיים</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p>נוצר ב-5 במרץ 2026 | נינג'ה מקלדת | כל התמונות נוצרו עם Gemini (nano-banana-poster)</p>
+    <p style="margin-top: 0.5rem; color: #6C5CE7;">צבעי מותג: Primary #6C5CE7 | Secondary #00B894</p>
+  </div>
+
+</body>
+</html>

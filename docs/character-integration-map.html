@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מפת שילוב דמויות - נינג'ה מקלדת</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d0b1a;color:#e0e0e0;font-family:'Heebo',sans-serif;line-height:1.7;padding:20px;max-width:1200px;margin:0 auto}
+h1{color:#6C5CE7;font-size:2.2rem;text-align:center;margin:30px 0 10px;text-shadow:0 0 20px rgba(108,92,231,.3)}
+h2{color:#6C5CE7;font-size:1.6rem;margin:30px 0 15px;border-bottom:2px solid #6C5CE733;padding-bottom:8px}
+h3{color:#00B894;font-size:1.2rem;margin:20px 0 10px}
+.subtitle{text-align:center;color:#888;margin-bottom:30px;font-size:.9rem}
+.badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:700}
+.b-hero{background:#6C5CE733;color:#a29bfe}
+.b-villain{background:#e1705633;color:#e17056}
+.b-mentor{background:#f9ca2433;color:#f9ca24}
+.b-ally{background:#00B89433;color:#00B894}
+.b-rival{background:#e056a033;color:#e056a0}
+.b-boss{background:#ff634733;color:#ff6347;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+table{width:100%;border-collapse:collapse;margin:10px 0 20px;font-size:.85rem}
+th{background:#1a1730;color:#6C5CE7;padding:8px 10px;text-align:right;font-weight:700;position:sticky;top:0}
+td{padding:6px 10px;border-bottom:1px solid #1a1730}
+tr:hover td{background:#1a173066}
+details{background:#12101f;border:1px solid #1a1730;border-radius:8px;margin:8px 0;overflow:hidden}
+summary{padding:12px 16px;cursor:pointer;font-weight:700;color:#a29bfe;list-style:none;display:flex;align-items:center;gap:8px}
+summary::before{content:'>';color:#6C5CE7;transition:transform .2s;display:inline-block}
+details[open] summary::before{transform:rotate(90deg)}
+summary:hover{background:#1a1730}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:15px 0}
+.card{background:#12101f;border:1px solid #1a1730;border-radius:10px;padding:14px;transition:border-color .2s}
+.card:hover{border-color:#6C5CE7}
+.card-title{color:#6C5CE7;font-weight:700;font-size:1rem;margin-bottom:6px}
+.card-sub{color:#00B894;font-size:.8rem;margin-bottom:8px}
+.card p{font-size:.82rem;color:#aaa}
+.timeline{position:relative;padding-right:30px}
+.timeline::before{content:'';position:absolute;right:10px;top:0;bottom:0;width:3px;background:linear-gradient(#6C5CE7,#00B894)}
+.tl-item{position:relative;margin:8px 0;padding:8px 14px;background:#12101f;border-radius:8px;border:1px solid #1a1730}
+.tl-item::before{content:'';position:absolute;right:-26px;top:14px;width:12px;height:12px;border-radius:50%;background:#6C5CE7;border:2px solid #0d0b1a}
+.tl-item.boss::before{background:#ff6347;box-shadow:0 0 8px #ff6347}
+.tl-lesson{color:#6C5CE7;font-weight:700;font-size:.9rem}
+.tl-chars{color:#aaa;font-size:.82rem}
+.tl-act{color:#00B894;font-size:.75rem;font-weight:700}
+.size-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;font-size:.75rem;text-align:center}
+.size-grid .hdr{background:#1a1730;color:#6C5CE7;padding:6px 4px;font-weight:700;border-radius:4px}
+.size-grid .cell{background:#12101f;padding:4px;border-radius:4px}
+.size-grid .cell.zero{color:#555}
+.combat-box{background:linear-gradient(135deg,#12101f,#1a1730);border:1px solid #6C5CE733;border-radius:10px;padding:16px;margin:10px 0}
+.legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:20px 0}
+.footer{text-align:center;color:#555;font-size:.75rem;margin-top:40px;padding:20px;border-top:1px solid #1a1730}
+.highlight{color:#f9ca24}
+.nowrap{white-space:nowrap}
+</style>
+</head>
+<body>
+
+<h1>מפת שילוב דמויות</h1>
+<p class="subtitle">נינג'ה מקלדת | גרסה 1.0 | מרץ 2026 | תוכנית-אב לכל הופעות הדמויות, פתיחות, הבעות והתנהגות מותאמת גיל</p>
+
+<div class="legend">
+  <span class="badge b-hero">גיבור</span>
+  <span class="badge b-mentor">מנטור</span>
+  <span class="badge b-ally">בן-ברית</span>
+  <span class="badge b-villain">נבל</span>
+  <span class="badge b-rival">יריב</span>
+  <span class="badge b-boss">בוס</span>
+</div>
+
+<!-- ===== SECTION 1: TIMELINE ===== -->
+<h2>1. ציר זמן מפגשי דמויות (20 שיעורים)</h2>
+
+<details open>
+<summary>סקירת ציר הזמן המלא</summary>
+<table>
+<tr><th>שיעור</th><th>מערכה</th><th>דמויות</th><th>בוס?</th><th>קשת נרטיבית</th><th>מיקוד הקלדה</th></tr>
+<tr><td>1</td><td>1</td><td>קי, סנסאי זן (קול)</td><td></td><td>גילוי</td><td>שורת הבית</td></tr>
+<tr><td>2</td><td>1</td><td>קי, <b>מיקה (חדשה)</b></td><td></td><td>שותפות</td><td>תרגול שורת הבית</td></tr>
+<tr><td>3</td><td>1</td><td>קי, מיקה</td><td></td><td>שליטה</td><td>שטף שורת הבית</td></tr>
+<tr><td>4</td><td>1</td><td>קי, מיקה</td><td></td><td>מהירות</td><td>שורה עליונה</td></tr>
+<tr><td>5</td><td>1</td><td>קי, מיקה, <b>באג (חדש)</b></td><td></td><td>מפגש נבל ראשון</td><td>שורה תחתונה + בלבולים</td></tr>
+<tr><td>6</td><td>1</td><td>קי, מיקה, באג</td><td></td><td>מלחמה חזרה</td><td>כל המקלדת</td></tr>
+<tr><td>7</td><td>1</td><td>קי, מיקה נגד באג</td><td class="badge b-boss">מיני</td><td>בוס: "באג הקטן"</td><td>10 מילים ב-60 שניות</td></tr>
+<tr><td>8</td><td>2</td><td><b>סנסאי זן (פיזי)</b>, קי, מיקה</td><td></td><td>המנטור מגיע</td><td>Shift, מספרים</td></tr>
+<tr><td>9</td><td>2</td><td>קי, מיקה, סנסאי זן</td><td></td><td>אימון מלא</td><td>סמלים, פיסוק</td></tr>
+<tr><td>10</td><td>2</td><td><b>יוקי (חדשה)</b>, קי, מיקה</td><td></td><td>מומחית מהירות</td><td>תרגילי מהירות</td></tr>
+<tr><td>11</td><td>2</td><td><b>לונה (חדשה)</b>, קי</td><td></td><td>מיקוד וסבלנות</td><td>דיוק</td></tr>
+<tr><td>12</td><td>2</td><td><b>גליץ' (חדש)</b>, קי, מיקה</td><td></td><td>הסלמת כאוס</td><td>הקלדה תחת שיבוש</td></tr>
+<tr><td>13</td><td>2</td><td><b>קאי (חדש)</b>, <b>נועה (חדשה)</b>, קי, מיקה</td><td></td><td>לוחמים ומרפאים</td><td>דיוק + תרגילי קרב</td></tr>
+<tr><td>14</td><td>2</td><td>כל הגיבורים, באג</td><td></td><td>הצוות מתאחד</td><td>פסקאות ארוכות</td></tr>
+<tr><td>15</td><td>2</td><td>כל הגיבורים נגד באג + גליץ'</td><td class="badge b-boss">אמצע</td><td>בוס כפול</td><td>20 מילים + תיקונים + היפוך מקלדת</td></tr>
+<tr><td>16</td><td>3</td><td>קי, מיקה, באג</td><td></td><td>מבוך השגיאות</td><td>משפטים מורכבים</td></tr>
+<tr><td>17</td><td>3</td><td>מיקה, לונה, פיקסל</td><td></td><td>טכנולוגיה + מיקוד</td><td>קיצורי מקלדת</td></tr>
+<tr><td>18</td><td>3</td><td>גליץ' (גאולה), קי</td><td></td><td>הקלף הפראי מתהפך</td><td>דיוק תחת עיוות</td></tr>
+<tr><td>19</td><td>3</td><td>קאי, נועה, יוקי</td><td></td><td>הדחיפה האחרונה</td><td>מהירות + דיוק + סיבולת</td></tr>
+<tr><td>20</td><td>3</td><td>כל הדמויות נגד מלך הבאגים</td><td class="badge b-boss">סופי</td><td>בוס סיום</td><td>50 מילים, 90%+ דיוק, 120 שניות</td></tr>
+</table>
+</details>
+
+<details>
+<summary>פירוט שיעורים 1-7 (מערכה 1 - "ההתעוררות")</summary>
+<div class="timeline">
+<div class="tl-item">
+  <div class="tl-lesson">שיעור 1: "המקלדת הזוהרת" (ההתעוררות)</div>
+  <div class="tl-act">מערכה 1</div>
+  <div class="tl-chars"><span class="badge b-hero">קי</span> <span class="badge b-mentor">סנסאי זן - קול בלבד</span></div>
+  <p>קי מגלה מקלדת זוהרת בדוג'ו ישן. קול סנסאי זן מהדהד: "?אהה, תלמיד חדש". מצב רוח: חושב &larr; שמח. סביבה: דוג'ו אימונים (חשוך, מקלדת זוהרת).</p>
+</div>
+<div class="tl-item">
+  <div class="tl-lesson">שיעור 2: "שותפה מופיעה" (מיקה נכנסת)</div>
+  <div class="tl-chars"><span class="badge b-hero">קי</span> <span class="badge b-hero">מיקה - הופעה ראשונה</span></div>
+  <p>מיקה יוצאת מהצללים: "!בוא ננסה ביחד, קי". שותפות שווה, לא עוזרת. דגל: <code>mikaJoined: true</code>.</p>
+</div>
+<div class="tl-item">
+  <div class="tl-lesson">שיעור 3: "שורת הבית"</div>
+  <div class="tl-chars"><span class="badge b-hero">קי</span> <span class="badge b-hero">מיקה</span></div>
+  <p>חיזוק שליטה בשורת הבית. מיקה: "!שורת הבית - הבסיס של כל נינג'ה". דוג'ו מואר יותר.</p>
+</div>
+<div class="tl-item">
+  <div class="tl-lesson">שיעור 4: "יותר מהר!"</div>
+  <div class="tl-chars"><span class="badge b-hero">קי</span> <span class="badge b-hero">מיקה</span></div>
+  <p>הצגת מהירות כמטרה. מיקה דוחפת: "!הפעם - יותר מהר". מיקוד: שורה עליונה.</p>
+</div>
+<div class="tl-item">
+  <div class="tl-lesson">שיעור 5: "הבאג מופיע!"</div>
+  <div class="tl-chars"><span class="badge b-hero">קי</span> <span class="badge b-hero">מיקה</span> <span class="badge b-villain">באג - הופעה ראשונה</span></div>
+  <p>באג פורץ פנימה בצחקוק: "!הא הא! בלבלתי לכם את האותיות". דגל: <code>bugFirstAppearance</code>. סביבה: דוג'ו (אורות מהבהבים, פיקסלים ירוקים).</p>
+</div>
+<div class="tl-item">
+  <div class="tl-lesson">שיעור 6: "לא ניתן לבאג לנצח!"</div>
+  <div class="tl-chars"><span class="badge b-hero">קי</span> <span class="badge b-hero">מיקה</span> <span class="badge b-villain">באג</span></div>
+  <p>בניית ביטחון לפני קרב הבוס. מיקה נחושה: "!לא ניתן לבאג לנצח".</p>
+</div>
+<div class="tl-item boss">
+  <div class="tl-lesson">שיעור 7: מיני-בוס - "באג הקטן"</div>
+  <div class="tl-chars"><span class="badge b-hero">קי</span> <span class="badge b-hero">מיקה</span> <span class="badge b-boss">באג - צורת בוס</span></div>
+  <p><b>10 מילים ב-60 שניות.</b> HP באג = 100. מילה נכונה = -10 HP. קומבו 5 = -2 לבבות (סופר-מכה!). שגיאה = באג מתרפא +1. באג בורח (לעולם לא מת!). סביבה: מאורת באג.</p>
+</div>
+</div>
+</details>
+
+<details>
+<summary>פירוט שיעורים 8-15 (מערכה 2 - "האימון")</summary>
+<div class="timeline">
+<div class="tl-item">
+  <div class="tl-lesson">שיעור 8: "סנסאי זן מגיע"</div>
+  <div class="tl-act">מערכה 2</div>
+  <div class="tl-chars"><span class="badge b-mentor">סנסאי זן - הופעה פיזית</span> <span class="badge b-hero">קי</span> <span class="badge b-hero">מיקה</span></div>
+  <p>"!סבלנות היא הנשק החזק ביותר". חושף: כדי לנצח את באג, חייבים לשלוט בכל מקש. דגל: <code>senseiIntroduced</code>.</p>
+</div>
+<div class="tl-item">
+  <div class="tl-lesson">שיעור 9: "כל המקשים"</div>
+  <div class="tl-chars"><span class="badge b-hero">קי</span> <span class="badge b-hero">מיקה</span> <span class="badge b-mentor">סנסאי זן</span></div>
+  <p>שליטה מלאה במקלדת. סנסאי זן: "המקלדת מדברת... אם תקשיבו".</p>
+</div>
+<div class="tl-item">
+  <div class="tl-lesson">שיעור 10: "יוקי מאתגרת"</div>
+  <div class="tl-chars"><span class="badge b-ally">יוקי - הופעה ראשונה</span> <span class="badge b-hero">קי</span> <span class="badge b-hero">מיקה</span></div>
+  <p>יוקי מסתובבת באוויר עם חיוך: "!אני הכי מהירה בדוג'ו". דינמיקת יריבה-חברה עם קי.</p>
+</div>
+<div class="tl-item">
+  <div class="tl-lesson">שיעור 11: "גן הירח"</div>
+  <div class="tl-chars"><span class="badge b-ally">לונה - הופעה ראשונה</span> <span class="badge b-hero">קי</span></div>
+  <p>לונה בשלווה: "...נשימה עמוקה, ואז מתחילים". משקל נגד לאנרגיה. דגל: <code>lunaJoined</code>. סביבה: גן הירח (גוני כסף/אינדיגו).</p>
+</div>
+<div class="tl-item">
+  <div class="tl-lesson">שיעור 12: "גליץ' מכה!"</div>
+  <div class="tl-chars"><span class="badge b-villain">גליץ' - הופעה ראשונה</span> <span class="badge b-hero">קי</span> <span class="badge b-hero">מיקה</span></div>
+  <p>גליץ' מתממש: "!גגג-גליץ' פ-פ-פה". הוא הופך את פריסת המקלדת! אבל מגמגם ונראה מבולבל - זרעי גאולה. דגל: <code>glitchRevealed</code>. סביבה: מערת גליץ'.</p>
+</div>
+<div class="tl-item">
+  <div class="tl-lesson">שיעור 13: "לוחמים ומרפאים"</div>
+  <div class="tl-chars"><span class="badge b-ally">קאי - הופעה ראשונה</span> <span class="badge b-ally">נועה - הופעה ראשונה</span> <span class="badge b-hero">קי</span> <span class="badge b-hero">מיקה</span></div>
+  <p>קאי עם להבות: "!בוא נלחם". נועה רגועה: "...ואני אתקן מה שהבאג שובר". הצוות שלם! דגל: <code>noaJoined</code>.</p>
+</div>
+<div class="tl-item">
+  <div class="tl-lesson">שיעור 14: "ביחד אנחנו חזקים"</div>
+  <div class="tl-chars"><span class="badge b-hero">כל הגיבורים</span> <span class="badge b-mentor">סנסאי זן</span> <span class="badge b-villain">באג</span></div>
+  <p>באג חוזר עם פסקאות שלמות מבולבלות. סנסאי זן: "...רק ביחד תוכלו". הצגת הצוות המלא.</p>
+</div>
+<div class="tl-item boss">
+  <div class="tl-lesson">שיעור 15: בוס-אמצע - "באג + גליץ'"</div>
+  <div class="tl-chars"><span class="badge b-hero">כל הגיבורים</span> <span class="badge b-boss">באג + גליץ'</span></div>
+  <p><b>20 מילים + תיקוני שגיאות + היפוכי מקלדת.</b> HP באג=150, HP גליץ'=100. 90 שניות. באג: "!הפעם הבאתי חבר". גליץ' נראה לא מחויב.</p>
+</div>
+</div>
+</details>
+
+<details>
+<summary>פירוט שיעורים 16-20 (מערכה 3 - "הנינג'ה")</summary>
+<div class="timeline">
+<div class="tl-item">
+  <div class="tl-lesson">שיעור 16: "מבוך השגיאות"</div>
+  <div class="tl-act">מערכה 3</div>
+  <div class="tl-chars"><span class="badge b-hero">קי</span> <span class="badge b-hero">מיקה</span> <span class="badge b-villain">באג</span></div>
+  <p>באג על מסך ענק: "!ברוכים הבאים לעולם שלי". מבוך דיגיטלי של טקסט מבולבל.</p>
+</div>
+<div class="tl-item">
+  <div class="tl-lesson">שיעור 17: "מיקה פורצת"</div>
+  <div class="tl-chars"><span class="badge b-hero">מיקה (מובילה)</span> <span class="badge b-ally">לונה</span> <span class="badge b-ally">פיקסל</span></div>
+  <p>מיקה: "!בואי נפרוץ את המערכת". פיקסל: "!חומת אש פרוצה! 73% מהמבוך ממופה". שיעור של מיקה ולונה - קי בצד.</p>
+</div>
+<div class="tl-item">
+  <div class="tl-lesson">שיעור 18: "גליץ' מתלבט" (גאולה)</div>
+  <div class="tl-chars"><span class="badge b-hero">קי</span> <span class="badge b-villain">גליץ' - בן-ברית חלקי</span></div>
+  <p>גליץ' מהבהב: "!א-א-אני לא רוצה להיות ר-ר-רע". הקלדה מדויקת = הרגעת גליץ'. הוא פותח שביל ואז מאבד שליטה. <b>אמפתיה, לא אלימות.</b></p>
+</div>
+<div class="tl-item">
+  <div class="tl-lesson">שיעור 19: "מחזיקים מעמד"</div>
+  <div class="tl-chars"><span class="badge b-ally">קאי (מוביל)</span> <span class="badge b-ally">נועה</span> <span class="badge b-ally">יוקי</span></div>
+  <p>קאי: "!אני אעצור אותם". נועה: "!ואני אתקן כל שגיאה". יוקי: "!מהר, אין הרבה זמן". השביל למלך הבאגים פתוח.</p>
+</div>
+<div class="tl-item boss">
+  <div class="tl-lesson">שיעור 20: בוס סופי - "מלך הבאגים"</div>
+  <div class="tl-chars"><span class="badge b-hero">כל הגיבורים</span> <span class="badge b-mentor">סנסאי זן</span> <span class="badge b-ally">פיקסל + רקס</span> <span class="badge b-boss">מלך הבאגים</span></div>
+  <p><b>50 מילים, 120 שניות, 90%+ דיוק. HP = 200.</b> באג עם כתר זהב קטן: "!אני מלך הבאגים!". מערכת קומבו: קי=מהירות, מיקה=מגן דיוק, יוקי=מצב רסק, לונה=עדשת מיקוד, קאי=מכת כוח, נועה=ריפוי. ניצחון = תעודת "נינג'ה מקלדת אמיתי". באג בורח (לעולם לא מת!).</p>
+</div>
+</div>
+</details>
+
+<!-- ===== SECTION 2: UNLOCKS ===== -->
+<h2>2. מכניקת פתיחת דמויות</h2>
+
+<details open>
+<summary>לוח פתיחות</summary>
+<table>
+<tr><th>#</th><th>דמות</th><th>עברית</th><th>טריגר פתיחה</th><th>שיעור</th><th>סוג</th></tr>
+<tr><td>1</td><td>Ki</td><td>קי</td><td>זמין מההתחלה</td><td>0</td><td><span class="badge b-hero">ברירת מחדל</span></td></tr>
+<tr><td>2</td><td>Mika</td><td>מיקה</td><td>השלמת שיעור 2</td><td>2</td><td><span class="badge b-hero">סיפור</span></td></tr>
+<tr><td>3</td><td>Sensei Zen</td><td>סנסאי זן</td><td>השלמת שיעור 8</td><td>8</td><td><span class="badge b-mentor">סיפור</span></td></tr>
+<tr><td>4</td><td>Yuki</td><td>יוקי</td><td>השלמת שיעור 10</td><td>10</td><td><span class="badge b-ally">סיפור</span></td></tr>
+<tr><td>5</td><td>Luna</td><td>לונה</td><td>השלמת שיעור 11</td><td>11</td><td><span class="badge b-ally">סיפור</span></td></tr>
+<tr><td>6</td><td>Kai</td><td>קאי</td><td>השלמת שיעור 13</td><td>13</td><td><span class="badge b-ally">סיפור</span></td></tr>
+<tr><td>7</td><td>Noa</td><td>נועה</td><td>השלמת שיעור 13</td><td>13</td><td><span class="badge b-ally">סיפור</span></td></tr>
+<tr><td>8</td><td>Pixel</td><td>פיקסל</td><td>זמין מההתחלה</td><td>0</td><td><span class="badge b-ally">אלמנט UI</span></td></tr>
+<tr><td>9</td><td>Rex</td><td>רקס</td><td>השלמת 3 משחקים</td><td>N/A</td><td><span class="badge b-ally">הישג</span></td></tr>
+<tr><td>10</td><td>Shadow</td><td>צל</td><td>כניסה ראשונה לזירה</td><td>N/A</td><td><span class="badge b-rival">קרב</span></td></tr>
+<tr><td>11</td><td>Storm</td><td>סערה</td><td>ניצחון על צל</td><td>N/A</td><td><span class="badge b-rival">קרב</span></td></tr>
+<tr><td>12</td><td>Blaze</td><td>להבה</td><td>ניצחון על סערה</td><td>N/A</td><td><span class="badge b-rival">קרב</span></td></tr>
+<tr><td>13</td><td>Bug</td><td>באג</td><td>מופיע בשיעור 5 (לא ניתן לפתיחה)</td><td>5</td><td><span class="badge b-villain">נבל</span></td></tr>
+<tr><td>14</td><td>Glitch</td><td>גליץ'</td><td>מופיע בשיעור 12 (לא ניתן לפתיחה)</td><td>12</td><td><span class="badge b-villain">נבל</span></td></tr>
+</table>
+</details>
+
+<details>
+<summary>מה קורה בפתיחה + אנימציות פתיחה</summary>
+<table>
+<tr><th>אפקט פתיחה</th><th>תיאור</th></tr>
+<tr><td>בחירת מלווה</td><td>ניתן לבחור את הדמות כמלווה פעיל בדשבורד הבית</td></tr>
+<tr><td>הפעלת דיאלוג</td><td>הדמות מתחילה לדבר בעמודים שהוקצו לה</td></tr>
+<tr><td>אנימציית חגיגה</td><td>אנימציית פתיחה חד-פעמית (3 שניות)</td></tr>
+<tr><td>גלריית פרופיל</td><td>הדמות מופיעה ב"הצוות שלי"</td></tr>
+<tr><td>תג הישג</td><td>"(שם הדמות) הצטרף/ה לצוות"</td></tr>
+<tr><td>שיפור עמוד</td><td>הדמות מופיעה בעמוד שהוקצה לה בגודל מותאם גיל</td></tr>
+<tr><td>קרוסלת בית</td><td>דמויות פתוחות מסתובבות בדשבורד (מקסימום 3 גלויות)</td></tr>
+</table>
+
+<h3>אנימציות פתיחה (3 שניות כל אחת)</h3>
+<table>
+<tr><th>דמות</th><th>אנימציה</th><th>משפט ברכה</th></tr>
+<tr><td>מיקה</td><td>נכנסת מימין, כפפות הולוגרפיות מהבהבות</td><td>"!היי! ביחד נהיה בלתי ניתנים לעצירה"</td></tr>
+<tr><td>סנסאי זן</td><td>מופיע לאט עם זוהר זהוב, משתחווה</td><td>"...סבלנות, תלמידים. הכל מתחיל כאן"</td></tr>
+<tr><td>יוקי</td><td>כניסת טשטוש מהירות, אוזני חתול קופצות</td><td>"!הכי מהירה בדוג'ו - עד עכשיו"</td></tr>
+<tr><td>לונה</td><td>יורדת מלמעלה עם חלקיקי אור ירח</td><td>"...נשימה, ריכוז, ואז... הקלדה מושלמת"</td></tr>
+<tr><td>קאי</td><td>פורץ פנימה עם אפקטי להבה (חלקיקים)</td><td>"!אש באצבעות! בוא נלחם"</td></tr>
+<tr><td>נועה</td><td>נכנסת בעדינות, ניצוצות ריפוי ירוקים</td><td>"!אני כאן, לא נורא לטעות"</td></tr>
+<tr><td>רקס</td><td>דורך פנימה, ידיים זעירות מנופפות</td><td>"!גם עם ידיים קטנות - אני פה"</td></tr>
+<tr><td>צל</td><td>מתממש מחושך, עיניים סגולות זוהרות</td><td>"...צל מופיע. הכינו את האצבעות"</td></tr>
+<tr><td>סערה</td><td>הבזק ברק, ואז מופיע</td><td>"!ברק! מוכנים לגורל שלכם?"</td></tr>
+<tr><td>להבה</td><td>מעגל אש, ואז צועד דרכו</td><td>"!אש קדושה! רק הראויים ישרדו"</td></tr>
+</table>
+</details>
+
+<!-- ===== SECTION 3: PAGE MAPPING ===== -->
+<h2>3. תפקידי דמויות לפי עמוד</h2>
+
+<details open>
+<summary>מפת עמוד-לדמות מלאה</summary>
+<div class="card-grid">
+<div class="card">
+  <div class="card-title">דשבורד בית</div>
+  <div class="card-sub"><span class="badge b-hero">קי</span> ראשי | מלווים מסתובבים | <span class="badge b-ally">פיקסל</span> סרגל נתונים</div>
+  <p>ברכה, טיפ יומי. עד 3 מלווים פתוחים בקרוסלה.</p>
+</div>
+<div class="card">
+  <div class="card-title">שיעורים</div>
+  <div class="card-sub"><span class="badge b-mentor">סנסאי זן</span> ראשי | <span class="badge b-hero">קי</span> עידוד</div>
+  <p>סנסאי זן מנחה ומציג. דמויות ספציפיות לפי שיעור (ראו ציר הזמן). סביבה: דוג'ו אימונים.</p>
+</div>
+<div class="card">
+  <div class="card-title">תרגול חופשי</div>
+  <div class="card-sub"><span class="badge b-ally">לונה</span> ראשית | <span class="badge b-ally">נועה</span> בשגיאות >40%</div>
+  <p>לונה מנחה ברוגע. קי קטן בפינה. סביבה: גן הירח.</p>
+</div>
+<div class="card">
+  <div class="card-title">מבחן מהירות</div>
+  <div class="card-sub"><span class="badge b-ally">יוקי</span> ראשית | <span class="badge b-ally">רקס</span> מעודד</div>
+  <p>יוקי מתחרה עם השחקן. רקס מגיב למהירות. סביבה: זירת מהירות.</p>
+</div>
+<div class="card">
+  <div class="card-title">זירת קרב</div>
+  <div class="card-sub"><span class="badge b-ally">קאי</span> מאמן | <span class="badge b-rival">צל/סערה/להבה</span> יריבים</div>
+  <p>קאי מאמן ונותן טיפים אסטרטגיים. קי קטן, מעודד. סביבה: קולוסיאום קרב.</p>
+</div>
+<div class="card">
+  <div class="card-title">קיצורי מקלדת</div>
+  <div class="card-sub"><span class="badge b-hero">מיקה</span> ראשית | <span class="badge b-ally">פיקסל</span> רמזים</div>
+  <p>מיקה מדגימה כל קיצור. פיקסל שכבת נתונים. סביבה: מעבדת סייבר.</p>
+</div>
+<div class="card">
+  <div class="card-title">משחקים</div>
+  <div class="card-sub"><span class="badge b-ally">רקס</span> ראשי | <span class="badge b-ally">פיקסל</span> ניקוד</div>
+  <p>רקס חבר גיימינג, מציג כל משחק. סביבה: ארקייד משחקים.</p>
+</div>
+<div class="card">
+  <div class="card-title">סטטיסטיקות</div>
+  <div class="card-sub"><span class="badge b-ally">פיקסל</span> ראשי בלבד</div>
+  <p>פיקסל מציג נתונים. קי זעיר בפינה. שכבת UI נתונים.</p>
+</div>
+<div class="card">
+  <div class="card-title">פרופיל / הגדרות</div>
+  <div class="card-sub"><span class="badge b-hero">קי</span> אייקון קטן</div>
+  <p>מלווה נבחר מוצג. ללא דמויות נוספות.</p>
+</div>
+<div class="card">
+  <div class="card-title">עזרת שגיאות (שכבה)</div>
+  <div class="card-sub"><span class="badge b-ally">נועה</span> בלבד</div>
+  <p>נועה מופיעה קונטקסטואלית בכל עמוד כשהשחקן מתקשה. "!לא נורא, ננסה שוב".</p>
+</div>
+<div class="card">
+  <div class="card-title">קרבות בוס</div>
+  <div class="card-sub"><span class="badge b-hero">כל הגיבורים</span> | <span class="badge b-villain">באג / גליץ'</span></div>
+  <p>כל הגיבורים מתגייסים. פיקסל מציג HP/זמן. סביבה משתנה לפי מערכה.</p>
+</div>
+</div>
+</details>
+
+<details>
+<summary>דמויות בסרגל צד וניווט</summary>
+<table>
+<tr><th>אלמנט UI</th><th>דמות</th><th>התנהגות</th></tr>
+<tr><td>לוגו/אווטר סרגל צד</td><td>קי (קטן, מגיב לעמוד)</td><td>סרק בסרגל. שמח בניווט.</td></tr>
+<tr><td>השלמת שיעור</td><td>קי + סנסאי זן</td><td>קי מריע, סנסאי מהנהן בחוכמה</td></tr>
+<tr><td>פופאפ הישג</td><td>קי (מצב מעודד)</td><td>קופץ, ניצוצות</td></tr>
+<tr><td>רצף שגיאות (>5)</td><td>נועה (שכבה)</td><td>"!לא נורא, ננסה שוב"</td></tr>
+<tr><td>טיפ יומי (בית)</td><td>סנסאי זן (בועה)</td><td>מסתובב בין ציטוטי חוכמה</td></tr>
+<tr><td>מונה רצף</td><td>קי (אנימציית להבה ברצף >7)</td><td>להבה גדלה עם הרצף</td></tr>
+</table>
+</details>
+
+<details>
+<summary>תצוגת מורה / מנהל</summary>
+<table>
+<tr><th>אלמנט</th><th>תצוגת תלמיד</th><th>תצוגת מורה</th></tr>
+<tr><td>דמות ראשית</td><td>קי (אנרגטי, גדול)</td><td>סנסאי זן (חכם, אווטר קטן)</td></tr>
+<tr><td>נוכחות דמויות</td><td>דמויות מלאות, מונפשות</td><td>אווטר סנסאי זן בסרגל צד בלבד</td></tr>
+<tr><td>מלווה נתונים</td><td>פיקסל (שמח)</td><td>פיקסל (אנליטי, בולט)</td></tr>
+<tr><td>טון דיאלוג</td><td>כיף, סלנג, עידוד</td><td>מקצועי, מונחה נתונים</td></tr>
+<tr><td>סיפור/נרטיב</td><td>בועות ופעימות סיפור מלאות</td><td>מושבת</td></tr>
+<tr><td>מצב קרב</td><td>זמין</td><td>מוסתר או "דמו" בלבד</td></tr>
+</table>
+</details>
+
+<!-- ===== SECTION 4: VILLAINS ===== -->
+<h2>4. מבנה קשת הנבלים</h2>
+
+<details>
+<summary>קשת באג (באג) - מערכות 1-3</summary>
+<div class="combat-box">
+<h3>פילוסופיה: באג לעולם לא מת!</h3>
+<p>עיקרון עיצוב מרכזי המושרש בפסיכולוגיית ילדים. באג הוא חמוד וקומי, לא מפחיד. הוא לא מבין שהוא "רע" - הוא חושב שבלבול זה כיף!</p>
+<table>
+<tr><th>תרחיש</th><th>מה קורה</th><th>ויזואלי</th></tr>
+<tr><td>מילה נכונה</td><td>באג מחבק את עצמו, עיניים סחרחרות (לא כאב!)</td><td>ספירלות, נדנוד</td></tr>
+<tr><td>איבוד HP</td><td>קליפה נסדקת קלות (כמו ביצה, חמוד)</td><td>חלקיקי פיקסל קטנים</td></tr>
+<tr><td>"הובס"</td><td>כתר נופל. באג מתכווץ. "!אחזוווור" + עף לו</td><td>ענן פוף, ניצוצות</td></tr>
+</table>
+</div>
+
+<table>
+<tr><th>מערכה</th><th>רמת כוח</th><th>סוג התקפה</th><th>היקף</th></tr>
+<tr><td>1 (שיעורים 5-6)</td><td>נמוכה</td><td>מחליף 2-3 אותיות</td><td>אותיות בודדות</td></tr>
+<tr><td>1 - בוס (7)</td><td>בינונית</td><td>מבלבל 10 מילים שלמות</td><td>מילים שלמות</td></tr>
+<tr><td>2 (8-14)</td><td>בינונית-גבוהה</td><td>בלבול פסקאות + שגיאות מתחדשות</td><td>פסקאות</td></tr>
+<tr><td>2 - בוס (15)</td><td>גבוהה</td><td>20 מילים + היפוכי מקלדת</td><td>כפול עם גליץ'</td></tr>
+<tr><td>3 (16-19)</td><td>גבוהה מאוד</td><td>מבוך שגיאות שלם</td><td>עולם דיגיטלי</td></tr>
+<tr><td>3 - בוס (20)</td><td>מקסימום - "מלך הבאגים"</td><td>50 מילים, 90% דיוק, טיימר</td><td>עימות סופי</td></tr>
+</table>
+
+<h3>צורות עתידיות של באג (תוכן פוסט-השקה)</h3>
+<table>
+<tr><th>צורה</th><th>אירוע</th><th>תיאור</th></tr>
+<tr><td>באג חנוכה</td><td>כסלו</td><td>כובע סביבון, מבלבל מילות חנוכה</td></tr>
+<tr><td>באג פורים</td><td>אדר</td><td>תחפושת (שונה כל שנה), מטורף במיוחד</td></tr>
+<tr><td>באג חוף</td><td>קיץ</td><td>משקפי שמש זעירים ושמשייה</td></tr>
+<tr><td>SPAM</td><td>בוס חודשי</td><td>ישות ספאם אימייל - נבל חדש</td></tr>
+<tr><td>VIRUS</td><td>בוס חודשי</td><td>ישות השחתת טקסט - נבל חדש</td></tr>
+</table>
+</details>
+
+<details>
+<summary>קשת גליץ' (גליץ') - גאולה</summary>
+<table>
+<tr><th>שלב</th><th>שיעורים</th><th>תיאור</th></tr>
+<tr><td>לא קיים</td><td>1-11</td><td>אין רמיזות. הפתעה נקייה.</td></tr>
+<tr><td>הצגה</td><td>12</td><td>גורם עיוות מסך. מגמגם, מתנצל, מבולבל. דמות אוהדת מיידית.</td></tr>
+<tr><td>ברית עם באג</td><td>12-15</td><td>ברית לא יציבה. באג אומר לו "לבלגן". גליץ' מציית אבל ממשיך להתנצל.</td></tr>
+<tr><td>גאולה</td><td>18</td><td>השחקן "מרגיע" את גליץ' באמצעות הקלדה מדויקת. גליץ' עוזר לרגע, ואז מאבד שליטה.</td></tr>
+<tr><td>פוסט-גיים</td><td>אירועים</td><td>קלף פראי. לפעמים עוזר, לפעמים מפריע. תמיד אוהד.</td></tr>
+</table>
+<p style="margin-top:10px;color:#00B894"><b>הקשת של גליץ' עוסקת באמפתיה:</b> השחקן לא נלחם בגליץ' - הוא מרגיע אותו דרך שליטה. לא כל אויב הוא עוין; חלקם פשוט מבולבלים וצריכים סבלנות.</p>
+</details>
+
+<details>
+<summary>מכניקת "הנשק = המקלדת"</summary>
+<div class="combat-box">
+<table>
+<tr><th>פעולה</th><th>מיומנות שחקן</th><th>מכניקת משחק</th><th>ויזואלי</th></tr>
+<tr><td>מילה נכונה</td><td>דיוק</td><td>באג מאבד -1 לב</td><td>הבזק ירוק, כוכבים</td></tr>
+<tr><td>קומבו 5 מילים</td><td>עקביות</td><td>באג מאבד -2 לבבות (סופר-מכה!)</td><td>הבזק זהב, כל הגיבורים מריעים</td></tr>
+<tr><td>שגיאת הקלדה</td><td>טעות</td><td>באג מתרפא +1 לב</td><td>הבזק אדום, באג צוחק</td></tr>
+<tr><td>מהירות גבוהה</td><td>מהירות</td><td>בונוס זמן, יותר נקודות</td><td>קווי מהירות, יוקי חוגגת</td></tr>
+<tr><td>שימוש בקיצור</td><td>ידע</td><td>פורץ מחסומים</td><td>דפוס מעגל, מיקה חוגגת</td></tr>
+</table>
+<h3 style="margin-top:12px">כוחות מיוחדים בבוס סופי (שיעור 20)</h3>
+<table>
+<tr><th>דמות</th><th>כוח מיוחד</th><th>אפקט</th></tr>
+<tr><td>קי</td><td>פרץ מהירות</td><td>+10% WPM ל-5 שניות</td></tr>
+<tr><td>מיקה</td><td>מגן דיוק</td><td>1 שגיאה חינם</td></tr>
+<tr><td>יוקי</td><td>מצב רסק</td><td>נקודות כפולות ל-3 שניות</td></tr>
+<tr><td>לונה</td><td>עדשת מיקוד</td><td>מקשים גדולים יותר ל-3 שניות</td></tr>
+<tr><td>קאי</td><td>מכת כוח</td><td>מילה נכונה = -2 HP</td></tr>
+<tr><td>נועה</td><td>ריפוי</td><td>מסירה שגיאה אחת מהרשומה</td></tr>
+</table>
+</div>
+</details>
+
+<!-- ===== SECTION 5: SKINS ===== -->
+<h2>5. סקינים / מצבים חלופיים</h2>
+
+<details>
+<summary>סקיני דמויות עונתיים</summary>
+<table>
+<tr><th>אירוע</th><th>דמויות עם סקינים</th><th>שם סט</th></tr>
+<tr><td>חנוכה (כסלו)</td><td>קי: סרט ראש חנוכייה. מיקה: דרון הולוגרם סביבון.</td><td>"נינג'ה חנוכה"</td></tr>
+<tr><td>פורים (אדר)</td><td>כל הדמויות בתחפושות מטורפות. באג מקבל את התחפושת הכי טובה!</td><td>"פורים פליפ" - גליץ' הכוכב</td></tr>
+<tr><td>ט"ו בשבט</td><td>נועה: כתר פרחים. רקס: תחפושת עץ.</td><td>"נינג'ה גן"</td></tr>
+<tr><td>שבוע העברית</td><td>סנסאי זן: תלבושת סופר מסורתית, נוצה.</td><td>"שומר העברית"</td></tr>
+<tr><td>שבוע הספר (אייר)</td><td>לונה: דפי ספר מרחפים. קי: משקפי תולעת ספרים.</td><td>"נינג'ה סיפור"</td></tr>
+<tr><td>קיץ (יולי-אוג')</td><td>קי: מכנסי חוף, גלשן. יוקי: משקפי שחייה.</td><td>"נינג'ה חוף"</td></tr>
+<tr><td>שבוע סייבר (פבר')</td><td>מיקה: שריון סייברפאנק. פיקסל: מצב אדום.</td><td>"נינג'ה סייבר"</td></tr>
+<tr><td>חזרה לבית-ספר (ספט')</td><td>קי: תיק גב, עיפרון. סנסאי זן: מצביע ללוח.</td><td>"יום ראשון"</td></tr>
+</table>
+</details>
+
+<details>
+<summary>סקיני אווטר שחקן + חגורת נינג'ה</summary>
+<table>
+<tr><th>התאמה אישית</th><th>מקור</th><th>איך נפתח</th></tr>
+<tr><td>אווטר ברירת מחדל</td><td>6 צלליות נינג'ה מוכנות</td><td>זמין מההתחלה</td></tr>
+<tr><td>אווטר בהשראת דמות</td><td>סגנון קי, סגנון מיקה וכו'</td><td>פתיחת דמות + אבן דרך WPM</td></tr>
+<tr><td>מסגרת אווטר עונתית</td><td>גבול חגיגי</td><td>השלמת אירוע עונתי</td></tr>
+<tr><td>חגורת נינג'ה</td><td>לבנה > צהובה > ירוקה > כחולה > סגולה > שחורה</td><td>ספי WPM: 10, 20, 30, 40, 50, 60</td></tr>
+</table>
+</details>
+
+<details>
+<summary>וריאנטים של דמויות לפי מצב משחק</summary>
+<table>
+<tr><th>מצב משחק</th><th>וריאנט דמות</th><th>תיאור</th></tr>
+<tr><td>גשם מילים (משחקים)</td><td>רקס תופס מילים נופלות</td><td>רקס רץ שמאלה-ימינה, ידיים זעירות</td></tr>
+<tr><td>חיתוך נינג'ה (משחקים)</td><td>קי חותך אותיות מעופפות</td><td>סגנון Fruit Ninja עם אותיות עבריות</td></tr>
+<tr><td>זיכרון אותיות (משחקים)</td><td>פיקסל חושף זוגות</td><td>משחק קלפי זיכרון, פיקסל הופך</td></tr>
+<tr><td>ספרינט מהירות</td><td>יוקי רצה ליד טקסט השחקן</td><td>מירוץ מסך מפוצל</td></tr>
+<tr><td>דוג'ו קיצורים</td><td>מיקה מדגימה כל קיצור</td><td>שכבת מקלדת הולוגרפית</td></tr>
+<tr><td>מצב זן (תרגול)</td><td>לונה בלבד, ללא אחרות</td><td>UI מינימלי, מוזיקה רגועה, אור ירח</td></tr>
+<tr><td>מצב אתגר (קרב)</td><td>קאי מאמן, יריב מופיע</td><td>ויזואליזציית 1 נגד 1</td></tr>
+</table>
+</details>
+
+<!-- ===== SECTION 6: AGE-ADAPTIVE ===== -->
+<h2>6. נראות דמויות מותאמת גיל</h2>
+
+<details open>
+<summary>מטריצת גדלים - כל הדמויות בכל הגילאים</summary>
+<div class="size-grid">
+  <div class="hdr">דמות</div><div class="hdr">שתיל (6-8)</div><div class="hdr">נבט (8-10)</div><div class="hdr">גזע (10-12)</div><div class="hdr">ענף (12-14)</div><div class="hdr">צמרת (14-16+)</div>
+  <div class="cell">קי</div><div class="cell">120px</div><div class="cell">80px</div><div class="cell">48px</div><div class="cell">28px</div><div class="cell zero">מוסתר</div>
+  <div class="cell">מיקה</div><div class="cell">120px</div><div class="cell">80px</div><div class="cell">48px</div><div class="cell zero">מוסתר</div><div class="cell zero">מוסתר</div>
+  <div class="cell">סנסאי זן</div><div class="cell">120px</div><div class="cell">80px</div><div class="cell">48px</div><div class="cell">טקסט טיפ</div><div class="cell zero">מוסתר</div>
+  <div class="cell">יוקי</div><div class="cell">120px</div><div class="cell">80px</div><div class="cell">48px</div><div class="cell zero">מוסתר</div><div class="cell zero">מוסתר</div>
+  <div class="cell">לונה</div><div class="cell">120px</div><div class="cell">80px</div><div class="cell">48px</div><div class="cell zero">מוסתר</div><div class="cell zero">מוסתר</div>
+  <div class="cell">קאי</div><div class="cell">120px</div><div class="cell">80px</div><div class="cell">48px</div><div class="cell zero">מוסתר</div><div class="cell zero">מוסתר</div>
+  <div class="cell">נועה</div><div class="cell">120px</div><div class="cell">80px</div><div class="cell">48px</div><div class="cell zero">מוסתר</div><div class="cell zero">מוסתר</div>
+  <div class="cell">פיקסל</div><div class="cell">100px</div><div class="cell">64px</div><div class="cell">48px</div><div class="cell">36px</div><div class="cell zero">מוסתר</div>
+  <div class="cell">רקס</div><div class="cell">120px</div><div class="cell">80px</div><div class="cell">48px</div><div class="cell zero">מוסתר</div><div class="cell zero">מוסתר</div>
+  <div class="cell">באג</div><div class="cell">מאוד חמוד</div><div class="cell">חמוד</div><div class="cell">נבל מלא</div><div class="cell">נבל מלא</div><div class="cell">אייקון קטן</div>
+  <div class="cell">גליץ'</div><div class="cell zero">לא מופיע</div><div class="cell">קצר, "מצחיק"</div><div class="cell">נוכחות מלאה</div><div class="cell">נוכחות מלאה</div><div class="cell zero">אייקון / נעדר</div>
+  <div class="cell">יריבים</div><div class="cell">גדולים, ידידותיים</div><div class="cell">בינוניים, יריבים</div><div class="cell">תחרותיים מלאים</div><div class="cell">קטנים, רציניים</div><div class="cell zero">שם טקסט בלבד</div>
+</div>
+</details>
+
+<details>
+<summary>התנהגות מפורטת לפי שכבת גיל</summary>
+<table>
+<tr><th>כלל</th><th>שתיל (6-8)</th><th>נבט (8-10)</th><th>גזע (10-12)</th><th>ענף (12-14)</th><th>צמרת (14-16+)</th></tr>
+<tr><td>עולם</td><td>"גן קסום"</td><td>"מחנה הרפתקאות"</td><td>"זירת נינג'ה"</td><td>"מרכז אימון"</td><td>"דשבורד פרו"</td></tr>
+<tr><td>סגנון ציור</td><td>צ'יבי מוגבר, צבעים רכים, עיניים ענקיות</td><td>צ'יבי רגיל, צבעים בהירים</td><td>פרופורציות גבוהות יותר, מגניב</td><td>מפורט, פחות קריקטורי</td><td>הכי בוגר (אם מופעל)</td></tr>
+<tr><td>בועות דיאלוג</td><td>מקסימום 5 מילים</td><td>מקסימום 8 מילים</td><td>10+ מילים</td><td>עובדתי: "WPM: 45"</td><td>אפס בועות</td></tr>
+<tr><td>בוס - באג</td><td>5 מילים, ללא טיימר, חגיגה ענקית</td><td>10 מילים, תזמון רגוע</td><td>טיימר + דיוק + קומבו</td><td>+ לוח תוצאות</td><td>"שבור שיא אישי" בלבד</td></tr>
+<tr><td>נרטיב</td><td>מינימלי. בועות קצרות.</td><td>3 מערכות בפישוט</td><td>3 מערכות מלאות</td><td>מצומצם דרמטית</td><td>מושבת לגמרי</td></tr>
+<tr><td>גליץ'</td><td>לא מופיע (מבלבל/מפחיד)</td><td>קצר, מסגור "מצחיק"</td><td>נוכחות מלאה</td><td>נוכחות מלאה</td><td>אייקון בלבד או נעדר</td></tr>
+</table>
+</details>
+
+<!-- ===== SECTION 7: EXPRESSIONS ===== -->
+<h2>7. דרישות הבעות/תנוחות לפי דמות</h2>
+
+<details>
+<summary>קי (קי) - קמע ראשי | 12 הבעות, 6 תנוחות</summary>
+<table>
+<tr><th>הבעה</th><th>עברית</th><th>שימוש</th><th>עדיפות</th></tr>
+<tr><td>idle</td><td>מצב רגיל</td><td>ברירת מחדל בכל העמודים</td><td>P0</td></tr>
+<tr><td>happy</td><td>שמח</td><td>תשובה נכונה, ניצחון קטן</td><td>P0</td></tr>
+<tr><td>excited</td><td>נרגש</td><td>הישג גדול, עליית רמה, קומבו</td><td>P0</td></tr>
+<tr><td>thinking</td><td>חושב</td><td>פתיחת שיעור, לפני הקלדה</td><td>P0</td></tr>
+<tr><td>sad</td><td>עצוב</td><td>ניסיון כושל, ציון נמוך</td><td>P0</td></tr>
+<tr><td>cheering</td><td>מעודד</td><td>בוס הובס, אבן דרך</td><td>P0</td></tr>
+<tr><td>sleeping</td><td>ישן</td><td>טיימאאוט סרק (>60 שניות)</td><td>P1</td></tr>
+<tr><td>surprised</td><td>מופתע</td><td>באג מופיע, אירוע לא צפוי</td><td>P1</td></tr>
+<tr><td>determined</td><td>נחוש</td><td>תחילת קרב בוס, אתגר מקובל</td><td>P1</td></tr>
+<tr><td>celebrating</td><td>חוגג</td><td>שיעור הושלם, הישג נפתח</td><td>P1</td></tr>
+<tr><td>confused</td><td>מבולבל</td><td>עיוות גליץ', שינוי פריסה</td><td>P2</td></tr>
+<tr><td>winking</td><td>קורץ</td><td>ביצת פסחא, סוד שנמצא</td><td>P2</td></tr>
+</table>
+<p><b>תנוחות:</b> עמידת מוכנות (ברירת מחדל), ריצה (מהירות), הקלדה (שיעורים), ניצחון (פוסט-בוס), מצביע (CTA), ישיבה (תרגול).</p>
+</details>
+
+<details>
+<summary>מיקה (מיקה) - נינג'ת טק | 10 הבעות</summary>
+<table>
+<tr><th>הבעה</th><th>עברית</th><th>שימוש</th><th>עדיפות</th></tr>
+<tr><td>idle</td><td>מצב רגיל</td><td>ברירת מחדל בעמוד קיצורים</td><td>P0</td></tr>
+<tr><td>happy</td><td>שמחה</td><td>קיצור נכון</td><td>P0</td></tr>
+<tr><td>excited</td><td>נרגשת</td><td>אתגר טכנולוגי הושלם</td><td>P0</td></tr>
+<tr><td>thinking</td><td>חושבת</td><td>מנתחת בעיה</td><td>P0</td></tr>
+<tr><td>competitive</td><td>תחרותית</td><td>מאתגרת את השחקן</td><td>P0</td></tr>
+<tr><td>impressed</td><td>מרשימה</td><td>שחקן עולה על ציפיות</td><td>P1</td></tr>
+<tr><td>hacking</td><td>פורצת</td><td>הדגמות קיצורים, מעבדת סייבר</td><td>P1</td></tr>
+<tr><td>determined</td><td>נחושה</td><td>קרב בוס, לובשת מסכה כתומה</td><td>P1</td></tr>
+<tr><td>sarcastic</td><td>ציניקנית</td><td>טעות ברורה (גיל גזע+ בלבד)</td><td>P2</td></tr>
+<tr><td>celebrating</td><td>חוגגת</td><td>בוס הובס, משימה הושלמה</td><td>P2</td></tr>
+</table>
+<p><b>מצבים מיוחדים:</b> מסכה כתומה (קרב) | דרון כתף פעיל (הדגמות).</p>
+</details>
+
+<details>
+<summary>שאר הדמויות (יוקי, לונה, קאי, נועה, סנסאי זן, פיקסל, רקס) | 8 הבעות כל אחד</summary>
+<table>
+<tr><th>דמות</th><th>הבעות P0</th><th>הבעות P1</th><th>הבעות P2</th><th>הערה מיוחדת</th></tr>
+<tr><td><b>יוקי</b></td><td>idle, racing, impressed</td><td>taunting, defeated, celebrating</td><td>stretching, windswept</td><td>windswept ב-WPM>50</td></tr>
+<tr><td><b>לונה</b></td><td>idle, peaceful, encouraging</td><td>meditating, concerned, happy</td><td>moonlit, whispering</td><td>moonlit בדיוק >95%</td></tr>
+<tr><td><b>קאי</b></td><td>idle, battle-ready, attacking (+ P0)</td><td>defending, victory, defeat, fired-up</td><td>coaching, exhausted, saluting</td><td>10 הבעות סה"כ</td></tr>
+<tr><td><b>נועה</b></td><td>idle, healing, encouraging</td><td>happy, concerned, celebrating</td><td>working, proud</td><td>מופיעה בכל עמוד בשגיאות!</td></tr>
+<tr><td><b>סנסאי זן</b></td><td>idle, teaching, wise</td><td>proud, thoughtful, laughing</td><td>mysterious, emotional</td><td>מסכה שחורה על השריון (פריט לור)</td></tr>
+<tr><td><b>פיקסל</b></td><td>idle, analyzing, happy</td><td>alert, scanning, celebrating</td><td>sad-face, glitching</td><td>"פנים" = פיקסל-ארט על מסך :) :/ ! &lt;3</td></tr>
+<tr><td><b>רקס</b></td><td>idle, excited, cheering</td><td>trying, laughing, celebrating</td><td>sleeping, stomping</td><td>ידיים זעירות = הומור</td></tr>
+</table>
+</details>
+
+<details>
+<summary>באג (נבל) | 10 הבעות + גליץ' | 8 הבעות</summary>
+<table>
+<tr><th colspan="4" style="background:#e1705622;color:#e17056">באג (באג) - 10 הבעות</th></tr>
+<tr><th>הבעה</th><th>עברית</th><th>שימוש</th><th>עדיפות</th></tr>
+<tr><td>idle, mischievous, giggling</td><td>רגיל, שובב, צוחק</td><td>ברירת מחדל, בלבול, אחרי שגיאה</td><td>P0</td></tr>
+<tr><td>hit, fleeing</td><td>נפגע, בורח</td><td>מילה נכונה (מחבק עצמו!), הובס</td><td>P0</td></tr>
+<tr><td>confident, surprised, healing</td><td>בטוח, מופתע, מתרפא</td><td>לפני בוס, קומבו שחקן, שגיאת שחקן</td><td>P1</td></tr>
+<tr><td>king-form, dancing</td><td>מלך, רוקד</td><td>כתר+גלימה 1.5x, ניצחון באג</td><td>P1-P2</td></tr>
+</table>
+<p style="color:#ff6347;margin:8px 0"><b>כלל קריטי:</b> "נפגע" = מחבק עצמו + עיניים סחרחרות, לעולם לא כאב. "בורח" = ענן פוף + "!אחזוווור".</p>
+
+<table style="margin-top:12px">
+<tr><th colspan="4" style="background:#6C5CE722;color:#a29bfe">גליץ' (גליץ') - 8 הבעות</th></tr>
+<tr><th>הבעה</th><th>עברית</th><th>שימוש</th><th>עדיפות</th></tr>
+<tr><td>default, attacking, glitching</td><td>ברירת מחדל, תוקף, מתגלטש</td><td>צביר פיקסלים מבולבל, התקפה, סטטיק</td><td>P0</td></tr>
+<tr><td>calm, confused</td><td>רגוע, מבולבל</td><td>שלווה (שיעור 18), מהבהב בין צורות</td><td>P1</td></tr>
+<tr><td>dissolving, helping, reforming</td><td>מתפורר, עוזר, מתאחד</td><td>מאבד צורה, פותח שביל, חוזר</td><td>P1-P2</td></tr>
+</table>
+<p style="color:#a29bfe;margin:8px 0"><b>כלל ויזואלי:</b> לגליץ' אין צורה קבועה. כל פריים מראה תנועת פיקסלים עדינה. הקבועים היחידים: שתי "עיניים" עגולות לבנות וגודל/צללית כללית.</p>
+</details>
+
+<details>
+<summary>יריבי קרב (צל, סערה, להבה) | 6 הבעות כל אחד</summary>
+<table>
+<tr><th>הבעה</th><th>צל (חתול - קל)</th><th>סערה (שועל - בינוני)</th><th>להבה (דרקון - קשה)</th></tr>
+<tr><td>idle</td><td>כורע, עיניים סגולות זוהרות</td><td>ברקים סביבו, חיוך יהיר</td><td>עומד מלכותי, הילת אש, שריון זהב</td></tr>
+<tr><td>טעינה/הכנה</td><td>אורב, מקיף את השחקן</td><td>חשמל מצטבר</td><td>להבות מתגברות, כנפיים נפרשות</td></tr>
+<tr><td>attacking</td><td>זינוק קדימה</td><td>מכת ברק</td><td>נשיפת אש (מעוצבת, לא אלימה)</td></tr>
+<tr><td>defeated</td><td>יושב, מלקק כף רגל, מכובד</td><td>פריקה סטטית, מופתע</td><td>להבה דועכת, משתחווה בכבוד</td></tr>
+<tr><td>victory</td><td>עומד זקוף, תנועת זנב</td><td>ילל, רקע ברקים</td><td>עף למעלה, שאגה (קריקטורית)</td></tr>
+<tr><td>respect</td><td>מרכין ראש אחרי קרב הוגן</td><td>מהנהן, ברקים נרגעים</td><td>מגיש להבה כמתנה (ידידותי)</td></tr>
+</table>
+</details>
+
+<!-- ===== SECTION 8: IMPLEMENTATION ===== -->
+<h2>8. רשימת מימוש</h2>
+
+<details>
+<summary>נכסי אמנות נדרשים</summary>
+<table>
+<tr><th>דמות</th><th>מודל שיט</th><th>קיים?</th><th>גיליון הבעות</th><th>קיים?</th></tr>
+<tr><td>קי</td><td>ki-boy-v2.jpg</td><td style="color:#00B894">כן</td><td>נדרש</td><td style="color:#e17056">לא</td></tr>
+<tr><td>מיקה</td><td>mika-girl.jpg</td><td style="color:#00B894">כן</td><td>נדרש</td><td style="color:#e17056">לא</td></tr>
+<tr><td>יוקי</td><td>yuki-girl.jpg</td><td style="color:#00B894">כן</td><td>נדרש</td><td style="color:#e17056">לא</td></tr>
+<tr><td>לונה</td><td>luna-girl.jpg</td><td style="color:#00B894">כן</td><td>נדרש</td><td style="color:#e17056">לא</td></tr>
+<tr><td>קאי</td><td>kai-boy.jpg</td><td style="color:#00B894">כן</td><td>נדרש</td><td style="color:#e17056">לא</td></tr>
+<tr><td>נועה</td><td>noa-girl.jpg</td><td style="color:#00B894">כן</td><td>נדרש</td><td style="color:#e17056">לא</td></tr>
+<tr><td>סנסאי זן</td><td>sensei-zen.jpg</td><td style="color:#00B894">כן</td><td>נדרש</td><td style="color:#e17056">לא</td></tr>
+<tr><td>פיקסל</td><td>pixel-robot.jpg</td><td style="color:#00B894">כן</td><td>פנים מסך</td><td style="color:#e17056">לא</td></tr>
+<tr><td>רקס</td><td>rex-dino.jpg</td><td style="color:#00B894">כן</td><td>נדרש</td><td style="color:#e17056">לא</td></tr>
+<tr><td>באג</td><td>bug-villain.jpg</td><td style="color:#00B894">כן</td><td>נדרש</td><td style="color:#e17056">לא</td></tr>
+<tr><td>גליץ'</td><td>glitch-entity.jpg</td><td style="color:#00B894">כן</td><td>נדרש</td><td style="color:#e17056">לא</td></tr>
+<tr><td>צל</td><td>shadow-cat.jpg</td><td style="color:#00B894">כן</td><td>קרב</td><td style="color:#e17056">לא</td></tr>
+<tr><td>סערה</td><td>storm-fox.jpg</td><td style="color:#00B894">כן</td><td>קרב</td><td style="color:#e17056">לא</td></tr>
+<tr><td>להבה</td><td>blaze-dragon.jpg</td><td style="color:#00B894">כן</td><td>קרב</td><td style="color:#e17056">לא</td></tr>
+<tr><td>מלך הבאגים</td><td>bug-king.jpg</td><td style="color:#00B894">כן</td><td>--</td><td>--</td></tr>
+</table>
+<p><b>סיכום:</b> <span style="color:#00B894">14/14 מודל שיטים קיימים.</span> <span style="color:#e17056">0/14 גיליונות הבעות. 0/4 גיליונות תנוחות. 0/3 גיליונות קרב.</span></p>
+</details>
+
+<details>
+<summary>קומפוננטות קוד + הרחבת סקריפט סיפור</summary>
+<table>
+<tr><th>קומפוננטה</th><th>מטרה</th><th>סטטוס</th></tr>
+<tr><td>CharacterRenderer</td><td>מציג כל דמות בכל גודל/הבעה לפי ערכת נושא</td><td style="color:#e17056">נדרש</td></tr>
+<tr><td>CharacterVisibility</td><td>HOC/הוק שמסתיר דמויות לפי ערכת נושא גיל</td><td style="color:#e17056">נדרש</td></tr>
+<tr><td>StoryBeatPlayer</td><td>מציג דיאלוגי שיעור לפני/אחרי</td><td style="color:#f9ca24">חלקי (מערכה 1 בלבד)</td></tr>
+<tr><td>BossEncounter</td><td>UI קרב בוס מלא עם HP, טיימר, קומבו</td><td style="color:#e17056">נדרש</td></tr>
+<tr><td>UnlockAnimation</td><td>מנגן חגיגת פתיחת דמות</td><td style="color:#e17056">נדרש</td></tr>
+<tr><td>CharacterCarousel</td><td>מסובב דמויות פתוחות בדף הבית</td><td style="color:#e17056">נדרש</td></tr>
+<tr><td>NpcOverlay</td><td>שכבת עזרת שגיאות קונטקסטואלית של נועה</td><td style="color:#e17056">נדרש</td></tr>
+<tr><td>CompanionSelector</td><td>בחירת מלווה בעמוד פרופיל</td><td style="color:#e17056">נדרש</td></tr>
+</table>
+
+<h3>הרחבת סקריפט סיפור</h3>
+<table>
+<tr><th>סקריפט</th><th>מצב נוכחי</th><th>נדרש</th></tr>
+<tr><td>מערכה 1 (שיעורים 1-7)</td><td style="color:#00B894">ממומש ב-story-script.ts</td><td>הוספת קול סנסאי זן לשיעור 1</td></tr>
+<tr><td>מערכה 2 (שיעורים 8-15)</td><td style="color:#e17056">לא ממומש</td><td>סקריפט מלא עם כל הצגות דמויות</td></tr>
+<tr><td>מערכה 3 (שיעורים 16-20)</td><td style="color:#e17056">לא ממומש</td><td>סקריפט מלא עם גאולת גליץ' + מלך הבאגים</td></tr>
+<tr><td>תצורות בוס</td><td style="color:#f9ca24">רק שיעור 7</td><td>שיעור 15 (באג+גליץ') + שיעור 20 (מלך הבאגים)</td></tr>
+</table>
+</details>
+
+<details>
+<summary>הרחבת מערכת טיפוסים (TypeScript)</summary>
+<div class="combat-box">
+<p>טיפוס <code>CharacterMood</code> הנוכחי ב-<code>src/types/story.ts</code> תומך ב:</p>
+<p style="color:#aaa;font-family:monospace;font-size:.8rem">idle | happy | excited | thinking | sad | cheering | concerned | mischievous | sleeping | surprised</p>
+<p style="margin-top:10px"><b>המלצה:</b> קבץ מצבי רוח לקטגוריות:</p>
+<table>
+<tr><th>טיפוס</th><th>ערכים</th></tr>
+<tr><td style="color:#6C5CE7;font-family:monospace">CoreMood</td><td>idle, happy, excited, thinking, sad, cheering, surprised</td></tr>
+<tr><td style="color:#00B894;font-family:monospace">HeroMood</td><td>CoreMood + determined, celebrating, confused</td></tr>
+<tr><td style="color:#e17056;font-family:monospace">CombatMood</td><td>battle-ready, attacking, defending, victory, defeat</td></tr>
+<tr><td style="color:#ff6347;font-family:monospace">VillainMood</td><td>idle, mischievous, giggling, hit, fleeing, confident, surprised</td></tr>
+<tr><td style="color:#a29bfe;font-family:monospace">GlitchMood</td><td>default, attacking, glitching, calm, confused, dissolving, helping, reforming</td></tr>
+</table>
+</div>
+</details>
+
+<!-- ===== SECTION 9: QUICK REF ===== -->
+<h2>9. כרטיסי התייחסות מהירה</h2>
+
+<details open>
+<summary>איזו דמות שייכת לאיזה עמוד?</summary>
+<div class="card-grid">
+<div class="card" style="border-color:#6C5CE7"><div class="card-title">בית</div><div class="card-sub">קי (קי)</div></div>
+<div class="card" style="border-color:#f9ca24"><div class="card-title">שיעורים</div><div class="card-sub">סנסאי זן (סנסאי זן)</div></div>
+<div class="card" style="border-color:#a29bfe"><div class="card-title">תרגול</div><div class="card-sub">לונה (לונה)</div></div>
+<div class="card" style="border-color:#00B894"><div class="card-title">מבחן מהירות</div><div class="card-sub">יוקי (יוקי)</div></div>
+<div class="card" style="border-color:#e17056"><div class="card-title">זירת קרב</div><div class="card-sub">קאי (קאי)</div></div>
+<div class="card" style="border-color:#00cec9"><div class="card-title">קיצורי מקלדת</div><div class="card-sub">מיקה (מיקה)</div></div>
+<div class="card" style="border-color:#fdcb6e"><div class="card-title">משחקים</div><div class="card-sub">רקס (רקס)</div></div>
+<div class="card" style="border-color:#636e72"><div class="card-title">סטטיסטיקות</div><div class="card-sub">פיקסל (פיקסל)</div></div>
+<div class="card" style="border-color:#ff6347"><div class="card-title">קרבות בוס</div><div class="card-sub">באג / גליץ'</div></div>
+<div class="card" style="border-color:#55efc4"><div class="card-title">עזרת שגיאות</div><div class="card-sub">נועה (נועה)</div></div>
+</div>
+</details>
+
+<div class="footer">
+  <p>מפת שילוב דמויות | נינג'ה מקלדת | גרסה 1.0 | מרץ 2026</p>
+  <p>תוכנית-אב מוכנה ליצירת אמנות ומימוש קוד.</p>
+  <p>שלבים הבאים: יצירת גיליונות הבעות ל-14 דמויות, ואז מימוש CharacterRenderer ו-CharacterVisibility.</p>
+</div>
+
+</body>
+</html>

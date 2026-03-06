@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ninja Keyboard - מערכת התקדמות דמויות</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --bg:#0d0b1a; --bg2:#080618; --card:#0c0a20; --elevated:#13102a;
+    --border:rgba(108,92,231,0.18); --purple:#6C5CE7; --green:#00B894;
+    --pink:#FD79A8; --orange:#FDCB6E; --red:#FF6B6B; --blue:#74B9FF;
+    --cyan:#00CEC9; --gold:#F9CA24; --text:#E8E6F0; --dim:#8B86A6;
+    --glow:0 0 22px rgba(108,92,231,0.35);
+  }
+  body { font-family:'Heebo',sans-serif; background:var(--bg); color:var(--text); line-height:1.75; }
+  nav {
+    position:sticky; top:0; z-index:100;
+    background:rgba(13,11,26,0.96); backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--border);
+    padding:10px 20px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;
+  }
+  nav .logo { font-size:17px; font-weight:900; color:var(--purple); margin-left:14px; }
+  nav a { color:var(--dim); text-decoration:none; padding:5px 12px; border-radius:18px;
+    font-size:12px; font-weight:500; border:1px solid transparent; transition:all .18s; }
+  nav a:hover { color:var(--purple); background:rgba(108,92,231,0.1); border-color:rgba(108,92,231,0.3); }
+  .hero { text-align:center; padding:56px 24px 36px;
+    background:linear-gradient(180deg,rgba(108,92,231,0.09) 0%,transparent 100%); }
+  .hero h1 { font-size:40px; font-weight:900;
+    background:linear-gradient(135deg,var(--purple),var(--cyan));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:10px; }
+  .hero p { color:var(--dim); font-size:17px; max-width:680px; margin:0 auto; }
+  .hero .badges { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:22px; }
+  .hero .badge { display:inline-block; padding:8px 20px;
+    background:rgba(108,92,231,0.12); border:1px solid rgba(108,92,231,0.35);
+    border-radius:24px; font-size:13px; color:var(--purple); font-weight:600; }
+  .hero .badge.green { background:rgba(0,184,148,0.12); border-color:rgba(0,184,148,0.35); color:var(--green); }
+  .hero .badge.gold { background:rgba(249,202,36,0.12); border-color:rgba(249,202,36,0.35); color:var(--gold); }
+  .section { max-width:1100px; margin:0 auto; padding:40px 20px; }
+  .section-header { display:flex; align-items:center; gap:14px; margin-bottom:28px;
+    padding-bottom:14px; border-bottom:1px solid var(--border); }
+  .section-header .emoji { font-size:36px; }
+  .section-header h2 { font-size:26px; font-weight:900; }
+  .section-header .sub { font-size:14px; color:var(--dim); margin-top:3px; }
+  .section-header .tag { margin-right:auto; padding:4px 12px; border-radius:14px; font-size:12px; font-weight:700; }
+  .tag-purple { background:rgba(108,92,231,0.15); color:var(--purple); border:1px solid rgba(108,92,231,0.3); }
+  .tag-green { background:rgba(0,184,148,0.12); color:var(--green); border:1px solid rgba(0,184,148,0.28); }
+  .tag-red { background:rgba(255,107,107,0.12); color:var(--red); border:1px solid rgba(255,107,107,0.28); }
+  .tag-gold { background:rgba(249,202,36,0.15); color:var(--gold); border:1px solid rgba(249,202,36,0.3); }
+  .tag-cyan { background:rgba(0,206,201,0.12); color:var(--cyan); border:1px solid rgba(0,206,201,0.28); }
+  .tag-pink { background:rgba(253,121,168,0.12); color:var(--pink); border:1px solid rgba(253,121,168,0.28); }
+  .notice { background:rgba(116,185,255,0.07); border:1px solid rgba(116,185,255,0.2);
+    border-radius:12px; padding:16px 20px; margin-bottom:24px;
+    font-size:13.5px; color:var(--blue); display:flex; gap:12px; align-items:flex-start; }
+  .notice.green { background:rgba(0,184,148,0.07); border-color:rgba(0,184,148,0.2); color:var(--green); }
+  .notice.purple { background:rgba(108,92,231,0.07); border-color:rgba(108,92,231,0.2); color:var(--purple); }
+  .notice .icon { font-size:22px; flex-shrink:0; }
+  .notice strong { color:var(--text); }
+  /* Cards */
+  .card { background:var(--elevated); border:1px solid var(--border); border-radius:16px;
+    overflow:hidden; transition:transform .2s,box-shadow .2s; }
+  .card:hover { transform:translateY(-4px); box-shadow:var(--glow); }
+  .grid-2 { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; margin-bottom:24px; }
+  .grid-3 { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; margin-bottom:24px; }
+  .grid-4 { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px; margin-bottom:24px; }
+  /* Character cards */
+  .char-card { background:var(--elevated); border:1px solid var(--border); border-radius:16px;
+    padding:18px; transition:transform .2s,box-shadow .2s; }
+  .char-card:hover { transform:translateY(-3px); box-shadow:var(--glow); }
+  .char-card .top { display:flex; align-items:center; gap:14px; margin-bottom:12px; }
+  .avatar { width:54px; height:54px; border-radius:50%; display:flex; align-items:center;
+    justify-content:center; font-size:26px; flex-shrink:0; border:2px solid rgba(255,255,255,0.1); }
+  .char-name { font-size:16px; font-weight:700; }
+  .char-he { font-size:13px; color:var(--dim); margin-top:2px; }
+  .char-body { font-size:13px; color:var(--dim); line-height:1.75; }
+  .char-body strong { color:var(--text); }
+  .char-footer { margin-top:12px; padding-top:10px; border-top:1px solid var(--border);
+    font-size:12px; color:var(--dim); display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  /* Tables */
+  .tbl-wrap { overflow-x:auto; margin-bottom:24px; border-radius:14px; border:1px solid var(--border); }
+  table { width:100%; border-collapse:collapse; font-size:13.5px; }
+  thead th { background:var(--card); color:var(--purple); font-weight:700; padding:12px 14px;
+    text-align:right; border-bottom:1px solid var(--border); white-space:nowrap; }
+  tbody tr { border-bottom:1px solid rgba(108,92,231,0.08); transition:background .15s; }
+  tbody tr:hover { background:rgba(108,92,231,0.04); }
+  tbody tr:last-child { border-bottom:none; }
+  tbody td { padding:11px 14px; color:var(--dim); vertical-align:top; }
+  tbody td strong { color:var(--text); }
+  .td-char { display:flex; align-items:center; gap:10px; }
+  .td-char .av-sm { width:32px; height:32px; border-radius:50%; display:flex; align-items:center;
+    justify-content:center; font-size:16px; flex-shrink:0; }
+  /* Code blocks */
+  pre { background:var(--card); border:1px solid var(--border); border-radius:12px;
+    padding:18px 20px; overflow-x:auto; font-size:12px; line-height:1.7;
+    color:#a9c5ff; margin-bottom:20px; font-family:'Courier New',monospace; }
+  code { font-family:'Courier New',monospace; font-size:12px; color:var(--cyan);
+    background:rgba(0,206,201,0.1); padding:2px 6px; border-radius:4px; }
+  /* Progress bars */
+  .prog-bar { background:rgba(255,255,255,0.06); border-radius:8px; height:8px; overflow:hidden; margin:6px 0 12px; }
+  .prog-bar .fill { height:100%; border-radius:8px; transition:width .6s; }
+  /* Unlock tree */
+  .unlock-tree { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:22px; margin-bottom:24px; }
+  .unlock-tree .tree-line { display:flex; align-items:flex-start; gap:12px; margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid rgba(108,92,231,0.08); }
+  .unlock-tree .tree-line:last-child { margin-bottom:0; padding-bottom:0; border-bottom:none; }
+  .unlock-tree .step-icon { font-size:24px; flex-shrink:0; margin-top:2px; }
+  .unlock-tree .step-body { flex:1; }
+  .unlock-tree .step-title { font-size:15px; font-weight:700; margin-bottom:3px; }
+  .unlock-tree .step-cond { font-size:12px; color:var(--dim); margin-bottom:4px; }
+  .unlock-tree .step-quote { font-size:12px; color:var(--cyan); font-style:italic; }
+  .unlock-badge { display:inline-block; padding:2px 10px; border-radius:10px; font-size:11px;
+    font-weight:600; margin-top:4px; }
+  /* Rival cards */
+  .rival-card { background:var(--elevated); border-radius:16px; padding:20px;
+    border:1px solid var(--border); transition:transform .2s,box-shadow .2s; }
+  .rival-card:hover { transform:translateY(-3px); }
+  .rival-card.easy:hover { box-shadow:0 0 22px rgba(0,206,201,0.3); }
+  .rival-card.medium:hover { box-shadow:0 0 22px rgba(253,121,168,0.3); }
+  .rival-card.hard:hover { box-shadow:0 0 22px rgba(255,107,107,0.3); }
+  .rival-card.nightmare:hover { box-shadow:0 0 22px rgba(108,92,231,0.5); }
+  .rival-card .rc-top { display:flex; align-items:center; gap:14px; margin-bottom:12px; }
+  .rival-card .rc-icon { font-size:40px; }
+  .rival-card .rc-title { font-size:18px; font-weight:800; }
+  .rival-card .rc-sub { font-size:12px; color:var(--dim); margin-top:2px; }
+  .rival-card .rc-body { font-size:13px; color:var(--dim); line-height:1.8; }
+  .rival-card .rc-body strong { color:var(--text); }
+  .difficulty-bar { display:flex; gap:4px; margin-top:8px; }
+  .difficulty-bar .dot { width:14px; height:14px; border-radius:50%; }
+  .difficulty-bar .dot.filled { opacity:1; }
+  .difficulty-bar .dot.empty { opacity:0.2; }
+  /* Boss cards */
+  .boss-card { background:var(--elevated); border-radius:16px; overflow:hidden;
+    border:1px solid var(--border); margin-bottom:16px; transition:box-shadow .2s; }
+  .boss-card:hover { box-shadow:0 0 28px rgba(255,107,107,0.25); }
+  .boss-card .boss-header { padding:16px 20px; display:flex; align-items:center; gap:14px; }
+  .boss-card .boss-emoji { font-size:38px; }
+  .boss-card .boss-title { font-size:18px; font-weight:800; }
+  .boss-card .boss-lesson { font-size:12px; color:var(--dim); margin-top:2px; }
+  .boss-card .boss-body { padding:0 20px 18px; font-size:13px; color:var(--dim); line-height:1.8; }
+  .boss-card .boss-body strong { color:var(--text); }
+  .boss-card .boss-footer { padding:12px 20px; border-top:1px solid var(--border);
+    display:flex; gap:8px; flex-wrap:wrap; }
+  /* Badge chips */
+  .chip { display:inline-flex; align-items:center; gap:5px; padding:4px 12px; border-radius:12px;
+    font-size:12px; font-weight:600; }
+  .chip-purple { background:rgba(108,92,231,0.15); color:var(--purple); border:1px solid rgba(108,92,231,0.3); }
+  .chip-green { background:rgba(0,184,148,0.12); color:var(--green); border:1px solid rgba(0,184,148,0.28); }
+  .chip-gold { background:rgba(249,202,36,0.12); color:var(--gold); border:1px solid rgba(249,202,36,0.28); }
+  .chip-red { background:rgba(255,107,107,0.12); color:var(--red); border:1px solid rgba(255,107,107,0.25); }
+  .chip-pink { background:rgba(253,121,168,0.12); color:var(--pink); border:1px solid rgba(253,121,168,0.25); }
+  .chip-cyan { background:rgba(0,206,201,0.12); color:var(--cyan); border:1px solid rgba(0,206,201,0.25); }
+  .chip-orange { background:rgba(253,203,110,0.12); color:var(--orange); border:1px solid rgba(253,203,110,0.25); }
+  /* Info box */
+  .info-box { background:var(--card); border:1px solid var(--border); border-radius:14px;
+    padding:18px 22px; margin-bottom:22px; font-size:14px; color:var(--dim); line-height:1.8; }
+  .info-box strong { color:var(--text); }
+  .info-box h4 { color:var(--purple); font-size:15px; margin-bottom:10px; }
+  /* Stat pills */
+  .stat-pill { display:inline-flex; align-items:center; gap:6px; padding:5px 14px;
+    border-radius:20px; font-size:12px; font-weight:700; }
+  .stat-pill.purple { background:rgba(108,92,231,0.15); color:var(--purple); }
+  .stat-pill.green { background:rgba(0,184,148,0.12); color:var(--green); }
+  .stat-pill.gold { background:rgba(249,202,36,0.12); color:var(--gold); }
+  .stat-pill.red { background:rgba(255,107,107,0.12); color:var(--red); }
+  .stat-pill.cyan { background:rgba(0,206,201,0.12); color:var(--cyan); }
+  /* Timeline */
+  .timeline { position:relative; padding-right:28px; }
+  .timeline::before { content:''; position:absolute; right:10px; top:0; bottom:0;
+    width:2px; background:var(--border); }
+  .tl-item { position:relative; margin-bottom:18px; }
+  .tl-item::before { content:''; position:absolute; right:-22px; top:7px;
+    width:10px; height:10px; border-radius:50%; background:var(--purple);
+    border:2px solid var(--bg); }
+  .tl-item.boss::before { background:var(--red); }
+  .tl-item.unlock::before { background:var(--green); }
+  .tl-item.badge::before { background:var(--gold); }
+  .tl-body { background:var(--elevated); border:1px solid var(--border); border-radius:12px;
+    padding:12px 16px; font-size:13px; }
+  .tl-body .tl-label { font-size:11px; font-weight:700; color:var(--dim); margin-bottom:4px; text-transform:uppercase; letter-spacing:.5px; }
+  .tl-body .tl-title { font-size:14px; font-weight:700; color:var(--text); margin-bottom:3px; }
+  .tl-body .tl-desc { font-size:12px; color:var(--dim); }
+  /* Sound cards */
+  .sound-card { background:var(--elevated); border:1px solid var(--border); border-radius:12px;
+    padding:14px 16px; }
+  .sound-card .sc-name { font-size:14px; font-weight:700; font-family:'Courier New',monospace; color:var(--cyan); }
+  .sound-card .sc-desc { font-size:12px; color:var(--dim); margin-top:4px; }
+  .sound-card .sc-wave { display:flex; align-items:flex-end; gap:2px; height:24px; margin-top:8px; }
+  .sound-card .sc-wave .bar { border-radius:2px 2px 0 0; background:var(--purple); opacity:.7; min-width:4px; }
+  /* Phase cards */
+  .phase-card { background:var(--elevated); border-radius:14px; padding:18px 20px;
+    border-right:3px solid; margin-bottom:12px; }
+  .phase-card.p0 { border-color:var(--red); }
+  .phase-card.p1 { border-color:var(--purple); }
+  .phase-card.p2 { border-color:var(--blue); }
+  .phase-card.p3 { border-color:var(--dim); }
+  .phase-card .ph-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
+  .phase-card.p0 .ph-label { color:var(--red); }
+  .phase-card.p1 .ph-label { color:var(--purple); }
+  .phase-card.p2 .ph-label { color:var(--blue); }
+  .phase-card.p3 .ph-label { color:var(--dim); }
+  .phase-card .ph-tasks { margin-top:8px; display:flex; flex-direction:column; gap:4px; }
+  .ph-task { font-size:13px; color:var(--dim); display:flex; gap:8px; }
+  .ph-task::before { content:'›'; color:var(--purple); flex-shrink:0; }
+  hr.div { border:none; border-top:1px solid var(--border); margin:8px 0 28px; }
+  footer { text-align:center; padding:40px 20px; color:var(--dim); font-size:13px;
+    border-top:1px solid var(--border); margin-top:40px; }
+  footer strong { color:var(--purple); }
+  /* Reaction table */
+  .reaction-table td:first-child { color:var(--text); font-weight:600; }
+  .quote-green { color:var(--green); font-style:italic; }
+  .quote-red { color:var(--orange); font-style:italic; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">⌨️ Ninja Keyboard</span>
+  <a href="#unlock-tree" style="color:var(--green);font-weight:700;">פתיחת דמויות</a>
+  <a href="#companion">שותפים</a>
+  <a href="#rivals">יריבים</a>
+  <a href="#villains">בוסים</a>
+  <a href="#achievements">הישגים</a>
+  <a href="#stores">Stores</a>
+  <a href="#sounds">סאונד</a>
+  <a href="#priority">עדיפויות</a>
+  <a href="#journey">מסע</a>
+</nav>
+
+<div class="hero">
+  <h1>מערכת התקדמות דמויות ⚔️</h1>
+  <p>מפרט עיצוב מלא לפתיחת דמויות, שותפים, יריבים, בוסים, הישגים, מוזיקה ותזרים נתונים</p>
+  <div class="badges">
+    <span class="badge">גרסה 1.0</span>
+    <span class="badge green">מרץ 2026</span>
+    <span class="badge gold">מוכן ליישום</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 1: CHARACTER UNLOCK TREE                               -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section" id="unlock-tree">
+  <div class="section-header">
+    <span class="emoji">🔓</span>
+    <div><h2>1. עץ פתיחת דמויות</h2><div class="sub">תנאי פתיחה לכל 9 גיבורי הקבוצה</div></div>
+    <span class="tag tag-green">P0 — דחוף</span>
+  </div>
+
+  <div class="notice purple">
+    <span class="icon">⚡</span>
+    <div><strong>2 דמויות מתחילות תמיד:</strong> קי (Ki) תמיד נוכח כמסקוט הראשי. פיקסל (Pixel) זמין כעוזר ממשק מלשיעור 1. שאר 7 הדמויות נפתחות בהתקדמות.</div>
+  </div>
+
+  <div class="unlock-tree">
+
+    <div class="tree-line">
+      <div class="step-icon">🥷</div>
+      <div class="step-body">
+        <div class="step-title">קי (Ki) + פיקסל (Pixel) — זמינים תמיד</div>
+        <div class="step-cond">תנאי: <code>always</code> — ללא דרישות</div>
+        <div class="step-quote">קי = מסקוט ראשי. פיקסל = עוזר ממשק.</div>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:flex-start;">
+        <span class="chip chip-purple">🥷 Ki</span>
+        <span class="chip chip-cyan">📊 Pixel</span>
+      </div>
+    </div>
+
+    <div class="tree-line">
+      <div class="step-icon">⚡</div>
+      <div class="step-body">
+        <div class="step-title">מיקה (Mika) — שותפה שווה</div>
+        <div class="step-cond">תנאי: השלמת שיעור 2 | <code>storyFlag: mikaJoined</code></div>
+        <div class="step-quote">"You're too slow." — מאתגרת את קי בפגישה הראשונה</div>
+        <div style="margin-top:6px"><span class="chip chip-pink">שיעור 2</span></div>
+      </div>
+    </div>
+
+    <div class="tree-line">
+      <div class="step-icon">🐢</div>
+      <div class="step-body">
+        <div class="step-title">סנסיי זן (Sensei Zen) — המנטור</div>
+        <div class="step-cond">תנאי: השלמת שיעור 3 | <code>storyFlag: senseiIntroduced</code></div>
+        <div class="step-quote">אדון הצב העתיק מברך את התלמיד</div>
+        <div style="margin-top:6px"><span class="chip chip-green">שיעור 3</span></div>
+      </div>
+    </div>
+
+    <div class="tree-line">
+      <div class="step-icon">🦊</div>
+      <div class="step-body">
+        <div class="step-title">יוקי (Yuki) — מומחית מהירות</div>
+        <div class="step-cond">תנאי: שיעור 4+ AND ניסיון מבחן מהירות אחד | <code>storyFlag: yukiJoined</code></div>
+        <div class="step-quote">"I'm the fastest! Let's race." — אתגר מיידי</div>
+        <div style="margin-top:6px"><span class="chip chip-cyan">שיעור 4+</span> <span class="chip chip-purple">מבחן מהירות × 1</span></div>
+      </div>
+    </div>
+
+    <div class="tree-line">
+      <div class="step-icon">🌙</div>
+      <div class="step-body">
+        <div class="step-title">לונה (Luna) — שותפת התרגול</div>
+        <div class="step-cond">תנאי: שיעור 5+ AND 10 פגישות תרגול | <code>storyFlag: lunaJoined</code></div>
+        <div class="step-quote">"Slow down. Breathe. Then type." — שקט ורוגע</div>
+        <div style="margin-top:6px"><span class="chip chip-purple">שיעור 5+</span> <span class="chip chip-green">10 תרגולים</span></div>
+      </div>
+    </div>
+
+    <div class="tree-line">
+      <div class="step-icon">💊</div>
+      <div class="step-body">
+        <div class="step-title">נועה (Noa) — הרופאה</div>
+        <div class="step-cond">תנאי: ניצחון בוס שיעור 7 | <code>storyFlag: noaJoined</code></div>
+        <div class="step-quote">נועה מופיעה לרפא את הטקסט שבאג השחית</div>
+        <div style="margin-top:6px"><span class="chip chip-red">בוס שיעור 7</span></div>
+      </div>
+    </div>
+
+    <div class="tree-line">
+      <div class="step-icon">🔥</div>
+      <div class="step-body">
+        <div class="step-title">קאי (Kai) — לוחם האש</div>
+        <div class="step-cond">תנאי: מהירות מקסימלית 50 WPM (כל מצב) | <code>storyFlag: kaiJoined</code></div>
+        <div class="step-quote">"You type with fire! Join me in the arena."</div>
+        <div style="margin-top:6px"><span class="chip chip-red">50 WPM</span></div>
+      </div>
+    </div>
+
+    <div class="tree-line">
+      <div class="step-icon">🦕</div>
+      <div class="step-body">
+        <div class="step-title">רקס (Rex) — חבר הגיימר</div>
+        <div class="step-cond">תנאי: 5 משחקים שוחקו | <code>storyFlag: rexJoined</code></div>
+        <div class="step-quote">"Even with tiny arms, I keep playing! You too!"</div>
+        <div style="margin-top:6px"><span class="chip chip-gold">5 משחקים</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Formal unlock table -->
+  <h3 style="font-size:17px;margin-bottom:14px;color:var(--purple);">1.2 טבלת תנאי פתיחה רשמיים</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>דמות</th>
+          <th>ID</th>
+          <th>תנאי פתיחה</th>
+          <th>Store מקור</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#6C5CE7,#a29bfe)">🥷</div><strong>Ki</strong></div></td>
+          <td><code>ki</code></td>
+          <td>תמיד זמין</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#00CEC9,#74B9FF)">📊</div><strong>Pixel</strong></div></td>
+          <td><code>pixel</code></td>
+          <td>תמיד זמין (עוזר ממשק)</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#FD79A8,#e17055)">⚡</div><strong>Mika</strong></div></td>
+          <td><code>mika</code></td>
+          <td>שיעור 2+ הושלם</td>
+          <td>xp-store</td>
+        </tr>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#00B894,#2d3436)">🐢</div><strong>Sensei Zen</strong></div></td>
+          <td><code>senseiZen</code></td>
+          <td>שיעור 3+ הושלם</td>
+          <td>xp-store</td>
+        </tr>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#00CEC9,#6C5CE7)">🦊</div><strong>Yuki</strong></div></td>
+          <td><code>yuki</code></td>
+          <td>שיעור 4+ AND speedTestAttempts ≥ 1</td>
+          <td>xp-store + NEW</td>
+        </tr>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#6C5CE7,#74B9FF)">🌙</div><strong>Luna</strong></div></td>
+          <td><code>luna</code></td>
+          <td>שיעור 5+ AND practiceSessionCount ≥ 10</td>
+          <td>xp-store + practice-history</td>
+        </tr>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#00B894,#00CEC9)">💊</div><strong>Noa</strong></div></td>
+          <td><code>noa</code></td>
+          <td>bossResults[7].defeated === true</td>
+          <td>story-store</td>
+        </tr>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#FF6B6B,#FDCB6E)">🔥</div><strong>Kai</strong></div></td>
+          <td><code>kai</code></td>
+          <td>bestWpm ≥ 50 (כל מצב)</td>
+          <td>practice-history-store</td>
+        </tr>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#FDCB6E,#e17055)">🦕</div><strong>Rex</strong></div></td>
+          <td><code>rex</code></td>
+          <td>gamesPlayed ≥ 5</td>
+          <td>xp-store (NEW)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 2: COMPANION SYSTEM                                    -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section" id="companion">
+  <div class="section-header">
+    <span class="emoji">🤝</span>
+    <div><h2>2. מערכת שותפים</h2><div class="sub">בחירת שותף פעיל, בונוסים ותגובות בזמן ההקלדה</div></div>
+    <span class="tag tag-purple">Companion Store</span>
+  </div>
+
+  <div class="notice">
+    <span class="icon">📌</span>
+    <div><strong>כללי עיצוב מרכזיים:</strong> רק גיבורים יכולים להיות שותפים (לא נבלים, לא יריבים). קי הוא השותף הברירת מחדל — אם השחקן מסיר את השותף, קי חוזר. בונוסים לא חוסמים תוכן. שכבות גיל קובעות גודל בונוס.</div>
+  </div>
+
+  <h3 style="font-size:17px;margin-bottom:14px;color:var(--purple);">2.2 בונוסים פסיביים לכל שותף</h3>
+  <div class="grid-3">
+
+    <div class="char-card">
+      <div class="top">
+        <div class="avatar" style="background:linear-gradient(135deg,#6C5CE7,#a29bfe)">🥷</div>
+        <div><div class="char-name">Ki</div><div class="char-he">קי | +5% XP</div></div>
+      </div>
+      <div class="prog-bar"><div class="fill" style="width:50%;background:var(--purple)"></div></div>
+      <div class="char-body">כל ה-XP שנצבר מוכפל ב-1.05 לאורך כל הפגישה</div>
+      <div class="char-footer"><span class="chip chip-purple">xp_boost · 0.05</span></div>
+    </div>
+
+    <div class="char-card">
+      <div class="top">
+        <div class="avatar" style="background:linear-gradient(135deg,#FD79A8,#e17055)">⚡</div>
+        <div><div class="char-name">Mika</div><div class="char-he">מיקה | טיפ קיצור</div></div>
+      </div>
+      <div class="prog-bar"><div class="fill" style="width:65%;background:var(--pink)"></div></div>
+      <div class="char-body">טיפ קיצור מקלדת אקראי מופיע כל 2 דקות</div>
+      <div class="char-footer"><span class="chip chip-pink">shortcut_tips · ×1</span></div>
+    </div>
+
+    <div class="char-card">
+      <div class="top">
+        <div class="avatar" style="background:linear-gradient(135deg,#00CEC9,#6C5CE7)">🦊</div>
+        <div><div class="char-name">Yuki</div><div class="char-he">יוקי | +3 שניות</div></div>
+      </div>
+      <div class="prog-bar"><div class="fill" style="width:40%;background:var(--cyan)"></div></div>
+      <div class="char-body">מבחני מהירות ואתגרים מתוזמנים מקבלים 3 שניות נוספות</div>
+      <div class="char-footer"><span class="chip chip-cyan">speed_timer_bonus · +3s</span></div>
+    </div>
+
+    <div class="char-card">
+      <div class="top">
+        <div class="avatar" style="background:linear-gradient(135deg,#6C5CE7,#74B9FF)">🌙</div>
+        <div><div class="char-name">Luna</div><div class="char-he">לונה | מפתחות חלשים</div></div>
+      </div>
+      <div class="prog-bar"><div class="fill" style="width:55%;background:var(--blue)"></div></div>
+      <div class="char-body">בתחילת תרגול, מדגישה 3 מפתחות החלשים ביותר של השחקן</div>
+      <div class="char-footer"><span class="chip chip-purple">practice_hints · ×3</span></div>
+    </div>
+
+    <div class="char-card">
+      <div class="top">
+        <div class="avatar" style="background:linear-gradient(135deg,#00B894,#00CEC9)">💊</div>
+        <div><div class="char-name">Noa</div><div class="char-he">נועה | לב נוסף</div></div>
+      </div>
+      <div class="prog-bar"><div class="fill" style="width:70%;background:var(--green)"></div></div>
+      <div class="char-body">קרבות בוס מתחילים עם לב נוסף</div>
+      <div class="char-footer"><span class="chip chip-green">extra_life · +1❤️</span></div>
+    </div>
+
+    <div class="char-card">
+      <div class="top">
+        <div class="avatar" style="background:linear-gradient(135deg,#FF6B6B,#FDCB6E)">🔥</div>
+        <div><div class="char-name">Kai</div><div class="char-he">קאי | קומבו</div></div>
+      </div>
+      <div class="prog-bar"><div class="fill" style="width:80%;background:var(--red)"></div></div>
+      <div class="char-body">מכפיל XP קומבו מוגדל ב-0.1×</div>
+      <div class="char-footer"><span class="chip chip-red">combo_multiplier · +10%</span></div>
+    </div>
+
+    <div class="char-card">
+      <div class="top">
+        <div class="avatar" style="background:linear-gradient(135deg,#00B894,#2d3436)">🐢</div>
+        <div><div class="char-name">Sensei Zen</div><div class="char-he">+3% XP + ציטוט יומי</div></div>
+      </div>
+      <div class="prog-bar"><div class="fill" style="width:35%;background:var(--green)"></div></div>
+      <div class="char-body">+3% XP ועצת חכמה יומית בטולטיפ</div>
+      <div class="char-footer"><span class="chip chip-green">wisdom_xp · 0.03</span></div>
+    </div>
+
+    <div class="char-card">
+      <div class="top">
+        <div class="avatar" style="background:linear-gradient(135deg,#00CEC9,#74B9FF)">📊</div>
+        <div><div class="char-name">Pixel</div><div class="char-he">פיקסל | HUD סטטיסטיקות</div></div>
+      </div>
+      <div class="prog-bar"><div class="fill" style="width:60%;background:var(--cyan)"></div></div>
+      <div class="char-body">HUD קטן בפינה מציג WPM ודיוק בזמן אמת</div>
+      <div class="char-footer"><span class="chip chip-cyan">stats_overlay · live</span></div>
+    </div>
+
+    <div class="char-card">
+      <div class="top">
+        <div class="avatar" style="background:linear-gradient(135deg,#FDCB6E,#e17055)">🦕</div>
+        <div><div class="char-name">Rex</div><div class="char-he">רקס | +10% ניקוד</div></div>
+      </div>
+      <div class="prog-bar"><div class="fill" style="width:45%;background:var(--orange)"></div></div>
+      <div class="char-body">ניקוד כל המשחקים הזוטרים מוכפל ב-1.1</div>
+      <div class="char-footer"><span class="chip chip-gold">game_score_bonus · +10%</span></div>
+    </div>
+
+  </div>
+
+  <h3 style="font-size:17px;margin:24px 0 14px;color:var(--purple);">2.3 תגובות שותף — טריגרים</h3>
+  <div class="tbl-wrap">
+    <table class="reaction-table">
+      <thead>
+        <tr><th>שותף</th><th>streak_20 🔥</th><th>error_burst 😓</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#6C5CE7,#a29bfe)">🥷</div>Ki</div></td>
+          <td><span class="quote-green">!וואו, אתה על אש</span></td>
+          <td><span class="quote-red">!גם אני טועה לפעמים, קדימה</span></td>
+        </tr>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#FD79A8,#e17055)">⚡</div>Mika</div></td>
+          <td><span class="quote-green">!מהר ומדויק, ככה אני אוהבת</span></td>
+          <td><span class="quote-red">!Ctrl+Z ונמשיך</span></td>
+        </tr>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#00CEC9,#6C5CE7)">🦊</div>Yuki</div></td>
+          <td><span class="quote-green">!כמעט עקפת אותי</span></td>
+          <td><span class="quote-red">!לאט יותר, מדויק יותר</span></td>
+        </tr>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#6C5CE7,#74B9FF)">🌙</div>Luna</div></td>
+          <td><span class="quote-green">...נשימה עמוקה... מושלם</span></td>
+          <td><span class="quote-red">!נשימה. שקט. ומתחילים מחדש</span></td>
+        </tr>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#00B894,#00CEC9)">💊</div>Noa</div></td>
+          <td><span class="quote-green">!את מתקדמת מדהים</span></td>
+          <td><span class="quote-red">!לא נורא, ננסה שוב ביחד</span></td>
+        </tr>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#FF6B6B,#FDCB6E)">🔥</div>Kai</div></td>
+          <td><span class="quote-green">!אש באצבעות</span></td>
+          <td><span class="quote-red">!לוחם אמיתי לא מוותר</span></td>
+        </tr>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#00B894,#2d3436)">🐢</div>Sensei</div></td>
+          <td><span class="quote-green">!סבלנות מובילה למהירות</span></td>
+          <td><span class="quote-red">!כל טעות היא שיעור</span></td>
+        </tr>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#00CEC9,#74B9FF)">📊</div>Pixel</div></td>
+          <td><span class="quote-green">!שיפור של 12% מאתמול</span></td>
+          <td><span class="quote-red">!סורק... מומלץ להאט קצת</span></td>
+        </tr>
+        <tr>
+          <td><div class="td-char"><div class="av-sm" style="background:linear-gradient(135deg,#FDCB6E,#e17055)">🦕</div>Rex</div></td>
+          <td><span class="quote-green">!ררררמ! מהיר כמו דינוזאור</span></td>
+          <td><span class="quote-red">!גם עם ידיים קטנות, ממשיכים</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 3: RIVAL PROGRESSION                                   -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section" id="rivals">
+  <div class="section-header">
+    <span class="emoji">⚔️</span>
+    <div><h2>3. התקדמות יריבים</h2><div class="sub">זירת הקרב — ניצחון על 3 יריבים לפתיחת פנטום הסודי</div></div>
+    <span class="tag tag-red">Battle Arena</span>
+  </div>
+
+  <div class="notice">
+    <span class="icon">🏟️</span>
+    <div><strong>זמינות זירת הקרב:</strong> נפתחת משיעור 4. יריבים מתפתחים ברצף — כל ניצחון 3× על יריב פותח את הבא.</div>
+  </div>
+
+  <div class="grid-2">
+
+    <div class="rival-card easy">
+      <div class="rc-top">
+        <div class="rc-icon">🐱</div>
+        <div>
+          <div class="rc-title" style="color:var(--cyan)">Shadow (שאדו)</div>
+          <div class="rc-sub">קל — תמיד זמין בזירה</div>
+        </div>
+        <span class="chip chip-cyan" style="margin-right:auto">קל</span>
+      </div>
+      <div class="rc-body">
+        <strong>טווח WPM:</strong> 15–25 | <strong>אישיות:</strong> מסתורי, שקט<br>
+        <strong>בדג ניצחון:</strong> "shadow-slayer" — נוצח צל 🐱
+      </div>
+      <div class="difficulty-bar">
+        <div class="dot filled" style="background:var(--cyan)"></div>
+        <div class="dot empty" style="background:var(--cyan)"></div>
+        <div class="dot empty" style="background:var(--cyan)"></div>
+        <div class="dot empty" style="background:var(--cyan)"></div>
+      </div>
+    </div>
+
+    <div class="rival-card medium">
+      <div class="rc-top">
+        <div class="rc-icon">🦊</div>
+        <div>
+          <div class="rc-title" style="color:var(--pink)">Storm (סטורם)</div>
+          <div class="rc-sub">בינוני — beat Shadow ×3</div>
+        </div>
+        <span class="chip chip-pink" style="margin-right:auto">בינוני</span>
+      </div>
+      <div class="rc-body">
+        <strong>טווח WPM:</strong> 25–40 | <strong>אישיות:</strong> מהיר, רברבן<br>
+        <strong>בדג ניצחון:</strong> "storm-breaker" — שובר סערות 🦊
+      </div>
+      <div class="difficulty-bar">
+        <div class="dot filled" style="background:var(--pink)"></div>
+        <div class="dot filled" style="background:var(--pink)"></div>
+        <div class="dot empty" style="background:var(--pink)"></div>
+        <div class="dot empty" style="background:var(--pink)"></div>
+      </div>
+    </div>
+
+    <div class="rival-card hard">
+      <div class="rc-top">
+        <div class="rc-icon">🐉</div>
+        <div>
+          <div class="rc-title" style="color:var(--red)">Blaze (בלייז)</div>
+          <div class="rc-sub">קשה — beat Storm ×3</div>
+        </div>
+        <span class="chip chip-red" style="margin-right:auto">קשה</span>
+      </div>
+      <div class="rc-body">
+        <strong>טווח WPM:</strong> 40–60 | <strong>אישיות:</strong> עז, מכובד<br>
+        <strong>בדג ניצחון:</strong> "blaze-tamer" — מאלף להבות 🐉
+      </div>
+      <div class="difficulty-bar">
+        <div class="dot filled" style="background:var(--red)"></div>
+        <div class="dot filled" style="background:var(--red)"></div>
+        <div class="dot filled" style="background:var(--red)"></div>
+        <div class="dot empty" style="background:var(--red)"></div>
+      </div>
+    </div>
+
+    <div class="rival-card nightmare">
+      <div class="rc-top">
+        <div class="rc-icon">👻</div>
+        <div>
+          <div class="rc-title" style="color:var(--purple)">??? Phantom (פנטום)</div>
+          <div class="rc-sub">סיוט — beat Blaze ×3 | סוד</div>
+        </div>
+        <span class="chip chip-purple" style="margin-right:auto">🔒 סודי</span>
+      </div>
+      <div class="rc-body">
+        <strong>טווח WPM:</strong> 60–80 | <strong>אישיות:</strong> שקט מוחלט<br>
+        <strong>ציטוט:</strong> <span style="color:var(--purple);font-style:italic">...ראוי</span><br>
+        <strong>מין:</strong> רוח-נינג'ה (צבעים שקופים ומוכהים) | דרוש ציור Gemini
+      </div>
+      <div class="difficulty-bar">
+        <div class="dot filled" style="background:var(--purple)"></div>
+        <div class="dot filled" style="background:var(--purple)"></div>
+        <div class="dot filled" style="background:var(--purple)"></div>
+        <div class="dot filled" style="background:var(--purple)"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <h3 style="font-size:17px;margin:8px 0 14px;color:var(--purple);">3.3 תנאי פתיחה ובדגים</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>יריב</th><th>תנאי פתיחה</th><th>בדג בניצחון ראשון</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Shadow 🐱</strong></td>
+          <td>זמין אחרי פתיחת זירת קרב (שיעור 4)</td>
+          <td><span class="chip chip-cyan">shadow-slayer — נוצח צל</span></td>
+        </tr>
+        <tr>
+          <td><strong>Storm 🦊</strong></td>
+          <td><code>rivalRecords.shadow.wins ≥ 3</code></td>
+          <td><span class="chip chip-pink">storm-breaker — שובר סערות</span></td>
+        </tr>
+        <tr>
+          <td><strong>Blaze 🐉</strong></td>
+          <td><code>rivalRecords.storm.wins ≥ 3</code></td>
+          <td><span class="chip chip-red">blaze-tamer — מאלף להבות</span></td>
+        </tr>
+        <tr>
+          <td><strong>Phantom 👻</strong></td>
+          <td><code>rivalRecords.blaze.wins ≥ 3</code></td>
+          <td><span class="chip chip-purple">phantom-hunter — צייד רוחות</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 4: VILLAIN ENCOUNTER SCHEDULE                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section" id="villains">
+  <div class="section-header">
+    <span class="emoji">🪲</span>
+    <div><h2>4. לוח מפגשי נבלים</h2><div class="sub">תיזמון הבוסים, מכניקות ואדפטציה לגיל</div></div>
+    <span class="tag tag-red">Boss Battles</span>
+  </div>
+
+  <h3 style="font-size:17px;margin-bottom:14px;color:var(--orange);">4.1 רגעי הפתעה של באג (שיעורים 3–6)</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>שיעור</th><th>סוג הפתעה</th><th>אפקט ויזואלי</th><th>משך</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="stat-pill green">שיעור 3</span></td>
+          <td><strong>Flicker</strong></td>
+          <td>תו אחד בצג מהבהב ירוק (#00FF41)</td>
+          <td>0.5s</td>
+        </tr>
+        <tr>
+          <td><span class="stat-pill purple">שיעור 4</span></td>
+          <td><strong>Shadow</strong></td>
+          <td>צלליות חיפושית קטנה עוברת בתחתית אזור ההקלדה</td>
+          <td>1s</td>
+        </tr>
+        <tr>
+          <td><span class="stat-pill cyan">שיעור 5</span></td>
+          <td><strong>Scramble</strong></td>
+          <td>מילה אחת מציגה אותיות מבולבלות ואז מתקנת עצמה</td>
+          <td>1.5s</td>
+        </tr>
+        <tr>
+          <td><span class="stat-pill gold">שיעור 6</span></td>
+          <td><strong>Giggle</strong></td>
+          <td>צחוק של באג ("הי הי הי") + ניצוץ ירוק קטן בפינה</td>
+          <td>2s</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size:17px;margin:20px 0 14px;color:var(--red);">4.2 קרבות בוס עיקריים</h3>
+  <div class="boss-card">
+    <div class="boss-header" style="background:linear-gradient(90deg,rgba(0,184,148,0.1),transparent)">
+      <div class="boss-emoji">🪲</div>
+      <div>
+        <div class="boss-title" style="color:var(--green)">שיעור 7 — באג הקטן</div>
+        <div class="boss-lesson">Mini-Boss ראשון | HP: 10 | 60 שניות</div>
+      </div>
+      <span class="chip chip-green" style="margin-right:auto">קל</span>
+    </div>
+    <div class="boss-body">
+      <strong>מכניקה:</strong> 10 מילים מבולבלות תוך 60 שניות. כל מילה נכונה = באג מקבל מכה. אחרי 10 — באג בורח בענן עשן.<br>
+      <strong>תנאי ניצחון:</strong> 10 מילים נכונות (ללא דרישת דיוק למשחק ראשון).<br>
+      <strong>גרסת באג:</strong> חיפושית בסיסית (חמודה)
+    </div>
+    <div class="boss-footer">
+      <span class="chip chip-green">XP: 100</span>
+      <span class="chip chip-gold">badge: bug-buster — מגרש באגים 🪲</span>
+      <span class="chip chip-purple">פותח: Noa</span>
+    </div>
+  </div>
+
+  <div class="boss-card">
+    <div class="boss-header" style="background:linear-gradient(90deg,rgba(255,107,107,0.1),transparent)">
+      <div class="boss-emoji">🪲⚡</div>
+      <div>
+        <div class="boss-title" style="color:var(--red)">שיעור 15 — באג + גליץ'</div>
+        <div class="boss-lesson">Mid-Boss | HP: 20 | 120 שניות | דיוק 80%</div>
+      </div>
+      <span class="chip chip-red" style="margin-right:auto">קשה</span>
+    </div>
+    <div class="boss-body">
+      <strong>מכניקה:</strong> 20 מילים + גליץ' הופך מיקומי מפתחות. כל 15 שניות גליץ' מהפך 3 מפתחות ל-5 שניות.<br>
+      <strong>גרסת באג:</strong> באג בסיסי + גליץ' ביחד (כפול מסך!)
+    </div>
+    <div class="boss-footer">
+      <span class="chip chip-red">XP: 250</span>
+      <span class="chip chip-gold">badge: glitch-survivor — שורד גליץ' ⚡</span>
+    </div>
+  </div>
+
+  <div class="boss-card">
+    <div class="boss-header" style="background:linear-gradient(90deg,rgba(249,202,36,0.1),transparent)">
+      <div class="boss-emoji">👑</div>
+      <div>
+        <div class="boss-title" style="color:var(--gold)">שיעור 20 — מלך הבאגים</div>
+        <div class="boss-lesson">Final Boss | HP: 50 | 120 שניות | דיוק 90% | 3 שלבים</div>
+      </div>
+      <span class="chip chip-gold" style="margin-right:auto">אחרון!</span>
+    </div>
+    <div class="boss-body">
+      <strong>שלב 1 (HP 50–35):</strong> קצב נורמלי, 2 מילות בלבול בו-זמנית<br>
+      <strong>שלב 2 (HP 34–15):</strong> מהיר, 3 מילות בלבול<br>
+      <strong>שלב 3 (HP 14–0):</strong> עצבני, 4 מילות בלבול<br>
+      <strong>מערכת קומבו:</strong> כל גיבור שנבחר כשותף מוסיף כוח מיוחד!
+    </div>
+    <div class="boss-footer">
+      <span class="chip chip-gold">XP: 500</span>
+      <span class="chip chip-gold">badge: bug-king-slayer — מפיל מלכים 👑</span>
+      <span class="chip chip-purple">תעודה: נינג'ה מקלדת אמיתי</span>
+    </div>
+  </div>
+
+  <h3 style="font-size:17px;margin:20px 0 14px;color:var(--purple);">4.5 אדפטציה לגיל — קרבות בוס</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>ערכת גיל</th><th>בוס שיעור 7</th><th>בוס שיעור 15</th><th>בוס שיעור 20</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="chip chip-green">שתיל 6–8</span></td>
+          <td>5 מילים, ללא זמן, חגיגה ענקית</td>
+          <td>10 מילים, 180s, ללא גליץ'</td>
+          <td>20 מילים, 180s, 80% דיוק</td>
+        </tr>
+        <tr>
+          <td><span class="chip chip-cyan">נבט 8–10</span></td>
+          <td>10 מילים, 90s</td>
+          <td>15 מילים, 150s, גליץ' קל</td>
+          <td>35 מילים, 150s, 85%</td>
+        </tr>
+        <tr>
+          <td><span class="chip chip-purple">גזע 10–12</span></td>
+          <td>10 מילים, 60s (רגיל)</td>
+          <td>20 מילים, 120s (רגיל)</td>
+          <td>50 מילים, 120s, 90% (רגיל)</td>
+        </tr>
+        <tr>
+          <td><span class="chip chip-pink">ענף 12–14</span></td>
+          <td>12 מילים, 50s</td>
+          <td>25 מילים, 100s, גליץ' אגרסיבי</td>
+          <td>60 מילים, 120s, 92%</td>
+        </tr>
+        <tr>
+          <td><span class="chip chip-red">צמרת 14–16</span></td>
+          <td>15 מילים, 45s</td>
+          <td>30 מילים, 90s, גליץ' מלא</td>
+          <td>70 מילים, 120s, 95%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size:17px;margin:20px 0 14px;color:var(--orange);">4.6 אירועי בוס חודשיים (אחרי שיעור 20)</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>חודש</th><th>אירוע</th><th>מכניקה מיוחדת</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>חודשי אי-זוגיים</td><td><strong>רמאץ' של באג</strong></td><td>מהירות באג = WPM מקסימלי שלך + 10%</td></tr>
+        <tr><td>חודשי זוגיים</td><td><strong>אתגר גליץ'</strong></td><td>פריסת מקלדת הפוכה לחלוטין</td></tr>
+        <tr><td>כל 3 חודשים</td><td><strong>באג + גליץ' Co-op</strong></td><td>כל הכיתה ביחד גורמת נזק</td></tr>
+        <tr><td>פורים (אדר)</td><td><strong>גליץ' פורים</strong></td><td>אותיות בתחפושת — צריך לזהות את האות האמיתית</td></tr>
+        <tr><td>חנוכה</td><td><strong>מרתון 8 לילות</strong></td><td>8 קרבות באג בקשיות עולה, לילה אחד כל לילה</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 5: ACHIEVEMENTS                                        -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section" id="achievements">
+  <div class="section-header">
+    <span class="emoji">🏆</span>
+    <div><h2>5. הישגים ובדגים חדשים</h2><div class="sub">מיפוי בדג-לאירוע דמות ואוסף תגמולים</div></div>
+    <span class="tag tag-gold">Badges</span>
+  </div>
+
+  <h3 style="font-size:17px;margin-bottom:14px;color:var(--gold);">5.1 מיפוי בדג → אירוע דמות</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Badge ID</th><th>שם</th><th>אירוע דמות</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>first-lesson</code></td>
+          <td>First Step</td>
+          <td><span style="color:var(--purple)">🥷 Ki: "!יאללה, התחלת את המסע"</span></td>
+        </tr>
+        <tr>
+          <td><code>persistent</code></td>
+          <td>5-day streak</td>
+          <td><span style="color:var(--green)">🐢 Sensei Zen: "!סבלנות מובילה לכוח"</span></td>
+        </tr>
+        <tr>
+          <td><code>accurate</code></td>
+          <td>95%+ accuracy</td>
+          <td><span style="color:var(--pink)">⚡ Mika: "!מדויק, ככה אני אוהבת"</span></td>
+        </tr>
+        <tr>
+          <td><code>rocket</code></td>
+          <td>30 WPM</td>
+          <td><span style="color:var(--cyan)">🦊 Yuki: "!לא רע... אבל אני עדיין יותר מהירה"</span></td>
+        </tr>
+        <tr>
+          <td><code>ninja</code></td>
+          <td>40 WPM</td>
+          <td><span style="color:var(--red)">🔥 Kai: "!לוחם אמיתי"</span></td>
+        </tr>
+        <tr>
+          <td><code>bug-buster</code> <span class="chip chip-green" style="font-size:10px">חדש</span></td>
+          <td>Beat Bug L7</td>
+          <td><span style="color:var(--green)">💊 Noa: "!ביחד ניצחנו את הבאג"</span></td>
+        </tr>
+        <tr>
+          <td><code>glitch-survivor</code> <span class="chip chip-green" style="font-size:10px">חדש</span></td>
+          <td>Beat Bug+Glitch L15</td>
+          <td><span style="color:var(--cyan)">📊 Pixel: "!כל המערכות תקינות. ניצחון"</span></td>
+        </tr>
+        <tr>
+          <td><code>bug-king-slayer</code> <span class="chip chip-green" style="font-size:10px">חדש</span></td>
+          <td>Beat Bug King L20</td>
+          <td><span style="color:var(--gold)">כל הדמויות חוגגות ביחד! 🎉</span></td>
+        </tr>
+        <tr>
+          <td><code>phantom-hunter</code> <span class="chip chip-green" style="font-size:10px">חדש</span></td>
+          <td>Beat Phantom</td>
+          <td><span style="color:var(--purple)">🐢 Sensei Zen: "...הגעת למקום שרק מעטים מגיעים"</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size:17px;margin:20px 0 14px;color:var(--gold);">5.3 תגמולי אוסף ושלמות</h3>
+  <div class="grid-2">
+
+    <div class="info-box">
+      <h4>⭐ כל הגיבורים נפתחו</h4>
+      <strong>דרישה:</strong> 9 דמויות גיבורים<br>
+      <strong>תגמול:</strong> badge "Full Team" + 500 XP + ציור קבוצתי מיוחד כטפט
+    </div>
+
+    <div class="info-box">
+      <h4>🏟️ כל היריבים הובסו</h4>
+      <strong>דרישה:</strong> ניצחון על Shadow, Storm, Blaze, Phantom<br>
+      <strong>תגמול:</strong> badge "Arena Champion" + 300 XP + מסגרת זהב לפרופיל
+    </div>
+
+    <div class="info-box">
+      <h4>🪲 כל הבוסים הובסו</h4>
+      <strong>דרישה:</strong> Bug L7 + Bug+Glitch L15 + Bug King L20<br>
+      <strong>תגמול:</strong> badge "True Ninja" + תעודה + 1000 XP
+    </div>
+
+    <div class="info-box">
+      <h4>🎯 כל הבדגים הושגו</h4>
+      <strong>דרישה:</strong> כל בדג בקטלוג<br>
+      <strong>תגמול:</strong> badge "Completionist" + סקין Ki זהוב ייחודי
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 6: STORE UPDATES                                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section" id="stores">
+  <div class="section-header">
+    <span class="emoji">🗄️</span>
+    <div><h2>6. עדכוני Zustand Stores</h2><div class="sub">שינויים נדרשים ב-stores קיימים + stores חדשים</div></div>
+    <span class="tag tag-cyan">TypeScript</span>
+  </div>
+
+  <div class="notice">
+    <span class="icon">🔧</span>
+    <div><strong>תזרים נתונים:</strong> xp-store → story-store ← practice-history → unlock-checker → companion-store + badge-store → battle-record-store</div>
+  </div>
+
+  <div class="grid-2">
+
+    <div class="info-box">
+      <h4>📦 companion-store.ts — חדש</h4>
+      <strong>מצב:</strong> activeCompanion, companionUsage<br>
+      <strong>פעולות:</strong> setActiveCompanion, recordCompanionSession, getActiveBonus, getCompanionSessions<br>
+      <code>name: 'ninja-keyboard-companion'</code>
+    </div>
+
+    <div class="info-box">
+      <h4>📦 battle-record-store.ts — חדש</h4>
+      <strong>מצב:</strong> rivalRecords, totalBattles<br>
+      <strong>פעולות:</strong> recordBattle, isRivalUnlocked, getRivalWins<br>
+      <code>name: 'ninja-keyboard-battle-records'</code>
+    </div>
+
+    <div class="info-box">
+      <h4>✏️ story-store.ts — עדכון</h4>
+      <strong>חדש ב-StoryFlags:</strong> yukiJoined, kaiJoined, rexJoined, bugTease L3–L6, glitchCalmed, phantomRevealed<br>
+      <strong>פעולות חדשות:</strong> markBugTease(), processUnlocks()
+    </div>
+
+    <div class="info-box">
+      <h4>✏️ xp-store.ts — עדכון</h4>
+      <strong>שדות חדשים:</strong> speedTestAttempts, gamesPlayed<br>
+      <strong>פעולות חדשות:</strong> recordSpeedTest(), recordGamePlayed()
+    </div>
+
+  </div>
+
+  <h3 style="font-size:17px;margin:16px 0 12px;color:var(--cyan);">6.7 דיאגרמת תזרים נתונים</h3>
+  <div class="info-box" style="font-family:monospace; font-size:12px; line-height:2;">
+    <div style="color:var(--purple)">xp-store</div>
+    <div style="padding-right:16px;color:var(--dim)">└─ completedLessons, speedTestAttempts, gamesPlayed</div>
+    <div style="color:var(--purple)">story-store</div>
+    <div style="padding-right:16px;color:var(--dim)">└─ processUnlocks(ctx) → CharacterUnlockDef[]</div>
+    <div style="color:var(--purple)">practice-history</div>
+    <div style="padding-right:16px;color:var(--dim)">└─ results.length, getBestWpm()</div>
+    <div style="color:var(--green);margin-top:6px">↓ unlock-checker.ts</div>
+    <div style="padding-right:16px;color:var(--dim)">└─ getNewlyUnlockable(ctx) → CharacterUnlockDef[]</div>
+    <div style="color:var(--green);margin-top:6px">↙ companion-store &nbsp;&nbsp;&nbsp; ↘ badge-store</div>
+    <div style="color:var(--cyan);margin-top:6px">↓ battle-record-store</div>
+    <div style="padding-right:16px;color:var(--dim)">└─ rivalRecords, isRivalUnlocked()</div>
+  </div>
+
+  <h3 style="font-size:17px;margin:20px 0 12px;color:var(--cyan);">6.8 hook — useProgressionCheck</h3>
+  <pre>// src/hooks/use-progression-check.ts
+export function useProgressionCheck() {
+  // Collects context from all stores:
+  // xp-store: speedTestAttempts, gamesPlayed
+  // practice-history: results.length, getBestWpm()
+  // story-store: bossResults, unlockedCharacters
+
+  const checkProgression = useCallback((): ProgressionEvent[] => {
+    // 1. Check character unlocks → getNewlyUnlockable(ctx)
+    // 2. Check badge unlocks    → getNewlyEarnedBadges(ctx)
+    // 3. Check rival unlocks    → battleRecordStore.isRivalUnlocked()
+    return events
+  }, [/* all stores */])
+
+  return { checkProgression }
+}</pre>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 7: SOUND SYSTEM                                        -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section" id="sounds">
+  <div class="section-header">
+    <span class="emoji">🎵</span>
+    <div><h2>7. מערכת מוזיקה וסאונד</h2><div class="sub">Web Audio API — ללא קבצים חיצוניים</div></div>
+    <span class="tag tag-pink">Audio Synthesis</span>
+  </div>
+
+  <div class="notice green">
+    <span class="icon">🔊</span>
+    <div><strong>ארכיטקטורת סאונד:</strong> כל הצלילים מסונתזים ב-Web Audio API בזמן אמת. אין קבצי שמע חיצוניים. הגדרות ב-<code>src/lib/audio/sounds.ts</code>.</div>
+  </div>
+
+  <div class="grid-3">
+
+    <div class="sound-card">
+      <div class="sc-name">characterUnlock</div>
+      <div class="sc-desc">ארפג'יו עולה: C5→E5→G5→C6 + זנב ניצוצות</div>
+      <div class="sc-wave">
+        <div class="bar" style="height:40%"></div>
+        <div class="bar" style="height:55%"></div>
+        <div class="bar" style="height:70%"></div>
+        <div class="bar" style="height:100%"></div>
+        <div class="bar" style="height:80%;background:var(--gold)"></div>
+        <div class="bar" style="height:90%;background:var(--gold)"></div>
+      </div>
+    </div>
+
+    <div class="sound-card">
+      <div class="sc-name">bossEncounter</div>
+      <div class="sc-desc">ירידה דרמטית: רחש נמוך → מתח → פגיעה</div>
+      <div class="sc-wave">
+        <div class="bar" style="height:60%;background:var(--red)"></div>
+        <div class="bar" style="height:70%;background:var(--red)"></div>
+        <div class="bar" style="height:50%;background:var(--red)"></div>
+        <div class="bar" style="height:100%;background:var(--red)"></div>
+      </div>
+    </div>
+
+    <div class="sound-card">
+      <div class="sc-name">bossVictory</div>
+      <div class="sc-desc">טריומף: סולם מז'ור מלא C4→C6</div>
+      <div class="sc-wave">
+        <div class="bar" style="height:25%;background:var(--green)"></div>
+        <div class="bar" style="height:35%;background:var(--green)"></div>
+        <div class="bar" style="height:45%;background:var(--green)"></div>
+        <div class="bar" style="height:55%;background:var(--green)"></div>
+        <div class="bar" style="height:65%;background:var(--green)"></div>
+        <div class="bar" style="height:80%;background:var(--green)"></div>
+        <div class="bar" style="height:100%;background:var(--green)"></div>
+      </div>
+    </div>
+
+    <div class="sound-card">
+      <div class="sc-name">bugTease</div>
+      <div class="sc-desc">צ'ירפ קצר ומשובב: square wave</div>
+      <div class="sc-wave">
+        <div class="bar" style="height:90%;background:var(--orange)"></div>
+        <div class="bar" style="height:100%;background:var(--orange)"></div>
+        <div class="bar" style="height:60%;background:var(--orange)"></div>
+      </div>
+    </div>
+
+    <div class="sound-card">
+      <div class="sc-name">glitchEffect</div>
+      <div class="sc-desc">הפרעה דיגיטלית: sawtooth + square אקראי</div>
+      <div class="sc-wave">
+        <div class="bar" style="height:30%;background:var(--cyan)"></div>
+        <div class="bar" style="height:100%;background:var(--cyan)"></div>
+        <div class="bar" style="height:20%;background:var(--cyan)"></div>
+        <div class="bar" style="height:90%;background:var(--cyan)"></div>
+        <div class="bar" style="height:40%;background:var(--cyan)"></div>
+      </div>
+    </div>
+
+    <div class="sound-card">
+      <div class="sc-name">certificateEarned</div>
+      <div class="sc-desc">גרנד: סולם מלא C4→C6 עם קיצור</div>
+      <div class="sc-wave">
+        <div class="bar" style="height:20%;background:var(--gold)"></div>
+        <div class="bar" style="height:28%;background:var(--gold)"></div>
+        <div class="bar" style="height:36%;background:var(--gold)"></div>
+        <div class="bar" style="height:44%;background:var(--gold)"></div>
+        <div class="bar" style="height:55%;background:var(--gold)"></div>
+        <div class="bar" style="height:66%;background:var(--gold)"></div>
+        <div class="bar" style="height:77%;background:var(--gold)"></div>
+        <div class="bar" style="height:88%;background:var(--gold)"></div>
+        <div class="bar" style="height:95%;background:var(--gold)"></div>
+        <div class="bar" style="height:100%;background:var(--gold)"></div>
+      </div>
+    </div>
+
+    <div class="sound-card">
+      <div class="sc-name">companionReaction</div>
+      <div class="sc-desc">פעמון עדין: A5→C#6 sine</div>
+      <div class="sc-wave">
+        <div class="bar" style="height:60%;background:var(--pink)"></div>
+        <div class="bar" style="height:80%;background:var(--pink)"></div>
+      </div>
+    </div>
+
+    <div class="sound-card">
+      <div class="sc-name">rivalUnlock</div>
+      <div class="sc-desc">מינורי מאתגר: sawtooth → sine</div>
+      <div class="sc-wave">
+        <div class="bar" style="height:50%;background:var(--red)"></div>
+        <div class="bar" style="height:60%;background:var(--red)"></div>
+        <div class="bar" style="height:45%;background:var(--red)"></div>
+        <div class="bar" style="height:100%;background:var(--red)"></div>
+      </div>
+    </div>
+
+    <div class="sound-card">
+      <div class="sc-name">glitchCalmed</div>
+      <div class="sc-desc">כאוס מתייצב להרמוניה: sawtooth→sine</div>
+      <div class="sc-wave">
+        <div class="bar" style="height:80%;background:var(--dim)"></div>
+        <div class="bar" style="height:100%;background:var(--dim)"></div>
+        <div class="bar" style="height:55%;background:var(--cyan)"></div>
+        <div class="bar" style="height:70%;background:var(--cyan)"></div>
+        <div class="bar" style="height:90%;background:var(--cyan)"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <h3 style="font-size:17px;margin:16px 0 12px;color:var(--purple);">7.4 עוצמת סאונד לפי ערכת גיל</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>ערכת גיל</th><th>עוצמה</th><th>שכבות נוספות</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="chip chip-green">שתיל 6–8</span></td><td>100%</td><td>שלבי ניצוצות נוספים לפנפרות</td></tr>
+        <tr><td><span class="chip chip-cyan">נבט 8–10</span></td><td>90%</td><td>רגיל</td></tr>
+        <tr><td><span class="chip chip-purple">גזע 10–12</span></td><td>80%</td><td>רגיל</td></tr>
+        <tr><td><span class="chip chip-pink">ענף 12–14</span></td><td>60%</td><td>מקוצר (פחות שלבים)</td></tr>
+        <tr><td><span class="chip chip-red">צמרת 14–16</span></td><td>40% / כבוי</td><td>מינימלי — טון בודד או שקט</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 8: IMPLEMENTATION PRIORITY                            -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section" id="priority">
+  <div class="section-header">
+    <span class="emoji">📋</span>
+    <div><h2>נספח א׳: עדיפויות יישום</h2><div class="sub">5 שלבים לפי עדיפות — P0 קריטי עד P3 נמוך</div></div>
+    <span class="tag tag-gold">Implementation Plan</span>
+  </div>
+
+  <div class="phase-card p0">
+    <div class="ph-label">שלב 1 — P0 קריטי</div>
+    <div class="ph-tasks">
+      <div class="ph-task">הוסף StoryFlags חדשים: yukiJoined, kaiJoined, rexJoined, bugTease L3–L6, glitchCalmed, phantomRevealed | <code>types/story.ts + stores/story-store.ts</code></div>
+      <div class="ph-task">הוסף speedTestAttempts ו-gamesPlayed ל-xp-store | <code>stores/xp-store.ts</code></div>
+      <div class="ph-task">צור unlock-conditions.ts ו-unlock-checker.ts | <code>lib/progression/</code> (חדש)</div>
+      <div class="ph-task">צור companion-store.ts | <code>stores/companion-store.ts</code> (חדש)</div>
+      <div class="ph-task">צור battle-record-store.ts | <code>stores/battle-record-store.ts</code> (חדש)</div>
+    </div>
+  </div>
+
+  <div class="phase-card p1">
+    <div class="ph-label">שלב 2 — P1 גבוה</div>
+    <div class="ph-tasks">
+      <div class="ph-task">הוסף סוגי תנאי בדג חדשים ו-badge definitions | <code>lib/gamification/badge-definitions.ts</code></div>
+      <div class="ph-task">הרחב badge checker עם תנאים חדשים | <code>lib/gamification/badge-checker.ts</code></div>
+      <div class="ph-task">הוסף sound cues חדשים | <code>lib/audio/sounds.ts</code></div>
+      <div class="ph-task">צור use-progression-check.ts hook | <code>hooks/use-progression-check.ts</code> (חדש)</div>
+    </div>
+  </div>
+
+  <div class="phase-card p1">
+    <div class="ph-label">שלב 3 — P1/P2</div>
+    <div class="ph-tasks">
+      <div class="ph-task">ממשק UI לבחירת שותף | <code>components/companion/</code> (חדש)</div>
+      <div class="ph-task">מערכת תגובות שותף | <code>components/companion/companion-reaction.tsx</code> (חדש) — P2</div>
+      <div class="ph-task">אפקטים ויזואלים Bug tease (L3–L6) | <code>components/story/bug-tease.tsx</code> (חדש) — P2</div>
+      <div class="ph-task">מכניקת קרב בוס (L7 ראשון) | <code>components/battle/boss-battle.tsx</code> (חדש) — P1</div>
+    </div>
+  </div>
+
+  <div class="phase-card p2">
+    <div class="ph-label">שלב 4 — P2</div>
+    <div class="ph-tasks">
+      <div class="ph-task">אפקטי Glitch (היפוך מקלדת) | <code>components/battle/glitch-effect.tsx</code> (חדש)</div>
+      <div class="ph-task">יישום Phantom יריב סודי | <code>components/characters/rival-ninja.tsx</code> עדכון</div>
+      <div class="ph-task">סקאלינג סאונד לפי ערכת גיל | <code>lib/audio/sound-manager.ts</code></div>
+    </div>
+  </div>
+
+  <div class="phase-card p3">
+    <div class="ph-label">שלב 5 — P1/P3</div>
+    <div class="ph-tasks">
+      <div class="ph-task">UI חגיגה לפתיחת דמות | <code>components/story/character-unlock.tsx</code> (חדש) — P1</div>
+      <div class="ph-task">UI תגמולי אוסף ושלמות | <code>components/gamification/collection-rewards.tsx</code> (חדש) — P3</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 9: PLAYER JOURNEY TIMELINE                            -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="section" id="journey">
+  <div class="section-header">
+    <span class="emoji">🗺️</span>
+    <div><h2>נספח ב׳: ציר הזמן של השחקן</h2><div class="sub">מסע מלא — שיעור 1 עד אחרי המשחק</div></div>
+    <span class="tag tag-purple">Player Journey</span>
+  </div>
+
+  <div class="timeline">
+
+    <div class="tl-item unlock">
+      <div class="tl-body">
+        <div class="tl-label">שיעור 1</div>
+        <div class="tl-title">🥷 Ki + 📊 Pixel — המסע מתחיל</div>
+        <div class="tl-desc">Ki הוא המדריך שלך. Pixel מציג סטטיסטיקות.</div>
+      </div>
+    </div>
+
+    <div class="tl-item unlock">
+      <div class="tl-body">
+        <div class="tl-label">שיעור 2</div>
+        <div class="tl-title">⚡ UNLOCK: Mika מצטרפת! שותפות מתחילה.</div>
+        <div class="tl-desc">"You're too slow." — היא מאתגרת את Ki.</div>
+      </div>
+    </div>
+
+    <div class="tl-item unlock">
+      <div class="tl-body">
+        <div class="tl-label">שיעור 3</div>
+        <div class="tl-title">🐢 UNLOCK: Sensei Zen מופיע + 👁️ Bug Tease: flicker</div>
+        <div class="tl-desc">המנטור הטורטל העתיק. תו אחד מהבהב ירוק לחצי שנייה.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-body">
+        <div class="tl-label">שיעור 4</div>
+        <div class="tl-title">👁️ Bug Tease: shadow | 🦊 UNLOCK: Yuki (אחרי מבחן מהירות!)</div>
+        <div class="tl-desc">צללית חיפושית עוברת. נסו מבחן מהירות ↔ Yuki מצטרפת!</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-body">
+        <div class="tl-label">שיעור 5</div>
+        <div class="tl-title">👁️ Bug Tease: scramble | 🌙 UNLOCK: Luna (אחרי 10 תרגולים)</div>
+        <div class="tl-desc">מילה מבולבלת לרגע ← Luna מלמדת ריכוז.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-body">
+        <div class="tl-label">שיעור 6</div>
+        <div class="tl-title">👁️ Bug Tease: giggle | 🪲 הופעה ראשונה של Bug!</div>
+        <div class="tl-desc">צחוק "הי הי הי" + Bug מופיע לראשונה — טוטוריאל.</div>
+      </div>
+    </div>
+
+    <div class="tl-item boss">
+      <div class="tl-body">
+        <div class="tl-label">שיעור 7</div>
+        <div class="tl-title">👑 BOSS: Bug הקטן! | 💊 UNLOCK: Noa | 🏆 badge: bug-buster</div>
+        <div class="tl-desc">10 מילים, 60 שניות. ניצחת → Noa מרפאת וצטרפת לקבוצה.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-body">
+        <div class="tl-label">שיעורים 8–11</div>
+        <div class="tl-title">🎓 אימון — Yuki אתגרי מהירות, Luna גינת ירח</div>
+        <div class="tl-desc">Sensei Zen מלמד אישית. Luna — תרגילי ריכוז בגינת הירח.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-body">
+        <div class="tl-label">שיעור 12</div>
+        <div class="tl-title">⚡ Glitch מופיע! היפוך מקלדת לטוטוריאל</div>
+        <div class="tl-desc">Mika מסבירה. Glitch הופך פריסה ל-10 שניות — להסתגל!</div>
+      </div>
+    </div>
+
+    <div class="tl-item boss">
+      <div class="tl-body">
+        <div class="tl-label">שיעור 15</div>
+        <div class="tl-title">👑 BOSS: Bug + Glitch! | 🏆 badge: glitch-survivor</div>
+        <div class="tl-desc">20 מילים, 120s. גליץ' הופך מפתחות כל 15s. ניצחון = שורד גליץ'!</div>
+      </div>
+    </div>
+
+    <div class="tl-item unlock">
+      <div class="tl-body">
+        <div class="tl-label">במקביל — זירת קרב</div>
+        <div class="tl-title">🐱→🦊→🐉 Shadow × 3 → Storm → Blaze</div>
+        <div class="tl-desc">Beat Shadow ×3 → UNLOCK: Storm | Beat Storm ×3 → UNLOCK: Blaze | badge per rival</div>
+      </div>
+    </div>
+
+    <div class="tl-item unlock">
+      <div class="tl-body">
+        <div class="tl-label">במקביל — WPM + Games</div>
+        <div class="tl-title">🔥 50 WPM → UNLOCK: Kai | 🦕 5 משחקים → UNLOCK: Rex</div>
+        <div class="tl-desc">Kai: badge "Speed Demon" | Rex: badge "Gamer"</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-body">
+        <div class="tl-label">שיעורים 16–19</div>
+        <div class="tl-title">🌀 מבוך השגיאות + פדיון גליץ' (שיעור 18)</div>
+        <div class="tl-desc">Mika פורצת חומות אש. שיעור 18: 95% דיוק מרגיע את גליץ' — הוא הופך לבן ברית!</div>
+      </div>
+    </div>
+
+    <div class="tl-item boss">
+      <div class="tl-body">
+        <div class="tl-label">שיעור 20</div>
+        <div class="tl-title">👑 FINAL BOSS: מלך הבאגים! כל הגיבורים ביחד!</div>
+        <div class="tl-desc">50 מילים, 120s, 90% דיוק, 3 שלבים. badge: King Slayer + תעודה: נינג'ה מקלדת אמיתי!</div>
+      </div>
+    </div>
+
+    <div class="tl-item badge">
+      <div class="tl-body">
+        <div class="tl-label">אחרי המשחק</div>
+        <div class="tl-title">👻 Beat Blaze ×3 → UNLOCK: Phantom | ⭐ אוסף מלא → Completionist</div>
+        <div class="tl-desc">אירועי בוס חודשיים. אסוף את כל הבדגים → badge ייחודי + סקין זהוב לKi.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <strong>Ninja Keyboard</strong> — מערכת התקדמות דמויות v1.0<br>
+  <span>עודכן לאחרונה: מרץ 2026 | מוכן ליישום — שלב 1 יכול להתחיל מיד</span><br>
+  <span style="margin-top:8px;display:block;font-size:11px;">תלויות: character-bible-merged.md · story-store.ts · xp-store.ts · badge-store.ts · character-config.ts</span>
+</footer>
+
+</body>
+</html>

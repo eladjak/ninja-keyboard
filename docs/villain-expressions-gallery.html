@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>נינג'ה מקלדת - גלריית הבעות פנים: נבלים ויריבים</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background-color: #0d0b1a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1333 0%, #0d0b1a 50%, #1a0d2e 100%);
+            border-bottom: 2px solid #6C5CE7;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #6C5CE7, #00B894);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #a0a0c0;
+        }
+
+        .header .badge {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            background: rgba(108, 92, 231, 0.15);
+            color: #6C5CE7;
+            border: 1px solid rgba(108, 92, 231, 0.3);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1.5rem 2rem;
+            background: rgba(108, 92, 231, 0.05);
+            border-bottom: 1px solid rgba(108, 92, 231, 0.15);
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #6C5CE7;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Section Headers */
+        .section-header {
+            padding: 2rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header.villains h2 {
+            color: #e74c3c;
+        }
+
+        .section-header.rivals h2 {
+            color: #f39c12;
+        }
+
+        .section-header.heroes h2 {
+            color: #00B894;
+        }
+
+        .section-header p {
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        .section-divider {
+            width: 120px;
+            height: 3px;
+            margin: 0.8rem auto 0;
+            border-radius: 2px;
+        }
+
+        .section-divider.villains {
+            background: linear-gradient(90deg, transparent, #e74c3c, transparent);
+        }
+
+        .section-divider.rivals {
+            background: linear-gradient(90deg, transparent, #f39c12, transparent);
+        }
+
+        .section-divider.heroes {
+            background: linear-gradient(90deg, transparent, #00B894, transparent);
+        }
+
+        /* Main Content */
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem 3rem;
+        }
+
+        /* Character Cards */
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .character-card {
+            background: #13102a;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(108, 92, 231, 0.15);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .character-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(108, 92, 231, 0.2);
+        }
+
+        .character-card.villain {
+            border-color: rgba(231, 76, 60, 0.3);
+        }
+
+        .character-card.villain:hover {
+            box-shadow: 0 8px 32px rgba(231, 76, 60, 0.2);
+        }
+
+        .character-card.rival {
+            border-color: rgba(243, 156, 18, 0.3);
+        }
+
+        .character-card.rival:hover {
+            box-shadow: 0 8px 32px rgba(243, 156, 18, 0.2);
+        }
+
+        .character-card.hero {
+            border-color: rgba(0, 184, 148, 0.3);
+        }
+
+        .character-card.hero:hover {
+            box-shadow: 0 8px 32px rgba(0, 184, 148, 0.2);
+        }
+
+        .card-header {
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card-header .name-section {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .card-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .card-header .name-en {
+            font-size: 0.85rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .role-badge {
+            padding: 0.25rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .role-badge.villain {
+            background: rgba(231, 76, 60, 0.15);
+            color: #e74c3c;
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        }
+
+        .role-badge.rival {
+            background: rgba(243, 156, 18, 0.15);
+            color: #f39c12;
+            border: 1px solid rgba(243, 156, 18, 0.3);
+        }
+
+        .role-badge.hero {
+            background: rgba(0, 184, 148, 0.15);
+            color: #00B894;
+            border: 1px solid rgba(0, 184, 148, 0.3);
+        }
+
+        .card-description {
+            padding: 0.8rem 1.5rem;
+            font-size: 0.9rem;
+            color: #999;
+            line-height: 1.6;
+        }
+
+        .expression-image {
+            width: 100%;
+            display: block;
+            cursor: pointer;
+            transition: filter 0.2s ease;
+        }
+
+        .expression-image:hover {
+            filter: brightness(1.1);
+        }
+
+        .card-footer {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .moods-list {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .mood-tag {
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            background: rgba(108, 92, 231, 0.1);
+            color: #8b7fe8;
+            font-size: 0.7rem;
+        }
+
+        /* Legend */
+        .legend {
+            margin-top: 3rem;
+            padding: 1.5rem 2rem;
+            background: #13102a;
+            border-radius: 12px;
+            border: 1px solid rgba(108, 92, 231, 0.15);
+        }
+
+        .legend h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #6C5CE7;
+            margin-bottom: 1rem;
+        }
+
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.8rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.85rem;
+        }
+
+        .legend-emoji {
+            font-size: 1.2rem;
+            width: 28px;
+            text-align: center;
+        }
+
+        .legend-text {
+            color: #bbb;
+        }
+
+        .legend-text strong {
+            color: #e0e0e0;
+        }
+
+        /* Footer */
+        .page-footer {
+            text-align: center;
+            padding: 2rem;
+            color: #555;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(108, 92, 231, 0.1);
+            margin-top: 2rem;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 95vw;
+            max-height: 95vh;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .lightbox .close-btn {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(108, 92, 231, 0.3);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .character-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-bar {
+                gap: 1rem;
+            }
+
+            .content {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>גלריית הבעות פנים: נבלים ויריבים</h1>
+        <p>דפי הבעות פנים (Expression Sheets) - 8 רגשות לכל דמות</p>
+        <span class="badge">V1 - מרץ 2026</span>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-value">12</div>
+            <div class="stat-label">דמויות סה"כ</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">6</div>
+            <div class="stat-label">נבלים ויריבים (חדש!)</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">8</div>
+            <div class="stat-label">רגשות לכל דמות</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">96</div>
+            <div class="stat-label">הבעות סה"כ</div>
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Villains Section -->
+        <div class="section-header villains">
+            <h2>נבלים</h2>
+            <p>האויבים הראשיים של עולם נינג'ה מקלדת</p>
+            <div class="section-divider villains"></div>
+        </div>
+
+        <div class="character-grid">
+            <!-- Bug -->
+            <div class="character-card villain">
+                <div class="card-header">
+                    <div class="name-section">
+                        <h3>באג</h3>
+                        <span class="name-en">Bug</span>
+                    </div>
+                    <span class="role-badge villain">נבל - משרת</span>
+                </div>
+                <div class="card-description">
+                    יצור ג'וק קטן וחמוד עם אנטנות, צבע ירוק-חום, עיניים גדולות ומבעיות, סרט נינג'ה זעיר. משרת נאמן של מלך הבאגים.
+                </div>
+                <img src="../public/images/characters/expressions/bug-expressions-v1.jpg"
+                     alt="באג - דף הבעות פנים"
+                     class="expression-image"
+                     onclick="openLightbox(this.src)">
+                <div class="card-footer">
+                    <span>bug-expressions-v1.jpg</span>
+                    <div class="moods-list">
+                        <span class="mood-tag">רגיל</span>
+                        <span class="mood-tag">שמח</span>
+                        <span class="mood-tag">נרגש</span>
+                        <span class="mood-tag">חושב</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bug King -->
+            <div class="character-card villain">
+                <div class="card-header">
+                    <div class="name-section">
+                        <h3>מלך הבאגים</h3>
+                        <span class="name-en">Bug King</span>
+                    </div>
+                    <span class="role-badge villain">נבל - בוס</span>
+                </div>
+                <div class="card-description">
+                    חיפושית ענקית משוריינת, שריון סגול כהה עם עיטורי זהב, כתר מלכותי, לסתות מאיימות, גלימה מלכותית. הבוס הראשי של פרק 3.
+                </div>
+                <img src="../public/images/characters/expressions/bugking-expressions-v1.jpg"
+                     alt="מלך הבאגים - דף הבעות פנים"
+                     class="expression-image"
+                     onclick="openLightbox(this.src)">
+                <div class="card-footer">
+                    <span>bugking-expressions-v1.jpg</span>
+                    <div class="moods-list">
+                        <span class="mood-tag">רגיל</span>
+                        <span class="mood-tag">שמח</span>
+                        <span class="mood-tag">נרגש</span>
+                        <span class="mood-tag">חושב</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Glitch -->
+            <div class="character-card villain">
+                <div class="card-header">
+                    <div class="name-section">
+                        <h3>גליץ'</h3>
+                        <span class="name-en">Glitch</span>
+                    </div>
+                    <span class="role-badge villain">נבלה - דיגיטלית</span>
+                </div>
+                <div class="card-description">
+                    יצור דיגיטלי נשי, אפקטים של פיקסלים מושחתים, סגול וציאן, שיער דיגיטלי עם סטטיק, עין אחת מתקלקלת. חברה לשעבר של מיקה שנשבתה.
+                </div>
+                <img src="../public/images/characters/expressions/glitch-expressions-v1.jpg"
+                     alt="גליץ' - דף הבעות פנים"
+                     class="expression-image"
+                     onclick="openLightbox(this.src)">
+                <div class="card-footer">
+                    <span>glitch-expressions-v1.jpg</span>
+                    <div class="moods-list">
+                        <span class="mood-tag">רגיל</span>
+                        <span class="mood-tag">שמח</span>
+                        <span class="mood-tag">נרגש</span>
+                        <span class="mood-tag">חושב</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rivals Section -->
+        <div class="section-header rivals" style="margin-top: 3rem;">
+            <h2>יריבים</h2>
+            <p>יריבי AI שמתחרים נגד השחקן במבחני מהירות</p>
+            <div class="section-divider rivals"></div>
+        </div>
+
+        <div class="character-grid">
+            <!-- Shadow -->
+            <div class="character-card rival">
+                <div class="card-header">
+                    <div class="name-section">
+                        <h3>שאדו</h3>
+                        <span class="name-en">Shadow</span>
+                    </div>
+                    <span class="role-badge rival">יריב - חתול</span>
+                </div>
+                <div class="card-description">
+                    חתול נינג'ה שחור וחלק, עיניים צהובות זוהרות, תלבושת נינג'ה כהה עם ברדס, אפקטי צל ועשן, גוף רזה וחטוב. היריב הראשון - קל.
+                </div>
+                <img src="../public/images/characters/expressions/shadow-expressions-v1.jpg"
+                     alt="שאדו - דף הבעות פנים"
+                     class="expression-image"
+                     onclick="openLightbox(this.src)">
+                <div class="card-footer">
+                    <span>shadow-expressions-v1.jpg</span>
+                    <div class="moods-list">
+                        <span class="mood-tag">רגיל</span>
+                        <span class="mood-tag">שמח</span>
+                        <span class="mood-tag">נרגש</span>
+                        <span class="mood-tag">כועס</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Storm -->
+            <div class="character-card rival">
+                <div class="card-header">
+                    <div class="name-section">
+                        <h3>סטורם</h3>
+                        <span class="name-en">Storm</span>
+                    </div>
+                    <span class="role-badge rival">יריב - שועל</span>
+                </div>
+                <div class="card-description">
+                    שועל חשמלי כחול עם סימני ברקים על הפרווה, ניצוצות חשמליים סביב הגוף, אנרגטי ומהיר, תלבושת נינג'ה עם דגשים כחולים. היריב השני - בינוני.
+                </div>
+                <img src="../public/images/characters/expressions/storm-expressions-v1.jpg"
+                     alt="סטורם - דף הבעות פנים"
+                     class="expression-image"
+                     onclick="openLightbox(this.src)">
+                <div class="card-footer">
+                    <span>storm-expressions-v1.jpg</span>
+                    <div class="moods-list">
+                        <span class="mood-tag">רגיל</span>
+                        <span class="mood-tag">שמח</span>
+                        <span class="mood-tag">נרגש</span>
+                        <span class="mood-tag">כועס</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blaze -->
+            <div class="character-card rival">
+                <div class="card-header">
+                    <div class="name-section">
+                        <h3>בלייז</h3>
+                        <span class="name-en">Blaze</span>
+                    </div>
+                    <span class="role-badge rival">יריב - דרקון</span>
+                </div>
+                <div class="card-description">
+                    דרקון אש נינג'ה, קשקשים אדומים-כתומים, רעמת להבות, אצילי אך עז, כנפי דרקון קטנות, נושף אש. היריב השלישי והחזק ביותר - קשה.
+                </div>
+                <img src="../public/images/characters/expressions/blaze-expressions-v1.jpg"
+                     alt="בלייז - דף הבעות פנים"
+                     class="expression-image"
+                     onclick="openLightbox(this.src)">
+                <div class="card-footer">
+                    <span>blaze-expressions-v1.jpg</span>
+                    <div class="moods-list">
+                        <span class="mood-tag">רגיל</span>
+                        <span class="mood-tag">שמח</span>
+                        <span class="mood-tag">נרגש</span>
+                        <span class="mood-tag">כועס</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Heroes Section (existing) -->
+        <div class="section-header heroes" style="margin-top: 3rem;">
+            <h2>גיבורים (קיימים)</h2>
+            <p>דפי הבעות פנים שכבר נוצרו בסבבים קודמים</p>
+            <div class="section-divider heroes"></div>
+        </div>
+
+        <div class="character-grid">
+            <!-- Ki -->
+            <div class="character-card hero">
+                <div class="card-header">
+                    <div class="name-section">
+                        <h3>קי</h3>
+                        <span class="name-en">Ki</span>
+                    </div>
+                    <span class="role-badge hero">גיבור ראשי</span>
+                </div>
+                <div class="card-description">
+                    הגיבור הראשי - ילד נינג'ה ישראלי, קמע המסקוט של המשחק. 8 מצבי רוח אנימטיביים.
+                </div>
+                <img src="../public/images/characters/expressions/ki-expressions.jpg"
+                     alt="קי - דף הבעות פנים"
+                     class="expression-image"
+                     onclick="openLightbox(this.src)">
+                <div class="card-footer">
+                    <span>ki-expressions.jpg</span>
+                    <div class="moods-list">
+                        <span class="mood-tag">קיים</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Yuki -->
+            <div class="character-card hero">
+                <div class="card-header">
+                    <div class="name-section">
+                        <h3>יוקי</h3>
+                        <span class="name-en">Yuki</span>
+                    </div>
+                    <span class="role-badge hero">גיבורה</span>
+                </div>
+                <div class="card-description">
+                    נינג'ה מהירה כברק, מובילה את מבחני המהירות. סברית ישראלית מוחלטת.
+                </div>
+                <img src="../public/images/characters/expressions/yuki-expressions.jpg"
+                     alt="יוקי - דף הבעות פנים"
+                     class="expression-image"
+                     onclick="openLightbox(this.src)">
+                <div class="card-footer">
+                    <span>yuki-expressions.jpg</span>
+                    <div class="moods-list">
+                        <span class="mood-tag">קיים</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mika -->
+            <div class="character-card hero">
+                <div class="card-header">
+                    <div class="name-section">
+                        <h3>מיקה</h3>
+                        <span class="name-en">Mika</span>
+                    </div>
+                    <span class="role-badge hero">גיבורה</span>
+                </div>
+                <div class="card-description">
+                    מומחית קיצורי מקשים והאקרית לשעבר. חברה לשעבר של גליץ'.
+                </div>
+                <img src="../public/images/characters/expressions/mika-expressions.jpg"
+                     alt="מיקה - דף הבעות פנים"
+                     class="expression-image"
+                     onclick="openLightbox(this.src)">
+                <div class="card-footer">
+                    <span>mika-expressions.jpg</span>
+                    <div class="moods-list">
+                        <span class="mood-tag">קיים</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kai -->
+            <div class="character-card hero">
+                <div class="card-header">
+                    <div class="name-section">
+                        <h3>קאי</h3>
+                        <span class="name-en">Kai</span>
+                    </div>
+                    <span class="role-badge hero">גיבור</span>
+                </div>
+                <div class="card-description">
+                    נינג'ה מופנם ורגיש, מומחה בדיוק ובשלמות הקלדה.
+                </div>
+                <img src="../public/images/characters/expressions/kai-expressions.jpg"
+                     alt="קאי - דף הבעות פנים"
+                     class="expression-image"
+                     onclick="openLightbox(this.src)">
+                <div class="card-footer">
+                    <span>kai-expressions.jpg</span>
+                    <div class="moods-list">
+                        <span class="mood-tag">קיים</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Luna -->
+            <div class="character-card hero">
+                <div class="card-header">
+                    <div class="name-section">
+                        <h3>לונה</h3>
+                        <span class="name-en">Luna</span>
+                    </div>
+                    <span class="role-badge hero">גיבורה</span>
+                </div>
+                <div class="card-description">
+                    אמנית ביישנית שלומדת להיפתח ולהראות את האמנות שלה לעולם. מובילה את אזור התרגול.
+                </div>
+                <img src="../public/images/characters/expressions/luna-expressions.jpg"
+                     alt="לונה - דף הבעות פנים"
+                     class="expression-image"
+                     onclick="openLightbox(this.src)">
+                <div class="card-footer">
+                    <span>luna-expressions.jpg</span>
+                    <div class="moods-list">
+                        <span class="mood-tag">קיים</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Noa -->
+            <div class="character-card hero">
+                <div class="card-header">
+                    <div class="name-section">
+                        <h3>נעה</h3>
+                        <span class="name-en">Noa</span>
+                    </div>
+                    <span class="role-badge hero">גיבורה</span>
+                </div>
+                <div class="card-description">
+                    מרפאה וטבע-נינג'ה, מתקנת באגים ומחלקת כוח. תתמודד עם מלכת הבאגים.
+                </div>
+                <img src="../public/images/characters/expressions/noa-expressions.jpg"
+                     alt="נעה - דף הבעות פנים"
+                     class="expression-image"
+                     onclick="openLightbox(this.src)">
+                <div class="card-footer">
+                    <span>noa-expressions.jpg</span>
+                    <div class="moods-list">
+                        <span class="mood-tag">קיים</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mood Legend -->
+        <div class="legend">
+            <h3>מפתח רגשות (8 הבעות לכל דמות)</h3>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <span class="legend-emoji">😐</span>
+                    <span class="legend-text"><strong>Normal</strong> - רגיל</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-emoji">😊</span>
+                    <span class="legend-text"><strong>Happy</strong> - שמח</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-emoji">🤩</span>
+                    <span class="legend-text"><strong>Excited</strong> - נרגש</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-emoji">🤔</span>
+                    <span class="legend-text"><strong>Thinking</strong> - חושב</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-emoji">😕</span>
+                    <span class="legend-text"><strong>Confused</strong> - מבולבל</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-emoji">😢</span>
+                    <span class="legend-text"><strong>Sad</strong> - עצוב</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-emoji">😠</span>
+                    <span class="legend-text"><strong>Angry</strong> - כועס</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-emoji">🎉</span>
+                    <span class="legend-text"><strong>Celebrating</strong> - חוגג</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Notes -->
+        <div class="legend" style="margin-top: 1.5rem;">
+            <h3>פרטים טכניים</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.85rem; color: #999;">
+                <div>
+                    <strong style="color: #ccc;">סגנון:</strong> Brawl Stars x Anime Chibi<br>
+                    <strong style="color: #ccc;">יחס תמונה:</strong> 16:9<br>
+                    <strong style="color: #ccc;">פריסה:</strong> 2 שורות x 4 עמודות
+                </div>
+                <div>
+                    <strong style="color: #ccc;">כלי יצירה:</strong> Gemini (nano-banana-poster)<br>
+                    <strong style="color: #ccc;">גרסה:</strong> V1<br>
+                    <strong style="color: #ccc;">תאריך:</strong> מרץ 2026
+                </div>
+            </div>
+        </div>
+
+        <!-- File Paths -->
+        <div class="legend" style="margin-top: 1.5rem;">
+            <h3>נתיבי קבצים</h3>
+            <div style="font-family: monospace; font-size: 0.8rem; color: #888; direction: ltr; text-align: left; line-height: 2;">
+                <div style="color: #e74c3c;">public/images/characters/expressions/bug-expressions-v1.jpg</div>
+                <div style="color: #e74c3c;">public/images/characters/expressions/bugking-expressions-v1.jpg</div>
+                <div style="color: #e74c3c;">public/images/characters/expressions/glitch-expressions-v1.jpg</div>
+                <div style="color: #f39c12;">public/images/characters/expressions/shadow-expressions-v1.jpg</div>
+                <div style="color: #f39c12;">public/images/characters/expressions/storm-expressions-v1.jpg</div>
+                <div style="color: #f39c12;">public/images/characters/expressions/blaze-expressions-v1.jpg</div>
+                <div style="color: #00B894;">public/images/characters/expressions/ki-expressions.jpg</div>
+                <div style="color: #00B894;">public/images/characters/expressions/yuki-expressions.jpg</div>
+                <div style="color: #00B894;">public/images/characters/expressions/mika-expressions.jpg</div>
+                <div style="color: #00B894;">public/images/characters/expressions/kai-expressions.jpg</div>
+                <div style="color: #00B894;">public/images/characters/expressions/luna-expressions.jpg</div>
+                <div style="color: #00B894;">public/images/characters/expressions/noa-expressions.jpg</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="page-footer">
+        נינג'ה מקלדת - גלריית הבעות פנים V1 | נוצר במרץ 2026 | Gemini Image Generation
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="close-btn" onclick="closeLightbox()">&times;</button>
+        <img id="lightbox-img" src="" alt="תצוגה מוגדלת">
+    </div>
+
+    <script>
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
+
+</body>
+</html>

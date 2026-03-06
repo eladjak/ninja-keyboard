@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ninja Keyboard - סקינים לחגים: הרחבה + דרגות</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#0d0b1a;--bg2:#080618;--card:#0c0a20;--elevated:#13102a;
+    --border:rgba(108,92,231,0.18);--purple:#6C5CE7;--green:#00B894;
+    --pink:#FD79A8;--orange:#FDCB6E;--red:#FF6B6B;--blue:#74B9FF;
+    --cyan:#00CEC9;--gold:#F9CA24;--text:#E8E6F0;--dim:#8B86A6;
+    --glow:0 0 22px rgba(108,92,231,0.35);
+    --bronze:#CD7F32;--silver:#C0C0C0;
+  }
+  body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);line-height:1.75;}
+  nav{position:sticky;top:0;z-index:100;background:rgba(13,11,26,0.96);backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--border);padding:10px 20px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+  nav .logo{font-size:17px;font-weight:900;color:var(--purple);margin-left:14px;}
+  nav a{color:var(--dim);text-decoration:none;padding:5px 12px;border-radius:18px;
+    font-size:12px;font-weight:500;border:1px solid transparent;transition:all .18s;}
+  nav a:hover{color:var(--purple);background:rgba(108,92,231,0.1);border-color:rgba(108,92,231,0.3);}
+  .hero{text-align:center;padding:56px 24px 36px;
+    background:linear-gradient(180deg,rgba(108,92,231,0.09) 0%,transparent 100%);}
+  .hero h1{font-size:38px;font-weight:900;
+    background:linear-gradient(135deg,var(--purple),var(--green));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px;}
+  .hero p{color:var(--dim);font-size:17px;max-width:700px;margin:0 auto;}
+  .hero .badge{display:inline-block;margin-top:20px;padding:8px 20px;
+    background:rgba(108,92,231,0.12);border:1px solid rgba(108,92,231,0.35);
+    border-radius:24px;font-size:13px;color:var(--purple);font-weight:600;}
+  .section{max-width:1100px;margin:0 auto;padding:40px 20px;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;
+    padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .section-header .emoji{font-size:36px;}
+  .section-header h2{font-size:26px;font-weight:900;}
+  .section-header .sub{font-size:14px;color:var(--dim);margin-top:3px;}
+  .section-header .tag{margin-right:auto;padding:4px 12px;border-radius:14px;font-size:12px;font-weight:700;}
+  .tag-joy{background:rgba(249,202,36,0.15);color:var(--gold);border:1px solid rgba(249,202,36,0.3);}
+  .tag-solemn{background:rgba(116,185,255,0.1);color:var(--blue);border:1px solid rgba(116,185,255,0.25);}
+  .tag-hero{background:rgba(255,107,107,0.12);color:var(--red);border:1px solid rgba(255,107,107,0.28);}
+  .tag-nature{background:rgba(0,184,148,0.12);color:var(--green);border:1px solid rgba(0,184,148,0.28);}
+  .skin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:16px;margin-bottom:14px;}
+  .skin-card{background:var(--elevated);border:1px solid var(--border);border-radius:16px;
+    overflow:hidden;transition:transform .2s,box-shadow .2s;}
+  .skin-card:hover{transform:translateY(-4px);box-shadow:var(--glow);}
+  .skin-card .card-top{padding:18px 18px 14px;display:flex;align-items:flex-start;gap:12px;}
+  .avatar{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;
+    justify-content:center;font-size:26px;flex-shrink:0;border:2px solid rgba(255,255,255,0.1);}
+  .char-name{font-size:17px;font-weight:700;}
+  .skin-name{font-size:12px;color:var(--dim);margin-top:2px;}
+  .card-body{padding:0 18px 16px;font-size:13px;color:var(--dim);line-height:1.75;}
+  .card-body p{margin-bottom:8px;}
+  .card-body strong{color:var(--text);}
+  .anim-tag{display:inline-block;margin-top:4px;padding:3px 10px;border-radius:10px;
+    font-size:11px;font-weight:600;background:rgba(108,92,231,0.15);color:var(--purple);
+    border:1px solid rgba(108,92,231,0.25);}
+  .card-footer{padding:10px 18px;border-top:1px solid var(--border);
+    font-size:11px;color:var(--dim);font-style:italic;}
+  .color-row{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap;}
+  .swatch{width:18px;height:18px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);display:inline-block;}
+  .notice{background:rgba(116,185,255,0.07);border:1px solid rgba(116,185,255,0.2);
+    border-radius:12px;padding:16px 20px;margin-bottom:24px;
+    font-size:13.5px;color:var(--blue);display:flex;gap:12px;align-items:flex-start;}
+  .notice .icon{font-size:22px;flex-shrink:0;}
+  hr.div{border:none;border-top:1px solid var(--border);margin:8px 0 28px;}
+  footer{text-align:center;padding:40px 20px;color:var(--dim);font-size:13px;
+    border-top:1px solid var(--border);margin-top:40px;}
+  .tier-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:14px;}
+  .tier-card{background:var(--elevated);border-radius:16px;overflow:hidden;transition:transform .2s,box-shadow .2s;padding:18px 20px;}
+  .tier-card:hover{transform:translateY(-3px);box-shadow:var(--glow);}
+  .tier-card h4{font-size:16px;font-weight:800;margin-bottom:10px;}
+  .tier-card p{font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:6px;}
+  .tier-card strong{color:var(--text);}
+  .tier-bronze{border:2px solid rgba(205,127,50,0.4);}
+  .tier-silver{border:2px solid rgba(192,192,192,0.4);}
+  .tier-gold{border:2px solid rgba(249,202,36,0.4);}
+  .tier-badge{display:inline-block;padding:3px 12px;border-radius:10px;font-size:11px;font-weight:700;margin-bottom:8px;}
+  .badge-bronze{background:rgba(205,127,50,0.15);color:var(--bronze);border:1px solid rgba(205,127,50,0.3);}
+  .badge-silver{background:rgba(192,192,192,0.12);color:var(--silver);border:1px solid rgba(192,192,192,0.3);}
+  .badge-gold{background:rgba(249,202,36,0.15);color:var(--gold);border:1px solid rgba(249,202,36,0.3);}
+  .char-section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 22px;margin-bottom:22px;}
+  .char-section h3{font-size:18px;font-weight:800;margin-bottom:4px;}
+  .char-section .sub{font-size:13px;color:var(--dim);margin-bottom:12px;}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">⌨️ Ninja Keyboard</span>
+  <a href="israeli-holiday-skins.html" style="color:var(--green);font-weight:700;">חזרה למסמך הראשי</a>
+  <a href="#shadow">Shadow</a>
+  <a href="#storm">Storm</a>
+  <a href="#blaze">Blaze</a>
+  <a href="#phantom">Phantom</a>
+  <a href="#pixel">Pixel</a>
+  <a href="#tiers">דרגות ברונזה/כסף/זהב</a>
+</nav>
+
+<div class="hero">
+  <h1>סקינים לחגים — הרחבת דמויות + דרגות</h1>
+  <p>מסמך נלווה ל<a href="israeli-holiday-skins.html" style="color:var(--purple);">סקינים לחגי ישראל</a>: 5 דמויות חסרות × 12 חגים + מערכת דרגות ברונזה/כסף/זהב לכל הדמויות</p>
+  <div class="badge">5 דמויות · 12 חגים · 60 סקינים חדשים · מערכת 3 דרגות</div>
+</div>
+
+<!-- =============================== -->
+<!-- SHADOW - 12 HOLIDAYS             -->
+<!-- =============================== -->
+<div class="section" id="shadow">
+  <div class="section-header">
+    <span class="emoji">🐱‍👤</span>
+    <div><h2>Shadow (צל) — חתול נינג'ה שחור</h2><div class="sub">יריב קל | 15-25 WPM | מסתורי, שקט, חמקני</div></div>
+    <span class="tag tag-joy">12 סקינים</span>
+  </div>
+  <div class="char-section">
+    <h3>על הדמות</h3>
+    <div class="sub">Shadow הוא חתול נינג'ה שחור עם עיניים סגולות זוהרות — היריב הראשון שהשחקן פוגש בזירת הקרב. מסתורי ושקט, נע כמו צל. צבעיו: שחור/אפור כהה, עיניים סגולות.</div>
+  </div>
+
+  <div class="skin-grid">
+    <!-- ראש השנה -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a1a2a,#6C5CE7)">🐱</div>
+        <div><div class="char-name">Shadow</div><div class="skin-name">🍎 צל של שנה טובה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> פרווה שחורה עם נצנוצי זהב כמו דבש. על ראשו כיפה לבנה זעירה. זנבו כרוך סביב תפוח אדום קטן.</p>
+        <p><strong>פוז:</strong> יושב בתנוחת חתול מלכותית ליד צנצנת דבש, מלקק כף רגל בזהירות.</p>
+        <div class="color-row"><span class="swatch" style="background:#1a1a2a"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#8B0000"></span></div>
+        <div class="anim-tag">✨ נצנוצי דבש זהובים על הפרווה</div>
+      </div>
+      <div class="card-footer">Shadow: '...שנה טובה. גם לך. ...אם תנצח אותי.'</div>
+    </div>
+    <!-- יום כיפור -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a1a2a,#E8E6F0)">🐱</div>
+        <div><div class="char-name">Shadow</div><div class="skin-name">🕊️ צל הלבן</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> פרווה לבנה-שלג לחלוטין — ההפך הגמור מ-Shadow הרגיל. רק העיניים הסגולות נשארו. שקט מוחלט.</p>
+        <p><strong>פוז:</strong> שוכב מכורבל, עיניים חצי עצומות, נשימה עמוקה ואיטית.</p>
+        <div class="color-row"><span class="swatch" style="background:#FFFFFF"></span><span class="swatch" style="background:#E8E6F0"></span><span class="swatch" style="background:#6C5CE7"></span></div>
+        <div class="anim-tag">🌬️ נשימה איטית — Shadow לבן לחלוטין</div>
+      </div>
+      <div class="card-footer">Shadow: '...' (ביום כיפור, Shadow לא מדבר כלל.)</div>
+    </div>
+    <!-- סוכות -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a4a1a,#6C5CE7)">🐱</div>
+        <div><div class="char-name">Shadow</div><div class="skin-name">🌿 צל בסוכה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Shadow שוכב על גג סוכה — בין ענפי הסכך. פרוותו השחורה מעוטרת בעלי הדס ירוקים שנתפסו בו.</p>
+        <p><strong>פוז:</strong> מציץ מתוך הסכך למטה, רק עיניו הסגולות נראות בין העלים.</p>
+        <div class="color-row"><span class="swatch" style="background:#1a1a2a"></span><span class="swatch" style="background:#4CAF50"></span><span class="swatch" style="background:#8B4513"></span></div>
+        <div class="anim-tag">🍃 עלים נושרים מהסכך סביבו</div>
+      </div>
+      <div class="card-footer">Shadow: '...הסוכה הכי טובה... היא זו שאף אחד לא רואה אותך בתוכה.'</div>
+    </div>
+    <!-- חנוכה -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a3a,#74B9FF)">🐱</div>
+        <div><div class="char-name">Shadow</div><div class="skin-name">🕎 צל המכבים</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Shadow עם שריון מכבי מיניאטורי על הגוף. על ראשו קסדת ברונזה זעירה. זנבו מסתיים בסביבון כסוף.</p>
+        <p><strong>פוז:</strong> מתגנב בחושך ליד חנוכייה מוארת — עיניו מאירות בכחול.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a3a"></span><span class="swatch" style="background:#74B9FF"></span><span class="swatch" style="background:#C0C0C0"></span></div>
+        <div class="anim-tag">🕯️ אור חנוכייה מתגנב על פרוותו</div>
+      </div>
+      <div class="card-footer">Shadow: '...נס גדול היה פה. ...אני הייתי החושך שממנו יצא האור.'</div>
+    </div>
+    <!-- פורים -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a0080,#FD79A8)">🐱</div>
+        <div><div class="char-name">Shadow</div><div class="skin-name">🎭 צל בתחפושת</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Shadow מתחפש ל... כלב! לובש תחפושת כלב ססגונית מעל גופו השחור. מסכת כלב על הפנים, אבל העיניים הסגולות בוגדות.</p>
+        <p><strong>פוז:</strong> מנסה לנבוח אבל יוצא מיאו — מבט מבולבל.</p>
+        <div class="color-row"><span class="swatch" style="background:#4a0080"></span><span class="swatch" style="background:#FD79A8"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">🎭 מסכת כלב נופלת, חוזרת, נופלת</div>
+      </div>
+      <div class="card-footer">Shadow: '...מ-מיאו— כלומר... האו! ...זה לא עובד.'</div>
+    </div>
+    <!-- פסח -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a3a6a,#74B9FF)">🐱</div>
+        <div><div class="char-name">Shadow</div><div class="skin-name">🫓 צל יציאת מצרים</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Shadow עם גלימה כחולה-ים ושרשרת שבורה על צווארו. כפותיו טבולות בחול מדבר. על גבו — מצה שלמה.</p>
+        <p><strong>פוז:</strong> מתגנב בחושך לאורך חומות מצרים — עיניים נחושות, זנב נמוך.</p>
+        <div class="color-row"><span class="swatch" style="background:#1a3a6a"></span><span class="swatch" style="background:#74B9FF"></span><span class="swatch" style="background:#FDCB6E"></span></div>
+        <div class="anim-tag">⛓️ שרשרת נשברת על צווארו</div>
+      </div>
+      <div class="card-footer">Shadow: '...גם צל יכול לצאת מהחושך. ...בלי שירגישו.'</div>
+    </div>
+    <!-- יום השואה -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a0a,#2a2a2a)">🐱</div>
+        <div><div class="char-name">Shadow</div><div class="skin-name">🕯️ צל הזיכרון</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Shadow שחור לחלוטין, ללא שום עיטור. רק פרח כלנית צהוב קטן מאחורי אוזנו. עיניו כבויות — אפורות במקום סגולות.</p>
+        <p><strong>פוז:</strong> יושב בדממה מוחלטת, ראש מורכן, כפות מקופלות.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a0a"></span><span class="swatch" style="background:#2a2a2a"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">🕯️ אור נר בודד מהבהב ליד Shadow</div>
+      </div>
+      <div class="card-footer">Shadow שקט. ביום הזה, אפילו הצללים מתאבלים.</div>
+    </div>
+    <!-- יום הזיכרון -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a3a,#1a1a6a)">🐱</div>
+        <div><div class="char-name">Shadow</div><div class="skin-name">🌹 צל שומר הזיכרון</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Shadow עם סרט כחול-כהה על הצוואר ופרח פרג אדום על חזהו. יושב ליד אנדרטה קטנה.</p>
+        <p><strong>פוז:</strong> יושב זקוף כמו שומר ליד אנדרטת זיכרון, עיניים קדימה, ללא תנועה.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a3a"></span><span class="swatch" style="background:#1a1a6a"></span><span class="swatch" style="background:#CC2200"></span></div>
+        <div class="anim-tag">🌺 פרג אדום עדין על חזהו</div>
+      </div>
+      <div class="card-footer">Shadow שומר. גם בלילה. גם כשאף אחד לא רואה.</div>
+    </div>
+    <!-- יום העצמאות -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a3a8a,#74B9FF)">🐱</div>
+        <div><div class="char-name">Shadow</div><div class="skin-name">🇮🇱 צל החוגג</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Shadow עם פרווה כחולה-לבנה בפסים! דגלון ישראל קטן קשור לזנבו. משקפי שמש כחולים.</p>
+        <p><strong>פוז:</strong> קופץ באוויר — רגע נדיר של שמחה גלויה מ-Shadow. פרצוף מופתע מעצמו.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a3a8a"></span><span class="swatch" style="background:#E8E6F0"></span><span class="swatch" style="background:#74B9FF"></span></div>
+        <div class="anim-tag">🎆 זיקוקים כחולים-לבנים מסביבו</div>
+      </div>
+      <div class="card-footer">Shadow: '...יום עצמאות. ...גם חתולים חוגגים. ...בשקט.'</div>
+    </div>
+    <!-- ל"ג בעומר -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a1a00,#FF6B6B)">🐱</div>
+        <div><div class="char-name">Shadow</div><div class="skin-name">🔥 צל המדורה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Shadow עם סימני אש כתומים על פרוותו השחורה. עיניו בוהקות באדום-כתום במקום סגול. זנבו מסתיים בלהבה קטנה.</p>
+        <p><strong>פוז:</strong> מתגנב סביב מדורה, עיניו מאירות באור האש — צל שמרקד.</p>
+        <div class="color-row"><span class="swatch" style="background:#1a1a2a"></span><span class="swatch" style="background:#FF6B6B"></span><span class="swatch" style="background:#FDCB6E"></span></div>
+        <div class="anim-tag">🔥 להבות קטנות רצות על פרוותו</div>
+      </div>
+      <div class="card-footer">Shadow: '...אש ו-Shadow. ...אש מפילה צללים. ...אני הצל.'</div>
+    </div>
+    <!-- שבועות -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a1a3a,#FD79A8)">🐱</div>
+        <div><div class="char-name">Shadow</div><div class="skin-name">🌸 צל בשדה פרחים</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Shadow מכוסה בפרחי בר — חרציות, כלניות, נרקיסים. שוכב בשדה ירוק, פרוותו מלאה עלי כותרת.</p>
+        <p><strong>פוז:</strong> מתגלגל בשדה פרחים — רגע רך ונדיר. מחייך (בצורת חתול).</p>
+        <div class="color-row"><span class="swatch" style="background:#0a1a3a"></span><span class="swatch" style="background:#FD79A8"></span><span class="swatch" style="background:#4CAF50"></span></div>
+        <div class="anim-tag">🌸 עלי כותרת נושרים מפרוותו</div>
+      </div>
+      <div class="card-footer">Shadow: '...שבועות. ...יום שגם הצללים... יוצאים לשמש.'</div>
+    </div>
+    <!-- ט"ו באב -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a0040,#FD79A8)">🐱</div>
+        <div><div class="char-name">Shadow</div><div class="skin-name">💕 צל מאוהב</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Shadow עם פפיון ורוד קטן על הצוואר. פרוותו השחורה נוצצת בנקודות ורודות. עיניו סגולות-ורודות.</p>
+        <p><strong>פוז:</strong> מביט הצידה בביישנות, כף רגל אחת מורמת, זנב מתכרבל בצורת לב.</p>
+        <div class="color-row"><span class="swatch" style="background:#1a1a2a"></span><span class="swatch" style="background:#FD79A8"></span><span class="swatch" style="background:#FF6B6B"></span></div>
+        <div class="anim-tag">💕 לבבות קטנים צפים מסביב</div>
+      </div>
+      <div class="card-footer">Shadow: '...ט"ו באב. ...לא שאני... ...שום דבר. תשכח.'</div>
+    </div>
+  </div>
+</div>
+<hr class="div">
+
+<!-- =============================== -->
+<!-- STORM - 12 HOLIDAYS              -->
+<!-- =============================== -->
+<div class="section" id="storm">
+  <div class="section-header">
+    <span class="emoji">🦊</span>
+    <div><h2>Storm (סערה) — שועל ברק כחול</h2><div class="sub">יריב בינוני | 25-40 WPM | מהיר, יהיר, חשמלי</div></div>
+    <span class="tag tag-joy">12 סקינים</span>
+  </div>
+  <div class="char-section">
+    <h3>על הדמות</h3>
+    <div class="sub">Storm הוא שועל נינג'ה כחול-חשמלי עם דפוסי ברק על גופו — היריב הבינוני בזירת הקרב. מהיר, יהיר, אנרגטי. צבעיו: כחול חשמלי, דפוסי ברק.</div>
+  </div>
+
+  <div class="skin-grid">
+    <!-- ראש השנה -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a3a5c,#74B9FF)">🦊</div>
+        <div><div class="char-name">Storm</div><div class="skin-name">🍎 סערה של שנה חדשה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> פרוות ברק לבנה-כסופה עם ניצוצות זהב. על ראשו כובע שופר. הזנב מסתיים בצורת רימון זוהר.</p>
+        <p><strong>פוז:</strong> עומד על רגליים אחוריות, תוקע ב"שופר" חשמלי — ברקים יוצאים מקצהו.</p>
+        <div class="color-row"><span class="swatch" style="background:#E8E6F0"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#74B9FF"></span></div>
+        <div class="anim-tag">⚡ ברקי זהב יוצאים מהשופר</div>
+      </div>
+      <div class="card-footer">Storm: 'שנה טובה! השנה הזו — אני מהיר יותר מתמיד!'</div>
+    </div>
+    <!-- יום כיפור -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a1a3a,#E8E6F0)">🦊</div>
+        <div><div class="char-name">Storm</div><div class="skin-name">🕊️ סערה שקטה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> סערה ללא ברקים — פרווה לבנה-אפרפרה שקטה. הברקים כבויים. עיניו כחולות-אפורות.</p>
+        <p><strong>פוז:</strong> שוכב בשקט, ראש על כפות, עיניים עצומות. אין חשמל — רק שקט.</p>
+        <div class="color-row"><span class="swatch" style="background:#E8E6F0"></span><span class="swatch" style="background:#C0C0C0"></span><span class="swatch" style="background:#808080"></span></div>
+        <div class="anim-tag">🌬️ ללא ברקים — שקט מוחלט</div>
+      </div>
+      <div class="card-footer">Storm: (שקט. גם ברקים צריכים יום מנוחה.)</div>
+    </div>
+    <!-- סוכות -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a4a1a,#74B9FF)">🦊</div>
+        <div><div class="char-name">Storm</div><div class="skin-name">🌿 סערת הסוכה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Storm עם גלימת עלים ירוקים. ברקיו הפכו לגפנים זוהרות. מחזיק אתרוג בפיו.</p>
+        <p><strong>פוז:</strong> רץ סביב סוכה במהירות — רוח סערה שמנענעת את הסכך!</p>
+        <div class="color-row"><span class="swatch" style="background:#1a4a1a"></span><span class="swatch" style="background:#74B9FF"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">🍃 סכך עף, אתרוג בפה, רוח!</div>
+      </div>
+      <div class="card-footer">Storm: 'סוכה צריכה להחזיק ברוח! ...אופס, הפלתי את הסכך.'</div>
+    </div>
+    <!-- חנוכה -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a3a,#74B9FF)">🦊</div>
+        <div><div class="char-name">Storm</div><div class="skin-name">🕎 סערת האורות</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Storm עם 8 נקודות ברק כחולות לאורך גבו — כמו 8 נרות חנוכייה. זנבו מאיר ככל שנדלקים נרות.</p>
+        <p><strong>פוז:</strong> רץ במעגלים סביב חנוכייה ענקית — ברק מדליק נר אחד בכל סיבוב!</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a3a"></span><span class="swatch" style="background:#74B9FF"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">⚡ ברק מדליק נר בכל סיבוב</div>
+      </div>
+      <div class="card-footer">Storm: 'שמונה נרות? שמונה ברקים! כל ערב — ברק נוסף!'</div>
+    </div>
+    <!-- פורים -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a0080,#FDCB6E)">🦊</div>
+        <div><div class="char-name">Storm</div><div class="skin-name">🎭 סערה כמרדכי</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Storm מתחפש למרדכי היהודי — גלימת מלכות סגולה-זהובה, כתר קטן. הברקים הפכו לפסי זהב מלכותיים.</p>
+        <p><strong>פוז:</strong> עומד בגאווה עם גלימה, זנב מונף — 'ומרדכי לא יכרע ולא ישתחווה!'</p>
+        <div class="color-row"><span class="swatch" style="background:#4a0080"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#FDCB6E"></span></div>
+        <div class="anim-tag">👑 כתר זהב זוהר על ראשו</div>
+      </div>
+      <div class="card-footer">Storm: 'מרדכי לא כרע! וגם סערה — לא מפסידה בקלות!'</div>
+    </div>
+    <!-- פסח -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a4a6a,#74B9FF)">🦊</div>
+        <div><div class="char-name">Storm</div><div class="skin-name">🌊 סערה קורעת את הים</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Storm רץ כל כך מהר שהוא קורע את הים! ברקים כחולים כמו גלים. פרוותו רטובה מהתזות ים.</p>
+        <p><strong>פוז:</strong> רץ בין שני קירות מים — ברקים כתריסים שמחזיקים את המים!</p>
+        <div class="color-row"><span class="swatch" style="background:#1a4a6a"></span><span class="swatch" style="background:#74B9FF"></span><span class="swatch" style="background:#E8E6F0"></span></div>
+        <div class="anim-tag">🌊 גלי ים נפתחים לשני צדדיו</div>
+      </div>
+      <div class="card-footer">Storm: 'ים סוף? בשבילי — שלולית! רק ברק אחד ואני בצד השני!'</div>
+    </div>
+    <!-- יום השואה -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a0a,#2a2a2a)">🦊</div>
+        <div><div class="char-name">Storm</div><div class="skin-name">🕯️ סערה הזוכרת</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Storm בשחור מוחלט. ברקים כבויים. פרח כלנית צהוב על חזהו. עיניו כהות.</p>
+        <p><strong>פוז:</strong> עומד זקוף ודומם, ראש מורכן. אין תנועה. אין אנרגיה. רק כבוד.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a0a"></span><span class="swatch" style="background:#2a2a2a"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">🕯️ ברקים כבויים — רק אור נר</div>
+      </div>
+      <div class="card-footer">ביום השואה, גם הסערה שוכבת. זוכרים.</div>
+    </div>
+    <!-- יום הזיכרון -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a3a,#1a1a6a)">🦊</div>
+        <div><div class="char-name">Storm</div><div class="skin-name">🌹 סערה הנכבדת</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Storm עם סרט כחול-כהה ופרח פרג. ברקיו הפכו לכחול עמוק — לא חשמלי, נכבד.</p>
+        <p><strong>פוז:</strong> עומד במצדעה — כף רגל קדמית על הלב. זנב נמוך.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a3a"></span><span class="swatch" style="background:#1a1a6a"></span><span class="swatch" style="background:#CC2200"></span></div>
+        <div class="anim-tag">💙 ברקים כחולים-עמוקים, איטיים</div>
+      </div>
+      <div class="card-footer">Storm: 'הם רצו במהירות... למען כולנו. אני מכבד.'</div>
+    </div>
+    <!-- יום העצמאות -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a3a8a,#74B9FF)">🦊</div>
+        <div><div class="char-name">Storm</div><div class="skin-name">🇮🇱 סערה ישראלית</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Storm בפרווה כחולה-לבנה עם ברקים בצבעי הדגל. על גבו — דגל ישראל כגלימה. סביבון ענק על הזנב.</p>
+        <p><strong>פוז:</strong> רץ בסיבוב ניצחון עם דגל — ברקים כחולים-לבנים מסביב!</p>
+        <div class="color-row"><span class="swatch" style="background:#0a3a8a"></span><span class="swatch" style="background:#E8E6F0"></span><span class="swatch" style="background:#74B9FF"></span></div>
+        <div class="anim-tag">🎆 ברקים כחולים-לבנים + זיקוקים</div>
+      </div>
+      <div class="card-footer">Storm: 'עצמאות! מהירות! ברק ישראלי!'</div>
+    </div>
+    <!-- ל"ג בעומר -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a1a00,#FDCB6E)">🦊</div>
+        <div><div class="char-name">Storm</div><div class="skin-name">🔥 סערת אש</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Storm עם ברקים שהפכו ללהבות! פרוותו כתומה-אדומה. זנבו לוהט. מחזיק קשת וחץ חשמליים.</p>
+        <p><strong>פוז:</strong> יורה חץ-ברק לעבר מדורה — מציתה בפיצוץ של אור!</p>
+        <div class="color-row"><span class="swatch" style="background:#4a1a00"></span><span class="swatch" style="background:#FDCB6E"></span><span class="swatch" style="background:#FF6B6B"></span></div>
+        <div class="anim-tag">🏹 חץ-ברק מציתים מדורה</div>
+      </div>
+      <div class="card-footer">Storm: 'למה גפרורים כשיש ברקים? מדורה בשנייה!'</div>
+    </div>
+    <!-- שבועות -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a1a3a,#FD79A8)">🦊</div>
+        <div><div class="char-name">Storm</div><div class="skin-name">⚡ סערת סיני</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Storm על הר סיני — ברקים מכל עבר! פרוותו לבנה-ירוקה עם פרחי בר. עיניו מאירות כמו הברקים במעמד הר סיני.</p>
+        <p><strong>פוז:</strong> עומד על פסגת הר, ברקים מכל כיוון — רגע דרמטי מוחלט.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a1a3a"></span><span class="swatch" style="background:#FD79A8"></span><span class="swatch" style="background:#74B9FF"></span></div>
+        <div class="anim-tag">⚡ ברקים של מתן תורה מכל כיוון</div>
+      </div>
+      <div class="card-footer">Storm: 'הברק של הר סיני! הברק המקורי! כולם חיקו אותי!'</div>
+    </div>
+    <!-- ט"ו באב -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a0040,#FD79A8)">🦊</div>
+        <div><div class="char-name">Storm</div><div class="skin-name">💕 ברק של אהבה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Storm עם ברקים ורודים במקום כחולים! פפיון ורוד על הצוואר. זנבו מסתיים בצורת לב חשמלי.</p>
+        <p><strong>פוז:</strong> רץ עם זר פרחים בפה — מנסה להגיע למתנה, אבל מהיר מדי ומפזר עלי כותרת.</p>
+        <div class="color-row"><span class="swatch" style="background:#4a0040"></span><span class="swatch" style="background:#FD79A8"></span><span class="swatch" style="background:#FF6B6B"></span></div>
+        <div class="anim-tag">💕 ברקים ורודים + לבבות חשמליים</div>
+      </div>
+      <div class="card-footer">Storm: 'ט"ו באב! ברק ראשון = אהבה ראשונה! ...שתיהם מכות חזק.'</div>
+    </div>
+  </div>
+</div>
+<hr class="div">
+
+<!-- =============================== -->
+<!-- BLAZE - 12 HOLIDAYS              -->
+<!-- =============================== -->
+<div class="section" id="blaze">
+  <div class="section-header">
+    <span class="emoji">🐉</span>
+    <div><h2>Blaze (להבה) — דרקון אש נינג'ה</h2><div class="sub">יריב קשה | 40-60 WPM | עז, מכובד, אדיר</div></div>
+    <span class="tag tag-joy">12 סקינים</span>
+  </div>
+  <div class="char-section">
+    <h3>על הדמות</h3>
+    <div class="sub">Blaze הוא דרקון נינג'ה אדום-כתום עם שריון זהב — היריב הקשה ביותר לפני Phantom. עז, מכובד, רב-עוצמה. צבעיו: אדום-כתום אש, שריון זהב.</div>
+  </div>
+
+  <div class="skin-grid">
+    <!-- ראש השנה -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#8B0000,#F9CA24)">🐉</div>
+        <div><div class="char-name">להבה</div><div class="skin-name">🍎 להבה של שנה מתוקה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> להבה עם שריון זהב-דבש. כנפיו מעוטרות ברימונים מצוירים. פולט אש זהובה-מתוקה במקום אדומה.</p>
+        <p><strong>פוז:</strong> מחזיק צנצנת דבש ענקית בכנפיו — מנסה לטבול תפוח באש שלו במקום בדבש.</p>
+        <div class="color-row"><span class="swatch" style="background:#8B0000"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#FFC107"></span></div>
+        <div class="anim-tag">🍯 אש זהובה-מתוקה במקום אדומה</div>
+      </div>
+      <div class="card-footer">להבה: 'שנה טובה! אש קדושה של שנה חדשה! ...התפוח נשרף. סליחה.'</div>
+    </div>
+    <!-- יום כיפור -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#2a2a4a,#E8E6F0)">🐉</div>
+        <div><div class="char-name">להבה</div><div class="skin-name">🕊️ להבה הכבויה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> להבה ללא אש — שריון לבן-כסף, כנפיים מקופלות. עיניו אפורות-שקטות. דרקון בשלווה.</p>
+        <p><strong>פוז:</strong> שוכב עם כנפיים מקופלות, ראש על כפות, עיניים עצומות. ללא שום אש.</p>
+        <div class="color-row"><span class="swatch" style="background:#E8E6F0"></span><span class="swatch" style="background:#C0C0C0"></span><span class="swatch" style="background:#808080"></span></div>
+        <div class="anim-tag">🌬️ ללא אש — שקט מוחלט של דרקון</div>
+      </div>
+      <div class="card-footer">להבה: (ביום כיפור, גם הדרקון מכבה את האש שלו.)</div>
+    </div>
+    <!-- סוכות -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a4a1a,#F9CA24)">🐉</div>
+        <div><div class="char-name">להבה</div><div class="skin-name">🌿 להבה הסוכתי</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> להבה עם סוכה מיניאטורית על גבו! כנפיו הפכו לסכך. שריון ירוק-חום עם אתרוג על השריון.</p>
+        <p><strong>פוז:</strong> מנסה לשבת בסוכה שעל גבו — אבל הוא גדול מדי ובולט החוצה.</p>
+        <div class="color-row"><span class="swatch" style="background:#1a4a1a"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#8B4513"></span></div>
+        <div class="anim-tag">🍃 סכך על הכנפיים, אתרוג על השריון</div>
+      </div>
+      <div class="card-footer">להבה: 'סוכה... על דרקון. ...קצת צפוף, אבל חגיגי!'</div>
+    </div>
+    <!-- חנוכה -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a3a,#F9CA24)">🐉</div>
+        <div><div class="char-name">להבה</div><div class="skin-name">🕎 להבה החנוכייה החיה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> להבה הפך לחנוכייה חיה! 8 שלהבות על קשקשיו + שמש על ראשו. שריון כחול-כסף.</p>
+        <p><strong>פוז:</strong> עומד זקוף עם 8 להבות לאורך גבו — מדליק אחת נוספת בכל יום!</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a3a"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#74B9FF"></span></div>
+        <div class="anim-tag">🕎 להבה = חנוכייה חיה! 8 נרות על גבו</div>
+      </div>
+      <div class="card-footer">להבה: 'אני חנוכייה! ...הסקין הזה... נולד בשבילי.'</div>
+    </div>
+    <!-- פורים -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a0080,#FF6B6B)">🐉</div>
+        <div><div class="char-name">להבה</div><div class="skin-name">🎭 להבה כאחשוורוש</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> להבה מתחפש לאחשוורוש! כתר זהב ענק, גלימה סגולה מלכותית, שרביט. גודלו הדרקוני מתאים למלכות.</p>
+        <p><strong>פוז:</strong> יושב על כס מלכות קטן מדי — זנבו בולט, כנפיו לא נכנסות.</p>
+        <div class="color-row"><span class="swatch" style="background:#4a0080"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#FF6B6B"></span></div>
+        <div class="anim-tag">👑 כתר ענק מתנדנד על ראשו</div>
+      </div>
+      <div class="card-footer">להבה: 'אני המלך! ...מלך הדרקונים ומלך שושן!'</div>
+    </div>
+    <!-- פסח -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a0a0a,#F9CA24)">🐉</div>
+        <div><div class="char-name">להבה</div><div class="skin-name">🔥 להבה עמוד האש</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> להבה כעמוד האש שהוביל את בני ישראל במדבר! גוף לוהט זהב-אדום, כנפיים פרושות מאירות את הדרך.</p>
+        <p><strong>פוז:</strong> עף מעל מדבר, מאיר את הדרך — דמות מצלית דרמטית על רקע ליל מדבר.</p>
+        <div class="color-row"><span class="swatch" style="background:#4a0a0a"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#FF6B6B"></span></div>
+        <div class="anim-tag">🔥 להבה = עמוד האש של יציאת מצרים</div>
+      </div>
+      <div class="card-footer">להבה: 'עמוד אש הובילם! ...זה תפקידי מאז ומתמיד!'</div>
+    </div>
+    <!-- יום השואה -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a0a,#2a2a2a)">🐉</div>
+        <div><div class="char-name">להבה</div><div class="skin-name">🕯️ להבה הזוכרת</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> להבה שחור-אפור מוחלט. ללא שום אש מלבד נר זיכרון בודד על כף ידו. כנפיים מקופלות, ראש מורכן.</p>
+        <p><strong>פוז:</strong> ראש מורכן, כנפיים עוטפות את גופו כמו טלית. נר בודד על כף ידו.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a0a"></span><span class="swatch" style="background:#2a2a2a"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">🕯️ נר בודד — כל שאר האש כבויה</div>
+      </div>
+      <div class="card-footer">ביום השואה, גם דרקון האש מכבה הכל. חוץ מנר אחד. לזכור.</div>
+    </div>
+    <!-- יום הזיכרון -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a3a,#1a1a6a)">🐉</div>
+        <div><div class="char-name">להבה</div><div class="skin-name">🌹 להבה המצדיע</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> להבה בשריון כחול-כהה של צה"ל. פרח פרג על השריון. כנפיים מקופלות בצבאיות.</p>
+        <p><strong>פוז:</strong> עומד במצדעה — כנף על הלב, ראש מורכן, עיניים סגורות.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a3a"></span><span class="swatch" style="background:#1a1a6a"></span><span class="swatch" style="background:#CC2200"></span></div>
+        <div class="anim-tag">💙 אש כחולה-שקטה, מצדעה</div>
+      </div>
+      <div class="card-footer">להבה: 'אש קדושה... לזכר הלוחמים שנפלו.'</div>
+    </div>
+    <!-- יום העצמאות -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a3a8a,#F9CA24)">🐉</div>
+        <div><div class="char-name">להבה</div><div class="skin-name">🇮🇱 להבה הלאומי</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> להבה בשריון כחול-לבן מהודר. כנפיו פרושות — דגל ישראל חי! אש כחולה-לבנה מפיו.</p>
+        <p><strong>פוז:</strong> עף גבוה עם כנפיים פרושות בצבעי הדגל — מטס אווירי של דרקון אחד!</p>
+        <div class="color-row"><span class="swatch" style="background:#0a3a8a"></span><span class="swatch" style="background:#E8E6F0"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">✈️ מטס אווירי של דרקון כחול-לבן!</div>
+      </div>
+      <div class="card-footer">להבה: 'אש ישראלית! עצמאות! דרקון חופשי!'</div>
+    </div>
+    <!-- ל"ג בעומר -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a0a0a,#FF6B6B)">🐉</div>
+        <div><div class="char-name">להבה</div><div class="skin-name">🔥 מלך המדורות</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> להבה בשיא כוחו — 7 מדורות סביבו, כנפיים של אש טהורה, עיניים בוהקות. קשת וחץ אש על גבו.</p>
+        <p><strong>פוז:</strong> עף מעל שדה מדורות, פולט אש — מציתן אחת אחת!</p>
+        <div class="color-row"><span class="swatch" style="background:#4a0a0a"></span><span class="swatch" style="background:#FF6B6B"></span><span class="swatch" style="background:#FDCB6E"></span></div>
+        <div class="anim-tag">🔥🔥🔥 7 מדורות — מלך האש של ל"ג בעומר!</div>
+      </div>
+      <div class="card-footer">להבה: 'ל"ג בעומר! היום המושלם להיות דרקון!'</div>
+    </div>
+    <!-- שבועות -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a1a3a,#FD79A8)">🐉</div>
+        <div><div class="char-name">להבה</div><div class="skin-name">🌸 להבה פסגת סיני</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> להבה על הר סיני — אש קדושה לבנה-ורודה. שריון מעוטר בפרחי בר. לוחות אבן בין כנפיו.</p>
+        <p><strong>פוז:</strong> עומד בפסגת הר, לוחות אבן בידיו, אש קדושה סביבו — לא שורפת, מאירה.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a1a3a"></span><span class="swatch" style="background:#FD79A8"></span><span class="swatch" style="background:#E8E6F0"></span></div>
+        <div class="anim-tag">🔥 אש קדושה לבנה — לא שורפת, מאירה</div>
+      </div>
+      <div class="card-footer">להבה: 'אש של הר סיני — אש שלא שורפת. ...מיוחד גם בשביל דרקון.'</div>
+    </div>
+    <!-- ט"ו באב -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a0040,#FF6B6B)">🐉</div>
+        <div><div class="char-name">להבה</div><div class="skin-name">💕 להבה באהבה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> להבה עם אש ורודה! שריון ורוד-אדום, כנפיים בצורת לב. לבבות אש מרחפים סביבו.</p>
+        <p><strong>פוז:</strong> מנסה לעשות לב מאש — אבל הלב גדול מדי ומתפזר.</p>
+        <div class="color-row"><span class="swatch" style="background:#4a0040"></span><span class="swatch" style="background:#FF6B6B"></span><span class="swatch" style="background:#FD79A8"></span></div>
+        <div class="anim-tag">💕 לבבות אש ורודה מסביב</div>
+      </div>
+      <div class="card-footer">להבה: 'ט"ו באב! אש... של אהבה! ...אל תגידו לאף אחד שאני רומנטי.'</div>
+    </div>
+  </div>
+</div>
+<hr class="div">
+
+<!-- =============================== -->
+<!-- PHANTOM - 12 HOLIDAYS            -->
+<!-- =============================== -->
+<div class="section" id="phantom">
+  <div class="section-header">
+    <span class="emoji">👻</span>
+    <div><h2>Phantom / רז (פאנטום) — רוח-נינג'ה</h2><div class="sub">יריב סודי | 60-80 WPM | שקט מוחלט, מדויק, מסתורי | ממוצא תימני-ישראלי</div></div>
+    <span class="tag tag-joy">12 סקינים</span>
+  </div>
+  <div class="char-section">
+    <h3>על הדמות</h3>
+    <div class="sub">Phantom (רז) הוא רוח-נינג'ה חצי-שקופה — היריב הסודי, ה-Boss האחרון. ממוצא תימני-ישראלי, עור כהה-חום חמים. שקט מוחלט, מדויק ומהיר. צבעיו: סגול כהה (#7D3C98), אפור-כחלחל (#4A4A6A), לבן רפאים (#A3C4F3).</div>
+  </div>
+
+  <div class="skin-grid">
+    <!-- ראש השנה -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#7D3C98,#A3C4F3)">👻</div>
+        <div><div class="char-name">Phantom</div><div class="skin-name">🍎 רוח של שנה חדשה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> גלימה לבנה-שקופה עם ריקמת רימונים רפאים. צבעיו הסגולים מתרככים ללבן-זהוב. שופר רוחני שקוף מרחף לצדו.</p>
+        <p><strong>פוז:</strong> עומד בשקט ליד חנוכייה ישנה, יד מושטת — מציע תפוח חצי-שקוף. מבט רך נדיר.</p>
+        <div class="color-row"><span class="swatch" style="background:#7D3C98"></span><span class="swatch" style="background:#E8E6F0"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">👻 ניצוצות רפאים זהובים מסביבו</div>
+      </div>
+      <div class="card-footer">Phantom: '...שנה טובה.' (שתי מילים. מקסימום.)</div>
+    </div>
+    <!-- יום כיפור -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4A4A6A,#E8E6F0)">👻</div>
+        <div><div class="char-name">Phantom</div><div class="skin-name">🕊️ רוח הכפרה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Phantom כמעט בלתי נראה — שקיפות מוחלטת. רק קווי מתאר לבנים-כסופים. פניו שלווים כמו מעולם לא היו.</p>
+        <p><strong>פוז:</strong> יושב במדיטציה, רגליים מקופלות, גוף שקוף כמעט לחלוטין. רק העיניים נראות.</p>
+        <div class="color-row"><span class="swatch" style="background:#E8E6F0"></span><span class="swatch" style="background:#C0C0C0"></span><span class="swatch" style="background:#4A4A6A"></span></div>
+        <div class="anim-tag">🌬️ כמעט בלתי נראה — שקיפות מלאה</div>
+      </div>
+      <div class="card-footer">Phantom: (שקט. חשבון נפש של רוח.)</div>
+    </div>
+    <!-- סוכות -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4A4A6A,#4CAF50)">👻</div>
+        <div><div class="char-name">Phantom</div><div class="skin-name">🌿 רוח האושפיזין</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Phantom כאושפיז — אורח רוחני בסוכה. גלימה ירוקה-שקופה, עלי סכך מרחפים דרך גופו.</p>
+        <p><strong>פוז:</strong> יושב בסוכה כאורח שקט — כמו רוח שנכנסה. אף אחד לא שם לב.</p>
+        <div class="color-row"><span class="swatch" style="background:#4A4A6A"></span><span class="swatch" style="background:#4CAF50"></span><span class="swatch" style="background:#8B4513"></span></div>
+        <div class="anim-tag">🍃 עלים עוברים דרך גופו השקוף</div>
+      </div>
+      <div class="card-footer">Phantom: '...אושפיזין. ...אורח שלא הוזמן. ...כרגיל.'</div>
+    </div>
+    <!-- חנוכה -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#7D3C98,#74B9FF)">👻</div>
+        <div><div class="char-name">Phantom</div><div class="skin-name">🕎 רוח האור</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Phantom מואר מבפנים — כמו פנס חנוכה חי. אור כחול-סגול זורם דרך גופו השקוף. בידו — שמש (נר ההדלקה).</p>
+        <p><strong>פוז:</strong> מדליק חנוכייה בשקט מוחלט. האש מתחילה בידו ועוברת לנרות. אור בחושך.</p>
+        <div class="color-row"><span class="swatch" style="background:#7D3C98"></span><span class="swatch" style="background:#74B9FF"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">🕯️ אור פנימי זוהר דרך גופו השקוף</div>
+      </div>
+      <div class="card-footer">Phantom: '...אור בחושך. ...אני מכיר את שניהם.'</div>
+    </div>
+    <!-- פורים -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#7D3C98,#FD79A8)">👻</div>
+        <div><div class="char-name">Phantom</div><div class="skin-name">🎭 הנסתר בפורים</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Phantom לא צריך תחפושת — הוא כבר בלתי נראה. אבל בפורים הוא מתגלה! גוף מוצק, צבעוני, עם מסכת פורים פשוטה.</p>
+        <p><strong>פוז:</strong> עומד בצבעוניות — ההפך מהרגיל. מבט של מי שלא יודע איך להתמודד עם תשומת לב.</p>
+        <div class="color-row"><span class="swatch" style="background:#7D3C98"></span><span class="swatch" style="background:#FD79A8"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">🎭 גוף מוצק במקום שקוף — ההפך!</div>
+      </div>
+      <div class="card-footer">Phantom: '...פורים. ...היום... אני נראה. ...מוזר.'</div>
+    </div>
+    <!-- פסח -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4A4A6A,#74B9FF)">👻</div>
+        <div><div class="char-name">Phantom</div><div class="skin-name">🫓 רוח של חרות</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Phantom עם שרשראות שבורות שמרחפות סביבו — הוא שיחרר את עצמו. גלימה כחולת-ים שקופה. רוח מדבר.</p>
+        <p><strong>פוז:</strong> הולך לבד במדבר — רוח חופשית. שרשראות שבורות מרחפות מאחוריו.</p>
+        <div class="color-row"><span class="swatch" style="background:#4A4A6A"></span><span class="swatch" style="background:#74B9FF"></span><span class="swatch" style="background:#A3C4F3"></span></div>
+        <div class="anim-tag">⛓️ שרשראות שבורות מרחפות סביבו</div>
+      </div>
+      <div class="card-footer">Phantom: '...חרות. ...אני יודע מה זה. ...להיות לבד ולבחור בזה.'</div>
+    </div>
+    <!-- יום השואה -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a0a,#4A4A6A)">👻</div>
+        <div><div class="char-name">Phantom</div><div class="skin-name">🕯️ רוח הנספים</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Phantom שחור-שקוף. כמעט בלתי נראה — רק קווי מתאר עדינים. שש נרות מרחפים סביבו. שקט מוחלט.</p>
+        <p><strong>פוז:</strong> עומד ליד שש נרות. שישה מיליון. שקוף כמו זיכרון שלא נשכח.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a0a"></span><span class="swatch" style="background:#4A4A6A"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">🕯️ שש נרות מרחפים — שישה מיליון</div>
+      </div>
+      <div class="card-footer">Phantom: (שקט. רוח לא צריכה מילים כדי לזכור.)</div>
+    </div>
+    <!-- יום הזיכרון -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a3a,#4A4A6A)">👻</div>
+        <div><div class="char-name">Phantom</div><div class="skin-name">🌹 רוח הנופלים</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Phantom בגוון כחול-כהה עם פרח פרג שמרחף ליד לבו. שקוף כמו רוח של חייל שנפל.</p>
+        <p><strong>פוז:</strong> עומד ליד אנדרטה, יד על הלב, שקוף כמו רוח. הפרג הוא הדבר היחיד הצבעוני.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a3a"></span><span class="swatch" style="background:#4A4A6A"></span><span class="swatch" style="background:#CC2200"></span></div>
+        <div class="anim-tag">🌺 פרג מרחף ליד הלב</div>
+      </div>
+      <div class="card-footer">Phantom: '...גם רוחות... זוכרות.'</div>
+    </div>
+    <!-- יום העצמאות -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#7D3C98,#74B9FF)">👻</div>
+        <div><div class="char-name">Phantom</div><div class="skin-name">🇮🇱 רוח העצמאות</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Phantom בגוונים כחולים-לבנים — שקוף עם נצנוצי דגל. רגע נדיר: חצי חיוך. מגן דוד זוהר על חזהו.</p>
+        <p><strong>פוז:</strong> עומד על גג בניין, מסתכל על זיקוקים. בפעם הראשונה — לא בורח מהאור.</p>
+        <div class="color-row"><span class="swatch" style="background:#7D3C98"></span><span class="swatch" style="background:#74B9FF"></span><span class="swatch" style="background:#E8E6F0"></span></div>
+        <div class="anim-tag">🎆 זיקוקים עוברים דרך גופו השקוף</div>
+      </div>
+      <div class="card-footer">Phantom: '...עצמאות. ...כן. גם שלי.'</div>
+    </div>
+    <!-- ל"ג בעומר -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#7D3C98,#FF6B6B)">👻</div>
+        <div><div class="char-name">Phantom</div><div class="skin-name">🔥 רוח המדורה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Phantom יושב לבד ליד מדורה. אור האש עובר דרך גופו השקוף ומטיל צל — פרדוקס: רוח שמטילה צל.</p>
+        <p><strong>פוז:</strong> יושב ליד מדורה, מסתכל לתוך האש. הצל שלו ארוך ומסתורי.</p>
+        <div class="color-row"><span class="swatch" style="background:#7D3C98"></span><span class="swatch" style="background:#FF6B6B"></span><span class="swatch" style="background:#FDCB6E"></span></div>
+        <div class="anim-tag">🔥 אש עוברת דרכו — צל פרדוקסלי</div>
+      </div>
+      <div class="card-footer">Phantom: '...מדורה. ...אני נהניתי ממדורות. ...פעם.'</div>
+    </div>
+    <!-- שבועות -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#7D3C98,#FD79A8)">👻</div>
+        <div><div class="char-name">Phantom</div><div class="skin-name">🌸 רוח הר סיני</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Phantom על הר סיני — גוף שקוף עם אותיות עבריות זורמות דרכו. פרחי בר מרחפים סביבו.</p>
+        <p><strong>פוז:</strong> עומד בפסגה, אותיות תורה מרחפות דרך גופו — כמו שהוא חלק מהטקסט.</p>
+        <div class="color-row"><span class="swatch" style="background:#7D3C98"></span><span class="swatch" style="background:#FD79A8"></span><span class="swatch" style="background:#A3C4F3"></span></div>
+        <div class="anim-tag">✨ אותיות עבריות זורמות דרך גופו</div>
+      </div>
+      <div class="card-footer">Phantom: '...מתן תורה. ...גם רוחות קיבלו אותה.'</div>
+    </div>
+    <!-- ט"ו באב -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#7D3C98,#FD79A8)">👻</div>
+        <div><div class="char-name">Phantom</div><div class="skin-name">💕 רוח של געגוע</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> Phantom עם גוון ורוד-סגול רך. פניו רכים יותר — רז מתגלה מאחורי הפאנטום. פרח בודד מרחף בידו.</p>
+        <p><strong>פוז:</strong> מושיט פרח — אבל היד שקופה והפרח מרחף לבד. מבט של געגוע עמוק.</p>
+        <div class="color-row"><span class="swatch" style="background:#7D3C98"></span><span class="swatch" style="background:#FD79A8"></span><span class="swatch" style="background:#A3C4F3"></span></div>
+        <div class="anim-tag">💕 פרח מרחף ביד שקופה</div>
+      </div>
+      <div class="card-footer">Phantom: '...ט"ו באב. ...יום שגם רוחות... מתגעגעות.'</div>
+    </div>
+  </div>
+</div>
+<hr class="div">
+
+<!-- =============================== -->
+<!-- PIXEL - 12 HOLIDAYS              -->
+<!-- =============================== -->
+<div class="section" id="pixel">
+  <div class="section-header">
+    <span class="emoji">🤖</span>
+    <div><h2>Pixel (פיקסל) — רובוט נתונים מרחף</h2><div class="sub">עוזר נתונים | NPC | מדויק, שמח, דאטה-אוריינטד</div></div>
+    <span class="tag tag-joy">12 סקינים</span>
+  </div>
+  <div class="char-section">
+    <h3>על הדמות</h3>
+    <div class="sub">Pixel הוא רובוט מרחף חמוד עם מסך-פנים שמציג רגשות — עוזר הנתונים של המשחק. מופיע בדף סטטיסטיקות ובמעבדת הסייבר. צבעיו: ציאן/כסף, אקסנטים כתומים.</div>
+  </div>
+
+  <div class="skin-grid">
+    <!-- ראש השנה -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a3a5c,#00CEC9)">🤖</div>
+        <div><div class="char-name">פיקסל</div><div class="skin-name">🍎 פיקסל שנה טובה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> ציפוי זהב-דבש. המסך מציג: 'שנה חדשה — נתונים חדשים!' אנטנה עם רימון מיניאטורי. גוף מנצנץ בזהב.</p>
+        <p><strong>פוז:</strong> מרחף ומציג סטטיסטיקות שנה חולפת + תחזית לשנה חדשה.</p>
+        <div class="color-row"><span class="swatch" style="background:#00CEC9"></span><span class="swatch" style="background:#F9CA24"></span><span class="swatch" style="background:#8B0000"></span></div>
+        <div class="anim-tag">📊 גרף שנה ← שנה חדשה על המסך</div>
+      </div>
+      <div class="card-footer">פיקסל: 'ניתוח שנתי: שיפור 280%. תחזית לשנה הבאה: 500%!'</div>
+    </div>
+    <!-- יום כיפור -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a1a3a,#E8E6F0)">🤖</div>
+        <div><div class="char-name">פיקסל</div><div class="skin-name">📊 פיקסל חשבון הנפש</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> ציפוי לבן-מט. המסך מציג 'שגיאות השנה' מול 'תיקונים' בשחור-לבן. אנטנה שקטה, ללא הבהוב.</p>
+        <p><strong>פוז:</strong> מרחף בשקט, מציג: 'שגיאות: 1,247 → תיקונים: 1,247 → איזון: ✓'</p>
+        <div class="color-row"><span class="swatch" style="background:#E8E6F0"></span><span class="swatch" style="background:#808080"></span><span class="swatch" style="background:#C0C0C0"></span></div>
+        <div class="anim-tag">📊 נתוני שנה חולפים לאט על גופו</div>
+      </div>
+      <div class="card-footer">פיקסל: 'ניתוח שנה חלפה: שיפור 340%. מוכן לשנה חדשה.'</div>
+    </div>
+    <!-- סוכות -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a4a1a,#00CEC9)">🤖</div>
+        <div><div class="char-name">פיקסל</div><div class="skin-name">🌿 פיקסל הסוכתי</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> פיקסל עם סכך מיניאטורי מעל ראשו! ציפוי ירוק-חום טבעי. המסך מציג מזג אוויר: 'מתאים לסוכה!'</p>
+        <p><strong>פוז:</strong> מרחף מתחת לסכך מיניאטורי, מציג נתוני מזג אוויר לסוכות.</p>
+        <div class="color-row"><span class="swatch" style="background:#1a4a1a"></span><span class="swatch" style="background:#00CEC9"></span><span class="swatch" style="background:#8B4513"></span></div>
+        <div class="anim-tag">🍃 סכך מיניאטורי מעל ראשו</div>
+      </div>
+      <div class="card-footer">פיקסל: 'חיישן סכך: כיסוי 72%. כוכבים נראים: ✓. סוכה כשרה!'</div>
+    </div>
+    <!-- חנוכה -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a3a,#74B9FF)">🤖</div>
+        <div><div class="char-name">פיקסל</div><div class="skin-name">🕎 פיקסל 8 ביט</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> ציפוי כחול-כסף. המסך מציג חנוכייה פיקסלית — 8 ביט. נר נוסף נדלק כל יום. אנטנה עם סביבון.</p>
+        <p><strong>פוז:</strong> מסתובב כמו סביבון — ומציג על המסך: נ-ג-ה-פ בפיקסלים!</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a3a"></span><span class="swatch" style="background:#74B9FF"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">🌀 מסתובב כמו סביבון, חנוכייה 8-ביט</div>
+      </div>
+      <div class="card-footer">פיקסל: '8 נרות = 8 ביט = בייט אחד שלם של נס!'</div>
+    </div>
+    <!-- פורים -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a0080,#FDCB6E)">🤖</div>
+        <div><div class="char-name">פיקסל</div><div class="skin-name">🎭 פיקסל רעשן</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> פיקסל מתחפש לרעשן! גופו מסתובב ומשמיע רעש כש-'המן' מופיע על המסך. ציפוי ססגוני.</p>
+        <p><strong>פוז:</strong> מסתובב ומשמיע רעש — על המסך: 'זיהוי שם: המן → הפעלת רעש!'</p>
+        <div class="color-row"><span class="swatch" style="background:#4a0080"></span><span class="swatch" style="background:#FDCB6E"></span><span class="swatch" style="background:#FD79A8"></span></div>
+        <div class="anim-tag">📢 מסתובב ומשמיע רעש כשמזהה 'המן'</div>
+      </div>
+      <div class="card-footer">פיקסל: 'זיהוי מילה: ה-מ-ן! הפעלת פרוטוקול רעש! רררררררר!'</div>
+    </div>
+    <!-- פסח -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#1a4a6a,#00CEC9)">🤖</div>
+        <div><div class="char-name">פיקסל</div><div class="skin-name">🫓 פיקסל בודק חמץ</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> פיקסל עם פנס חיפוש ונוצה! סורק את המקלדת בחיפוש 'חמץ דיגיטלי' — שגיאות כתיב שנשארו.</p>
+        <p><strong>פוז:</strong> מרחף עם פנס, סורק: 'חמץ דיגיטלי נמצא: 3 שגיאות! ביעור!'</p>
+        <div class="color-row"><span class="swatch" style="background:#1a4a6a"></span><span class="swatch" style="background:#00CEC9"></span><span class="swatch" style="background:#FDCB6E"></span></div>
+        <div class="anim-tag">🔦 סורק וזוהה 'חמץ דיגיטלי'</div>
+      </div>
+      <div class="card-footer">פיקסל: 'סריקת חמץ דיגיטלי: 3 שגיאות כתיב נמצאו. מבצע ביעור!'</div>
+    </div>
+    <!-- יום השואה -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a0a,#4A4A6A)">🤖</div>
+        <div><div class="char-name">פיקסל</div><div class="skin-name">🕯️ פיקסל זוכר</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> ציפוי שחור. המסך מציג שמות בגלילה איטית — שמות נספים. אנטנה כבויה. אור עדין בלבד.</p>
+        <p><strong>פוז:</strong> מרחף נמוך ושקט. על המסך: שמות גוללים לאט, לא נגמרים.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a0a"></span><span class="swatch" style="background:#4A4A6A"></span><span class="swatch" style="background:#F9CA24"></span></div>
+        <div class="anim-tag">📜 שמות נספים גוללים על המסך</div>
+      </div>
+      <div class="card-footer">פיקסל: 'מאגר נתונים: 6,000,000 שמות. ללא מחיקה. לעולם.'</div>
+    </div>
+    <!-- יום הזיכרון -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a0a3a,#1a1a6a)">🤖</div>
+        <div><div class="char-name">פיקסל</div><div class="skin-name">🌹 פיקסל הזיכרון</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> ציפוי כחול-כהה עם פרג אדום על המסך. מציג: מספר החללים, שמות, תמונות. שקט.</p>
+        <p><strong>פוז:</strong> מרחף ליד אנדרטה, מציג על המסך נתוני זיכרון. שקט מכובד.</p>
+        <div class="color-row"><span class="swatch" style="background:#0a0a3a"></span><span class="swatch" style="background:#1a1a6a"></span><span class="swatch" style="background:#CC2200"></span></div>
+        <div class="anim-tag">🌺 פרג על המסך, נתוני זיכרון</div>
+      </div>
+      <div class="card-footer">פיקסל: 'מאגר גיבורים: 24,068 חללים. זיכרון דיגיטלי — לנצח.'</div>
+    </div>
+    <!-- יום העצמאות -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a3a8a,#00CEC9)">🤖</div>
+        <div><div class="char-name">פיקסל</div><div class="skin-name">🇮🇱 פיקסל הישראלי</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> ציפוי כחול-לבן! המסך מציג דגל ישראל מונפש. אנטנה עם דגלון. קונפטי כחול-לבן מסביב.</p>
+        <p><strong>פוז:</strong> מסתובב בשמחה, מציג: 'עצמאות! 78 שנים! נתונים מרשימים!'</p>
+        <div class="color-row"><span class="swatch" style="background:#0a3a8a"></span><span class="swatch" style="background:#E8E6F0"></span><span class="swatch" style="background:#00CEC9"></span></div>
+        <div class="anim-tag">🎆 דגל ישראל מונפש על המסך</div>
+      </div>
+      <div class="card-footer">פיקסל: '78 שנות עצמאות! אוכלוסייה: 10M! סטארטאפים: 7,000+!'</div>
+    </div>
+    <!-- ל"ג בעומר -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a1a00,#00CEC9)">🤖</div>
+        <div><div class="char-name">פיקסל</div><div class="skin-name">🔥 פיקסל חום-מדורה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> ציפוי כתום-אדום. המסך מציג טמפרטורת מדורה: '742°C — בטוח!' אנטנה עם מרשמלו נמס.</p>
+        <p><strong>פוז:</strong> מרחף ליד מדורה, מודד חום: 'אזהרה: מרשמלו שעל האנטנה נמס!'</p>
+        <div class="color-row"><span class="swatch" style="background:#4a1a00"></span><span class="swatch" style="background:#FF6B6B"></span><span class="swatch" style="background:#00CEC9"></span></div>
+        <div class="anim-tag">🔥 מרשמלו נמס על האנטנה</div>
+      </div>
+      <div class="card-footer">פיקסל: 'טמפרטורת מדורה: 742°C. מרשמלו: 100% נמס. אנטנה: ...דביקה.'</div>
+    </div>
+    <!-- שבועות -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#0a1a3a,#00CEC9)">🤖</div>
+        <div><div class="char-name">פיקסל</div><div class="skin-name">🌸 פיקסל מתן תורה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> ציפוי ירוק-לבן עם פרחים. המסך מציג את עשרת הדיברות כ-10 כללי הקלדה. פרחי בר על אנטנה.</p>
+        <p><strong>פוז:</strong> מרחף ומציג: 'דיבר 1: לא תקליד ב-2 אצבעות!'</p>
+        <div class="color-row"><span class="swatch" style="background:#0a1a3a"></span><span class="swatch" style="background:#00CEC9"></span><span class="swatch" style="background:#FD79A8"></span></div>
+        <div class="anim-tag">📜 10 דיברות הקלדה על המסך</div>
+      </div>
+      <div class="card-footer">פיקסל: 'עשרת דיברות ההקלדה: 1) לא תקליד ב-2 אצבעות. 2) כבד את ה-Shift...'</div>
+    </div>
+    <!-- ט"ו באב -->
+    <div class="skin-card">
+      <div class="card-top">
+        <div class="avatar" style="background:linear-gradient(135deg,#4a0040,#00CEC9)">🤖</div>
+        <div><div class="char-name">פיקסל</div><div class="skin-name">💕 פיקסל אהבה</div></div>
+      </div>
+      <div class="card-body">
+        <p><strong>תיאור:</strong> ציפוי ורוד! המסך מציג לב פועם. אנטנה עם פפיון ורוד. קונפטי לבבות סביבו.</p>
+        <p><strong>פוז:</strong> מרחף ומציג: 'זיהוי רגש: אהבה. סיכוי: 99.9%. שגיאה: 0.1% (על המתמטיקה).'</p>
+        <div class="color-row"><span class="swatch" style="background:#4a0040"></span><span class="swatch" style="background:#FD79A8"></span><span class="swatch" style="background:#00CEC9"></span></div>
+        <div class="anim-tag">💕 לב פועם על המסך + לבבות סביב</div>
+      </div>
+      <div class="card-footer">פיקסל: 'ט"ו באב! ניתוח רגשות: אהבה 99.9%. ...מה זה אהבה? שואל ברצינות.'</div>
+    </div>
+  </div>
+</div>
+<hr class="div">
+
+<!-- =============================== -->
+<!-- BRONZE / SILVER / GOLD TIERS     -->
+<!-- =============================== -->
+<div class="section" id="tiers">
+  <div class="section-header">
+    <span class="emoji">🏆</span>
+    <div><h2>מערכת דרגות: ברונזה / כסף / זהב</h2><div class="sub">שלוש דרגות לכל סקין של כל דמות — bragging rights!</div></div>
+    <span class="tag tag-hero">חדש!</span>
+  </div>
+
+  <div class="notice"><span class="icon">🏆</span><div>
+    <strong>עקרון מנחה:</strong> כל סקין חג מגיע ב-3 דרגות. הדרגה משפיעה על <strong>רמת הפירוט, האנימציות, האפקטים</strong> ותחושת ה-"bragging rights". שחקנים יראו את הדרגה של שחקנים אחרים בזירת הקרב — מוטיבציה לשחק יותר!
+  </div></div>
+
+  <div class="tier-grid">
+    <div class="tier-card tier-bronze">
+      <span class="tier-badge badge-bronze">🥉 ברונזה</span>
+      <h4>דרגת ברונזה — בסיס</h4>
+      <p><strong>תנאי פתיחה:</strong> להתחבר למשחק במהלך החג (השתתפות פסיבית).</p>
+      <p><strong>עיצוב:</strong> גרסה בסיסית של הסקין — צבעים נכונים, בגדים חגיגיים, ללא אפקטים מיוחדים. אנימציות בסיסיות בלבד (idle, חיוך).</p>
+      <p><strong>אפקטים:</strong> ללא ניצוצות, ללא חלקיקים, ללא אנימציות מיוחדות.</p>
+      <p><strong>מסגרת:</strong> מסגרת ברונזית דקה סביב תמונת הדמות.</p>
+    </div>
+    <div class="tier-card tier-silver">
+      <span class="tier-badge badge-silver">🥈 כסף</span>
+      <h4>דרגת כסף — משודרג</h4>
+      <p><strong>תנאי פתיחה:</strong> להשלים 3 שיעורים/אתגרים במהלך תקופת החג.</p>
+      <p><strong>עיצוב:</strong> גרסה משודרגת — פרטים נוספים על הבגדים (ריקמות, עיטורים), אביזרים חגיגיים (כובע/כתר/נשק חגיגי). אנימציות ייחודיות לחג.</p>
+      <p><strong>אפקטים:</strong> ניצוצות/חלקיקים עדינים (כוכבים, פתיתים, עלים — תלוי חג).</p>
+      <p><strong>מסגרת:</strong> מסגרת כסופה מנצנצת סביב תמונת הדמות.</p>
+    </div>
+    <div class="tier-card tier-gold">
+      <span class="tier-badge badge-gold">🥇 זהב</span>
+      <h4>דרגת זהב — אגדי</h4>
+      <p><strong>תנאי פתיחה:</strong> להגיע ל-WPM יעד ספציפי + 95%+ דיוק + השלמת 7 אתגרים בתקופת החג.</p>
+      <p><strong>עיצוב:</strong> גרסה מלאה ואגדית — כל הפרטים, כל האביזרים, אפקטים בוהקים. הדמות "זוהרת" באור זהוב. אנימציה ייחודית של כניסה (entrance animation).</p>
+      <p><strong>אפקטים:</strong> אפקטים מלאים — ניצוצות, חלקיקים, אורות, trail effects. אנימציית כניסה ייחודית + אנימציית ניצחון ייחודית.</p>
+      <p><strong>מסגרת:</strong> מסגרת זהובה זוהרת עם אפקט glow + כתר קטן.</p>
+      <p><strong>בונוס:</strong> הדמות משמיעה קו קולי ייחודי לזהב בלבד!</p>
+    </div>
+  </div>
+
+  <div class="notice"><span class="icon">📋</span><div>
+    <strong>דוגמאות לפי חגים:</strong>
+  </div></div>
+
+  <!-- דוגמאות דרגות לפי דמויות -->
+  <div class="char-section">
+    <h3>🥷 קי — דוגמת דרגות (ראש השנה)</h3>
+    <div class="tier-grid">
+      <div class="tier-card tier-bronze">
+        <span class="tier-badge badge-bronze">ברונזה</span>
+        <p><strong>קי של שנה טובה (בסיס):</strong> חליפה לבנה פשוטה, סרט ראש לבן. תפוח ביד. ללא ניצוצות.</p>
+      </div>
+      <div class="tier-card tier-silver">
+        <span class="tier-badge badge-silver">כסף</span>
+        <p><strong>קי של שנה טובה (כסף):</strong> חליפה לבנה + ריקמת רימונים כסופים. שופר מיניאטורי על חגורה. ניצוצות כסופים עדינים.</p>
+      </div>
+      <div class="tier-card tier-gold">
+        <span class="tier-badge badge-gold">זהב</span>
+        <p><strong>קי של שנה טובה (זהב):</strong> חליפה לבנה מבריקה + ריקמת רימונים זהובים. שופר זהב. ניצוצות זהובים מלאים + אנימציית כניסה: קי תוקע בשופר!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="char-section">
+    <h3>🐱 Shadow — דוגמת דרגות (חנוכה)</h3>
+    <div class="tier-grid">
+      <div class="tier-card tier-bronze">
+        <span class="tier-badge badge-bronze">ברונזה</span>
+        <p><strong>צל המכבים (בסיס):</strong> Shadow עם כובע מכבי פשוט. ללא שריון. ללא סביבון.</p>
+      </div>
+      <div class="tier-card tier-silver">
+        <span class="tier-badge badge-silver">כסף</span>
+        <p><strong>צל המכבים (כסף):</strong> Shadow + שריון מכבי כסוף. סביבון על זנב. אור חנוכייה על פרווה.</p>
+      </div>
+      <div class="tier-card tier-gold">
+        <span class="tier-badge badge-gold">זהב</span>
+        <p><strong>צל המכבים (זהב):</strong> שריון זהב מלא + סביבון זוהר + 8 נרות מנצנצים על גוף. אנימציית כניסה: Shadow מתגנב ומדליק חנוכייה!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="char-section">
+    <h3>🐉 להבה — דוגמת דרגות (ל"ג בעומר)</h3>
+    <div class="tier-grid">
+      <div class="tier-card tier-bronze">
+        <span class="tier-badge badge-bronze">ברונזה</span>
+        <p><strong>מלך המדורות (בסיס):</strong> להבה עם אש רגילה. מדורה אחת ברקע.</p>
+      </div>
+      <div class="tier-card tier-silver">
+        <span class="tier-badge badge-silver">כסף</span>
+        <p><strong>מלך המדורות (כסף):</strong> להבה + 3 מדורות, קשת וחץ. כנפיים בוהקות.</p>
+      </div>
+      <div class="tier-card tier-gold">
+        <span class="tier-badge badge-gold">זהב</span>
+        <p><strong>מלך המדורות (זהב):</strong> 7 מדורות! כנפיי אש טהורה. קשת וחץ זוהרים. אנימציית כניסה: להבה מציתה 7 מדורות ברצף!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="char-section">
+    <h3>👻 Phantom — דוגמת דרגות (פורים)</h3>
+    <div class="tier-grid">
+      <div class="tier-card tier-bronze">
+        <span class="tier-badge badge-bronze">ברונזה</span>
+        <p><strong>הנסתר בפורים (בסיס):</strong> Phantom מעט פחות שקוף מהרגיל. מסכת פורים פשוטה.</p>
+      </div>
+      <div class="tier-card tier-silver">
+        <span class="tier-badge badge-silver">כסף</span>
+        <p><strong>הנסתר בפורים (כסף):</strong> Phantom מוצק לחצי! בגדים ססגוניים. מסכת פורים מפוארת.</p>
+      </div>
+      <div class="tier-card tier-gold">
+        <span class="tier-badge badge-gold">זהב</span>
+        <p><strong>הנסתר בפורים (זהב):</strong> Phantom מוצק לחלוטין! צבעוני, מחייך, קונפטי. אנימציית כניסה: מתגלה מאחורי מסכה בפיצוץ צבע!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="char-section">
+    <h3>🤖 פיקסל — דוגמת דרגות (פסח)</h3>
+    <div class="tier-grid">
+      <div class="tier-card tier-bronze">
+        <span class="tier-badge badge-bronze">ברונזה</span>
+        <p><strong>פיקסל בודק חמץ (בסיס):</strong> פיקסל עם פנס קטן. מסך רגיל.</p>
+      </div>
+      <div class="tier-card tier-silver">
+        <span class="tier-badge badge-silver">כסף</span>
+        <p><strong>פיקסל בודק חמץ (כסף):</strong> פנס + נוצה. מסך מציג 'סריקת חמץ'. אנימציית חיפוש.</p>
+      </div>
+      <div class="tier-card tier-gold">
+        <span class="tier-badge badge-gold">זהב</span>
+        <p><strong>פיקסל בודק חמץ (זהב):</strong> פנס מתקדם + נוצה + שלט 'חמץ-פרי!'. מסך עם אנימציית סריקה מלאה. אנימציית כניסה: פיקסל סורק ומוצא חמץ!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="char-section">
+    <h3>🦊 Storm — דוגמת דרגות (יום העצמאות)</h3>
+    <div class="tier-grid">
+      <div class="tier-card tier-bronze">
+        <span class="tier-badge badge-bronze">ברונזה</span>
+        <p><strong>סערה ישראלית (בסיס):</strong> Storm עם ברקים כחולים בלבד. דגלון קטן.</p>
+      </div>
+      <div class="tier-card tier-silver">
+        <span class="tier-badge badge-silver">כסף</span>
+        <p><strong>סערה ישראלית (כסף):</strong> ברקים כחולים-לבנים. דגל ישראל על גב. פרווה כחולה-לבנה.</p>
+      </div>
+      <div class="tier-card tier-gold">
+        <span class="tier-badge badge-gold">זהב</span>
+        <p><strong>סערה ישראלית (זהב):</strong> ברקים כחולים-לבנים-זהובים. דגל מלא כגלימה. אנימציית כניסה: Storm רץ סיבוב ניצחון עם זיקוקים!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- כלל דרגות לכל הדמויות -->
+  <div class="notice"><span class="icon">📐</span><div>
+    <strong>כלל אוניברסלי:</strong> מערכת הדרגות חלה על <strong>כל 19 הדמויות</strong> (קי, מיקה, סנסאי זן, יוקי, לונה, נועה, קאי, רקס, Shadow, Storm, להבה, Phantom, פיקסל, באג, באג קינג, גליץ') ועל <strong>כל 14 החגים</strong>. סה"כ: <strong>19 × 14 × 3 = 798 וריאציות סקין!</strong>
+  </div></div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 22px;margin-bottom:22px;">
+    <strong style="color:var(--purple);font-size:15px;">טבלת תנאי פתיחה:</strong>
+    <table style="width:100%;margin-top:12px;font-size:13px;color:var(--dim);border-collapse:collapse;">
+      <tr style="border-bottom:1px solid var(--border);background:rgba(108,92,231,0.08);">
+        <td style="padding:10px;font-weight:700;color:var(--text);width:100px;">דרגה</td>
+        <td style="padding:10px;font-weight:700;color:var(--text);">תנאי פתיחה</td>
+        <td style="padding:10px;font-weight:700;color:var(--text);">מה מקבלים</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:10px;color:var(--bronze);font-weight:700;">🥉 ברונזה</td>
+        <td style="padding:10px;">התחברות למשחק בתקופת החג</td>
+        <td style="padding:10px;">סקין בסיסי, צבעים חגיגיים, מסגרת ברונזית</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:10px;color:var(--silver);font-weight:700;">🥈 כסף</td>
+        <td style="padding:10px;">3 שיעורים/אתגרים בתקופת החג</td>
+        <td style="padding:10px;">אביזרים, אנימציות, חלקיקים עדינים, מסגרת כסופה</td>
+      </tr>
+      <tr>
+        <td style="padding:10px;color:var(--gold);font-weight:700;">🥇 זהב</td>
+        <td style="padding:10px;">WPM יעד + 95% דיוק + 7 אתגרים</td>
+        <td style="padding:10px;">אפקטים מלאים, אנימציית כניסה, קו קולי ייחודי, מסגרת זהובה + glow</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="notice"><span class="icon">💡</span><div>
+    <strong>חשוב:</strong> סקינים של <strong>יום השואה ויום הזיכרון</strong> אינם כפופים למערכת דרגות. יש גרסה אחת בלבד — מכובדת, שקטה, שוויונית. אין "bragging rights" בימי זיכרון.
+  </div></div>
+
+</div>
+
+<footer>
+  <p>Ninja Keyboard — הרחבת סקינים לחגים + דרגות · מסמך נלווה ל-<a href="israeli-holiday-skins.html" style="color:var(--purple);">סקינים לחגי ישראל</a></p>
+  <p style="margin-top:8px;font-size:11px;">5 דמויות חדשות × 12 חגים = 60 סקינים · מערכת ברונזה/כסף/זהב לכל 798 וריאציות<br>
+  עיצוב: Claude Opus 4.6 · מרץ 2026</p>
+</footer>
+
+</body>
+</html>

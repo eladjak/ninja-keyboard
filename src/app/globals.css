@@ -567,6 +567,12 @@
   animation: hero-border-glow 3s ease-in-out infinite;
 }
 
+/* ── Game button glow pulse ────────────────────────────────────────── */
+@keyframes game-btn-pulse {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.6; }
+}
+
 /* Gaming text shadow */
 .text-glow {
   text-shadow: 0 0 12px oklch(1 0 0 / 40%), 0 2px 8px oklch(0 0 0 / 50%);
@@ -574,4 +580,1034 @@
 
 .text-glow-sm {
   text-shadow: 0 0 8px oklch(1 0 0 / 30%);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Character Idle Animations
+   GPU-accelerated (transform/opacity only), infinite loops.
+   Each character gets a unique combo from these base keyframes.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Base Idle Keyframes ──────────────────────────────────────────── */
+
+@keyframes idle-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+@keyframes idle-float {
+  0%, 100% { transform: translateY(0) translateZ(0); }
+  50% { transform: translateY(-4px) translateZ(0); }
+}
+
+@keyframes idle-sway {
+  0%, 100% { transform: rotate(-1deg); }
+  50% { transform: rotate(1deg); }
+}
+
+@keyframes idle-blink {
+  0%, 89%, 96%, 100% { opacity: 1; }
+  90%, 95% { opacity: 0.1; }
+}
+
+@keyframes idle-glow {
+  0%, 100% { box-shadow: 0 0 8px oklch(0.72 0.15 292 / 20%); }
+  50% { box-shadow: 0 0 20px oklch(0.72 0.15 292 / 50%); }
+}
+
+@keyframes idle-bounce {
+  0%, 100% { transform: translateY(0) translateZ(0); }
+  40% { transform: translateY(-6px) translateZ(0); }
+  60% { transform: translateY(-3px) translateZ(0); }
+}
+
+/* Glitch-specific: random jitter effect */
+@keyframes idle-jitter {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-1px, 1px); }
+  20% { transform: translate(1px, -1px); }
+  30% { transform: translate(0, 0); }
+  40% { transform: translate(1px, 1px); }
+  50% { transform: translate(-1px, 0); }
+  60% { transform: translate(0, 0); }
+  70% { transform: translate(0, -1px); }
+  80% { transform: translate(1px, 0); }
+  90% { transform: translate(-1px, -1px); }
+}
+
+/* Phantom-specific: ethereal fade */
+@keyframes idle-fade {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 0.5; }
+}
+
+/* ── Character-Specific Idle Classes ──────────────────────────────── */
+
+/* Ki - hero, energetic: breathe + slight glow */
+.idle-ki {
+  animation: idle-breathe 3s ease-in-out infinite, idle-glow 2s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Yuki - speedster, always moving: fast sway + float */
+.idle-yuki {
+  animation: idle-sway 2s ease-in-out infinite, idle-float 1.8s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Luna - dreamy, calm: slow float + gentle breathe */
+.idle-luna {
+  animation: idle-float 3.5s ease-in-out infinite, idle-breathe 4s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Kai - fighter, ready stance: breathe + subtle bounce */
+.idle-kai {
+  animation: idle-breathe 2.8s ease-in-out infinite, idle-bounce 2s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Mika - hacker, digital energy: sway + glow */
+.idle-mika {
+  animation: idle-sway 3s ease-in-out infinite, idle-glow 1.5s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Noa - healer, serene: breathe + slow float */
+.idle-noa {
+  animation: idle-breathe 4s ease-in-out infinite, idle-float 4.5s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Rex - dinosaur, playful: bounce + breathe */
+.idle-rex {
+  animation: idle-bounce 1.5s ease-in-out infinite, idle-breathe 2.5s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Pixel - robot, hovering: float + glow + blink */
+.idle-pixel {
+  animation: idle-float 2s ease-in-out infinite, idle-glow 2s ease-in-out infinite, idle-blink 4s step-end infinite;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Sensei Zen - wise, calm: very slow breathe only */
+.idle-sensei {
+  animation: idle-breathe 5s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Shadow - cat, stealthy: float + fade */
+.idle-shadow {
+  animation: idle-float 3s ease-in-out infinite, idle-fade 4s ease-in-out infinite;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Storm - fox, electric: sway + glow */
+.idle-storm {
+  animation: idle-sway 2.5s ease-in-out infinite, idle-glow 1.8s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Blaze - dragon, fiery: breathe + glow */
+.idle-blaze {
+  animation: idle-breathe 2.2s ease-in-out infinite, idle-glow 1.5s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Bug - insect, jittery: fast bounce + sway */
+.idle-bug {
+  animation: idle-bounce 1s ease-in-out infinite, idle-sway 1.5s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Bug King - boss, imposing: slow breathe + glow */
+.idle-bugking {
+  animation: idle-breathe 4s ease-in-out infinite, idle-glow 3s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Glitch - glitchy, unstable: random jitter + blink */
+.idle-glitch {
+  animation: idle-jitter 0.8s steps(10) infinite, idle-blink 3s step-end infinite;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Phantom - ghost, ethereal: float + fade */
+.idle-phantom {
+  animation: idle-float 3.5s ease-in-out infinite, idle-fade 3s ease-in-out infinite;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* ── Intensity Modifiers ──────────────────────────────────────────── */
+
+/* Subtle: slow everything down by 50% */
+.idle-subtle {
+  animation-duration: inherit;
+  animation-timing-function: ease-in-out;
+}
+.idle-subtle.idle-ki     { animation-duration: 4.5s, 3s; }
+.idle-subtle.idle-yuki   { animation-duration: 3s, 2.7s; }
+.idle-subtle.idle-luna   { animation-duration: 5.25s, 6s; }
+.idle-subtle.idle-kai    { animation-duration: 4.2s, 3s; }
+.idle-subtle.idle-mika   { animation-duration: 4.5s, 2.25s; }
+.idle-subtle.idle-noa    { animation-duration: 6s, 6.75s; }
+.idle-subtle.idle-rex    { animation-duration: 2.25s, 3.75s; }
+.idle-subtle.idle-pixel  { animation-duration: 3s, 3s, 6s; }
+.idle-subtle.idle-sensei { animation-duration: 7.5s; }
+.idle-subtle.idle-shadow { animation-duration: 4.5s, 6s; }
+.idle-subtle.idle-storm  { animation-duration: 3.75s, 2.7s; }
+.idle-subtle.idle-blaze  { animation-duration: 3.3s, 2.25s; }
+.idle-subtle.idle-bug    { animation-duration: 1.5s, 2.25s; }
+.idle-subtle.idle-bugking { animation-duration: 6s, 4.5s; }
+.idle-subtle.idle-glitch { animation-duration: 1.2s, 4.5s; }
+.idle-subtle.idle-phantom { animation-duration: 5.25s, 4.5s; }
+
+/* Energetic: speed everything up by 50% */
+.idle-energetic.idle-ki     { animation-duration: 2s, 1.33s; }
+.idle-energetic.idle-yuki   { animation-duration: 1.33s, 1.2s; }
+.idle-energetic.idle-luna   { animation-duration: 2.33s, 2.67s; }
+.idle-energetic.idle-kai    { animation-duration: 1.87s, 1.33s; }
+.idle-energetic.idle-mika   { animation-duration: 2s, 1s; }
+.idle-energetic.idle-noa    { animation-duration: 2.67s, 3s; }
+.idle-energetic.idle-rex    { animation-duration: 1s, 1.67s; }
+.idle-energetic.idle-pixel  { animation-duration: 1.33s, 1.33s, 2.67s; }
+.idle-energetic.idle-sensei { animation-duration: 3.33s; }
+.idle-energetic.idle-shadow { animation-duration: 2s, 2.67s; }
+.idle-energetic.idle-storm  { animation-duration: 1.67s, 1.2s; }
+.idle-energetic.idle-blaze  { animation-duration: 1.47s, 1s; }
+.idle-energetic.idle-bug    { animation-duration: 0.67s, 1s; }
+.idle-energetic.idle-bugking { animation-duration: 2.67s, 2s; }
+.idle-energetic.idle-glitch { animation-duration: 0.53s, 2s; }
+.idle-energetic.idle-phantom { animation-duration: 2.33s, 2s; }
+
+/* Paused: stop all animations (accessibility / performance) */
+.idle-paused {
+  animation-play-state: paused !important;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .idle-ki, .idle-yuki, .idle-luna, .idle-kai,
+  .idle-mika, .idle-noa, .idle-rex, .idle-pixel,
+  .idle-sensei, .idle-shadow, .idle-storm, .idle-blaze,
+  .idle-bug, .idle-bugking, .idle-glitch, .idle-phantom {
+    animation: none !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Gaming UI System - CSS Utilities
+   Based on UI research from Brawl Stars, Clash Royale, Duolingo,
+   Among Us & Fall Guys. RTL-first, CSS logical properties,
+   transform/opacity animations only.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Gaming CSS Variables (Typography & Layout) ────────────── */
+
+:root {
+  /* Gaming Typography Scale */
+  --game-text-xs: 0.75rem;     /* 12px - labels, meta */
+  --game-text-sm: 0.875rem;    /* 14px - captions, nav */
+  --game-text-base: 1rem;      /* 16px - body text */
+  --game-text-lg: 1.125rem;    /* 18px - emphasis */
+  --game-text-xl: 1.25rem;     /* 20px - section titles */
+  --game-text-2xl: 1.5rem;     /* 24px - card titles */
+  --game-text-3xl: 1.875rem;   /* 30px - page titles */
+  --game-text-4xl: 2.25rem;    /* 36px - hero headlines */
+
+  /* Gaming Spacing Scale */
+  --game-space-xs: 4px;
+  --game-space-sm: 8px;
+  --game-space-md: 16px;
+  --game-space-lg: 24px;
+  --game-space-xl: 32px;
+  --game-space-2xl: 48px;
+
+  /* Gaming Radii */
+  --game-radius-sm: 8px;
+  --game-radius-md: 12px;
+  --game-radius-lg: 16px;
+  --game-radius-xl: 20px;
+  --game-radius-pill: 9999px;
+  --game-radius-asymm: 20px 12px 20px 12px;
+
+  /* Gaming Timing */
+  --game-duration-fast: 100ms;
+  --game-duration-normal: 150ms;
+  --game-duration-slow: 250ms;
+  --game-ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --game-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --game-ease-bounce: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+
+  /* Gaming Layout */
+  --game-sidebar-width: 280px;
+  --game-header-height: 60px;
+  --game-card-min-width: 200px;
+
+  /* Gaming Shadows */
+  --game-shadow-card: 0 4px 12px oklch(0 0 0 / 30%), 0 0 0 1px oklch(0.25 0.04 292 / 50%);
+  --game-shadow-card-hover: 0 8px 24px oklch(0 0 0 / 40%), 0 0 20px oklch(0.495 0.205 292 / 15%);
+  --game-shadow-elevated: 0 12px 32px oklch(0 0 0 / 50%), 0 0 0 1px oklch(0.3 0.05 292 / 60%);
+  --game-shadow-glow-purple: 0 0 20px oklch(0.495 0.205 292 / 40%), 0 0 40px oklch(0.495 0.205 292 / 15%);
+  --game-shadow-glow-green: 0 0 20px oklch(0.672 0.148 168 / 40%), 0 0 40px oklch(0.672 0.148 168 / 15%);
+
+  /* Progress bar stripes */
+  --game-stripe-color: oklch(1 0 0 / 10%);
+}
+
+/* ── 2. Gaming Card ───────────────────────────────────────────── */
+/* Card with gradient border, hover lift, glass morphism */
+
+.game-card {
+  position: relative;
+  background: linear-gradient(135deg, oklch(0.15 0.02 292 / 80%) 0%, oklch(0.12 0.01 280 / 90%) 100%);
+  border: 1.5px solid oklch(0.495 0.205 292 / 25%);
+  border-radius: var(--game-radius-lg);
+  padding: var(--game-space-lg);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--game-shadow-card);
+  transition:
+    transform var(--game-duration-normal) var(--game-ease-out),
+    box-shadow var(--game-duration-normal) var(--game-ease-out),
+    border-color var(--game-duration-normal) var(--game-ease-out);
+  overflow: hidden;
+}
+
+.game-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, oklch(0.495 0.205 292 / 6%) 0%, transparent 50%, oklch(0.672 0.148 168 / 4%) 100%);
+  pointer-events: none;
+}
+
+.game-card:hover {
+  transform: translateY(-2px);
+  border-color: oklch(0.495 0.205 292 / 50%);
+  box-shadow: var(--game-shadow-card-hover);
+}
+
+.game-card:active {
+  transform: translateY(0) scale(0.99);
+}
+
+/* Light theme override */
+.light .game-card {
+  background: linear-gradient(135deg, oklch(0.98 0.005 290) 0%, oklch(1 0 0) 100%);
+  border-color: oklch(0.85 0.02 292 / 40%);
+  box-shadow: 0 2px 8px oklch(0 0 0 / 8%);
+  backdrop-filter: none;
+}
+
+.light .game-card:hover {
+  border-color: oklch(0.495 0.205 292 / 40%);
+  box-shadow: 0 4px 16px oklch(0 0 0 / 12%), 0 0 12px oklch(0.495 0.205 292 / 10%);
+}
+
+/* ── 3. Gaming Panel ──────────────────────────────────────────── */
+/* Panel with asymmetric corners (Brawl Stars style) */
+
+.game-panel {
+  position: relative;
+  background: linear-gradient(180deg, oklch(0.14 0.025 292) 0%, oklch(0.11 0.015 290) 100%);
+  border: 2px solid oklch(0.3 0.05 292 / 60%);
+  border-radius: var(--game-radius-asymm);
+  padding: var(--game-space-lg);
+  box-shadow: var(--game-shadow-card);
+}
+
+.game-panel::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: 8px;
+  inset-inline-end: 8px;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, oklch(1 0 0 / 15%), transparent);
+  border-radius: 1px;
+}
+
+.light .game-panel {
+  background: linear-gradient(180deg, oklch(0.99 0 0) 0%, oklch(0.97 0.005 292) 100%);
+  border-color: oklch(0.88 0.02 292 / 50%);
+  box-shadow: 0 2px 8px oklch(0 0 0 / 6%);
+}
+
+/* ── 4. Gaming Header ────────────────────────────────────────── */
+/* Bold header with text shadow and gradient */
+
+.game-header {
+  font-family: var(--font-heebo), sans-serif;
+  font-weight: 900;
+  font-size: var(--game-text-3xl);
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, oklch(0.95 0.01 290) 0%, oklch(0.72 0.15 292) 50%, oklch(0.672 0.148 168) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none; /* gradient text does not support text-shadow directly */
+  filter: drop-shadow(0 2px 4px oklch(0.495 0.205 292 / 30%));
+}
+
+.game-header-sm {
+  font-family: var(--font-heebo), sans-serif;
+  font-weight: 800;
+  font-size: var(--game-text-xl);
+  letter-spacing: -0.01em;
+  background: linear-gradient(135deg, oklch(0.9 0.02 290) 0%, oklch(0.72 0.15 292) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 1px 2px oklch(0.495 0.205 292 / 20%));
+}
+
+.light .game-header {
+  background: linear-gradient(135deg, oklch(0.3 0.04 290) 0%, oklch(0.495 0.205 292) 50%, oklch(0.55 0.15 168) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: none;
+}
+
+.light .game-header-sm {
+  background: linear-gradient(135deg, oklch(0.35 0.04 290) 0%, oklch(0.495 0.205 292) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: none;
+}
+
+/* ── 5. Gaming Badge ─────────────────────────────────────────── */
+/* Small badge/pill with glow effect */
+
+.game-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--game-radius-pill);
+  font-size: var(--game-text-xs);
+  font-weight: 700;
+  line-height: 1.4;
+  border: 1.5px solid oklch(0.495 0.205 292 / 35%);
+  background: oklch(0.15 0.03 292 / 70%);
+  color: oklch(0.85 0.08 292);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 8px oklch(0.495 0.205 292 / 15%);
+  white-space: nowrap;
+  transition: box-shadow var(--game-duration-normal) var(--game-ease-out);
+}
+
+.game-badge:hover {
+  box-shadow: 0 0 16px oklch(0.495 0.205 292 / 30%);
+}
+
+.game-badge--green {
+  border-color: oklch(0.672 0.148 168 / 35%);
+  background: oklch(0.15 0.03 168 / 70%);
+  color: oklch(0.85 0.1 168);
+  box-shadow: 0 0 8px oklch(0.672 0.148 168 / 15%);
+}
+
+.game-badge--green:hover {
+  box-shadow: 0 0 16px oklch(0.672 0.148 168 / 30%);
+}
+
+.game-badge--gold {
+  border-color: oklch(0.75 0.14 80 / 40%);
+  background: oklch(0.2 0.04 80 / 70%);
+  color: oklch(0.85 0.12 80);
+  box-shadow: 0 0 8px oklch(0.75 0.14 80 / 15%);
+}
+
+.game-badge--gold:hover {
+  box-shadow: 0 0 16px oklch(0.75 0.14 80 / 30%);
+}
+
+.game-badge--danger {
+  border-color: oklch(0.65 0.2 25 / 40%);
+  background: oklch(0.18 0.04 25 / 70%);
+  color: oklch(0.85 0.12 25);
+  box-shadow: 0 0 8px oklch(0.65 0.2 25 / 15%);
+}
+
+.light .game-badge {
+  background: oklch(0.95 0.02 292 / 90%);
+  border-color: oklch(0.495 0.205 292 / 30%);
+  color: oklch(0.4 0.15 292);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+/* ── 6. Gaming Progress Bar ──────────────────────────────────── */
+/* Animated progress bar with stripe pattern and glow */
+
+.game-progress-bar {
+  position: relative;
+  height: 14px;
+  background: oklch(0.12 0.02 292);
+  border-radius: var(--game-radius-pill);
+  border: 1px solid oklch(0.25 0.04 292 / 60%);
+  overflow: hidden;
+}
+
+.game-progress-bar__fill {
+  height: 100%;
+  border-radius: var(--game-radius-pill);
+  background: linear-gradient(90deg, var(--game-accent-purple) 0%, oklch(0.6 0.18 280) 50%, var(--game-accent-green) 100%);
+  box-shadow: 0 0 12px oklch(0.495 0.205 292 / 50%);
+  position: relative;
+  transition: width 0.6s var(--game-ease-out);
+}
+
+/* Shine line at top */
+.game-progress-bar__fill::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  inset-inline-start: 8px;
+  inset-inline-end: 8px;
+  height: 3px;
+  background: oklch(1 0 0 / 25%);
+  border-radius: 2px;
+}
+
+/* Animated stripes */
+.game-progress-bar__fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--game-stripe-color),
+    var(--game-stripe-color) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+  animation: game-stripe-move 1s linear infinite;
+  border-radius: inherit;
+}
+
+@keyframes game-stripe-move {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(12px); }
+}
+
+.game-progress-bar--green .game-progress-bar__fill {
+  background: linear-gradient(90deg, oklch(0.55 0.14 168) 0%, var(--game-accent-green) 100%);
+  box-shadow: 0 0 12px oklch(0.672 0.148 168 / 50%);
+}
+
+.game-progress-bar--gold .game-progress-bar__fill {
+  background: linear-gradient(90deg, #FF8C00 0%, #FFD700 100%);
+  box-shadow: 0 0 12px oklch(0.75 0.14 80 / 50%);
+}
+
+.light .game-progress-bar {
+  background: oklch(0.92 0.01 292);
+  border-color: oklch(0.85 0.02 292);
+}
+
+/* ── 7. Gaming Avatar Frame ──────────────────────────────────── */
+/* Character avatar with animated glowing border */
+
+.game-avatar-frame {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--game-radius-lg);
+  padding: 3px;
+  background: conic-gradient(
+    from 0deg,
+    oklch(0.495 0.205 292),
+    oklch(0.672 0.148 168),
+    oklch(0.75 0.14 80),
+    oklch(0.495 0.205 292)
+  );
+  animation: game-avatar-spin 4s linear infinite;
+  box-shadow: 0 0 16px oklch(0.495 0.205 292 / 30%);
+}
+
+.game-avatar-frame > * {
+  border-radius: calc(var(--game-radius-lg) - 3px);
+  display: block;
+}
+
+@keyframes game-avatar-spin {
+  0% { background: conic-gradient(from 0deg, oklch(0.495 0.205 292), oklch(0.672 0.148 168), oklch(0.75 0.14 80), oklch(0.495 0.205 292)); }
+  25% { background: conic-gradient(from 90deg, oklch(0.495 0.205 292), oklch(0.672 0.148 168), oklch(0.75 0.14 80), oklch(0.495 0.205 292)); }
+  50% { background: conic-gradient(from 180deg, oklch(0.495 0.205 292), oklch(0.672 0.148 168), oklch(0.75 0.14 80), oklch(0.495 0.205 292)); }
+  75% { background: conic-gradient(from 270deg, oklch(0.495 0.205 292), oklch(0.672 0.148 168), oklch(0.75 0.14 80), oklch(0.495 0.205 292)); }
+  100% { background: conic-gradient(from 360deg, oklch(0.495 0.205 292), oklch(0.672 0.148 168), oklch(0.75 0.14 80), oklch(0.495 0.205 292)); }
+}
+
+.game-avatar-frame--sm {
+  border-radius: var(--game-radius-md);
+  padding: 2px;
+}
+
+.game-avatar-frame--sm > * {
+  border-radius: calc(var(--game-radius-md) - 2px);
+}
+
+.game-avatar-frame--lg {
+  border-radius: var(--game-radius-xl);
+  padding: 4px;
+  box-shadow: 0 0 24px oklch(0.495 0.205 292 / 40%);
+}
+
+.game-avatar-frame--lg > * {
+  border-radius: calc(var(--game-radius-xl) - 4px);
+}
+
+/* ── 8. Gaming XP Counter ────────────────────────────────────── */
+/* XP display with counting animation and glow */
+
+.game-xp-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Inter', var(--font-heebo), sans-serif;
+  font-size: var(--game-text-2xl);
+  font-weight: 800;
+  color: #FFD700;
+  text-shadow: 0 0 12px oklch(0.75 0.14 80 / 50%), 0 2px 4px oklch(0 0 0 / 40%);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+}
+
+.game-xp-counter__label {
+  font-size: var(--game-text-sm);
+  font-weight: 700;
+  color: oklch(0.7 0.1 80);
+  text-shadow: none;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.game-xp-counter--sm {
+  font-size: var(--game-text-lg);
+  gap: 0.3rem;
+}
+
+.game-xp-counter--sm .game-xp-counter__label {
+  font-size: var(--game-text-xs);
+}
+
+/* Pulse animation when XP changes */
+@keyframes game-xp-bump {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.15); }
+  60% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.game-xp-counter--animate {
+  animation: game-xp-bump 0.35s var(--game-ease-spring);
+}
+
+/* ── 9. Gaming Notification ──────────────────────────────────── */
+/* Toast-like notification with slide-in */
+
+.game-notification {
+  position: fixed;
+  top: var(--game-space-lg);
+  inset-inline-end: var(--game-space-lg);
+  z-index: 100;
+  min-width: 280px;
+  max-width: 400px;
+  padding: var(--game-space-md) var(--game-space-lg);
+  background: linear-gradient(135deg, oklch(0.16 0.03 292 / 95%) 0%, oklch(0.13 0.02 290 / 98%) 100%);
+  border: 1.5px solid oklch(0.495 0.205 292 / 35%);
+  border-radius: var(--game-radius-lg);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--game-shadow-elevated);
+  display: flex;
+  align-items: center;
+  gap: var(--game-space-md);
+  transform: translateX(120%);
+  opacity: 0;
+  transition:
+    transform 0.3s var(--game-ease-spring),
+    opacity 0.3s var(--game-ease-out);
+}
+
+[dir='rtl'] .game-notification {
+  transform: translateX(-120%);
+}
+
+.game-notification--visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.game-notification--success {
+  border-color: oklch(0.672 0.148 168 / 40%);
+}
+
+.game-notification--warning {
+  border-color: oklch(0.75 0.14 80 / 40%);
+}
+
+.game-notification--error {
+  border-color: oklch(0.65 0.2 25 / 40%);
+}
+
+.game-notification__icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--game-radius-md);
+  font-size: 1.2rem;
+  background: oklch(0.495 0.205 292 / 15%);
+}
+
+.game-notification__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.game-notification__title {
+  font-size: var(--game-text-sm);
+  font-weight: 700;
+  color: oklch(0.95 0.01 290);
+}
+
+.game-notification__message {
+  font-size: var(--game-text-xs);
+  color: oklch(0.65 0.02 290);
+  margin-top: 2px;
+}
+
+.light .game-notification {
+  background: linear-gradient(135deg, oklch(0.99 0 0 / 95%) 0%, oklch(0.97 0.005 292 / 98%) 100%);
+  border-color: oklch(0.85 0.03 292 / 60%);
+  box-shadow: 0 8px 24px oklch(0 0 0 / 10%);
+}
+
+/* ── 10. Gaming Tooltip ──────────────────────────────────────── */
+/* Gaming-styled tooltip */
+
+.game-tooltip {
+  position: relative;
+}
+
+.game-tooltip__content {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  padding: 0.4rem 0.75rem;
+  background: oklch(0.18 0.03 292 / 95%);
+  border: 1px solid oklch(0.495 0.205 292 / 30%);
+  border-radius: var(--game-radius-sm);
+  backdrop-filter: blur(8px);
+  color: oklch(0.9 0.02 290);
+  font-size: var(--game-text-xs);
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-50%) translateY(4px);
+  transition:
+    opacity var(--game-duration-normal) var(--game-ease-out),
+    transform var(--game-duration-normal) var(--game-ease-out);
+  z-index: 50;
+  box-shadow: 0 4px 12px oklch(0 0 0 / 40%);
+}
+
+[dir='rtl'] .game-tooltip__content {
+  inset-inline-start: 50%;
+  transform: translateX(50%) translateY(4px);
+}
+
+[dir='rtl'] .game-tooltip:hover .game-tooltip__content,
+[dir='rtl'] .game-tooltip:focus-within .game-tooltip__content {
+  transform: translateX(50%) translateY(0);
+}
+
+/* Arrow */
+.game-tooltip__content::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: oklch(0.495 0.205 292 / 30%);
+}
+
+.game-tooltip:hover .game-tooltip__content,
+.game-tooltip:focus-within .game-tooltip__content {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.light .game-tooltip__content {
+  background: oklch(0.98 0 0 / 95%);
+  border-color: oklch(0.85 0.02 292 / 50%);
+  color: oklch(0.2 0.04 292);
+  box-shadow: 0 4px 12px oklch(0 0 0 / 12%);
+}
+
+/* ── 11. Typography Utilities ────────────────────────────────── */
+
+.game-font-display {
+  font-family: var(--font-heebo), sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-shadow: var(--game-text-glow);
+}
+
+.game-font-title {
+  font-family: var(--font-heebo), sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-shadow: var(--game-text-glow-sm);
+}
+
+.game-font-body {
+  font-family: 'Assistant', var(--font-heebo), sans-serif;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.game-font-data {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+}
+
+.light .game-font-display,
+.light .game-font-title {
+  text-shadow: none;
+}
+
+/* ── 12. Transition & Animation Presets ──────────────────────── */
+
+/* Standard game transition */
+.transition-game {
+  transition-property: transform, opacity, box-shadow, border-color;
+  transition-duration: var(--game-duration-normal);
+  transition-timing-function: var(--game-ease-out);
+}
+
+/* Hover lift - translateY(-2px) on hover */
+.hover-lift {
+  transition: transform var(--game-duration-normal) var(--game-ease-out),
+              box-shadow var(--game-duration-normal) var(--game-ease-out);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+/* Hover glow - box-shadow glow on hover */
+.hover-glow {
+  transition: box-shadow var(--game-duration-normal) var(--game-ease-out);
+}
+
+.hover-glow:hover {
+  box-shadow: var(--game-shadow-glow-purple);
+}
+
+.hover-glow--green:hover {
+  box-shadow: var(--game-shadow-glow-green);
+}
+
+/* Press scale - scale(0.95) on active */
+.press-scale {
+  transition: transform var(--game-duration-fast) var(--game-ease-out);
+}
+
+.press-scale:active {
+  transform: scale(0.95);
+}
+
+/* Entrance slide up - slide up + fade in */
+@keyframes game-entrance-slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.entrance-slide-up {
+  animation: game-entrance-slide-up 0.3s var(--game-ease-out) both;
+}
+
+/* Staggered entrance: add --stagger-index custom property */
+.entrance-slide-up[style*="--stagger-index"] {
+  animation-delay: calc(var(--stagger-index, 0) * 60ms);
+}
+
+/* Entrance slide in from inline-end (for RTL slide from left) */
+@keyframes game-entrance-slide-inline {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+[dir='rtl'] .entrance-slide-inline {
+  animation: game-entrance-slide-inline 0.25s var(--game-ease-out) both;
+}
+
+/* Entrance scale */
+@keyframes game-entrance-scale {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.entrance-scale {
+  animation: game-entrance-scale 0.25s var(--game-ease-spring) both;
+}
+
+/* ── 13. Layout Patterns ─────────────────────────────────────── */
+
+/* Responsive card grid with auto-fill */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--game-card-min-width), 1fr));
+  gap: var(--game-space-lg);
+}
+
+.game-grid--sm {
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--game-space-md);
+}
+
+.game-grid--lg {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--game-space-xl);
+}
+
+/* Sidebar layout with character display */
+.game-sidebar {
+  display: flex;
+  flex-direction: column;
+  width: var(--game-sidebar-width);
+  height: 100dvh;
+  position: sticky;
+  top: 0;
+  background: var(--game-bg-secondary);
+  border-inline-end: 1px solid var(--game-border);
+  overflow-y: auto;
+  padding: var(--game-space-lg) var(--game-space-md);
+}
+
+.game-sidebar__character {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--game-space-lg) 0;
+  gap: var(--game-space-md);
+}
+
+/* Main content area */
+.game-main {
+  flex: 1;
+  padding: var(--game-space-lg);
+  padding-block-end: var(--game-space-2xl);
+  max-width: 1200px;
+  margin-inline: auto;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .game-main {
+    padding: var(--game-space-md);
+    padding-block-end: calc(var(--game-space-2xl) + 60px); /* room for bottom tabs */
+  }
+}
+
+/* ── 14. Interactive Gaming Divider ──────────────────────────── */
+
+.game-divider {
+  height: 1px;
+  margin-block: var(--game-space-xl);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    oklch(0.495 0.205 292 / 30%),
+    oklch(0.672 0.148 168 / 20%),
+    oklch(0.495 0.205 292 / 30%),
+    transparent
+  );
+}
+
+/* ── 15. Reduced Motion ──────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .game-card,
+  .game-panel,
+  .hover-lift,
+  .hover-glow,
+  .press-scale,
+  .transition-game {
+    transition: none !important;
+  }
+
+  .game-card:hover {
+    transform: none;
+  }
+
+  .hover-lift:hover {
+    transform: none;
+  }
+
+  .entrance-slide-up,
+  .entrance-slide-inline,
+  .entrance-scale {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+
+  .game-avatar-frame {
+    animation: none !important;
+  }
+
+  .game-progress-bar__fill::after {
+    animation: none !important;
+  }
+
+  .game-xp-counter--animate {
+    animation: none !important;
+  }
 }

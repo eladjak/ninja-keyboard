@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>נינג'ה מקלדת - פרופילי קול דמויות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0d0b1a;--bg2:#13102a;--bg3:#1a1635;--bg4:#221e3d;
+--primary:#6C5CE7;--secondary:#00B894;
+--text:#e8e6f0;--text-dim:#9b97b0;--text-bright:#fff;
+--hero-ki:#6C5CE7;--hero-mika:#E84393;--hero-yuki:#00B894;
+--hero-luna:#a29bfe;--hero-noa:#fd79a8;--hero-kai:#e17055;
+--mentor-zen:#ffeaa7;--mentor-pixel:#74b9ff;--mentor-rex:#fdcb6e;
+--villain-bug:#d63031;--villain-glitch:#00cec9;
+--rival-shadow:#636e72;--rival-storm:#0984e3;--rival-blaze:#e17055;
+--card-radius:16px;--glow-spread:30px;
+}
+body{
+font-family:'Heebo',sans-serif;
+background:var(--bg);color:var(--text);
+line-height:1.7;min-height:100vh;
+}
+
+/* Title Bar */
+.title-bar{
+background:linear-gradient(135deg,var(--bg2),var(--bg3));
+border-bottom:2px solid var(--primary);
+padding:28px 40px;text-align:center;position:sticky;top:0;z-index:100;
+box-shadow:0 4px 30px rgba(108,92,231,.25);
+}
+.title-bar h1{
+font-size:2.4rem;font-weight:800;
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+background-clip:text;
+}
+.title-bar .subtitle{
+color:var(--text-dim);font-size:1rem;margin-top:4px;font-weight:300;
+}
+
+/* Container */
+.container{max-width:1200px;margin:0 auto;padding:30px 24px 60px;}
+
+/* Meta Info */
+.meta-bar{
+display:flex;flex-wrap:wrap;gap:16px;justify-content:center;
+margin-bottom:36px;
+}
+.meta-chip{
+background:var(--bg3);border:1px solid rgba(108,92,231,.3);
+border-radius:10px;padding:10px 20px;font-size:.9rem;
+color:var(--text-dim);
+}
+.meta-chip strong{color:var(--primary);font-weight:600;}
+
+/* Section Headers */
+.section-header{
+text-align:center;margin:48px 0 28px;position:relative;
+}
+.section-header h2{
+display:inline-block;font-size:1.8rem;font-weight:700;
+padding:0 24px;position:relative;z-index:1;
+}
+.section-header h2::after{
+content:'';position:absolute;bottom:-6px;right:0;width:100%;height:3px;
+border-radius:2px;
+}
+.section-header.heroes h2{color:var(--primary);}
+.section-header.heroes h2::after{background:linear-gradient(90deg,var(--primary),var(--secondary));}
+.section-header.mentors h2{color:var(--mentor-zen);}
+.section-header.mentors h2::after{background:linear-gradient(90deg,var(--mentor-zen),var(--mentor-pixel));}
+.section-header.villains h2{color:var(--villain-bug);}
+.section-header.villains h2::after{background:linear-gradient(90deg,var(--villain-bug),var(--villain-glitch));}
+.section-header.rivals h2{color:var(--rival-storm);}
+.section-header.rivals h2::after{background:linear-gradient(90deg,var(--rival-shadow),var(--rival-blaze));}
+.section-header .section-line{
+position:absolute;top:50%;right:0;width:100%;height:1px;
+background:rgba(108,92,231,.15);z-index:0;
+}
+
+/* Philosophy Box */
+.philosophy{
+background:var(--bg3);border:1px solid rgba(108,92,231,.25);
+border-radius:var(--card-radius);padding:28px 32px;margin-bottom:36px;
+position:relative;overflow:hidden;
+}
+.philosophy::before{
+content:'';position:absolute;top:0;right:0;width:4px;height:100%;
+background:linear-gradient(180deg,var(--primary),var(--secondary));
+}
+.philosophy h3{
+color:var(--primary);font-size:1.3rem;font-weight:700;margin-bottom:16px;
+}
+.philosophy ol{padding-right:20px;}
+.philosophy li{margin-bottom:10px;color:var(--text);font-size:.95rem;}
+.philosophy li strong{color:var(--secondary);}
+
+/* Character Card */
+.char-card{
+background:var(--bg2);
+border:1px solid rgba(255,255,255,.06);
+border-radius:var(--card-radius);
+margin-bottom:28px;overflow:hidden;
+transition:transform .2s,box-shadow .2s;
+}
+.char-card:hover{
+transform:translateY(-2px);
+box-shadow:0 8px 40px rgba(0,0,0,.4);
+}
+
+/* Card Header */
+.card-header{
+display:flex;align-items:center;gap:16px;
+padding:20px 28px;position:relative;
+}
+.card-header::after{
+content:'';position:absolute;bottom:0;right:28px;left:28px;
+height:1px;background:rgba(255,255,255,.06);
+}
+.char-number{
+width:42px;height:42px;border-radius:12px;
+display:flex;align-items:center;justify-content:center;
+font-weight:800;font-size:1.1rem;color:#fff;flex-shrink:0;
+}
+.card-header .char-name{
+font-size:1.4rem;font-weight:700;color:var(--text-bright);
+}
+.card-header .char-role{
+font-size:.9rem;color:var(--text-dim);font-weight:400;
+}
+.status-badge{
+margin-right:auto;margin-left:0;
+padding:4px 14px;border-radius:20px;font-size:.75rem;font-weight:600;
+}
+.status-badge.voiced{background:rgba(0,184,148,.15);color:var(--secondary);border:1px solid rgba(0,184,148,.3);}
+.status-badge.pending{background:rgba(253,203,110,.12);color:#fdcb6e;border:1px solid rgba(253,203,110,.25);}
+.status-badge.webaudio{background:rgba(116,185,255,.12);color:#74b9ff;border:1px solid rgba(116,185,255,.25);}
+
+/* Card Body */
+.card-body{padding:20px 28px;display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:768px){.card-body{grid-template-columns:1fr;}}
+
+/* Info Block */
+.info-block{
+background:var(--bg3);border-radius:12px;padding:16px 20px;
+}
+.info-block h4{
+font-size:.8rem;text-transform:uppercase;letter-spacing:1px;
+color:var(--text-dim);margin-bottom:10px;font-weight:600;
+}
+.info-row{
+display:flex;justify-content:space-between;align-items:center;
+padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);
+font-size:.9rem;
+}
+.info-row:last-child{border-bottom:none;}
+.info-row .label{color:var(--text-dim);}
+.info-row .value{color:var(--text-bright);font-weight:500;}
+
+/* Param Bars */
+.param-bar-wrap{margin-top:6px;}
+.param-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:.85rem;}
+.param-bar-label{width:80px;text-align:start;color:var(--text-dim);flex-shrink:0;}
+.param-bar-track{
+flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden;
+}
+.param-bar-fill{height:100%;border-radius:4px;transition:width .5s;}
+.param-bar-val{width:36px;text-align:end;color:var(--text-bright);font-weight:600;font-size:.8rem;}
+
+/* Direction Block */
+.direction{
+grid-column:1/-1;
+background:var(--bg3);border-radius:12px;padding:16px 20px;
+border-right:3px solid;
+}
+.direction h4{
+font-size:.8rem;text-transform:uppercase;letter-spacing:1px;
+color:var(--text-dim);margin-bottom:8px;font-weight:600;
+}
+.direction p{font-size:.92rem;line-height:1.8;}
+.direction .reason{
+margin-top:8px;font-size:.85rem;color:var(--text-dim);font-style:italic;
+}
+
+/* Lines Table */
+.lines-section{
+grid-column:1/-1;
+}
+.lines-section h4{
+font-size:.8rem;text-transform:uppercase;letter-spacing:1px;
+color:var(--text-dim);margin-bottom:12px;font-weight:600;
+}
+.lines-table{width:100%;border-collapse:collapse;font-size:.88rem;}
+.lines-table th{
+text-align:start;padding:8px 12px;
+background:var(--bg3);color:var(--text-dim);
+font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;
+}
+.lines-table th:first-child{border-radius:0 8px 8px 0;}
+.lines-table th:last-child{border-radius:8px 0 0 8px;}
+.lines-table td{
+padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);
+}
+.lines-table .file-cell{
+font-family:'Courier New',monospace;font-size:.8rem;color:var(--secondary);direction:ltr;text-align:right;
+}
+.lines-table .hebrew-cell{font-weight:500;color:var(--text-bright);}
+.lines-table .context-cell{color:var(--text-dim);font-size:.84rem;}
+.lines-table .stability-cell{
+font-weight:700;font-size:.82rem;
+}
+.note-box{
+grid-column:1/-1;
+background:rgba(116,185,255,.06);border:1px solid rgba(116,185,255,.15);
+border-radius:10px;padding:12px 18px;font-size:.88rem;color:#74b9ff;
+}
+
+/* File Structure */
+.file-structure{
+background:var(--bg3);border:1px solid rgba(108,92,231,.2);
+border-radius:var(--card-radius);padding:24px 28px;margin-top:36px;
+}
+.file-structure h3{color:var(--primary);font-size:1.2rem;margin-bottom:16px;}
+.file-tree{
+font-family:'Courier New',monospace;font-size:.85rem;line-height:2;
+direction:ltr;text-align:left;color:var(--text);
+background:var(--bg);border-radius:10px;padding:20px 24px;
+overflow-x:auto;white-space:pre;
+}
+.file-tree .dir{color:var(--primary);font-weight:600;}
+.file-tree .file{color:var(--secondary);}
+.file-tree .size{color:var(--text-dim);}
+.file-tree .desc{color:var(--text-dim);font-style:italic;}
+
+/* Tech Section */
+.tech-section{
+background:var(--bg3);border:1px solid rgba(0,184,148,.2);
+border-radius:var(--card-radius);padding:24px 28px;margin-top:28px;
+}
+.tech-section h3{color:var(--secondary);font-size:1.2rem;margin-bottom:16px;}
+.code-block{
+font-family:'Courier New',monospace;font-size:.83rem;
+background:var(--bg);border-radius:10px;padding:18px 22px;
+direction:ltr;text-align:left;color:#a29bfe;
+overflow-x:auto;white-space:pre;margin-bottom:16px;line-height:1.7;
+}
+.code-block .kw{color:#6C5CE7;}
+.code-block .str{color:#00B894;}
+.code-block .cm{color:#636e72;}
+.code-block .fn{color:#fdcb6e;}
+
+/* Summary Table */
+.summary-table{
+width:100%;border-collapse:collapse;font-size:.85rem;margin-top:16px;
+}
+.summary-table th{
+background:var(--bg3);padding:10px 14px;text-align:start;
+color:var(--text-dim);font-weight:600;font-size:.78rem;
+text-transform:uppercase;letter-spacing:.5px;
+}
+.summary-table td{
+padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04);
+}
+.summary-table .mono{font-family:'Courier New',monospace;font-size:.78rem;direction:ltr;color:var(--secondary);}
+
+/* Future Section */
+.future-section{
+background:var(--bg3);border:1px solid rgba(108,92,231,.2);
+border-radius:var(--card-radius);padding:24px 28px;margin-top:28px;
+}
+.future-section h3{color:var(--primary);font-size:1.2rem;margin-bottom:16px;}
+.future-section h4{color:var(--text-bright);font-size:1rem;margin:16px 0 8px;font-weight:600;}
+.future-section ul{padding-right:20px;margin-bottom:8px;}
+.future-section li{color:var(--text);font-size:.9rem;margin-bottom:4px;}
+
+/* Generation Script */
+.gen-script{
+background:var(--bg3);border:1px solid rgba(0,184,148,.2);
+border-radius:var(--card-radius);padding:24px 28px;margin-top:28px;
+}
+.gen-script h3{color:var(--secondary);font-size:1.2rem;margin-bottom:12px;}
+.gen-script p{font-size:.92rem;margin-bottom:12px;}
+.gen-script ul{padding-right:20px;}
+.gen-script li{font-size:.88rem;margin-bottom:4px;}
+
+/* Total badge */
+.total-badge{
+display:inline-block;margin-top:12px;
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+padding:8px 24px;border-radius:20px;font-weight:700;color:#fff;font-size:.95rem;
+}
+
+/* Glitch stability progression */
+.stability-prog{
+display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;
+}
+.stab-step{
+background:var(--bg);border-radius:8px;padding:8px 14px;
+font-size:.82rem;text-align:center;flex:1;min-width:120px;
+border:1px solid rgba(0,206,201,.2);
+}
+.stab-step .stab-val{font-weight:800;font-size:1.1rem;display:block;margin-bottom:2px;}
+.stab-step .stab-label{color:var(--text-dim);}
+</style>
+</head>
+<body>
+
+<!-- Title Bar -->
+<div class="title-bar">
+  <h1>פרופילי קול דמויות</h1>
+  <div class="subtitle">נינג'ה מקלדת -- מערכת קולות ElevenLabs</div>
+</div>
+
+<div class="container">
+
+<!-- Meta -->
+<div class="meta-bar">
+  <div class="meta-chip"><strong>גרסה:</strong>&nbsp;1.0</div>
+  <div class="meta-chip"><strong>תאריך:</strong>&nbsp;מרץ 2026</div>
+  <div class="meta-chip"><strong>מנוע:</strong>&nbsp;ElevenLabs API (eleven_v3)</div>
+  <div class="meta-chip"><strong>סה״כ דמויות:</strong>&nbsp;14 (13 מוקלטות + פיקסל רובוט דרך Web Audio)</div>
+</div>
+
+<!-- Philosophy -->
+<div class="philosophy">
+  <h3>פילוסופיית עיצוב הקולות</h3>
+  <ol>
+    <li><strong>מיפוי מהירות-דמות:</strong> מהירות הדיבור של כל דמות משקפת את האישיות שלה -- דמויות מהירות מדברות מהר יותר, דמויות חכמות מדברות לאט יותר.</li>
+    <li><strong>יציבות כתכונת אופי:</strong> הפרמטר stability ב-ElevenLabs משמש באופן יצירתי -- לגליץ' יציבות נמוכה מאוד (0.2) ליצירת דיבור בלתי צפוי ומגומגם, בעוד סנסיי זן בעל יציבות גבוהה (0.7) לרוגע עקבי.</li>
+    <li><strong>עברית-מקורית:</strong> כל השורות בעברית. מודל eleven_v3 מטפל היטב בעברית עם קולות אנגליים מוכנים מראש.</li>
+    <li><strong>מותאם-גיל:</strong> הקולות נבחרו בהתאם לגילאי הדמויות -- דמויות צעירות משתמשות בקולות צעירים, צב-המאסטר הזקן משתמש בקול קשיש.</li>
+  </ol>
+</div>
+
+<!-- ========== HEROES ========== -->
+<div class="section-header heroes">
+  <div class="section-line"></div>
+  <h2>גיבורים</h2>
+</div>
+
+<!-- Ki -->
+<div class="char-card" style="border-top:3px solid var(--hero-ki);">
+  <div class="card-header">
+    <div class="char-number" style="background:var(--hero-ki);">1</div>
+    <div>
+      <div class="char-name">קי (Ki)</div>
+      <div class="char-role">הגיבור הראשי</div>
+    </div>
+    <span class="status-badge voiced">4 שורות מוקלטות</span>
+  </div>
+  <div class="card-body">
+    <div class="info-block">
+      <h4>פרטי קול</h4>
+      <div class="info-row"><span class="label">קול ElevenLabs</span><span class="value">Liam</span></div>
+      <div class="info-row"><span class="label">מזהה</span><span class="value" style="direction:ltr;font-family:monospace;font-size:.8rem;">TX3LPaxmHKxFdv7VOQHJ</span></div>
+      <div class="info-row"><span class="label">תיאור קול</span><span class="value">אנרגטי, יוצר תוכן</span></div>
+      <div class="info-row"><span class="label">מין / גיל</span><span class="value">זכר, צעיר</span></div>
+      <div class="info-row"><span class="label">גיל הדמות</span><span class="value">10</span></div>
+    </div>
+    <div class="info-block">
+      <h4>פרמטרים</h4>
+      <div class="param-bar-wrap">
+        <div class="param-bar-row">
+          <span class="param-bar-label">מהירות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:73%;background:var(--hero-ki);"></div></div>
+          <span class="param-bar-val">1.1</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">יציבות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:50%;background:var(--hero-ki);"></div></div>
+          <span class="param-bar-val">0.5</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">דמיון</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:75%;background:var(--hero-ki);"></div></div>
+          <span class="param-bar-val">0.75</span>
+        </div>
+      </div>
+    </div>
+    <div class="direction" style="border-color:var(--hero-ki);">
+      <h4>הנחיית קול</h4>
+      <p>בהיר, נרגש, הרפתקני. חשבו על: ילד שגילה משהו מדהים.</p>
+      <div class="reason">למה הקול הזה: האיכות האנרגטית והצעירה של Liam לוכדת את ההתלהבות האמיצה של קי. המהירות המעט גבוהה מעבירה את ההתרגשות שלו מגילוי עולם המקלדת.</div>
+    </div>
+    <div class="lines-section">
+      <h4>שורות מוקלטות</h4>
+      <table class="lines-table">
+        <thead><tr><th>קובץ</th><th>טקסט בעברית</th><th>הקשר</th></tr></thead>
+        <tbody>
+          <tr><td class="file-cell">ki/ki-discovery.mp3</td><td class="hebrew-cell">!וואו! המקלדת הזו זוהרת</td><td class="context-cell">שיעור 1 פתיחה -- גילוי המקלדת הזוהרת</td></tr>
+          <tr><td class="file-cell">ki/ki-victory.mp3</td><td class="hebrew-cell">...ניצחנו! אבל הוא ברח</td><td class="context-cell">שיעור 7 סיום -- הבסת מיני-בוס באג</td></tr>
+          <tr><td class="file-cell">ki/ki-team.mp3</td><td class="hebrew-cell">!ביחד אנחנו חזקים יותר</td><td class="context-cell">שיעור 2 סיום -- הקמת הצוות</td></tr>
+          <tr><td class="file-cell">ki/ki-final.mp3</td><td class="hebrew-cell">!עכשיו אנחנו מוכנים</td><td class="context-cell">שיעור 14 סיום -- הצוות מאוחד</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Mika -->
+<div class="char-card" style="border-top:3px solid var(--hero-mika);">
+  <div class="card-header">
+    <div class="char-number" style="background:var(--hero-mika);">2</div>
+    <div>
+      <div class="char-name">מיקה (Mika)</div>
+      <div class="char-role">שותפה טכנולוגית</div>
+    </div>
+    <span class="status-badge voiced">3 שורות מוקלטות</span>
+  </div>
+  <div class="card-body">
+    <div class="info-block">
+      <h4>פרטי קול</h4>
+      <div class="info-row"><span class="label">קול ElevenLabs</span><span class="value">Jessica</span></div>
+      <div class="info-row"><span class="label">מזהה</span><span class="value" style="direction:ltr;font-family:monospace;font-size:.8rem;">cgSgspJ2msm6clMCkdW9</span></div>
+      <div class="info-row"><span class="label">תיאור קול</span><span class="value">שובבה, בהירה, חמה</span></div>
+      <div class="info-row"><span class="label">מין / גיל</span><span class="value">נקבה, צעירה</span></div>
+      <div class="info-row"><span class="label">גיל הדמות</span><span class="value">10</span></div>
+    </div>
+    <div class="info-block">
+      <h4>פרמטרים</h4>
+      <div class="param-bar-wrap">
+        <div class="param-bar-row">
+          <span class="param-bar-label">מהירות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:70%;background:var(--hero-mika);"></div></div>
+          <span class="param-bar-val">1.05</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">יציבות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:50%;background:var(--hero-mika);"></div></div>
+          <span class="param-bar-val">0.5</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">דמיון</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:75%;background:var(--hero-mika);"></div></div>
+          <span class="param-bar-val">0.75</span>
+        </div>
+      </div>
+    </div>
+    <div class="direction" style="border-color:var(--hero-mika);">
+      <h4>הנחיית קול</h4>
+      <p>חכמה, בטוחה, מעודדת. החברה הטכנולוגית שתמיד יש לה תוכנית.</p>
+      <div class="reason">למה הקול הזה: הבהירות השובבה של Jessica מתאימה לאישיות החכמה והבטוחה של מיקה. לא חמודה מדי -- היא שותפה שווה, לא סיידקיק.</div>
+    </div>
+    <div class="lines-section">
+      <h4>שורות מוקלטות</h4>
+      <table class="lines-table">
+        <thead><tr><th>קובץ</th><th>טקסט בעברית</th><th>הקשר</th></tr></thead>
+        <tbody>
+          <tr><td class="file-cell">mika/mika-intro.mp3</td><td class="hebrew-cell">!בוא ננסה ביחד, קי</td><td class="context-cell">שיעור 2 פתיחה -- הופעה ראשונה של מיקה</td></tr>
+          <tr><td class="file-cell">mika/mika-fight.mp3</td><td class="hebrew-cell">!לא ניתן לבאג לנצח</td><td class="context-cell">שיעור 6 פתיחה -- גיוס נגד באג</td></tr>
+          <tr><td class="file-cell">mika/mika-hack.mp3</td><td class="hebrew-cell">!בואי נפרוץ את המערכת</td><td class="context-cell">שיעור 17 פתיחה -- פריצת מערכות באג</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Yuki -->
+<div class="char-card" style="border-top:3px solid var(--hero-yuki);">
+  <div class="card-header">
+    <div class="char-number" style="background:var(--hero-yuki);">3</div>
+    <div>
+      <div class="char-name">יוקי (Yuki)</div>
+      <div class="char-role">מומחית מהירות</div>
+    </div>
+    <span class="status-badge voiced">שורה אחת מוקלטת</span>
+  </div>
+  <div class="card-body">
+    <div class="info-block">
+      <h4>פרטי קול</h4>
+      <div class="info-row"><span class="label">קול ElevenLabs</span><span class="value">Laura</span></div>
+      <div class="info-row"><span class="label">מזהה</span><span class="value" style="direction:ltr;font-family:monospace;font-size:.8rem;">FGY2WhTYpPnrIDTdsKH5</span></div>
+      <div class="info-row"><span class="label">תיאור קול</span><span class="value">נלהבת, אופי מוזר</span></div>
+      <div class="info-row"><span class="label">מין / גיל</span><span class="value">נקבה, צעירה</span></div>
+      <div class="info-row"><span class="label">גיל הדמות</span><span class="value">11</span></div>
+    </div>
+    <div class="info-block">
+      <h4>פרמטרים</h4>
+      <div class="param-bar-wrap">
+        <div class="param-bar-row">
+          <span class="param-bar-label">מהירות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:80%;background:var(--hero-yuki);"></div></div>
+          <span class="param-bar-val">1.2</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">יציבות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:50%;background:var(--hero-yuki);"></div></div>
+          <span class="param-bar-val">0.5</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">דמיון</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:75%;background:var(--hero-yuki);"></div></div>
+          <span class="param-bar-val">0.75</span>
+        </div>
+      </div>
+    </div>
+    <div class="direction" style="border-color:var(--hero-yuki);">
+      <h4>הנחיית קול</h4>
+      <p>מהירה, תחרותית, יריבות שובבה. תמיד מאתגרת אחרים להיות מהירים יותר.</p>
+      <div class="reason">למה הקול הזה: ההתלהבות המוזרה של Laura מתאימה בדיוק לאופי התחרותי והמהיר של יוקי. מהירות 1.2 הופכת אותה למהירה בצורה בולטת מדמויות אחרות.</div>
+    </div>
+    <div class="lines-section">
+      <h4>שורות מוקלטות</h4>
+      <table class="lines-table">
+        <thead><tr><th>קובץ</th><th>טקסט בעברית</th><th>הקשר</th></tr></thead>
+        <tbody>
+          <tr><td class="file-cell">yuki/yuki-challenge.mp3</td><td class="hebrew-cell">!אני הכי מהירה בדוג'ו</td><td class="context-cell">שיעור 10 פתיחה -- אתגור הצוות</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Luna -->
+<div class="char-card" style="border-top:3px solid var(--hero-luna);">
+  <div class="card-header">
+    <div class="char-number" style="background:var(--hero-luna);">4</div>
+    <div>
+      <div class="char-name">לונה (Luna)</div>
+      <div class="char-role">ריכוז וסבלנות</div>
+    </div>
+    <span class="status-badge voiced">שורה אחת מוקלטת</span>
+  </div>
+  <div class="card-body">
+    <div class="info-block">
+      <h4>פרטי קול</h4>
+      <div class="info-row"><span class="label">קול ElevenLabs</span><span class="value">Lily</span></div>
+      <div class="info-row"><span class="label">מזהה</span><span class="value" style="direction:ltr;font-family:monospace;font-size:.8rem;">pFZP5JQG7iQjIQuC4Bku</span></div>
+      <div class="info-row"><span class="label">תיאור קול</span><span class="value">קטיפתית, שחקנית</span></div>
+      <div class="info-row"><span class="label">מין / גיל</span><span class="value">נקבה, בגיל העמידה (משחקת צעירה)</span></div>
+      <div class="info-row"><span class="label">גיל הדמות</span><span class="value">10</span></div>
+    </div>
+    <div class="info-block">
+      <h4>פרמטרים</h4>
+      <div class="param-bar-wrap">
+        <div class="param-bar-row">
+          <span class="param-bar-label">מהירות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:60%;background:var(--hero-luna);"></div></div>
+          <span class="param-bar-val">0.9</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">יציבות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:60%;background:var(--hero-luna);"></div></div>
+          <span class="param-bar-val">0.6</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">דמיון</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:75%;background:var(--hero-luna);"></div></div>
+          <span class="param-bar-val">0.75</span>
+        </div>
+      </div>
+    </div>
+    <div class="direction" style="border-color:var(--hero-luna);">
+      <h4>הנחיית קול</h4>
+      <p>שלווה, עדינה, מרגיעה. כמו מדיטציה מונחית לילדים. לנשום פנימה, לנשום החוצה.</p>
+      <div class="reason">למה הקול הזה: האיכות הקטיפתית של Lily יוצרת נוכחות שלווה ומרגיעה. המהירות האיטית והיציבות הגבוהה יותר נותנות ללונה תחושה מדיטטיבית -- משקל נגד לאנרגיה הגבוהה של המשחק.</div>
+    </div>
+    <div class="lines-section">
+      <h4>שורות מוקלטות</h4>
+      <table class="lines-table">
+        <thead><tr><th>קובץ</th><th>טקסט בעברית</th><th>הקשר</th></tr></thead>
+        <tbody>
+          <tr><td class="file-cell">luna/luna-breathe.mp3</td><td class="hebrew-cell">...נשימה עמוקה, ואז מתחילים</td><td class="context-cell">שיעור 11 פתיחה -- לימוד ריכוז</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Noa -->
+<div class="char-card" style="border-top:3px solid var(--hero-noa);">
+  <div class="card-header">
+    <div class="char-number" style="background:var(--hero-noa);">5</div>
+    <div>
+      <div class="char-name">נועה (Noa)</div>
+      <div class="char-role">מרפאה / חובשת</div>
+    </div>
+    <span class="status-badge voiced">שורה אחת מוקלטת</span>
+  </div>
+  <div class="card-body">
+    <div class="info-block">
+      <h4>פרטי קול</h4>
+      <div class="info-row"><span class="label">קול ElevenLabs</span><span class="value">Sarah</span></div>
+      <div class="info-row"><span class="label">מזהה</span><span class="value" style="direction:ltr;font-family:monospace;font-size:.8rem;">EXAVITQu4vr4xnSDxMaL</span></div>
+      <div class="info-row"><span class="label">תיאור קול</span><span class="value">בוגרת, מרגיעה, בטוחה</span></div>
+      <div class="info-row"><span class="label">מין / גיל</span><span class="value">נקבה, צעירה</span></div>
+      <div class="info-row"><span class="label">גיל הדמות</span><span class="value">9</span></div>
+    </div>
+    <div class="info-block">
+      <h4>פרמטרים</h4>
+      <div class="param-bar-wrap">
+        <div class="param-bar-row">
+          <span class="param-bar-label">מהירות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:63%;background:var(--hero-noa);"></div></div>
+          <span class="param-bar-val">0.95</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">יציבות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:60%;background:var(--hero-noa);"></div></div>
+          <span class="param-bar-val">0.6</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">דמיון</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:75%;background:var(--hero-noa);"></div></div>
+          <span class="param-bar-val">0.75</span>
+        </div>
+      </div>
+    </div>
+    <div class="direction" style="border-color:var(--hero-noa);">
+      <h4>הנחיית קול</h4>
+      <p>חמה, תומכת, מטפחת. אנרגיית "בסדר לטעות".</p>
+      <div class="reason">למה הקול הזה: האיכות המרגיעה של Sarah מושלמת למרפאה של הצוות. נועה אף פעם לא שופטת טעויות -- היא מעודדת ומתקנת.</div>
+    </div>
+    <div class="lines-section">
+      <h4>שורות מוקלטות</h4>
+      <table class="lines-table">
+        <thead><tr><th>קובץ</th><th>טקסט בעברית</th><th>הקשר</th></tr></thead>
+        <tbody>
+          <tr><td class="file-cell">noa/noa-heal.mp3</td><td class="hebrew-cell">!אני כאן, לא נורא לטעות</td><td class="context-cell">שיעור 13 -- הרגעת המרפאה</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Kai -->
+<div class="char-card" style="border-top:3px solid var(--hero-kai);">
+  <div class="card-header">
+    <div class="char-number" style="background:var(--hero-kai);">6</div>
+    <div>
+      <div class="char-name">קאי (Kai)</div>
+      <div class="char-role">לוחם האש</div>
+    </div>
+    <span class="status-badge voiced">שורה אחת מוקלטת</span>
+  </div>
+  <div class="card-body">
+    <div class="info-block">
+      <h4>פרטי קול</h4>
+      <div class="info-row"><span class="label">קול ElevenLabs</span><span class="value">Charlie</span></div>
+      <div class="info-row"><span class="label">מזהה</span><span class="value" style="direction:ltr;font-family:monospace;font-size:.8rem;">IKne3meq5aSn9XLyUdCD</span></div>
+      <div class="info-row"><span class="label">תיאור קול</span><span class="value">עמוק, בטוח, אנרגטי</span></div>
+      <div class="info-row"><span class="label">מין / גיל</span><span class="value">זכר, צעיר</span></div>
+      <div class="info-row"><span class="label">גיל הדמות</span><span class="value">12</span></div>
+    </div>
+    <div class="info-block">
+      <h4>פרמטרים</h4>
+      <div class="param-bar-wrap">
+        <div class="param-bar-row">
+          <span class="param-bar-label">מהירות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:73%;background:var(--hero-kai);"></div></div>
+          <span class="param-bar-val">1.1</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">יציבות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:50%;background:var(--hero-kai);"></div></div>
+          <span class="param-bar-val">0.5</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">דמיון</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:75%;background:var(--hero-kai);"></div></div>
+          <span class="param-bar-val">0.75</span>
+        </div>
+      </div>
+    </div>
+    <div class="direction" style="border-color:var(--hero-kai);">
+      <h4>הנחיית קול</h4>
+      <p>עז, אמיץ, מגן. המגן והחרב של הצוות. משפטים קצרים ופוגעניים.</p>
+      <div class="reason">למה הקול הזה: הביטחון העמוק של Charlie נותן לקאי את הגרביטאס של לוחם. נשמע מעט מבוגר יותר מקי, מתאים לגיל 12 שלו.</div>
+    </div>
+    <div class="lines-section">
+      <h4>שורות מוקלטות</h4>
+      <table class="lines-table">
+        <thead><tr><th>קובץ</th><th>טקסט בעברית</th><th>הקשר</th></tr></thead>
+        <tbody>
+          <tr><td class="file-cell">kai/kai-fight.mp3</td><td class="hebrew-cell">!בוא נלחם</td><td class="context-cell">שיעור 13 -- זעקת הקרב של הלוחם</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MENTORS ========== -->
+<div class="section-header mentors">
+  <div class="section-line"></div>
+  <h2>מנטורים</h2>
+</div>
+
+<!-- Sensei Zen -->
+<div class="char-card" style="border-top:3px solid var(--mentor-zen);">
+  <div class="card-header">
+    <div class="char-number" style="background:var(--mentor-zen);color:#0d0b1a;">7</div>
+    <div>
+      <div class="char-name">סנסיי זן (Sensei Zen)</div>
+      <div class="char-role">מאסטר הצב העתיק</div>
+    </div>
+    <span class="status-badge voiced">3 שורות מוקלטות</span>
+  </div>
+  <div class="card-body">
+    <div class="info-block">
+      <h4>פרטי קול</h4>
+      <div class="info-row"><span class="label">קול ElevenLabs</span><span class="value">Bill</span></div>
+      <div class="info-row"><span class="label">מזהה</span><span class="value" style="direction:ltr;font-family:monospace;font-size:.8rem;">pqHfZKP75CvOlQylNhV4</span></div>
+      <div class="info-row"><span class="label">תיאור קול</span><span class="value">חכם, בוגר, מאוזן</span></div>
+      <div class="info-row"><span class="label">מין / גיל</span><span class="value">זכר, מבוגר</span></div>
+      <div class="info-row"><span class="label">גיל הדמות</span><span class="value">עתיק (צב)</span></div>
+    </div>
+    <div class="info-block">
+      <h4>פרמטרים</h4>
+      <div class="param-bar-wrap">
+        <div class="param-bar-row">
+          <span class="param-bar-label">מהירות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:53%;background:var(--mentor-zen);"></div></div>
+          <span class="param-bar-val">0.8</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">יציבות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:70%;background:var(--mentor-zen);"></div></div>
+          <span class="param-bar-val">0.7</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">דמיון</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:75%;background:var(--mentor-zen);"></div></div>
+          <span class="param-bar-val">0.75</span>
+        </div>
+      </div>
+    </div>
+    <div class="direction" style="border-color:var(--mentor-zen);">
+      <h4>הנחיית קול</h4>
+      <p>איטי, חכם, חם. כמו סבא שמספר סיפורים. הפסקות ארוכות בין מחשבות. מדבר בפתגמים.</p>
+      <div class="reason">למה הקול הזה: Bill הוא הקול ה"מבוגר" היחיד בקטלוג -- מושלם למאסטר הצב העתיק. המהירות האיטית מאוד (0.8) יוצרת קצב מתון וחכם. כל מילה מרגישה מכוונת.</div>
+    </div>
+    <div class="lines-section">
+      <h4>שורות מוקלטות</h4>
+      <table class="lines-table">
+        <thead><tr><th>קובץ</th><th>טקסט בעברית</th><th>הקשר</th></tr></thead>
+        <tbody>
+          <tr><td class="file-cell">sensei-zen/sensei-patience.mp3</td><td class="hebrew-cell">!סבלנות היא הנשק החזק ביותר</td><td class="context-cell">שיעור 8 פתיחה -- הופעה פיזית ראשונה</td></tr>
+          <tr><td class="file-cell">sensei-zen/sensei-journey.mp3</td><td class="hebrew-cell">!כל מסע מתחיל בלחיצה אחת</td><td class="context-cell">שיעור 8 סיום -- חוכמת המאסטר</td></tr>
+          <tr><td class="file-cell">sensei-zen/sensei-final.mp3</td><td class="hebrew-cell">...נינג'ה אמיתי</td><td class="context-cell">שיעור 20 סיום -- טקס סיום</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Pixel -->
+<div class="char-card" style="border-top:3px solid var(--mentor-pixel);">
+  <div class="card-header">
+    <div class="char-number" style="background:var(--mentor-pixel);color:#0d0b1a;">8</div>
+    <div>
+      <div class="char-name">פיקסל (Pixel)</div>
+      <div class="char-role">חבר רובוטי</div>
+    </div>
+    <span class="status-badge webaudio">Web Audio ראשי</span>
+  </div>
+  <div class="card-body">
+    <div class="info-block">
+      <h4>פרטי קול</h4>
+      <div class="info-row"><span class="label">קול ElevenLabs</span><span class="value">River</span></div>
+      <div class="info-row"><span class="label">מזהה</span><span class="value" style="direction:ltr;font-family:monospace;font-size:.8rem;">SAz9YHcvj6GT2YYXdXww</span></div>
+      <div class="info-row"><span class="label">תיאור קול</span><span class="value">רגוע, ניטרלי, אינפורמטיבי</span></div>
+      <div class="info-row"><span class="label">מין / גיל</span><span class="value">ניטרלי, בגיל העמידה</span></div>
+      <div class="info-row"><span class="label">גיל הדמות</span><span class="value">רובוט (חסר גיל)</span></div>
+    </div>
+    <div class="info-block">
+      <h4>פרמטרים</h4>
+      <div class="param-bar-wrap">
+        <div class="param-bar-row">
+          <span class="param-bar-label">מהירות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:76%;background:var(--mentor-pixel);"></div></div>
+          <span class="param-bar-val">1.15</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">יציבות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:70%;background:var(--mentor-pixel);"></div></div>
+          <span class="param-bar-val">0.7</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">דמיון</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:75%;background:var(--mentor-pixel);"></div></div>
+          <span class="param-bar-val">0.75</span>
+        </div>
+      </div>
+    </div>
+    <div class="direction" style="border-color:var(--mentor-pixel);">
+      <h4>הנחיית קול</h4>
+      <p>קליני, מדויק, ממוקד נתונים. מדווח עובדות וסטטיסטיקות. מנסה הומור מדי פעם ונכשל בצורה חמודה.</p>
+      <div class="reason">למה הקול הזה: הטון הניטרלי והאינפורמטיבי של River מושלם לרובוט נתונים. המהירות המעט גבוהה והיציבות הגבוהה יוצרות תחושת דיוק רובוטית.</div>
+    </div>
+    <div class="note-box">
+      <strong>הערה:</strong> פיקסל מקבל קול בעיקר דרך סינתזת Web Audio במשחק. קול ElevenLabs שמור לרגעי עלילה מפתח בלבד. לא נוצרו שורות באצווה זו.
+    </div>
+  </div>
+</div>
+
+<!-- Rex -->
+<div class="char-card" style="border-top:3px solid var(--mentor-rex);">
+  <div class="card-header">
+    <div class="char-number" style="background:var(--mentor-rex);color:#0d0b1a;">9</div>
+    <div>
+      <div class="char-name">רקס (Rex)</div>
+      <div class="char-role">דינוזאור תינוק</div>
+    </div>
+    <span class="status-badge voiced">שורה אחת מוקלטת</span>
+  </div>
+  <div class="card-body">
+    <div class="info-block">
+      <h4>פרטי קול</h4>
+      <div class="info-row"><span class="label">קול ElevenLabs</span><span class="value">Roger</span></div>
+      <div class="info-row"><span class="label">מזהה</span><span class="value" style="direction:ltr;font-family:monospace;font-size:.8rem;">CwhRBWXzGAHq8TQ4Fs17</span></div>
+      <div class="info-row"><span class="label">תיאור קול</span><span class="value">רגוע, קז'ואל, מהדהד</span></div>
+      <div class="info-row"><span class="label">מין / גיל</span><span class="value">זכר, בגיל העמידה</span></div>
+      <div class="info-row"><span class="label">גיל הדמות</span><span class="value">דינוזאור תינוק</span></div>
+    </div>
+    <div class="info-block">
+      <h4>פרמטרים</h4>
+      <div class="param-bar-wrap">
+        <div class="param-bar-row">
+          <span class="param-bar-label">מהירות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:67%;background:var(--mentor-rex);"></div></div>
+          <span class="param-bar-val">1.0</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">יציבות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:50%;background:var(--mentor-rex);"></div></div>
+          <span class="param-bar-val">0.5</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">דמיון</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:75%;background:var(--mentor-rex);"></div></div>
+          <span class="param-bar-val">0.75</span>
+        </div>
+      </div>
+    </div>
+    <div class="direction" style="border-color:var(--mentor-rex);">
+      <h4>הנחיית קול</h4>
+      <p>צ'יל, קז'ואל, הומור עצמי על הידיים הקטנות שלו. הקמע של הצוות.</p>
+      <div class="reason">למה הקול הזה: האיכות הרגועה והקז'ואלית של Roger נותנת לרקס אישיות מפתיעה בצ'יל לדינוזאור. הניגוד בין קול עמוק מהדהד לדינו תינוקי יוצר הומור.</div>
+    </div>
+    <div class="lines-section">
+      <h4>שורות מוקלטות</h4>
+      <table class="lines-table">
+        <thead><tr><th>קובץ</th><th>טקסט בעברית</th><th>הקשר</th></tr></thead>
+        <tbody>
+          <tr><td class="file-cell">rex/rex-play.mp3</td><td class="hebrew-cell">!גם עם ידיים קטנות - אני פה</td><td class="context-cell">אנימציית שחרור -- הומור עצמי</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ========== VILLAINS ========== -->
+<div class="section-header villains">
+  <div class="section-line"></div>
+  <h2>נבלים</h2>
+</div>
+
+<!-- Bug -->
+<div class="char-card" style="border-top:3px solid var(--villain-bug);">
+  <div class="card-header">
+    <div class="char-number" style="background:var(--villain-bug);">10</div>
+    <div>
+      <div class="char-name">באג (Bug)</div>
+      <div class="char-role">האנטגוניסט הראשי</div>
+    </div>
+    <span class="status-badge voiced">4 שורות מוקלטות</span>
+  </div>
+  <div class="card-body">
+    <div class="info-block">
+      <h4>פרטי קול</h4>
+      <div class="info-row"><span class="label">קול ElevenLabs</span><span class="value">Callum</span></div>
+      <div class="info-row"><span class="label">מזהה</span><span class="value" style="direction:ltr;font-family:monospace;font-size:.8rem;">N2lVS1w4EtoT3dr4eOWO</span></div>
+      <div class="info-row"><span class="label">תיאור קול</span><span class="value">צרוד, שובב</span></div>
+      <div class="info-row"><span class="label">מין / גיל</span><span class="value">זכר, בגיל העמידה</span></div>
+      <div class="info-row"><span class="label">גיל הדמות</span><span class="value">לא ידוע (חיפושית חמודה)</span></div>
+    </div>
+    <div class="info-block">
+      <h4>פרמטרים</h4>
+      <div class="param-bar-wrap">
+        <div class="param-bar-row">
+          <span class="param-bar-label">מהירות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:80%;background:var(--villain-bug);"></div></div>
+          <span class="param-bar-val">1.2</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">יציבות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:40%;background:var(--villain-bug);"></div></div>
+          <span class="param-bar-val">0.4</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">דמיון</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:75%;background:var(--villain-bug);"></div></div>
+          <span class="param-bar-val">0.75</span>
+        </div>
+      </div>
+    </div>
+    <div class="direction" style="border-color:var(--villain-bug);">
+      <h4>הנחיית קול</h4>
+      <p>שובב, צוחקני, תיאטרלי. נבל חמוד שאוהב להיות רע אבל אף פעם לא באמת מפחיד. חשבו: נבל קרטון שמגזים.</p>
+      <div class="reason">למה הקול הזה: התיאור "שובב צרוד" של Callum הוא ממש באג. היציבות הנמוכה יוצרת איכות בלתי צפויה ומעט מטורפת שגורמת לבאג להרגיש כאוטי אבל מצחיק, אף פעם לא באמת מאיים.</div>
+    </div>
+    <div class="lines-section">
+      <h4>שורות מוקלטות</h4>
+      <table class="lines-table">
+        <thead><tr><th>קובץ</th><th>טקסט בעברית</th><th>הקשר</th></tr></thead>
+        <tbody>
+          <tr><td class="file-cell">bug/bug-scramble.mp3</td><td class="hebrew-cell">!הא הא! בלבלתי לכם את האותיות</td><td class="context-cell">שיעור 5 -- הופעה ראשונה של באג</td></tr>
+          <tr><td class="file-cell">bug/bug-boss.mp3</td><td class="hebrew-cell">!עכשיו אני מבלבל עשר מילים שלמות</td><td class="context-cell">שיעור 7 -- כניסת מיני-בוס</td></tr>
+          <tr><td class="file-cell">bug/bug-king.mp3</td><td class="hebrew-cell">!אני מלך הבאגים! לעולם לא תנצחו אותי</td><td class="context-cell">שיעור 20 -- כניסת בוס סופי</td></tr>
+          <tr><td class="file-cell">bug/bug-defeat.mp3</td><td class="hebrew-cell">!אוי! אחזוווור</td><td class="context-cell">שיעור 20 -- מובס, עף לו</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Glitch -->
+<div class="char-card" style="border-top:3px solid var(--villain-glitch);">
+  <div class="card-header">
+    <div class="char-number" style="background:var(--villain-glitch);color:#0d0b1a;">11</div>
+    <div>
+      <div class="char-name">גליץ' (Glitch)</div>
+      <div class="char-role">ישות כאוטית (ניתנת לגאולה)</div>
+    </div>
+    <span class="status-badge voiced">3 שורות מוקלטות</span>
+  </div>
+  <div class="card-body">
+    <div class="info-block">
+      <h4>פרטי קול</h4>
+      <div class="info-row"><span class="label">קול ElevenLabs</span><span class="value">Will</span></div>
+      <div class="info-row"><span class="label">מזהה</span><span class="value" style="direction:ltr;font-family:monospace;font-size:.8rem;">bIHbv24MWmeRgasZH58o</span></div>
+      <div class="info-row"><span class="label">תיאור קול</span><span class="value">רגוע, אופטימי</span></div>
+      <div class="info-row"><span class="label">מין / גיל</span><span class="value">זכר, צעיר</span></div>
+      <div class="info-row"><span class="label">גיל הדמות</span><span class="value">לא ידוע (ישות דיגיטלית)</span></div>
+    </div>
+    <div class="info-block">
+      <h4>פרמטרים</h4>
+      <div class="param-bar-wrap">
+        <div class="param-bar-row">
+          <span class="param-bar-label">מהירות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:67%;background:var(--villain-glitch);"></div></div>
+          <span class="param-bar-val">1.0</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">יציבות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:20%;background:var(--villain-glitch);"></div></div>
+          <span class="param-bar-val" style="color:var(--villain-glitch);">0.2-0.4</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">דמיון</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:75%;background:var(--villain-glitch);"></div></div>
+          <span class="param-bar-val">0.75</span>
+        </div>
+      </div>
+      <h4 style="margin-top:14px;font-size:.8rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);">התקדמות יציבות</h4>
+      <div class="stability-prog">
+        <div class="stab-step"><span class="stab-val" style="color:var(--villain-glitch);">0.2</span><span class="stab-label">כניסה (גליץ' מקסימלי)</span></div>
+        <div class="stab-step"><span class="stab-val" style="color:var(--villain-glitch);">0.25</span><span class="stab-label">גאולה (עדיין שבור)</span></div>
+        <div class="stab-step"><span class="stab-val" style="color:var(--villain-glitch);">0.4</span><span class="stab-label">תודה (מתחיל להתייצב)</span></div>
+      </div>
+    </div>
+    <div class="direction" style="border-color:var(--villain-glitch);">
+      <h4>הנחיית קול</h4>
+      <p>מגמגם, לא בטוח, מעורר אהדה. הטקסט עצמו מכיל גמגומים ("גגג-גליץ'"), והיציבות הנמוכה מוסיפה אי-צפיות קולית נוספת. ככל שגליץ' מתייצב בעלילה (שיעורים 18+), היציבות עולה מ-0.2 ל-0.4.</p>
+      <div class="reason">למה הקול הזה: הבסיס "אופטימי רגוע" של Will מנוגד ליציבות הנמוכה ביותר, ויוצר קול שרוצה להיות נורמלי אבל לא מצליח להפסיק לתקתק. זה משקף בדיוק את הארק של גליץ': הוא לא רע, הוא שבור.</div>
+    </div>
+    <div class="lines-section">
+      <h4>שורות מוקלטות</h4>
+      <table class="lines-table">
+        <thead><tr><th>קובץ</th><th>טקסט בעברית</th><th>הקשר</th><th>יציבות</th></tr></thead>
+        <tbody>
+          <tr><td class="file-cell">glitch/glitch-intro.mp3</td><td class="hebrew-cell">!גגג-גליץ' פ-פ-פה</td><td class="context-cell">שיעור 12 -- כניסה כאוטית</td><td class="stability-cell" style="color:var(--villain-glitch);">0.2</td></tr>
+          <tr><td class="file-cell">glitch/glitch-redemption.mp3</td><td class="hebrew-cell">!א-א-אני לא רוצה להיות ר-ר-רע</td><td class="context-cell">שיעור 18 -- רוצה להשתנות</td><td class="stability-cell" style="color:var(--villain-glitch);">0.25</td></tr>
+          <tr><td class="file-cell">glitch/glitch-thanks.mp3</td><td class="hebrew-cell">...ת-תודה</td><td class="context-cell">שיעור 18 סיום -- יציבות קצרה</td><td class="stability-cell" style="color:var(--villain-glitch);">0.4</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ========== RIVALS ========== -->
+<div class="section-header rivals">
+  <div class="section-line"></div>
+  <h2>יריבים (זירת הקרב)</h2>
+</div>
+
+<!-- Shadow -->
+<div class="char-card" style="border-top:3px solid var(--rival-shadow);">
+  <div class="card-header">
+    <div class="char-number" style="background:var(--rival-shadow);">12</div>
+    <div>
+      <div class="char-name">שאדו (Shadow)</div>
+      <div class="char-role">חתול נינג'ה מגניב</div>
+    </div>
+    <span class="status-badge pending">ממתין לזירת הקרב</span>
+  </div>
+  <div class="card-body">
+    <div class="info-block">
+      <h4>פרטי קול</h4>
+      <div class="info-row"><span class="label">קול ElevenLabs</span><span class="value">Eric</span></div>
+      <div class="info-row"><span class="label">מזהה</span><span class="value" style="direction:ltr;font-family:monospace;font-size:.8rem;">cjVigY5qzO86Huf0OWal</span></div>
+      <div class="info-row"><span class="label">תיאור קול</span><span class="value">חלק, אמין</span></div>
+      <div class="info-row"><span class="label">מין / גיל</span><span class="value">זכר, בגיל העמידה</span></div>
+      <div class="info-row"><span class="label">גיל הדמות</span><span class="value">לא ידוע (חתול נינג'ה)</span></div>
+    </div>
+    <div class="info-block">
+      <h4>פרמטרים</h4>
+      <div class="param-bar-wrap">
+        <div class="param-bar-row">
+          <span class="param-bar-label">מהירות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:63%;background:var(--rival-shadow);"></div></div>
+          <span class="param-bar-val">0.95</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">יציבות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:60%;background:var(--rival-shadow);"></div></div>
+          <span class="param-bar-val">0.6</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">דמיון</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:75%;background:var(--rival-shadow);"></div></div>
+          <span class="param-bar-val">0.75</span>
+        </div>
+      </div>
+    </div>
+    <div class="direction" style="border-color:var(--rival-shadow);">
+      <h4>הנחיית קול</h4>
+      <p>מגניב, רגוע, מסתורי. מדבר במשפטים קצרים ומרשימים. אף פעם לא מרים את הקול.</p>
+      <div class="reason">למה הקול הזה: האיכות החלקה של Eric יוצרת את היריב המגניב והמסתורי. שאדו לא ממהר -- הוא תמיד בשליטה, תמיד צופה מהצללים.</div>
+    </div>
+    <div class="note-box">
+      <strong>סטטוס:</strong> לא נוצרו שורות באצווה זו. שמור לשילוב בזירת הקרב.
+    </div>
+  </div>
+</div>
+
+<!-- Storm -->
+<div class="char-card" style="border-top:3px solid var(--rival-storm);">
+  <div class="card-header">
+    <div class="char-number" style="background:var(--rival-storm);">13</div>
+    <div>
+      <div class="char-name">סטורם (Storm)</div>
+      <div class="char-role">שועל חשמלי</div>
+    </div>
+    <span class="status-badge pending">ממתין לזירת הקרב</span>
+  </div>
+  <div class="card-body">
+    <div class="info-block">
+      <h4>פרטי קול</h4>
+      <div class="info-row"><span class="label">קול ElevenLabs</span><span class="value">Harry</span></div>
+      <div class="info-row"><span class="label">מזהה</span><span class="value" style="direction:ltr;font-family:monospace;font-size:.8rem;">SOYHLrjzK2X1ezoPC6cr</span></div>
+      <div class="info-row"><span class="label">תיאור קול</span><span class="value">לוחם עז</span></div>
+      <div class="info-row"><span class="label">מין / גיל</span><span class="value">זכר, צעיר</span></div>
+      <div class="info-row"><span class="label">גיל הדמות</span><span class="value">לא ידוע (שועל חשמלי)</span></div>
+    </div>
+    <div class="info-block">
+      <h4>פרמטרים</h4>
+      <div class="param-bar-wrap">
+        <div class="param-bar-row">
+          <span class="param-bar-label">מהירות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:73%;background:var(--rival-storm);"></div></div>
+          <span class="param-bar-val">1.1</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">יציבות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:45%;background:var(--rival-storm);"></div></div>
+          <span class="param-bar-val">0.45</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">דמיון</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:75%;background:var(--rival-storm);"></div></div>
+          <span class="param-bar-val">0.75</span>
+        </div>
+      </div>
+    </div>
+    <div class="direction" style="border-color:var(--rival-storm);">
+      <h4>הנחיית קול</h4>
+      <p>אינטנסיבי, מתפרק מאנרגיה, תחרותי. מאתגר את השחקן עם מטאפורות ברקים.</p>
+      <div class="reason">למה הקול הזה: איכות "הלוחם העז" של Harry לוכדת את האישיות האינטנסיבית והחשמלית של סטורם. היציבות הנמוכה מעט מוסיפה קצה בלתי צפוי -- כמו חשמל מפרפר.</div>
+    </div>
+    <div class="note-box">
+      <strong>סטטוס:</strong> לא נוצרו שורות באצווה זו. שמור לשילוב בזירת הקרב.
+    </div>
+  </div>
+</div>
+
+<!-- Blaze -->
+<div class="char-card" style="border-top:3px solid var(--rival-blaze);">
+  <div class="card-header">
+    <div class="char-number" style="background:var(--rival-blaze);">14</div>
+    <div>
+      <div class="char-name">בלייז (Blaze)</div>
+      <div class="char-role">דרקון אש</div>
+    </div>
+    <span class="status-badge pending">ממתין לזירת הקרב</span>
+  </div>
+  <div class="card-body">
+    <div class="info-block">
+      <h4>פרטי קול</h4>
+      <div class="info-row"><span class="label">קול ElevenLabs</span><span class="value">Adam</span></div>
+      <div class="info-row"><span class="label">מזהה</span><span class="value" style="direction:ltr;font-family:monospace;font-size:.8rem;">pNInz6obpgDQGcFmaJgB</span></div>
+      <div class="info-row"><span class="label">תיאור קול</span><span class="value">דומיננטי, תקיף</span></div>
+      <div class="info-row"><span class="label">מין / גיל</span><span class="value">זכר, בגיל העמידה</span></div>
+      <div class="info-row"><span class="label">גיל הדמות</span><span class="value">לא ידוע (דרקון אש)</span></div>
+    </div>
+    <div class="info-block">
+      <h4>פרמטרים</h4>
+      <div class="param-bar-wrap">
+        <div class="param-bar-row">
+          <span class="param-bar-label">מהירות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:67%;background:var(--rival-blaze);"></div></div>
+          <span class="param-bar-val">1.0</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">יציבות</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:55%;background:var(--rival-blaze);"></div></div>
+          <span class="param-bar-val">0.55</span>
+        </div>
+        <div class="param-bar-row">
+          <span class="param-bar-label">דמיון</span>
+          <div class="param-bar-track"><div class="param-bar-fill" style="width:75%;background:var(--rival-blaze);"></div></div>
+          <span class="param-bar-val">0.75</span>
+        </div>
+      </div>
+    </div>
+    <div class="direction" style="border-color:var(--rival-blaze);">
+      <h4>הנחיית קול</h4>
+      <p>חזק, מפקד, עתיק. מדבר כמו מלוכה. מטאפורות אש. האתגר הסופי.</p>
+      <div class="reason">למה הקול הזה: האיכות הדומיננטית והתקיפה של Adam מושלמת ליריב האולטימטיבי -- דרקון אש. בלייז לא צריך להיות מהיר; הכוח שלו מדבר בעד עצמו.</div>
+    </div>
+    <div class="note-box">
+      <strong>סטטוס:</strong> לא נוצרו שורות באצווה זו. שמור לשילוב בזירת הקרב.
+    </div>
+  </div>
+</div>
+
+<!-- ========== FILE STRUCTURE ========== -->
+<div class="section-header heroes">
+  <div class="section-line"></div>
+  <h2>מבנה קבצים</h2>
+</div>
+
+<div class="file-structure">
+  <h3>מבנה תיקיית הקולות</h3>
+  <div class="file-tree"><span class="dir">public/audio/voices/</span>
+<span class="dir">  ki/</span>
+<span class="file">    ki-discovery.mp3</span>    <span class="size">(37 KB)</span>  <span class="desc">-- שיעור 1 פתיחה</span>
+<span class="file">    ki-victory.mp3</span>      <span class="size">(41 KB)</span>  <span class="desc">-- שיעור 7 סיום (ניצחון)</span>
+<span class="file">    ki-team.mp3</span>         <span class="size">(32 KB)</span>  <span class="desc">-- שיעור 2 סיום</span>
+<span class="file">    ki-final.mp3</span>        <span class="size">(20 KB)</span>  <span class="desc">-- שיעור 14 סיום</span>
+<span class="dir">  mika/</span>
+<span class="file">    mika-intro.mp3</span>      <span class="size">(34 KB)</span>  <span class="desc">-- שיעור 2 פתיחה</span>
+<span class="file">    mika-fight.mp3</span>      <span class="size">(31 KB)</span>  <span class="desc">-- שיעור 6 פתיחה</span>
+<span class="file">    mika-hack.mp3</span>       <span class="size">(31 KB)</span>  <span class="desc">-- שיעור 17 פתיחה</span>
+<span class="dir">  sensei-zen/</span>
+<span class="file">    sensei-patience.mp3</span> <span class="size">(55 KB)</span>  <span class="desc">-- שיעור 8 פתיחה</span>
+<span class="file">    sensei-journey.mp3</span>  <span class="size">(38 KB)</span>  <span class="desc">-- שיעור 8 סיום</span>
+<span class="file">    sensei-final.mp3</span>    <span class="size">(26 KB)</span>  <span class="desc">-- שיעור 20 סיום (ניצחון)</span>
+<span class="dir">  bug/</span>
+<span class="file">    bug-scramble.mp3</span>    <span class="size">(54 KB)</span>  <span class="desc">-- שיעור 5 פתיחה</span>
+<span class="file">    bug-boss.mp3</span>        <span class="size">(42 KB)</span>  <span class="desc">-- שיעור 7 פתיחה</span>
+<span class="file">    bug-king.mp3</span>        <span class="size">(60 KB)</span>  <span class="desc">-- שיעור 20 פתיחה</span>
+<span class="file">    bug-defeat.mp3</span>      <span class="size">(41 KB)</span>  <span class="desc">-- שיעור 20 סיום (ניצחון)</span>
+<span class="dir">  glitch/</span>
+<span class="file">    glitch-intro.mp3</span>    <span class="size">(29 KB)</span>  <span class="desc">-- שיעור 12 פתיחה</span>
+<span class="file">    glitch-redemption.mp3</span><span class="size">(41 KB)</span>  <span class="desc">-- שיעור 18 פתיחה</span>
+<span class="file">    glitch-thanks.mp3</span>   <span class="size">(24 KB)</span>  <span class="desc">-- שיעור 18 סיום</span>
+<span class="dir">  yuki/</span>
+<span class="file">    yuki-challenge.mp3</span>  <span class="size">(32 KB)</span>  <span class="desc">-- שיעור 10 פתיחה</span>
+<span class="dir">  luna/</span>
+<span class="file">    luna-breathe.mp3</span>    <span class="size">(52 KB)</span>  <span class="desc">-- שיעור 11 פתיחה</span>
+<span class="dir">  kai/</span>
+<span class="file">    kai-fight.mp3</span>       <span class="size">(18 KB)</span>  <span class="desc">-- שיעור 13 פתיחה</span>
+<span class="dir">  noa/</span>
+<span class="file">    noa-heal.mp3</span>        <span class="size">(31 KB)</span>  <span class="desc">-- שיעור 13 פתיחה</span>
+<span class="dir">  rex/</span>
+<span class="file">    rex-play.mp3</span>        <span class="size">(40 KB)</span>  <span class="desc">-- אנימציית שחרור</span></div>
+  <div class="total-badge">סה״כ: 22 שורות קול, ~799 KB</div>
+</div>
+
+<!-- ========== TECH INTEGRATION ========== -->
+<div class="section-header heroes">
+  <div class="section-line"></div>
+  <h2>אינטגרציה טכנית</h2>
+</div>
+
+<div class="tech-section">
+  <h3>השמעת שורות קול במשחק</h3>
+  <div class="code-block"><span class="cm">// דוגמה: השמעת שורת קול של דמות</span>
+<span class="kw">const</span> audio = <span class="kw">new</span> <span class="fn">Audio</span>(<span class="str">'/audio/voices/ki/ki-discovery.mp3'</span>);
+audio.volume = <span class="str">0.8</span>; <span class="cm">// עוצמת קול דמות</span>
+audio.<span class="fn">play</span>();</div>
+</div>
+
+<div class="tech-section">
+  <h3>מיפוי נקודות עלילה לקבצי קול</h3>
+  <p style="font-size:.92rem;margin-bottom:12px;">מוסכמת שמות הקבצים ממפה ישירות לנקודות עלילה:</p>
+  <div class="code-block"><span class="cm">// דפוס: /audio/voices/{character}/{character}-{identifier}.mp3</span>
+<span class="cm">// המזהה תואם להקשר תסריט העלילה</span>
+
+<span class="kw">function</span> <span class="fn">getVoiceFile</span>(speaker: CharacterName, identifier: <span class="kw">string</span>): <span class="kw">string</span> {
+  <span class="kw">const</span> charDir = speaker === <span class="str">'senseiZen'</span> ? <span class="str">'sensei-zen'</span> : speaker;
+  <span class="kw">return</span> <span class="str">`/audio/voices/${charDir}/${charDir}-${identifier}.mp3`</span>;
+}</div>
+</div>
+
+<!-- Summary Table -->
+<div class="tech-section">
+  <h3>טבלת הגדרות קול -- סיכום</h3>
+  <table class="summary-table">
+    <thead>
+      <tr><th>דמות</th><th>מזהה קול</th><th>מהירות</th><th>יציבות</th><th>אישיות</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>קי</td><td class="mono">TX3LPaxmHKxFdv7VOQHJ</td><td>1.1</td><td>0.5</td><td>נרגש, אמיץ</td></tr>
+      <tr><td>מיקה</td><td class="mono">cgSgspJ2msm6clMCkdW9</td><td>1.05</td><td>0.5</td><td>חכמה, בטוחה</td></tr>
+      <tr><td>יוקי</td><td class="mono">FGY2WhTYpPnrIDTdsKH5</td><td>1.2</td><td>0.5</td><td>מהירה, תחרותית</td></tr>
+      <tr><td>לונה</td><td class="mono">pFZP5JQG7iQjIQuC4Bku</td><td>0.9</td><td>0.6</td><td>רגועה, שלווה</td></tr>
+      <tr><td>נועה</td><td class="mono">EXAVITQu4vr4xnSDxMaL</td><td>0.95</td><td>0.6</td><td>חמה, אכפתית</td></tr>
+      <tr><td>קאי</td><td class="mono">IKne3meq5aSn9XLyUdCD</td><td>1.1</td><td>0.5</td><td>עז, אמיץ</td></tr>
+      <tr><td>סנסיי זן</td><td class="mono">pqHfZKP75CvOlQylNhV4</td><td>0.8</td><td>0.7</td><td>חכם, איטי</td></tr>
+      <tr><td>פיקסל</td><td class="mono">SAz9YHcvj6GT2YYXdXww</td><td>1.15</td><td>0.7</td><td>רובוטי, מדויק</td></tr>
+      <tr><td>רקס</td><td class="mono">CwhRBWXzGAHq8TQ4Fs17</td><td>1.0</td><td>0.5</td><td>צ'יל, קז'ואל</td></tr>
+      <tr><td>באג</td><td class="mono">N2lVS1w4EtoT3dr4eOWO</td><td>1.2</td><td>0.4</td><td>שובב, כאוטי</td></tr>
+      <tr><td>גליץ'</td><td class="mono">bIHbv24MWmeRgasZH58o</td><td>1.0</td><td>0.2-0.4</td><td>מגמגם, שבור</td></tr>
+      <tr><td>שאדו</td><td class="mono">cjVigY5qzO86Huf0OWal</td><td>0.95</td><td>0.6</td><td>חלק, מסתורי</td></tr>
+      <tr><td>סטורם</td><td class="mono">SOYHLrjzK2X1ezoPC6cr</td><td>1.1</td><td>0.45</td><td>אינטנסיבי, חשמלי</td></tr>
+      <tr><td>בלייז</td><td class="mono">pNInz6obpgDQGcFmaJgB</td><td>1.0</td><td>0.55</td><td>דומיננטי, מפקד</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ========== FUTURE ========== -->
+<div class="section-header heroes">
+  <div class="section-line"></div>
+  <h2>שורות קול עתידיות (אצוות הבאות)</h2>
+</div>
+
+<div class="future-section">
+  <h4>עדיפות 2: שאר נקודות עלילה מערכות 1-3</h4>
+  <ul>
+    <li>קי: 8 שורות נוספות (שיעורים 3, 4, 5, 9, 16 + תגובות שחרור)</li>
+    <li>מיקה: 5 שורות נוספות (שיעורים 3, 4, 12, 15)</li>
+    <li>סנסיי זן: 4 שורות נוספות (שיעורים 9, 14, 15, 20)</li>
+    <li>באג: 3 שורות נוספות (שיעורים 15, 16)</li>
+    <li>גליץ': 2 שורות נוספות (שיעור 15)</li>
+  </ul>
+
+  <h4>עדיפות 3: אנימציות שחרור</h4>
+  <ul>
+    <li>10 שורות ברכה (אחת לכל דמות הניתנת לשחרור)</li>
+  </ul>
+
+  <h4>עדיפות 4: זירת הקרב</h4>
+  <ul>
+    <li>שאדו: 3 שורות (קנטור, תבוסה, ניצחון)</li>
+    <li>סטורם: 3 שורות (קנטור, תבוסה, ניצחון)</li>
+    <li>בלייז: 3 שורות (קנטור, תבוסה, ניצחון)</li>
+  </ul>
+
+  <h4>עדיפות 5: משוב ממשק</h4>
+  <ul>
+    <li>שורות עידוד כלליות לכל דמות (5-8 כל אחת)</li>
+    <li>תגובות שגיאה/טעות (3-5 כל אחת)</li>
+    <li>שורות חגיגה להישגים (3-5 כל אחת)</li>
+  </ul>
+</div>
+
+<!-- ========== GENERATION SCRIPT ========== -->
+<div class="gen-script">
+  <h3>סקריפט ייצור</h3>
+  <p>סקריפט ייצור הקולות נמצא ב-<code style="color:var(--secondary);">scripts/generate-voices.cjs</code>. ליצירה מחדש או הוספת שורות חדשות:</p>
+  <div class="code-block"><span class="cm"># ערוך את מערך VOICE_LINES בקובץ scripts/generate-voices.cjs</span>
+<span class="cm"># ואז הרץ:</span>
+node scripts/generate-voices.cjs</div>
+  <p>הסקריפט באופן אוטומטי:</p>
+  <ul>
+    <li>יוצר תיקיות לפי הצורך</li>
+    <li>מייצר שורה אחת בכל פעם עם השהיות של 2 שניות (בטיחות הגבלת קצב)</li>
+    <li>מדווח הצלחה/כישלון לכל שורה</li>
+    <li>מציג את כל הקבצים שנוצרו עם גדלים בסיום</li>
+  </ul>
+</div>
+
+</div><!-- /container -->
+</body>
+</html>

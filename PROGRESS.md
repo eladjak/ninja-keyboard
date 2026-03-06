@@ -1,143 +1,105 @@
 # Ninja Keyboard - Progress
 
 ## Status: Active
-## Last Updated: 2026-03-05
-## Sprint: Character World Expansion (IN PROGRESS)
+## Last Updated: 2026-03-07
+## Sprint: Character World Expansion - Iteration 6
 
 ## Current State
-Voice V5 complete + Yuki V6 (Flash-like rapid voice). 10 characters with custom ElevenLabs voices, 40 Hebrew voice lines, ffmpeg post-processing for Rex/Bug/BugKing/Glitch. 15 V5 character model sheets (all characters including villains + rivals). 16 AI SFX integrated. Bug split into Bug (minion) + Bug King (boss). Glitch redesigned as digital creature. Ki modern design (full face). All using unified Brawl Stars × Anime art style. Holiday skins doc updated with user feedback (timing, distribution, per-holiday creative additions).
+Iteration 7 complete: 6/6 tasks done. Yuki V8-D set as official voice, 7 new badges + trophy fix, Chapter 6 fully rewritten (Glitch resurrection, 6 team side quests, rival names), 3 new character designs (Barak fox, Block cubic, Lens AI), AND 2 production-ready code components: DialogBox+StoryPlayer (story system) and useSoundEffect+Web Audio (12 synthesized UI sounds). Building on Iterations 5-6.
 
-## What Was Done This Session (Iteration 4.2 - User Feedback Integration)
+## What Was Done This Session (Iteration 7 - Code + Content + Fixes)
 
-### 1. Voice V5 Overhaul (COMPLETE)
-- [x] Ki V5: Dominant, emotional, anime protagonist voice
-- [x] Luna V5: Airy but grounded, younger, natural
-- [x] Kai V5: Slightly more mature, precise nuances
-- [x] Rex V5: Younger surfer style, pitch down 95% (was 90%)
-- [x] Bug V5: NEW creature voice - pitch UP 115% + vibrato (small insect minion)
-- [x] Bug King V5: NEW separate character - deepest voice, pitch down 85% + heavy echo
-- [x] Glitch V5: Creature with static - tremolo + echo + bandpass filter (200-3000Hz)
-- [x] Mika V4 kept (almost perfect, tweaked description)
-- [x] Noa V4 kept (excellent)
-- [x] Yuki V4 kept
-- [x] 40 Hebrew voice lines generated across 10 characters
-- [x] ffmpeg post-processing completed for Rex (2), Bug (4), BugKing (5), Glitch (4)
+### Code Implementation (2/2 COMPLETE)
+- [x] DialogBox + StoryPlayer: story types, typewriter effect, 4 dialog styles, choices, portal overlay, tutorial example
+- [x] useSoundEffect hook + 12 Web Audio sounds: click, hover, navigate, success, error, notification, achievement, levelup, countdown, battle-start, battle-win, battle-lose
 
-### 2. V5 Character Art - Full Cast (COMPLETE)
-- [x] Ki boy V5 (modern, full face visible - style reference for all)
-- [x] Mika girl V5, Luna girl V5, Noa girl V5, Yuki girl V5, Sensei Zen V5
-- [x] Kai boy V5 (red/orange fighter)
-- [x] Rex dino V5 (cute green T-Rex with ninja headband)
-- [x] Bug creature V5 (small cockroach minion)
-- [x] BugKing boss V5 (massive armored beetle king)
-- [x] Glitch entity V5 (corrupted digital creature)
-- [x] Pixel robot V5 (floating robot with screen face)
-- [x] Shadow cat V5 (stealthy black cat ninja - easy rival)
-- [x] Storm fox V5 (electric blue fox - medium rival)
-- [x] Blaze dragon V5 (fire dragon ninja - hard rival)
-- [x] Total: 15 V5 model sheets, all using Ki V5 as style reference
+### Content + Assets (4/4 COMPLETE)
+- [x] Yuki V8-D (energized) set as official voice, 5 files copied to main folder, JSON updated
+- [x] 7 new badges + trophy replacement: first-lesson, perfect-lesson, 10-lessons, speed-50wpm, battle-winner, 7day-streak, trophy
+- [x] Chapter 6 V2.2: Glitch resurrection, 6 teams, Barak=fox, Bug Queen=Zara, Bug King=Keres, all rivals→friends
+- [x] 3 new character designs: Barak (speed fox), Block (cubic rival), Lens (AI photographer) - model sheets + expressions
 
-### 3. Code Fixes (COMPLETE)
-- [x] SoundManager clone cleanup (memory leak prevention)
-- [x] Fixed 6 broken image paths in iteration-review-v4.html
-- [x] Created iteration-review-v4.1.html with full feedback integration
+---
 
-### 4. User Feedback Integration (Iteration 4.2) (COMPLETE)
-- [x] Yuki V6 voice: Flash-like rapid-fire, higher pitch, younger (ElevenLabs Voice Design)
-- [x] 3 Yuki V6 Hebrew voice lines generated (yuki-challenge, yuki-speed, yuki-win)
-- [x] Previous Yuki V5 backed up to v4/
-- [x] Mika V5 art regenerated (was duplicate of Luna due to parallel generation)
-- [x] Holiday skins doc: added scheduling guidelines section (timing, notifications, equal distribution)
-- [x] Holiday skins doc: added user feedback per holiday (11 feedback notices)
-- [x] Holiday skins doc: real weapons approved for IDF soldier skins
-- [x] Holiday skins doc: annual schedule table with display periods
+## What Was Done Previous Session (Iteration 6 - Critical Fixes + New Systems)
 
-## What Was Done Previous Session (Iteration 4)
+### Critical Fixes (4/4 COMPLETE)
+- [x] Copyright fix: 4 badges regenerated (rank-bronze/silver/gold + achievement-gold) - NO Naruto resemblance
+- [x] Hero expressions V2: Ki (full face!), Mika (more feminine), Luna, Noa - matching V5 model sheets
+- [x] Narrative corrections V2.1: Glitch arc (Ch4→Ch5 sacrifice), Hana→Sakura, Virus 2 designs, Storm=female, Blaze=small fire lizard, Shadow=playful, secondary chars in early chapters, Phantom Yemenite sensitivity
+- [x] Yuki V8 voices: 82 files generated, 4 variations (Sabra Speed/Tel Aviv Announcer/Ninja Lightning/Hyper Sabra), 4 post-processing each. ElevenLabs content filter fixed.
 
-### 1. SFX Integration into Game (COMPLETE)
-- [x] Upgraded `SoundManager` to support AI-generated MP3 SFX files
-- [x] MP3 files play as primary, Web Audio synthesis as fallback
-- [x] 16 SFX mapped: keyboard-click, correct-answer, wrong-answer, level-up, xp-gain, countdown-beep, countdown-go, keyboard-combo, achievement-unlock, character-unlock, star-earn, streak-fire, victory-cheers, ninja-slash, bug-appear, glitch-warp
-- [x] 5 new sound methods: `playStreakFire()`, `playVictoryCheers()`, `playNinjaSlash()`, `playBugAppear()`, `playGlitchWarp()`
-- [x] Preloading in `AppProviders` on app mount
-- [x] Victory cheers integrated into battle arena win
-- [x] All 1093 tests pass, build clean
+### New Design Documents (4/4 COMPLETE)
+- [x] Story delivery system (Hades-style): 1,472 lines, 9 sections, dialog system, cutscenes, choices, journal, emotion+music, 3 live mockups
+- [x] Pedagogical research: 1,022 lines, 8 sections, WPM benchmarks, teacher/parent guides, mobile interface, skill mapping, FAQ
+- [x] AI opponents design: 823 lines, 7 sections, human-like typing model, 6 rival profiles, dynamic difficulty, full algorithm
+- [x] UI sound effects system: 7 sections, 55 interaction mappings, useSoundEffect() hook, 4-phase timeline, 41 new assets planned
 
-### 2. Profile Background (COMPLETE)
-- [x] Added profile-background.jpg to profile page
+## New Files Created This Session
 
-### 3. Story Mode Expansion (IN PROGRESS)
-- [ ] `docs/story-mode-expansion.html` - agent running
+### HTML Documents
+- `docs/story-delivery-system.html` - Hades-style story system (1,472 lines)
+- `docs/pedagogical-research.html` - Teacher/parent guide with research (1,022 lines)
+- `docs/ai-opponents-design.html` - AI typing opponents (823 lines)
+- `docs/ui-sound-effects-system.html` - Full UI sound effects plan
 
-## What Was Done Previous Session (Iteration 3)
+### Updated Files
+- `docs/story-mode-expansion-v2.html` - Updated to V2.1 with all narrative corrections
+- `scripts/yuki-v8-generate.mjs` - Fixed ElevenLabs content filter issue
 
-### Voice Design V4 - Custom Voices + Hebrew Lines (COMPLETE)
-- [x] 27 custom voice previews via Voice Design v3 API
-- [x] 9 voices saved to ElevenLabs account
-- [x] 36 Hebrew voice lines generated with `language_code:'he'` + eleven_v3
-- [x] ffmpeg post-processing: Rex (pitch-down), Bug (pitch-down+echo), Glitch (tremolo+echo)
-- [x] Account voice IDs: `public/audio/voices/voice-design-previews/account-voices-v4.json`
-- [ ] **WAITING**: User to listen to V4 Hebrew voices and confirm quality
+### Generated Assets
+- `public/images/badges/rank-bronze.jpg` - REGENERATED (original, no copyright)
+- `public/images/badges/rank-silver.jpg` - REGENERATED
+- `public/images/badges/rank-gold.jpg` - REGENERATED
+- `public/images/badges/badge-achievement-gold.jpg` - REGENERATED
+- `public/images/characters/expressions/ki-expressions-v2.jpg` - Matching V5 model
+- `public/images/characters/expressions/mika-expressions-v2.jpg` - More feminine
+- `public/images/characters/expressions/luna-expressions-v2.jpg` - Matching V5 model
+- `public/images/characters/expressions/noa-expressions-v2.jpg` - Matching V5 model
 
-### Game Sound Effects (COMPLETE)
-- [x] 16 AI-generated SFX via ElevenLabs Sound Generation API
-- [x] Saved to `public/audio/sfx/`
+### Audio Files
+- `public/audio/voices/yuki/v8-previews/` - 82 voice files (4 variations × 4 lines × 4 processing + 12 previews)
+- `public/audio/voices/yuki/v7/` - V7 backup
 
-### Soundtrack Master Plan (COMPLETE)
-- [x] `docs/soundtrack-master-plan.html` - 48 tracks across 8 sections
+## Previous Iteration (5) Summary
+17/17 tasks: Full music system, gaming UI (799 CSS lines), idle animations, game buttons, Phantom character, 60 holiday skins + tier system (798 variations), story V2, community/tournament, villain expressions, 10 UI assets, anti-frustration research.
 
-### Character Art (COMPLETE)
-- [x] 14/14 model sheets (Bug + Glitch added)
-- [x] 6 expression sheets (Ki, Mika, Kai, Yuki, Luna, Noa × 8 emotions)
-- [x] 6 menu backgrounds (home, lessons, battle, speed-test, games-hub, profile)
-
-### Israeli Holiday Skins (COMPLETE)
-- [x] `docs/israeli-holiday-skins.html` - 15 sections, 12 holidays + hero skins
-- [x] Character-specific skins with color palettes and unlock conditions
-- [x] Respectful treatment of memorial days (Yom HaShoah, Yom HaZikaron)
-
-## Previously Completed (Iteration 2)
-- Voice V3: 19 voices with `language_code:'he'`, Gemini-tuned settings
-- Suno Direct Connection (Playwright-based, user's own subscription)
-- Post-Narrative Content Design (Boss Rush, Seasonal Events, etc.)
-- Art Asset Checklist (14 chars × 9 types = 126 needed)
-
-## Previously Completed (Iteration 1)
-- 12 character model sheets (Brawl Stars + anime chibi)
-- 22 voice lines V1→V2→V3 (ElevenLabs eleven_v3)
-- 2 music tracks × 2 versions (Suno)
-- Game Bible Dashboard, Character Bible, Age-adaptive UX spec
-- 8 environment backgrounds, Dark gaming theme
-
-## Voice Version History
-- V1: Initial ElevenLabs generation (American accent)
-- V2: Young voices, ffmpeg effects for villains (still American)
-- V3: `language_code:'he'`, Gemini-tuned settings, speaker boost
-- V4: Voice Design v3 → Save to account → Hebrew TTS (current, 36 lines)
-- V5: Full rewrite for all 10 characters, ffmpeg post-processing (40 lines)
-- V6: Yuki only — Flash-like rapid-fire, higher pitch, younger
-- Sensei Zen: Original voice, approved by user, never changed
+## User Feedback Status (Iteration 6 fixes)
+- [x] Copyright: Naruto-like badges REPLACED with original Hebrew keyboard ninja designs
+- [x] Expression mismatch: Hero V2 sheets now match V5 model sheets
+- [x] Glitch arc: Goes willingly (Ch4) → fights friends (Ch5) → sacrifices from inside (Ch5 end)
+- [x] Sensei Hana → Sakura: Renamed, relationship with Zen established
+- [x] Virus: Two-design concept (friendly pre-reveal + evil post-reveal)
+- [x] Storm = female: Explicitly marked, Barak's sister
+- [x] Blaze = small: Fire lizard/salamander, not giant dragon
+- [x] Shadow = playful: Sneaky but endearing cat
+- [x] Foreshadowing: Shadow/Storm/Blaze/Pixel appear in Ch1-2
+- [x] Phantom: Yemenite heritage sensitivity guidance added
+- [x] Yuki V8: Pure Sabra voices generated, awaiting user selection
+- [x] Story delivery: Hades-style system designed
+- [x] Teacher/parent: Pedagogical research + mobile interface designed
+- [x] AI opponents: Human-like typing with rival personalities
+- [x] UI sounds: Complete interaction mapping + technical plan
 
 ## Next Steps
-1. **Listen to Yuki V6** - user to confirm Flash-like voice quality
-2. **Generate remaining music** with Suno direct (8 priority tracks in Batch 1, approved)
-3. **Fill UI folder** (`public/images/ui/`) - badges, icons, UI assets
-4. **Implement idle animations** (CSS keyframes, always-on)
-5. **Implement game-style buttons** (Brawl Stars asymmetric design)
-6. **Implement music system** (zone-based, with Jukebox unlock)
-7. **CSS variable migration** - replace hardcoded dark theme colors
-8. **Create Bug + Glitch villain expressions** (only heroes have expression sheets)
-9. **Story mode expansion** - continue narrative doc
+1. **User listens to Yuki V8**: Pick best variation from v8-previews/
+2. **Generate music tracks**: Batch 1 (8 priority tracks) with Suno
+3. **3D POC**: Ki character (Rodin Gen-2 → Blender → R3F)
+4. **Implement story delivery**: DialogBox + CutscenePlayer components
+5. **Implement AI opponents**: AIOpponent component + Web Worker
+6. **Create UI sound effects**: Phase 1 critical sounds (12 sounds)
+7. **Integrate MusicProvider**: Add to app-providers.tsx
+8. **Apply gaming CSS**: Start using game-card, game-panel in actual pages
+9. **Build teacher mobile interface**: PWA companion app
 
-## Key Files
-- `docs/voice-preview-v4.html` - Voice preview comparison page
-- `docs/soundtrack-master-plan.html` - 48-track soundtrack plan
-- `docs/israeli-holiday-skins.html` - **Updated: 15 holidays + scheduling guidelines + user feedback**
-- `docs/story-mode-expansion.html` - Narrative expansion (in progress)
-- `src/lib/audio/sound-manager.ts` - **Upgraded: MP3 SFX + Web Audio fallback**
-- `public/audio/sfx/` - **16 AI-generated sound effects**
-- `public/audio/voices/` - V5/V6 Hebrew voice lines (40 files across 10 characters)
-- `public/images/characters/expressions/` - 6 expression sheets
-- `public/images/characters/model-sheets/` - 15 V5 model sheets (all complete)
-- `public/images/backgrounds/` - 15 backgrounds
-- `scripts/voice-generate-all-hebrew.mjs` - Full Hebrew voice pipeline
+## Key Stats
+- Total HTML docs: 30+
+- Total code components: 6 new (from Iter 5)
+- Total CSS additions: ~1,000+ lines
+- Total generated images: 24 (16 + 4 badges + 4 expressions)
+- Total expression sheets: 16 (6 heroes V1 + 4 heroes V2 + 6 villains/rivals)
+- Total holiday skins designed: 798 variations
+- Total characters: 16 (10 heroes + 3 rivals + 3 villains) + Phantom
+- Total voice files: 82 new Yuki V8
+- Unit tests: 1093 (all pass)
+- TypeScript: 0 errors

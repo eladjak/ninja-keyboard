@@ -15,6 +15,7 @@ import {
   BarChart3,
   User,
   Settings,
+  Music,
   LogOut,
   GraduationCap,
   Flame,
@@ -54,6 +55,7 @@ const navGroups = [
     label: 'אישי',
     items: [
       { href: '/profile', label: 'פרופיל', icon: User },
+      { href: '/jukebox', label: "ג'וקבוקס", icon: Music },
       { href: '/settings', label: 'הגדרות', icon: Settings },
     ],
   },

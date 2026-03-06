@@ -1,0 +1,99 @@
+{
+  "version": "v8",
+  "date": "2026-03-05T23:52:38.647Z",
+  "goal": "Pure Israeli Sabra accent, ultra-fast, expressive (no Russian tones)",
+  "v7feedback": "Only speed clip was good. Challenge + win had Russian tones, too slow, monotone.",
+  "variations": [
+    {
+      "id": "A",
+      "label": "Sabra Speed Runner",
+      "previewDuration": 9.85,
+      "accountVoiceId": "6NlcQRSCMdkyhZrr6JKY",
+      "ttsSettings": {
+        "stability": 0.4,
+        "similarity_boost": 0.95,
+        "style": 0.95,
+        "use_speaker_boost": true
+      }
+    },
+    {
+      "id": "B",
+      "label": "Tel Aviv Sports Announcer",
+      "previewDuration": 9.928375,
+      "accountVoiceId": "HpMube8zlNeuLeOhkw5V",
+      "ttsSettings": {
+        "stability": 0.35,
+        "similarity_boost": 0.95,
+        "style": 1,
+        "use_speaker_boost": true
+      }
+    },
+    {
+      "id": "C",
+      "label": "Ninja Lightning Voice",
+      "previewDuration": 12.801875,
+      "accountVoiceId": "cUv2pl7qV3KYj50keoaR",
+      "ttsSettings": {
+        "stability": 0.45,
+        "similarity_boost": 0.95,
+        "style": 0.9,
+        "use_speaker_boost": true
+      }
+    },
+    {
+      "id": "D",
+      "label": "Hyper Sabra Gamer",
+      "previewDuration": 9.614916666666666,
+      "accountVoiceId": "svFzGI0ewo7PyrO1RHP1",
+      "ttsSettings": {
+        "stability": 0.38,
+        "similarity_boost": 0.92,
+        "style": 1,
+        "use_speaker_boost": true
+      }
+    }
+  ],
+  "testLines": [
+    {
+      "id": "yuki-challenge",
+      "text": "בואו נראה מי הכי מהיר כאן!"
+    },
+    {
+      "id": "yuki-win",
+      "text": "שברתי את השיא! אף אחד לא יעקוף אותי!"
+    },
+    {
+      "id": "yuki-encourage",
+      "text": "מהר יותר! מהר יותר! אני יכולה לנצח!"
+    },
+    {
+      "id": "yuki-taunt",
+      "text": "אתה חושב שאתה מהיר? תראה את זה!"
+    }
+  ],
+  "postProcessing": [
+    {
+      "suffix": "-raw.mp3",
+      "description": "Original TTS output"
+    },
+    {
+      "suffix": "-tempo110.mp3",
+      "description": "ffmpeg atempo=1.10 (+10% speed)"
+    },
+    {
+      "suffix": "-tempo115.mp3",
+      "description": "ffmpeg atempo=1.15 (+15% speed)"
+    },
+    {
+      "suffix": "-energized.mp3",
+      "description": "ffmpeg atempo=1.12 + EQ boost at 3kHz for brightness"
+    }
+  ],
+  "nextSteps": [
+    "1. Listen to ALL v8-previews/var-*/yuki-*-tempo110.mp3 files",
+    "2. Compare across variations A/B/C/D",
+    "3. Pick the best variation + tempo combo",
+    "4. Copy winning files to yuki/ main folder",
+    "5. Update account-voices-v4.json with winning voice ID"
+  ]
+}

@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מחקר אנטי-תסכול | נינג'ה מקלדת</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0b1a;
+  --surface: #161328;
+  --surface-2: #1e1a35;
+  --surface-3: #262040;
+  --primary: #6C5CE7;
+  --primary-dim: #5a4bd6;
+  --secondary: #00B894;
+  --secondary-dim: #00a382;
+  --text: #e8e6f0;
+  --text-dim: #9b97b0;
+  --danger: #ff6b6b;
+  --warning: #ffd93d;
+  --info: #74b9ff;
+  --border: #2d2650;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Heebo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  padding: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+h1 {
+  font-size: 2rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.subtitle { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 32px; }
+h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 36px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+}
+h2 .emoji { font-size: 1.2rem; margin-left: 8px; }
+h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--secondary);
+  margin: 20px 0 10px;
+}
+p { margin-bottom: 12px; color: var(--text); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.card-accent {
+  border-right: 4px solid var(--primary);
+}
+.card-green { border-right-color: var(--secondary); }
+.card-red { border-right-color: var(--danger); }
+.card-warn { border-right-color: var(--warning); }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0 20px;
+  font-size: 0.9rem;
+}
+th {
+  background: var(--surface-3);
+  color: var(--primary);
+  font-weight: 700;
+  padding: 10px 14px;
+  text-align: right;
+  border-bottom: 2px solid var(--primary);
+}
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+tr:hover td { background: var(--surface-2); }
+.tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.tag-p { background: rgba(108,92,231,0.2); color: var(--primary); }
+.tag-s { background: rgba(0,184,148,0.2); color: var(--secondary); }
+.tag-d { background: rgba(255,107,107,0.2); color: var(--danger); }
+.tag-w { background: rgba(255,217,61,0.2); color: var(--warning); }
+.tag-i { background: rgba(116,185,255,0.2); color: var(--info); }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+@media (max-width: 768px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  body { padding: 16px; }
+}
+.msg-box {
+  background: var(--surface-2);
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin: 6px 0;
+  font-size: 0.9rem;
+}
+.msg-box .context { color: var(--text-dim); font-size: 0.8rem; }
+.priority-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  font-weight: 800;
+  font-size: 0.85rem;
+  margin-left: 8px;
+}
+.flow-diagram {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+  direction: ltr;
+}
+.flow-box {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  text-align: center;
+}
+.flow-arrow { color: var(--primary); font-weight: 700; }
+.sources {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-top: 32px;
+  font-size: 0.82rem;
+}
+.sources a { color: var(--info); text-decoration: none; }
+.sources a:hover { text-decoration: underline; }
+.sources li { margin: 4px 0; }
+ul, ol { padding-right: 20px; margin-bottom: 12px; }
+li { margin: 4px 0; }
+.highlight { color: var(--secondary); font-weight: 600; }
+.warn-text { color: var(--danger); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1>מחקר אנטי-תסכול למשחק הקלדה לילדים</h1>
+<p class="subtitle">נינג'ה מקלדת | גילאי 6-16 | מבוסס על מחקר אקדמי + ניסיון תעשייתי (נינטנדו, Celeste, Supercell ועוד)</p>
+
+<!-- ===== 1. מנגנונים מוכחים ===== -->
+<h2>1. מנגנונים מוכחים מהתעשייה</h2>
+<p>עשרה מנגנוני אנטי-תסכול שהוכחו במשחקים מצליחים, עם המלצת יישום לנינג'ה מקלדת:</p>
+
+<table>
+<tr>
+  <th>#</th>
+  <th>מנגנון</th>
+  <th>משחק לדוגמה</th>
+  <th>איך זה עובד</th>
+  <th>יישום אצלנו</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><strong>Super Guide / מצב עזרה</strong></td>
+  <td>New Super Mario Bros Wii</td>
+  <td>לאחר 8 מוות, לואיג'י מדגים איך לעבור את השלב. השחקן יכול להשתלט בכל רגע</td>
+  <td>Ki מדגים את רצף ההקלדה הנכון לאחר 3 כישלונות</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><strong>Assist Mode (מצב סיוע גרנולרי)</strong></td>
+  <td>Celeste</td>
+  <td>השחקן בוחר: האטת מהירות, חסינות, סטמינה אינסופית, דילוג על פרקים — ללא שיפוט</td>
+  <td>הורדת מהירות נדרשת, הארכת זמן, הפחתת מילים — השחקן בוחר</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><strong>DDA — התאמת קושי דינמית</strong></td>
+  <td>Left 4 Dead (AI Director)</td>
+  <td>מנוע AI מנתח ביצועים בזמן אמת ומכוונן קושי: מספר אויבים, נזק, פריטים</td>
+  <td>אם דיוק &lt;70% → הפחת מילים. אם &gt;95% → הגדל מהירות נדרשת</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><strong>Checkpoint נדיב</strong></td>
+  <td>Celeste, Super Meat Boy</td>
+  <td>נקודות שמירה תכופות מאוד. כישלון מחזיר רק כמה שניות אחורה</td>
+  <td>כל משפט = checkpoint. כישלון לא מחזיר לתחילת השיעור</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><strong>Rubber Banding / האטת מתחרים</strong></td>
+  <td>Mario Kart</td>
+  <td>מתחרי AI מאטים כשהשחקן מפגר, ומאיצים כשהוא מוביל — שומר על תחרותיות</td>
+  <td>יריבי AI (Shadow, Storm, Blaze) מתכווננים ל-5-15% מעל רמת השחקן</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><strong>Loss Aversion מופחת</strong></td>
+  <td>Duolingo</td>
+  <td>במקום להעניש על כישלון, מראים כמה קרוב היית להצלחה. XP לא יורד, רק ההתקדמות נעצרת</td>
+  <td>XP אף פעם לא יורד. הצג "היית 92% מדויק! עוד קצת!"</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><strong>Streak Freeze / הגנת רצף</strong></td>
+  <td>Duolingo</td>
+  <td>פריט שמגן על רצף יומי אם השחקן שוכח יום. מפחית לחץ ותסכול</td>
+  <td>מגן נינג'ה: מגן על רצף תרגול אם מפספסים יום אחד</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><strong>Encouragement System</strong></td>
+  <td>Wii Sports, Ring Fit</td>
+  <td>הודעות עידוד מותאמות: לא רק "כל הכבוד" אלא "שיפרת את המהירות ב-15%!"</td>
+  <td>Ki אומר משפטי עידוד ספציפיים לפי מצב — ראו טבלת עידוד למטה</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><strong>Practice Mode / חדר אימונים</strong></td>
+  <td>Guitar Hero, Rocksmith</td>
+  <td>תרגול חופשי ללא ציון, ללא לחץ זמן, ללא השלכות — רק ללמוד</td>
+  <td>מצב "דוג'ו חופשי" — תרגול ללא ציון, Ki מלווה ומסביר</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><strong>Scaffolding הדרגתי</strong></td>
+  <td>Typing Club, Khan Academy</td>
+  <td>מתחילים עם תמיכה מלאה (סימון אצבעות, מקש מואר) ומפחיתים בהדרגה ככל שהמיומנות עולה</td>
+  <td>שלב 1: מקלדת מסומנת + אצבעות. שלב 2: רק מקש. שלב 3: ללא עזרה</td>
+</tr>
+</table>
+
+<!-- ===== 2. התאמת קושי דינמית ===== -->
+<h2>2. התאמת קושי דינמית (DDA) לפי קבוצת גיל</h2>
+
+<p>בהתבסס על תיאוריית ה-Flow של Csikszentmihalyi ו-Zone of Proximal Development של Vygotsky: <span class="highlight">האתגר חייב להיות גבוה מספיק כדי לעניין, אבל נמוך מספיק כדי לא לתסכל</span>. הנקודה המתוקה היא 70-85% הצלחה.</p>
+
+<div class="flow-diagram">
+  <div class="flow-box" style="border-color: var(--danger);">שעמום<br><small>אתגר &lt; יכולת</small></div>
+  <div class="flow-arrow">&rarr;</div>
+  <div class="flow-box" style="border-color: var(--secondary); background: rgba(0,184,148,0.1);">Flow Zone<br><small>70-85% הצלחה</small></div>
+  <div class="flow-arrow">&rarr;</div>
+  <div class="flow-box" style="border-color: var(--danger);">תסכול<br><small>אתגר &gt;&gt; יכולת</small></div>
+</div>
+
+<table>
+<tr>
+  <th>פרמטר</th>
+  <th>שתיל (6-8)</th>
+  <th>נבט (8-10)</th>
+  <th>גזע (10-12)</th>
+  <th>ענף (12-14)</th>
+  <th>צמרת (14-16)</th>
+</tr>
+<tr>
+  <td><strong>יעד דיוק מינימלי</strong></td>
+  <td>60%</td>
+  <td>65%</td>
+  <td>70%</td>
+  <td>75%</td>
+  <td>80%</td>
+</tr>
+<tr>
+  <td><strong>מילים בתרגיל</strong></td>
+  <td>3-5</td>
+  <td>5-8</td>
+  <td>8-12</td>
+  <td>12-18</td>
+  <td>15-25</td>
+</tr>
+<tr>
+  <td><strong>זמן מקסימלי למילה</strong></td>
+  <td>ללא הגבלה</td>
+  <td>15 שניות</td>
+  <td>10 שניות</td>
+  <td>7 שניות</td>
+  <td>5 שניות</td>
+</tr>
+<tr>
+  <td><strong>ניסיונות לפני עזרה</strong></td>
+  <td>2</td>
+  <td>2</td>
+  <td>3</td>
+  <td>3</td>
+  <td>4</td>
+</tr>
+<tr>
+  <td><strong>סף DDA (הורדת קושי)</strong></td>
+  <td>2 כישלונות רצופים</td>
+  <td>2 כישלונות רצופים</td>
+  <td>3 כישלונות רצופים</td>
+  <td>3 כישלונות רצופים</td>
+  <td>4 כישלונות רצופים</td>
+</tr>
+<tr>
+  <td><strong>סף DDA (העלאת קושי)</strong></td>
+  <td>3 הצלחות &gt;90%</td>
+  <td>3 הצלחות &gt;90%</td>
+  <td>2 הצלחות &gt;92%</td>
+  <td>2 הצלחות &gt;93%</td>
+  <td>2 הצלחות &gt;95%</td>
+</tr>
+<tr>
+  <td><strong>עזרה ויזואלית</strong></td>
+  <td>מקלדת מלאה + אצבעות + אנימציה</td>
+  <td>מקלדת + הדגשת מקש</td>
+  <td>הדגשת מקש בלבד</td>
+  <td>רמז מינימלי</td>
+  <td>ללא (אלא אם ביקש)</td>
+</tr>
+<tr>
+  <td><strong>תגובת Ki לכישלון</strong></td>
+  <td>חיבוק + "ננסה ביחד!"</td>
+  <td>"אתה מתקדם! ננסה שוב?"</td>
+  <td>"קרוב! שים לב ל..."</td>
+  <td>"נתח את הטעות:"</td>
+  <td>סטטיסטיקה + טיפ ממוקד</td>
+</tr>
+</table>
+
+<div class="card card-accent">
+  <h3>אלגוריתם DDA מומלץ</h3>
+  <ol>
+    <li><strong>מדוד</strong>: דיוק, מהירות (WPM), זמן תגובה, כישלונות רצופים</li>
+    <li><strong>חשב</strong>: ממוצע נע של 5 תרגילים אחרונים</li>
+    <li><strong>התאם</strong>: אם מתחת לסף → הורד רמה אחת. אם מעל → העלה רמה אחת</li>
+    <li><strong>הגבל</strong>: מקסימום קפיצה של רמה אחת בכל כיוון. לא יותר מ-2 שינויים בדקה</li>
+    <li><strong>שמור</strong>: תעד את ההתאמות ב-analytics לשיפור המערכת</li>
+  </ol>
+</div>
+
+<!-- ===== 3. מערכת עידוד ===== -->
+<h2>3. מערכת עידוד — 20 משפטים לפי מצב</h2>
+<p>המפתח: <span class="highlight">עידוד ספציפי</span> (לא גנרי). לא "יפה!" אלא "שיפרת את המהירות ב-12%!" — מבוסס מחקר שמשוב ספציפי מגביר מוטיבציה ב-40%.</p>
+
+<div class="grid-2">
+  <div>
+    <h3>הצלחה ושיפור</h3>
+    <div class="msg-box">1. "שיא חדש! הגעת ל-{wpm} מילים לדקה!" <span class="context">שבירת שיא אישי</span></div>
+    <div class="msg-box">2. "הדיוק שלך עלה ב-{delta}%! האצבעות שלך מתחזקות!" <span class="context">שיפור דיוק</span></div>
+    <div class="msg-box">3. "רצף של {n} ימים! אתה נינג'ה אמיתי!" <span class="context">שמירת רצף</span></div>
+    <div class="msg-box">4. "פתחת טכניקה חדשה: {skill}! הכוח שלך גדל!" <span class="context">רכישת מיומנות</span></div>
+    <div class="msg-box">5. "מושלם! אפס טעויות! אתה מוכן לאתגר הבא!" <span class="context">100% דיוק</span></div>
+  </div>
+  <div>
+    <h3>התמודדות עם קושי</h3>
+    <div class="msg-box">6. "היית קרוב! {accuracy}% דיוק — עוד קצת ותפצח את זה!" <span class="context">כישלון קרוב (80%+)</span></div>
+    <div class="msg-box">7. "המילה הזו קשה! בוא נתרגל אותה לאט יותר." <span class="context">מילה בעייתית חוזרת</span></div>
+    <div class="msg-box">8. "גם נינג'ות אמיתיות צריכות לתרגל. ננסה שוב?" <span class="context">כישלון רצוף</span></div>
+    <div class="msg-box">9. "שם לב שהאות '{key}' מתחלפת לך — טיפ: {tip}" <span class="context">טעות חוזרת באות ספציפית</span></div>
+    <div class="msg-box">10. "אל תוותר! אתמול גם היה קשה ואז הצלחת!" <span class="context">ניסיון שלישי+</span></div>
+  </div>
+  <div>
+    <h3>מוטיבציה ומעורבות</h3>
+    <div class="msg-box">11. "עוד {n} XP ואתה עולה רמה! בוא נעשה את זה!" <span class="context">קרוב לעליית רמה</span></div>
+    <div class="msg-box">12. "חברים שלך ב-{class} כבר מחכים לך באתגר!" <span class="context">אלמנט חברתי</span></div>
+    <div class="msg-box">13. "אתגר יומי חדש! מוכן להוכיח שאתה אלוף?" <span class="context">התחלת יום</span></div>
+    <div class="msg-box">14. "כבר למדת {n} אותיות! זה {pct}% מהמקלדת!" <span class="context">תצוגת התקדמות</span></div>
+    <div class="msg-box">15. "סנסיי זן גאה בך! הוא שולח לך מסר מיוחד..." <span class="context">הישג נרטיבי</span></div>
+  </div>
+  <div>
+    <h3>חזרה ושימור</h3>
+    <div class="msg-box">16. "חזרת! בוא נראה מה אתה זוכר מאתמול." <span class="context">חזרה אחרי הפסקה קצרה</span></div>
+    <div class="msg-box">17. "שבוע לא נראינו! בוא נתחמם קצת לפני שממשיכים." <span class="context">חזרה אחרי הפסקה ארוכה</span></div>
+    <div class="msg-box">18. "אתה מתכונן למבחן? מצב אימון מהיר מוכן!" <span class="context">הכנה למבחן</span></div>
+    <div class="msg-box">19. "הצמחייה שלך גדלה! תרגול יומי = כוח נינג'ה!" <span class="context">קישור לנושא הצמיחה</span></div>
+    <div class="msg-box">20. "השלמת את כל האותיות בשורה {row}! אלוף!" <span class="context">סיום מקטע מקלדת</span></div>
+  </div>
+</div>
+
+<!-- ===== 4. UX קרבות בוס ===== -->
+<h2>4. UX קרבות בוס — עיצוב אנטי-תסכולי</h2>
+
+<div class="card card-accent">
+  <h3>עקרונות ליבה לקרבות בוס</h3>
+  <ul>
+    <li><strong>רמזים ברורים:</strong> לפני כל התקפת בוס, הראה מה צריך להקליד ותן 2-3 שניות הכנה</li>
+    <li><strong>פידבק מיידי:</strong> כל הקלדה נכונה = אפקט ויזואלי של פגיעה בבוס</li>
+    <li><strong>התקדמות נשמרת:</strong> כל שלב של הבוס שנוצח — נשמר. לא חוזרים להתחלה</li>
+    <li><strong>3 חיים + הזדמנות נוספת:</strong> לא "Game Over" מיידי. לאחר 3 כישלונות, Ki מציע טיפ</li>
+    <li><strong>סיפור מנחה:</strong> הבוס מדבר, מתגרה — זה חלק מהנרטיב, לא רק מבחן טכני</li>
+  </ul>
+</div>
+
+<div class="grid-2">
+  <div class="card card-green">
+    <h3>מבנה קרב בוס מומלץ</h3>
+    <ol>
+      <li><strong>פתיח נרטיבי</strong> — הבוס מופיע, דיאלוג קצר (10 שניות)</li>
+      <li><strong>שלב 1 — חימום</strong> — מילים קלות, מהירות נמוכה, 100% סיכוי הצלחה</li>
+      <li><strong>שלב 2 — אתגר</strong> — מילים קשות יותר, מהירות עולה בהדרגה</li>
+      <li><strong>שלב 3 — שיא</strong> — מילים מעורבות, מהירות מקסימלית (מותאמת DDA)</li>
+      <li><strong>סיום</strong> — ניצחון + אנימציה + פרס + קטע נרטיבי</li>
+    </ol>
+  </div>
+  <div class="card card-green">
+    <h3>טיפול בכישלון בקרב בוס</h3>
+    <ol>
+      <li><strong>כישלון 1:</strong> "כמעט! שים לב ל-[מילה בעייתית]" + חזרה מאותו שלב</li>
+      <li><strong>כישלון 2:</strong> Ki מראה הדגמה איטית של המילים הבעייתיות</li>
+      <li><strong>כישלון 3:</strong> "רוצה להתאמן על המילים האלה לפני שממשיכים?" + מצב תרגול</li>
+      <li><strong>כישלון 4:</strong> הורדת קושי אוטומטית (פחות מילים, יותר זמן)</li>
+      <li><strong>כישלון 5:</strong> "רוצה לדלג ולחזור מאוחר יותר?" (ללא שיפוט!)</li>
+    </ol>
+  </div>
+</div>
+
+<div class="card card-warn">
+  <h3>הבדלי גיל בקרבות בוס</h3>
+  <table>
+    <tr>
+      <th>מאפיין</th>
+      <th>שתיל-נבט (6-10)</th>
+      <th>גזע-ענף (10-14)</th>
+      <th>צמרת (14-16)</th>
+    </tr>
+    <tr>
+      <td>משך קרב</td>
+      <td>60-90 שניות</td>
+      <td>90-150 שניות</td>
+      <td>120-180 שניות</td>
+    </tr>
+    <tr>
+      <td>מספר שלבים</td>
+      <td>2-3</td>
+      <td>3-4</td>
+      <td>4-5</td>
+    </tr>
+    <tr>
+      <td>עידוד</td>
+      <td>אנימציות + קולות + כוכבים</td>
+      <td>סטטיסטיקות + תגים</td>
+      <td>דירוג + השוואה לשחקנים אחרים</td>
+    </tr>
+    <tr>
+      <td>עונש כישלון</td>
+      <td>אין — רק חזרה עם עזרה</td>
+      <td>חזרה מתחילת השלב</td>
+      <td>חזרה + אובדן זמן בונוס</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ===== 5. אנטי-פטרנים ===== -->
+<h2>5. אנטי-פטרנים — מה לא לעשות</h2>
+
+<table>
+<tr>
+  <th>אנטי-פטרן</th>
+  <th>למה זה גרוע</th>
+  <th>מה לעשות במקום</th>
+  <th>חומרה</th>
+</tr>
+<tr>
+  <td>הורדת XP / עונש על כישלון</td>
+  <td>ילדים מרגישים שהמשחק לוקח מהם. גורם לנטישה מיידית, במיוחד גילאי 6-10</td>
+  <td>XP רק עולה. כישלון = לא מתקדם, אבל לא מפסיד</td>
+  <td><span class="tag tag-d">קריטי</span></td>
+</tr>
+<tr>
+  <td>טיימר לוחץ ללא אפשרות כיבוי</td>
+  <td>לחץ זמן גורם לטעויות שגורמות ללחץ שגורם לטעויות — לולאה הרסנית</td>
+  <td>טיימר אופציונלי. ברירת מחדל: ללא טיימר לגילאי 6-10</td>
+  <td><span class="tag tag-d">קריטי</span></td>
+</tr>
+<tr>
+  <td>השוואה שלילית בין ילדים</td>
+  <td>"אתה במקום האחרון" הורס ביטחון עצמי. ילדים בכיתה מרגישים נחיתות</td>
+  <td>הצג רק את ההתקדמות האישית. לידרבורד אופציונלי ואנונימי</td>
+  <td><span class="tag tag-d">קריטי</span></td>
+</tr>
+<tr>
+  <td>"Game Over" מוחלט</td>
+  <td>חסימה מוחלטת מתסכלת. הילד לא יודע מה לעשות כדי להשתפר</td>
+  <td>תמיד תן דרך קדימה: תרגול, עזרה, דילוג</td>
+  <td><span class="tag tag-d">קריטי</span></td>
+</tr>
+<tr>
+  <td>עודף טקסט / הסברים ארוכים</td>
+  <td>ילדים לא קוראים. במיוחד דיסלקטיים — אירוניה במשחק הקלדה</td>
+  <td>הסבר ויזואלי: אנימציה + דוגמה + מקסימום משפט אחד</td>
+  <td><span class="tag tag-w">גבוה</span></td>
+</tr>
+<tr>
+  <td>חזרה ארוכה אחרי כישלון</td>
+  <td>לחזור 5 דקות אחורה = ויתור. Celeste הוכיחה ש-checkpoint תכוף = מוטיבציה</td>
+  <td>Checkpoint כל משפט. חזרה = 10-15 שניות מקסימום</td>
+  <td><span class="tag tag-w">גבוה</span></td>
+</tr>
+<tr>
+  <td>שלבים שלא ניתן לדלג עליהם</td>
+  <td>ילד שתקוע = ילד שעוזב. חסימה היא אויבת ההתמדה</td>
+  <td>אפשר דילוג עם חזרה מאוחר יותר (ללא שיפוט)</td>
+  <td><span class="tag tag-w">גבוה</span></td>
+</tr>
+<tr>
+  <td>פידבק שלילי על טעויות ("לא נכון!")</td>
+  <td>יוצר אסוציאציה שלילית עם הלמידה. ילדים מפנימים "אני לא טוב בזה"</td>
+  <td>פידבק חיובי: "כמעט! שים לב ל..." או "ננסה ביחד"</td>
+  <td><span class="tag tag-w">גבוה</span></td>
+</tr>
+<tr>
+  <td>חוסר שליטה של השחקן</td>
+  <td>ילד שמרגיש שאין לו בחירה → תסכול → נטישה</td>
+  <td>תן בחירה: איזה שיעור, איזה דמות, איזה קושי, מתי לעצור</td>
+  <td><span class="tag tag-i">בינוני</span></td>
+</tr>
+<tr>
+  <td>תגמול רק בסוף (לא בדרך)</td>
+  <td>ילדים צריכים חיזוק מיידי. לחכות 20 דקות לכוכב = ויתור אחרי 5</td>
+  <td>Micro-rewards: כל מילה נכונה = ניצוץ. כל משפט = כוכב. כל שיעור = פרס</td>
+  <td><span class="tag tag-i">בינוני</span></td>
+</tr>
+</table>
+
+<!-- ===== 6. יישום לנינג'ה מקלדת ===== -->
+<h2>6. יישום ספציפי לנינג'ה מקלדת</h2>
+
+<div class="grid-2">
+  <div class="card card-accent">
+    <h3>מנוע DDA — ליבה</h3>
+    <p>להוסיף ל-<code>typing-session-store</code>:</p>
+    <ul>
+      <li>מעקב אחר 5 תוצאות אחרונות (דיוק + WPM)</li>
+      <li>ספירת כישלונות רצופים per-lesson</li>
+      <li>סף הצלחה/כישלון לפי קבוצת גיל (מטבלת DDA למעלה)</li>
+      <li>פעולות: הפחתת מילים, הארכת זמן, הוספת רמזים, הפחתת מהירות נדרשת</li>
+    </ul>
+  </div>
+  <div class="card card-accent">
+    <h3>מערכת Checkpoint</h3>
+    <p>לשלב ב-<code>lesson-view.tsx</code>:</p>
+    <ul>
+      <li>שמירה אוטומטית אחרי כל משפט שהושלם בהצלחה</li>
+      <li>כישלון = חזרה למשפט הנוכחי בלבד</li>
+      <li>אפשרות "חזרה על המשפט" עם הדגשת טעויות</li>
+      <li>כפתור "בקש עזרה מ-Ki" — תמיד נגיש</li>
+    </ul>
+  </div>
+  <div class="card card-green">
+    <h3>Ki כמלווה רגשי</h3>
+    <p>להרחיב את מצבי הרוח של Ki (8 מצבים קיימים):</p>
+    <ul>
+      <li><strong>חדש: מצב "מעודד"</strong> — מופעל אחרי 2+ כישלונות. Ki מחבק, מעודד, מציע עזרה</li>
+      <li><strong>חדש: מצב "גאה"</strong> — מופעל אחרי שבירת שיא. Ki קופץ, חוגג, מילים ספציפיות</li>
+      <li><strong>חדש: מצב "מדריך"</strong> — מופעל כשהשחקן מבקש עזרה. Ki מראה הדגמה איטית</li>
+      <li>בחירת המשפט מטבלת העידוד (20 משפטים למעלה) לפי context</li>
+    </ul>
+  </div>
+  <div class="card card-green">
+    <h3>יריבי AI מותאמים</h3>
+    <p>לעדכן את Shadow/Storm/Blaze ב-<code>rival-ninja</code>:</p>
+    <ul>
+      <li>יריב תמיד 5-15% מעל רמת השחקן (Rubber Banding)</li>
+      <li>אם השחקן מפסיד 3 פעמים — היריב "מעד" ומאט</li>
+      <li>ניצחון תמיד אפשרי אבל מאתגר — הנקודה המתוקה</li>
+      <li>היריב "מברך" אחרי הפסד — "הקלדה מרשימה, נינג'ה!"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card card-accent">
+  <h3>Assist Mode — מצב סיוע (בהשראת Celeste)</h3>
+  <p>להוסיף בהגדרות (<code>settings-store</code>) — <strong>בלי שיפוט</strong>:</p>
+  <div class="grid-3">
+    <div class="msg-box"><strong>מהירות מופחתת</strong><br>הורדת מהירות נדרשת ב-25%/50%</div>
+    <div class="msg-box"><strong>מילים מועטות</strong><br>הפחתת מספר מילים בתרגיל</div>
+    <div class="msg-box"><strong>זמן נוסף</strong><br>הכפלת/ביטול מגבלת זמן</div>
+    <div class="msg-box"><strong>רמזים תמידיים</strong><br>מקלדת מסומנת תמיד</div>
+    <div class="msg-box"><strong>דילוג על בוסים</strong><br>אפשרות לדלג ולחזור</div>
+    <div class="msg-box"><strong>מצב תרגול חופשי</strong><br>ללא ציון, ללא לחץ</div>
+  </div>
+  <p style="color: var(--text-dim); margin-top: 8px;">
+    הודעה בכניסה למצב סיוע: "נינג'ה מקלדת נועד ליהנות! התאם את המשחק כך שיהיה כיף בשבילך. אין דרך לא נכונה לשחק."
+  </p>
+</div>
+
+<!-- ===== 7. סדר עדיפויות ===== -->
+<h2>7. סדר עדיפויות — מה לבנות קודם</h2>
+
+<table>
+<tr>
+  <th>עדיפות</th>
+  <th>מנגנון</th>
+  <th>מורכבות</th>
+  <th>השפעה</th>
+  <th>נימוק</th>
+</tr>
+<tr>
+  <td><span class="priority-num">1</span></td>
+  <td><strong>מנוע DDA בסיסי</strong></td>
+  <td><span class="tag tag-i">בינוני</span></td>
+  <td><span class="tag tag-s">קריטי</span></td>
+  <td>הבסיס לכל מנגנון אחר. חייב לעבוד לפני הכל — מונע תסכול מיום ראשון</td>
+</tr>
+<tr>
+  <td><span class="priority-num">2</span></td>
+  <td><strong>Checkpoint כל משפט</strong></td>
+  <td><span class="tag tag-s">נמוך</span></td>
+  <td><span class="tag tag-s">קריטי</span></td>
+  <td>שינוי קטן, השפעה ענקית. Celeste הוכיחה: checkpoint תכוף = המפתח לסבלנות</td>
+</tr>
+<tr>
+  <td><span class="priority-num">3</span></td>
+  <td><strong>משפטי עידוד ספציפיים</strong></td>
+  <td><span class="tag tag-s">נמוך</span></td>
+  <td><span class="tag tag-w">גבוה</span></td>
+  <td>20 המשפטים מלמעלה + לוגיקת בחירה לפי context. Ki כבר קיים — רק תוכן חדש</td>
+</tr>
+<tr>
+  <td><span class="priority-num">4</span></td>
+  <td><strong>Loss Aversion מופחת</strong></td>
+  <td><span class="tag tag-s">נמוך</span></td>
+  <td><span class="tag tag-w">גבוה</span></td>
+  <td>ודא ש-XP אף פעם לא יורד. הצג "כמעט הצלחת!" במקום "נכשלת"</td>
+</tr>
+<tr>
+  <td><span class="priority-num">5</span></td>
+  <td><strong>Assist Mode (הגדרות)</strong></td>
+  <td><span class="tag tag-i">בינוני</span></td>
+  <td><span class="tag tag-w">גבוה</span></td>
+  <td>5-6 מתגי סיוע בהגדרות. פשוט ליישם, מעצים את השחקן</td>
+</tr>
+<tr>
+  <td><span class="priority-num">6</span></td>
+  <td><strong>Rubber Banding ליריבי AI</strong></td>
+  <td><span class="tag tag-i">בינוני</span></td>
+  <td><span class="tag tag-i">בינוני</span></td>
+  <td>Shadow/Storm/Blaze מותאמים לרמת השחקן — תמיד מאתגר אבל אפשרי</td>
+</tr>
+<tr>
+  <td><span class="priority-num">7</span></td>
+  <td><strong>UX קרב בוס מתוקן</strong></td>
+  <td><span class="tag tag-w">גבוה</span></td>
+  <td><span class="tag tag-i">בינוני</span></td>
+  <td>מבנה 5 שלבים + טיפול בכישלון חוזר + התאמה לגיל</td>
+</tr>
+<tr>
+  <td><span class="priority-num">8</span></td>
+  <td><strong>Ki מלווה רגשי (3 מצבים חדשים)</strong></td>
+  <td><span class="tag tag-i">בינוני</span></td>
+  <td><span class="tag tag-i">בינוני</span></td>
+  <td>מצבים חדשים: מעודד, גאה, מדריך. דורש אנימציות + לוגיקת בחירה</td>
+</tr>
+<tr>
+  <td><span class="priority-num">9</span></td>
+  <td><strong>Super Guide (Ki מדגים)</strong></td>
+  <td><span class="tag tag-w">גבוה</span></td>
+  <td><span class="tag tag-i">בינוני</span></td>
+  <td>Ki מדגים הקלדה נכונה. דורש אנימציית הקלדה + UI חדש</td>
+</tr>
+<tr>
+  <td><span class="priority-num">10</span></td>
+  <td><strong>Scaffolding הדרגתי</strong></td>
+  <td><span class="tag tag-w">גבוה</span></td>
+  <td><span class="tag tag-i">בינוני</span></td>
+  <td>הפחתת עזרה ויזואלית בהדרגה. דורש מעקב אחר רמת מיומנות per-key</td>
+</tr>
+</table>
+
+<div class="card card-accent" style="margin-top: 20px;">
+  <h3>תוכנית יישום מומלצת</h3>
+  <p><strong>ספרינט 1 (שבוע):</strong> פריטים 1-4 — מנוע DDA + Checkpoint + עידוד + Loss Aversion</p>
+  <p><strong>ספרינט 2 (שבוע):</strong> פריטים 5-6 — Assist Mode + Rubber Banding</p>
+  <p><strong>ספרינט 3 (שבועיים):</strong> פריטים 7-10 — קרבות בוס + Ki מורחב + Super Guide + Scaffolding</p>
+</div>
+
+<!-- ===== Sources ===== -->
+<div class="sources">
+  <h3 style="color: var(--text-dim); margin-bottom: 8px;">מקורות מחקר</h3>
+  <ol>
+    <li><a href="https://www.mdpi.com/2078-2489/17/1/96" target="_blank">Dynamic Difficulty Adjustment in Serious Games: A Literature Review (MDPI, 2024)</a></li>
+    <li><a href="https://www.intechopen.com/chapters/1228576" target="_blank">Dynamic Difficulty Adjustment: Concepts, Techniques, and Applications (IntechOpen)</a></li>
+    <li><a href="https://www.gamedeveloper.com/design/check-out-i-celeste-s-i-remarkably-granular-assist-options" target="_blank">Celeste's Remarkably Granular Assist Options (Game Developer)</a></li>
+    <li><a href="https://icenet.blog/2025/12/02/in-the-zone-the-intersection-of-flow-theory-and-the-zone-of-proximal-development-in-game-based-learning/" target="_blank">Flow Theory + Zone of Proximal Development in Game-Based Learning (ICE Blog)</a></li>
+    <li><a href="https://slejournal.springeropen.com/articles/10.1186/s40561-019-0085-2" target="_blank">Engaging Children with Educational Content via Gamification (Smart Learning Environments)</a></li>
+    <li><a href="https://caniplaythat.com/2020/06/30/accessible-game-design-for-kids-and-everyone/" target="_blank">Accessible Game Design for Kids and Everyone (Can I Play That)</a></li>
+    <li><a href="https://www.keengamer.com/articles/features/opinion-pieces/why-assist-modes-should-feature-in-more-games/" target="_blank">Why Assist Modes Should Feature in More Games (KeenGamer)</a></li>
+    <li><a href="https://www.roxanamurariu.com/an-educational-journey-into-zpd-deliberate-practice-and-flow" target="_blank">Integrating ZPD, Deliberate Practice, and Flow (Roxana Murariu)</a></li>
+  </ol>
+</div>
+
+</body>
+</html>

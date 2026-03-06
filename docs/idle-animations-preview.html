@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>אנימציות Idle - תצוגה מקדימה | נינג'ה מקלדת</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #0d0b1a;
+      --bg-secondary: #080618;
+      --bg-card: #0c0a20;
+      --bg-elevated: #13102a;
+      --border: rgba(108, 92, 231, 0.25);
+      --accent-purple: #6C5CE7;
+      --accent-green: #00B894;
+      --text-main: #f0eef6;
+      --text-muted: #9b95b0;
+      --glow-purple: rgba(108, 92, 231, 0.4);
+      --glow-green: rgba(0, 184, 148, 0.4);
+    }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-main);
+      min-height: 100vh;
+      direction: rtl;
+      overflow-x: hidden;
+    }
+
+    /* ── Header ────────────────────────────────── */
+    .header {
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+      background: linear-gradient(180deg, rgba(108,92,231,0.08) 0%, transparent 100%);
+    }
+    .header h1 {
+      font-size: 2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #a78bfa 0%, #6C5CE7 50%, #00B894 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+    .header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* ── Controls ──────────────────────────────── */
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .controls button {
+      font-family: 'Heebo', sans-serif;
+      padding: 0.5rem 1.25rem;
+      border-radius: 9999px;
+      border: 1.5px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 150ms ease;
+    }
+    .controls button:hover {
+      border-color: var(--accent-purple);
+      box-shadow: 0 0 12px var(--glow-purple);
+    }
+    .controls button.active {
+      background: linear-gradient(135deg, #6C5CE7, #5A4BD1);
+      border-color: rgba(255,255,255,0.2);
+      color: #fff;
+      box-shadow: 0 0 16px var(--glow-purple);
+    }
+    .controls button.pause-btn.active {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      border-color: rgba(231,76,60,0.5);
+    }
+
+    /* ── Grid ──────────────────────────────────── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.25rem;
+      padding: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ── Character Card ───────────────────────── */
+    .char-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.5rem 1rem;
+      border-radius: 1rem;
+      border: 2px solid var(--border);
+      background: linear-gradient(135deg, rgba(21,16,42,0.8), rgba(18,14,32,0.9));
+      backdrop-filter: blur(8px);
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+    .char-card:hover {
+      border-color: rgba(108,92,231,0.5);
+      box-shadow: 0 0 20px rgba(108,92,231,0.15);
+    }
+
+    /* Character avatar circle */
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      font-weight: 800;
+      border: 3px solid var(--border);
+      position: relative;
+    }
+
+    .char-name {
+      font-weight: 800;
+      font-size: 1rem;
+    }
+    .char-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.4;
+    }
+    .char-anims {
+      display: flex;
+      gap: 0.375rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .char-anims span {
+      font-size: 0.65rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 9999px;
+      background: rgba(108,92,231,0.15);
+      color: #a78bfa;
+      border: 1px solid rgba(108,92,231,0.2);
+    }
+
+    /* ── Keyframes (same as globals.css) ───────── */
+    @keyframes idle-breathe {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+    @keyframes idle-float {
+      0%, 100% { transform: translateY(0) translateZ(0); }
+      50% { transform: translateY(-4px) translateZ(0); }
+    }
+    @keyframes idle-sway {
+      0%, 100% { transform: rotate(-1deg); }
+      50% { transform: rotate(1deg); }
+    }
+    @keyframes idle-blink {
+      0%, 89%, 96%, 100% { opacity: 1; }
+      90%, 95% { opacity: 0.1; }
+    }
+    @keyframes idle-glow {
+      0%, 100% { box-shadow: 0 0 8px var(--glow-color, rgba(108,92,231,0.2)); }
+      50% { box-shadow: 0 0 20px var(--glow-color, rgba(108,92,231,0.5)); }
+    }
+    @keyframes idle-bounce {
+      0%, 100% { transform: translateY(0) translateZ(0); }
+      40% { transform: translateY(-6px) translateZ(0); }
+      60% { transform: translateY(-3px) translateZ(0); }
+    }
+    @keyframes idle-jitter {
+      0%, 100% { transform: translate(0, 0); }
+      10% { transform: translate(-1px, 1px); }
+      20% { transform: translate(1px, -1px); }
+      30% { transform: translate(0, 0); }
+      40% { transform: translate(1px, 1px); }
+      50% { transform: translate(-1px, 0); }
+      60% { transform: translate(0, 0); }
+      70% { transform: translate(0, -1px); }
+      80% { transform: translate(1px, 0); }
+      90% { transform: translate(-1px, -1px); }
+    }
+    @keyframes idle-fade {
+      0%, 100% { opacity: 0.9; }
+      50% { opacity: 0.5; }
+    }
+
+    /* ── Character-specific idle classes ───────── */
+    .idle-ki      { animation: idle-breathe 3s ease-in-out infinite, idle-glow 2s ease-in-out infinite; will-change: transform; }
+    .idle-yuki    { animation: idle-sway 2s ease-in-out infinite, idle-float 1.8s ease-in-out infinite; will-change: transform; }
+    .idle-luna    { animation: idle-float 3.5s ease-in-out infinite, idle-breathe 4s ease-in-out infinite; will-change: transform; }
+    .idle-kai     { animation: idle-breathe 2.8s ease-in-out infinite, idle-bounce 2s ease-in-out infinite; will-change: transform; }
+    .idle-mika    { animation: idle-sway 3s ease-in-out infinite, idle-glow 1.5s ease-in-out infinite; will-change: transform; }
+    .idle-noa     { animation: idle-breathe 4s ease-in-out infinite, idle-float 4.5s ease-in-out infinite; will-change: transform; }
+    .idle-rex     { animation: idle-bounce 1.5s ease-in-out infinite, idle-breathe 2.5s ease-in-out infinite; will-change: transform; }
+    .idle-pixel   { animation: idle-float 2s ease-in-out infinite, idle-glow 2s ease-in-out infinite, idle-blink 4s step-end infinite; will-change: transform, opacity; }
+    .idle-sensei  { animation: idle-breathe 5s ease-in-out infinite; will-change: transform; }
+    .idle-shadow  { animation: idle-float 3s ease-in-out infinite, idle-fade 4s ease-in-out infinite; will-change: transform, opacity; }
+    .idle-storm   { animation: idle-sway 2.5s ease-in-out infinite, idle-glow 1.8s ease-in-out infinite; will-change: transform; }
+    .idle-blaze   { animation: idle-breathe 2.2s ease-in-out infinite, idle-glow 1.5s ease-in-out infinite; will-change: transform; }
+    .idle-bug     { animation: idle-bounce 1s ease-in-out infinite, idle-sway 1.5s ease-in-out infinite; will-change: transform; }
+    .idle-bugking { animation: idle-breathe 4s ease-in-out infinite, idle-glow 3s ease-in-out infinite; will-change: transform; }
+    .idle-glitch  { animation: idle-jitter 0.8s steps(10) infinite, idle-blink 3s step-end infinite; will-change: transform, opacity; }
+    .idle-phantom { animation: idle-float 3.5s ease-in-out infinite, idle-fade 3s ease-in-out infinite; will-change: transform, opacity; }
+
+    /* Intensity: subtle */
+    .idle-subtle.idle-ki      { animation-duration: 4.5s, 3s; }
+    .idle-subtle.idle-yuki    { animation-duration: 3s, 2.7s; }
+    .idle-subtle.idle-luna    { animation-duration: 5.25s, 6s; }
+    .idle-subtle.idle-kai     { animation-duration: 4.2s, 3s; }
+    .idle-subtle.idle-mika    { animation-duration: 4.5s, 2.25s; }
+    .idle-subtle.idle-noa     { animation-duration: 6s, 6.75s; }
+    .idle-subtle.idle-rex     { animation-duration: 2.25s, 3.75s; }
+    .idle-subtle.idle-pixel   { animation-duration: 3s, 3s, 6s; }
+    .idle-subtle.idle-sensei  { animation-duration: 7.5s; }
+    .idle-subtle.idle-shadow  { animation-duration: 4.5s, 6s; }
+    .idle-subtle.idle-storm   { animation-duration: 3.75s, 2.7s; }
+    .idle-subtle.idle-blaze   { animation-duration: 3.3s, 2.25s; }
+    .idle-subtle.idle-bug     { animation-duration: 1.5s, 2.25s; }
+    .idle-subtle.idle-bugking { animation-duration: 6s, 4.5s; }
+    .idle-subtle.idle-glitch  { animation-duration: 1.2s, 4.5s; }
+    .idle-subtle.idle-phantom { animation-duration: 5.25s, 4.5s; }
+
+    /* Intensity: energetic */
+    .idle-energetic.idle-ki      { animation-duration: 2s, 1.33s; }
+    .idle-energetic.idle-yuki    { animation-duration: 1.33s, 1.2s; }
+    .idle-energetic.idle-luna    { animation-duration: 2.33s, 2.67s; }
+    .idle-energetic.idle-kai     { animation-duration: 1.87s, 1.33s; }
+    .idle-energetic.idle-mika    { animation-duration: 2s, 1s; }
+    .idle-energetic.idle-noa     { animation-duration: 2.67s, 3s; }
+    .idle-energetic.idle-rex     { animation-duration: 1s, 1.67s; }
+    .idle-energetic.idle-pixel   { animation-duration: 1.33s, 1.33s, 2.67s; }
+    .idle-energetic.idle-sensei  { animation-duration: 3.33s; }
+    .idle-energetic.idle-shadow  { animation-duration: 2s, 2.67s; }
+    .idle-energetic.idle-storm   { animation-duration: 1.67s, 1.2s; }
+    .idle-energetic.idle-blaze   { animation-duration: 1.47s, 1s; }
+    .idle-energetic.idle-bug     { animation-duration: 0.67s, 1s; }
+    .idle-energetic.idle-bugking { animation-duration: 2.67s, 2s; }
+    .idle-energetic.idle-glitch  { animation-duration: 0.53s, 2s; }
+    .idle-energetic.idle-phantom { animation-duration: 2.33s, 2s; }
+
+    /* Paused */
+    .idle-paused { animation-play-state: paused !important; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .idle-ki, .idle-yuki, .idle-luna, .idle-kai,
+      .idle-mika, .idle-noa, .idle-rex, .idle-pixel,
+      .idle-sensei, .idle-shadow, .idle-storm, .idle-blaze,
+      .idle-bug, .idle-bugking, .idle-glitch, .idle-phantom {
+        animation: none !important;
+      }
+    }
+
+    /* ── Keyframes Section ─────────────────────── */
+    .section-title {
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent-green);
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    /* ── Keyframe Demo Row ─────────────────────── */
+    .kf-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem;
+      padding: 0 1.5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .kf-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1.25rem 0.75rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+    .kf-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-purple), #8B7FFF);
+    }
+    .kf-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-green), #2ecc71);
+    }
+    .kf-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent-purple);
+    }
+    .kf-desc {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Keyframe demos */
+    .demo-breathe  { animation: idle-breathe 3s ease-in-out infinite; }
+    .demo-float    { animation: idle-float 2.5s ease-in-out infinite; }
+    .demo-sway     { animation: idle-sway 4s ease-in-out infinite; }
+    .demo-blink    { animation: idle-blink 4s step-end infinite; }
+    .demo-glow     { animation: idle-glow 2s ease-in-out infinite; }
+    .demo-bounce   { animation: idle-bounce 1.5s ease-in-out infinite; }
+    .demo-jitter   { animation: idle-jitter 0.8s steps(10) infinite; }
+    .demo-fade     { animation: idle-fade 3s ease-in-out infinite; }
+
+    /* ── Footer ────────────────────────────────── */
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      border-top: 1px solid var(--border);
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>אנימציות Idle - דמויות נינג'ה מקלדת</h1>
+    <p>כל דמות מקבלת אנימציית idle ייחודית שרצה ברציפות. GPU-accelerated, transform/opacity בלבד.</p>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls" id="controls">
+    <button class="active" data-intensity="normal" onclick="setIntensity('normal')">רגיל</button>
+    <button data-intensity="subtle" onclick="setIntensity('subtle')">עדין</button>
+    <button data-intensity="energetic" onclick="setIntensity('energetic')">אנרגטי</button>
+    <button class="pause-btn" data-action="pause" onclick="togglePause()">⏸ השהה</button>
+  </div>
+
+  <!-- Keyframe Demos Section -->
+  <h2 class="section-title">אנימציות בסיס (Keyframes)</h2>
+  <p class="section-sub">8 אנימציות בסיס שמשולבות לכל דמות</p>
+
+  <div class="kf-grid">
+    <div class="kf-card">
+      <div class="kf-box demo-breathe"></div>
+      <span class="kf-name">breathe</span>
+      <span class="kf-desc">נשימה עדינה<br>scale 1→1.02→1</span>
+    </div>
+    <div class="kf-card">
+      <div class="kf-circle demo-float"></div>
+      <span class="kf-name">float</span>
+      <span class="kf-desc">ריחוף<br>translateY 0→-4px→0</span>
+    </div>
+    <div class="kf-card">
+      <div class="kf-box demo-sway"></div>
+      <span class="kf-name">sway</span>
+      <span class="kf-desc">נדנוד<br>rotate -1°→1°→-1°</span>
+    </div>
+    <div class="kf-card">
+      <div class="kf-circle demo-blink"></div>
+      <span class="kf-name">blink</span>
+      <span class="kf-desc">מצמוץ<br>opacity 1→0.1→1</span>
+    </div>
+    <div class="kf-card">
+      <div class="kf-box demo-glow" style="--glow-color: rgba(108,92,231,0.5)"></div>
+      <span class="kf-name">glow</span>
+      <span class="kf-desc">זוהר פועם<br>box-shadow pulse</span>
+    </div>
+    <div class="kf-card">
+      <div class="kf-circle demo-bounce"></div>
+      <span class="kf-name">bounce</span>
+      <span class="kf-desc">קפיצה<br>translateY bounce</span>
+    </div>
+    <div class="kf-card">
+      <div class="kf-box demo-jitter"></div>
+      <span class="kf-name">jitter</span>
+      <span class="kf-desc">רעידה אקראית<br>translate random</span>
+    </div>
+    <div class="kf-card">
+      <div class="kf-circle demo-fade"></div>
+      <span class="kf-name">fade</span>
+      <span class="kf-desc">דעיכה אתרית<br>opacity 0.9→0.5→0.9</span>
+    </div>
+  </div>
+
+  <!-- Characters Section -->
+  <h2 class="section-title">דמויות - אנימציות idle ייחודיות</h2>
+  <p class="section-sub">כל דמות משלבת אנימציות בסיס שונות לתחושה ייחודית</p>
+
+  <div class="grid" id="charGrid"></div>
+
+  <div class="footer">
+    נינג'ה מקלדת &copy; 2026 &bull; כל האנימציות משתמשות ב-transform/opacity בלבד &bull; GPU-accelerated &bull; prefers-reduced-motion נתמך
+  </div>
+
+  <script>
+    const CHARACTERS = [
+      { id: 'ki', name: 'קי', emoji: '⚡', color: '#6C5CE7', glowColor: 'rgba(108,92,231,0.5)', desc: 'הגיבור הראשי, אנרגטי', anims: ['breathe', 'glow'] },
+      { id: 'yuki', name: 'יוקי', emoji: '💨', color: '#00B894', glowColor: 'rgba(0,184,148,0.5)', desc: 'ספידסטר, תמיד בתנועה', anims: ['sway', 'float'] },
+      { id: 'luna', name: 'לונה', emoji: '🌙', color: '#a78bfa', glowColor: 'rgba(167,139,250,0.5)', desc: 'חולמנית, רגועה', anims: ['float', 'breathe'] },
+      { id: 'kai', name: 'קאי', emoji: '🥋', color: '#e74c3c', glowColor: 'rgba(231,76,60,0.5)', desc: 'לוחם, תמיד מוכן', anims: ['breathe', 'bounce'] },
+      { id: 'mika', name: 'מיקה', emoji: '💻', color: '#00cec9', glowColor: 'rgba(0,206,201,0.5)', desc: 'האקרית, אנרגיה דיגיטלית', anims: ['sway', 'glow'] },
+      { id: 'noa', name: 'נועה', emoji: '🌿', color: '#55efc4', glowColor: 'rgba(85,239,196,0.5)', desc: 'מרפאה, שלווה', anims: ['breathe', 'float'] },
+      { id: 'rex', name: 'רקס', emoji: '🦖', color: '#fdcb6e', glowColor: 'rgba(253,203,110,0.5)', desc: 'דינוזאור, שובב', anims: ['bounce', 'breathe'] },
+      { id: 'pixel', name: 'פיקסל', emoji: '🤖', color: '#74b9ff', glowColor: 'rgba(116,185,255,0.5)', desc: 'רובוט, מרחף', anims: ['float', 'glow', 'blink'] },
+      { id: 'sensei', name: 'סנסיי זן', emoji: '🐢', color: '#2d3436', glowColor: 'rgba(45,52,54,0.5)', desc: 'חכם, רגוע מאוד', anims: ['breathe'] },
+      { id: 'shadow', name: 'צל', emoji: '🐱', color: '#636e72', glowColor: 'rgba(99,110,114,0.5)', desc: 'חתול, חמקמק', anims: ['float', 'fade'] },
+      { id: 'storm', name: 'סערה', emoji: '🦊', color: '#0984e3', glowColor: 'rgba(9,132,227,0.5)', desc: 'שועל, חשמלי', anims: ['sway', 'glow'] },
+      { id: 'blaze', name: 'להבה', emoji: '🐉', color: '#d63031', glowColor: 'rgba(214,48,49,0.5)', desc: 'דרקון, לוהט', anims: ['breathe', 'glow'] },
+      { id: 'bug', name: 'באג', emoji: '🐛', color: '#e17055', glowColor: 'rgba(225,112,85,0.5)', desc: 'חרק, עצבני', anims: ['bounce', 'sway'] },
+      { id: 'bugking', name: 'מלך הבאגים', emoji: '👑', color: '#6c5ce7', glowColor: 'rgba(108,92,231,0.5)', desc: 'בוס, מרשים', anims: ['breathe', 'glow'] },
+      { id: 'glitch', name: 'גליץ\'', emoji: '⚠️', color: '#fd79a8', glowColor: 'rgba(253,121,168,0.5)', desc: 'לא יציבה, גליטצ\'ית', anims: ['jitter', 'blink'] },
+      { id: 'phantom', name: 'פאנטום', emoji: '👻', color: '#dfe6e9', glowColor: 'rgba(223,230,233,0.5)', desc: 'רוח רפאים, אתרי', anims: ['float', 'fade'] },
+    ];
+
+    let currentIntensity = 'normal';
+    let isPaused = false;
+
+    function renderGrid() {
+      const grid = document.getElementById('charGrid');
+      grid.innerHTML = '';
+
+      CHARACTERS.forEach(char => {
+        const intensityClass = currentIntensity === 'normal' ? '' :
+                               currentIntensity === 'subtle' ? 'idle-subtle' : 'idle-energetic';
+        const pausedClass = isPaused ? 'idle-paused' : '';
+
+        const card = document.createElement('div');
+        card.className = 'char-card';
+        card.innerHTML = `
+          <div class="avatar idle-${char.id} ${intensityClass} ${pausedClass}"
+               style="background: ${char.color}22; border-color: ${char.color}66; --glow-color: ${char.glowColor}; color: ${char.color};">
+            ${char.emoji}
+          </div>
+          <span class="char-name" style="color: ${char.color}">${char.name}</span>
+          <span class="char-desc">${char.desc}</span>
+          <div class="char-anims">
+            ${char.anims.map(a => `<span>${a}</span>`).join('')}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function setIntensity(intensity) {
+      currentIntensity = intensity;
+      document.querySelectorAll('[data-intensity]').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.intensity === intensity);
+      });
+      renderGrid();
+    }
+
+    function togglePause() {
+      isPaused = !isPaused;
+      const btn = document.querySelector('[data-action="pause"]');
+      btn.classList.toggle('active', isPaused);
+      btn.textContent = isPaused ? '▶ המשך' : '⏸ השהה';
+      renderGrid();
+    }
+
+    // Initial render
+    renderGrid();
+  </script>
+</body>
+</html>

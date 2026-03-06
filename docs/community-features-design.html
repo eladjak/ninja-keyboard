@@ -1,0 +1,1800 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ninja Keyboard - תכנון פיצ'רים קהילתיים וטורנירים</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0d0b1a;--bg2:#080618;--card:#0c0a20;--elevated:#13102a;
+    --border:rgba(108,92,231,0.18);--purple:#6C5CE7;--green:#00B894;
+    --pink:#FD79A8;--orange:#FDCB6E;--red:#FF6B6B;--blue:#74B9FF;
+    --cyan:#00CEC9;--gold:#F9CA24;--text:#E8E6F0;--dim:#8B86A6;
+    --glow:0 0 22px rgba(108,92,231,0.35);
+  }
+  body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);line-height:1.75}
+  nav{position:sticky;top:0;z-index:100;background:rgba(13,11,26,0.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  nav .logo{font-size:17px;font-weight:900;color:var(--purple);margin-left:14px}
+  nav a{color:var(--dim);text-decoration:none;padding:5px 12px;border-radius:18px;font-size:12px;font-weight:500;border:1px solid transparent;transition:all .18s}
+  nav a:hover{color:var(--purple);background:rgba(108,92,231,0.1);border-color:rgba(108,92,231,0.3)}
+  .hero{text-align:center;padding:56px 24px 36px;background:linear-gradient(180deg,rgba(108,92,231,0.09) 0%,transparent 100%)}
+  .hero h1{font-size:40px;font-weight:900;background:linear-gradient(135deg,var(--purple),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px}
+  .hero p{color:var(--dim);font-size:17px;max-width:720px;margin:0 auto}
+  .hero .badge{display:inline-block;margin-top:20px;padding:8px 20px;background:rgba(108,92,231,0.12);border:1px solid rgba(108,92,231,0.35);border-radius:24px;font-size:13px;color:var(--purple);font-weight:600}
+  .section{max-width:1100px;margin:0 auto;padding:40px 20px}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+  .section-header .emoji{font-size:36px}
+  .section-header h2{font-size:26px;font-weight:900}
+  .section-header .sub{font-size:14px;color:var(--dim);margin-top:3px}
+  h3{font-size:20px;font-weight:700;color:var(--green);margin:28px 0 14px}
+  h4{font-size:16px;font-weight:700;color:#a78bfa;margin:20px 0 10px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin:16px 0}
+  .card-green{border-color:rgba(0,184,148,0.3);background:rgba(0,184,148,0.05)}
+  .card-red{border-color:rgba(255,107,107,0.3);background:rgba(255,107,107,0.05)}
+  .card-gold{border-color:rgba(249,202,36,0.3);background:rgba(249,202,36,0.05)}
+  .card-blue{border-color:rgba(116,185,255,0.3);background:rgba(116,185,255,0.05)}
+  .card-purple{border-color:rgba(108,92,231,0.35);background:rgba(108,92,231,0.08)}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  th{background:rgba(108,92,231,0.12);color:#a78bfa;padding:10px 14px;text-align:right;font-weight:700;font-size:13px}
+  td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.04)}
+  tr:hover td{background:rgba(108,92,231,0.04)}
+  .tag{display:inline-block;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:700}
+  .tag-purple{background:rgba(108,92,231,0.2);color:var(--purple)}
+  .tag-green{background:rgba(0,184,148,0.2);color:var(--green)}
+  .tag-gold{background:rgba(249,202,36,0.2);color:var(--gold)}
+  .tag-red{background:rgba(255,107,107,0.2);color:var(--red)}
+  .tag-blue{background:rgba(116,185,255,0.2);color:var(--blue)}
+  .tag-pink{background:rgba(253,121,168,0.2);color:var(--pink)}
+  pre{background:rgba(0,0,0,0.4);border:1px solid var(--border);border-radius:10px;padding:18px;margin:14px 0;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;overflow-x:auto;direction:ltr;text-align:left;color:#a78bfa}
+  .grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin:14px 0}
+  .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:14px 0}
+  .stat-card{background:var(--elevated);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center}
+  .stat-card .num{font-size:32px;font-weight:900;color:var(--purple)}
+  .stat-card .label{font-size:13px;color:var(--dim);margin-top:4px}
+  .flow-diagram{background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:12px;padding:24px;margin:16px 0;direction:ltr;text-align:left;font-family:'Courier New',monospace;font-size:13px;line-height:1.7;color:var(--green);white-space:pre;overflow-x:auto}
+  .highlight{background:rgba(108,92,231,0.15);border-right:3px solid var(--purple);padding:14px 18px;margin:14px 0;border-radius:0 10px 10px 0}
+  .warning{background:rgba(255,107,107,0.08);border-right:3px solid var(--red);padding:14px 18px;margin:14px 0;border-radius:0 10px 10px 0}
+  .success{background:rgba(0,184,148,0.08);border-right:3px solid var(--green);padding:14px 18px;margin:14px 0;border-radius:0 10px 10px 0}
+  ul,ol{margin:10px 20px;font-size:14px}
+  li{margin:6px 0}
+  .toc{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin:0 auto 30px;max-width:800px}
+  .toc h3{color:var(--purple);margin:0 0 14px}
+  .toc ol{list-style:none;counter-reset:toc;margin:0;padding:0}
+  .toc li{counter-increment:toc;margin:8px 0}
+  .toc li::before{content:counter(toc) ".";color:var(--purple);font-weight:700;margin-left:8px}
+  .toc a{color:var(--text);text-decoration:none;font-size:15px}
+  .toc a:hover{color:var(--green)}
+  .mockup{background:var(--elevated);border:2px dashed rgba(108,92,231,0.3);border-radius:14px;padding:20px;margin:16px 0;text-align:center}
+  .mockup .title{font-size:12px;color:var(--dim);margin-bottom:10px;text-transform:uppercase;letter-spacing:2px}
+  .badge-row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  .badge-item{background:var(--elevated);border:1px solid var(--border);border-radius:10px;padding:10px 16px;font-size:13px;display:flex;align-items:center;gap:8px}
+  footer{text-align:center;padding:40px 20px;color:var(--dim);font-size:13px;border-top:1px solid var(--border);margin-top:40px}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Ninja Keyboard</span>
+  <a href="#tournaments">טורנירים</a>
+  <a href="#dojo">מערכת דוג'ו</a>
+  <a href="#leaderboards">לוחות הישגים</a>
+  <a href="#social">פיצ'רים חברתיים</a>
+  <a href="#rewards">מערכת פרסים</a>
+  <a href="#technical">ארכיטקטורה טכנית</a>
+  <a href="#safety">בטיחות ופרטיות</a>
+  <a href="#narrative">שילוב נרטיבי</a>
+  <a href="#implementation">תוכנית יישום</a>
+</nav>
+
+<div class="hero">
+  <h1>פיצ'רים קהילתיים וטורנירים</h1>
+  <p>מערכת תחרויות, דוג'ואים, לוחות הישגים ופיצ'רים חברתיים בטוחים לילדים -- שילוב מלא עם מעשה 5 (הטורניר הדיגיטלי)</p>
+  <div class="badge">גרסה 1.0 | מרץ 2026 | Chapter 5 Integration</div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="section">
+  <div class="toc">
+    <h3>תוכן עניינים</h3>
+    <ol>
+      <li><a href="#tournaments">מערכת טורנירים (1v1, כיתה, בית ספר, עונתי)</a></li>
+      <li><a href="#dojo">מערכת דוג'ו (קבוצות/גילדות)</a></li>
+      <li><a href="#leaderboards">לוחות הישגים ודירוגים</a></li>
+      <li><a href="#social">פיצ'רים חברתיים בטוחים לילדים</a></li>
+      <li><a href="#rewards">מערכת פרסים -- סקינים, תגים, גביעים</a></li>
+      <li><a href="#technical">ארכיטקטורה טכנית (Supabase Realtime, DB Schema)</a></li>
+      <li><a href="#safety">בטיחות, פרטיות ו-COPPA</a></li>
+      <li><a href="#narrative">שילוב נרטיבי -- מעשה 5: הטורניר הדיגיטלי</a></li>
+      <li><a href="#implementation">תוכנית יישום ואבני דרך</a></li>
+    </ol>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 1: TOURNAMENTS -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section" id="tournaments">
+  <div class="section-header">
+    <span class="emoji">&#x1F3C6;</span>
+    <div>
+      <h2>1. מערכת טורנירים</h2>
+      <div class="sub">מ-1v1 ועד תחרויות ארציות -- מותאם לגיל, הוגן ומהנה</div>
+    </div>
+  </div>
+
+  <!-- 1.1 Overview -->
+  <div class="highlight">
+    <strong>עקרון מנחה:</strong> כל טורניר חייב להרגיש כמו הרפתקה בעולם הנינג'ה, לא כמו מבחן. ההשראה: Brawl Stars Championship Challenge (15 ניצחונות לפני 3 הפסדים), Nitro Type (מירוצי הקלדה בזמן אמת), ו-Pokemon Unite Squad Battles.
+  </div>
+
+  <!-- 1.1 Types -->
+  <h3>1.1 סוגי טורנירים</h3>
+
+  <table>
+    <tr>
+      <th>סוג</th>
+      <th>פורמט</th>
+      <th>משך</th>
+      <th>גיל מינימלי</th>
+      <th>דמות מובילה</th>
+    </tr>
+    <tr>
+      <td><span class="tag tag-purple">1v1</span> קרב נינג'ה</td>
+      <td>שני שחקנים מקלידים אותו טקסט בו-זמנית. ראשון שמסיים עם 85%+ דיוק מנצח</td>
+      <td>60-120 שניות</td>
+      <td>8+ (נבט)</td>
+      <td>קאי (מאמן קרב)</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-green">כיתה vs כיתה</span> קרב דוג'ואים</td>
+      <td>ממוצע WPM + דיוק של כל חברי הכיתה. 5 סבבים, כל סבב 90 שניות</td>
+      <td>10-15 דקות</td>
+      <td>8+ (נבט)</td>
+      <td>סנסאי זן (שופט)</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-gold">בית ספר vs בית ספר</span> אליפות בתי ספר</td>
+      <td>3 הכיתות הטובות ביותר מכל בית ספר. Best-of-5 סבבים</td>
+      <td>20-30 דקות</td>
+      <td>10+ (גזע)</td>
+      <td>קי (קפטן)</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-red">טורניר הנינג'ות הגדול</span> ארצי</td>
+      <td>שלבי הקדמה (אונליין) &rarr; חצי גמר (אזורי) &rarr; גמר (ארצי). כמו BSC Championship</td>
+      <td>עונתי (3 חודשים)</td>
+      <td>10+ (גזע)</td>
+      <td>כל הדמויות</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-blue">עונתי</span> אירוע חג</td>
+      <td>טורניר מיוחד לכל חג ישראלי (ראה israeli-holiday-skins.html)</td>
+      <td>שבוע</td>
+      <td>6+ (שתיל)</td>
+      <td>משתנה לפי חג</td>
+    </tr>
+  </table>
+
+  <!-- 1.2 1v1 Details -->
+  <h3>1.2 קרב נינג'ה 1v1 -- פירוט</h3>
+
+  <div class="card">
+    <h4>זרימת קרב</h4>
+    <div class="flow-diagram">
+[שחקן לוחץ "אתגר"] --> [מערכת מוצאת יריב מתאים (MMR)]
+        |
+        v
+[מסך "מוכן?" -- ספירה לאחור 3-2-1] --> [שני השחקנים מקלידים]
+        |                                        |
+        v                                        v
+[טקסט זהה לשניהם]                    [פס התקדמות בזמן אמת]
+        |                                        |
+        v                                        v
+[שחקן מסיים / נגמר הזמן]           [תוצאה: WPM, דיוק, זמן]
+        |
+        v
+[מסך תוצאות + XP + אנימציית ניצחון]
+        |
+        v
+[אפשרות: קרב חוזר / חזרה לאולם]</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h4>מנגנון Matchmaking (MMR)</h4>
+      <ul>
+        <li><strong>חישוב MMR:</strong> משוקלל מ-WPM (40%), דיוק (35%), עקביות (25%)</li>
+        <li><strong>טווח התאמה:</strong> &plusmn;100 MMR בהתחלה, מתרחב עם זמן המתנה</li>
+        <li><strong>הפרדת גיל:</strong> שתיל (6-8) לא מתחרים מול צמרת (14-16+)</li>
+        <li><strong>MMR התחלתי:</strong> מחושב ממבחן השמה (placement engine)</li>
+        <li><strong>קבוצות גיל:</strong> 6-8 / 8-10 / 10-12 / 12-14 / 14-16+</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>חישוב דירוג (ELO-like)</h4>
+      <ul>
+        <li><strong>ניצחון נגד יריב חזק:</strong> +30 MMR</li>
+        <li><strong>ניצחון נגד יריב שווה:</strong> +20 MMR</li>
+        <li><strong>ניצחון נגד יריב חלש:</strong> +10 MMR</li>
+        <li><strong>הפסד:</strong> -10 עד -20 MMR (מופחת לגילאי 6-10)</li>
+        <li><strong>הגנה:</strong> MMR לא יורד מתחת ל-100 (רצפת בטחון)</li>
+        <li><strong>בונוס דיוק:</strong> +5 MMR ל-95%+ דיוק</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 1.3 Class vs Class -->
+  <h3>1.3 כיתה vs כיתה -- קרב דוג'ואים</h3>
+
+  <div class="card card-green">
+    <h4>פורמט קרב קבוצתי</h4>
+    <p>בהשראת Brawl Stars Club League -- כל חברי הכיתה תורמים לניקוד הכולל.</p>
+    <table>
+      <tr><th>שלב</th><th>מכניקה</th><th>ניקוד</th></tr>
+      <tr>
+        <td>1. סבב חימום</td>
+        <td>כל תלמיד מקליד 30 שניות בנפרד. ממוצע WPM של הכיתה = ניקוד בסיס</td>
+        <td>ממוצע WPM x 10</td>
+      </tr>
+      <tr>
+        <td>2. סבב דיוק</td>
+        <td>טקסט ארוך יותר, 60 שניות. ניקוד לפי דיוק ממוצע</td>
+        <td>ממוצע דיוק x 15</td>
+      </tr>
+      <tr>
+        <td>3. סבב קיצורים</td>
+        <td>רצף קיצורי מקלדת (Ctrl+C, Alt+Tab...). ניקוד לפי מהירות ביצוע</td>
+        <td>קיצורים נכונים x 20</td>
+      </tr>
+      <tr>
+        <td>4. סבב שיתוף פעולה</td>
+        <td>"שרשרת מילים": כל תלמיד מקליד מילה אחת, הכיתה משלימה טקסט ביחד</td>
+        <td>מילים שהושלמו x 25</td>
+      </tr>
+      <tr>
+        <td>5. סבב גמר</td>
+        <td>5 התלמידים הטובים ביותר מכל כיתה -- קרב 1v1 מקביל</td>
+        <td>ניצחון = 100 נק'</td>
+      </tr>
+    </table>
+    <p style="margin-top:12px;color:var(--dim)"><strong>חשוב:</strong> תלמיד חלש לא מוריד את הכיתה -- הניקוד מתבסס על השיפור האישי שלו (לא על ציון אבסולוטי). כך כולם מרגישים שהם תורמים.</p>
+  </div>
+
+  <!-- 1.4 School vs School -->
+  <h3>1.4 בית ספר vs בית ספר -- אליפות ארצית</h3>
+
+  <div class="card card-gold">
+    <div class="flow-diagram">
+              אליפות בתי ספר -- מבנה עונתי
+
+    שלב 1: ליגה אזורית (4 שבועות)
+    =============================
+    בתי ספר מחולקים לאזורים: צפון / מרכז / דרום / ירושלים
+    כל שבוע: תחרות כיתה vs כיתה בין 2 בתי ספר
+    טבלת ניקוד אזורית -- 8 הטובים עולים
+
+    שלב 2: חצי גמר אזורי (2 שבועות)
+    =================================
+    נוקאאוט: Best-of-3 קרבות כיתתיים
+    4 בתי ספר מכל אזור עולים לגמר הארצי
+
+    שלב 3: הגמר הארצי -- "טורניר הנינג'ות הגדול"
+    =============================================
+    16 בתי ספר מכל הארץ
+    אירוע חי (אונליין) עם שידור חי
+    שלושה סבבים: מהירות + דיוק + אתגר מיוחד
+    הזוכה: "דוג'ו האלוף של ישראל"</div>
+  </div>
+
+  <div class="highlight">
+    <strong>שילוב נרטיבי (מעשה 5):</strong> הטורניר הארצי הוא ה"טורניר הדיגיטלי" מהסיפור. כל בית ספר הוא "דוג'ו" שמייצג. וירוס מנסה לשבש את הטורניר (אירוע סיפורי מיוחד בגמר).
+  </div>
+
+  <!-- 1.5 Weekly/Monthly -->
+  <h3>1.5 טורנירים שבועיים וחודשיים</h3>
+
+  <table>
+    <tr>
+      <th>טורניר</th>
+      <th>תדירות</th>
+      <th>פורמט</th>
+      <th>פרס</th>
+      <th>גיל</th>
+    </tr>
+    <tr>
+      <td>אתגר שבועי</td>
+      <td>כל יום ראשון</td>
+      <td>אתגר WPM -- עבור רף מסוים לפי הגיל שלך</td>
+      <td>50 XP + תג שבועי</td>
+      <td>כולם</td>
+    </tr>
+    <tr>
+      <td>גביע החודש</td>
+      <td>ראשון בחודש</td>
+      <td>טורניר 1v1 נוקאאוט -- 16 שחקנים</td>
+      <td>סקין בלעדי + 200 XP</td>
+      <td>10+</td>
+    </tr>
+    <tr>
+      <td>אתגר הבוס</td>
+      <td>אמצע החודש</td>
+      <td>בוס CO-OP -- כיתה שלמה נגד באג/גליץ'/וירוס</td>
+      <td>תג בוס + 150 XP</td>
+      <td>8+</td>
+    </tr>
+    <tr>
+      <td>שבוע הדוג'ו</td>
+      <td>שבוע אחרון בחודש</td>
+      <td>דוג'ו vs דוג'ו -- ניקוד מצטבר של כל החברים</td>
+      <td>נקודות דוג'ו + דגל</td>
+      <td>8+</td>
+    </tr>
+    <tr>
+      <td>גביע עונתי</td>
+      <td>כל 3 חודשים</td>
+      <td>אליפות ארצית מלאה (ראה 1.4)</td>
+      <td>גביע + סקין עונתי + תואר</td>
+      <td>10+</td>
+    </tr>
+  </table>
+
+  <!-- 1.6 Age Matchmaking -->
+  <h3>1.6 התאמת גיל ורמה</h3>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th>קבוצת גיל</th>
+        <th>שם נינג'ה</th>
+        <th>WPM צפוי</th>
+        <th>זמן קרב</th>
+        <th>רמת לחץ</th>
+        <th>מנגנון הגנה</th>
+      </tr>
+      <tr>
+        <td>6-8 (שתיל)</td>
+        <td>נינג'ה מתחיל</td>
+        <td>5-15</td>
+        <td>90 שניות</td>
+        <td>אפס -- אין ספירה נראית</td>
+        <td>תמיד מנצח XP, אין "הפסד" מוצג</td>
+      </tr>
+      <tr>
+        <td>8-10 (נבט)</td>
+        <td>נינג'ה צעיר</td>
+        <td>15-25</td>
+        <td>75 שניות</td>
+        <td>נמוכה -- ספירה ירוקה</td>
+        <td>MMR לא יורד, "ניסיון טוב!" בהפסד</td>
+      </tr>
+      <tr>
+        <td>10-12 (גזע)</td>
+        <td>נינג'ה מתקדם</td>
+        <td>25-40</td>
+        <td>60 שניות</td>
+        <td>בינונית</td>
+        <td>MMR יורד לאט, עידוד לשיפור</td>
+      </tr>
+      <tr>
+        <td>12-14 (ענף)</td>
+        <td>נינג'ה מיומן</td>
+        <td>35-55</td>
+        <td>60 שניות</td>
+        <td>גבוהה -- ספירה אדומה</td>
+        <td>מערכת דירוג מלאה</td>
+      </tr>
+      <tr>
+        <td>14-16+ (צמרת)</td>
+        <td>מאסטר נינג'ה</td>
+        <td>50-80+</td>
+        <td>45 שניות</td>
+        <td>מלאה</td>
+        <td>ELO מלא, לוח הישגים תחרותי</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="warning">
+    <strong>עקרון אנטי-תסכול (Anti-Frustration):</strong> לעולם לא להראות "הפסדת!" לילדים מתחת לגיל 10. במקום: "!קרב מעולה! למדת המון" עם אנימציית כף יד של נועה. השחקן תמיד מרוויח XP (גם בהפסד), רק פחות. בהשראת מחקר על מוטיבציה במשחקים חינוכיים -- לוחות הישגים שמעודדים שיתוף פעולה מגדילים מוטיבציה יותר מתחרות ישירה.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 2: DOJO SYSTEM -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section" id="dojo">
+  <div class="section-header">
+    <span class="emoji">&#x1F3EF;</span>
+    <div>
+      <h2>2. מערכת דוג'ו (קבוצות/גילדות)</h2>
+      <div class="sub">כיתה = דוג'ו, מורה = מאסטר דוג'ו, תלמידים = נינג'ות מתאמנות</div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <strong>השראה:</strong> Brawl Stars Clubs (עד 100 חברים, Club League, תפקידים), Pokemon Unite Squads (משימות שבועיות, נקודות צוות). הדוג'ו הוא הלב של החוויה הקהילתית -- הוא גם הכיתה הלימודית וגם הגילדה במשחק.
+  </div>
+
+  <!-- 2.1 Creating/Joining -->
+  <h3>2.1 יצירה והצטרפות לדוג'ו</h3>
+
+  <div class="grid-2">
+    <div class="card">
+      <h4>מורה יוצר דוג'ו (= כיתה)</h4>
+      <ol>
+        <li>מורה נרשם ומאומת כמורה</li>
+        <li>יוצר כיתה &rarr; מתקבל <strong>קוד דוג'ו</strong> (6 תווים, כבר קיים ב-DB)</li>
+        <li>בוחר שם דוג'ו: "דוג'ו הברק", "דוג'ו הדיוק" וכו'</li>
+        <li>בוחר סמל דוג'ו (מתוך 20 אפשרויות)</li>
+        <li>מגדיר הגדרות פרטיות (ראה סעיף 7)</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h4>תלמיד מצטרף לדוג'ו</h4>
+      <ol>
+        <li>מקבל קוד דוג'ו מהמורה (6 ספרות)</li>
+        <li>מקליד את הקוד במסך "הצטרף לדוג'ו"</li>
+        <li>אם מתחת לגיל 13: נדרש אישור הורה (COPPA)</li>
+        <li>מקבל תפקיד "נינג'ה מתחיל" בדוג'ו</li>
+        <li>רואה את לוח הדוג'ו, אתגרים, ולוח הישגים פנימי</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 2.2 Dojo Ranks -->
+  <h3>2.2 דרגות ורמות דוג'ו</h3>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th>רמת דוג'ו</th>
+        <th>נקודות דוג'ו נדרשות</th>
+        <th>סמל</th>
+        <th>הטבות</th>
+      </tr>
+      <tr>
+        <td>1. דוג'ו עץ</td>
+        <td>0 - 500</td>
+        <td style="font-size:20px">&#x1FAB5;</td>
+        <td>פיצ'רים בסיסיים, לוח הישגים פנימי</td>
+      </tr>
+      <tr>
+        <td>2. דוג'ו אבן</td>
+        <td>500 - 1,500</td>
+        <td style="font-size:20px">&#x1FAA8;</td>
+        <td>+ סמל דוג'ו מותאם אישית</td>
+      </tr>
+      <tr>
+        <td>3. דוג'ו ברזל</td>
+        <td>1,500 - 3,000</td>
+        <td style="font-size:20px">&#x2694;&#xFE0F;</td>
+        <td>+ השתתפות בטורנירים בין-דוג'ואיים</td>
+      </tr>
+      <tr>
+        <td>4. דוג'ו כסף</td>
+        <td>3,000 - 6,000</td>
+        <td style="font-size:20px">&#x1FA99;</td>
+        <td>+ אתגרים בלעדיים, מדליית כסף לחברים</td>
+      </tr>
+      <tr>
+        <td>5. דוג'ו זהב</td>
+        <td>6,000 - 12,000</td>
+        <td style="font-size:20px">&#x1F947;</td>
+        <td>+ סקין דוג'ו זהב, דגל מיוחד</td>
+      </tr>
+      <tr>
+        <td>6. דוג'ו יהלום</td>
+        <td>12,000 - 25,000</td>
+        <td style="font-size:20px">&#x1F48E;</td>
+        <td>+ מסגרת יהלום לכל חברי הדוג'ו</td>
+      </tr>
+      <tr>
+        <td>7. דוג'ו מאסטר</td>
+        <td>25,000+</td>
+        <td style="font-size:20px">&#x1F3EF;</td>
+        <td>+ כותרת "דוג'ו האלוף", אפקט מיוחד</td>
+      </tr>
+    </table>
+    <p style="margin-top:12px;color:var(--dim)"><strong>צבירת נקודות:</strong> כל תלמיד שמתרגל/משלים שיעור/משתתף בטורניר צובר נקודות לדוג'ו. נקודות הדוג'ו = סכום פעילות כל החברים. כך גם תלמידים חלשים תורמים.</p>
+  </div>
+
+  <!-- 2.3 Dojo Challenges -->
+  <h3>2.3 אתגרי דוג'ו</h3>
+
+  <div class="grid-2">
+    <div class="card card-green">
+      <h4>אתגרים יומיים</h4>
+      <ul>
+        <li><strong>"אימון בוקר":</strong> כל חבר מתרגל 5 דקות &rarr; 10 נק' דוג'ו לכל חבר</li>
+        <li><strong>"שרשרת הנינג'ות":</strong> 5 חברים שונים מתרגלים באותו יום &rarr; 50 נק' בונוס</li>
+        <li><strong>"שיא יומי":</strong> חבר אחד שובר שיא אישי &rarr; 25 נק' דוג'ו</li>
+      </ul>
+    </div>
+    <div class="card card-gold">
+      <h4>אתגרים שבועיים</h4>
+      <ul>
+        <li><strong>"מסע הנינג'ה":</strong> הדוג'ו כולו צובר 1000 WPM מצטבר &rarr; 200 נק'</li>
+        <li><strong>"שבוע בלי באגים":</strong> ממוצע דיוק של הדוג'ו מעל 90% &rarr; 300 נק'</li>
+        <li><strong>"כל הכוחות":</strong> כל חבר בדוג'ו התחבר לפחות פעם אחת השבוע &rarr; 150 נק'</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 2.4 Teacher as Dojo Master -->
+  <h3>2.4 המורה כמאסטר דוג'ו</h3>
+
+  <div class="card card-purple">
+    <table>
+      <tr>
+        <th>יכולת</th>
+        <th>תיאור</th>
+        <th>דמות מלווה</th>
+      </tr>
+      <tr>
+        <td>ניהול חברים</td>
+        <td>הוספה/הסרה של תלמידים, הקצאת תפקידים (סגן מאסטר)</td>
+        <td>סנסאי זן</td>
+      </tr>
+      <tr>
+        <td>הגדרת אתגרים</td>
+        <td>יצירת אתגרי דוג'ו מותאמים אישית עם יעדים ספציפיים</td>
+        <td>סנסאי זן</td>
+      </tr>
+      <tr>
+        <td>צפייה בנתונים</td>
+        <td>דשבורד מפורט: התקדמות כל תלמיד, נקודות חולשה, מגמות</td>
+        <td>פיקסל</td>
+      </tr>
+      <tr>
+        <td>ניהול טורנירים</td>
+        <td>תזמון קרבות כיתה vs כיתה, הגדרת כללים</td>
+        <td>סנסאי זן</td>
+      </tr>
+      <tr>
+        <td>הגדרות בטיחות</td>
+        <td>הפעלה/כיבוי של פיצ'רים חברתיים, אישור השתתפות בטורנירים</td>
+        <td>סנסאי זן</td>
+      </tr>
+      <tr>
+        <td>שליחת עידוד</td>
+        <td>בחירה מרשימה מוגדרת מראש של הודעות עידוד לתלמידים</td>
+        <td>נועה</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 3: LEADERBOARDS -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section" id="leaderboards">
+  <div class="section-header">
+    <span class="emoji">&#x1F4CA;</span>
+    <div>
+      <h2>3. לוחות הישגים ודירוגים</h2>
+      <div class="sub">מיקרו ומאקרו -- מהכיתה עד הרמה הארצית, מותאם לגיל</div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <strong>עקרון עיצוב:</strong> בהשראת מחקר JMIR (2021) -- לוחות הישגים "מיקרו" (בתוך קבוצה קטנה) מגדילים מוטיבציה יותר מ"מאקרו" (עולמיים). לכן: לוח הכיתה > לוח בית הספר > לוח ארצי. שחקן תמיד רואה קודם את הלוח שבו יש לו סיכוי להתקדם.
+  </div>
+
+  <!-- 3.1 Types -->
+  <h3>3.1 סוגי לוחות הישגים</h3>
+
+  <table>
+    <tr>
+      <th>לוח</th>
+      <th>היקף</th>
+      <th>מדד</th>
+      <th>עדכון</th>
+      <th>גיל מינ'</th>
+    </tr>
+    <tr>
+      <td><span class="tag tag-green">WPM כיתתי</span></td>
+      <td>בתוך הכיתה/דוג'ו</td>
+      <td>WPM ממוצע (שבוע אחרון)</td>
+      <td>בזמן אמת</td>
+      <td>8+</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-green">דיוק כיתתי</span></td>
+      <td>בתוך הכיתה/דוג'ו</td>
+      <td>אחוז דיוק ממוצע</td>
+      <td>בזמן אמת</td>
+      <td>8+</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-blue">WPM בית ספרי</span></td>
+      <td>כל הכיתות בבית ספר</td>
+      <td>WPM ממוצע (חודש)</td>
+      <td>יומי</td>
+      <td>10+</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-purple">סטריק</span></td>
+      <td>כיתתי / בית ספרי</td>
+      <td>ימי תרגול רצופים</td>
+      <td>יומי</td>
+      <td>8+</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-gold">דירוג ארצי</span></td>
+      <td>כל ישראל (לפי קבוצת גיל)</td>
+      <td>MMR + ניצחונות בטורניר</td>
+      <td>שבועי</td>
+      <td>10+</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-gold">דירוג דוג'ואים</span></td>
+      <td>כל הדוג'ואים בארץ</td>
+      <td>נקודות דוג'ו מצטברות</td>
+      <td>שבועי</td>
+      <td>--</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-red">אלוף העונה</span></td>
+      <td>ארצי</td>
+      <td>תוצאות טורניר עונתי</td>
+      <td>עונתי</td>
+      <td>10+</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-pink">שיפור</span></td>
+      <td>אישי / כיתתי</td>
+      <td>אחוז שיפור WPM/דיוק מהשבוע הקודם</td>
+      <td>שבועי</td>
+      <td>6+</td>
+    </tr>
+  </table>
+
+  <!-- 3.2 Age-based visibility -->
+  <h3>3.2 נראות לפי גיל</h3>
+
+  <div class="card">
+    <table>
+      <tr>
+        <th>קבוצת גיל</th>
+        <th>מה רואים</th>
+        <th>מה לא רואים</th>
+        <th>עקרון</th>
+      </tr>
+      <tr>
+        <td>שתיל (6-8)</td>
+        <td>רק "השיפור שלי" + כוכבים. אין לוח הישגים כלל</td>
+        <td>כל לוח תחרותי</td>
+        <td>"אתה מתחרה רק עם עצמך!"</td>
+      </tr>
+      <tr>
+        <td>נבט (8-10)</td>
+        <td>לוח כיתתי (WPM + שיפור). Top 3 עם כתרים</td>
+        <td>לוח בית ספרי, ארצי</td>
+        <td>"הכיתה שלך היא הדוג'ו שלך"</td>
+      </tr>
+      <tr>
+        <td>גזע (10-12)</td>
+        <td>כיתתי + בית ספרי + סטריק</td>
+        <td>לוח ארצי (רק דוג'ואים)</td>
+        <td>"בית הספר שלך מתחרה!"</td>
+      </tr>
+      <tr>
+        <td>ענף (12-14)</td>
+        <td>הכל + לוח ארצי (קבוצת גיל)</td>
+        <td>--</td>
+        <td>"אתה נינג'ה מיומן, תראה את המיקום שלך בארץ"</td>
+      </tr>
+      <tr>
+        <td>צמרת (14-16+)</td>
+        <td>הכל + דירוג MMR מדויק + סטטיסטיקות מתקדמות</td>
+        <td>--</td>
+        <td>"נתונים מלאים, כמו פרו"</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 3.3 Leaderboard Mockup -->
+  <h3>3.3 מוקאפ -- לוח הישגים כיתתי</h3>
+
+  <div class="mockup">
+    <div class="title">MOCKUP -- לוח הישגים כיתתי (נבט/גזע)</div>
+    <pre style="direction:rtl;text-align:right;font-size:14px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;color:var(--text)">
+ ╔══════════════════════════════════════════════════╗
+ ║  &#x1F3EF; דוג'ו הברק -- לוח הישגים שבועי           ║
+ ╠══════════════════════════════════════════════════╣
+ ║                                                  ║
+ ║  &#x1F451; #1  &#x1F9D1; דני       42 WPM  98%  &#x1F525; 12 ימים   ║
+ ║  &#x1F948; #2  &#x1F9D1; שירה      38 WPM  96%  &#x1F525; 8 ימים    ║
+ ║  &#x1F949; #3  &#x1F9D1; איתי      35 WPM  94%  &#x1F525; 5 ימים    ║
+ ║  ───────────────────────────────────────────     ║
+ ║   #4  &#x1F9D1; נעמה      33 WPM  97%  &#x1F525; 3 ימים       ║
+ ║   #5  &#x1F9D1; יונתן     30 WPM  91%  &#x1F525; 7 ימים       ║
+ ║  ...                                             ║
+ ║  ───────────────────────────────────────────     ║
+ ║  &#x1F4C8; #12 &#x1F9D1; [אתה]     22 WPM  88%  &#x1F525; 2 ימים    ║
+ ║       &#x2B06;&#xFE0F; עלית 3 מקומות השבוע!                  ║
+ ║                                                  ║
+ ║  [&#x1F3C6; אתגר שבועי: 25 WPM &rarr; 100 XP]             ║
+ ╚══════════════════════════════════════════════════╝</pre>
+  </div>
+
+  <div class="success">
+    <strong>עקרון "השיפור שלך":</strong> השחקן תמיד רואה את עצמו בלוח, גם אם הוא במקום 25 מתוך 30. אבל במקום להדגיש שהוא "אחרון", מודגש כמה מקומות הוא עלה. "עלית 3 מקומות השבוע!" חשוב הרבה יותר מ"מקום 25".
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 4: SOCIAL FEATURES -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section" id="social">
+  <div class="section-header">
+    <span class="emoji">&#x1F91D;</span>
+    <div>
+      <h2>4. פיצ'רים חברתיים בטוחים לילדים</h2>
+      <div class="sub">ללא טקסט חופשי, ללא הודעות ישירות -- רק תגובות מוגדרות מראש ואתגרים</div>
+    </div>
+  </div>
+
+  <div class="warning">
+    <strong>כלל ברזל:</strong> אין שום טקסט חופשי בין ילדים. אין צ'אט, אין הודעות, אין תגובות טקסטואליות. רק פעולות מוגדרות מראש. זה לא רק COPPA -- זה עקרון עיצוב. בהשראת Nitro Type: "no player chat and instant AI moderation."
+  </div>
+
+  <!-- 4.1 Pre-made Reactions -->
+  <h3>4.1 תגובות מוגדרות מראש (Emote System)</h3>
+
+  <div class="card">
+    <h4>תגובות בזמן קרב</h4>
+    <div class="badge-row">
+      <div class="badge-item">&#x1F44F; כל הכבוד!</div>
+      <div class="badge-item">&#x1F525; להבה!</div>
+      <div class="badge-item">&#x26A1; מהר!</div>
+      <div class="badge-item">&#x1F4AA; חזק!</div>
+      <div class="badge-item">&#x1F60E; מגניב!</div>
+      <div class="badge-item">&#x1F92F; וואו!</div>
+    </div>
+
+    <h4>תגובות אחרי קרב</h4>
+    <div class="badge-row">
+      <div class="badge-item">&#x1F91D; קרב טוב!</div>
+      <div class="badge-item">&#x1F3C6; אלוף/ה!</div>
+      <div class="badge-item">&#x1F504; עוד פעם?</div>
+      <div class="badge-item">&#x1F4AA; התקדמת מאוד!</div>
+      <div class="badge-item">&#x1F31F; מדהים!</div>
+      <div class="badge-item">&#x1F44B; להתראות!</div>
+    </div>
+
+    <h4>תגובות בדוג'ו</h4>
+    <div class="badge-row">
+      <div class="badge-item">&#x1F44B; בוקר טוב!</div>
+      <div class="badge-item">&#x1F4AA; יאללה נתאמן!</div>
+      <div class="badge-item">&#x1F389; שברתי שיא!</div>
+      <div class="badge-item">&#x1F525; רצף 7 ימים!</div>
+      <div class="badge-item">&#x1F64F; תודה מורה!</div>
+      <div class="badge-item">&#x2B50; כל הכבוד לכולם!</div>
+    </div>
+  </div>
+
+  <!-- 4.2 Challenge Friends -->
+  <h3>4.2 אתגור חברים</h3>
+
+  <div class="card">
+    <div class="flow-diagram">
+[שחקן A בוחר "אתגר חבר מהדוג'ו"]
+        |
+        v
+[רשימת חברי הדוג'ו -- בחירת יריב]
+        |
+        v
+[שחקן B מקבל התראה: "דני מאתגר אותך לקרב!"]
+        |
+        +---> [מקבל] --> [קרב 1v1 מתחיל]
+        |
+        +---> [דוחה] --> [הודעה: "בפעם אחרת!"]
+        |
+        +---> [לא מחובר] --> [האתגר נשמר 24 שעות]
+
+    * אתגרים מוגבלים ל-5 ביום (נגד ספאם)
+    * אפשר לאתגר רק חברי דוג'ו (לא זרים)
+    * אישור מורה נדרש אם מתחת לגיל 10</div>
+  </div>
+
+  <!-- 4.3 Share Achievements -->
+  <h3>4.3 שיתוף הישגים</h3>
+
+  <div class="card card-green">
+    <p>שחקנים יכולים <strong>להציג</strong> (לא לשתף החוצה) את ההישגים שלהם בפרופיל הדוג'ו:</p>
+    <ul>
+      <li><strong>תגים:</strong> תגים שנצברו מוצגים בפרופיל (עד 3 מוצגים)</li>
+      <li><strong>סקינים:</strong> הסקין הנבחר מוצג ליד השם בלוח הישגים</li>
+      <li><strong>כותרת:</strong> כותרת מתחת לשם: "&#x26A1; ספרינטר מהיר", "&#x1F3AF; צלף מדויק"</li>
+      <li><strong>שיא אישי:</strong> WPM מקסימלי מוצג בפרופיל</li>
+      <li><strong>גביעים:</strong> גביעי טורניר מוצגים על "מדף הגביעים" בפרופיל</li>
+    </ul>
+    <p style="margin-top:12px;color:var(--dim)"><strong>חשוב:</strong> אין שיתוף חיצוני (לא לרשתות חברתיות, לא הורדת תמונה). הכל נשאר בתוך המשחק. הורה/מורה יכול לראות דרך הדשבורד שלהם.</p>
+  </div>
+
+  <!-- 4.4 Spectate -->
+  <h3>4.4 צפייה בקרבות (Spectate)</h3>
+
+  <div class="card">
+    <ul>
+      <li><strong>צפייה חיה:</strong> חברי דוג'ו יכולים לצפות בקרב 1v1 בזמן אמת</li>
+      <li><strong>צופים רואים:</strong> שמות (ללא פרטים אישיים), WPM, דיוק, פס התקדמות</li>
+      <li><strong>צופים יכולים:</strong> לשלוח תגובות מוגדרות מראש (&#x1F44F; &#x1F525; &#x26A1;)</li>
+      <li><strong>צופים לא יכולים:</strong> לשלוח טקסט, לראות מה השחקנים מקלידים, להפריע</li>
+      <li><strong>הגבלה:</strong> עד 20 צופים לקרב (ביצועי Supabase Realtime)</li>
+      <li><strong>רשות מורה:</strong> מורה יכול לכבות צפייה לתלמידים ספציפיים</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 5: REWARDS -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section" id="rewards">
+  <div class="section-header">
+    <span class="emoji">&#x1F381;</span>
+    <div>
+      <h2>5. מערכת פרסים -- סקינים, תגים, גביעים וכותרות</h2>
+      <div class="sub">פרסים בלעדיים שאי אפשר להשיג בשום דרך אחרת -- מוטיבציה עילית</div>
+    </div>
+  </div>
+
+  <!-- 5.1 Tournament Skins -->
+  <h3>5.1 סקינים בלעדיים לטורנירים</h3>
+
+  <div class="card card-gold">
+    <table>
+      <tr>
+        <th>טורניר</th>
+        <th>סקין</th>
+        <th>דמות</th>
+        <th>רמה</th>
+      </tr>
+      <tr>
+        <td>ניצחון 1v1 ראשון</td>
+        <td>"נינג'ה מנצח" -- סרט ראש זהוב</td>
+        <td>קי</td>
+        <td><span class="tag tag-green">ברונזה</span></td>
+      </tr>
+      <tr>
+        <td>10 ניצחונות 1v1</td>
+        <td>"לוחם הזירה" -- שריון קרב</td>
+        <td>קאי</td>
+        <td><span class="tag tag-blue">כסף</span></td>
+      </tr>
+      <tr>
+        <td>אלוף גביע החודש</td>
+        <td>"אלוף החודש" -- גלימה סגולה</td>
+        <td>קי</td>
+        <td><span class="tag tag-gold">זהב</span></td>
+      </tr>
+      <tr>
+        <td>ניצחון כיתה vs כיתה</td>
+        <td>"דוג'ו מנצח" -- דגל דוג'ו על הגב</td>
+        <td>כל הדמויות</td>
+        <td><span class="tag tag-green">ברונזה</span></td>
+      </tr>
+      <tr>
+        <td>חצי גמר ארצי</td>
+        <td>"ספרינטר ישראלי" -- חולצה כחול-לבן</td>
+        <td>יוקי</td>
+        <td><span class="tag tag-blue">כסף</span></td>
+      </tr>
+      <tr>
+        <td>אלוף ארצי</td>
+        <td>"מאסטר הנינג'ות" -- חליפה זהובה מלאה</td>
+        <td>קי</td>
+        <td><span class="tag tag-gold">זהב</span></td>
+      </tr>
+      <tr>
+        <td>אלוף עונתי</td>
+        <td>סקין עונתי ייחודי (משתנה כל עונה)</td>
+        <td>משתנה</td>
+        <td><span class="tag tag-red">אגדי</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 5.2 Dojo Badges -->
+  <h3>5.2 תגי דוג'ו</h3>
+
+  <div class="badge-row">
+    <div class="badge-item" style="border-color:var(--green)">&#x1F331; חבר דוג'ו -- הצטרפת לדוג'ו</div>
+    <div class="badge-item" style="border-color:var(--purple)">&#x1F4AA; תורם -- 100 נק' לדוג'ו בשבוע</div>
+    <div class="badge-item" style="border-color:var(--gold)">&#x2B50; MVP -- הכי הרבה נקודות דוג'ו בשבוע</div>
+    <div class="badge-item" style="border-color:var(--blue)">&#x1F525; רצף דוג'ו -- 30 ימי תרגול רצופים</div>
+    <div class="badge-item" style="border-color:var(--pink)">&#x1F91D; מנטור -- עזרת ל-3 חברי דוג'ו להשתפר</div>
+    <div class="badge-item" style="border-color:var(--red)">&#x1F3C6; אלוף הדוג'ו -- #1 בלוח הישגים הכיתתי</div>
+  </div>
+
+  <!-- 5.3 Championship Titles -->
+  <h3>5.3 כותרות אליפות</h3>
+
+  <div class="card">
+    <table>
+      <tr><th>כותרת</th><th>תנאי</th><th>תצוגה</th></tr>
+      <tr>
+        <td>&#x26A1; "ספרינטר מהיר"</td>
+        <td>WPM מעל 50 ב-10 קרבות</td>
+        <td>מתחת לשם בלוח הישגים</td>
+      </tr>
+      <tr>
+        <td>&#x1F3AF; "צלף מדויק"</td>
+        <td>95%+ דיוק ב-20 קרבות רצופים</td>
+        <td>מתחת לשם בלוח הישגים</td>
+      </tr>
+      <tr>
+        <td>&#x1F525; "נינג'ה בלתי ניתן לעצירה"</td>
+        <td>10 ניצחונות 1v1 רצופים</td>
+        <td>כותרת מהבהבת בלוח</td>
+      </tr>
+      <tr>
+        <td>&#x1F3EF; "מאסטר הדוג'ו"</td>
+        <td>#1 בדוג'ו ב-4 שבועות רצופים</td>
+        <td>כתר ליד השם</td>
+      </tr>
+      <tr>
+        <td>&#x1F1EE;&#x1F1F1; "אלוף ישראל"</td>
+        <td>מקום 1 בגמר ארצי</td>
+        <td>מסגרת זהב + דגל ישראל</td>
+      </tr>
+      <tr>
+        <td>&#x1F9D8; "סנסאי"</td>
+        <td>השלמת כל 20 השיעורים + 100+ ניצחונות</td>
+        <td>כותרת מיוחדת בזהב</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 5.4 Seasonal Cups -->
+  <h3>5.4 גביעים עונתיים</h3>
+
+  <div class="grid-3">
+    <div class="stat-card" style="border-color:var(--green)">
+      <div class="num" style="color:var(--green)">&#x1F33F;</div>
+      <div class="label">גביע אביב<br>ניסן-סיוון</div>
+    </div>
+    <div class="stat-card" style="border-color:var(--gold)">
+      <div class="num" style="color:var(--gold)">&#x2600;&#xFE0F;</div>
+      <div class="label">גביע קיץ<br>תמוז-אלול</div>
+    </div>
+    <div class="stat-card" style="border-color:var(--orange)">
+      <div class="num" style="color:var(--orange)">&#x1F342;</div>
+      <div class="label">גביע סתיו<br>תשרי-כסלו</div>
+    </div>
+    <div class="stat-card" style="border-color:var(--blue)">
+      <div class="num" style="color:var(--blue)">&#x2744;&#xFE0F;</div>
+      <div class="label">גביע חורף<br>טבת-אדר</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 6: TECHNICAL ARCHITECTURE -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section" id="technical">
+  <div class="section-header">
+    <span class="emoji">&#x1F527;</span>
+    <div>
+      <h2>6. ארכיטקטורה טכנית</h2>
+      <div class="sub">Supabase Realtime, סכמת DB, Matchmaking, Anti-Cheat</div>
+    </div>
+  </div>
+
+  <!-- 6.1 Supabase Realtime -->
+  <h3>6.1 Supabase Realtime לקרבות חיים</h3>
+
+  <div class="card">
+    <h4>שלושה ערוצי Realtime</h4>
+    <table>
+      <tr><th>ערוץ</th><th>סוג</th><th>שימוש</th></tr>
+      <tr>
+        <td><code>battle:{battleId}</code></td>
+        <td>Broadcast</td>
+        <td>שידור WPM, דיוק, התקדמות בזמן אמת בין שני שחקנים</td>
+      </tr>
+      <tr>
+        <td><code>battle:{battleId}:spectators</code></td>
+        <td>Presence</td>
+        <td>מעקב אחרי צופים מחוברים, תגובות צופים</td>
+      </tr>
+      <tr>
+        <td><code>matchmaking:{ageGroup}</code></td>
+        <td>Broadcast</td>
+        <td>חיפוש יריב -- שחקנים מפרסמים MMR ומחכים להתאמה</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h4>זרימת קרב -- ארכיטקטורה</h4>
+    <div class="flow-diagram">
+Client A                    Supabase                    Client B
+   |                           |                           |
+   |--[join matchmaking]------>|                           |
+   |                           |<------[join matchmaking]--|
+   |                           |                           |
+   |                    [MMR match found]                  |
+   |                           |                           |
+   |<--[battle_created]--------|--------[battle_created]-->|
+   |                           |                           |
+   |--[ready]----------------->|                           |
+   |                           |<-----------[ready]--------|
+   |                           |                           |
+   |<--[countdown 3..2..1]----|----[countdown 3..2..1]--->|
+   |                           |                           |
+   |--[progress: wpm,acc]----->|                           |
+   |                           |------[progress: wpm,acc]->|
+   |<--[opponent_progress]----|                           |
+   |                           |<---[opponent_progress]----|
+   |   ... (every 500ms) ...  |                           |
+   |                           |                           |
+   |--[finished]-------------->|                           |
+   |                           |<-----------[finished]----|
+   |                           |                           |
+   |<--[results]--------------|--------[results]--------->|
+   |                           |                           |
+   |             [save to DB: battles table]               |</div>
+  </div>
+
+  <!-- 6.2 Database Schema -->
+  <h3>6.2 תוספות לסכמת DB</h3>
+
+  <div class="card">
+    <pre>
+-- ===========================================
+-- DOJOS (extends existing classes table)
+-- ===========================================
+ALTER TABLE public.classes ADD COLUMN IF NOT EXISTS
+  dojo_name TEXT,
+  dojo_icon TEXT DEFAULT 'default',
+  dojo_level INTEGER DEFAULT 1,
+  dojo_points INTEGER DEFAULT 0,
+  dojo_settings JSONB DEFAULT '{
+    "social_features_enabled": true,
+    "tournament_participation": true,
+    "spectating_allowed": true,
+    "challenge_approval_required": false
+  }';
+
+-- ===========================================
+-- BATTLES (1v1 typing battles)
+-- ===========================================
+CREATE TABLE public.battles (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  player_a UUID NOT NULL REFERENCES public.users(id),
+  player_b UUID NOT NULL REFERENCES public.users(id),
+  battle_type TEXT NOT NULL DEFAULT '1v1'
+    CHECK (battle_type IN ('1v1', 'class_vs_class',
+           'school_vs_school', 'tournament')),
+  text_content TEXT NOT NULL,
+  text_language TEXT DEFAULT 'he',
+
+  -- Results
+  winner_id UUID REFERENCES public.users(id),
+  player_a_wpm INTEGER,
+  player_a_accuracy NUMERIC(5,2),
+  player_a_time_ms INTEGER,
+  player_b_wpm INTEGER,
+  player_b_accuracy NUMERIC(5,2),
+  player_b_time_ms INTEGER,
+
+  -- Metadata
+  age_group TEXT CHECK (age_group IN (
+    'shatil','nevet','geza','anaf','tzameret')),
+  tournament_id UUID REFERENCES public.tournaments(id),
+  status TEXT DEFAULT 'pending'
+    CHECK (status IN ('pending','active',
+           'completed','cancelled')),
+
+  created_at TIMESTAMPTZ DEFAULT now(),
+  completed_at TIMESTAMPTZ
+);
+
+-- ===========================================
+-- TOURNAMENTS
+-- ===========================================
+CREATE TABLE public.tournaments (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name TEXT NOT NULL,
+  tournament_type TEXT NOT NULL
+    CHECK (tournament_type IN ('weekly','monthly',
+           'seasonal','school','national','holiday')),
+  status TEXT DEFAULT 'upcoming'
+    CHECK (status IN ('upcoming','registration',
+           'active','completed','cancelled')),
+
+  -- Scheduling
+  registration_start TIMESTAMPTZ,
+  start_date TIMESTAMPTZ NOT NULL,
+  end_date TIMESTAMPTZ NOT NULL,
+
+  -- Config
+  age_groups TEXT[] DEFAULT '{nevet,geza,anaf,tzameret}',
+  max_participants INTEGER DEFAULT 64,
+  format JSONB DEFAULT '{"rounds": 4, "type": "knockout"}',
+
+  -- Results
+  results JSONB DEFAULT '[]',
+  winner_id UUID REFERENCES public.users(id),
+  winner_dojo_id UUID REFERENCES public.classes(id),
+
+  created_by UUID REFERENCES public.users(id),
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- ===========================================
+-- TOURNAMENT PARTICIPANTS
+-- ===========================================
+CREATE TABLE public.tournament_participants (
+  tournament_id UUID REFERENCES public.tournaments(id)
+    ON DELETE CASCADE,
+  user_id UUID REFERENCES public.users(id)
+    ON DELETE CASCADE,
+  dojo_id UUID REFERENCES public.classes(id),
+  seed INTEGER,
+  mmr_at_registration INTEGER,
+  status TEXT DEFAULT 'registered'
+    CHECK (status IN ('registered','active',
+           'eliminated','winner')),
+  PRIMARY KEY (tournament_id, user_id)
+);
+
+-- ===========================================
+-- PLAYER MMR (Matchmaking Rating)
+-- ===========================================
+CREATE TABLE public.player_mmr (
+  user_id UUID PRIMARY KEY REFERENCES public.users(id)
+    ON DELETE CASCADE,
+  mmr INTEGER DEFAULT 500,
+  age_group TEXT NOT NULL,
+  wins INTEGER DEFAULT 0,
+  losses INTEGER DEFAULT 0,
+  win_streak INTEGER DEFAULT 0,
+  best_win_streak INTEGER DEFAULT 0,
+  last_battle_at TIMESTAMPTZ,
+  updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- ===========================================
+-- DOJO POINTS LOG
+-- ===========================================
+CREATE TABLE public.dojo_points_log (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  dojo_id UUID NOT NULL REFERENCES public.classes(id)
+    ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES public.users(id),
+  points INTEGER NOT NULL,
+  reason TEXT NOT NULL,
+  -- e.g. 'practice','lesson','tournament_win',
+  --      'challenge','streak','daily'
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- ===========================================
+-- SOCIAL: REACTIONS
+-- ===========================================
+CREATE TABLE public.reactions (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  sender_id UUID NOT NULL REFERENCES public.users(id),
+  target_type TEXT NOT NULL
+    CHECK (target_type IN ('battle','achievement',
+           'dojo','profile')),
+  target_id UUID NOT NULL,
+  reaction_code TEXT NOT NULL,
+  -- e.g. 'clap','fire','fast','strong','cool','wow'
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- ===========================================
+-- SOCIAL: CHALLENGES (friend challenges)
+-- ===========================================
+CREATE TABLE public.challenges (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  challenger_id UUID NOT NULL REFERENCES public.users(id),
+  challenged_id UUID NOT NULL REFERENCES public.users(id),
+  dojo_id UUID REFERENCES public.classes(id),
+  status TEXT DEFAULT 'pending'
+    CHECK (status IN ('pending','accepted',
+           'declined','expired','completed')),
+  battle_id UUID REFERENCES public.battles(id),
+  expires_at TIMESTAMPTZ DEFAULT now() + interval '24 hours',
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- ===========================================
+-- LEADERBOARDS (materialized views)
+-- ===========================================
+CREATE MATERIALIZED VIEW public.leaderboard_weekly_wpm AS
+SELECT
+  u.id AS user_id,
+  u.display_name,
+  u.age,
+  cm.class_id AS dojo_id,
+  CASE
+    WHEN u.age BETWEEN 6 AND 8 THEN 'shatil'
+    WHEN u.age BETWEEN 8 AND 10 THEN 'nevet'
+    WHEN u.age BETWEEN 10 AND 12 THEN 'geza'
+    WHEN u.age BETWEEN 12 AND 14 THEN 'anaf'
+    ELSE 'tzameret'
+  END AS age_group,
+  AVG(s.wpm) AS avg_wpm,
+  AVG(s.accuracy) AS avg_accuracy,
+  COUNT(s.id) AS session_count
+FROM public.users u
+JOIN public.sessions s ON s.user_id = u.id
+LEFT JOIN public.class_members cm ON cm.user_id = u.id
+WHERE s.created_at >= now() - interval '7 days'
+  AND u.role = 'student'
+GROUP BY u.id, u.display_name, u.age, cm.class_id
+ORDER BY avg_wpm DESC;
+
+-- Refresh every hour via pg_cron or Supabase Edge Function
+-- SELECT cron.schedule('refresh-leaderboard',
+--   '0 * * * *',
+--   'REFRESH MATERIALIZED VIEW CONCURRENTLY
+--    public.leaderboard_weekly_wpm');
+
+-- ===========================================
+-- INDEXES
+-- ===========================================
+CREATE INDEX idx_battles_players
+  ON public.battles (player_a, player_b);
+CREATE INDEX idx_battles_tournament
+  ON public.battles (tournament_id)
+  WHERE tournament_id IS NOT NULL;
+CREATE INDEX idx_battles_status
+  ON public.battles (status, created_at);
+CREATE INDEX idx_player_mmr_age
+  ON public.player_mmr (age_group, mmr);
+CREATE INDEX idx_dojo_points_dojo
+  ON public.dojo_points_log (dojo_id, created_at);
+CREATE INDEX idx_challenges_pending
+  ON public.challenges (challenged_id, status)
+  WHERE status = 'pending';
+CREATE INDEX idx_tournaments_active
+  ON public.tournaments (status, start_date)
+  WHERE status IN ('upcoming','registration','active');
+
+-- ===========================================
+-- RLS POLICIES
+-- ===========================================
+ALTER TABLE public.battles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.tournaments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.tournament_participants
+  ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.player_mmr ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.dojo_points_log
+  ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.reactions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.challenges ENABLE ROW LEVEL SECURITY;
+
+-- Players can read own battles and battles they're in
+CREATE POLICY battles_read ON public.battles
+  FOR SELECT USING (
+    auth.uid() = player_a OR
+    auth.uid() = player_b OR
+    EXISTS (
+      SELECT 1 FROM public.class_members cm
+      WHERE cm.user_id = auth.uid()
+        AND cm.class_id IN (
+          SELECT cm2.class_id FROM public.class_members cm2
+          WHERE cm2.user_id IN (battles.player_a,
+                                battles.player_b)
+        )
+    )
+  );
+
+-- Teachers can read all battles for their class
+CREATE POLICY battles_teacher_read ON public.battles
+  FOR SELECT USING (
+    EXISTS (
+      SELECT 1 FROM public.classes c
+      WHERE c.teacher_id = auth.uid()
+    )
+  );</pre>
+  </div>
+
+  <!-- 6.3 Anti-Cheat -->
+  <h3>6.3 מנגנון אנטי-צ'יט</h3>
+
+  <div class="card card-red">
+    <h4>שכבות הגנה (בהשראת TypeRacer Anti-Cheat)</h4>
+    <table>
+      <tr><th>שכבה</th><th>מנגנון</th><th>יישום</th></tr>
+      <tr>
+        <td>1. מניעה בסיסית</td>
+        <td>חסימת Copy/Paste, Drag & Drop, Auto-fill</td>
+        <td>Event listeners: <code>onPaste</code>, <code>onDrop</code> blocked. <code>autocomplete=off</code></td>
+      </tr>
+      <tr>
+        <td>2. ניתוח קצב</td>
+        <td>בדיקת עקביות הקלדה -- רובוט מקליד בקצב אחיד, אנושי לא</td>
+        <td>חישוב סטיית תקן של inter-key-intervals. אם SD &lt; 10ms &rarr; חשוד</td>
+      </tr>
+      <tr>
+        <td>3. רף WPM</td>
+        <td>WPM שחורג מ-200% מהממוצע ההיסטורי של השחקן &rarr; בדיקה</td>
+        <td>השוואה ל-<code>player_mmr.avg_wpm_history</code></td>
+      </tr>
+      <tr>
+        <td>4. CAPTCHA הקלדה</td>
+        <td>אחרי שיא WPM חשוד: תמונה עם טקסט (לא OCR-friendly)</td>
+        <td>Gemini-generated Hebrew text images. אי אפשר להעתיק</td>
+      </tr>
+      <tr>
+        <td>5. אימות צד שרת</td>
+        <td>השרת מאמת: זמני הקשה נשלחים ומושווים, לא רק תוצאה סופית</td>
+        <td>Supabase Edge Function מקבלת keystroke timestamps</td>
+      </tr>
+      <tr>
+        <td>6. דיווח</td>
+        <td>שחקנים יכולים לדווח על "משהו מוזר" (לא "מרמה" -- שפה בטוחה)</td>
+        <td>כפתור &#x1F6A9; &rarr; מורה/אדמין מקבל התראה</td>
+      </tr>
+    </table>
+
+    <div class="warning" style="margin-top:16px">
+      <strong>תגובה לזיהוי רמאות:</strong> אין באן מיידי! במקום: (1) תוצאת הקרב לא נספרת ללוח הישגים, (2) מורה מקבל התראה שקטה, (3) אחרי 3 זיהויים -- חשבון מסומן לבדיקת מורה. <strong>לעולם לא "להעניש" ילד פומבית.</strong>
+    </div>
+  </div>
+
+  <!-- 6.4 Matchmaking Algorithm -->
+  <h3>6.4 אלגוריתם Matchmaking</h3>
+
+  <div class="card">
+    <pre>
+// Matchmaking Algorithm (Pseudo-code)
+
+function findMatch(player: Player): Match | null {
+  const pool = getWaitingPlayers(player.ageGroup)
+
+  // Phase 1: Tight match (0-5 seconds)
+  const tight = pool.filter(p =>
+    Math.abs(p.mmr - player.mmr) <= 50 &&
+    p.id !== player.id
+  )
+  if (tight.length > 0) return bestMatch(tight, player)
+
+  // Phase 2: Wider match (5-15 seconds)
+  const wider = pool.filter(p =>
+    Math.abs(p.mmr - player.mmr) <= 150 &&
+    p.id !== player.id
+  )
+  if (wider.length > 0) return bestMatch(wider, player)
+
+  // Phase 3: Cross-age adjacent (15-30 seconds)
+  const adjacent = getAdjacentAgeGroup(player.ageGroup)
+  const cross = getWaitingPlayers(adjacent).filter(p =>
+    Math.abs(p.mmr - player.mmr) <= 100
+  )
+  if (cross.length > 0) return bestMatch(cross, player)
+
+  // Phase 4: AI opponent (30+ seconds)
+  return createAIOpponent(player.mmr, player.ageGroup)
+  // Shadow (easy), Storm (medium), Blaze (hard)
+}
+
+function bestMatch(candidates, player): Match {
+  // Sort by: MMR distance (40%), recent-battle-diversity
+  // (30%), connection quality (30%)
+  return candidates.sort((a, b) =>
+    score(a, player) - score(b, player)
+  )[0]
+}</pre>
+  </div>
+
+  <div class="success">
+    <strong>גיבוי AI:</strong> אם אין יריב אנושי תוך 30 שניות, המערכת מציעה קרב נגד Shadow/Storm/Blaze (היריבים הקיימים). הילד לא יודע -- חווית הקרב זהה. זה מבטיח שתמיד יש עם מי לשחק.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 7: SAFETY & COMPLIANCE -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section" id="safety">
+  <div class="section-header">
+    <span class="emoji">&#x1F6E1;&#xFE0F;</span>
+    <div>
+      <h2>7. בטיחות, פרטיות ו-COPPA</h2>
+      <div class="sub">הגנה מקסימלית על ילדים -- ללא פשרות</div>
+    </div>
+  </div>
+
+  <div class="warning">
+    <strong>הנחת עבודה:</strong> 100% מהמשתמשים הם ילדים מתחת ל-16. כל פיצ'ר חייב להיות בטוח לילד בן 6 בלי שום בקרה הורית. COPPA (ינואר 2025 עדכון) דורש הסכמה הורית מאומתת לכל מידע אישי -- אנחנו הולכים מעבר.
+  </div>
+
+  <!-- 7.1 COPPA -->
+  <h3>7.1 עמידה ב-COPPA (Children's Online Privacy Protection Act)</h3>
+
+  <div class="card">
+    <table>
+      <tr><th>דרישת COPPA</th><th>יישום ב-Ninja Keyboard</th></tr>
+      <tr>
+        <td>הסכמה הורית מאומתת לאיסוף מידע</td>
+        <td>טבלת <code>consents</code> קיימת. נוסיף consent_type: <code>'social_features'</code>, <code>'tournament_participation'</code>, <code>'leaderboard_display'</code></td>
+      </tr>
+      <tr>
+        <td>אין איסוף מידע מעבר לנדרש</td>
+        <td>לוח הישגים מציג רק display_name (לא שם מלא, לא אימייל, לא מיקום)</td>
+      </tr>
+      <tr>
+        <td>אין תקשורת ישירה בין ילדים</td>
+        <td>רק תגובות מוגדרות מראש (emotes). אין צ'אט, אין הודעות</td>
+      </tr>
+      <tr>
+        <td>הגנה על persistent identifiers</td>
+        <td>UUID בלבד, ללא device IDs, ללא cookies לפרסום, ללא geolocation</td>
+      </tr>
+      <tr>
+        <td>הורה יכול לבדוק ולמחוק מידע</td>
+        <td>דשבורד הורה: צפייה בנתונים, מחיקת חשבון, כיבוי פיצ'רים</td>
+      </tr>
+      <tr>
+        <td>הסכמה נפרדת לפיצ'רים "לא-חיוניים"</td>
+        <td>טורנירים ולוחות הישגים = opt-in, דורשים הסכמה נפרדת</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 7.2 No Personal Info -->
+  <h3>7.2 אפס מידע אישי בממשק הציבורי</h3>
+
+  <div class="card card-green">
+    <table>
+      <tr><th>מה מוצג</th><th>מה לא מוצג לעולם</th></tr>
+      <tr>
+        <td>&#x2705; כינוי (display_name) -- 3-15 תווים</td>
+        <td>&#x274C; שם מלא</td>
+      </tr>
+      <tr>
+        <td>&#x2705; אווטאר שנבחר (מרשימה קבועה)</td>
+        <td>&#x274C; תמונה אישית</td>
+      </tr>
+      <tr>
+        <td>&#x2705; WPM, דיוק, סטריק</td>
+        <td>&#x274C; גיל מדויק (רק קבוצת גיל)</td>
+      </tr>
+      <tr>
+        <td>&#x2705; שם הדוג'ו</td>
+        <td>&#x274C; שם בית הספר</td>
+      </tr>
+      <tr>
+        <td>&#x2705; תגים וסקינים</td>
+        <td>&#x274C; מיקום גאוגרפי</td>
+      </tr>
+      <tr>
+        <td>&#x2705; דירוג MMR (מספר)</td>
+        <td>&#x274C; אימייל, טלפון, כתובת</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 7.3 Teacher/Parent Approval -->
+  <h3>7.3 שכבות אישור</h3>
+
+  <div class="card">
+    <div class="flow-diagram">
+    שכבת אישור לפיצ'רים חברתיים
+
+    ┌─────────────────────────────────────────────┐
+    │  תלמיד רוצה להשתתף בטורניר                │
+    │                                             │
+    │  גיל 6-9 (שתיל/נבט):                      │
+    │    [אישור הורה] + [אישור מורה]             │
+    │    שניהם חייבים לאשר                        │
+    │                                             │
+    │  גיל 10-12 (גזע):                          │
+    │    [אישור הורה] בלבד                        │
+    │    מורה רואה אבל לא חוסם                    │
+    │                                             │
+    │  גיל 13+ (ענף/צמרת):                       │
+    │    [אישור הורה חד-פעמי] בהרשמה              │
+    │    אחרי זה -- עצמאי                         │
+    └─────────────────────────────────────────────┘
+
+    בקרות מורה (toggle per feature):
+    ┌──────────────────────────────────────┐
+    │  [x] לוח הישגים כיתתי              │
+    │  [x] אתגור חברים בדוג'ו            │
+    │  [ ] טורניר 1v1 (כבוי ברירת מחדל)  │
+    │  [x] צפייה בקרבות                  │
+    │  [ ] לוח הישגים בית ספרי            │
+    │  [ ] טורניר בין בתי ספר             │
+    └──────────────────────────────────────┘</div>
+  </div>
+
+  <!-- 7.4 Report/Block -->
+  <h3>7.4 דיווח וחסימה</h3>
+
+  <div class="card">
+    <h4>מנגנון דיווח (שפה בטוחה לילדים)</h4>
+    <p>אין "דווח על רמאות" או "דווח על שחקן רע". במקום:</p>
+    <div class="badge-row">
+      <div class="badge-item" style="border-color:var(--red)">&#x1F6A9; "משהו לא נראה בסדר"</div>
+      <div class="badge-item" style="border-color:var(--orange)">&#x1F914; "הקרב הזה היה מוזר"</div>
+      <div class="badge-item" style="border-color:var(--blue)">&#x1F6AB; "לא רוצה לשחק עם השחקן הזה"</div>
+    </div>
+
+    <h4 style="margin-top:16px">מה קורה אחרי דיווח</h4>
+    <ol>
+      <li>המורה/הורה מקבלים התראה שקטה</li>
+      <li>המערכת מונעת התאמה מחודשת בין השחקנים (soft block)</li>
+      <li>אם 3+ דיווחים על אותו שחקן: אדמין מקבל התראה</li>
+      <li>אין שום הודעה "נחסמת" לילד המדווח-עליו</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 8: NARRATIVE INTEGRATION -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section" id="narrative">
+  <div class="section-header">
+    <span class="emoji">&#x1F4D6;</span>
+    <div>
+      <h2>8. שילוב נרטיבי -- מעשה 5: הטורניר הדיגיטלי</h2>
+      <div class="sub">הטורנירים במשחק הם חלק מהסיפור -- הם ה"טורניר הדיגיטלי" שקי וחבריו משתתפים בו</div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <strong>עקרון:</strong> הטורניר הוא לא רק פיצ'ר -- הוא פרק 5 בסיפור. כשתלמיד משתתף בטורניר אמיתי (נגד שחקנים אמיתיים), הוא חי את מעשה 5 "הטורניר הדיגיטלי". הדמויות מלוות, מעודדות, ומגיבות לתוצאות.
+  </div>
+
+  <!-- 8.1 Character Roles in Tournaments -->
+  <h3>8.1 תפקידי דמויות בטורנירים</h3>
+
+  <div class="card">
+    <table>
+      <tr><th>דמות</th><th>תפקיד בטורניר</th><th>מתי מופיעה</th><th>דיאלוג</th></tr>
+      <tr>
+        <td>&#x1F9D2; קי</td>
+        <td>קפטן + מעודד</td>
+        <td>לפני כל קרב, אחרי ניצחון/הפסד</td>
+        <td>"!יאללה, אנחנו יכולים" / "!קרב מעולה, בפעם הבאה ננצח"</td>
+      </tr>
+      <tr>
+        <td>&#x1F469;&#x200D;&#x1F4BB; מיקה</td>
+        <td>אסטרטגית</td>
+        <td>בסבב הקיצורים</td>
+        <td>"!Ctrl+C, Ctrl+V, פשוט מהר" / "!המתחרה מהיר, תתמקדי בדיוק"</td>
+      </tr>
+      <tr>
+        <td>&#x26A1; יוקי</td>
+        <td>ספרינטרית -- סבב 1</td>
+        <td>בסבב המהירות</td>
+        <td>"!זה הרגע שלנו -- מהר יותר מכולם"</td>
+      </tr>
+      <tr>
+        <td>&#x1F525; קאי</td>
+        <td>לוחם -- סבב 2</td>
+        <td>בסבב הדיוק</td>
+        <td>"!דיוק מושלם, בלי רחמים"</td>
+      </tr>
+      <tr>
+        <td>&#x1F319; לונה</td>
+        <td>יוצרת אסטרטגיה</td>
+        <td>בהפסקות בין סבבים</td>
+        <td>"...נשימה עמוקה. ריכוז. אנחנו מוכנים"</td>
+      </tr>
+      <tr>
+        <td>&#x1F49A; נועה</td>
+        <td>תמיכה רגשית</td>
+        <td>אחרי הפסד, כשהשחקן מתוסכל</td>
+        <td>"!לא נורא, למדנו המון! הפעם הבאה נהיה חזקים יותר"</td>
+      </tr>
+      <tr>
+        <td>&#x1F996; רקס</td>
+        <td>בדרן / שומר מורל</td>
+        <td>בין סבבים</td>
+        <td>"?חחח, ידעתם שגם T-Rex ניצח טורניר פעם? טוב, לא באמת"</td>
+      </tr>
+      <tr>
+        <td>&#x1F4F7; פיקסל</td>
+        <td>צלם / מתעד</td>
+        <td>אחרי כל סבב -- מציג סטטיסטיקות</td>
+        <td>"!סריקה... WPM שלך: 35, דיוק: 94%. שיפור של 12%"</td>
+      </tr>
+      <tr>
+        <td>&#x1F422; סנסאי זן</td>
+        <td>שופט הטורניר</td>
+        <td>פתיחה, גמר, הענקת פרסים</td>
+        <td>"...אה, ברוכים הבאים לטורניר הנינג'ות. זכרו: סבלנות היא הנשק"</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 8.2 Virus Integration -->
+  <h3>8.2 שילוב וירוס בטורניר (אירוע סיפורי מיוחד)</h3>
+
+  <div class="card card-red">
+    <p>בגמר הטורניר (פרק 5.3 מהסיפור), <strong>וירוס מתגלה בתחפושת</strong>. זה מתורגם למשחק כך:</p>
+
+    <table>
+      <tr><th>שלב בטורניר</th><th>אירוע סיפורי</th><th>השפעה על משחק</th></tr>
+      <tr>
+        <td>סבב 1-3 (רגיל)</td>
+        <td>הטורניר מתנהל כרגיל</td>
+        <td>קרבות סטנדרטיים</td>
+      </tr>
+      <tr>
+        <td>לפני הגמר</td>
+        <td>וירוס חודר! "&#x1F9DF; שחקן מסתורי..." -- גליץ'ים על המסך</td>
+        <td>אפקט ויזואלי: המסך "מרצד" לשנייה</td>
+      </tr>
+      <tr>
+        <td>סבב הגמר</td>
+        <td>וירוס מוחק אותיות בזמן אמת! כל הדמויות מתאחדות</td>
+        <td>אתגר מיוחד: מקשים "נעלמים" כל 10 שניות. צריך להקליד בלי לראות אותם</td>
+      </tr>
+      <tr>
+        <td>ניצחון</td>
+        <td>כל הדמויות ביחד מנטרלות את וירוס. גליץ' חוזרת לצד הטוב</td>
+        <td>אנימציה מיוחדת: כל 14 הדמויות על המסך. תעודת "מאסטר מקלדת"</td>
+      </tr>
+    </table>
+
+    <p style="margin-top:12px;color:var(--dim)"><strong>הערה:</strong> האירוע הסיפורי מתרחש פעם אחת (כשהשחקן מגיע לגמר בפעם הראשונה). בטורנירים חוזרים -- הקרב הוא רגיל ללא אירוע סיפורי.</p>
+  </div>
+
+  <!-- 8.3 Chapter 5 Integration Map -->
+  <h3>8.3 מפת שילוב -- פיצ'ר קהילתי &harr; פרק בסיפור</h3>
+
+  <div class="card">
+    <table>
+      <tr><th>פיצ'ר קהילתי</th><th>פרק בסיפור</th><th>דמות מובילה</th><th>מיומנות הקלדה</th></tr>
+      <tr>
+        <td>קרב 1v1</td>
+        <td>5.1 -- ההזמנה לטורניר</td>
+        <td>קאי (מאמן)</td>
+        <td><span class="tag tag-green">מהירות + דיוק</span></td>
+      </tr>
+      <tr>
+        <td>כיתה vs כיתה</td>
+        <td>5.2 -- צוות מאוחד</td>
+        <td>קי (קפטן)</td>
+        <td><span class="tag tag-green">עבודת צוות</span></td>
+      </tr>
+      <tr>
+        <td>לוח הישגים</td>
+        <td>5.2 -- כל דמות מזריחה בתחומה</td>
+        <td>פיקסל (מתעד)</td>
+        <td><span class="tag tag-green">כל המיומנויות</span></td>
+      </tr>
+      <tr>
+        <td>אתגרי דוג'ו</td>
+        <td>5.1 -- הכנה לטורניר</td>
+        <td>סנסאי זן (מאמן)</td>
+        <td><span class="tag tag-green">שורת בית + מתקדם</span></td>
+      </tr>
+      <tr>
+        <td>טורניר ארצי</td>
+        <td>5.3 -- הגמר</td>
+        <td>כל הדמויות</td>
+        <td><span class="tag tag-red">מאסטר</span></td>
+      </tr>
+      <tr>
+        <td>אירוע וירוס</td>
+        <td>5.3 -- וירוס בתחפושת</td>
+        <td>וירוס + גליץ'</td>
+        <td><span class="tag tag-red">הקלדה עיוורת</span></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 9: IMPLEMENTATION PLAN -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section" id="implementation">
+  <div class="section-header">
+    <span class="emoji">&#x1F4CB;</span>
+    <div>
+      <h2>9. תוכנית יישום ואבני דרך</h2>
+      <div class="sub">4 שלבים -- מהתשתית ועד האליפות הארצית</div>
+    </div>
+  </div>
+
+  <h3>שלב 1: תשתית (2-3 שבועות)</h3>
+  <div class="card">
+    <table>
+      <tr><th>משימה</th><th>עדיפות</th><th>תלויות</th></tr>
+      <tr><td>הרצת מיגרציות DB (battles, tournaments, player_mmr, dojo_points_log)</td><td><span class="tag tag-red">P0</span></td><td>Supabase</td></tr>
+      <tr><td>RLS policies לכל הטבלאות החדשות</td><td><span class="tag tag-red">P0</span></td><td>DB</td></tr>
+      <tr><td>Supabase Realtime channels (battle, matchmaking, spectators)</td><td><span class="tag tag-red">P0</span></td><td>DB</td></tr>
+      <tr><td>Zustand stores: battle-store, tournament-store, mmr-store, dojo-store</td><td><span class="tag tag-red">P0</span></td><td>--</td></tr>
+      <tr><td>Matchmaking algorithm (Edge Function)</td><td><span class="tag tag-red">P0</span></td><td>Realtime</td></tr>
+      <tr><td>Anti-cheat layer (keystroke validation)</td><td><span class="tag tag-gold">P1</span></td><td>Battle flow</td></tr>
+    </table>
+  </div>
+
+  <h3>שלב 2: קרבות וטורנירים (3-4 שבועות)</h3>
+  <div class="card">
+    <table>
+      <tr><th>משימה</th><th>עדיפות</th><th>תלויות</th></tr>
+      <tr><td>מסך קרב 1v1 (UI + realtime)</td><td><span class="tag tag-red">P0</span></td><td>שלב 1</td></tr>
+      <tr><td>מסך תוצאות קרב + XP</td><td><span class="tag tag-red">P0</span></td><td>Battle UI</td></tr>
+      <tr><td>אתגור חברים מהדוג'ו</td><td><span class="tag tag-gold">P1</span></td><td>Battle + Dojo</td></tr>
+      <tr><td>מנגנון צפייה (spectate)</td><td><span class="tag tag-gold">P1</span></td><td>Battle</td></tr>
+      <tr><td>טורניר שבועי (אוטומטי)</td><td><span class="tag tag-gold">P1</span></td><td>Tournament table</td></tr>
+      <tr><td>AI fallback (Shadow/Storm/Blaze)</td><td><span class="tag tag-gold">P1</span></td><td>Battle</td></tr>
+      <tr><td>Emote system (תגובות מוגדרות מראש)</td><td><span class="tag tag-blue">P2</span></td><td>--</td></tr>
+    </table>
+  </div>
+
+  <h3>שלב 3: דוג'ו ולוחות הישגים (2-3 שבועות)</h3>
+  <div class="card">
+    <table>
+      <tr><th>משימה</th><th>עדיפות</th><th>תלויות</th></tr>
+      <tr><td>הרחבת classes &rarr; dojo (שדות חדשים)</td><td><span class="tag tag-red">P0</span></td><td>DB</td></tr>
+      <tr><td>לוח הישגים כיתתי (WPM + דיוק + סטריק)</td><td><span class="tag tag-red">P0</span></td><td>Dojo</td></tr>
+      <tr><td>נקודות דוג'ו + רמות דוג'ו</td><td><span class="tag tag-gold">P1</span></td><td>Dojo</td></tr>
+      <tr><td>אתגרי דוג'ו יומיים/שבועיים</td><td><span class="tag tag-gold">P1</span></td><td>Dojo points</td></tr>
+      <tr><td>לוח הישגים בית ספרי + סינון גיל</td><td><span class="tag tag-gold">P1</span></td><td>Leaderboard</td></tr>
+      <tr><td>דשבורד מורה -- ניהול דוג'ו</td><td><span class="tag tag-gold">P1</span></td><td>Dojo</td></tr>
+      <tr><td>Materialized views + refresh cron</td><td><span class="tag tag-blue">P2</span></td><td>DB</td></tr>
+    </table>
+  </div>
+
+  <h3>שלב 4: קהילה ואירועים (2-3 שבועות)</h3>
+  <div class="card">
+    <table>
+      <tr><th>משימה</th><th>עדיפות</th><th>תלויות</th></tr>
+      <tr><td>כיתה vs כיתה (קרב קבוצתי)</td><td><span class="tag tag-gold">P1</span></td><td>שלב 2+3</td></tr>
+      <tr><td>טורניר חודשי (נוקאאוט)</td><td><span class="tag tag-gold">P1</span></td><td>Tournament</td></tr>
+      <tr><td>סקינים + תגים + כותרות לטורנירים</td><td><span class="tag tag-gold">P1</span></td><td>Rewards system</td></tr>
+      <tr><td>מנגנון אישור הורה/מורה (COPPA)</td><td><span class="tag tag-red">P0</span></td><td>Consents table</td></tr>
+      <tr><td>מנגנון דיווח + soft block</td><td><span class="tag tag-gold">P1</span></td><td>--</td></tr>
+      <tr><td>אירוע סיפורי וירוס (גמר)</td><td><span class="tag tag-blue">P2</span></td><td>Story mode</td></tr>
+      <tr><td>גביעים עונתיים</td><td><span class="tag tag-blue">P2</span></td><td>Tournament</td></tr>
+      <tr><td>דירוג ארצי + לוח דוג'ואים ארצי</td><td><span class="tag tag-blue">P2</span></td><td>Leaderboard</td></tr>
+    </table>
+  </div>
+
+  <!-- Summary Stats -->
+  <h3>סיכום</h3>
+  <div class="grid-3">
+    <div class="stat-card">
+      <div class="num">7</div>
+      <div class="label">טבלאות DB חדשות</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">5</div>
+      <div class="label">סוגי טורנירים</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">8</div>
+      <div class="label">סוגי לוחות הישגים</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">18</div>
+      <div class="label">תגובות Emote</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">7</div>
+      <div class="label">רמות דוג'ו</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">6</div>
+      <div class="label">שכבות אנטי-צ'יט</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Ninja Keyboard -- Community Features Design v1.0 | March 2026</p>
+  <p style="margin-top:6px;font-size:12px">
+    &#x1F4DA; מבוסס על: story-mode-expansion.html | character-bible-merged.md | character-progression-system.md | israeli-holiday-skins.html
+  </p>
+  <p style="margin-top:6px;font-size:11px;color:#555">
+    Research: Brawl Stars Championship, Nitro Type, Pokemon Unite, COPPA 2025, JMIR Leaderboard Principles, TypeRacer Anti-Cheat, Supabase Realtime
+  </p>
+</footer>
+
+</body>
+</html>

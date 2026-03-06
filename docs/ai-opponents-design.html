@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ninja Keyboard - עיצוב יריבי AI להקלדה</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --bg:#0d0b1a; --bg2:#080618; --card:#0c0a20; --elevated:#13102a;
+    --border:rgba(108,92,231,0.18); --purple:#6C5CE7; --green:#00B894;
+    --pink:#FD79A8; --orange:#FDCB6E; --red:#FF6B6B; --blue:#74B9FF;
+    --cyan:#00CEC9; --gold:#F9CA24; --text:#E8E6F0; --dim:#8B86A6;
+    --glow:0 0 22px rgba(108,92,231,0.35);
+  }
+  body { font-family:'Heebo',sans-serif; background:var(--bg); color:var(--text); line-height:1.75; }
+  nav {
+    position:sticky; top:0; z-index:100;
+    background:rgba(13,11,26,0.96); backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--border);
+    padding:10px 20px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;
+  }
+  nav .logo { font-size:17px; font-weight:900; color:var(--purple); margin-left:14px; }
+  nav a { color:var(--dim); text-decoration:none; padding:5px 12px; border-radius:18px;
+    font-size:12px; font-weight:500; border:1px solid transparent; transition:all .18s; }
+  nav a:hover { color:var(--purple); background:rgba(108,92,231,0.1); border-color:rgba(108,92,231,0.3); }
+  .hero { text-align:center; padding:56px 24px 36px;
+    background:linear-gradient(180deg,rgba(108,92,231,0.09) 0%,transparent 100%); }
+  .hero h1 { font-size:40px; font-weight:900;
+    background:linear-gradient(135deg,var(--purple),var(--red));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:10px; }
+  .hero p { color:var(--dim); font-size:17px; max-width:680px; margin:0 auto; }
+  .hero .badges { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:22px; }
+  .hero .badge { display:inline-block; padding:8px 20px;
+    background:rgba(108,92,231,0.12); border:1px solid rgba(108,92,231,0.35);
+    border-radius:24px; font-size:13px; color:var(--purple); font-weight:600; }
+  .hero .badge.green { background:rgba(0,184,148,0.12); border-color:rgba(0,184,148,0.35); color:var(--green); }
+  .hero .badge.red { background:rgba(255,107,107,0.12); border-color:rgba(255,107,107,0.35); color:var(--red); }
+  .hero .badge.gold { background:rgba(249,202,36,0.12); border-color:rgba(249,202,36,0.35); color:var(--gold); }
+  .section { max-width:1100px; margin:0 auto; padding:40px 20px; }
+  .section-header { display:flex; align-items:center; gap:14px; margin-bottom:28px;
+    padding-bottom:14px; border-bottom:1px solid var(--border); }
+  .section-header .emoji { font-size:36px; }
+  .section-header h2 { font-size:26px; font-weight:900; }
+  .section-header .sub { font-size:14px; color:var(--dim); margin-top:3px; }
+  .section-header .tag { margin-right:auto; padding:4px 12px; border-radius:14px; font-size:12px; font-weight:700; }
+  .tag-purple { background:rgba(108,92,231,0.15); color:var(--purple); border:1px solid rgba(108,92,231,0.3); }
+  .tag-green { background:rgba(0,184,148,0.12); color:var(--green); border:1px solid rgba(0,184,148,0.28); }
+  .tag-red { background:rgba(255,107,107,0.12); color:var(--red); border:1px solid rgba(255,107,107,0.28); }
+  .tag-gold { background:rgba(249,202,36,0.15); color:var(--gold); border:1px solid rgba(249,202,36,0.3); }
+  .tag-cyan { background:rgba(0,206,201,0.12); color:var(--cyan); border:1px solid rgba(0,206,201,0.28); }
+  .tag-pink { background:rgba(253,121,168,0.12); color:var(--pink); border:1px solid rgba(253,121,168,0.28); }
+  .tag-blue { background:rgba(116,185,255,0.1); color:var(--blue); border:1px solid rgba(116,185,255,0.25); }
+  /* Notices */
+  .notice { background:rgba(116,185,255,0.07); border:1px solid rgba(116,185,255,0.2);
+    border-radius:12px; padding:16px 20px; margin-bottom:24px;
+    font-size:13.5px; color:var(--blue); display:flex; gap:12px; align-items:flex-start; }
+  .notice.green { background:rgba(0,184,148,0.07); border-color:rgba(0,184,148,0.2); color:var(--green); }
+  .notice.purple { background:rgba(108,92,231,0.07); border-color:rgba(108,92,231,0.2); color:var(--purple); }
+  .notice.red { background:rgba(255,107,107,0.07); border-color:rgba(255,107,107,0.2); color:var(--red); }
+  .notice .icon { font-size:22px; flex-shrink:0; }
+  .notice strong { color:var(--text); }
+  /* Cards */
+  .card { background:var(--elevated); border:1px solid var(--border); border-radius:16px;
+    overflow:hidden; transition:transform .2s,box-shadow .2s; padding:20px; }
+  .card:hover { transform:translateY(-4px); box-shadow:var(--glow); }
+  .grid-2 { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; margin-bottom:24px; }
+  .grid-3 { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px; margin-bottom:24px; }
+  /* Rival cards */
+  .rival-card { background:var(--elevated); border-radius:16px; padding:22px;
+    border:1px solid var(--border); transition:transform .2s,box-shadow .2s; }
+  .rival-card:hover { transform:translateY(-3px); }
+  .rival-card .rc-top { display:flex; align-items:center; gap:14px; margin-bottom:14px; }
+  .rival-card .rc-icon { font-size:42px; }
+  .rival-card .rc-title { font-size:18px; font-weight:800; }
+  .rival-card .rc-sub { font-size:12px; color:var(--dim); margin-top:2px; }
+  .rival-card .rc-body { font-size:13px; color:var(--dim); line-height:1.8; }
+  .rival-card .rc-body strong { color:var(--text); }
+  .rival-card .rc-stats { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px; }
+  .rival-card .stat { background:var(--card); border-radius:10px; padding:10px 12px; text-align:center; }
+  .rival-card .stat .val { font-size:20px; font-weight:900; }
+  .rival-card .stat .lbl { font-size:11px; color:var(--dim); margin-top:2px; }
+  .rival-card .rc-behavior { margin-top:14px; padding-top:12px; border-top:1px solid var(--border);
+    font-size:12px; color:var(--cyan); font-style:italic; }
+  /* Difficulty bar */
+  .difficulty-bar { display:flex; gap:4px; margin-top:8px; }
+  .difficulty-bar .dot { width:14px; height:14px; border-radius:50%; background:rgba(255,255,255,0.08); }
+  .difficulty-bar .dot.filled { opacity:1; }
+  /* Tables */
+  .tbl-wrap { overflow-x:auto; margin-bottom:24px; border-radius:14px; border:1px solid var(--border); }
+  table { width:100%; border-collapse:collapse; font-size:13.5px; }
+  thead th { background:var(--card); color:var(--purple); font-weight:700; padding:12px 14px;
+    text-align:right; border-bottom:1px solid var(--border); white-space:nowrap; }
+  tbody tr { border-bottom:1px solid rgba(108,92,231,0.08); transition:background .15s; }
+  tbody tr:hover { background:rgba(108,92,231,0.04); }
+  tbody tr:last-child { border-bottom:none; }
+  tbody td { padding:11px 14px; color:var(--dim); vertical-align:top; }
+  tbody td strong { color:var(--text); }
+  /* Code blocks */
+  pre { background:var(--card); border:1px solid var(--border); border-radius:12px;
+    padding:18px 20px; overflow-x:auto; font-size:12.5px; line-height:1.7;
+    color:#a9c5ff; margin-bottom:20px; font-family:'Courier New',monospace; direction:ltr; text-align:left; }
+  code { font-family:'Courier New',monospace; font-size:12px; color:var(--cyan);
+    background:rgba(0,206,201,0.1); padding:2px 6px; border-radius:4px; direction:ltr; }
+  /* Principle cards */
+  .principle-card { background:var(--card); border:1px solid var(--border); border-radius:14px;
+    padding:20px; margin-bottom:16px; }
+  .principle-card .p-head { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+  .principle-card .p-icon { font-size:28px; }
+  .principle-card .p-title { font-size:16px; font-weight:700; }
+  .principle-card .p-body { font-size:13.5px; color:var(--dim); line-height:1.8; }
+  .principle-card .p-body strong { color:var(--text); }
+  /* Flow diagram */
+  .flow-diagram { background:var(--card); border:1px solid var(--border); border-radius:14px;
+    padding:22px; margin-bottom:24px; direction:ltr; text-align:center; font-family:'Courier New',monospace;
+    font-size:12px; color:var(--cyan); line-height:1.6; overflow-x:auto; white-space:pre; }
+  /* Meter */
+  .meter { display:flex; align-items:center; gap:8px; margin:6px 0; }
+  .meter-bar { flex:1; height:10px; background:rgba(255,255,255,0.06); border-radius:6px; overflow:hidden; }
+  .meter-fill { height:100%; border-radius:6px; }
+  .meter-label { font-size:11px; color:var(--dim); min-width:35px; text-align:left; direction:ltr; }
+  /* Lists */
+  ul { list-style:none; padding:0; margin:0 0 16px; }
+  ul li { padding:6px 0; font-size:13.5px; color:var(--dim); display:flex; gap:8px; align-items:flex-start; }
+  ul li::before { content:''; display:inline-block; width:6px; height:6px; border-radius:50%;
+    background:var(--purple); margin-top:9px; flex-shrink:0; }
+  ul li strong { color:var(--text); }
+  ol { padding-right:20px; margin:0 0 16px; }
+  ol li { padding:4px 0; font-size:13.5px; color:var(--dim); }
+  ol li strong { color:var(--text); }
+  /* Paragraphs */
+  p { font-size:14px; color:var(--dim); margin-bottom:14px; line-height:1.8; }
+  p strong { color:var(--text); }
+  /* Sub headers */
+  h3 { font-size:18px; font-weight:700; color:var(--text); margin-bottom:14px; margin-top:28px; }
+  h4 { font-size:15px; font-weight:700; color:var(--purple); margin-bottom:10px; margin-top:20px; }
+  /* Footer */
+  .doc-footer { text-align:center; padding:40px 20px; border-top:1px solid var(--border);
+    color:var(--dim); font-size:12px; margin-top:40px; }
+  .doc-footer .logo-f { font-size:20px; font-weight:900; color:var(--purple); margin-bottom:8px; }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <span class="logo">NINJA KEYBOARD</span>
+  <a href="#philosophy">פילוסופיה</a>
+  <a href="#human-model">מודל אנושי</a>
+  <a href="#profiles">פרופילי יריבים</a>
+  <a href="#difficulty">קושי דינמי</a>
+  <a href="#algorithm">אלגוריתם</a>
+  <a href="#story">אינטגרציית סיפור</a>
+  <a href="#tech">ספציפיקציה טכנית</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>עיצוב יריבי AI להקלדה</h1>
+  <p>מערכת יריבים חכמה שמרגישה כמו ילדים אמיתיים מקלידים &mdash; לא כמו מכונות מושלמות. הקלדה אנושית, טעויות טבעיות, ואתגר שמתאים בדיוק לרמת השחקן.</p>
+  <div class="badges">
+    <span class="badge">6 פרופילי יריבים</span>
+    <span class="badge green">קושי דינמי</span>
+    <span class="badge red">Rubber-Banding</span>
+    <span class="badge gold">אינטגרציית סיפור</span>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- Section 1: AI Opponent Philosophy -->
+<!-- ================================================================ -->
+<div class="section" id="philosophy">
+  <div class="section-header">
+    <span class="emoji">🧠</span>
+    <div>
+      <h2>פילוסופיית יריבי AI</h2>
+      <div class="sub">העקרונות שמנחים את בניית המערכת</div>
+    </div>
+    <span class="tag tag-purple">ליבה</span>
+  </div>
+
+  <div class="notice purple">
+    <span class="icon">💡</span>
+    <div><strong>עיקרון מנחה:</strong> יריב AI טוב הוא כזה שהשחקן לא מבחין שהוא בוט. הוא מקליד כמו ילד בן גילו &mdash; עם טעויות, היסוסים, פרצי מהירות, ורגעי "אה, שכחתי את המקש".</div>
+  </div>
+
+  <div class="principle-card">
+    <div class="p-head">
+      <span class="p-icon">🎭</span>
+      <span class="p-title">לא מכונה &mdash; ילד</span>
+    </div>
+    <div class="p-body">
+      המטרה העיקרית: <strong>השחקן חייב להרגיש שהוא מתחרה נגד ילד אמיתי</strong>, לא נגד מחשב. אף ילד לא מקליד בקצב מושלם וקבוע. יריב AI שמכה כל אות בדיוק של 150ms הוא מפחיד וניכר כמזויף. במקום זה &mdash; תנודות, עצירות קטנות, טעויות ותיקונים.
+    </div>
+  </div>
+
+  <div class="principle-card">
+    <div class="p-head">
+      <span class="p-icon">🎯</span>
+      <span class="p-title">Rubber-Banding &mdash; גומיית קושי</span>
+    </div>
+    <div class="p-body">
+      כמו במשחקי מרוצים, ה-AI <strong>מתאים את עצמו לרמת השחקן</strong>. אם השחקן מוביל &mdash; ה-AI מאיץ קצת. אם ה-AI רחוק מדי &mdash; הוא "טועה". המטרה: <strong>ה-AI מנצח 40-50% מהזמן</strong>. מספיק אתגר בלי תסכול.
+    </div>
+  </div>
+
+  <div class="principle-card">
+    <div class="p-head">
+      <span class="p-icon">🎨</span>
+      <span class="p-title">אישיות ייחודית לכל יריב</span>
+    </div>
+    <div class="p-body">
+      כל דמות יריבה מקלידה <strong>בסגנון שונה לגמרי</strong>. Shadow (צל) יציב ומדויק. Storm (סערה) מהיר ובלתי צפוי. Blaze (להבה) מתחיל חם ונשרף. זה לא רק מספרים שונים &mdash; זה <strong>חוויה אחרת בכל קרב</strong>.
+    </div>
+  </div>
+
+  <div class="principle-card">
+    <div class="p-head">
+      <span class="p-icon">🫣</span>
+      <span class="p-title">לעולם לא רמאות גלויה</span>
+    </div>
+    <div class="p-body">
+      כל התאמת קושי חייבת להיות <strong>בלתי נראית</strong>. ה-AI לא "קופץ" פתאום ב-20 WPM. הוא לא עוצר באמצע מילה. כל שינוי קצב מתרחש בצורה טבעית &mdash; דרך "טעות" שנראית אמיתית, או "פרץ מהירות" שנראה כמו מוטיבציה.
+    </div>
+  </div>
+
+  <h3>4 מצבי שימוש ב-AI</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>מצב</th>
+          <th>מתי</th>
+          <th>התנהגות AI</th>
+          <th>רמת rubber-banding</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>תרגול יחיד</strong></td>
+          <td>שחקן מתאמן לבד</td>
+          <td>יריב AI ברמה קרובה לשחקן</td>
+          <td>גבוהה &mdash; מטרה: להניע שיפור</td>
+        </tr>
+        <tr>
+          <td><strong>המתנה ל-matchmaking</strong></td>
+          <td>אין יריב אנושי זמין</td>
+          <td>AI ממלא מקום עד שנמצא שחקן</td>
+          <td>בינונית &mdash; חוויה נעימה</td>
+        </tr>
+        <tr>
+          <td><strong>קרבות סיפור</strong></td>
+          <td>Boss battles בפרקים</td>
+          <td>פרופיל ספציפי לכל בוס</td>
+          <td>נמוכה &mdash; אתגר אמיתי</td>
+        </tr>
+        <tr>
+          <td><strong>תרגול טורניר</strong></td>
+          <td>הכנה לתחרויות</td>
+          <td>רמה גבוהה קבועה</td>
+          <td>אפס &mdash; ללא התאמות</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- Section 2: Human-Like Typing Model -->
+<!-- ================================================================ -->
+<div class="section" id="human-model">
+  <div class="section-header">
+    <span class="emoji">⌨️</span>
+    <div>
+      <h2>מודל הקלדה אנושית</h2>
+      <div class="sub">איך לגרום לבוט להקליד כמו בן-אדם</div>
+    </div>
+    <span class="tag tag-green">מנוע</span>
+  </div>
+
+  <div class="notice green">
+    <span class="icon">🔬</span>
+    <div><strong>מבוסס מחקר:</strong> מודל ההקלדה מבוסס על מחקרים אמפיריים על דפוסי הקלדה של ילדים בני 6-16. תזמון בין-מקשי עוקב התפלגות גאוסיאנית, לא אחידה.</div>
+  </div>
+
+  <h3>תזמון בין-מקשי (Inter-Key Timing)</h3>
+  <p>הקלדה אנושית <strong>לעולם לא מטרונומית</strong>. הזמן בין כל שני מקשים משתנה בצורה גאוסיאנית סביב ממוצע שנקבע לפי רמת הקושי.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>רמת קושי</th>
+          <th>WPM בסיסי</th>
+          <th>ממוצע ms בין מקשים</th>
+          <th>סטיית תקן (ms)</th>
+          <th>טווח גיל</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>שתיל</strong> (קל מאוד)</td>
+          <td>12-18</td>
+          <td>800</td>
+          <td>200</td>
+          <td>6-8</td>
+        </tr>
+        <tr>
+          <td><strong>נבט</strong> (קל)</td>
+          <td>18-28</td>
+          <td>500</td>
+          <td>140</td>
+          <td>8-10</td>
+        </tr>
+        <tr>
+          <td><strong>גזע</strong> (בינוני)</td>
+          <td>28-40</td>
+          <td>340</td>
+          <td>90</td>
+          <td>10-12</td>
+        </tr>
+        <tr>
+          <td><strong>ענף</strong> (קשה)</td>
+          <td>40-55</td>
+          <td>250</td>
+          <td>60</td>
+          <td>12-14</td>
+        </tr>
+        <tr>
+          <td><strong>צמרת</strong> (מומחה)</td>
+          <td>55-80</td>
+          <td>170</td>
+          <td>35</td>
+          <td>14-16+</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>דפוסי טעויות אנושיות</h3>
+  <p>טעויות הן המפתח לאמינות. ה-AI עושה את <strong>אותם סוגי טעויות</strong> שילדים אמיתיים עושים בהקלדה בעברית:</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h4>🔤 שגיאת מקש שכן</h4>
+      <p>לחיצה על מקש סמוך במקלדת העברית. לדוגמה: <code>ש</code> במקום <code>ד</code>, או <code>כ</code> במקום <code>ל</code>. הסיכוי עולה ככל שהמהירות גדלה.</p>
+      <div class="meter">
+        <span style="font-size:12px; color:var(--dim); min-width:55px;">סיכוי:</span>
+        <div class="meter-bar"><div class="meter-fill" style="width:35%; background:var(--orange);"></div></div>
+        <span class="meter-label">35%</span>
+      </div>
+    </div>
+    <div class="card">
+      <h4>🐌 היסוס באותיות נדירות</h4>
+      <p>אותיות סופיות (<code>ץ</code>, <code>ף</code>, <code>ך</code>, <code>ם</code>, <code>ן</code>) גורמות להאטה של 1.5-3x בזמן התגובה. ילדים צעירים צריכים "לחפש" אותן.</p>
+      <div class="meter">
+        <span style="font-size:12px; color:var(--dim); min-width:55px;">סיכוי:</span>
+        <div class="meter-bar"><div class="meter-fill" style="width:60%; background:var(--cyan);"></div></div>
+        <span class="meter-label">60%</span>
+      </div>
+    </div>
+    <div class="card">
+      <h4>⚡ פרצי מהירות</h4>
+      <p>מילים מוכרות (כמו "של", "את", "הוא") מוקלדות <strong>מהר בהרבה</strong> מהממוצע &mdash; כמו שריר-זיכרון. מילים חדשות או ארוכות גורמות להאטה.</p>
+      <div class="meter">
+        <span style="font-size:12px; color:var(--dim); min-width:55px;">סיכוי:</span>
+        <div class="meter-bar"><div class="meter-fill" style="width:45%; background:var(--green);"></div></div>
+        <span class="meter-label">45%</span>
+      </div>
+    </div>
+    <div class="card">
+      <h4>⌫ תיקונים לא מיידיים</h4>
+      <p>כשה-AI טועה, הוא לא מתקן ב-0ms. יש <strong>עיכוב של 200-800ms</strong> לפני לחיצה על Backspace &mdash; כמו שילד שם לב לטעות ואז מוחק.</p>
+      <div class="meter">
+        <span style="font-size:12px; color:var(--dim); min-width:55px;">סיכוי:</span>
+        <div class="meter-bar"><div class="meter-fill" style="width:80%; background:var(--purple);"></div></div>
+        <span class="meter-label">80%</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>התנהגויות זמן</h3>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>התנהגות</th>
+          <th>תיאור</th>
+          <th>פרמטרים</th>
+          <th>אפקט</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>חימום (Warmup)</strong></td>
+          <td>10 השניות הראשונות איטיות יותר</td>
+          <td>מכפיל 1.3-1.6x על זמן בין מקשים</td>
+          <td>WPM נמוך יותר בהתחלה</td>
+        </tr>
+        <tr>
+          <td><strong>עייפות (Fatigue)</strong></td>
+          <td>האטה הדרגתית אחרי 60+ שניות</td>
+          <td>+0.5% לזמן כל 10 שניות</td>
+          <td>ירידה של 5-15% WPM בסופו של דבר</td>
+        </tr>
+        <tr>
+          <td><strong>הפסקות חשיבה</strong></td>
+          <td>עצירות קצרות בין מילים</td>
+          <td>300-1200ms, בהסתברות 8-15%</td>
+          <td>נראה כמו "חושב על המילה הבאה"</td>
+        </tr>
+        <tr>
+          <td><strong>אזור נוחות</strong></td>
+          <td>מילים מוכרות = מהירות גבוהה</td>
+          <td>מכפיל 0.6-0.8x למילים נפוצות</td>
+          <td>פרצי מהירות טבעיים</td>
+        </tr>
+        <tr>
+          <td><strong>ריכוז מחודש</strong></td>
+          <td>אחרי טעות &mdash; 2-3 אותיות איטיות</td>
+          <td>מכפיל 1.2x, יורד הדרגתית</td>
+          <td>מרגיש "נזהר יותר" אחרי טעות</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>מפת שכנות מקלדת עברית</h3>
+  <p>מפת שכנות מגדירה אילו מקשים "סמוכים" על המקלדת העברית הסטנדרטית, לצורך יצירת שגיאות שכן:</p>
+
+  <pre>
+// Hebrew keyboard adjacency map (partial)
+const HEBREW_ADJACENCY: Record&lt;string, string[]&gt; = {
+  'ש': ['ד', 'נ', 'ג'],      // shin neighbors
+  'ד': ['ש', 'ג', 'כ'],      // dalet neighbors
+  'כ': ['ד', 'ע', 'ל'],      // kaf neighbors
+  'ל': ['כ', 'ח', 'ף'],      // lamed neighbors
+  'א': ['ת', 'ט', 'ם'],      // alef neighbors
+  'ב': ['ה', 'נ', 'מ'],      // bet neighbors
+  'ה': ['י', 'ב', 'ח'],      // he neighbors
+  'ו': ['ם', 'ת', 'ט'],      // vav neighbors
+  'ת': ['א', 'ו', 'ץ'],      // tav neighbors
+  'ר': ['ק', 'ע', 'ד'],      // resh neighbors
+  'ק': ['ר', 'ש'],           // qof neighbors
+  'ע': ['כ', 'ר', 'י'],      // ayin neighbors
+  'י': ['ע', 'ה', 'ח'],      // yod neighbors
+  'ח': ['י', 'ל', 'ה'],      // chet neighbors
+  'מ': ['ב', 'צ', 'נ'],      // mem neighbors
+  'נ': ['ש', 'ב', 'מ'],      // nun neighbors
+  'ג': ['ש', 'ד', 'כ'],      // gimel neighbors
+  'פ': ['ח', 'ל', 'ף'],      // pe neighbors
+  'ט': ['א', 'ו', 'ז'],      // tet neighbors
+  'צ': ['מ', 'ס', 'ז'],      // tsadi neighbors
+  // Final letters (sofit) - slower reaction time
+  'ץ': ['ת', '.'],
+  'ף': ['ל', 'פ'],
+  'ך': ['כ', 'ל'],
+  'ם': ['א', 'ו'],
+  'ן': ['נ', 'ב'],
+};</pre>
+</div>
+
+<!-- ================================================================ -->
+<!-- Section 3: Rival Profiles -->
+<!-- ================================================================ -->
+<div class="section" id="profiles">
+  <div class="section-header">
+    <span class="emoji">👥</span>
+    <div>
+      <h2>פרופילי יריבים</h2>
+      <div class="sub">6 דמויות, 6 סגנונות הקלדה ייחודיים</div>
+    </div>
+    <span class="tag tag-pink">דמויות</span>
+  </div>
+
+  <div class="notice">
+    <span class="icon">🎮</span>
+    <div>כל דמות מביאה <strong>חוויה שונה לגמרי</strong> לקרב. לא רק מספרים שונים &mdash; אלא קצב, אנרגיה, והתנהגות שמרגישה אמיתית ומתאימה לאישיות הדמות.</div>
+  </div>
+
+  <!-- Shadow -->
+  <div class="rival-card" style="margin-bottom:20px; border-color:rgba(116,185,255,0.3);">
+    <div class="rc-top">
+      <span class="rc-icon">🐱‍👤</span>
+      <div>
+        <div class="rc-title" style="color:var(--blue);">Shadow &mdash; צל</div>
+        <div class="rc-sub">החתול הנינג'ה | הקלדה יציבה ומדויקת</div>
+      </div>
+    </div>
+    <div class="rc-body">
+      <p>Shadow מקליד כמו <strong>מכונה שקטה ויציבה</strong>. קצב אחיד, מעט מאוד טעויות, אף פעם לא מתפרץ אבל גם לא נעצר. הוא כמו מים שזורמים &mdash; יציב, בלתי ניתן לעצירה, אבל לא המהיר ביותר.</p>
+      <strong>סגנון הקלדה:</strong> מטרונומי-כמעט, עם תנודות מינימליות. שקט ומדויק.
+    </div>
+    <div class="rc-stats">
+      <div class="stat">
+        <div class="val" style="color:var(--blue);">30-45</div>
+        <div class="lbl">WPM בסיסי</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--green);">3-5%</div>
+        <div class="lbl">אחוז שגיאות</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--cyan);">150ms</div>
+        <div class="lbl">מהירות תיקון</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--purple);">±15ms</div>
+        <div class="lbl">שונות תזמון</div>
+      </div>
+    </div>
+    <div class="rc-behavior">
+      💬 "הוא לא הכי מהיר, אבל הוא לעולם לא עוצר. כמו צל &mdash; תמיד שם, תמיד מתקדם."
+    </div>
+  </div>
+
+  <!-- Storm -->
+  <div class="rival-card" style="margin-bottom:20px; border-color:rgba(116,185,255,0.3);">
+    <div class="rc-top">
+      <span class="rc-icon">🦊</span>
+      <div>
+        <div class="rc-title" style="color:var(--cyan);">Storm &mdash; סערה</div>
+        <div class="rc-sub">השועל הסוער | פרצים בלתי צפויים</div>
+      </div>
+    </div>
+    <div class="rc-body">
+      <p>Storm הוא <strong>בלתי צפוי לחלוטין</strong>. פרצי מהירות מטורפים (90+ WPM לשניות בודדות!) ואז עצירה לחשוב. הקלדה שלו כמו ברקים &mdash; פתאום הוא מקליד 5 מילים ברגע, ואז עוצר ל-2 שניות.</p>
+      <strong>סגנון הקלדה:</strong> burst-pause-burst. אסטרטגיה כאוטית אבל יעילה.
+    </div>
+    <div class="rc-stats">
+      <div class="stat">
+        <div class="val" style="color:var(--cyan);">35-55</div>
+        <div class="lbl">WPM ממוצע</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--orange);">6-10%</div>
+        <div class="lbl">אחוז שגיאות</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--cyan);">200ms</div>
+        <div class="lbl">מהירות תיקון</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--red);">±80ms</div>
+        <div class="lbl">שונות תזמון</div>
+      </div>
+    </div>
+    <div class="rc-behavior">
+      💬 "אי אפשר לחזות את Storm. ברגע אחד אתה מוביל, ברגע הבא הוא מקליד כאילו יש לו 10 אצבעות על כל יד."
+    </div>
+  </div>
+
+  <!-- Blaze -->
+  <div class="rival-card" style="margin-bottom:20px; border-color:rgba(255,107,107,0.3);">
+    <div class="rc-top">
+      <span class="rc-icon">🐉</span>
+      <div>
+        <div class="rc-title" style="color:var(--red);">Blaze &mdash; להבה</div>
+        <div class="rc-sub">הדרקון הלוהט | מתחיל חם, נשרף</div>
+      </div>
+    </div>
+    <div class="rc-body">
+      <p>Blaze <strong>מתחיל כמו רקטה</strong>. ב-15 השניות הראשונות הוא מפלצתי &mdash; מהיר, מדויק, מפחיד. אבל אז העייפות מכה. הוא מאט בהדרגה, עושה יותר טעויות, ובסוף נלחם לגמור. אסטרטגיה: <strong>לשרוד את ההתחלה ולתפוס אותו בסוף</strong>.</p>
+      <strong>סגנון הקלדה:</strong> ירידה ליניארית. מתחיל ב-150% WPM, יורד ל-70% לקראת הסוף.
+    </div>
+    <div class="rc-stats">
+      <div class="stat">
+        <div class="val" style="color:var(--red);">45-70</div>
+        <div class="lbl">WPM התחלתי</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--orange);">4-12%</div>
+        <div class="lbl">שגיאות (עולה)</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--cyan);">300ms</div>
+        <div class="lbl">תיקון (מאט)</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--gold);">-2% / 10s</div>
+        <div class="lbl">קצב עייפות</div>
+      </div>
+    </div>
+    <div class="rc-behavior">
+      💬 "הוא כמו שריפה &mdash; מרשים ומפחיד בהתחלה, אבל אם אתה שורד את הלהבות, הוא נגמר."
+    </div>
+  </div>
+
+  <!-- Yuki -->
+  <div class="rival-card" style="margin-bottom:20px; border-color:rgba(108,92,231,0.4);">
+    <div class="rc-top">
+      <span class="rc-icon">❄️</span>
+      <div>
+        <div class="rc-title" style="color:var(--purple);">Yuki &mdash; יוקי</div>
+        <div class="rc-sub">נינג'ת הקרח | שותפת אימונים קשוחה</div>
+      </div>
+    </div>
+    <div class="rc-body">
+      <p>Yuki היא <strong>האתגר האולטימטיבי</strong>. מהירה, מדויקת, יציבה. כמעט בלי טעויות, בלי עצירות. היא משמשת כ<strong>שותפת אימונים</strong> &mdash; לא יריבה שצריך לנצח, אלא דוגמה של שלמות שאפשר לשאוף אליה. זמינה רק באימונים מתקדמים.</p>
+      <strong>סגנון הקלדה:</strong> מושלם-כמעט. רק רמז של אנושיות &mdash; תנודות מיקרוסקופיות.
+    </div>
+    <div class="rc-stats">
+      <div class="stat">
+        <div class="val" style="color:var(--purple);">60-90</div>
+        <div class="lbl">WPM</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--green);">1-2%</div>
+        <div class="lbl">אחוז שגיאות</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--cyan);">80ms</div>
+        <div class="lbl">תיקון מיידי</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--purple);">±8ms</div>
+        <div class="lbl">שונות מינימלית</div>
+      </div>
+    </div>
+    <div class="rc-behavior">
+      💬 "יוקי לא יריבה. היא מראה לך איפה הגבול. ואם אתה מגיע אליה &mdash; כבוד."
+    </div>
+  </div>
+
+  <!-- Bug -->
+  <div class="rival-card" style="margin-bottom:20px; border-color:rgba(0,184,148,0.3);">
+    <div class="rc-top">
+      <span class="rc-icon">🐛</span>
+      <div>
+        <div class="rc-title" style="color:var(--green);">Bug &mdash; באג</div>
+        <div class="rc-sub">הבאג הכאוטי | טעויות רבות, תיקונים מהירים</div>
+      </div>
+    </div>
+    <div class="rc-body">
+      <p>Bug הוא <strong>כאוס מוחלט</strong>. הוא מקליד מהר אבל טועה הרבה &mdash; ואז מתקן בשניות. הקלדה שלו כמו לראות ילד שטס על המקלדת, מוחק, טס שוב. מפתיע כי למרות כל הטעויות, <strong>הוא מסיים מהר</strong>.</p>
+      <strong>סגנון הקלדה:</strong> type-delete-retype. WPM גולמי גבוה, WPM נטו בינוני.
+    </div>
+    <div class="rc-stats">
+      <div class="stat">
+        <div class="val" style="color:var(--green);">40-55</div>
+        <div class="lbl">WPM גולמי</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--red);">15-25%</div>
+        <div class="lbl">אחוז שגיאות!</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--cyan);">100ms</div>
+        <div class="lbl">תיקון מהיר מאוד</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--orange);">25-35</div>
+        <div class="lbl">WPM נטו</div>
+      </div>
+    </div>
+    <div class="rc-behavior">
+      💬 "Bug מקליד כמו שהוא חי &mdash; מהר, רועש, בלאגן. אבל איכשהו הוא מגיע לקו הסיום."
+    </div>
+  </div>
+
+  <!-- Virus -->
+  <div class="rival-card" style="margin-bottom:20px; border-color:rgba(255,107,107,0.35);">
+    <div class="rc-top">
+      <span class="rc-icon">☣️</span>
+      <div>
+        <div class="rc-title" style="color:var(--red);">Virus &mdash; וירוס</div>
+        <div class="rc-sub">הנבל ההולם | מתחיל לאט, מאיץ בטירוף</div>
+      </div>
+    </div>
+    <div class="rc-body">
+      <p>Virus הוא <strong>ההפך מ-Blaze</strong>. הוא מתחיל לאט, כמעט מתחבא. השחקן מרגיש שהוא מנצח בקלות. ואז, ברגע שהשחקן נרגע &mdash; Virus <strong>מאיץ באגרסיביות</strong>. הוא גם <strong>אדפטיבי</strong>: לומד את דפוסי השחקן ומתאים את עצמו. הבוס הכי מפחיד במשחק.</p>
+      <strong>סגנון הקלדה:</strong> עקומה אקספוננציאלית. מתחיל ב-60% WPM, מגיע ל-130% לקראת הסוף.
+    </div>
+    <div class="rc-stats">
+      <div class="stat">
+        <div class="val" style="color:var(--dim);">20-30</div>
+        <div class="lbl">WPM התחלתי</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--red);">60-85</div>
+        <div class="lbl">WPM שיא</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--orange);">5-8%</div>
+        <div class="lbl">שגיאות (יורד)</div>
+      </div>
+      <div class="stat">
+        <div class="val" style="color:var(--red);">+3% / 10s</div>
+        <div class="lbl">קצב האצה</div>
+      </div>
+    </div>
+    <div class="rc-behavior">
+      💬 "הוא נראה חלש. זו הטעות. ברגע שאתה מרגיש בטוח &mdash; הוא כבר עקף אותך."
+    </div>
+  </div>
+
+  <!-- Comparison table -->
+  <h3>טבלת השוואת פרופילים</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>פרמטר</th>
+          <th>🐱‍👤 Shadow</th>
+          <th>🦊 Storm</th>
+          <th>🐉 Blaze</th>
+          <th>❄️ Yuki</th>
+          <th>🐛 Bug</th>
+          <th>☣️ Virus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>WPM ממוצע</strong></td>
+          <td>37</td>
+          <td>45</td>
+          <td>42 (נופל)</td>
+          <td>75</td>
+          <td>30 נטו</td>
+          <td>50 (עולה)</td>
+        </tr>
+        <tr>
+          <td><strong>יציבות</strong></td>
+          <td style="color:var(--green);">גבוהה מאוד</td>
+          <td style="color:var(--red);">נמוכה מאוד</td>
+          <td style="color:var(--orange);">יורדת</td>
+          <td style="color:var(--green);">גבוהה</td>
+          <td style="color:var(--red);">כאוטית</td>
+          <td style="color:var(--orange);">עולה</td>
+        </tr>
+        <tr>
+          <td><strong>שגיאות</strong></td>
+          <td>3-5%</td>
+          <td>6-10%</td>
+          <td>4-12%</td>
+          <td>1-2%</td>
+          <td>15-25%</td>
+          <td>5-8%</td>
+        </tr>
+        <tr>
+          <td><strong>קושי לשחקן</strong></td>
+          <td>בינוני</td>
+          <td>בינוני-קשה</td>
+          <td>קשה בהתחלה</td>
+          <td>קשה מאוד</td>
+          <td>קל-בינוני</td>
+          <td>מפחיד</td>
+        </tr>
+        <tr>
+          <td><strong>אסטרטגיה נגדית</strong></td>
+          <td>שיפור עקבי</td>
+          <td>ניצול הפסקות</td>
+          <td>שרוד את ההתחלה</td>
+          <td>למד ממנה</td>
+          <td>דיוק לפני מהירות</td>
+          <td>סיים מהר!</td>
+        </tr>
+        <tr>
+          <td><strong>מופיע בסיפור</strong></td>
+          <td>פרק 2</td>
+          <td>פרק 3</td>
+          <td>פרק 3</td>
+          <td>אימונים</td>
+          <td>פרק 1</td>
+          <td>פרק 4-5</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- Section 4: Dynamic Difficulty -->
+<!-- ================================================================ -->
+<div class="section" id="difficulty">
+  <div class="section-header">
+    <span class="emoji">🎚️</span>
+    <div>
+      <h2>מערכת קושי דינמית</h2>
+      <div class="sub">Rubber-Banding שמרגיש טבעי</div>
+    </div>
+    <span class="tag tag-gold">גיימפליי</span>
+  </div>
+
+  <div class="notice red">
+    <span class="icon">⚠️</span>
+    <div><strong>כלל זהב:</strong> השחקן לעולם לא צריך להרגיש שה-AI "מרמה". כל התאמה חייבת להיות בלתי מורגשת. אם שחקן שואל "למה הוא פתאום האט?" &mdash; נכשלנו.</div>
+  </div>
+
+  <h3>5 רמות קושי בסיסיות</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>רמה</th>
+          <th>עולם</th>
+          <th>WPM מטרה</th>
+          <th>שגיאות AI</th>
+          <th>rubber-band</th>
+          <th>יחס ניצחון מטרה</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1 - שתיל</strong></td>
+          <td>גן קסום</td>
+          <td>10-20</td>
+          <td>8-12%</td>
+          <td>חזק</td>
+          <td>60% שחקן</td>
+        </tr>
+        <tr>
+          <td><strong>2 - נבט</strong></td>
+          <td>יער הרפתקאות</td>
+          <td>20-32</td>
+          <td>6-9%</td>
+          <td>חזק</td>
+          <td>55% שחקן</td>
+        </tr>
+        <tr>
+          <td><strong>3 - גזע</strong></td>
+          <td>הר הנינג'ה</td>
+          <td>32-45</td>
+          <td>4-7%</td>
+          <td>בינוני</td>
+          <td>50% שחקן</td>
+        </tr>
+        <tr>
+          <td><strong>4 - ענף</strong></td>
+          <td>ארמון הקוד</td>
+          <td>45-60</td>
+          <td>3-5%</td>
+          <td>חלש</td>
+          <td>45% שחקן</td>
+        </tr>
+        <tr>
+          <td><strong>5 - צמרת</strong></td>
+          <td>שמי האינסוף</td>
+          <td>60-80+</td>
+          <td>2-3%</td>
+          <td>מינימלי</td>
+          <td>40% שחקן</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>אלגוריתם Rubber-Banding</h3>
+  <p>המערכת עוקבת אחרי <strong>פער התווים</strong> בין השחקן לבין ה-AI בזמן אמת, ומתאימה בהתאם:</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h4 style="color:var(--green);">🏃 שחקן מוביל (&gt;10 תווים)</h4>
+      <p>ה-AI <strong>מאיץ בהדרגה</strong>:</p>
+      <ul>
+        <li>הפחתה של 5-15% מזמן בין מקשים</li>
+        <li>הפחתת סיכוי שגיאות ב-20%</li>
+        <li>הפחתת הפסקות חשיבה</li>
+        <li><strong>לעולם לא יותר מ-+15% מ-WPM הבסיסי</strong></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--orange);">🤖 AI מוביל (&gt;15 תווים)</h4>
+      <p>ה-AI <strong>"טועה" בטבעיות</strong>:</p>
+      <ul>
+        <li>הוספת שגיאת מקש שכן</li>
+        <li>"הפסקת חשיבה" של 500-1500ms</li>
+        <li>האטה הדרגתית (לא פתאומית!)</li>
+        <li><strong>לעולם לא נראה מכוון</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>בונה מתח &mdash; הסיום</h3>
+  <p>כשנותרו <strong>פחות מ-20% מהטקסט</strong>, המערכת נכנסת למצב "מתח":</p>
+
+  <div class="principle-card">
+    <div class="p-head">
+      <span class="p-icon">🔥</span>
+      <span class="p-title">Tension Builder</span>
+    </div>
+    <div class="p-body">
+      <ul>
+        <li><strong>שני הצדדים מאיצים</strong> &mdash; ה-AI מעלה WPM ב-10%, גם אם מוביל</li>
+        <li><strong>הפער מתכווץ</strong> &mdash; אם יש פער גדול, הוא מצטמצם בהדרגה</li>
+        <li><strong>אפקט ויזואלי</strong> &mdash; המסך מזדעזע קלות, מוזיקה מתגברת</li>
+        <li><strong>סיום צמוד</strong> &mdash; מטרה: הפרש של 0-5 תווים בסיום (ב-70% מהמקרים)</li>
+        <li><strong>אף פעם לא מופגן</strong> &mdash; השחקן חייב להרגיש שהוא ניצח/הפסיד "באמת"</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>מעקב רמה אדפטיבי</h3>
+  <pre>
+interface PlayerPerformanceTracker {
+  // Rolling average over last 10 sessions
+  rollingWPM: number
+  rollingAccuracy: number
+
+  // Win rate against AI (target: 40-50%)
+  recentWinRate: number  // last 20 matches
+
+  // Trend detection
+  isImproving: boolean   // WPM increased 3+ sessions in a row
+  isStruggling: boolean  // Win rate &lt; 30% over last 10
+
+  // Adjustment multiplier (0.7 = much easier, 1.3 = much harder)
+  difficultyMultiplier: number
+}
+
+// Adjustment rules:
+// - Win rate > 60% for 5+ matches → increase multiplier by 0.05
+// - Win rate < 35% for 5+ matches → decrease multiplier by 0.05
+// - Player rage-quit (left mid-match 2+ times) → decrease by 0.1
+// - Player replayed same level 3+ times → decrease by 0.05
+// - Player won 3 in a row easily (>15 char lead) → increase by 0.08</pre>
+</div>
+
+<!-- ================================================================ -->
+<!-- Section 5: Typing Algorithm -->
+<!-- ================================================================ -->
+<div class="section" id="algorithm">
+  <div class="section-header">
+    <span class="emoji">⚙️</span>
+    <div>
+      <h2>אלגוריתם הקלדה</h2>
+      <div class="sub">ספציפיקציה טכנית של מנוע ה-AI</div>
+    </div>
+    <span class="tag tag-cyan">טכני</span>
+  </div>
+
+  <h3>ממשק הגדרות AI</h3>
+  <pre>
+interface AITypingConfig {
+  // Base typing speed
+  baseWPM: number                    // Target words per minute
+  wpmVariance: number                // ±% variance from base (e.g., 0.15 = ±15%)
+
+  // Error behavior
+  errorRate: number                  // 0-1, probability of error per keystroke
+  correctionDelay: [number, number]  // [min, max] ms before pressing backspace
+  errorType: 'adjacent' | 'random' | 'skip' // Most common error type
+
+  // Rhythm
+  burstProbability: number           // 0-1, chance of speed burst on familiar words
+  burstSpeedMultiplier: number       // e.g., 1.5 = 50% faster during burst
+  pauseProbability: number           // 0-1, chance of thinking pause between words
+  pauseDuration: [number, number]    // [min, max] ms for pauses
+
+  // Time effects
+  fatigueRate: number                // % slowdown per minute (e.g., 0.02 = 2%/min)
+  warmupDuration: number             // seconds of slower typing at start
+  warmupMultiplier: number           // e.g., 1.4 = 40% slower during warmup
+
+  // Rubber-banding
+  rubberBandStrength: number         // 0-1, how aggressively AI adapts
+  maxSpeedAdjustment: number         // Max % change to WPM (e.g., 0.15 = ±15%)
+
+  // Character-specific behavior
+  specialBehavior?: 'steady' | 'burst-pause' | 'burnout' | 'accelerate' | 'chaotic'
+}</pre>
+
+  <h3>פרופילי הגדרות לדמויות</h3>
+  <pre>
+const RIVAL_CONFIGS: Record&lt;string, AITypingConfig&gt; = {
+  shadow: {
+    baseWPM: 37, wpmVariance: 0.08,
+    errorRate: 0.04, correctionDelay: [150, 300], errorType: 'adjacent',
+    burstProbability: 0.15, burstSpeedMultiplier: 1.2,
+    pauseProbability: 0.05, pauseDuration: [200, 500],
+    fatigueRate: 0.005, warmupDuration: 8, warmupMultiplier: 1.2,
+    rubberBandStrength: 0.6, maxSpeedAdjustment: 0.12,
+    specialBehavior: 'steady',
+  },
+  storm: {
+    baseWPM: 45, wpmVariance: 0.25,
+    errorRate: 0.08, correctionDelay: [180, 400], errorType: 'adjacent',
+    burstProbability: 0.45, burstSpeedMultiplier: 1.8,
+    pauseProbability: 0.30, pauseDuration: [600, 2000],
+    fatigueRate: 0.01, warmupDuration: 5, warmupMultiplier: 1.1,
+    rubberBandStrength: 0.5, maxSpeedAdjustment: 0.15,
+    specialBehavior: 'burst-pause',
+  },
+  blaze: {
+    baseWPM: 55, wpmVariance: 0.12,
+    errorRate: 0.04, correctionDelay: [200, 500], errorType: 'adjacent',
+    burstProbability: 0.20, burstSpeedMultiplier: 1.3,
+    pauseProbability: 0.08, pauseDuration: [300, 700],
+    fatigueRate: 0.04, warmupDuration: 0, warmupMultiplier: 1.0,
+    rubberBandStrength: 0.4, maxSpeedAdjustment: 0.10,
+    specialBehavior: 'burnout',
+  },
+  yuki: {
+    baseWPM: 75, wpmVariance: 0.05,
+    errorRate: 0.015, correctionDelay: [60, 120], errorType: 'adjacent',
+    burstProbability: 0.10, burstSpeedMultiplier: 1.15,
+    pauseProbability: 0.03, pauseDuration: [150, 350],
+    fatigueRate: 0.002, warmupDuration: 3, warmupMultiplier: 1.1,
+    rubberBandStrength: 0.2, maxSpeedAdjustment: 0.05,
+    specialBehavior: 'steady',
+  },
+  bug: {
+    baseWPM: 48, wpmVariance: 0.18,
+    errorRate: 0.20, correctionDelay: [80, 180], errorType: 'random',
+    burstProbability: 0.30, burstSpeedMultiplier: 1.4,
+    pauseProbability: 0.10, pauseDuration: [200, 600],
+    fatigueRate: 0.008, warmupDuration: 5, warmupMultiplier: 1.3,
+    rubberBandStrength: 0.5, maxSpeedAdjustment: 0.12,
+    specialBehavior: 'chaotic',
+  },
+  virus: {
+    baseWPM: 25, wpmVariance: 0.10,
+    errorRate: 0.07, correctionDelay: [150, 350], errorType: 'adjacent',
+    burstProbability: 0.10, burstSpeedMultiplier: 1.3,
+    pauseProbability: 0.15, pauseDuration: [400, 1000],
+    fatigueRate: -0.03, warmupDuration: 15, warmupMultiplier: 1.6,
+    rubberBandStrength: 0.7, maxSpeedAdjustment: 0.20,
+    specialBehavior: 'accelerate',
+  },
+};</pre>
+
+  <h3>אלגוריתם יצירת הקשות &mdash; שלב-אחר-שלב</h3>
+
+  <div class="flow-diagram">
+┌─────────────────────────────────────────────────────────────────┐
+│                    AI KEYSTROKE GENERATOR                       │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐  │
+│  │ 1. CALC  │───>│ 2. ERROR │───>│ 3. APPLY │───>│ 4. EMIT  │  │
+│  │ BASE     │    │ CHECK    │    │ JITTER   │    │ KEYSTROKE │  │
+│  │ DELAY    │    │          │    │          │    │          │  │
+│  └──────────┘    └──────────┘    └──────────┘    └──────────┘  │
+│       │               │               │               │        │
+│       v               v               v               v        │
+│  baseDelay =     roll &lt; rate?    gaussian(μ,σ)   schedule     │
+│  60000 /         ├─ YES: wrong   add fatigue     keystroke     │
+│  (WPM * 5)      │  key + wait   add warmup      at time T     │
+│                  │  correction   add rubber-      update       │
+│                  └─ NO: correct   band           position      │
+│                     key                                        │
+│                                                                 │
+│  ┌──────────────────────────────────────┐                      │
+│  │ 5. SPECIAL BEHAVIOR (per character) │                      │
+│  ├──────────────────────────────────────┤                      │
+│  │ steady:      min variance           │                      │
+│  │ burst-pause: random speed/stop      │                      │
+│  │ burnout:     decay over time        │                      │
+│  │ accelerate:  grow over time         │                      │
+│  │ chaotic:     high error + fast fix  │                      │
+│  └──────────────────────────────────────┘                      │
+└─────────────────────────────────────────────────────────────────┘
+  </div>
+
+  <h3>חישוב תזמון מפורט</h3>
+  <pre>
+function calculateNextKeystrokeDelay(
+  config: AITypingConfig,
+  state: AITypingState,
+  targetText: string,
+  currentIndex: number
+): { delay: number; char: string; isError: boolean } {
+
+  // 1. Base delay from WPM
+  //    Average chars per word in Hebrew ≈ 5
+  const baseDelay = 60_000 / (config.baseWPM * 5)
+
+  // 2. Gaussian jitter (Box-Muller transform)
+  const jitter = gaussianRandom(0, baseDelay * config.wpmVariance)
+  let delay = baseDelay + jitter
+
+  // 3. Warmup effect (first N seconds)
+  const elapsed = Date.now() - state.startTime
+  if (elapsed &lt; config.warmupDuration * 1000) {
+    const warmupProgress = elapsed / (config.warmupDuration * 1000)
+    const warmupFactor = config.warmupMultiplier - (config.warmupMultiplier - 1) * warmupProgress
+    delay *= warmupFactor
+  }
+
+  // 4. Fatigue effect (after 60s)
+  if (elapsed > 60_000) {
+    const fatigueMinutes = (elapsed - 60_000) / 60_000
+    delay *= (1 + config.fatigueRate * fatigueMinutes)
+  }
+
+  // 5. Special behavior modifiers
+  delay = applySpecialBehavior(config, state, delay, elapsed)
+
+  // 6. Word familiarity (common Hebrew words = faster)
+  const currentWord = getCurrentWord(targetText, currentIndex)
+  if (COMMON_HEBREW_WORDS.has(currentWord)) {
+    if (Math.random() &lt; config.burstProbability) {
+      delay *= (1 / config.burstSpeedMultiplier)
+    }
+  }
+
+  // 7. Final letter hesitation (sofit letters)
+  const targetChar = targetText[currentIndex]
+  if (SOFIT_LETTERS.has(targetChar)) {
+    delay *= randomBetween(1.5, 3.0)
+  }
+
+  // 8. Thinking pause between words
+  if (targetChar === ' ' && Math.random() &lt; config.pauseProbability) {
+    delay += randomBetween(...config.pauseDuration)
+  }
+
+  // 9. Rubber-banding adjustment
+  delay = applyRubberBanding(config, state, delay)
+
+  // 10. Error check
+  const isError = Math.random() &lt; config.errorRate
+  let char = targetChar
+
+  if (isError) {
+    char = getErrorChar(targetChar, config.errorType)
+    // After error: schedule correction
+    state.pendingCorrection = {
+      delay: randomBetween(...config.correctionDelay),
+      correctChar: targetChar,
+    }
+  }
+
+  // 11. Post-error caution (slower for 2-3 chars after correction)
+  if (state.recentlyCorrected > 0) {
+    delay *= 1.2
+    state.recentlyCorrected--
+  }
+
+  return { delay: Math.max(delay, 30), char, isError }
+}
+
+// Gaussian random using Box-Muller transform
+function gaussianRandom(mean: number, stdDev: number): number {
+  const u1 = Math.random()
+  const u2 = Math.random()
+  const z = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2)
+  return mean + z * stdDev
+}</pre>
+
+  <h3>התנהגויות מיוחדות</h3>
+  <pre>
+function applySpecialBehavior(
+  config: AITypingConfig,
+  state: AITypingState,
+  delay: number,
+  elapsed: number
+): number {
+  switch (config.specialBehavior) {
+    case 'steady':
+      // Minimize variance — clamp jitter
+      return clamp(delay, delay * 0.85, delay * 1.15)
+
+    case 'burst-pause':
+      // Storm: random bursts then pauses
+      if (state.inBurst) {
+        delay *= 0.5  // Very fast during burst
+        state.burstRemaining--
+        if (state.burstRemaining &lt;= 0) state.inBurst = false
+      } else if (Math.random() &lt; 0.08) {
+        // Start a new burst (3-8 chars)
+        state.inBurst = true
+        state.burstRemaining = randomInt(3, 8)
+        delay *= 0.5
+      }
+      return delay
+
+    case 'burnout':
+      // Blaze: linear decay over time
+      const burnoutFactor = 1 + (elapsed / 60_000) * 0.04
+      return delay * burnoutFactor
+
+    case 'accelerate':
+      // Virus: exponential speedup over time
+      const accelFactor = Math.max(0.4, 1 - (elapsed / 120_000) * 0.6)
+      return delay * accelFactor
+
+    case 'chaotic':
+      // Bug: high variance, sometimes very fast sometimes very slow
+      const chaos = Math.random()
+      if (chaos &lt; 0.3) return delay * 0.5      // Very fast
+      if (chaos &lt; 0.5) return delay * 1.8      // Very slow
+      return delay                               // Normal
+
+    default:
+      return delay
+  }
+}</pre>
+
+  <h3>עקומות ביצועים לאורך זמן</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>דמות</th>
+          <th>0-15s</th>
+          <th>15-30s</th>
+          <th>30-60s</th>
+          <th>60-90s</th>
+          <th>90s+</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>🐱‍👤 Shadow</strong></td>
+          <td>90% WPM</td>
+          <td>100%</td>
+          <td>100%</td>
+          <td>98%</td>
+          <td>95%</td>
+        </tr>
+        <tr>
+          <td><strong>🦊 Storm</strong></td>
+          <td>110% (burst)</td>
+          <td>60% (pause)</td>
+          <td>130% (burst)</td>
+          <td>70% (pause)</td>
+          <td>בלתי צפוי</td>
+        </tr>
+        <tr>
+          <td><strong>🐉 Blaze</strong></td>
+          <td style="color:var(--red);">150%</td>
+          <td>120%</td>
+          <td>90%</td>
+          <td>70%</td>
+          <td style="color:var(--dim);">55%</td>
+        </tr>
+        <tr>
+          <td><strong>❄️ Yuki</strong></td>
+          <td>95%</td>
+          <td>100%</td>
+          <td>100%</td>
+          <td>100%</td>
+          <td>98%</td>
+        </tr>
+        <tr>
+          <td><strong>🐛 Bug</strong></td>
+          <td>80% (טעויות)</td>
+          <td>110% (תיקון)</td>
+          <td>90% (טעויות)</td>
+          <td>100%</td>
+          <td>85%</td>
+        </tr>
+        <tr>
+          <td><strong>☣️ Virus</strong></td>
+          <td style="color:var(--dim);">60%</td>
+          <td>80%</td>
+          <td>100%</td>
+          <td style="color:var(--orange);">120%</td>
+          <td style="color:var(--red);">140%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- Section 6: Story Integration -->
+<!-- ================================================================ -->
+<div class="section" id="story">
+  <div class="section-header">
+    <span class="emoji">📖</span>
+    <div>
+      <h2>אינטגרציה עם מערכת הסיפור</h2>
+      <div class="sub">קרבות בוס, מפגשי יריבים, ורגעים רגשיים</div>
+    </div>
+    <span class="tag tag-red">נרטיב</span>
+  </div>
+
+  <div class="notice purple">
+    <span class="icon">📜</span>
+    <div>ה-AI לא רק "יריב" &mdash; הוא <strong>חלק מהסיפור</strong>. קרבות הקלדה הם רגעים דרמטיים שמקדמים את העלילה. יריב AI טוב גורם לשחקן <strong>להרגיש</strong> משהו &mdash; לחץ, סיפוק, הפתעה.</div>
+  </div>
+
+  <h3>קרבות בוס לפי פרקים</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>פרק</th>
+          <th>בוס</th>
+          <th>קושי</th>
+          <th>התנהגות מיוחדת</th>
+          <th>רגע דרמטי</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>פרק 1</strong></td>
+          <td>🐛 Bug</td>
+          <td>קל-בינוני</td>
+          <td>כאוטי, הרבה טעויות. "קרב ראשון" &mdash; AI נוח יחסית.</td>
+          <td>השחקן מגלה שהוא יכול לנצח! בניית ביטחון.</td>
+        </tr>
+        <tr>
+          <td><strong>פרק 2</strong></td>
+          <td>🐱‍👤 Shadow</td>
+          <td>בינוני</td>
+          <td>יציב ובלתי ניתן לעצירה. השחקן חייב להיות עקבי.</td>
+          <td>Shadow מציע שיתוף פעולה אחרי ההפסד שלו.</td>
+        </tr>
+        <tr>
+          <td><strong>פרק 3</strong></td>
+          <td>🦊 Storm + 🐉 Blaze</td>
+          <td>קשה</td>
+          <td>שני קרבות &mdash; Storm (בלתי צפוי) ואז Blaze (שורף).</td>
+          <td>טורניר! השחקן חייב לנצח את שניהם ברצף.</td>
+        </tr>
+        <tr>
+          <td><strong>פרק 4</strong></td>
+          <td>☣️ Virus (חלק 1)</td>
+          <td>קשה מאוד</td>
+          <td>Virus מתחיל "ידידותי" (קל) ואז בוגד &mdash; מאיץ באגרסיביות.</td>
+          <td>הבגידה! Virus שנראה חבר הופך ליריב. הפתעה רגשית.</td>
+        </tr>
+        <tr>
+          <td><strong>פרק 5</strong></td>
+          <td>☣️ Virus + 🐛 Bug King</td>
+          <td>סיוט</td>
+          <td>Virus מתמזג עם Glitch. AI ברמה הגבוהה ביותר, rubber-banding מינימלי.</td>
+          <td>קרב גורלי. השחקן חייב להשתמש בכל מה שלמד.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>מפגשי יריבים בסיפור</h3>
+
+  <div class="grid-3">
+    <div class="card">
+      <h4 style="color:var(--blue);">🏋️ אימון עם Yuki</h4>
+      <p>Yuki משמשת כשותפת אימונים. בהתחלה <strong>בלתי ניתנת לניצחון</strong> &mdash; השחקן צריך להשתפר עד שהוא מתקרב אליה. כל פרק, היא "מגלה" טכניקות חדשות שהשחקן לומד.</p>
+      <p style="color:var(--cyan); font-size:12px; font-style:italic;">AI: מתחילה ב-+30 WPM מהשחקן, יורדת ל-+10 לאורך הפרקים.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--green);">🤝 גיוס בעלי ברית</h4>
+      <p>אחרי שמנצחים יריב &mdash; <strong>הוא מצטרף כבן-ברית</strong>. Shadow, Storm, Blaze הופכים לשותפי אימון עם "טיפים" מהסגנון שלהם.</p>
+      <p style="color:var(--cyan); font-size:12px; font-style:italic;">AI: מופיע כ"שותף" שמלמד טכניקות הקלדה ספציפיות.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--red);">💔 רגעים רגשיים</h4>
+      <p>בנקודות מפתח בסיפור, ה-AI יכול <strong>"לתת לשחקן לנצח" בעדינות</strong>. לדוגמה: כש-Glitch נלקחת &mdash; קרב "הצלה" שהשחקן חייב לנצח בו (rubber-banding חזק).</p>
+      <p style="color:var(--cyan); font-size:12px; font-style:italic;">AI: rubber-banding מוגבר ב-50%. מטרה: שחקן מנצח תמיד.</p>
+    </div>
+  </div>
+
+  <h3>מצב טורניר</h3>
+  <p>מערכת טורניר עם סוגרים (bracket) של יריבי AI ברמה עולה:</p>
+
+  <div class="flow-diagram">
+          ┌──────────────────────────┐
+          │      TOURNAMENT          │
+          │      BRACKET             │
+          └──────────┬───────────────┘
+                     │
+       ┌─────────────┼─────────────┐
+       │             │             │
+   ┌───┴───┐    ┌────┴───┐   ┌────┴───┐
+   │Round 1│    │Round 2 │   │ FINAL  │
+   │Easy AI│    │Medium  │   │ Hard   │
+   │70% WPM│    │90% WPM│   │110% WPM│
+   └───┬───┘    └────┬───┘   └────┬───┘
+       │             │            │
+  ┌────┴────┐  ┌─────┴───┐  ┌────┴────┐
+  │ Bug     │  │ Shadow  │  │ Storm / │
+  │ or      │  │ or      │  │ Blaze / │
+  │ random  │  │ random  │  │ Virus   │
+  └─────────┘  └─────────┘  └─────────┘
+
+  Difficulty scales with player's rolling WPM:
+  - Round 1: 70% of player's average
+  - Round 2: 90% of player's average
+  - Final:   105-110% of player's average
+  - Rubber-banding: OFF in tournament mode
+  </div>
+
+  <div class="notice green">
+    <span class="icon">🏆</span>
+    <div><strong>פיצ'ר עתידי:</strong> טורנירים בין תלמידים אמיתיים &mdash; בתי ספר / דוג'ו'ס. כשאין מספיק שחקנים, AI ממלא מקומות. ה-AI "מתחזה" לשחקן אמיתי (שם רנדומלי, אווטאר, סגנון הקלדה ייחודי).</div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- Section 7: Technical Specification -->
+<!-- ================================================================ -->
+<div class="section" id="tech">
+  <div class="section-header">
+    <span class="emoji">🔧</span>
+    <div>
+      <h2>ספציפיקציה טכנית</h2>
+      <div class="sub">ארכיטקטורה, קומפוננטות, ו-Web Workers</div>
+    </div>
+    <span class="tag tag-blue">מימוש</span>
+  </div>
+
+  <h3>ארכיטקטורת המערכת</h3>
+  <div class="flow-diagram">
+┌─────────────────────────────────────────────────────────────────────┐
+│                          MAIN THREAD                                │
+│                                                                     │
+│  ┌─────────────┐   ┌──────────────┐   ┌──────────────────────────┐ │
+│  │TypingArea   │   │AIOpponent    │   │MatchUI                  │ │
+│  │(player)     │   │(component)   │   │(scores, progress bars)  │ │
+│  │             │   │             │   │                          │ │
+│  │ onKeyDown   │   │ displays AI │   │ player WPM vs AI WPM    │ │
+│  │ → store     │   │ keystrokes  │   │ char position diff      │ │
+│  └──────┬──────┘   └──────┬──────┘   └──────────────────────────┘ │
+│         │                 │                                         │
+│         │    ┌────────────┴──────────┐                              │
+│         │    │  Zustand Store        │                              │
+│         └───>│  (ai-opponent-store)  │<──── messages from Worker   │
+│              │                       │                              │
+│              │  playerPosition       │                              │
+│              │  aiPosition           │                              │
+│              │  aiKeystrokes[]       │                              │
+│              │  matchState           │                              │
+│              └───────────┬───────────┘                              │
+│                          │                                          │
+├──────────────────────────┼──────────────────────────────────────────┤
+│                   postMessage                                       │
+│                          │                                          │
+│  ┌───────────────────────┴───────────────────────────────────────┐  │
+│  │                    WEB WORKER                                 │  │
+│  │                                                               │  │
+│  │  ┌──────────────────┐    ┌────────────────────────────────┐  │  │
+│  │  │ AITypingEngine   │    │ TimingScheduler                │  │  │
+│  │  │                  │    │                                │  │  │
+│  │  │ - config         │    │ - setTimeout chain             │  │  │
+│  │  │ - state          │    │ - high-precision timing        │  │  │
+│  │  │ - rubberBand     │───>│ - drift compensation           │  │  │
+│  │  │ - errorGenerator │    │                                │  │  │
+│  │  │ - specialBehavior│    │ emits: { char, time, isError } │  │  │
+│  │  └──────────────────┘    └────────────────────────────────┘  │  │
+│  │                                                               │  │
+│  └───────────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────────┘
+  </div>
+
+  <h3>קומפוננטת React: AIOpponent</h3>
+  <pre>
+// src/components/battle/ai-opponent.tsx
+'use client'
+
+import { useEffect, useRef, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useAIOpponentStore } from '@/stores/ai-opponent-store'
+
+interface AIOpponentProps {
+  rivalId: 'shadow' | 'storm' | 'blaze' | 'yuki' | 'bug' | 'virus'
+  targetText: string
+  difficulty: number          // 1-5
+  rubberBandEnabled: boolean  // false for tournaments
+  onComplete: (result: AIMatchResult) => void
+}
+
+export function AIOpponent({
+  rivalId,
+  targetText,
+  difficulty,
+  rubberBandEnabled,
+  onComplete,
+}: AIOpponentProps) {
+  const workerRef = useRef&lt;Worker | null&gt;(null)
+  const {
+    aiPosition,
+    aiKeystrokes,
+    aiWPM,
+    setAIKeystroke,
+    setAIComplete,
+  } = useAIOpponentStore()
+
+  // Initialize Web Worker
+  useEffect(() => {
+    workerRef.current = new Worker(
+      new URL('@/workers/ai-typing-worker.ts', import.meta.url)
+    )
+
+    workerRef.current.onmessage = (event) => {
+      const { type, payload } = event.data
+
+      switch (type) {
+        case 'keystroke':
+          setAIKeystroke(payload)
+          break
+        case 'complete':
+          setAIComplete(payload)
+          onComplete(payload)
+          break
+      }
+    }
+
+    // Start AI typing
+    workerRef.current.postMessage({
+      type: 'start',
+      payload: { rivalId, targetText, difficulty, rubberBandEnabled },
+    })
+
+    return () => workerRef.current?.terminate()
+  }, [rivalId, targetText, difficulty])
+
+  // Send player position updates to worker (for rubber-banding)
+  const updatePlayerPosition = useCallback((pos: number) => {
+    workerRef.current?.postMessage({
+      type: 'playerUpdate',
+      payload: { position: pos },
+    })
+  }, [])
+
+  return (
+    &lt;div className="relative"&gt;
+      {/* AI character avatar with reaction animations */}
+      &lt;RivalAvatar rivalId={rivalId} wpm={aiWPM} /&gt;
+
+      {/* AI typing display */}
+      &lt;div className="font-mono text-sm leading-relaxed"&gt;
+        {targetText.split('').map((char, i) =&gt; (
+          &lt;motion.span
+            key={i}
+            className={
+              i &lt; aiPosition
+                ? 'text-green-400'
+                : i === aiPosition
+                  ? 'text-white bg-purple-600/30'
+                  : 'text-gray-600'
+            }
+            animate={
+              i === aiPosition
+                ? { scale: [1, 1.05, 1], transition: { duration: 0.1 } }
+                : {}
+            }
+          &gt;
+            {char}
+          &lt;/motion.span&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}</pre>
+
+  <h3>Zustand Store: ai-opponent-store</h3>
+  <pre>
+// src/stores/ai-opponent-store.ts
+import { create } from 'zustand'
+
+interface AIKeystrokeEvent {
+  char: string
+  time: number
+  isError: boolean
+  position: number
+  wpm: number
+}
+
+interface AIMatchResult {
+  totalTime: number
+  finalWPM: number
+  accuracy: number
+  totalErrors: number
+  totalCorrections: number
+}
+
+interface AIOpponentState {
+  // State
+  aiPosition: number
+  aiKeystrokes: AIKeystrokeEvent[]
+  aiWPM: number
+  aiAccuracy: number
+  isComplete: boolean
+  matchResult: AIMatchResult | null
+
+  // Actions
+  setAIKeystroke: (event: AIKeystrokeEvent) => void
+  setAIComplete: (result: AIMatchResult) => void
+  reset: () => void
+}
+
+export const useAIOpponentStore = create&lt;AIOpponentState&gt;((set) => ({
+  aiPosition: 0,
+  aiKeystrokes: [],
+  aiWPM: 0,
+  aiAccuracy: 100,
+  isComplete: false,
+  matchResult: null,
+
+  setAIKeystroke: (event) =>
+    set((state) => ({
+      aiPosition: event.position,
+      aiKeystrokes: [...state.aiKeystrokes, event],
+      aiWPM: event.wpm,
+      aiAccuracy: calculateAccuracy(state.aiKeystrokes, event),
+    })),
+
+  setAIComplete: (result) =>
+    set({ isComplete: true, matchResult: result }),
+
+  reset: () =>
+    set({
+      aiPosition: 0, aiKeystrokes: [], aiWPM: 0,
+      aiAccuracy: 100, isComplete: false, matchResult: null,
+    }),
+}))</pre>
+
+  <h3>Web Worker: ai-typing-worker</h3>
+  <pre>
+// src/workers/ai-typing-worker.ts
+import { RIVAL_CONFIGS } from '@/lib/ai/rival-configs'
+import { AITypingEngine } from '@/lib/ai/ai-typing-engine'
+
+let engine: AITypingEngine | null = null
+
+self.onmessage = (event) => {
+  const { type, payload } = event.data
+
+  switch (type) {
+    case 'start': {
+      const config = RIVAL_CONFIGS[payload.rivalId]
+      const scaledConfig = scaleToDifficulty(config, payload.difficulty)
+
+      engine = new AITypingEngine(
+        scaledConfig,
+        payload.targetText,
+        payload.rubberBandEnabled
+      )
+
+      engine.onKeystroke = (event) => {
+        self.postMessage({ type: 'keystroke', payload: event })
+      }
+
+      engine.onComplete = (result) => {
+        self.postMessage({ type: 'complete', payload: result })
+      }
+
+      engine.start()
+      break
+    }
+
+    case 'playerUpdate': {
+      // Update rubber-banding with player's current position
+      engine?.updatePlayerPosition(payload.position)
+      break
+    }
+
+    case 'stop': {
+      engine?.stop()
+      engine = null
+      break
+    }
+  }
+}
+
+function scaleToDifficulty(
+  config: AITypingConfig,
+  difficulty: number
+): AITypingConfig {
+  // Scale base WPM and error rate based on difficulty tier
+  const wpmScale = [0.5, 0.7, 1.0, 1.2, 1.5][difficulty - 1]
+  const errorScale = [2.0, 1.5, 1.0, 0.7, 0.5][difficulty - 1]
+
+  return {
+    ...config,
+    baseWPM: config.baseWPM * wpmScale,
+    errorRate: Math.min(config.errorRate * errorScale, 0.35),
+  }
+}</pre>
+
+  <h3>אודיו: צלילי הקלדה של AI</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>אירוע</th>
+          <th>צליל</th>
+          <th>עוצמה</th>
+          <th>הערות</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>הקשה רגילה</strong></td>
+          <td><code>ai-key-tap.mp3</code></td>
+          <td>30% (עמום, "מרחוק")</td>
+          <td>Spatial audio &mdash; מגיע מכיוון ה-AI</td>
+        </tr>
+        <tr>
+          <td><strong>טעות</strong></td>
+          <td><code>ai-key-error.mp3</code></td>
+          <td>40%</td>
+          <td>צליל "לחיצה לא נכונה" קל</td>
+        </tr>
+        <tr>
+          <td><strong>Backspace</strong></td>
+          <td><code>ai-key-delete.mp3</code></td>
+          <td>35%</td>
+          <td>צליל מחיקה מהיר</td>
+        </tr>
+        <tr>
+          <td><strong>פרץ מהירות</strong></td>
+          <td>הקשות מהירות ברצף</td>
+          <td>45%</td>
+          <td>מוסיף מתח &mdash; "הוא מאיץ!"</td>
+        </tr>
+        <tr>
+          <td><strong>סיום</strong></td>
+          <td><code>ai-finish.mp3</code></td>
+          <td>60%</td>
+          <td>מפחיד אם ה-AI סיים ראשון</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>ביצועים ואופטימיזציה</h3>
+
+  <div class="grid-2">
+    <div class="card">
+      <h4 style="color:var(--green);">שימוש ב-Web Worker</h4>
+      <ul>
+        <li><strong>כל חישובי התזמון</strong> רצים ב-Worker &mdash; לא חוסמים את ה-main thread</li>
+        <li><strong>תקשורת דרך postMessage</strong> &mdash; רק אירועי הקשה (קטנים) עוברים</li>
+        <li><strong>setTimeout ב-Worker</strong> &mdash; דיוק גבוה יותר מ-main thread</li>
+        <li><strong>Drift compensation</strong> &mdash; תיקון הצטברות שגיאות תזמון</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--purple);">עלות CPU מינימלית</h4>
+      <ul>
+        <li><strong>אין לולאת רנדור</strong> &mdash; רק עדכון DOM בעת הקשה</li>
+        <li><strong>motion.span מותנה</strong> &mdash; אנימציה רק על תו נוכחי</li>
+        <li><strong>זיכרון</strong>: ~2KB לכל מצב AI פעיל</li>
+        <li><strong>מטרה: 60fps</strong> יציב גם במכשירים חלשים</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>אינטגרציה עם אנימציות דמות</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>מצב AI</th>
+          <th>אנימציית דמות</th>
+          <th>אפקט ויזואלי</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>הקלדה רגילה</strong></td>
+          <td>ידיים זזות, מבט ממוקד</td>
+          <td>אווטאר ב-idle typing loop</td>
+        </tr>
+        <tr>
+          <td><strong>פרץ מהירות</strong></td>
+          <td>ידיים מטורפות, עיניים "בוערות"</td>
+          <td>אפקט speedlines + glow</td>
+        </tr>
+        <tr>
+          <td><strong>טעות + תיקון</strong></td>
+          <td>מעוות פנים, מנדנד ראש</td>
+          <td>הבזק אדום קצר</td>
+        </tr>
+        <tr>
+          <td><strong>הפסקת חשיבה</strong></td>
+          <td>מרים עיניים, חושב</td>
+          <td>"..." בועה מעל הראש</td>
+        </tr>
+        <tr>
+          <td><strong>מוביל</strong></td>
+          <td>חיוך, בטוח בעצמו</td>
+          <td>אווירת ביטחון</td>
+        </tr>
+        <tr>
+          <td><strong>מפגר</strong></td>
+          <td>דאגה, לחץ</td>
+          <td>טיפות זיעה, לחץ</td>
+        </tr>
+        <tr>
+          <td><strong>ניצחון</strong></td>
+          <td>חגיגה, קפיצה</td>
+          <td>confetti + קונפטי</td>
+        </tr>
+        <tr>
+          <td><strong>הפסד</strong></td>
+          <td>אכזבה, אבל ספורטיבית</td>
+          <td>"כל הכבוד!" / "בפעם הבאה!"</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>מבנה קבצים</h3>
+  <pre>
+src/
+├── components/
+│   └── battle/
+│       ├── ai-opponent.tsx          # Main AI opponent component
+│       ├── rival-avatar.tsx         # Animated rival character
+│       ├── match-ui.tsx             # Score display, progress bars
+│       └── typing-race-view.tsx     # Full race view (player + AI)
+├── lib/
+│   └── ai/
+│       ├── ai-typing-engine.ts      # Core typing simulation engine
+│       ├── rival-configs.ts         # Character-specific configs
+│       ├── rubber-band.ts           # Dynamic difficulty adjustment
+│       ├── error-generator.ts       # Human-like error generation
+│       ├── hebrew-adjacency.ts      # Hebrew keyboard adjacency map
+│       └── performance-tracker.ts   # Player level tracking
+├── stores/
+│   └── ai-opponent-store.ts         # Zustand store for AI state
+├── workers/
+│   └── ai-typing-worker.ts         # Web Worker for timing
+└── types/
+    └── ai-opponent.ts               # TypeScript interfaces</pre>
+</div>
+
+<!-- Footer -->
+<div class="doc-footer">
+  <div class="logo-f">NINJA KEYBOARD</div>
+  <p>מסמך עיצוב יריבי AI להקלדה | גרסה 1.0 | מרץ 2026</p>
+  <p>נינג'ה מקלדת &mdash; ללמוד הקלדה כמו נינג'ה אמיתי</p>
+</div>
+
+</body>
+</html>

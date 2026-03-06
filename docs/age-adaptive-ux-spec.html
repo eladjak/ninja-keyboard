@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>נינג'ה מקלדת - מפרט UX מותאם גיל</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--pri:#6C5CE7;--pri-l:#a29bfe;--pri-d:#4a3db8;--sec:#00B894;--sec-l:#55efc4;--bg:#0d0b1a;--bg2:#13102a;--txt:#e8e8f0;--txt-m:#9e9eb8;--txt-d:#6c6c8a;--brd:rgba(108,92,231,0.2);--brd-g:rgba(108,92,231,0.4);--shatil:#FF6B6B;--nevet:#FECA57;--geza:#6C5CE7;--anaf:#00B894;--tzameret:#636e72;--danger:#FF6B6B;--warn:#FECA57;--ok:#00B894}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--txt);line-height:1.7;min-height:100vh}
+.title-bar{background:linear-gradient(135deg,var(--pri-d) 0%,var(--bg) 50%,#0a1628 100%);border-bottom:2px solid var(--brd-g);padding:2.5rem 2rem;text-align:center;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+.title-bar h1{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--pri-l),var(--sec-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem;letter-spacing:.02em}
+.title-bar .sub{color:var(--txt-m);font-size:1.1rem;font-weight:300}
+.badges{display:flex;gap:1rem;justify-content:center;margin-top:1rem;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .9rem;border-radius:999px;font-size:.85rem;font-weight:500;border:1px solid var(--brd);background:rgba(108,92,231,.08);color:var(--pri-l)}
+.ctr{max-width:1200px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.sh{display:flex;align-items:center;gap:.75rem;margin:3rem 0 1.5rem;cursor:pointer;user-select:none}
+.sn{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--pri),var(--pri-d));color:#fff;font-weight:800;font-size:1.1rem;flex-shrink:0;box-shadow:0 4px 15px rgba(108,92,231,.3)}
+.sh h2{font-size:1.6rem;font-weight:800;flex:1}
+.ti{font-size:1.2rem;color:var(--txt-m);transition:transform .3s;flex-shrink:0}
+.sh.coll .ti{transform:rotate(-90deg)}
+.sc{overflow:hidden;transition:max-height .4s ease}
+.sc.coll{max-height:0!important;overflow:hidden}
+.card{background:var(--bg2);border:1px solid var(--brd);border-radius:16px;padding:1.5rem;margin-bottom:1.25rem;transition:border-color .2s,box-shadow .2s}
+.card:hover{border-color:var(--brd-g);box-shadow:0 4px 20px rgba(108,92,231,.1)}
+.card h3{font-size:1.2rem;font-weight:700;color:var(--pri-l);margin-bottom:.75rem}
+.card h4{font-size:1rem;font-weight:600;color:var(--sec-l);margin:1rem 0 .5rem}
+.card p,.card li{color:var(--txt-m);font-size:.95rem;line-height:1.8}
+.card ul,.card ol{padding-right:1.5rem;margin:.5rem 0}
+.card li{margin-bottom:.3rem}
+.card strong{color:var(--txt)}
+.pcard{border-color:var(--danger);background:rgba(255,107,107,.05)}
+.pcard h3{color:var(--danger)}
+.subh{font-size:1.15rem;font-weight:700;color:var(--sec-l);margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid rgba(0,184,148,.2)}
+.tw{overflow-x:auto;margin:1rem 0;border-radius:12px;border:1px solid var(--brd)}
+table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:700px}
+th{background:linear-gradient(135deg,rgba(108,92,231,.15),rgba(108,92,231,.05));color:var(--pri-l);font-weight:700;text-align:right;padding:.85rem 1rem;white-space:nowrap;border-bottom:2px solid var(--brd-g)}
+td{padding:.7rem 1rem;border-bottom:1px solid rgba(108,92,231,.08);color:var(--txt-m);vertical-align:top}
+tr:hover td{background:rgba(108,92,231,.04)}
+.cs{background:rgba(255,107,107,.06)!important} .cn{background:rgba(254,202,87,.06)!important}
+.cg{background:rgba(108,92,231,.06)!important} .ca{background:rgba(0,184,148,.06)!important}
+.ct{background:rgba(99,110,114,.06)!important}
+th.cs{color:var(--shatil);border-bottom-color:var(--shatil)}
+th.cn{color:var(--nevet);border-bottom-color:var(--nevet)}
+th.cg{color:var(--pri-l);border-bottom-color:var(--geza)}
+th.ca{color:var(--anaf);border-bottom-color:var(--anaf)}
+th.ct{color:#b2bec3;border-bottom-color:var(--tzameret)}
+.cb{background:#0a0820;border:1px solid rgba(108,92,231,.15);border-radius:10px;padding:1.2rem;margin:1rem 0;overflow-x:auto;direction:ltr;text-align:left}
+.cb pre{font-family:'Fira Code','Consolas',monospace;font-size:.82rem;line-height:1.6;color:#c8c8e0;white-space:pre}
+code{direction:ltr;unicode-bidi:embed;background:rgba(108,92,231,.1);color:var(--pri-l);padding:.15rem .45rem;border-radius:5px;font-family:'Fira Code','Consolas',monospace;font-size:.85em}
+.ag{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.5rem 0}
+.ac{border-radius:16px;padding:1.5rem;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.ac:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.3)}
+.ac .an{font-size:1.4rem;font-weight:900;margin-bottom:.15rem}
+.ac .ar{font-size:.9rem;font-weight:600;margin-bottom:.5rem;opacity:.8}
+.ac .as{font-size:1rem;font-weight:700;margin-bottom:.5rem;opacity:.9}
+.ac .ad{font-size:.85rem;line-height:1.6;opacity:.75}
+.a1{background:linear-gradient(135deg,#FF6B6B,#ee5a24);color:#fff;border:2px solid rgba(255,107,107,.5)}
+.a2{background:linear-gradient(135deg,#FECA57,#f0932b);color:#2d3436;border:2px solid rgba(254,202,87,.5)}
+.a3{background:linear-gradient(135deg,#6C5CE7,#4a3db8);color:#fff;border:2px solid rgba(108,92,231,.5)}
+.a4{background:linear-gradient(135deg,#00B894,#00856a);color:#fff;border:2px solid rgba(0,184,148,.5)}
+.a5{background:linear-gradient(135deg,#636e72,#2d3436);color:#dfe6e9;border:2px solid rgba(99,110,114,.5)}
+.ld{background:#0a0820;border:1px solid var(--brd);border-radius:12px;padding:1.2rem;margin:1rem 0;direction:ltr;text-align:left;font-family:'Fira Code','Consolas',monospace;font-size:.82rem;line-height:1.5;color:var(--txt-m);white-space:pre;overflow-x:auto}
+.cl{list-style:none;padding:0;margin:.5rem 0}
+.cl li{display:flex;align-items:flex-start;gap:.5rem;padding:.4rem 0;color:var(--txt-m);font-size:.92rem}
+.cl li::before{content:'';display:inline-block;width:18px;height:18px;border:2px solid var(--pri);border-radius:4px;flex-shrink:0;margin-top:4px}
+.pc{background:var(--bg2);border:1px solid var(--brd);border-radius:16px;padding:1.5rem;margin-bottom:1rem;border-right:4px solid var(--pri)}
+.ph{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;flex-wrap:wrap}
+.pnum{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--pri),var(--pri-d));color:#fff;font-weight:800;font-size:.95rem;flex-shrink:0}
+.pt{font-size:1.1rem;font-weight:700;color:var(--txt)}
+.ptm{padding:.2rem .6rem;border-radius:999px;font-size:.78rem;background:rgba(0,184,148,.1);color:var(--sec);border:1px solid rgba(0,184,148,.2)}
+.pi{font-size:.85rem;color:var(--txt-d);font-style:italic;margin-bottom:.5rem}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:1.5rem 0}
+.ss{border-right:4px solid var(--sec)} .ss h3{color:var(--sec-l)!important}
+.sch{border-right:4px solid var(--pri)} .sch h3{color:var(--pri-l)!important}
+.ts{background:linear-gradient(135deg,rgba(0,184,148,.08),rgba(0,184,148,.02));border:2px solid rgba(0,184,148,.3);border-radius:16px;padding:1.5rem;margin:1.5rem 0}
+.ts h3{color:var(--sec)}
+.dv{height:1px;background:linear-gradient(90deg,transparent,var(--brd-g),transparent);margin:2rem 0}
+.priority{display:inline-block;padding:.2rem .6rem;border-radius:6px;font-size:.75rem;font-weight:700}
+.p-crit{background:rgba(255,107,107,.2);color:var(--danger);border:1px solid rgba(255,107,107,.3)}
+.p-high{background:rgba(254,202,87,.15);color:var(--warn);border:1px solid rgba(254,202,87,.25)}
+.p-med{background:rgba(108,92,231,.15);color:var(--pri-l);border:1px solid rgba(108,92,231,.25)}
+.p-low{background:rgba(99,110,114,.15);color:#b2bec3;border:1px solid rgba(99,110,114,.25)}
+.toc{background:var(--bg2);border:1px solid var(--brd);border-radius:16px;padding:1.5rem;margin-bottom:2rem}
+.toc h3{color:var(--pri-l);font-size:1.1rem;margin-bottom:.75rem}
+.toc ul{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.3rem}
+.toc a{color:var(--txt-m);text-decoration:none;font-size:.9rem;padding:.3rem .5rem;border-radius:6px;display:block;transition:background .2s,color .2s}
+.toc a:hover{background:rgba(108,92,231,.1);color:var(--pri-l)}
+.scroll-top{position:fixed;bottom:2rem;left:2rem;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--pri),var(--pri-d));color:#fff;border:none;cursor:pointer;font-size:1.3rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(108,92,231,.4);opacity:0;transition:opacity .3s;z-index:200}
+.scroll-top.vis{opacity:1}
+@media(max-width:768px){.title-bar h1{font-size:1.8rem}.ctr{padding:1rem}.sg{grid-template-columns:1fr}.ag{grid-template-columns:1fr 1fr}table{font-size:.78rem}th,td{padding:.5rem .6rem}}
+@media(max-width:480px){.ag{grid-template-columns:1fr}.toc ul{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="title-bar">
+<h1>נינג'ה מקלדת - מפרט UX מותאם גיל</h1>
+<div class="sub">מפרט מקיף לחוויות שונות באופן קיצוני לכל ערכת נושא גילאית ותפקיד</div>
+<div class="badges">
+<span class="badge">גרסה 1.0</span>
+<span class="badge">2026-03-04</span>
+<span class="badge">5 ערכות גיל</span>
+<span class="badge">3 תפקידים</span>
+<span class="badge">8 שלבי יישום</span>
+</div>
+</div>
+<div class="ctr">
+<div class="toc">
+<h3>תוכן עניינים</h3>
+<ul>
+<li><a href="#s1">1. ניתוח מצב קיים</a></li>
+<li><a href="#s2">2. פילוסופיית עיצוב לפי גיל</a></li>
+<li><a href="#s3">3. מערכת ויזואלית לפי גיל</a></li>
+<li><a href="#s4">4. נוכחות דמויות לפי גיל</a></li>
+<li><a href="#s5">5. ניווט לפי גיל/תפקיד</a></li>
+<li><a href="#s6">6. גיימיפיקציה לפי גיל</a></li>
+<li><a href="#s7">7. אסטרטגיית יישום</a></li>
+<li><a href="#s8">8. התאמה עמוד-אחר-עמוד</a></li>
+<li><a href="#s9">9. סדר עדיפויות יישום</a></li>
+<li><a href="#s10">10. רשימת מעבר (Migration)</a></li>
+<li><a href="#s11">11. אסטרטגיית בדיקות</a></li>
+<li><a href="#s12">12. סיכום: מה משתנה ומה נשאר</a></li>
+</ul>
+</div>
+
+<div id="s1">
+<div class="sh" onclick="toggleSection(this)"><span class="sn">1</span><h2>ניתוח מצב קיים</h2><span class="ti">&#9660;</span></div>
+<div class="sc">
+
+<div class="card">
+<h3>מה קיים היום</h3>
+<ul>
+<li><strong>5 ערכות גיל</strong> מוגדרות ב-<code>src/styles/themes/</code> עם טיפוס <code>AgeTheme</code>: שתיל (6-8), נבט (8-10), גזע (10-12), ענף (12-14), צמרת (14-16+)</li>
+<li><strong>משתני CSS</strong> ב-<code>src/styles/css/theme-vars.css</code> שמשנים <code>--theme-radius</code>, <code>--theme-font-scale</code>, <code>--theme-button-height</code>, <code>--theme-spacing</code> לפי <code>[data-theme]</code></li>
+<li><strong>סכמות צבע</strong> בלתי תלויות בגיל: <code>default</code>, <code>dark</code>, <code>high-contrast</code>, <code>dark-high-contrast</code></li>
+<li><strong>ThemeProvider</strong> ב-<code>src/components/providers/theme-provider.tsx</code> מגדיר <code>data-theme</code> ו-<code>data-scheme</code> על <code>&lt;html&gt;</code></li>
+<li><strong>חנות ערכות נושא</strong> ב-<code>src/stores/theme-store.ts</code> שומרת <code>ageName</code> ו-<code>colorScheme</code> דרך Zustand + localStorage</li>
+<li><strong>פריסה אחת</strong>: <code>AppShell</code> עם <code>Sidebar</code> (דסקטופ) + <code>BottomTabs</code> (מובייל) + <code>Header</code>, זהה לכל הגילאים</li>
+<li><strong>שפה ויזואלית אחת</strong>: ערכת גיימינג כהה (<code>#0d0b1a</code> בסיס, זוהרי ניאון, גבולות גרדיאנט, מחלקות "game-") מקודדת קשיח בכל מקום</li>
+<li><strong>קמע Ki</strong>: קמע מבוסס תמונה עם 8 אנימציות מצב רוח, 3 גדלים, בועות דיבור</li>
+<li><strong>12 דמויות</strong>: גליונות מודל נוצרו אך רק Ki משולב. מיפוי דמות-לעמוד קיים בתיעוד אך לא בקוד</li>
+<li><strong>מערכת סאונד</strong>: 15 צלילים מסונתזים ב-Web Audio API, זהים לכל הגילאים</li>
+</ul>
+</div>
+
+<div class="card pcard">
+<h3>הבעיה המרכזית</h3>
+<p>האסתטיקה הגיימינגית הכהה (<code>#0d0b1a</code>, זוהרי ניאון, גבולות גרדיאנט, מחלקות "game-") מקודדת קשיח ב:</p>
+<ol>
+<li><code>globals.css</code> - <code>:root</code> ו-<code>.dark</code> (שורות 52-120)</li>
+<li>מחלקות שירות גיימינג (<code>.game-bg</code>, <code>.game-card-border</code>, <code>.game-button</code>, <code>.game-stat-badge</code>) (שורות 418-495)</li>
+<li>רכיבי פריסה (<code>sidebar.tsx</code>, <code>header.tsx</code>, <code>bottom-tabs.tsx</code>) עם ערכים קשיחים</li>
+<li><code>home-client.tsx</code> עם <code>style={{ background: '#0d0b1a' }}</code> קשיח</li>
+<li>אין רינדור מותנה מבוסס <code>ageName</code> בשום רכיב</li>
+</ol>
+<p style="margin-top:.75rem;">הסלקטורים הקיימים של <code>[data-theme]</code> משנים רק 4 משתנים נמוכי-רמה. הם <strong>לא</strong> משנים צבעים, רקעים, נוכחות דמויות, עוצמת אנימציה, מבנה ניווט, או התנהגות גיימיפיקציה.</p>
+</div>
+
+</div></div>
+<div class="dv"></div>
+
+<div id="s2">
+<div class="sh" onclick="toggleSection(this)"><span class="sn">2</span><h2>פילוסופיית עיצוב לפי שכבת גיל</h2><span class="ti">&#9660;</span></div>
+<div class="sc">
+
+<div class="ag">
+<div class="ac a1"><div class="an">שתיל</div><div class="ar">גילאי 6-8</div><div class="as">"הגן הקסום"</div><div class="ad"><strong>מטרה רגשית:</strong> בטוח, חם, פלא. כמו להיכנס לעולם מצויר ידידותי.<br><strong>השראה:</strong> Duolingo Kids, Khan Academy Kids, משחקי PBS Kids.<br><br>ילד בן 6 צריך להרגיש שהוא משחק, לא לומד. מטרות מגע גדולות, חיזוק חיובי מתמיד, דמויות שמרגישות כמו חברים. המסך לעולם לא צריך להרגיש ריק או מאיים. רקעים בהירים עם צבעים עליזים.</div></div>
+
+<div class="ac a2"><div class="an">נבט</div><div class="ar">גילאי 8-10</div><div class="as">"מחנה הרפתקאות"</div><div class="ad"><strong>מטרה רגשית:</strong> כיף, מרגש, מאתגר קצת. כמו קריקטורת הרפתקאות של שבת בבוקר.<br><strong>השראה:</strong> Prodigy Math, Club Penguin, משחקי פוקימון מוקדמים.<br><br>ילדים בטווח הזה צוברים ביטחון ורוצים להרגיש "מגניבים" אבל עדיין צריכים חום. דמויות הן שותפות למסע. גיימיפיקציה בחזית אך לא מכריעה.</div></div>
+
+<div class="ac a3"><div class="an">גזע</div><div class="ar">גילאי 10-12</div><div class="as">"זירת הנינג'ה"</div><div class="ad"><strong>מטרה רגשית:</strong> מגניב, תחרותי, גיימינג. כמו לובי Brawl Stars או Fortnite.<br><strong>השראה:</strong> Brawl Stars, Clash Royale, Roblox UI.<br><br>זו הנקודה המתוקה של העיצוב הנוכחי. רקעים כהים, אקסנטים ניאוניים, כרטיסי גיימינג, אלמנטים תחרותיים. דמויות הן לוחמים שותפים. דירוגים חשובים. מצב קרב הוא פיצ'ר מרכזי.</div></div>
+
+<div class="ac a4"><div class="an">ענף</div><div class="ar">גילאי 12-14</div><div class="as">"מרכז האימונים"</div><div class="ad"><strong>מטרה רגשית:</strong> בוגר, יעיל, כבוד לאינטליגנציה של המשתמש. כמו אפליקציית פרודוקטיביות עם נגיעות גיימינג.<br><strong>השראה:</strong> Monkeytype (מצב כהה), Discord, Notion-lite.<br><br>מתבגרים מודעים-עצמית לגבי דברים "ילדותיים". הקמע צריך להיות עדין או אופציונלי. נתונים והתקדמות בולטים. ממשק חלק ומודרני.</div></div>
+
+<div class="ac a5"><div class="an">צמרת</div><div class="ar">גילאי 14-16+</div><div class="as">"דשבורד מקצועי"</div><div class="ad"><strong>מטרה רגשית:</strong> מקצועי, מינימלי, נתונים-ראשית. כמו כלי מפתחים או דשבורד אנליטיקה.<br><strong>השראה:</strong> Monkeytype, Keybr.com, typing.io.<br><br>אין דמויות אלא אם הופעלו במפורש. טיפוגרפיה נקייה, מידע צפוף, קיצורי מקלדת לכל דבר. הפוקוס הוא על WPM, דיוק, וגרפי שיפור.</div></div>
+</div>
+
+</div></div>
+<div class="dv"></div>
+
+<div id="s3">
+<div class="sh" onclick="toggleSection(this)"><span class="sn">3</span><h2>מערכת ויזואלית לפי גיל</h2><span class="ti">&#9660;</span></div>
+<div class="sc">
+
+<h3 class="subh">3.1 רקע ופלטת צבעים</h3>
+<div class="tw"><table>
+<thead><tr><th>מאפיין</th><th class="cs">שתיל (6-8)</th><th class="cn">נבט (8-10)</th><th class="cg">גזע (10-12)</th><th class="ca">ענף (12-14)</th><th class="ct">צמרת (14-16+)</th></tr></thead>
+<tbody>
+<tr><td><strong>רקע</strong></td><td class="cs">קרם חם <code>#FFF8F0</code><br>גרדיאנט רך ללבנדר</td><td class="cn">תכלת בהיר <code>#F0F4FF</code><br>דפוס עננים עדין</td><td class="cg">כהה עמוק <code>#0d0b1a</code><br>גרדיאנט רדיאלי, זוהרים</td><td class="ca">כהה נייטרלי <code>#1a1a2e</code><br>רך יותר, ללא זוהרים</td><td class="ct">כמעט-שחור <code>#111111</code><br>או לבן טהור (בחירה)</td></tr>
+<tr><td><strong>רקע כרטיס</strong></td><td class="cs">לבן <code>#FFFFFF</code><br>מעוגל, צל-שטח</td><td class="cn">לבן <code>#FFFFFF</code><br>גבול בהיר, צל עדין</td><td class="cg">זכוכית כהה<br><code>oklch(0.13 0.025 290)</code></td><td class="ca">עדין <code>#252540</code><br>גבולות נקיים 1px</td><td class="ct"><code>#1a1a1a</code><br>גבול מינימלי</td></tr>
+<tr><td><strong>טקסט</strong></td><td class="cs">כהה <code>#2D3436</code><br>גופן מעוגל</td><td class="cn">כהה <code>#2D3436</code></td><td class="cg">בהיר <code>#e8e8f0</code><br>אפקטי זוהר</td><td class="ca">אפור בהיר <code>#d1d5db</code></td><td class="ct"><code>#e5e5e5</code> או <code>#333</code></td></tr>
+<tr><td><strong>סגנון אקסנט</strong></td><td class="cs">פסטלים רכים<br>צבעי סוכריות</td><td class="cn">ראשוניים בהירים<br>רוויה מתונה</td><td class="cg">ניאון סגול/ירוק<br>אסתטיקה גיימינג</td><td class="ca">סגול מוט<br>קו-תחתון > זוהר</td><td class="ct">מונוכרום + אקסנט יחיד<br>ללא גרדיאנטים</td></tr>
+</tbody></table></div>
+
+<h3 class="subh">3.2 הרחבת משתני CSS</h3>
+<div class="card"><p>סלקטורי <code>[data-theme]</code> הנוכחיים צריכים להרחב מ-4 משתנים לכ-25. קטגוריות חדשות: אווירת צבע, עוצמת גיימינג, דמות ואנימציה, ניווט, טיפוגרפיה.</p></div>
+<div class="cb"><pre>/* שתיל - הגן הקסום */
+[data-theme='shatil'] {
+  /* קיים */
+  --theme-radius: 1.25rem;
+  --theme-font-scale: 1.25;
+  --theme-button-height: 60px;
+  --theme-spacing: 1.5;
+
+  /* חדש: אווירת צבע */
+  --theme-bg: #FFF8F0;
+  --theme-bg-secondary: #FFF0E6;
+  --theme-card-bg: #FFFFFF;
+  --theme-card-border: #F0E0D0;
+  --theme-card-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  --theme-text: #2D3436;
+  --theme-text-muted: #636E72;
+
+  /* חדש: עוצמת גיימינג (0=ללא, 1=מלא) */
+  --theme-glow-intensity: 0;
+  --theme-neon-opacity: 0;
+  --theme-gradient-border: 0;
+
+  /* חדש: דמות ואנימציה */
+  --theme-mascot-size: 120px;
+  --theme-animation-scale: 1.5;
+  --theme-celebration-intensity: 3;
+
+  /* חדש: ניווט */
+  --theme-nav-icon-size: 28px;
+  --theme-nav-label-size: 14px;
+
+  /* חדש: טיפוגרפיה */
+  --theme-heading-weight: 800;
+  --theme-body-line-height: 1.75;
+}
+
+/* גזע - זירת הנינג'ה (נוכחי) */
+[data-theme='geza'] {
+  --theme-bg: #0d0b1a;
+  --theme-card-bg: oklch(0.13 0.025 290);
+  --theme-glow-intensity: 1;
+  --theme-neon-opacity: 1;
+  --theme-mascot-size: 64px;
+  --theme-animation-scale: 1;
+}
+
+/* צמרת - דשבורד מקצועי */
+[data-theme='tzameret'] {
+  --theme-bg: #111111;
+  --theme-card-bg: #1e1e1e;
+  --theme-glow-intensity: 0;
+  --theme-neon-opacity: 0;
+  --theme-mascot-size: 0px;
+  --theme-animation-scale: 0.3;
+}</pre></div>
+
+<h3 class="subh">3.3 סקלת טיפוגרפיה</h3>
+<div class="tw"><table>
+<thead><tr><th>אלמנט</th><th class="cs">שתיל</th><th class="cn">נבט</th><th class="cg">גזע</th><th class="ca">ענף</th><th class="ct">צמרת</th></tr></thead>
+<tbody>
+<tr><td><strong>כותרת עמוד</strong></td><td class="cs">2.25rem/36px<br>extrabold</td><td class="cn">1.875rem/30px<br>bold</td><td class="cg">1.5rem/24px<br>extrabold + גרדיאנט</td><td class="ca">1.25rem/20px<br>semibold</td><td class="ct">1.125rem/18px<br>semibold + monospace</td></tr>
+<tr><td><strong>כותרת מקטע</strong></td><td class="cs">1.5rem/24px bold</td><td class="cn">1.25rem/20px semibold</td><td class="cg">1rem/16px extrabold+caps</td><td class="ca">0.875rem/14px medium+caps</td><td class="ct">0.75rem/12px medium+caps</td></tr>
+<tr><td><strong>טקסט גוף</strong></td><td class="cs">1.125rem line-h 1.75</td><td class="cn">1rem line-h 1.6</td><td class="cg">0.875rem line-h 1.5</td><td class="ca">0.875rem line-h 1.5</td><td class="ct">0.8125rem line-h 1.4</td></tr>
+<tr><td><strong>מספרי סטט</strong></td><td class="cs">2.5rem extrabold</td><td class="cn">2rem bold</td><td class="cg">1.75rem bold+glow</td><td class="ca">1.5rem semibold</td><td class="ct">1.25rem tabular-nums</td></tr>
+</tbody></table></div>
+
+<h3 class="subh">3.4 עוצמת אנימציה</h3>
+<div class="tw"><table>
+<thead><tr><th>אינטראקציה</th><th class="cs">שתיל</th><th class="cn">נבט</th><th class="cg">גזע</th><th class="ca">ענף</th><th class="ct">צמרת</th></tr></thead>
+<tbody>
+<tr><td><strong>כניסת עמוד</strong></td><td class="cs">קפיצה 400ms</td><td class="cn">החלקה 300ms</td><td class="cg">החלקה 250ms</td><td class="ca">דעיכה 200ms</td><td class="ct">מיידי 0ms</td></tr>
+<tr><td><strong>הופעת כרטיס</strong></td><td class="cs">Scale+bounce<br>stagger 80ms</td><td class="cn">Slide+fade<br>stagger 60ms</td><td class="cg">Slide+fade<br>stagger 40ms</td><td class="ca">Fade בלבד<br>stagger 20ms</td><td class="ct">מיידי<br>ללא stagger</td></tr>
+<tr><td><strong>ריחוף</strong></td><td class="cs">Scale 1.05 + נדנוד</td><td class="cn">Scale 1.03 + צל</td><td class="cg">Scale 1.02 + זוהר</td><td class="ca">שינוי צבע גבול</td><td class="ct">קו-תחתון בלבד</td></tr>
+<tr><td><strong>מקש נכון</strong></td><td class="cs">פרץ כוכבים + Ki</td><td class="cn">הבזק + סאונד</td><td class="cg">הבזק צבע</td><td class="ca">שינוי צבע</td><td class="ct">ללא אנימציה</td></tr>
+<tr><td><strong>סיום שלב</strong></td><td class="cs">קונפטי מלא 3 שניות</td><td class="cn">קונפטי 2 שניות</td><td class="cg">פרץ רדיאלי 1.5s</td><td class="ca">סימן וי 0.5s</td><td class="ct">טוסט מיידי</td></tr>
+</tbody></table></div>
+
+<h3 class="subh">3.5 עיצוב סאונד לפי גיל</h3>
+<div class="tw"><table>
+<thead><tr><th>אירוע</th><th class="cs">שתיל</th><th class="cn">נבט</th><th class="cg">גזע</th><th class="ca">ענף</th><th class="ct">צמרת</th></tr></thead>
+<tbody>
+<tr><td><strong>לחיצת מקש</strong></td><td class="cs">קסילופון רך 400Hz</td><td class="cn">קליק קל 600Hz</td><td class="cg">טיק חד 800Hz</td><td class="ca">טיק עדין 1000Hz</td><td class="ct">כבוי</td></tr>
+<tr><td><strong>נכון</strong></td><td class="cs">צלצול עולה 3 תווים</td><td class="cn">דינג בהיר 2 תווים</td><td class="cg">ביפ מהיר תו 1</td><td class="ca">פינג רך תו 1</td><td class="ct">כבוי</td></tr>
+<tr><td><strong>עליית שלב</strong></td><td class="cs">פנפרה 8 תווים 2s</td><td class="cn">ניצחון 5 תווים 1.5s</td><td class="cg">Power-up 3 תווים 0.8s</td><td class="ca">צלצול עדין 0.4s</td><td class="ct">כבוי</td></tr>
+<tr><td><strong>ווליום ברירת מחדל</strong></td><td class="cs">0.6</td><td class="cn">0.7</td><td class="cg">0.7</td><td class="ca">0.5</td><td class="ct">0.0</td></tr>
+</tbody></table></div>
+
+</div></div>
+<div class="dv"></div>
+
+<div id="s4">
+<div class="sh" onclick="toggleSection(this)"><span class="sn">4</span><h2>נוכחות דמויות לפי גיל</h2><span class="ti">&#9660;</span></div>
+<div class="sc">
+
+<h3 class="subh">4.1 מטריצת נראות דמויות</h3>
+<div class="tw"><table>
+<thead><tr><th>דמות</th><th class="cs">שתיל (6-8)</th><th class="cn">נבט (8-10)</th><th class="cg">גזע (10-12)</th><th class="ca">ענף (12-14)</th><th class="ct">צמרת (14-16+)</th></tr></thead>
+<tbody>
+<tr><td><strong>Ki (קמע)</strong></td><td class="cs">גדול, תמיד<br>מרכז/תחתון</td><td class="cn">בינוני, תמיד<br>פינה צפה</td><td class="cg">קטן, תמיד<br>פינה קבועה</td><td class="ca">זעיר, כותרת<br>אייקון בלבד</td><td class="ct">מוסתר<br>(הגדרות)</td></tr>
+<tr><td><strong>סנסיי זן</strong></td><td class="cs">גדול בשיעורים</td><td class="cn">בינוני בשיעורים</td><td class="cg">קטן בשיעורים</td><td class="ca">אווטר Tooltip</td><td class="ct">מוסתר</td></tr>
+<tr><td><strong>יוקי</strong></td><td class="cs">גדול במהירות</td><td class="cn">בינוני במהירות</td><td class="cg">קטן במהירות</td><td class="ca">מוסתר</td><td class="ct">מוסתר</td></tr>
+<tr><td><strong>לונה</strong></td><td class="cs">גדול בתרגול</td><td class="cn">בינוני בתרגול</td><td class="cg">קטן בתרגול</td><td class="ca">מוסתר</td><td class="ct">מוסתר</td></tr>
+<tr><td><strong>נועה</strong></td><td class="cs">גדול בשגיאות</td><td class="cn">בינוני בשגיאות</td><td class="cg">קטן בשגיאות</td><td class="ca">מוסתר</td><td class="ct">מוסתר</td></tr>
+<tr><td><strong>קאי</strong></td><td class="cs">גדול בקרב</td><td class="cn">בינוני בקרב</td><td class="cg">קטן בקרב</td><td class="ca">מוסתר</td><td class="ct">מוסתר</td></tr>
+<tr><td><strong>מיקה</strong></td><td class="cs">גדול בקיצורים</td><td class="cn">בינוני בקיצורים</td><td class="cg">קטן בקיצורים</td><td class="ca">מוסתר</td><td class="ct">מוסתר</td></tr>
+<tr><td><strong>פיקסל</strong></td><td class="cs">גדול בסטט</td><td class="cn">בינוני בסטט</td><td class="cg">קטן בסטט</td><td class="ca">קטן בסטט</td><td class="ct">מוסתר</td></tr>
+<tr><td><strong>רקס</strong></td><td class="cs">גדול במשחקים</td><td class="cn">בינוני במשחקים</td><td class="cg">קטן במשחקים</td><td class="ca">מוסתר</td><td class="ct">מוסתר</td></tr>
+<tr><td><strong>יריבים</strong></td><td class="cs">גדול בקרב</td><td class="cn">בינוני בקרב</td><td class="cg">סטנדרטי בקרב</td><td class="ca">קטן בקרב</td><td class="ct">שם טקסט בלבד</td></tr>
+</tbody></table></div>
+
+<h3 class="subh">4.2 הגדרות גודל דמות</h3>
+<div class="tw"><table>
+<thead><tr><th>גודל</th><th>מידות פיקסל</th><th>שימוש</th><th>רנדור</th></tr></thead>
+<tbody>
+<tr><td><strong>LARGE</strong></td><td>120-160px</td><td>שתיל ראשי</td><td>גוף מלא, לולאת idle מונפשת</td></tr>
+<tr><td><strong>MEDIUM</strong></td><td>64-96px</td><td>נבט ראשי</td><td>חצי גוף, idle עדין</td></tr>
+<tr><td><strong>SMALL</strong></td><td>36-48px</td><td>גזע/ענף</td><td>ראש בלבד, אנימציה מינימלית</td></tr>
+<tr><td><strong>TINY</strong></td><td>24-32px</td><td>אייקון כותרת ענף</td><td>עיגול אווטר סטטי</td></tr>
+<tr><td><strong>HIDDEN</strong></td><td>0px</td><td>ברירת מחדל צמרת</td><td>לא מרונדר (display:none)</td></tr>
+</tbody></table></div>
+
+<h3 class="subh">4.3 תדירות בועות דיבור</h3>
+<div class="tw"><table>
+<thead><tr><th>ערכה</th><th>תדירות</th><th>סגנון</th><th>סוג תוכן</th></tr></thead>
+<tbody>
+<tr><td><strong>שתיל</strong></td><td>כל 30 שניות + כל אירוע</td><td>בועה גדולה מעוגלת, פופ-אין, 5 שניות</td><td>עידוד, רמזים, חגיגות<br>"כל הכבוד!" "המשך ככה!"</td></tr>
+<tr><td><strong>נבט</strong></td><td>כל 60 שניות + מרכזיים</td><td>בועה בינונית, דעיכה, 4 שניות</td><td>טיפים, ברכות<br>"שיא חדש!" "מעולה!"</td></tr>
+<tr><td><strong>גזע</strong></td><td>אירועים מרכזיים בלבד</td><td>בועה קטנה, החלקה, 3 שניות</td><td>קריאות קרב<br>"אש!" "בום!"</td></tr>
+<tr><td><strong>ענף</strong></td><td>הישגים בלבד</td><td>tooltip מינימלי, 2 שניות</td><td>עובדתי: "WPM חדש: 45"</td></tr>
+<tr><td><strong>צמרת</strong></td><td>לעולם לא</td><td>לא מרונדר</td><td>-</td></tr>
+</tbody></table></div>
+
+<h3 class="subh">4.4 ארכיטקטורת מיקום דמות</h3>
+<div class="card" style="border-color:var(--shatil)"><h3 style="color:var(--shatil)">פריסת שתיל</h3>
+<div class="ld">+-----------------------------------------+
+| Header (מפושט, גדול)                   |
++-----------------------------------------+
+|                                         |
+|  [דמות: Ki]        [תוכן ראשי]         |
+|  120px, מונפש      כרטיסים גדולים      |
+|  בועת דיבור        טקסט גדול           |
+|                                         |
++-----------------------------------------+
+| טאבים תחתונים (3 טאבים גדולים)         |
++-----------------------------------------+</div></div>
+
+<div class="card" style="border-color:var(--geza)"><h3 style="color:var(--pri-l)">פריסת גזע (נוכחית)</h3>
+<div class="ld">+-----------------------------------------+
+| Header (גיימינג, קומפקטי)              |
++-----------------------------------------+
+|  [תוכן ראשי]               [Ki: 48px]  |
+|  כרטיסי גיימינג            פינה צפה    |
+|  רשת צפופה, אפקטי ניאון                |
++-----------------------------------------+
+| טאבים תחתונים (5 טאבים, קומפקטי)       |
++-----------------------------------------+</div></div>
+
+<div class="card" style="border-color:var(--tzameret)"><h3 style="color:#b2bec3">פריסת צמרת</h3>
+<div class="ld">+-----------------------------------------+
+| Header מינימלי (טקסט בלבד, קיצורים)    |
++-----------------------------------------+
+|  [תוכן ראשי]                           |
+|  טבלאות נתונים, גרפים                  |
+|  טיפוגרפיה צפופה, ללא דמויות          |
+|  קיצורי מקלדת מוצגים                   |
++-----------------------------------------+
+| ללא טאבים (ניווט מקלדת) או 3 מינימלי   |
++-----------------------------------------+</div></div>
+
+</div></div>
+<div class="dv"></div>
+
+<div id="s5">
+<div class="sh" onclick="toggleSection(this)"><span class="sn">5</span><h2>ניווט לפי גיל/תפקיד</h2><span class="ti">&#9660;</span></div>
+<div class="sc">
+
+<h3 class="subh">5.1 ניווט תלמיד לפי גיל</h3>
+
+<div class="card" style="border-color:var(--shatil)"><h3 style="color:var(--shatil)">שתיל (6-8) - מונחה, מינימום בחירות</h3>
+<h4>3 טאבים תחתונים בלבד</h4>
+<div class="ld">  [בית]    [שיעורים]    [משחקים]</div>
+<ul>
+<li>אין סרגל צד בדסקטופ</li>
+<li>אין עמוד הגדרות (שליטת הורים דרך PIN)</li>
+<li>אין סטטיסטיקות, קרב, או קיצורי מקלדת</li>
+<li>עמוד בית: כרטיס "צעד הבא" יחיד עם CTA גדול "בואו נתחיל!"</li>
+<li>התקדמות כמסלול/מפה ויזואלי, לא מספרים</li>
+</ul></div>
+
+<div class="card" style="border-color:var(--nevet)"><h3 style="color:var(--nevet)">נבט (8-10) - מונחה עם חקירה</h3>
+<h4>4 טאבים תחתונים</h4>
+<div class="ld">  [בית]    [שיעורים]    [משחקים]    [שלי]</div>
+<ul>
+<li>דסקטופ: סרגל צד מפושט (למידה, כיף, שלי)</li>
+<li>מצב קרב נפתח בשלב 5</li>
+<li>סטטיסטיקות כגרפי עמודות פשוטים</li>
+</ul></div>
+
+<div class="card" style="border-color:var(--geza)"><h3 style="color:var(--pri-l)">גזע (10-12) - ניווט מלא (נוכחי)</h3>
+<div class="ld">  [בית] [שיעורים] [תרגול] [קרב] [פרופיל]</div>
+<p>דסקטופ: סרגל צד מלא עם כל הקבוצות. זה העיצוב הנוכחי ועובד היטב.</p></div>
+
+<div class="card" style="border-color:var(--anaf)"><h3 style="color:var(--anaf)">ענף (12-14) - ניווט יעיל</h3>
+<ul>
+<li><strong>מובייל:</strong> 5 טאבים, אייקונים בלבד (ללא תוויות). Tooltip בלחיצה ארוכה</li>
+<li><strong>דסקטופ:</strong> סרגל צד מתקפל (40px אייקונים, מתרחב בריחוף). רמזי קיצורי מקלדת</li>
+<li><strong>בית:</strong> דשבורד עם גרף WPM בחזית. פעולות מהירות כפס כדורים</li>
+</ul></div>
+
+<div class="card" style="border-color:var(--tzameret)"><h3 style="color:#b2bec3">צמרת (14-16+) - מקלדת-ראשית</h3>
+<ul>
+<li><strong>מובייל:</strong> 3 טאבים: תרגול | סטטיסטיקות | הגדרות</li>
+<li><strong>דסקטופ:</strong> ללא סרגל צד. סרגל עליון אופקי. פלטת פקודות Cmd+K</li>
+<li><strong>בית =</strong> אזור הקלדה ישירות או דשבורד מינימלי</li>
+</ul>
+<h4>קיצורי מקלדת</h4>
+<div class="ld">  Alt+1 = תרגול     Alt+2 = מבחן מהירות
+  Alt+3 = סטטיסטיקות  Alt+S = הגדרות
+  Esc = חזרה לבית     / = פלטת פקודות</div></div>
+
+<h3 class="subh">5.2 ניווט מורה/מנהל</h3>
+<div class="ts">
+<h3>ממשק מורה - פריסה מונעת-נתונים</h3>
+<div class="ld">סרגל צד (תמיד מורחב בדסקטופ):
+  - לוח מחוונים (סקירה)
+  - הכיתות שלי (כיתה א, כיתה ב, + צור כיתה)
+  - תלמידים (כולם, מתקשים)
+  - דוחות (כיתה, אישי, ייצוא CSV/PDF)
+  - מטלות (צור, פעילות)
+  - הגדרות (כיתה, ערכת גיל, מדיניות)</div>
+<ul>
+<li>טבלאות נתונים ניתנות למיון וסינון</li>
+<li>התקדמות מקודדת-צבע: ירוק = בתוואי, צהוב = צריך עידוד, אדום = נשאר מאחור</li>
+<li>פעולות קבוצתיות (הקצאת שיעור, שליחת הודעה)</li>
+<li>ללא אלמנטים גיימינגיים. סכמת צבעים מקצועית (ענף/צמרת)</li>
+</ul></div>
+
+<h3 class="subh">5.3 ניווט הורה</h3>
+<div class="card">
+<h3>ממשק הורה - מובייל-ראשית, מבוסס כרטיסים</h3>
+<ul>
+<li><strong>מסכים:</strong> סקירה, פרטי התקדמות, הגדרות, התראות</li>
+<li><strong>דמויות:</strong> Ki כאווטר "מורה פרטי". שפה ויזואלית חמה (פלטת שתיל/נבט)</li>
+<li>ללא אלמנטים גיימינגיים. עיצוב נקי ואמין</li>
+<li>דגש: "הילד שלך משתפר" עם מסגור חיובי</li>
+</ul></div>
+
+</div></div>
+<div class="dv"></div>
+
+<div id="s6">
+<div class="sh" onclick="toggleSection(this)"><span class="sn">6</span><h2>גיימיפיקציה לפי גיל</h2><span class="ti">&#9660;</span></div>
+<div class="sc">
+
+<h3 class="subh">6.1 מערכת תגמול</h3>
+<div class="tw"><table>
+<thead><tr><th>פיצ'ר</th><th class="cs">שתיל</th><th class="cn">נבט</th><th class="cg">גזע</th><th class="ca">ענף</th><th class="ct">צמרת</th></tr></thead>
+<tbody>
+<tr><td><strong>תצוגת XP</strong></td><td class="cs">כוכבים, לא מספרים. "5 כוכבים היום!"</td><td class="cn">XP עם אייקון כוכב, תג שלב צבעוני</td><td class="cg">XP עם מספר + בר מונפש + זוהר ניאון</td><td class="ca">מספר XP בלבד בתג כותרת</td><td class="ct">"נקודות" או מוסתר לגמרי</td></tr>
+<tr><td><strong>מערכת שלבים</strong></td><td class="cs">"חגורות נינג'ה"<br>לבן->צהוב->כתום...</td><td class="cn">שלבים ממוספרים עם שמות כיפיים</td><td class="cg">שלבים ממוספרים עם דרגה</td><td class="ca">מספר בלבד "שלב 15"</td><td class="ct">"אבני דרך" (כל 10)</td></tr>
+<tr><td><strong>רצף</strong></td><td class="cs">אנימציית דמות להבה</td><td class="cn">מונה להבה + אנימציה</td><td class="cg">להבה + מונה ניאון</td><td class="ca">מספר + אייקון</td><td class="ct">מספר בלבד "רצף 12 ימים"</td></tr>
+<tr><td><strong>חגיגות</strong></td><td class="cs">מקסימום! קונפטי מסך מלא, Ki מריע, 3s פנפרה</td><td class="cn">גבוה: גשם קונפטי + סאונד + תג, 2s</td><td class="cg">בינוני: פרץ רדיאלי + XP צף, 1.5s</td><td class="ca">נמוך: סימן וי + מספר XP, 0.5s</td><td class="ct">מינימלי: טוסט "שיעור הושלם"</td></tr>
+<tr><td><strong>לוח מובילים</strong></td><td class="cs">לא מוצג (לחיץ מדי)</td><td class="cn">כיתה בלבד, כולם מקבלים מדליות</td><td class="cg">גלובלי + כיתה, תחרותי</td><td class="ca">גלובלי + כיתה, סינון לפי זמן</td><td class="ct">גלובלי, טבלה ניתנת למיון</td></tr>
+<tr><td><strong>ויזואליזציית התקדמות</strong></td><td class="cs">מסלול/מפה עם דמות הולכת</td><td class="cn">בר התקדמות עם דמות</td><td class="cg">בר XP + תג שלב</td><td class="ca">אחוזים בהגדרות</td><td class="ct">מספרים: WPM, דיוק, זמן</td></tr>
+</tbody></table></div>
+
+<h3 class="subh">6.2 קומפוננטת חגיגה מותאמת-גיל</h3>
+<div class="card"><p>רכיב <code>AchievementNotification</code> ישופץ לעטיפה מותאמת-גיל עם <code>CelebrationConfig</code> לכל ערכה:</p>
+<div class="cb"><pre>const CELEBRATION_CONFIGS: Record&lt;AgeName, CelebrationConfig&gt; = {
+  shatil: {
+    confetti: true,
+    confettiDuration: 3000,
+    confettiParticleCount: 150,
+    mascotReaction: true,
+    mascotSize: 'large',
+    soundFanfare: true,
+    toastOnly: false,
+    autoDissmissMs: 5000,
+  },
+  // ... nevet: 2000ms/80 particles
+  // ... geza: 1500ms/50 particles
+  anaf: {
+    confetti: false,
+    mascotReaction: false,
+    toastOnly: true,
+    autoDissmissMs: 2000,
+  },
+  tzameret: {
+    confetti: false,
+    mascotReaction: false,
+    toastOnly: true,
+    autoDissmissMs: 1500,
+  },
+}</pre></div></div>
+
+<h3 class="subh">6.3 גיימיפיקציה למורה/מנהל</h3>
+<div class="ts">
+<h3>מורים רואים שכבת גיימיפיקציה אחרת לגמרי</h3>
+<ul>
+<li>ללא XP/שלבים/תגים אישיים</li>
+<li>מדדים ברמת כיתה: "ממוצע WPM השבוע: 32 (עלייה של 4)"</li>
+<li>"תלמידים עומדים ביעד: 18/24 (75%)"</li>
+<li>"תלמידים מתקשים: 3 (צריכים תשומת לב)"</li>
+<li>טבלת השוואת תלמידים (אפשרות אנונימית להצגה לכיתה)</li>
+<li>אתגרי כיתה שבועיים: "אם ממוצע כיתה מגיע ל-35 WPM, פותחים פרס קבוצתי"</li>
+<li>כפתורי ייצוא לכל תצוגת נתונים (CSV, PDF)</li>
+<li>מפות חום מקודדות-צבע: ירוק/צהוב/אדום</li>
+</ul></div>
+
+</div></div>
+<div class="dv"></div>
+
+<div id="s7">
+<div class="sh" onclick="toggleSection(this)"><span class="sn">7</span><h2>אסטרטגיית יישום</h2><span class="ti">&#9660;</span></div>
+<div class="sc">
+
+<h3 class="subh">7.1 ארכיטקטורה: CSS-ראשית עם וריאנטי רכיבים</h3>
+<div class="card">
+<h3>3 שכבות יישום</h3>
+<h4>שכבה 1: משתני CSS (מה שמשתנה עם CSS בלבד)</h4>
+<ul>
+<li>צבעים, רקעים, צללים, זוהרים, גבולות</li>
+<li>גדלי גופן, משקלים, גובהי שורה</li>
+<li>ריווח, padding, border-radius</li>
+<li>משכי אנימציה, easing</li>
+<li>שקיפות זוהר/ניאון (0 או 1)</li>
+</ul>
+<h4>שכבה 2: סלקטורי Data-Attribute (מה שמשתנה עם CSS מותנה)</h4>
+<ul>
+<li>נראות אלמנטים (<code>[data-theme='tzameret'] .mascot { display: none }</code>)</li>
+<li>מספר עמודות ברשת</li>
+<li>התנהגות transition</li>
+</ul>
+<h4>שכבה 3: וריאנטי רכיבים (מה שצריך לוגיקת React)</h4>
+<ul>
+<li>מבנה ניווט (3 טאבים מול 5 מול סרגל אופקי)</li>
+<li>איזו דמות לרנדר ואיפה</li>
+<li>התנהגות חגיגה (קונפטי מול טוסט)</li>
+<li>תדירות טיימר בועות דיבור</li>
+<li>תוכן דשבורד (מפה מול כרטיסים מול טבלת נתונים)</li>
+<li>פרמטרי סינתזת סאונד</li>
+</ul></div>
+
+<h3 class="subh">7.2 יישום שכבה 1: משתני CSS מורחבים</h3>
+<div class="card">
+<h3>ערכים קשיחים שצריך להחליף</h3>
+<div class="tw"><table>
+<thead><tr><th style="direction:ltr;text-align:left">ערך קשיח נוכחי</th><th style="direction:ltr;text-align:left">להחליף ב-</th></tr></thead>
+<tbody>
+<tr><td style="direction:ltr;font-family:monospace;color:var(--danger)"><code>#0d0b1a</code> (רקע)</td><td style="direction:ltr;font-family:monospace;color:var(--ok)"><code>var(--theme-bg)</code></td></tr>
+<tr><td style="direction:ltr;font-family:monospace;color:var(--danger)"><code>#080618</code> (סרגל צד)</td><td style="direction:ltr;font-family:monospace;color:var(--ok)"><code>var(--theme-bg-secondary)</code></td></tr>
+<tr><td style="direction:ltr;font-family:monospace;color:var(--danger)"><code>oklch(0.25 0.04 292)</code> (גבולות)</td><td style="direction:ltr;font-family:monospace;color:var(--ok)"><code>var(--theme-card-border)</code></td></tr>
+<tr><td style="direction:ltr;font-family:monospace;color:var(--danger)"><code>oklch(0.13 0.025 290)</code> (כרטיסים)</td><td style="direction:ltr;font-family:monospace;color:var(--ok)"><code>var(--theme-card-bg)</code></td></tr>
+</tbody></table></div>
+</div>
+
+<h3 class="subh">7.3 יישום שכבה 2: סלקטורי Attribute</h3>
+<div class="card"><p>קובץ חדש: <code>src/styles/css/theme-adaptive.css</code> עם כללים מותנים לפי <code>[data-theme]</code> עבור נראות דמויות, אפקטי זוהר, צפיפות ניווט, וסגנון כרטיסים.</p></div>
+
+<h3 class="subh">7.4 יישום שכבה 3: וריאנטי רכיבים</h3>
+<div class="card">
+<h4>7.4.1 Hook מותאם-גיל</h4>
+<p>קובץ חדש: <code>src/hooks/use-age-config.ts</code> - מחזיר <code>AgeConfig</code> מלא (דמות, ניווט, גיימיפיקציה, ויזואלי, סאונד) לפי <code>ageName</code> מה-store.</p>
+<h4>7.4.2 AppShell מותאם</h4>
+<p>4 וריאנטי ניווט: <code>ShatilNavigation</code>, <code>StandardNavigation</code> (נבט+גזע), <code>CompactNavigation</code> (ענף), <code>ProNavigation</code> (צמרת).</p>
+<h4>7.4.3 עמוד בית מותאם</h4>
+<p>5 וריאנטי בית: <code>shatil-home.tsx</code> (מפה+Ki), <code>nevet-home.tsx</code> (הרפתקאות), <code>geza-home.tsx</code> (גיימינג - נוכחי), <code>anaf-home.tsx</code> (דשבורד), <code>tzameret-home.tsx</code> (מינימלי/נתונים). רכיב <code>home-router.tsx</code> מנתב.</p>
+</div>
+
+<h3 class="subh">7.5 הרחבת טיפוס AgeTheme</h3>
+<div class="card"><p>הרחבת <code>src/types/theme.ts</code> עם שדות חדשים: <code>defaultScheme</code>, <code>enableGlowEffects</code>, <code>enableGradientText</code>, <code>animationDurationScale</code>, <code>defaultCharacterSize</code>, <code>showSpeechBubbles</code>, <code>celebrationLevel</code>, <code>showXpAsStars</code>, <code>navDensity</code>, <code>maxBottomTabs</code>. וכן הוספת <code>UserRole = 'student' | 'teacher' | 'parent'</code>.</p></div>
+
+</div></div>
+<div class="dv"></div>
+
+<div id="s8">
+<div class="sh" onclick="toggleSection(this)"><span class="sn">8</span><h2>התאמה מפורטת עמוד-אחר-עמוד</h2><span class="ti">&#9660;</span></div>
+<div class="sc">
+
+<h3 class="subh">8.1 עמוד בית</h3>
+<div class="tw"><table>
+<thead><tr><th>מאפיין</th><th class="cs">שתיל</th><th class="cn">נבט</th><th class="cg">גזע</th><th class="ca">ענף</th><th class="ct">צמרת</th></tr></thead>
+<tbody>
+<tr><td><strong>Hero</strong></td><td class="cs">Ki גדול על מסלול, בועת דיבור "בוא נתחיל!", גרדיאנט חם</td><td class="cn">דמות עם תרמיל, "ההרפתקה ממשיכה!", גרדיאנט מתון</td><td class="cg">Hero כהה גיימינג, Ki קטן בפינה, בר XP, גבול ניאון</td><td class="ca">כרטיס נקי עם sparkline WPM, ללא תמונת hero</td><td class="ct">ללא hero. שורת סטטים: WPM / דיוק / רצף</td></tr>
+<tr><td><strong>סטטיסטיקות</strong></td><td class="cs">אוסף כוכבים ויזואלי "5 כוכבים היום!"</td><td class="cn">4 כרטיסי סטט עם אייקונים צבעוניים</td><td class="cg">4 כרטיסי סטט עם זוהר ניאון (נוכחי)</td><td class="ca">כדורי סטט אופקיים בשורה</td><td class="ct">שורה אחת: "45 WPM / 96% / רצף 12"</td></tr>
+<tr><td><strong>CTA</strong></td><td class="cs">כפתור ענק "בוא נשחק!" רוחב מלא, מקפיץ</td><td class="cn">"המשך הרפתקה" + חץ + שם שיעור</td><td class="cg">"המשך שיעור: X" כפתור גיימינג + גרדיאנט</td><td class="ca">"המשך: X" קומפקטי, סגנון משני</td><td class="ct">התחלה אוטומטית או קישור "התחל הקלדה"</td></tr>
+<tr><td><strong>התקדמות</strong></td><td class="cs">מפה עם סמן דמות, 5 "איי" שיעורים</td><td class="cn">בר התקדמות עם דמות בנקודה</td><td class="cg">בר XP + תג שלב (נוכחי)</td><td class="ca">גרף עיגול אחוזים</td><td class="ct">גרף קו WPM, רוחב מלא</td></tr>
+</tbody></table></div>
+
+<h3 class="subh">8.2 עמוד שיעור (אזור הקלדה)</h3>
+<div class="tw"><table>
+<thead><tr><th>מאפיין</th><th class="cs">שתיל</th><th class="cn">נבט</th><th class="cg">גזע</th><th class="ca">ענף</th><th class="ct">צמרת</th></tr></thead>
+<tbody>
+<tr><td><strong>דמות</strong></td><td class="cs">סנסיי זן (גדול) ליד אזור הקלדה, מגיב לכל מקש</td><td class="cn">סנסיי זן (בינוני) בפינה, מגיב לאבני דרך</td><td class="cg">Ki (קטן) פינה, מגיב בסיום</td><td class="ca">ללא דמות</td><td class="ct">ללא דמות</td></tr>
+<tr><td><strong>תצוגת טקסט</strong></td><td class="cs">גדול מאוד (1.25rem+), מילים קצרות, 2-3 מילים בשורה</td><td class="cn">גדול (1.1rem), משפטים קצרים</td><td class="cg">סטנדרטי (1rem), משפטים מלאים</td><td class="ca">סטנדרטי (1rem), קטעים ארוכים</td><td class="ct">קטן (0.9rem), צפוף, אופציית monospace</td></tr>
+<tr><td><strong>מקלדת ויזואלית</strong></td><td class="cs">גדולה, צבעונית, מדריך אצבעות תמיד</td><td class="cn">סטנדרטית, אזורי צבע, מדריך ברירת מחדל</td><td class="cg">סטנדרטית, אזורים אופציונליים</td><td class="ca">קומפקטית, חד-צבעית, מדריך כבוי</td><td class="ct">ללא מקלדת כברירת מחדל (מתג)</td></tr>
+<tr><td><strong>שגיאה</strong></td><td class="cs">מקש כתום (לא אדום!), נועה מופיעה "ננסה שוב!", רעד עדין</td><td class="cn">הבזק אדום, רעד x2</td><td class="cg">הבזק אדום, רעד x1</td><td class="ca">קו-תחתון אדום, ללא רעד</td><td class="ct">קו-תחתון אדום, ללא אנימציה</td></tr>
+<tr><td><strong>מהירות</strong></td><td class="cs">לא מוצג (לוחץ מדי)</td><td class="cn">מד מהירות ויזואלי עדין</td><td class="cg">WPM מתעדכן חי (נוכחי)</td><td class="ca">WPM קומפקטי</td><td class="ct">WPM + דיוק + גרף חי</td></tr>
+</tbody></table></div>
+
+<h3 class="subh">8.3 מצב קרב</h3>
+<div class="tw"><table>
+<thead><tr><th>מאפיין</th><th class="cs">שתיל</th><th class="cn">נבט</th><th class="cg">גזע</th><th class="ca">ענף</th><th class="ct">צמרת</th></tr></thead>
+<tbody>
+<tr><td><strong>זמינות</strong></td><td class="cs">מוסתר מניווט</td><td class="cn">נפתח בשלב 5, "מאבק ידידותי"</td><td class="cg">מצב קרב מלא (נוכחי)</td><td class="ca">מלא, סטטיסטיקות תחרותיות</td><td class="ct">זמין, ממשק מינימלי</td></tr>
+<tr><td><strong>יריב</strong></td><td class="cs">-</td><td class="cn">גוף מלא, שם, שלב</td><td class="cg">דמות + בר חיים + מהירות</td><td class="ca">שם + WPM בלבד</td><td class="ct">בר השוואת WPM</td></tr>
+<tr><td><strong>תוצאה</strong></td><td class="cs">-</td><td class="cn">"שניכם עשיתם מעולה!" כולם מקבלים כוכבים</td><td class="cg">מנצח/מפסיד + תגמולי XP</td><td class="ca">נצחון/הפסד + טבלת השוואה</td><td class="ct">טבלת סטט, דלתא WPM, דיוק</td></tr>
+</tbody></table></div>
+
+</div></div>
+<div class="dv"></div>
+
+<div id="s9">
+<div class="sh" onclick="toggleSection(this)"><span class="sn">9</span><h2>סדר עדיפויות יישום</h2><span class="ti">&#9660;</span></div>
+<div class="sc">
+
+<div class="pc" style="border-right-color:var(--danger)">
+<div class="ph"><span class="pnum">1</span><span class="pt">בסיס משתני CSS</span><span class="ptm">1-2 שבועות</span></div>
+<div class="pi">השפעה: בינונית. בסיס לכל השאר.</div>
+<ol class="card" style="padding-right:2.5rem">
+<li>הרחבת <code>theme-vars.css</code> ל-25+ משתנים לכל 5 ערכות</li>
+<li>החלפת כל הצבעים הקשיחים ב-<code>globals.css</code></li>
+<li>החלפת ערכים קשיחים ב-<code>sidebar.tsx</code>, <code>header.tsx</code>, <code>bottom-tabs.tsx</code>, <code>home-client.tsx</code></li>
+<li>יצירת <code>theme-adaptive.css</code> עם כללי <code>[data-theme]</code></li>
+</ol>
+<p style="color:var(--ok);font-size:.9rem;margin-top:.5rem"><strong>תוצאה:</strong> שינוי ערכה בהגדרות משנה מיד את כל אווירת הצבעים.</p>
+</div>
+
+<div class="pc">
+<div class="ph"><span class="pnum">2</span><span class="pt">מערכת נראות דמויות</span><span class="ptm">שבוע 1</span></div>
+<div class="pi">השפעה: גבוהה. דמויות מופיעות/נעלמות לפי גיל - השינוי הכי בולט.</div>
+<p style="color:var(--ok);font-size:.9rem"><strong>תוצאה:</strong> שתיל מראה Ki גדול, צמרת לא מראה כלום.</p>
+</div>
+
+<div class="pc">
+<div class="ph"><span class="pnum">3</span><span class="pt">וריאנטי ניווט</span><span class="ptm">2 שבועות</span></div>
+<div class="pi">השפעה: גבוהה. מבנה ניווט שונה לפי גיל משנה את כל התחושה.</div>
+<p style="color:var(--ok);font-size:.9rem"><strong>תוצאה:</strong> בן 6 רואה 3 טאבים גדולים וידידותיים. בן 16 רואה סרגל אופקי נקי.</p>
+</div>
+
+<div class="pc">
+<div class="ph"><span class="pnum">4</span><span class="pt">וריאנטי עמוד בית</span><span class="ptm">2 שבועות</span></div>
+<div class="pi">השפעה: הגבוהה ביותר. זה העמוד שמשתמשים רואים ראשון ובתדירות הגבוהה ביותר.</div>
+<p style="color:var(--ok);font-size:.9rem"><strong>תוצאה:</strong> חוויית בית שונה לחלוטין לפי גיל.</p>
+</div>
+
+<div class="pc">
+<div class="ph"><span class="pnum">5</span><span class="pt">התאמת חגיגה וגיימיפיקציה</span><span class="ptm">שבוע 1</span></div>
+<div class="pi">השפעה: בינונית. משפיעה משמעותית על החוויה הרגשית.</div>
+<p style="color:var(--ok);font-size:.9rem"><strong>תוצאה:</strong> שתיל מקבל פיצוצי קונפטי מלאים, צמרת מקבל טוסט עדין.</p>
+</div>
+
+<div class="pc">
+<div class="ph"><span class="pnum">6</span><span class="pt">מערכת עוצמת אנימציה</span><span class="ptm">שבוע 1</span></div>
+<div class="pi">השפעה: בינונית. מלטשת את התחושה לפי גיל.</div>
+<p style="color:var(--ok);font-size:.9rem"><strong>תוצאה:</strong> אנימציות מרגישות מותאמות-גיל במקום "גיימינגיות" באופן אחיד.</p>
+</div>
+
+<div class="pc">
+<div class="ph"><span class="pnum">7</span><span class="pt">התאמת אזור הקלדה</span><span class="ptm">1-2 שבועות</span></div>
+<div class="pi">השפעה: גבוהה. זו הפעילות המרכזית.</div>
+<p style="color:var(--ok);font-size:.9rem"><strong>תוצאה:</strong> בן 6 רואה טקסט גדול, סנסיי מועיל, ופרסי כוכבים. בן 16 רואה טקסט צפוף ומונה WPM.</p>
+</div>
+
+<div class="pc">
+<div class="ph"><span class="pnum">8</span><span class="pt">דשבורדים למורה/הורה</span><span class="ptm">2-3 שבועות</span></div>
+<div class="pi">השפעה: בינונית (קהל חדש). מאפשר צמיחה מעבר לתלמידים בלבד.</div>
+<p style="color:var(--ok);font-size:.9rem"><strong>תוצאה:</strong> מורים רואים כלי ניהול כיתות מקצועי, לא משחק ילדים.</p>
+</div>
+
+</div></div>
+<div class="dv"></div>
+
+<div id="s10">
+<div class="sh" onclick="toggleSection(this)"><span class="sn">10</span><h2>רשימת מעבר (Migration) לערכים קשיחים</h2><span class="ti">&#9660;</span></div>
+<div class="sc">
+
+<div class="card" style="border-right:4px solid var(--danger)">
+<h3 style="color:var(--danger)">קריטי (חוסם הכל) <span class="priority p-crit">קריטי</span></h3>
+<ul class="cl">
+<li><code>src/styles/css/theme-vars.css</code> - הרחבה מ-4 ל-25+ משתנים לכל ערכה</li>
+<li><code>src/app/globals.css</code> - החלפת כל <code>#0d0b1a</code>, <code>#080618</code>, <code>oklch(0.25...)</code> ב-<code>var(--theme-*)</code></li>
+<li><code>src/types/theme.ts</code> - הרחבת ממשק <code>AgeTheme</code></li>
+</ul></div>
+
+<div class="card" style="border-right:4px solid var(--warn)">
+<h3 style="color:var(--warn)">עדיפות גבוהה (הכי נראה) <span class="priority p-high">גבוה</span></h3>
+<ul class="cl">
+<li><code>src/components/layout/sidebar.tsx</code> - הסרת <code>bg-[#080618]</code>, <code>bg-[#0c0a20]</code></li>
+<li><code>src/components/layout/header.tsx</code> - הסרת <code>bg-[#0d0b1a]/90</code></li>
+<li><code>src/components/layout/bottom-tabs.tsx</code> - הסרת <code>bg-[#0d0b1a]/95</code></li>
+<li><code>src/components/layout/app-shell.tsx</code> - הוספת ניתוב ניווט מותאם-גיל</li>
+<li><code>src/app/(app)/home/home-client.tsx</code> - הסרת <code>style={{ background: '#0d0b1a' }}</code></li>
+<li><code>src/components/providers/theme-provider.tsx</code> - הגדרת יותר משתני CSS, סכמת צבע ברירת מחדל</li>
+</ul></div>
+
+<div class="card" style="border-right:4px solid var(--pri)">
+<h3>עדיפות בינונית (שיפור חוויה) <span class="priority p-med">בינוני</span></h3>
+<ul class="cl">
+<li><code>src/components/mascot/ki-mascot.tsx</code> - וריאנטי <code>tiny</code> ו-<code>hidden</code></li>
+<li><code>src/components/gamification/achievement-notification.tsx</code> - חגיגה מותאמת-גיל</li>
+<li><code>src/lib/audio/sound-manager.ts</code> - הוספת <code>setSoundProfile()</code></li>
+<li><code>src/lib/audio/sounds.ts</code> - סטים מרובים של פרמטרי סאונד</li>
+<li><code>src/components/ui/game-card.tsx</code> - כיבוד <code>--theme-glow-intensity</code></li>
+<li><code>src/stores/theme-store.ts</code> - הוספת <code>role: UserRole</code></li>
+</ul></div>
+
+<div class="card" style="border-right:4px solid var(--tzameret)">
+<h3 style="color:#b2bec3">עדיפות נמוכה (ליטוש) <span class="priority p-low">נמוך</span></h3>
+<ul class="cl">
+<li>כל רכיבי עמוד תחת <code>src/app/(app)/</code> - הסרת שימוש במחלקות gaming קשיחות</li>
+<li><code>src/components/typing/typing-area.tsx</code> - גודל טקסט ומשוב דמות לפי גיל</li>
+<li><code>src/components/typing/lesson-view.tsx</code> - נראות מחוון מהירות לפי גיל</li>
+<li><code>src/components/statistics/progress-chart.tsx</code> - סגנון גרף לפי גיל</li>
+</ul></div>
+
+</div></div>
+<div class="dv"></div>
+
+<div id="s11">
+<div class="sh" onclick="toggleSection(this)"><span class="sn">11</span><h2>אסטרטגיית בדיקות</h2><span class="ti">&#9660;</span></div>
+<div class="sc">
+
+<div class="card">
+<h3>רגרסיה ויזואלית</h3>
+<p>כל מעבר ערכה צריך להיבדק עם צילומי מסך בעמודים מרכזיים:</p>
+<ul>
+<li>עמוד בית x 5 ערכות = 5 צילומי מסך</li>
+<li>עמוד שיעור x 5 ערכות = 5 צילומי מסך</li>
+<li>עמוד קרב x 3 ערכות (לא מוצג בשתיל) = 3 צילומי מסך</li>
+</ul></div>
+
+<div class="card">
+<h3>נגישות לפי ערכה</h3>
+<ul>
+<li><strong>שתיל</strong> (ערכה בהירה): בדיקת יחס ניגודיות (WCAG AA טקסט גדול מספיק לגילאי 6-8)</li>
+<li><strong>צמרת</strong> (ערכה כהה): בדיקת יחס ניגודיות (WCAG AA טקסט סטנדרטי)</li>
+<li><strong>כל הערכות:</strong> ניווט מקלדת עובד, קורא מסך מכריז אותו תוכן</li>
+</ul></div>
+
+<div class="card">
+<h3>מטריצת בדיקות E2E</h3>
+<p>בדיקות E2E קיימות צריכות להיות פרמטריות עם לפחות 3 ערכות:</p>
+<div class="tw"><table>
+<thead><tr><th>ערכה</th><th>סוג</th><th>מאפיינים</th></tr></thead>
+<tbody>
+<tr><td><strong>שתיל</strong></td><td>בהיר, גדול, צעיר</td><td>תופסת שבירות פריסה ברקע בהיר</td></tr>
+<tr><td><strong>גזע</strong></td><td>כהה, סטנדרטי, ברירת מחדל</td><td>מאמתת את העיצוב הנוכחי</td></tr>
+<tr><td><strong>צמרת</strong></td><td>כהה, קומפקטי, בוגר</td><td>תופסת אלמנטים חסרים וניתוב ניווט</td></tr>
+</tbody></table></div>
+</div>
+
+</div></div>
+<div class="dv"></div>
+
+<div id="s12">
+<div class="sh" onclick="toggleSection(this)"><span class="sn">12</span><h2>סיכום: מה משתנה ומה נשאר</h2><span class="ti">&#9660;</span></div>
+<div class="sc">
+
+<div class="sg">
+<div class="card ss">
+<h3>נשאר זהה בכל הגילאים</h3>
+<ul>
+<li>מנוע הקלדה מרכזי (פונקציות טהורות)</li>
+<li>תוכן שיעורים ותוכנית לימודים</li>
+<li>סכמת Supabase בצד השרת</li>
+<li>זרימת אימות</li>
+<li>כיוון פריסה RTL</li>
+<li>משפחות גופן עבריות (Heebo, Assistant, Inter)</li>
+<li>צבעי מותג (סגול #6C5CE7, ירוק #00B894) - כאקסנט, לא כפלטה מלאה</li>
+<li>יסודות נגישות (focus visible, aria labels, skip nav)</li>
+<li>ארכיטקטורת חנויות Zustand</li>
+<li>מנוע סינתזת סאונד (פרמטרים משתנים, ארכיטקטורה נשארת)</li>
+</ul></div>
+
+<div class="card sch">
+<h3>משתנה באופן קיצוני לפי גיל</h3>
+<ul>
+<li>צבע רקע ואווירה (קרם בהיר מול ניאון כהה מול כהה נקי)</li>
+<li>נוכחות דמות, גודל, מיקום, ותדירות</li>
+<li>מבנה ניווט (3 טאבים מול סרגל צד מלא מול סרגל אופקי)</li>
+<li>עוצמת חגיגה (קונפטי מול טוסט)</li>
+<li>מהירות ונוכחות אנימציה</li>
+<li>סקלת טיפוגרפיה ומשקל</li>
+<li>סגנון כרטיסים (צללים רכים מול גבולות ניאון מול גבולות נקיים)</li>
+<li>מסגור גיימיפיקציה (כוכבים מול XP מול אבני דרך)</li>
+<li>פרופיל סאונד (עדין מול גיימינג מול שקט)</li>
+<li>הרכב עמוד בית (מפה מול כרטיסים מול דשבורד נתונים)</li>
+<li>צפיפות מידע (דליל מול צפוף)</li>
+</ul></div>
+</div>
+
+</div></div>
+
+</div><!-- end .ctr -->
+
+<!-- Scroll to top -->
+<button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" id="scrollBtn">&#9650;</button>
+
+<script>
+// Collapsible sections
+function toggleSection(header) {
+  header.classList.toggle('coll');
+  const content = header.nextElementSibling;
+  if (content.classList.contains('coll')) {
+    content.classList.remove('coll');
+    content.style.maxHeight = content.scrollHeight + 'px';
+    setTimeout(() => content.style.maxHeight = 'none', 400);
+  } else {
+    content.style.maxHeight = content.scrollHeight + 'px';
+    requestAnimationFrame(() => {
+      content.classList.add('coll');
+      content.style.maxHeight = '0';
+    });
+  }
+}
+
+// Scroll to top button
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollBtn').classList.toggle('vis', window.scrollY > 400);
+});
+
+// Smooth scroll for TOC
+document.querySelectorAll('.toc a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Expand section if collapsed
+      const header = target.querySelector('.sh');
+      const content = target.querySelector('.sc');
+      if (header && content && content.classList.contains('coll')) {
+        toggleSection(header);
+      }
+    }
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מחקר פדגוגי – מדריך למורים והורים | נינג'ה מקלדת</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root { --bg:#0d0b1a; --surface:#161328; --surface-2:#1e1a35; --surface-3:#262040; --primary:#6C5CE7; --primary-dim:#5a4bd6; --secondary:#00B894; --text:#e8e6f0; --text-dim:#9b97b0; --danger:#ff6b6b; --warning:#ffd93d; --info:#74b9ff; --border:#2d2650; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Heebo',sans-serif; background:var(--bg); color:var(--text); line-height:1.8; padding:24px; max-width:1100px; margin:0 auto; }
+h1 { font-size:2.2rem; font-weight:900; background:linear-gradient(135deg,var(--primary),var(--secondary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:8px; }
+.subtitle { color:var(--text-dim); font-size:1rem; margin-bottom:32px; }
+h2 { font-size:1.5rem; font-weight:700; color:var(--primary); margin:40px 0 16px; padding-bottom:8px; border-bottom:2px solid var(--border); }
+h3 { font-size:1.15rem; font-weight:600; color:var(--secondary); margin:24px 0 12px; }
+h4 { font-size:1rem; font-weight:600; color:var(--info); margin:16px 0 8px; }
+p { margin-bottom:12px; } ul,ol { margin:8px 24px 16px; } li { margin-bottom:6px; }
+.nav { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px 24px; margin-bottom:32px; }
+.nav-title { font-weight:700; color:var(--primary); margin-bottom:12px; font-size:1.1rem; }
+.nav-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:8px; }
+.nav a { color:var(--info); text-decoration:none; padding:6px 12px; border-radius:6px; display:block; transition:background .2s; font-size:.95rem; }
+.nav a:hover { background:var(--surface-2); } .nav a .num { color:var(--secondary); font-weight:700; }
+table { width:100%; border-collapse:collapse; margin:16px 0 24px; font-size:.95rem; }
+th { background:var(--surface-2); color:var(--primary); font-weight:600; padding:10px 14px; text-align:right; border:1px solid var(--border); }
+td { padding:10px 14px; border:1px solid var(--border); background:var(--surface); } tr:hover td { background:var(--surface-2); }
+details { background:var(--surface); border:1px solid var(--border); border-radius:10px; margin:12px 0; overflow:hidden; }
+details[open] { border-color:var(--primary-dim); }
+summary { padding:14px 20px; cursor:pointer; font-weight:600; color:var(--text); background:var(--surface-2); list-style:none; display:flex; align-items:center; gap:10px; user-select:none; }
+summary::-webkit-details-marker { display:none; }
+summary::before { content:'◀'; font-size:.7rem; color:var(--primary); transition:transform .2s; }
+details[open] summary::before { transform:rotate(-90deg); }
+details>div,details>p,details>ul,details>ol,details>table { padding:16px 20px; }
+.details-content { padding:16px 20px; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:20px; margin:12px 0; }
+.card-success { border-right:4px solid var(--secondary); } .card-warning { border-right:4px solid var(--warning); }
+.card-danger { border-right:4px solid var(--danger); } .card-info { border-right:4px solid var(--info); }
+.tag { display:inline-block; padding:3px 10px; border-radius:12px; font-size:.8rem; font-weight:600; }
+.tag-age { background:#6C5CE733; color:var(--primary); } .tag-tip { background:#00B89433; color:var(--secondary); }
+.tag-warn { background:#ffd93d33; color:var(--warning); } .tag-research { background:#74b9ff33; color:var(--info); }
+.highlight { background:linear-gradient(135deg,#6C5CE715,#00B89415); border:1px solid var(--border); border-radius:10px; padding:20px; margin:16px 0; }
+.citation { font-size:.85rem; color:var(--text-dim); font-style:italic; padding:8px 16px; border-right:3px solid var(--primary-dim); margin:12px 0; }
+.section-icon { font-size:1.4rem; margin-left:8px; }
+@media print { body { background:#fff; color:#111; } .nav { display:none; } details { border:1px solid #ccc; } summary { background:#eee; color:#111; } td,th { border-color:#ccc; } td { background:#fff; } th { background:#eee; color:#333; } }
+</style>
+</head>
+<body>
+
+<h1>מחקר פדגוגי – מדריך למורים והורים</h1>
+<p class="subtitle">נינג'ה מקלדת | מדריך מקיף מבוסס מחקר להוראת הקלדה לילדים בגילאי 6-16</p>
+
+<!-- Navigation -->
+<div class="nav">
+  <div class="nav-title">תוכן עניינים</div>
+  <div class="nav-grid">
+    <a href="#research"><span class="num">1.</span> מחקר: הוראת הקלדה לילדים</a>
+    <a href="#expectations"><span class="num">2.</span> ציפיות לפי גיל</a>
+    <a href="#teacher-guide"><span class="num">3.</span> מדריך למורה</a>
+    <a href="#parent-guide"><span class="num">4.</span> מדריך להורה</a>
+    <a href="#difficulties"><span class="num">5.</span> התמודדות עם קשיים</a>
+    <a href="#mobile"><span class="num">6.</span> ממשק מורה/הורה במובייל</a>
+    <a href="#skill-map"><span class="num">7.</span> מיפוי מיומנויות</a>
+    <a href="#faq"><span class="num">8.</span> שאלות נפוצות</a>
+  </div>
+</div>
+
+<!-- ===================== SECTION 1: RESEARCH ===================== -->
+<h2 id="research"><span class="section-icon">🔬</span> 1. מחקר: הוראת הקלדה לילדים</h2>
+
+<h3>מה אומר המחקר?</h3>
+<p>
+  לפי סקר EdWeek Research Center (נובמבר 2024), רוב המוסדות החינוכיים בארה"ב מלמדים הקלדה בכיתות ג'-ה' (84%). עם זאת, רק 8% מציעים קורס הקלדה עצמאי – הרוב משלבים את ההוראה בתוך השיעורים הרגילים. בישראל, הקלדת מגע אינה נלמדת באופן רשמי ברוב בתי הספר, למרות שתלמידים מקלידים כמויות גדולות מדי יום.
+</p>
+
+<div class="citation">
+  "Computer skills and information handling are defined as part of the basic skills required of every elementary school graduate in Israel."
+  – משרד החינוך, תוכנית ICT לאומית
+</div>
+
+<details>
+  <summary><span class="tag tag-research">מחקר</span> התפתחות מוטורית עדינה וגיל מתאים להקלדה</summary>
+  <div class="details-content">
+    <p>מחקרים מראים שמיומנויות מוטוריות עדינות בסיסיות מתפתחות ומבשילות בין גילאי 6-12. נתונים מרכזיים:</p>
+    <ul>
+      <li><strong>גיל 6-7:</strong> כתיבה ידנית נעשית שוטפת ומבוקרת יותר, ילדים מסוגלים לבצע משימות מפורטות</li>
+      <li><strong>גיל 7-8:</strong> מחקר מ-PMC (2017) הראה שהתערבות באמצעות תוכנת מחשב שיפרה משמעותית מיומנויות ויזואליות-מוטוריות אצל ילדים</li>
+      <li><strong>גיל 8+:</strong> תיאום עין-יד מספיק לתחילת הקלדת מגע מובנית</li>
+    </ul>
+    <p>המסקנה: ניתן להתחיל חשיפה למקלדת כבר מגיל 6, אך הקלדת מגע פורמלית מומלצת מגיל 8 (כיתה ג').</p>
+  </div>
+</details>
+
+<details>
+  <summary><span class="tag tag-research">מחקר</span> אפקטיביות הגיימיפיקציה בחינוך</summary>
+  <div class="details-content">
+    <p>מטא-אנליזה מ-Frontiers in Psychology (2023) מצאה גודל אפקט גדול (g = 0.822) להשפעת הגיימיפיקציה על תוצאות למידה. ממצאים מרכזיים:</p>
+    <ul>
+      <li><strong>מוטיבציה:</strong> שילוב אלמנטים משחקיים מגביר מוטיבציה פנימית ומעורבות</li>
+      <li><strong>ביצועים:</strong> שיפור משמעותי בביצועים אקדמיים בהשוואה ללמידה מסורתית</li>
+      <li><strong>הזהרה:</strong> מערכות גיימיפיקציה מעוצבות בצורה גרועה עלולות לגרום לתסכול ולנטישה</li>
+      <li><strong>תחרות:</strong> לוחות הישגים (leaderboards) עלולים ליצור חרדה אצל תלמידים פחות בטוחים</li>
+    </ul>
+    <div class="card card-success">
+      <strong>איך נינג'ה מקלדת מיישמת את המחקר:</strong>
+      <ul>
+        <li>מערכת XP והתקדמות – מניעה פנימית, לא רק תחרות</li>
+        <li>5 נושאים מותאמי-גיל – תוכן רלוונטי לכל שלב התפתחותי</li>
+        <li>דמויות ונרטיב – חיבור רגשי למסע הלמידה</li>
+        <li>מערכת אנטי-תסכול – קושי מתאים, עידוד אוטומטי</li>
+      </ul>
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary><span class="tag tag-research">מחקר</span> אתגרים ייחודיים בהקלדה בעברית</summary>
+  <div class="details-content">
+    <p>הקלדה בעברית מציבה אתגרים ייחודיים שאינם קיימים בשפות LTR (שמאל-לימין):</p>
+    <table>
+      <tr><th>אתגר</th><th>הסבר</th><th>הפתרון בנינג'ה מקלדת</th></tr>
+      <tr>
+        <td>כיוון RTL</td>
+        <td>טקסט עברי נכתב מימין לשמאל, מה שיכול לבלבל מתחילים שרגילים לכיוון ההפוך</td>
+        <td>ממשק RTL מלא, הנחיות ויזואליות ברורות לכיוון</td>
+      </tr>
+      <tr>
+        <td>פריסת מקלדת שונה</td>
+        <td>מיקום האותיות העבריות שונה לחלוטין מ-QWERTY, מכפיל את עומס הלמידה</td>
+        <td>מקלדת ויזואלית עם הדגשה ברורה של האצבע הנכונה</td>
+      </tr>
+      <tr>
+        <td>מעבר בין שפות</td>
+        <td>ילדים צריכים להתמודד עם שתי פריסות מקלדת (עברית + אנגלית)</td>
+        <td>שיעורים ייעודיים למעבר בין שפות</td>
+      </tr>
+      <tr>
+        <td>סימני פיסוק</td>
+        <td>סימני פיסוק "זוחלים" כשעוברים בין שפות במקלדת ישראלית סטנדרטית</td>
+        <td>תרגילים ממוקדים בסימני פיסוק</td>
+      </tr>
+      <tr>
+        <td>אותיות סופיות</td>
+        <td>5 אותיות סופיות (ך, ם, ן, ף, ץ) דורשות למידה נפרדת</td>
+        <td>שיעורים ייעודיים לאותיות סופיות</td>
+      </tr>
+    </table>
+    <div class="citation">
+      מכון התקנים הישראלי הציע סידור חלופי למקשי עברית כדי לפתור בעיות בלבול בין פריסות אנגלית ועברית.
+      – The Times of Israel
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary><span class="tag tag-research">מחקר</span> משך תרגול אופטימלי לפי גיל</summary>
+  <div class="details-content">
+    <table>
+      <tr><th>קבוצת גיל</th><th>משך מומלץ ליחידה</th><th>תדירות שבועית</th><th>הערות</th></tr>
+      <tr>
+        <td><span class="tag tag-age">6-8 (שתיל)</span></td>
+        <td>10-12 דקות</td>
+        <td>3-4 פעמים</td>
+        <td>הפסקות תכופות, דגש על חוויה חיובית ולא על דיוק</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-age">8-10 (נבט)</span></td>
+        <td>12-15 דקות</td>
+        <td>4-5 פעמים</td>
+        <td>שילוב משחקים עם תרגול מובנה</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-age">10-12 (גזע)</span></td>
+        <td>15-20 דקות</td>
+        <td>4-5 פעמים</td>
+        <td>ניתן להגדיל עצימות, הכנסת תחרויות</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-age">12-14 (ענף)</span></td>
+        <td>20-25 דקות</td>
+        <td>5 פעמים</td>
+        <td>תרגול עצמאי, אתגרי מהירות</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-age">14-16 (צמרת)</span></td>
+        <td>20-30 דקות</td>
+        <td>5 פעמים</td>
+        <td>קיצורי מקלדת, ניווט מתקדם</td>
+      </tr>
+    </table>
+    <div class="card card-warning">
+      <strong>עקרון מפתח:</strong> עדיף 10 דקות כל יום מאשר 40 דקות פעמיים בשבוע. עקביות חשובה הרבה יותר ממשך.
+    </div>
+  </div>
+</details>
+
+<!-- ===================== SECTION 2: EXPECTATIONS ===================== -->
+<h2 id="expectations"><span class="section-icon">📊</span> 2. ציפיות לפי גיל</h2>
+
+<h3>יעדי מהירות (מילים לדקה – WPM)</h3>
+<p>
+  הנוסחה המקובלת: <strong>5 מילים לדקה × מספר כיתה</strong>. כלומר, תלמיד כיתה ה' צריך לשאוף ל-25 WPM.
+  להלן טבלה מפורטת עם יעדים ריאליסטיים בעברית (בדרך כלל 10-15% פחות מאנגלית בשל מורכבות הפריסה):
+</p>
+
+<table>
+  <tr>
+    <th>גיל / כיתה</th>
+    <th>עולם בנינג'ה מקלדת</th>
+    <th>WPM מינימלי (עברית)</th>
+    <th>WPM יעד</th>
+    <th>דיוק מינימלי</th>
+    <th>דיוק יעד</th>
+  </tr>
+  <tr>
+    <td>6-7 / א'-ב'</td>
+    <td><span class="tag tag-age">שתיל</span></td>
+    <td>3-5</td>
+    <td>8</td>
+    <td>70%</td>
+    <td>80%</td>
+  </tr>
+  <tr>
+    <td>8-9 / ג'-ד'</td>
+    <td><span class="tag tag-age">נבט</span></td>
+    <td>8-12</td>
+    <td>18</td>
+    <td>80%</td>
+    <td>90%</td>
+  </tr>
+  <tr>
+    <td>10-11 / ה'-ו'</td>
+    <td><span class="tag tag-age">גזע</span></td>
+    <td>15-20</td>
+    <td>28</td>
+    <td>85%</td>
+    <td>92%</td>
+  </tr>
+  <tr>
+    <td>12-13 / ז'-ח'</td>
+    <td><span class="tag tag-age">ענף</span></td>
+    <td>22-28</td>
+    <td>35</td>
+    <td>88%</td>
+    <td>95%</td>
+  </tr>
+  <tr>
+    <td>14-16 / ט'-י'</td>
+    <td><span class="tag tag-age">צמרת</span></td>
+    <td>30-35</td>
+    <td>45</td>
+    <td>90%</td>
+    <td>97%</td>
+  </tr>
+</table>
+
+<div class="citation">
+  מקור יעדים: Typing.com Grade Level Averages + התאמה לעברית, EdWeek Research Center (2024)
+</div>
+
+<details>
+  <summary>אבני דרך התקדמות (Milestones)</summary>
+  <div class="details-content">
+    <table>
+      <tr><th>אבן דרך</th><th>תיאור</th><th>זמן ממוצע להשגה</th></tr>
+      <tr><td>שורת בית</td><td>הקלדה בלי להסתכל על שורת הבית (א-ש-ד-ג-כ-ע-י-ח-ל)</td><td>2-3 שבועות</td></tr>
+      <tr><td>כל האותיות</td><td>שליטה בכל 27 אותיות + 5 סופיות</td><td>6-10 שבועות</td></tr>
+      <tr><td>10 WPM</td><td>הקלדה שוטפת של מילים פשוטות</td><td>8-12 שבועות</td></tr>
+      <tr><td>20 WPM</td><td>הקלדה ברמת "שיחה" – כתיבת משפטים</td><td>3-5 חודשים</td></tr>
+      <tr><td>30 WPM</td><td>הקלדה פרודוקטיבית – כתיבת חיבורים</td><td>5-8 חודשים</td></tr>
+      <tr><td>40+ WPM</td><td>שליטה מלאה – הקלדה אוטומטית</td><td>8-12 חודשים</td></tr>
+    </table>
+  </div>
+</details>
+
+<details>
+  <summary>מתי לדאוג ומתי להתאזר בסבלנות?</summary>
+  <div class="details-content">
+    <div class="card card-success">
+      <h4>סימנים שהכל בסדר (סבלנות!)</h4>
+      <ul>
+        <li>התקדמות איטית אך עקבית – גם שיפור של 1-2 WPM בחודש זה מצוין</li>
+        <li>הילד נהנה מהמשחק, גם אם המהירות לא גבוהה</li>
+        <li>דיוק משתפר גם אם המהירות לא</li>
+        <li>ירידה זמנית במהירות כשלומדים אותיות חדשות – זה טבעי לחלוטין</li>
+        <li>ביצועים משתנים מיום ליום – עייפות, מצב רוח, הכל משפיע</li>
+      </ul>
+    </div>
+    <div class="card card-danger">
+      <h4>סימני אזהרה (יש לבדוק)</h4>
+      <ul>
+        <li>אין שיפור כלל אחרי 4-6 שבועות של תרגול קבוע</li>
+        <li>הילד מסרב באופן עקבי לתרגל – ייתכן שיש חסם רגשי או פיזי</li>
+        <li>כאבים ביד או בפרק כף היד – לבדוק ארגונומיה</li>
+        <li>תסכול קיצוני וכעס – ייתכן שרמת הקושי גבוהה מדי</li>
+        <li>דיוק נמוך באופן עקבי (מתחת ל-60%) – ייתכנו קשיים מוטוריים</li>
+      </ul>
+    </div>
+  </div>
+</details>
+
+<!-- ===================== SECTION 3: TEACHER GUIDE ===================== -->
+<h2 id="teacher-guide"><span class="section-icon">👩‍🏫</span> 3. מדריך למורה</h2>
+
+<details>
+  <summary>הקמת כיתה (קודי כיתה וחשבונות תלמידים)</summary>
+  <div class="details-content">
+    <h4>שלב 1: יצירת חשבון מורה</h4>
+    <ol>
+      <li>הירשם/י לנינג'ה מקלדת עם כתובת מייל בית-ספרית</li>
+      <li>בחר/י "אני מורה" בעמוד ההגדרה</li>
+      <li>הזן/י את פרטי בית הספר</li>
+    </ol>
+    <h4>שלב 2: יצירת כיתה</h4>
+    <ol>
+      <li>לחץ/י "כיתה חדשה" בלוח הבקרה</li>
+      <li>הגדר/י שם כיתה, שכבת גיל, ומספר תלמידים</li>
+      <li>המערכת תייצר <strong>קוד כיתה</strong> ייחודי (6 תווים)</li>
+    </ol>
+    <h4>שלב 3: הצטרפות תלמידים</h4>
+    <ol>
+      <li>שתף/י את קוד הכיתה עם התלמידים</li>
+      <li>תלמידים נכנסים לאתר ← לוחצים "הצטרף לכיתה" ← מזינים את הקוד</li>
+      <li>לתלמידים צעירים (6-8): אין צורך במייל, מספיק שם משתמש + קוד כיתה</li>
+    </ol>
+    <div class="card card-info">
+      <strong>טיפ:</strong> הדפס/י את קוד הכיתה על כרטיסיות וחלק/י לתלמידים. ניתן גם להקרין על הלוח.
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>שילוב בתוכנית הלימודים (תרגול יומי 15 דקות)</summary>
+  <div class="details-content">
+    <h4>מודל "15 דקות ביום"</h4>
+    <p>המחקר מראה שתרגול קצר ועקבי עדיף על מפגשים ארוכים ומרוחקים. הנה תוכנית שבועית מומלצת:</p>
+    <table>
+      <tr><th>יום</th><th>תוכן (15 דק')</th><th>מטרה</th></tr>
+      <tr><td>ראשון</td><td>שיעור חדש + תרגול מודרך</td><td>למידת אותיות/מיומנות חדשה</td></tr>
+      <tr><td>שני</td><td>תרגול חופשי + משחקים</td><td>חיזוק מה שנלמד</td></tr>
+      <tr><td>שלישי</td><td>אתגר מהירות (קצר)</td><td>בדיקת התקדמות</td></tr>
+      <tr><td>רביעי</td><td>תרגול מקלדת בהקשר (כתיבת משפטים)</td><td>יישום מעשי</td></tr>
+      <tr><td>חמישי</td><td>טורניר כיתתי / שיתופי</td><td>מוטיבציה חברתית</td></tr>
+    </table>
+    <h4>שילוב בין-תחומי</h4>
+    <ul>
+      <li><strong>שיעורי עברית:</strong> הקלדת מילות אוצר מילים חדשות</li>
+      <li><strong>מדעים:</strong> הקלדת מונחים מדעיים</li>
+      <li><strong>חשבון:</strong> שימוש במקשי מספרים וסימנים מתמטיים</li>
+      <li><strong>מחשבים:</strong> שילוב קיצורי מקלדת בפעילויות דיגיטליות</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary>שימוש בלוח הבקרה (דשבורד) לניטור התקדמות</summary>
+  <div class="details-content">
+    <p>לוח הבקרה מציג בזמן אמת:</p>
+    <ul>
+      <li><strong>מבט כיתתי:</strong> ממוצע WPM, ממוצע דיוק, אחוז השלמת שיעורים</li>
+      <li><strong>גרף התקדמות:</strong> עקומת למידה של הכיתה לאורך זמן</li>
+      <li><strong>מפת חום אותיות:</strong> אילו אותיות מאתגרות את הכיתה</li>
+      <li><strong>התראות:</strong> תלמידים שנתקעו, ירידה בביצועים, הישגים</li>
+    </ul>
+    <h4>מדדים חשובים לעקוב אחריהם</h4>
+    <table>
+      <tr><th>מדד</th><th>מה מסמן</th><th>פעולה מומלצת</th></tr>
+      <tr>
+        <td>WPM יורד</td>
+        <td>ייתכן שהתלמיד לומד טכניקה חדשה (טבעי) או מתוסכל</td>
+        <td>בדוק אם זה זמני; שוחח עם התלמיד אם נמשך</td>
+      </tr>
+      <tr>
+        <td>דיוק נמוך (&lt;70%)</td>
+        <td>התלמיד מנסה להקליד מהר מדי או לא מביט במסך</td>
+        <td>הפעל "מצב דיוק" שמאט ומתמקד בנכונות</td>
+      </tr>
+      <tr>
+        <td>לא נכנס 5+ ימים</td>
+        <td>אובדן עניין או חסם טכני</td>
+        <td>שלח עידוד, בדוק אם יש בעיית גישה</td>
+      </tr>
+      <tr>
+        <td>רק משחקים, לא שיעורים</td>
+        <td>התלמיד נהנה אך לא מתקדם</td>
+        <td>הפעל "שערי התקדמות" – חובה להשלים שיעור לפני משחק</td>
+      </tr>
+    </table>
+  </div>
+</details>
+
+<details>
+  <summary>זיהוי תלמידים מתקשים</summary>
+  <div class="details-content">
+    <p>המערכת מסמנת אוטומטית תלמידים שעונים על הקריטריונים הבאים:</p>
+    <ul>
+      <li><strong>דגל אדום:</strong> אין שיפור ב-WPM אחרי 3 שבועות של תרגול קבוע</li>
+      <li><strong>דגל כתום:</strong> דיוק עקבי מתחת ל-70%</li>
+      <li><strong>דגל כחול:</strong> התלמיד נוטש באמצע שיעורים באופן חוזר</li>
+    </ul>
+    <h4>צעדים לזיהוי הסיבה</h4>
+    <ol>
+      <li>בדוק/י את "מפת האצבעות" – האם התלמיד משתמש באצבעות הנכונות?</li>
+      <li>בדוק/י את "מפת השגיאות" – האם יש אותיות ספציפיות בעייתיות?</li>
+      <li>שוחח/י עם התלמיד – האם יש כאב? חרדה? שעמום?</li>
+      <li>בדוק/י ארגונומיה – גובה כיסא, מרחק מהמסך, תאורה</li>
+    </ol>
+  </div>
+</details>
+
+<details>
+  <summary>תחרות מול שיתוף פעולה</summary>
+  <div class="details-content">
+    <div class="card card-warning">
+      <strong>אזהרת מחקר:</strong> מחקרים מ-2024 מראים שלוחות הישגים (leaderboards) עלולים ליצור חרדה אצל תלמידים פחות בטוחים בעצמם. יש לאזן בזהירות!
+    </div>
+    <table>
+      <tr><th>אסטרטגיה</th><th>מתי לשימוש</th><th>הזהרות</th></tr>
+      <tr>
+        <td><strong>תחרות אישית</strong><br>"נצח את עצמך"</td>
+        <td>תמיד – בטוח לכולם</td>
+        <td>ודא שהמשווה הוא הילד עם עצמו, לא עם אחרים</td>
+      </tr>
+      <tr>
+        <td><strong>תחרות קבוצתית</strong><br>קבוצות משולבות</td>
+        <td>כשיש מגוון רמות – מערבבים חזקים עם חלשים</td>
+        <td>ניקוד קבוצתי מבוסס שיפור, לא רמה מוחלטת</td>
+      </tr>
+      <tr>
+        <td><strong>לוח הישגים</strong><br>טבלת מובילים</td>
+        <td>רק כשכל הכיתה ברמה דומה</td>
+        <td>שקול להציג רק 5 הראשונים, או לשנות קריטריון (דיוק, שיפור)</td>
+      </tr>
+      <tr>
+        <td><strong>משימות שיתופיות</strong><br>"הגיעו יחד ל-1000 מילים"</td>
+        <td>כשרוצים לחזק גיבוש כיתתי</td>
+        <td>מושלם לכיתות עם פערים גדולים</td>
+      </tr>
+    </table>
+  </div>
+</details>
+
+<details>
+  <summary>נגישות והתאמות (דיסלקציה, קשיי מוטוריקה)</summary>
+  <div class="details-content">
+    <p>מחקר מ-ScienceDirect (2025) מצא שילדים עם דיסלקציה הראו ביצועי איות טובים יותר כשלמדו דרך הקלדה. נינג'ה מקלדת כוללת:</p>
+    <table>
+      <tr><th>התאמה</th><th>תיאור</th><th>הפעלה</th></tr>
+      <tr>
+        <td>גופן נגיש</td>
+        <td>גופן Assistant מותאם לדיסלקציה</td>
+        <td>הגדרות ← נגישות ← גופן</td>
+      </tr>
+      <tr>
+        <td>ניגודיות גבוהה</td>
+        <td>ערכת צבעים עם ניגודיות מוגברת</td>
+        <td>הגדרות ← תצוגה ← ניגודיות</td>
+      </tr>
+      <tr>
+        <td>מהירות מותאמת</td>
+        <td>ביטול לחץ זמן, התקדמות לפי קצב אישי</td>
+        <td>הגדרות ← קושי ← ללא מגבלת זמן</td>
+      </tr>
+      <tr>
+        <td>מקשים גדולים</td>
+        <td>תצוגת מקלדת מוגדלת</td>
+        <td>הגדרות ← תצוגה ← מקלדת גדולה</td>
+      </tr>
+      <tr>
+        <td>קריינות</td>
+        <td>הוראות בקול של דמויות המשחק</td>
+        <td>מופעל כברירת מחדל, ניתן לכבות</td>
+      </tr>
+    </table>
+    <div class="card card-info">
+      <strong>חשוב:</strong> התאמות נגישות אינן "ויתור" – הן מאפשרות לכל ילד להגיע לפוטנציאל שלו. הן לא משפיעות על מדדי ההצלחה.
+    </div>
+  </div>
+</details>
+
+<!-- ===================== SECTION 4: PARENT GUIDE ===================== -->
+<h2 id="parent-guide"><span class="section-icon">👨‍👩‍👧</span> 4. מדריך להורה</h2>
+
+<details>
+  <summary>הגדרה בבית</summary>
+  <div class="details-content">
+    <h4>מה צריך?</h4>
+    <ul>
+      <li>מחשב עם מקלדת עברית (מחשב נייד או שולחני)</li>
+      <li>חיבור לאינטרנט</li>
+      <li>כיסא ושולחן בגובה מתאים לילד</li>
+      <li>דפדפן מעודכן (Chrome, Firefox, Safari, Edge)</li>
+    </ul>
+    <h4>הקמת חשבון</h4>
+    <ol>
+      <li>גלשו ל-ninja-keyboard.co.il</li>
+      <li>לחצו "הרשמה" ← "אני הורה"</li>
+      <li>הזינו פרטי ילד (שם, גיל, כיתה) – בלי צורך באימייל לילד</li>
+      <li>אם המורה נתן קוד כיתה – הזינו אותו כדי לחבר לכיתה</li>
+    </ol>
+    <h4>ארגונומיה נכונה</h4>
+    <ul>
+      <li>כפות הרגליים שטוחות על הרצפה (שרפרף אם צריך)</li>
+      <li>מרפקים בזווית 90°</li>
+      <li>מסך בגובה העיניים</li>
+      <li>מרחק 50-70 ס"מ מהמסך</li>
+      <li>תאורה מספקת, ללא השתקפויות על המסך</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary>תמיכה בלי לחץ</summary>
+  <div class="details-content">
+    <div class="card card-success">
+      <h4>כן לעשות ✓</h4>
+      <ul>
+        <li>לעודד את <strong>התהליך</strong>, לא רק את התוצאה ("ראיתי שהתאמנת היום – כל הכבוד!")</li>
+        <li>להשוות את הילד <strong>לעצמו בלבד</strong> ("לפני חודש הייתה ב-8, עכשיו 14!")</li>
+        <li>לתרגל ביחד – לשבת ליד הילד ולנסות בעצמכם</li>
+        <li>לחגוג אבני דרך קטנות (סיום שיעור, שיא אישי חדש)</li>
+        <li>לתת מרחב לימים גרועים – ביצועים משתנים וזה בסדר</li>
+      </ul>
+    </div>
+    <div class="card card-danger">
+      <h4>לא לעשות ✗</h4>
+      <ul>
+        <li>לא להשוות לאחים, חברים, או ילדים אחרים</li>
+        <li>לא לעמוד מאחורי הגב ולתקן טעויות בזמן אמת</li>
+        <li>לא לאיים ("אם לא תתאמן, אין מסכים")</li>
+        <li>לא להכריח תרגול כשהילד עייף, רעב, או מתוסכל</li>
+        <li>לא לנזוף על טעויות – הן חלק הכרחי מהלמידה</li>
+      </ul>
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>זמן מסך – איזון נכון</summary>
+  <div class="details-content">
+    <p>הקלדה היא <strong>זמן מסך פרודוקטיבי</strong> – לא שווה ערך לצפייה פסיבית בסרטונים.</p>
+    <table>
+      <tr><th>גיל</th><th>מומלץ יומי</th><th>טיפ</th></tr>
+      <tr>
+        <td>6-8</td>
+        <td>10-12 דקות</td>
+        <td>קבעו שעה קבועה, לפני הפעילויות ה"כיפיות" על המסך</td>
+      </tr>
+      <tr>
+        <td>8-10</td>
+        <td>12-15 דקות</td>
+        <td>ניתן לפצל ל-2 מפגשים של 7 דקות</td>
+      </tr>
+      <tr>
+        <td>10-12</td>
+        <td>15-20 דקות</td>
+        <td>ניתן לשלב עם שיעורי בית דיגיטליים</td>
+      </tr>
+      <tr>
+        <td>12-16</td>
+        <td>20-25 דקות</td>
+        <td>תנו אוטונומיה – הילד כבר מבין למה זה חשוב</td>
+      </tr>
+    </table>
+    <div class="card card-info">
+      <strong>הסבירו לילד:</strong> "הקלדה זה כמו ללמוד לרכב על אופניים – ברגע שתדע, זה איתך לכל החיים. וזה ישרת אותך בכל יום, בבית ספר ומחוצה לו."
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>הבנת הגיימיפיקציה (זה חינוכי!)</summary>
+  <div class="details-content">
+    <p>נינג'ה מקלדת משתמשת באלמנטים משחקיים כדי לגרום לילדים לרצות לתרגל. הנה מה שכל אלמנט עושה:</p>
+    <table>
+      <tr><th>אלמנט משחקי</th><th>מה הילד רואה</th><th>מה באמת קורה (חינוכית)</th></tr>
+      <tr>
+        <td>XP ורמות</td>
+        <td>"עליתי לרמה 7!"</td>
+        <td>תמריץ לתרגול עקבי, תחושת התקדמות</td>
+      </tr>
+      <tr>
+        <td>תגים (badges)</td>
+        <td>"קיבלתי תג מהירות!"</td>
+        <td>סימון אבני דרך ספציפיות, חיזוק חיובי</td>
+      </tr>
+      <tr>
+        <td>סיפור ודמויות</td>
+        <td>"רוצה לגלות מה קורה עם קי!"</td>
+        <td>מוטיבציה פנימית, המשכיות בתרגול</td>
+      </tr>
+      <tr>
+        <td>יריבים AI</td>
+        <td>"רוצה לנצח את שאדו!"</td>
+        <td>תרגול ממוקד תחת לחץ מבוקר ומותאם</td>
+      </tr>
+      <tr>
+        <td>טורנירים</td>
+        <td>"הכיתה שלי מתחרה!"</td>
+        <td>מוטיבציה חברתית, שייכות קבוצתית</td>
+      </tr>
+    </table>
+    <div class="card card-success">
+      <strong>שורה תחתונה להורים:</strong> המשחק אינו "בזבוז זמן" – כל דקה בו היא תרגול הקלדה אקטיבי. הגיימיפיקציה רק גורמת לזה להרגיש כיף.
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>מתי להתערב ומתי לתת למשחק לעבוד</summary>
+  <div class="details-content">
+    <table>
+      <tr><th>מצב</th><th>האם להתערב?</th><th>מה לעשות</th></tr>
+      <tr>
+        <td>הילד נהנה אבל מתקדם לאט</td>
+        <td><span class="tag tag-tip">לא</span></td>
+        <td>המערכת מתאימה קושי אוטומטית. תנו לה לעבוד.</td>
+      </tr>
+      <tr>
+        <td>הילד מתוסכל ורוצה להפסיק</td>
+        <td><span class="tag tag-warn">כן</span></td>
+        <td>שוחחו, בדקו מה מפריע, הורידו קושי בהגדרות</td>
+      </tr>
+      <tr>
+        <td>הילד רק משחק, לא עושה שיעורים</td>
+        <td><span class="tag tag-warn">כן</span></td>
+        <td>הפעילו "שערי התקדמות" בהגדרות ההורה</td>
+      </tr>
+      <tr>
+        <td>הילד מקליד עם שתי אצבעות</td>
+        <td><span class="tag tag-warn">כן</span></td>
+        <td>חזרו לשיעורי שורת הבית, הדגישו שהמטרה היא הקלדת מגע</td>
+      </tr>
+      <tr>
+        <td>הילד מתאמן כל יום 30+ דקות</td>
+        <td><span class="tag tag-tip">לא</span></td>
+        <td>תנו לו, אבל ודאו שזה לא על חשבון פעילות גופנית</td>
+      </tr>
+    </table>
+  </div>
+</details>
+
+<!-- ===================== SECTION 5: DIFFICULTIES ===================== -->
+<h2 id="difficulties"><span class="section-icon">🛡️</span> 5. התמודדות עם קשיים</h2>
+
+<details>
+  <summary><span class="tag tag-danger">בעיה</span> תלמיד מתוסכל / רוצה לעזוב</summary>
+  <div class="details-content">
+    <h4>מה עומד מאחורי זה?</h4>
+    <ul>
+      <li>רמת קושי גבוהה מדי ביחס ליכולת הנוכחית</li>
+      <li>השוואה לאחרים גורמת לתחושת כישלון</li>
+      <li>ציפיות לא ריאליסטיות (של ההורה, המורה, או הילד עצמו)</li>
+    </ul>
+    <h4>מנגנוני אנטי-תסכול במשחק</h4>
+    <ul>
+      <li><strong>קושי אדפטיבי:</strong> המערכת מורידה קושי אוטומטית אחרי 3 כישלונות רצופים</li>
+      <li><strong>דמות קי מעודדת:</strong> הודעות עידוד מותאמות אישית ("כמעט! נסה שוב נינג'ה!")</li>
+      <li><strong>מצב ללא לחץ:</strong> ביטול טיימר ולוח תוצאות</li>
+      <li><strong>"המוח שלך גדל":</strong> הסברים על נוירופלסטיות ברמת ילד – "כל טעות בונה חיבור חדש במוח!"</li>
+      <li><strong>הפסקת כיף:</strong> מיני-משחק מרגיע אחרי 3 שיעורים מאתגרים</li>
+    </ul>
+    <div class="card card-success">
+      <strong>פעולה של מורה/הורה:</strong> שבו עם הילד, שחקו יחד, הראו שגם אתם טועים. שנו את הנרטיב מ"אני גרוע" ל"אני לומד".
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary><span class="tag tag-warn">בעיה</span> התקדמות איטית מאוד</summary>
+  <div class="details-content">
+    <h4>סיבות אפשריות ופתרונות</h4>
+    <table>
+      <tr><th>סיבה</th><th>כיצד לזהות</th><th>פתרון</th></tr>
+      <tr>
+        <td>תרגול לא עקבי</td>
+        <td>יומן פעילות מראה פערים גדולים</td>
+        <td>קבעו שעה קבועה, תזכורות אוטומטיות</td>
+      </tr>
+      <tr>
+        <td>שיטה לא נכונה</td>
+        <td>מקליד עם 2 אצבעות, מסתכל על המקלדת</td>
+        <td>חזרה לשיעורי שורת בית, כיסוי מקלדת</td>
+      </tr>
+      <tr>
+        <td>קשיי מוטוריקה עדינה</td>
+        <td>גם כתיבה ידנית קשה, לחיצות לא מדויקות</td>
+        <td>התאמות נגישות, ייעוץ עם מרפא בעיסוק</td>
+      </tr>
+      <tr>
+        <td>חרדת ביצוע</td>
+        <td>מהיר בתרגול חופשי, איטי במבחן</td>
+        <td>מצב ללא לחץ, ביטול ציוני מהירות</td>
+      </tr>
+    </table>
+  </div>
+</details>
+
+<details>
+  <summary><span class="tag tag-warn">בעיה</span> רק משחקים, מדלגים על שיעורים</summary>
+  <div class="details-content">
+    <p>זה אומר שהגיימיפיקציה עובדת – הילד נהנה! אבל צריך לכוון את ההנאה ללמידה:</p>
+    <ul>
+      <li><strong>שערי התקדמות:</strong> הפעלה בהגדרות – חובה להשלים שיעור 1 כדי לפתוח משחק</li>
+      <li><strong>יחס מומלץ:</strong> שיעור 1 → משחק 1 → שיעור 1 → משחק חופשי</li>
+      <li><strong>תגים מבוססי שיעורים:</strong> תגים מיוחדים שניתנים רק על השלמת שיעורים</li>
+      <li><strong>עדכון להורים:</strong> דוח שבועי מציין יחס שיעורים/משחקים</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary><span class="tag tag-warn">בעיה</span> קשיי מוטוריקה / דיסלקציה</summary>
+  <div class="details-content">
+    <div class="highlight">
+      <strong>ממצא מחקרי חשוב:</strong> מחקר מ-ScienceDirect (2025) מצא שילדים עם דיסלקציה הראו ביצועים טובים יותר באיות ובלמידת מילים חדשות דרך הקלדה, לעומת כתיבה ידנית. הקלדה יכולה להיות כלי מעצים עבור ילדים אלו.
+    </div>
+    <h4>התאמות מומלצות</h4>
+    <ul>
+      <li>הפעלת מצב נגישות מלא (גופן מיוחד + ניגודיות + מקשים גדולים)</li>
+      <li>ביטול מגבלות זמן</li>
+      <li>שיעורים קצרים יותר (5-8 דקות במקום 15)</li>
+      <li>חיזוק חיובי מוגבר – יותר עידוד על כל הצלחה</li>
+      <li>שיתוף מרפא/ת בעיסוק בתהליך</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary><span class="tag tag-tip">בעיה</span> תלמיד מחונן / משועמם</summary>
+  <div class="details-content">
+    <p>תלמידים מתקדמים צריכים אתגרים שישמרו על העניין:</p>
+    <ul>
+      <li><strong>אתגרי מהירות מתקדמים:</strong> יעד 40-60 WPM עם 98% דיוק</li>
+      <li><strong>קיצורי מקלדת:</strong> שיעורי Ctrl+C, Ctrl+V, Alt+Tab ועוד</li>
+      <li><strong>הקלדה דו-לשונית:</strong> מעבר מהיר עברית-אנגלית</li>
+      <li><strong>טורנירים:</strong> תחרויות בין-כיתתיות ובין-בית-ספריות</li>
+      <li><strong>עזרה לחברים:</strong> מינוי כ"מנטור הקלדה" בכיתה</li>
+      <li><strong>ניווט מתקדם:</strong> שליטה ב-Windows בלי עכבר</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary><span class="tag tag-warn">בעיה</span> חרדה ממבחני מהירות</summary>
+  <div class="details-content">
+    <ul>
+      <li><strong>מצב "ללא לחץ":</strong> הסתרת טיימר ו-WPM בזמן אמת</li>
+      <li><strong>הצגת מגמות ולא מספרים:</strong> "השתפרת!" במקום "18 WPM"</li>
+      <li><strong>מבחנים כ"אתגרים":</strong> שינוי שפה מ"מבחן" ל"אתגר נינג'ה" – פחות מאיים</li>
+      <li><strong>תחרות עם AI ולא עם חברים:</strong> היריבים הם דמויות משחק, לא ילדים אחרים</li>
+      <li><strong>ניקוד על שיפור:</strong> "יותר מהפעם הקודמת" חשוב יותר מ"יותר מהממוצע"</li>
+    </ul>
+  </div>
+</details>
+
+<!-- ===================== SECTION 6: MOBILE INTERFACE ===================== -->
+<h2 id="mobile"><span class="section-icon">📱</span> 6. ממשק מורה/הורה במובייל</h2>
+
+<p>
+  נינג'ה מקלדת כוללת אפליקציית PWA מלווה המותאמת למובייל, המאפשרת למורים ולהורים לעקוב אחרי התקדמות ללא צורך במחשב.
+</p>
+
+<details>
+  <summary>דשבורד כיתתי בזמן אמת (מורים)</summary>
+  <div class="details-content">
+    <h4>מסך ראשי – מבט על הכיתה</h4>
+    <ul>
+      <li>ממוצע WPM כיתתי (גרף שבועי)</li>
+      <li>ממוצע דיוק</li>
+      <li>מספר תלמידים פעילים היום</li>
+      <li>התראות: תלמידים שצריכים תשומת לב (דגלים צבעוניים)</li>
+    </ul>
+    <h4>מסך תלמיד בודד</h4>
+    <ul>
+      <li>כרטיס התקדמות אישי: WPM, דיוק, שיעורים שהושלמו</li>
+      <li>גרף מגמה (שבוע, חודש, שנה)</li>
+      <li>מפת אותיות בעייתיות</li>
+      <li>המלצה אוטומטית: "רמת קושי X מומלצת"</li>
+    </ul>
+    <h4>פעולות מהירות</h4>
+    <table>
+      <tr><th>פעולה</th><th>תיאור</th></tr>
+      <tr><td>שלח עידוד</td><td>הודעה אישית מהמורה מופיעה לתלמיד כשנכנס למשחק</td></tr>
+      <tr><td>הקצה תרגול נוסף</td><td>שיעור ספציפי או אותיות לתרגול</td></tr>
+      <tr><td>שנה רמת קושי</td><td>התאמה ידנית של רמת קושי לתלמיד</td></tr>
+      <tr><td>צור דוח להורים</td><td>PDF עם סיכום חודשי להדפסה/שליחה</td></tr>
+    </table>
+  </div>
+</details>
+
+<details>
+  <summary>תצוגת הורה במובייל + פרטיות COPPA</summary>
+  <div class="details-content">
+    <p><strong>מסך ראשי:</strong> כרטיס ילד (WPM, דיוק, רמה), סטטוס יומי ("התאמן/ה היום"), ומגמת שבוע (חצים ירוקים/אדומים).</p>
+    <p><strong>התראות Push שבועיות:</strong> סיכום פעילות, הישג בולט, והמלצה אישית.</p>
+    <p><strong>תקשורת מורה-הורה:</strong> הודעות על התקדמות, שאלות למורה, ויעדים שהמורה הגדיר.</p>
+    <h4>פרטיות ותאימות COPPA</h4>
+    <ul>
+      <li>אין מידע מזהה בלוחות ציבוריים; רק מורה/הורה רואים נתוני תלמיד</li>
+      <li>ילדים מתחת ל-13 – הסכמת הורה נדרשת; כל הנתונים מוצפנים</li>
+      <li>אין פרסום או מכירת נתונים; הורה יכול למחוק הכל בכל רגע</li>
+    </ul>
+  </div>
+</details>
+
+<!-- ===================== SECTION 7: SKILL MAPPING ===================== -->
+<h2 id="skill-map"><span class="section-icon">🗺️</span> 7. מיפוי מיומנויות</h2>
+
+<details>
+  <summary>הקלדה ← קריאה, כתיבה ואוריינות דיגיטלית</summary>
+  <div class="details-content">
+    <table>
+      <tr><th>מיומנות</th><th>הקשר להקלדה</th><th>מחקר תומך</th></tr>
+      <tr>
+        <td><strong>קריאה</strong></td>
+        <td>הקלדה מחזקת זיהוי אותיות וחיבורי צליל-אות. ילדים שמקלידים מילים לומדים לזהות אותן בקריאה</td>
+        <td>ScienceDirect (2023): הקלדה שיפרה זיהוי מילים אצל ילדים עם דיסלקציה</td>
+      </tr>
+      <tr>
+        <td><strong>כתיבה</strong></td>
+        <td>כשהקלדה הופכת לאוטומטית, המוח פנוי לחשיבה על תוכן. ילדים כותבים יותר ויותר טוב</td>
+        <td>מחקרי EdWeek (2024): תלמידים עם שליטה בהקלדה כתבו חיבורים ארוכים ומורכבים יותר</td>
+      </tr>
+      <tr>
+        <td><strong>אוריינות דיגיטלית</strong></td>
+        <td>הקלדה היא שער הכניסה לכל פעילות דיגיטלית: חיפוש, תכנות, יצירת תוכן</td>
+        <td>משרד החינוך הישראלי: מיומנויות מחשב הן מיומנויות בסיס לכל בוגר יסודי</td>
+      </tr>
+      <tr>
+        <td><strong>שפה עברית</strong></td>
+        <td>תרגול הקלדה מחזק: אותיות סופיות, ניקוד, שימוש נכון באותיות דומות (כ/ק, ט/ת)</td>
+        <td>התמודדות עם אתגרים ייחודיים לעברית</td>
+      </tr>
+    </table>
+  </div>
+</details>
+
+<details>
+  <summary>התאמה לתוכנית הלימודים (משרד החינוך)</summary>
+  <div class="details-content">
+    <p>נינג'ה מקלדת תואמת את מדיניות משרד החינוך בתחום ה-ICT והאוריינות הדיגיטלית:</p>
+    <table>
+      <tr><th>תחום בתוכנית הלימודים</th><th>תרומת נינג'ה מקלדת</th><th>כיתות</th></tr>
+      <tr>
+        <td>אוריינות טכנולוגית</td>
+        <td>שליטה במקלדת, ניווט חלונות, קיצורי דרך</td>
+        <td>ג'-ו'</td>
+      </tr>
+      <tr>
+        <td>אוריינות מידע</td>
+        <td>חיפוש יעיל (Ctrl+F), הקלדה מהירה לחיפוש ברשת</td>
+        <td>ד'-ו'</td>
+      </tr>
+      <tr>
+        <td>שיתוף פעולה דיגיטלי</td>
+        <td>טורנירים כיתתיים, משימות שיתופיות</td>
+        <td>ג'-ו'</td>
+      </tr>
+      <tr>
+        <td>חשיבה חישובית</td>
+        <td>בסיס לתכנות – שליטה במקלדת היא דרישת קדם</td>
+        <td>ה'-ט'</td>
+      </tr>
+      <tr>
+        <td>עברית ואוריינות</td>
+        <td>חיזוק זיהוי אותיות, אותיות סופיות, כתיבה נכונה</td>
+        <td>א'-ו'</td>
+      </tr>
+    </table>
+  </div>
+</details>
+
+<details>
+  <summary>מיומנויות המאה ה-21 ושילוב בתעודה</summary>
+  <div class="details-content">
+    <h4>חיבור למיומנויות המאה ה-21</h4>
+    <table>
+      <tr><th>מיומנות</th><th>איך הקלדה תורמת</th></tr>
+      <tr><td>תקשורת</td><td>יכולת לכתוב מהר = תקשורת דיגיטלית יעילה</td></tr>
+      <tr><td>שיתוף פעולה</td><td>עבודה על מסמכים משותפים דורשת הקלדה מהירה</td></tr>
+      <tr><td>יצירתיות</td><td>כשהקלדה אוטומטית – ניתן להתמקד ביצירת תוכן</td></tr>
+      <tr><td>חשיבה ביקורתית</td><td>חיפוש ומחקר ברשת נסמכים על הקלדה</td></tr>
+      <tr><td>אוריינות דיגיטלית</td><td>מיומנות ליבה – בסיס לכל שאר המיומנויות</td></tr>
+    </table>
+    <h4>שילוב בתעודה</h4>
+    <p>מורים יכולים לשלב את נתוני נינג'ה מקלדת בתעודה ובהערכות:</p>
+    <ul>
+      <li><strong>הערכת מיומנויות מחשב:</strong> ציון WPM ודיוק כחלק מהערכת ICT</li>
+      <li><strong>דוח למידה אישי:</strong> ייצוא PDF עם גרפי התקדמות לתיק אישי</li>
+      <li><strong>הערכה מעצבת:</strong> שימוש בנתונים לתכנון הוראה מותאמת</li>
+    </ul>
+  </div>
+</details>
+
+<!-- ===================== SECTION 8: FAQ ===================== -->
+<h2 id="faq"><span class="section-icon">❓</span> 8. שאלות נפוצות</h2>
+
+<details>
+  <summary>מאיזה גיל אפשר להתחיל?</summary>
+  <div class="details-content">
+    <p>מגיל <strong>6</strong> ניתן להתחיל חשיפה והיכרות עם המקלדת דרך משחקים. הקלדת מגע פורמלית (עם שמירה על אצבעות נכונות) מומלצת מגיל <strong>8</strong> (כיתה ג'), כשהמוטוריקה העדינה מבשילה מספיק. נינג'ה מקלדת מתאימה את עצמה לכל שלב גיל אוטומטית.</p>
+  </div>
+</details>
+
+<details>
+  <summary>כמה זמן לוקח ללמוד הקלדת מגע?</summary>
+  <div class="details-content">
+    <p>עם תרגול יומי של 10-15 דקות:</p>
+    <ul>
+      <li><strong>2-3 שבועות:</strong> שליטה בשורת הבית</li>
+      <li><strong>2-3 חודשים:</strong> היכרות עם כל האותיות</li>
+      <li><strong>4-6 חודשים:</strong> הקלדה שוטפת (15-20 WPM)</li>
+      <li><strong>8-12 חודשים:</strong> שליטה מלאה (30+ WPM)</li>
+    </ul>
+    <p>חשוב: <strong>עקביות</strong> חשובה הרבה יותר ממשך. 10 דקות כל יום > 40 דקות פעמיים בשבוע.</p>
+  </div>
+</details>
+
+<details>
+  <summary>הילד שלי מקליד עם שתי אצבעות ומהר – למה לשנות?</summary>
+  <div class="details-content">
+    <p>הקלדה בשתי אצבעות מגבילה את המהירות ל-15-25 WPM בממוצע. הקלדת מגע מאפשרת 40-80+ WPM. בנוסף:</p>
+    <ul>
+      <li>הקלדת מגע מפחיתה עומס קוגניטיבי – המוח פנוי לחשוב על מה לכתוב</li>
+      <li>פחות עייפות – כל אצבע עובדת פחות</li>
+      <li>פחות טעויות – שרירים "לומדים" את המיקום</li>
+    </ul>
+    <p><strong>חשוב:</strong> המעבר מ-2 אצבעות להקלדת מגע כרוך בירידה זמנית במהירות. זה <em>טבעי</em> ונמשך 2-4 שבועות.</p>
+  </div>
+</details>
+
+<details>
+  <summary>האם המשחק מתאים גם לילדים עם הפרעות קשב (ADHD)?</summary>
+  <div class="details-content">
+    <p>כן! הגיימיפיקציה דווקא מתאימה מאוד לילדים עם הפרעות קשב:</p>
+    <ul>
+      <li><strong>משוב מיידי:</strong> כל מקש נותן תגובה ויזואלית וקולית</li>
+      <li><strong>מפגשים קצרים:</strong> 10-12 דקות – בטווח הקשב</li>
+      <li><strong>גיוון:</strong> חילופי פעילויות – שיעור, משחק, אתגר, סיפור</li>
+      <li><strong>תגמול מיידי:</strong> XP ותגים ניתנים מיד, לא "בסוף השנה"</li>
+    </ul>
+    <p>טיפ: הפעילו "מצב מיקוד" שמסתיר הסחות ומציג רק את המשימה הנוכחית.</p>
+  </div>
+</details>
+
+<details>
+  <summary>הילד רק רוצה לשחק ולא ללמוד – מה עושים?</summary>
+  <div class="details-content">
+    <p>זה סימן טוב! זה אומר שהמשחק עובד. הפתרון הוא לא למנוע משחק, אלא לחבר אותו ללמידה:</p>
+    <ol>
+      <li>הפעלת "שערי התקדמות": חובה להשלים שיעור כדי לפתוח משחק</li>
+      <li>הסבר לילד: "המשחקים מאתגרים יותר ככל שאתה מתקדם בשיעורים"</li>
+      <li>תגים מיוחדים שניתנים רק על השלמת שיעורים</li>
+    </ol>
+  </div>
+</details>
+
+<details>
+  <summary>האם המשחק בטוח לילדים? (פרטיות ותוכן)</summary>
+  <div class="details-content">
+    <ul>
+      <li>תוכן 100% נקי ומותאם לילדים, ללא אלימות או תוכן בוגר</li>
+      <li>אין צ'אט בין שחקנים, אין חשיפה לזרים</li>
+      <li>תאימות COPPA – הסכמת הורה לילדים מתחת ל-13</li>
+      <li>נתונים מוצפנים, אין פרסום, אין מכירת מידע</li>
+      <li>הורה יכול לצפות בכל פעילות ולמחוק נתונים</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary>שאלות טכניות: טאבלט, כאבים, חיבור למורה</summary>
+  <div class="details-content">
+    <p><strong>טאבלט/טלפון:</strong> הקלדת מגע דורשת מקלדת פיזית. טאבלט עם מקלדת חיצונית – אפשרי. אפליקציית ההורה/מורה עובדת מצוין על מובייל.</p>
+    <p><strong>כאבים ביד:</strong> בדרך כלל נובע מארגונומיה לקויה (גובה שולחן/כיסא), לחיצה חזקה מדי, או תרגול ארוך מדי. תקנו ארגונומיה, הגבילו ל-15-20 דקות. אם נמשך – פנו לרופא.</p>
+    <p><strong>חיבור למורה:</strong> אם הילד מחובר לכיתה, תראו שם מורה ובית ספר בלוח ההורים. אם לא – בקשו מהמורה קוד כיתה.</p>
+  </div>
+</details>
+
+<details>
+  <summary>מה ההבדל בין נינג'ה מקלדת לאפליקציות אחרות?</summary>
+  <div class="details-content">
+    <p>עברית כשפה ראשונה (RTL מובנה), 5 נושאים מותאמי-גיל (6-16), 14 דמויות עם עלילה מלאה ב-5 פרקים, מערכת אנטי-תסכול עם קושי אדפטיבי, דשבורד מורה עם קודי כיתה, ותמיכה מלאה בפריסת מקלדת ישראלית כולל אותיות סופיות.</p>
+  </div>
+</details>
+
+<details>
+  <summary>עלויות והורים שלא יודעים להקליד</summary>
+  <div class="details-content">
+    <p><strong>תמחור:</strong> גרסה חינמית (3 שיעורים + 2 משחקים), מנוי אישי (כל התכנים), רישיון כיתתי (דשבורד מורה), ורישיון בית-ספרי (ניהול מרכזי).</p>
+    <p><strong>הורים שלא מקלידים:</strong> לא צריך! המשחק מלמד. תפקיד ההורה: לוודא תרגול קבוע, סביבה נוחה, ועידוד. רוצים בכל זאת? פתחו חשבון מבוגר ותרגלו ביחד.</p>
+  </div>
+</details>
+
+<details>
+  <summary>אנגלית קודם, שיעורי בית, וחופשות</summary>
+  <div class="details-content">
+    <p><strong>כבר מקליד באנגלית?</strong> יתרון (מבין עקרון הקלדת מגע) ואתגר (פריסה שונה לחלוטין). המערכת מזהה מקלידים מנוסים ומציעה מסלול מקוצר.</p>
+    <p><strong>שילוב עם שיעורי בית:</strong> עברית (מילות מילון, חיבורים), מדעים (מושגים, מצגות), מתמטיקה (מספרים וסימנים). כל שיעורי בית דיגיטליים = תרגול הקלדה!</p>
+    <p><strong>חופשות:</strong> ירידה בביצועים אחרי הפסקה טבעית לחלוטין. עודדו 5 דקות ביום בחופשה. המערכת מזהה הפסקה ומתחילה ב"חימום" אוטומטי.</p>
+  </div>
+</details>
+
+<!-- Footer -->
+<div style="margin-top: 60px; padding-top: 24px; border-top: 2px solid var(--border); text-align: center;">
+  <p style="color: var(--text-dim); font-size: 0.9rem;">
+    נינג'ה מקלדת | מדריך פדגוגי מבוסס מחקר
+    <br>
+    גרסה 1.0 | מרץ 2026
+  </p>
+  <p style="color: var(--text-dim); font-size: 0.8rem; margin-top: 12px;">
+    <strong>מקורות מחקר:</strong>
+    EdWeek Research Center (2024) •
+    Frontiers in Psychology (2023) •
+    PMC / ScienceDirect (2023-2025) •
+    Typing.com Grade Level Standards •
+    משרד החינוך – תוכנית ICT לאומית •
+    Kid Sense Child Development •
+    TV Tropes Anti-Frustration Features
+  </p>
+</div>
+
+</body>
+</html>

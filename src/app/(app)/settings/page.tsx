@@ -1,11 +1,13 @@
 'use client'
 
+import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import { Settings, Volume2, Keyboard, Hand, Monitor, Sun, Moon } from 'lucide-react'
+import { Settings, Volume2, Music, Keyboard, Hand, Monitor, Sun, Moon } from 'lucide-react'
 import { useThemeStore } from '@/stores/theme-store'
 import { useSettingsStore } from '@/stores/settings-store'
+import { useMusicStore } from '@/stores/music-store'
 import type { KeyboardLayout, ThemePreference } from '@/stores/settings-store'
 import { themes } from '@/styles/themes'
 import type { AgeName } from '@/types/theme'
@@ -39,6 +41,13 @@ export default function SettingsPage() {
     setKeyboardLayout,
     setThemePreference,
   } = useSettingsStore()
+
+  const musicEnabled = useMusicStore((s) => s.musicEnabled)
+  const musicVolume = useMusicStore((s) => s.musicVolume)
+  const musicMuted = useMusicStore((s) => s.musicMuted)
+  const toggleMusicEnabled = useMusicStore((s) => s.toggleMusicEnabled)
+  const setMusicVolume = useMusicStore((s) => s.setMusicVolume)
+  const toggleMusicMute = useMusicStore((s) => s.toggleMusicMute)
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
@@ -142,6 +151,63 @@ export default function SettingsPage() {
               className="w-full accent-primary disabled:opacity-40"
             />
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Music settings */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-base">
+            <Music className="size-5" />
+            מוזיקה
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-5">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="music-enabled">מוזיקת רקע</Label>
+            <Switch
+              id="music-enabled"
+              checked={musicEnabled}
+              onCheckedChange={toggleMusicEnabled}
+            />
+          </div>
+
+          <div className="flex items-center justify-between">
+            <Label htmlFor="music-muted">השתק מוזיקה</Label>
+            <Switch
+              id="music-muted"
+              checked={musicMuted}
+              onCheckedChange={toggleMusicMute}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <Label htmlFor="music-volume">עוצמת מוזיקה</Label>
+              <span className="text-sm tabular-nums text-muted-foreground">
+                {Math.round(musicVolume * 100)}%
+              </span>
+            </div>
+            <input
+              id="music-volume"
+              type="range"
+              min={0}
+              max={1}
+              step={0.05}
+              value={musicVolume}
+              disabled={!musicEnabled || musicMuted}
+              onChange={(e) => setMusicVolume(Number(e.target.value))}
+              className="w-full accent-primary disabled:opacity-40"
+            />
+          </div>
+
+          <Link
+            href="/jukebox"
+            className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
+          >
+            <Music className="size-4" />
+            {"פתח את הג'וקבוקס"}
+          </Link>
         </CardContent>
       </Card>
 

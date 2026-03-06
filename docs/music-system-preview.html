@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ninja Keyboard - מערכת מוזיקה — תצוגה מקדימה</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #0d0b1a;
+      --bg-card: #12102a;
+      --bg-card2: #1a1735;
+      --bg-card3: #1e1b3a;
+      --border: oklch(0.28 0.06 292);
+      --border-glow: oklch(0.45 0.2 292);
+      --purple: #6C5CE7;
+      --purple-light: #8B7CF8;
+      --purple-dim: rgba(108,92,231,0.15);
+      --green: #00B894;
+      --green-light: #00d4a4;
+      --yellow: #FDCB6E;
+      --orange: #E17055;
+      --red: #D63031;
+      --cyan: #00CEC9;
+      --pink: #fd79a8;
+      --text: #e8e3ff;
+      --text-muted: #9990cc;
+      --text-dim: #554f88;
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg-base);
+      color: var(--text);
+      line-height: 1.7;
+      direction: rtl;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13, 11, 26, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      height: 52px;
+    }
+    nav::-webkit-scrollbar { display: none; }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    nav a:hover { color: var(--text); background: var(--bg-card2); }
+    nav .nav-logo {
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--purple-light);
+      margin-left: 1.5rem;
+      white-space: nowrap;
+    }
+
+    .hero {
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(108,92,231,0.15) 0%, transparent 70%);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(0,184,148,0.15);
+      border: 1px solid rgba(0,184,148,0.4);
+      border-radius: 999px;
+      padding: 0.3rem 1rem;
+      font-size: 0.75rem;
+      color: var(--green-light);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, #fff 0%, var(--purple-light) 50%, var(--green) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto 2rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: 4rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    section:last-of-type { border-bottom: none; }
+
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-sub {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      max-width: 700px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .card:hover { border-color: var(--border-glow); }
+    .card-title {
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+    }
+    .card-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    th {
+      text-align: right;
+      padding: 0.75rem 1rem;
+      background: var(--bg-card2);
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(108,92,231,0.04); }
+
+    .table-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .info-box {
+      background: rgba(108,92,231,0.08);
+      border: 1px solid rgba(108,92,231,0.25);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .info-box-title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--purple-light);
+    }
+    .info-box p, .info-box li {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .info-box ul, .info-box ol { padding-right: 1.25rem; }
+    .info-box li { margin-bottom: 0.25rem; }
+
+    .success-box {
+      background: rgba(0,184,148,0.08);
+      border: 1px solid rgba(0,184,148,0.25);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--green-light);
+    }
+
+    code {
+      background: var(--bg-card3);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      color: var(--purple-light);
+      font-family: 'Courier New', monospace;
+    }
+
+    .prompt-box {
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      margin-top: 0.75rem;
+    }
+    .prompt-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--purple-light);
+      margin-bottom: 0.4rem;
+      font-weight: 700;
+    }
+    .prompt-code {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'Courier New', monospace;
+      line-height: 1.5;
+      direction: ltr;
+      text-align: left;
+      white-space: pre-wrap;
+    }
+
+    .arch-diagram {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      margin-bottom: 1.5rem;
+    }
+    .arch-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .arch-box {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.5rem 1rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-align: center;
+      min-width: 110px;
+    }
+    .arch-box.main { background: var(--purple-dim); color: var(--purple-light); border-color: rgba(108,92,231,0.4); }
+    .arch-box.music { background: rgba(0,184,148,0.12); color: var(--green-light); border-color: rgba(0,184,148,0.3); }
+    .arch-box.stinger { background: rgba(253,203,110,0.12); color: var(--yellow); border-color: rgba(253,203,110,0.3); }
+    .arch-box.sfx { background: rgba(0,206,201,0.12); color: var(--cyan); border-color: rgba(0,206,201,0.3); }
+    .arch-box.store { background: rgba(225,112,85,0.12); color: var(--orange); border-color: rgba(225,112,85,0.3); }
+    .arch-connector {
+      color: var(--text-dim);
+      font-size: 1.2rem;
+      font-weight: 900;
+    }
+
+    .tag {
+      font-size: 0.68rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-weight: 600;
+      display: inline-block;
+    }
+    .tag-green { background: rgba(0,184,148,0.2); color: var(--green); border: 1px solid rgba(0,184,148,0.4); }
+    .tag-purple { background: rgba(108,92,231,0.2); color: var(--purple-light); border: 1px solid rgba(108,92,231,0.3); }
+    .tag-yellow { background: rgba(253,203,110,0.15); color: var(--yellow); border: 1px solid rgba(253,203,110,0.3); }
+
+    /* Jukebox mockup */
+    .jukebox-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 0.75rem;
+    }
+    .jukebox-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      transition: border-color 0.2s;
+    }
+    .jukebox-card:hover { border-color: var(--border-glow); }
+    .jukebox-card.locked { opacity: 0.55; }
+    .jukebox-card.playing { border-color: var(--green); box-shadow: 0 0 12px rgba(0,184,148,0.3); }
+    .jukebox-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .jukebox-title { font-weight: 700; font-size: 0.88rem; }
+    .jukebox-genre { font-size: 0.7rem; color: var(--text-muted); }
+    .jukebox-play {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: 0.15s;
+    }
+    .jukebox-play.unlocked { background: var(--bg-card3); color: var(--text); }
+    .jukebox-play.unlocked:hover { background: var(--purple); color: white; }
+    .jukebox-play.playing-btn { background: var(--green); color: black; }
+    .jukebox-play.locked-btn { background: var(--bg-card2); color: var(--text-dim); cursor: default; }
+    .jukebox-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+    }
+    .jukebox-hint {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .progress-bar-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .progress-bar-outer {
+      height: 10px;
+      border-radius: 5px;
+      background: var(--bg-card3);
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+    .progress-bar-inner {
+      height: 100%;
+      border-radius: 5px;
+      background: linear-gradient(90deg, var(--purple), var(--green));
+      width: 35%;
+    }
+
+    .file-tree {
+      font-family: 'Courier New', monospace;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      direction: ltr;
+      text-align: left;
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 0.75rem;
+    }
+    .file-tree .highlight { color: var(--green-light); font-weight: 700; }
+    .file-tree .new { color: var(--purple-light); }
+
+    @media (max-width: 640px) {
+      section { padding: 2.5rem 1rem; }
+      .card-grid, .card-grid-3, .jukebox-grid { grid-template-columns: 1fr; }
+      .hero { padding: 3rem 1rem 2rem; }
+      nav { padding: 0 1rem; }
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">🎶 מערכת מוזיקה — תצוגה מקדימה</span>
+  <a href="#architecture">ארכיטקטורה</a>
+  <a href="#zone-map">מפת זירות</a>
+  <a href="#files">קבצים חדשים</a>
+  <a href="#crossfade">Crossfade</a>
+  <a href="#jukebox-preview">ג'וקבוקס</a>
+  <a href="#holiday-override">חגים</a>
+  <a href="#code">דוגמאות קוד</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">מימוש — מרץ 2026</div>
+  <h1>מערכת מוזיקה — Music Manager</h1>
+  <p>Web Audio API, Zustand, crossfade בין זירות, מערכת ג'וקבוקס עם ביטול נעילה, תמיכה בחגי ישראל, ושילוב מלא עם ה-SFX הקיים.</p>
+</div>
+
+<!-- ===== ARCHITECTURE ===== -->
+<section id="architecture">
+  <div class="container">
+    <div class="section-title">🏗️ ארכיטקטורה</div>
+    <div class="section-sub">שלוש שכבות אודיו נפרדות, Web Audio API, ו-Zustand לניהול מצב.</div>
+
+    <div class="arch-diagram">
+      <div style="text-align: center; font-weight: 800; font-size: 0.85rem; color: var(--purple-light); margin-bottom: 0.5rem;">Audio Graph — Web Audio API</div>
+
+      <div class="arch-row" style="justify-content: center;">
+        <div class="arch-box main">AudioContext</div>
+      </div>
+
+      <div class="arch-row" style="justify-content: center;">
+        <span class="arch-connector">|</span>
+      </div>
+
+      <div class="arch-row" style="justify-content: center;">
+        <div class="arch-box main">masterGain<br><small>Volume + Mute</small></div>
+      </div>
+
+      <div class="arch-row" style="justify-content: center;">
+        <span class="arch-connector">|</span>
+        <span style="width: 80px;"></span>
+        <span class="arch-connector">|</span>
+      </div>
+
+      <div class="arch-row" style="justify-content: center; gap: 2rem;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+          <div class="arch-box music">musicGain<br><small>שכבה 1 — רקע</small></div>
+          <div class="arch-row" style="gap: 0.5rem;">
+            <div class="arch-box music" style="min-width: 90px;">sourceA<br><small>רצועה נוכחית</small></div>
+            <div class="arch-box music" style="min-width: 90px;">sourceB<br><small>crossfade</small></div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+          <div class="arch-box stinger">stingerGain<br><small>שכבה 2 — ג'ינגלים</small></div>
+          <div class="arch-box stinger" style="min-width: 90px;">stinger source<br><small>one-shot</small></div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 1rem;">
+        <div class="arch-box sfx" style="display: inline-block;">SFX (sound-manager.ts)<br><small>שכבה 3 — אפקטים קוליים (נפרד)</small></div>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title" style="color: var(--green);">שכבה 1 — Background Music</div>
+        <ul style="font-size: 0.82rem; color: var(--text-muted); padding-right: 1.25rem; line-height: 2;">
+          <li>רצועת רקע אחת בכל רגע, loop אינסופי</li>
+          <li>Crossfade חלק (equal-power, 1.5 שניות) בין זירות</li>
+          <li>Pre-load — רצועת היעד נטענת מראש</li>
+          <li>Buffer cache — כל רצועה נטענת פעם אחת בלבד</li>
+          <li>Volume ducking כשג'ינגל מתנגן</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="color: var(--yellow);">שכבה 2 — Stingers / ג'ינגלים</div>
+        <ul style="font-size: 0.82rem; color: var(--text-muted); padding-right: 1.25rem; line-height: 2;">
+          <li>Victory, Level Up, Character Unlock, Achievement</li>
+          <li>מתנגנים מעל הרקע בלי לעצור אותו</li>
+          <li>Volume duck אוטומטי — הרקע יורד ל-30%</li>
+          <li>שחזור Volume חלק אחרי שהג'ינגל נגמר</li>
+          <li>8 stingers מוגדרים מראש, ניתן להוסיף</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="color: var(--cyan);">שכבה 3 — SFX (קיים)</div>
+        <ul style="font-size: 0.82rem; color: var(--text-muted); padding-right: 1.25rem; line-height: 2;">
+          <li>16 אפקטים קוליים מ-sound-manager.ts</li>
+          <li>ערוץ נפרד לחלוטין מהמוזיקה</li>
+          <li>Volume נשלט דרך settings-store (soundVolume)</li>
+          <li>MP3 preload + Web Audio synthesis fallback</li>
+          <li>ללא שינוי — עובד כמו שהוא</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info-box" style="margin-top: 1rem;">
+      <div class="info-box-title">State Management — Zustand</div>
+      <ul>
+        <li><strong>music-store.ts</strong> — currentZone, musicVolume, musicMuted, musicEnabled, unlockedTracks, zoneOverrides, activeHoliday</li>
+        <li><strong>settings-store.ts</strong> — soundVolume, soundEnabled (SFX — כבר קיים, ללא שינוי)</li>
+        <li><strong>Persist:</strong> Volume, mute, unlocked tracks, zone overrides נשמרים ב-localStorage</li>
+        <li><strong>הפרדה מלאה:</strong> Music ≠ SFX. שני ערוצי volume עצמאיים.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ZONE MAP ===== -->
+<section id="zone-map">
+  <div class="container">
+    <div class="section-title">🗺️ מפת זירות-לרצועות</div>
+    <div class="section-sub">כל נתיב באפליקציה ממופה לזירה, כל זירה ממופה לרצועה.</div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>זירה (GameZone)</th>
+            <th>נתיב (Route)</th>
+            <th>רצועת ברירת מחדל</th>
+            <th>סגנון</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>home</code></td>
+            <td>/home</td>
+            <td>main-theme.mp3</td>
+            <td><span class="tag tag-green">Chiptune</span></td>
+          </tr>
+          <tr>
+            <td><code>lessons-easy</code></td>
+            <td>/lessons, /practice</td>
+            <td>practice-easy.mp3</td>
+            <td><span class="tag tag-green">Lo-fi Hip Hop</span></td>
+          </tr>
+          <tr>
+            <td><code>lessons-medium</code></td>
+            <td>(difficulty switch)</td>
+            <td>practice-medium.mp3</td>
+            <td><span class="tag tag-purple">Indie Electronic</span></td>
+          </tr>
+          <tr>
+            <td><code>lessons-hard</code></td>
+            <td>(difficulty switch)</td>
+            <td>practice-hard.mp3</td>
+            <td><span class="tag tag-yellow">D&amp;B / Techno</span></td>
+          </tr>
+          <tr>
+            <td><code>battle-arena</code></td>
+            <td>/battle</td>
+            <td>battle-arena.mp3</td>
+            <td><span class="tag tag-green">Chiptune Battle</span></td>
+          </tr>
+          <tr>
+            <td><code>speed-test</code></td>
+            <td>/speed-test, /speed</td>
+            <td>speed-test.mp3</td>
+            <td><span class="tag tag-yellow">EDM / Dubstep</span></td>
+          </tr>
+          <tr>
+            <td><code>games-hub</code></td>
+            <td>/games</td>
+            <td>games-hub.mp3</td>
+            <td><span class="tag tag-green">Chiptune</span></td>
+          </tr>
+          <tr>
+            <td><code>profile</code></td>
+            <td>/profile, /progress</td>
+            <td>profile.mp3</td>
+            <td><span class="tag tag-purple">Ambient</span></td>
+          </tr>
+          <tr>
+            <td><code>story-mode</code></td>
+            <td>/story</td>
+            <td>story-mode.mp3</td>
+            <td><span class="tag tag-yellow">Cinematic</span></td>
+          </tr>
+          <tr>
+            <td><code>boss-battle</code></td>
+            <td>(battle context)</td>
+            <td>boss-battle.mp3</td>
+            <td><span class="tag tag-purple">Orchestral Epic</span></td>
+          </tr>
+          <tr>
+            <td><code>boss-battle-final</code></td>
+            <td>(battle context)</td>
+            <td>boss-battle-final.mp3</td>
+            <td><span class="tag tag-yellow">Orchestral + Glitch</span></td>
+          </tr>
+          <tr>
+            <td><code>menu</code></td>
+            <td>/settings, /jukebox</td>
+            <td>main-theme.mp3</td>
+            <td><span class="tag tag-green">Chiptune</span></td>
+          </tr>
+          <tr>
+            <td><code>victory</code></td>
+            <td>(event trigger)</td>
+            <td>victory-fanfare.mp3</td>
+            <td><span class="tag tag-green">Brass / Chiptune</span></td>
+          </tr>
+          <tr>
+            <td><code>defeat</code></td>
+            <td>(event trigger)</td>
+            <td>defeat.mp3</td>
+            <td><span class="tag tag-purple">Somber</span></td>
+          </tr>
+          <tr>
+            <td><code>loading</code></td>
+            <td>(loading state)</td>
+            <td>loading.mp3</td>
+            <td><span class="tag tag-purple">Ambient</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="success-box">
+      <strong>ניתוב אוטומטי:</strong> ה-MusicProvider מפענח את הנתיב הנוכחי (<code>usePathname</code>) ומתרגם אותו לזירה. ברגע שהנתיב משתנה, המוזיקה עושה crossfade חלק לרצועה של הזירה החדשה.
+    </div>
+  </div>
+</section>
+
+<!-- ===== FILES ===== -->
+<section id="files">
+  <div class="container">
+    <div class="section-title">📁 קבצים חדשים</div>
+    <div class="section-sub">4 קבצים חדשים שנוספו למערכת, ללא שינוי בקוד קיים.</div>
+
+    <div class="file-tree">
+src/
+├── lib/
+│   └── audio/
+│       ├── sound-manager.ts      <span style="color:var(--text-dim);">// קיים — SFX, ללא שינוי</span>
+│       ├── sounds.ts             <span style="color:var(--text-dim);">// קיים — Web Audio configs</span>
+│       └── <span class="new">music-manager.ts</span>      <span class="highlight">// חדש! MusicManager class</span>
+├── stores/
+│   ├── settings-store.ts         <span style="color:var(--text-dim);">// קיים — SFX settings</span>
+│   └── <span class="new">music-store.ts</span>            <span class="highlight">// חדש! Music state + unlock conditions</span>
+└── components/
+    └── audio/
+        ├── <span class="new">music-provider.tsx</span>     <span class="highlight">// חדש! Provider + route-to-zone mapping</span>
+        └── <span class="new">jukebox.tsx</span>            <span class="highlight">// חדש! Jukebox UI component</span>
+    </div>
+
+    <div class="card-grid" style="margin-top: 1.5rem;">
+      <div class="card">
+        <div class="card-title" style="color: var(--green);">music-manager.ts</div>
+        <ul style="font-size: 0.82rem; color: var(--text-muted); padding-right: 1.25rem; line-height: 2;">
+          <li>~450 שורות TypeScript strict</li>
+          <li>Web Audio API: AudioContext, GainNode, AudioBufferSourceNode</li>
+          <li>Crossfade equal-power curve (1.5s configurable)</li>
+          <li>Buffer cache + dedup loading promises</li>
+          <li>Autoplay restriction handling</li>
+          <li>Stinger ducking (30% volume duck)</li>
+          <li>Zone overrides + holiday overrides</li>
+          <li>Silent fallback — אם קובץ לא קיים, אין שגיאה</li>
+          <li>Singleton pattern (musicManager export)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="color: var(--purple-light);">music-store.ts</div>
+        <ul style="font-size: 0.82rem; color: var(--text-muted); padding-right: 1.25rem; line-height: 2;">
+          <li>Zustand + persist middleware</li>
+          <li>17 unlock conditions (free, badge, wpm, accuracy, lessons, battle-win, level)</li>
+          <li>7 free tracks available from start</li>
+          <li>Zone overrides map (for jukebox customization)</li>
+          <li>Holiday override state</li>
+          <li>Persists: volume, mute, unlocked tracks, overrides</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="color: var(--yellow);">music-provider.tsx</div>
+        <ul style="font-size: 0.82rem; color: var(--text-muted); padding-right: 1.25rem; line-height: 2;">
+          <li>React Context provider</li>
+          <li>Route-to-zone mapping (12 route prefixes)</li>
+          <li>Syncs Zustand store ↔ MusicManager</li>
+          <li>Auto-play zone music on route change</li>
+          <li>Preloads adjacent zone tracks</li>
+          <li>useMusic() hook for child components</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="color: var(--cyan);">jukebox.tsx</div>
+        <ul style="font-size: 0.82rem; color: var(--text-muted); padding-right: 1.25rem; line-height: 2;">
+          <li>Collection progress bar (X/48 רצועות)</li>
+          <li>Category filter tabs (הכל, משחק, קרבות, דמויות, אירועים)</li>
+          <li>Track cards with play/pause + lock status</li>
+          <li>Zone selector for music override</li>
+          <li>RTL, Hebrew labels, game-card design</li>
+          <li>Responsive grid layout</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CROSSFADE ===== -->
+<section id="crossfade">
+  <div class="container">
+    <div class="section-title">🔀 Crossfade בין זירות</div>
+    <div class="section-sub">מעבר חלק בין רצועות כשהשחקן עובר בין מסכים.</div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title" style="color: var(--green);">Equal-Power Crossfade</div>
+        <ul style="font-size: 0.82rem; color: var(--text-muted); padding-right: 1.25rem; line-height: 2;">
+          <li><strong>משך:</strong> 1.5 שניות (configurable)</li>
+          <li><strong>עקומה:</strong> linearRamp — fade out ישן + fade in חדש</li>
+          <li><strong>Buffer:</strong> הרצועה החדשה נטענת מראש (preload)</li>
+          <li><strong>דה-דופליקציה:</strong> אם אותה זירה — skip</li>
+          <li><strong>ניקוי:</strong> source ישן מתנתק אחרי fade + 100ms</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="color: var(--yellow);">Stinger Ducking</div>
+        <ul style="font-size: 0.82rem; color: var(--text-muted); padding-right: 1.25rem; line-height: 2;">
+          <li><strong>Duck level:</strong> musicGain יורד ל-30%</li>
+          <li><strong>Fade time:</strong> 0.4 שניות (חלק, לא חד)</li>
+          <li><strong>שחזור:</strong> אוטומטי כשהג'ינגל נגמר</li>
+          <li><strong>דוגמה:</strong> Victory fanfare → רקע יורד → fanfare נגמר → רקע חוזר</li>
+          <li><strong>כפילות:</strong> אם 2 stingers רצים, duck נשמר עד שהאחרון נגמר</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="prompt-box">
+      <div class="prompt-label">Crossfade Implementation</div>
+      <div class="prompt-code">// Equal-power crossfade between zones
+const fadeDuration = 1.5; // seconds
+const now = audioContext.currentTime;
+
+// Fade out current track
+currentGain.gain.setValueAtTime(currentGain.gain.value, now);
+currentGain.gain.linearRampToValueAtTime(0, now + fadeDuration);
+
+// Fade in new track
+newGain.gain.setValueAtTime(0, now);
+newGain.gain.linearRampToValueAtTime(1, now + fadeDuration);
+
+// Stop old source after fade completes
+currentSource.stop(now + fadeDuration + 0.1);
+
+// New source starts immediately (already loaded via preload)
+newSource.start(0);</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== JUKEBOX PREVIEW ===== -->
+<section id="jukebox-preview">
+  <div class="container">
+    <div class="section-title">🎮 ג'וקבוקס — Mockup</div>
+    <div class="section-sub">איך הג'וקבוקס ייראה בתוך המשחק. Collection progress, קטגוריות, וכרטיסי רצועות.</div>
+
+    <!-- Progress bar mockup -->
+    <div class="progress-bar-wrap">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 1.2rem;">🎵</span>
+          <span style="font-weight: 700; font-size: 0.88rem;">אוסף המוזיקה שלי</span>
+        </div>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">7/17 רצועות נאספו</span>
+      </div>
+      <div class="progress-bar-outer">
+        <div class="progress-bar-inner" style="width: 41%;"></div>
+      </div>
+    </div>
+
+    <!-- Category tabs mockup -->
+    <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+      <span style="padding: 0.4rem 1rem; background: var(--purple); color: white; border-radius: 8px; font-size: 0.78rem; font-weight: 700;">הכל</span>
+      <span style="padding: 0.4rem 1rem; background: var(--bg-card3); color: var(--text-muted); border-radius: 8px; font-size: 0.78rem; font-weight: 600;">משחק</span>
+      <span style="padding: 0.4rem 1rem; background: var(--bg-card3); color: var(--text-muted); border-radius: 8px; font-size: 0.78rem; font-weight: 600;">קרבות</span>
+      <span style="padding: 0.4rem 1rem; background: var(--bg-card3); color: var(--text-muted); border-radius: 8px; font-size: 0.78rem; font-weight: 600;">דמויות</span>
+      <span style="padding: 0.4rem 1rem; background: var(--bg-card3); color: var(--text-muted); border-radius: 8px; font-size: 0.78rem; font-weight: 600;">אירועים</span>
+    </div>
+
+    <!-- Track cards mockup -->
+    <div class="jukebox-grid">
+      <!-- Unlocked, playing -->
+      <div class="jukebox-card playing">
+        <div class="jukebox-header">
+          <div>
+            <div class="jukebox-title">🔓 תרגול רגוע</div>
+            <div class="jukebox-genre">Lo-fi Hip Hop</div>
+          </div>
+          <button class="jukebox-play playing-btn">⏸</button>
+        </div>
+        <div class="jukebox-meta">
+          <span>PLAY-001</span>
+          <span>לולאה</span>
+        </div>
+      </div>
+
+      <!-- Unlocked -->
+      <div class="jukebox-card">
+        <div class="jukebox-header">
+          <div>
+            <div class="jukebox-title">🔓 פנפרת ניצחון</div>
+            <div class="jukebox-genre">Brass / Chiptune</div>
+          </div>
+          <button class="jukebox-play unlocked">▶</button>
+        </div>
+        <div class="jukebox-meta">
+          <span>EVENT-001</span>
+          <span>8 שניות</span>
+        </div>
+      </div>
+
+      <!-- Unlocked -->
+      <div class="jukebox-card">
+        <div class="jukebox-header">
+          <div>
+            <div class="jukebox-title">🔓 תמה ראשית</div>
+            <div class="jukebox-genre">Chiptune</div>
+          </div>
+          <button class="jukebox-play unlocked">▶</button>
+        </div>
+        <div class="jukebox-meta">
+          <span>MENU-001</span>
+          <span>לולאה</span>
+        </div>
+      </div>
+
+      <!-- Locked -->
+      <div class="jukebox-card locked">
+        <div class="jukebox-header">
+          <div>
+            <div class="jukebox-title">🔒 ???</div>
+            <div class="jukebox-genre">Chiptune Battle</div>
+          </div>
+          <button class="jukebox-play locked-btn">🔒</button>
+        </div>
+        <div class="jukebox-meta">
+          <span>BATTLE-002</span>
+          <span>לולאה</span>
+        </div>
+        <div class="jukebox-hint">🔒 נצח את שאדו קאט</div>
+      </div>
+
+      <!-- Locked -->
+      <div class="jukebox-card locked">
+        <div class="jukebox-header">
+          <div>
+            <div class="jukebox-title">🔒 ???</div>
+            <div class="jukebox-genre">EDM / Dubstep</div>
+          </div>
+          <button class="jukebox-play locked-btn">🔒</button>
+        </div>
+        <div class="jukebox-meta">
+          <span>PLAY-004</span>
+          <span>לולאה</span>
+        </div>
+        <div class="jukebox-hint">🔒 השג 40 WPM</div>
+      </div>
+
+      <!-- Locked -->
+      <div class="jukebox-card locked">
+        <div class="jukebox-header">
+          <div>
+            <div class="jukebox-title">🔒 ???</div>
+            <div class="jukebox-genre">Orchestral Epic</div>
+          </div>
+          <button class="jukebox-play locked-btn">🔒</button>
+        </div>
+        <div class="jukebox-meta">
+          <span>BOSS-001</span>
+          <span>לולאה</span>
+        </div>
+        <div class="jukebox-hint">🔒 הגע לקרב בוס ראשון</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOLIDAY OVERRIDE ===== -->
+<section id="holiday-override">
+  <div class="container">
+    <div class="section-title">🕎 מוזיקת חגים — Override</div>
+    <div class="section-sub">בזמן חגי ישראל, זירות הבית והתפריט מחליפות מוזיקה אוטומטית.</div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>חג</th>
+            <th>קובץ</th>
+            <th>זירות מושפעות</th>
+            <th>סגנון</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🕎 חנוכה</td>
+            <td><code>holidays/hanukkah-theme.mp3</code></td>
+            <td>home, menu</td>
+            <td>Klezmer + Chiptune</td>
+          </tr>
+          <tr>
+            <td>🎭 פורים</td>
+            <td><code>holidays/purim-theme.mp3</code></td>
+            <td>home, menu</td>
+            <td>Carnival Party</td>
+          </tr>
+          <tr>
+            <td>🍷 פסח</td>
+            <td><code>holidays/pesach-theme.mp3</code></td>
+            <td>home, menu</td>
+            <td>Orchestral Liberation</td>
+          </tr>
+          <tr>
+            <td>🇮🇱 יום העצמאות</td>
+            <td><code>holidays/yom-haatzmaut-theme.mp3</code></td>
+            <td>home, menu</td>
+            <td>Israeli Pop-Rock</td>
+          </tr>
+          <tr>
+            <td>🍎 ראש השנה</td>
+            <td><code>holidays/rosh-hashana-theme.mp3</code></td>
+            <td>home, menu</td>
+            <td>Majestic + Shofar</td>
+          </tr>
+          <tr>
+            <td>🌿 סוכות</td>
+            <td><code>holidays/sukkot-theme.mp3</code></td>
+            <td>home, menu</td>
+            <td>Acoustic Folk</td>
+          </tr>
+          <tr>
+            <td>📜 שבועות</td>
+            <td><code>holidays/shavuot-theme.mp3</code></td>
+            <td>home, menu</td>
+            <td>Ethereal Ambient</td>
+          </tr>
+          <tr>
+            <td>🔥 ל"ג בעומר</td>
+            <td><code>holidays/lag-baomer-theme.mp3</code></td>
+            <td>home, menu</td>
+            <td>Tribal Drums</td>
+          </tr>
+          <tr>
+            <td>🌳 ט"ו בשבט</td>
+            <td><code>holidays/tu-bishvat-theme.mp3</code></td>
+            <td>home, menu</td>
+            <td>Nature Ambient</td>
+          </tr>
+          <tr>
+            <td>😔 יום הזיכרון</td>
+            <td><code>holidays/yom-hazikaron-theme.mp3</code></td>
+            <td>home, menu</td>
+            <td>Solemn Piano</td>
+          </tr>
+          <tr>
+            <td>🕯️ יום השואה</td>
+            <td><code>holidays/yom-hashoah-theme.mp3</code></td>
+            <td>home, menu</td>
+            <td>Solo Violin</td>
+          </tr>
+          <tr>
+            <td>🎊 שמחת תורה</td>
+            <td><code>holidays/simchat-torah-theme.mp3</code></td>
+            <td>home, menu</td>
+            <td>Klezmer Dance</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-box">
+      <div class="info-box-title">הערה: זירות gameplay לא מושפעות</div>
+      <p>מוזיקת חגים מחליפה רק את זירות <code>home</code> ו-<code>menu</code>. זירות משחק (שיעורים, קרבות, מבחנים) נשארות עם הרצועות הרגילות — כי שחקן לא צריך לשמוע klezmer באמצע מבחן מהירות.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CODE EXAMPLES ===== -->
+<section id="code">
+  <div class="container">
+    <div class="section-title">💻 דוגמאות קוד</div>
+    <div class="section-sub">איך להשתמש במערכת המוזיקה מתוך קומפוננטות React.</div>
+
+    <div class="card">
+      <div class="card-title" style="color: var(--green);">שימוש בסיסי — useMusic hook</div>
+      <div class="prompt-box">
+        <div class="prompt-label">Component example</div>
+        <div class="prompt-code">import { useMusic } from '@/components/audio/music-provider'
+
+function BattleScreen() {
+  const { playZone, playStinger, stopAll } = useMusic()
+
+  // Switch to battle music
+  const startBattle = () => {
+    playZone('battle-arena')
+  }
+
+  // Play victory jingle (ducks background automatically)
+  const onVictory = () => {
+    playStinger('victory-fanfare')
+  }
+
+  // Stop all music
+  const onExit = () => {
+    stopAll()
+  }
+
+  return (
+    &lt;div&gt;
+      &lt;button onClick={startBattle}&gt;התחל קרב&lt;/button&gt;
+      &lt;button onClick={onVictory}&gt;ניצחון!&lt;/button&gt;
+      &lt;button onClick={onExit}&gt;יציאה&lt;/button&gt;
+    &lt;/div&gt;
+  )
+}</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 1rem;">
+      <div class="card-title" style="color: var(--purple-light);">Volume controls</div>
+      <div class="prompt-box">
+        <div class="prompt-label">Settings component</div>
+        <div class="prompt-code">import { useMusicStore } from '@/stores/music-store'
+
+function MusicSettings() {
+  const volume = useMusicStore((s) => s.musicVolume)
+  const muted = useMusicStore((s) => s.musicMuted)
+  const enabled = useMusicStore((s) => s.musicEnabled)
+  const setVolume = useMusicStore((s) => s.setMusicVolume)
+  const toggleMute = useMusicStore((s) => s.toggleMusicMute)
+  const toggleEnabled = useMusicStore((s) => s.toggleMusicEnabled)
+
+  return (
+    &lt;div&gt;
+      &lt;label&gt;
+        &lt;input type="checkbox" checked={enabled}
+               onChange={toggleEnabled} /&gt;
+        מוזיקה מופעלת
+      &lt;/label&gt;
+      &lt;label&gt;
+        &lt;input type="checkbox" checked={muted}
+               onChange={toggleMute} /&gt;
+        השתקת מוזיקה
+      &lt;/label&gt;
+      &lt;input type="range" min={0} max={1} step={0.05}
+             value={volume}
+             onChange={(e) => setVolume(Number(e.target.value))} /&gt;
+    &lt;/div&gt;
+  )
+}</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 1rem;">
+      <div class="card-title" style="color: var(--yellow);">Holiday override</div>
+      <div class="prompt-box">
+        <div class="prompt-label">Holiday detection integration</div>
+        <div class="prompt-code">import { useMusicStore } from '@/stores/music-store'
+import type { HebrewHoliday } from '@/lib/audio/music-manager'
+
+// In your holiday detection system:
+function useHolidayMusic(holiday: HebrewHoliday | null) {
+  const setActiveHoliday = useMusicStore((s) => s.setActiveHoliday)
+
+  useEffect(() => {
+    setActiveHoliday(holiday)
+    return () => setActiveHoliday(null)
+  }, [holiday, setActiveHoliday])
+}</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 1rem;">
+      <div class="card-title" style="color: var(--cyan);">Integration with AppProviders</div>
+      <div class="prompt-box">
+        <div class="prompt-label">app-providers.tsx — add MusicProvider</div>
+        <div class="prompt-code">import { MusicProvider } from '@/components/audio/music-provider'
+
+export function AppProviders({ children }) {
+  useEffect(() => {
+    soundManager.preload()
+  }, [])
+
+  return (
+    &lt;ThemeProvider&gt;
+      &lt;MusicProvider&gt;
+        {children}
+      &lt;/MusicProvider&gt;
+      &lt;Toaster position="top-center" dir="rtl" richColors /&gt;
+    &lt;/ThemeProvider&gt;
+  )
+}</div>
+      </div>
+    </div>
+
+    <div class="success-box" style="margin-top: 1.5rem;">
+      <strong>Next step:</strong> הוסף את <code>&lt;MusicProvider&gt;</code> ל-AppProviders, צור קבצי MP3 (או השאר placeholder paths), והמערכת תעבוד. קבצים חסרים יטופלו בשקט (silent fallback).
+    </div>
+  </div>
+</section>
+
+<div style="text-align: center; padding: 3rem 2rem; color: var(--text-dim); font-size: 0.78rem;">
+  Ninja Keyboard Music System — מרץ 2026 — Web Audio API + Zustand
+</div>
+
+</body>
+</html>

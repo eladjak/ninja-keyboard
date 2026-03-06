@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Buttons Preview - Ninja Keyboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&family=Assistant:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0b1a;
+    --bg2: #13102a;
+    --bg3: #1a1735;
+    --primary: #6C5CE7;
+    --primary-light: #8B7EF8;
+    --primary-dark: #4a3cb0;
+    --secondary: #00B894;
+    --secondary-light: #00d4a8;
+    --secondary-dark: #007d65;
+    --danger: #E17055;
+    --danger-light: #fd7979;
+    --danger-dark: #c0392b;
+    --warning: #FDCB6E;
+    --warning-light: #FFEAA7;
+    --warning-dark: #d4a017;
+    --text: #e8e6f0;
+    --text-muted: #9990bb;
+    --border: #2a2550;
+    --card: #16132e;
+    --card2: #1e1a3d;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    direction: rtl;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ───────────────────────────────────────────── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,11,26,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 1rem;
+    height: 56px;
+  }
+  nav .brand {
+    font-weight: 900; font-size: 1rem;
+    background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-left: auto; flex-shrink: 0;
+  }
+  nav a {
+    color: var(--text-muted); text-decoration: none; font-size: 0.82rem;
+    font-weight: 500; white-space: nowrap; padding: 0.35rem 0.75rem;
+    border-radius: 6px; transition: all 0.15s;
+  }
+  nav a:hover { color: var(--primary-light); background: rgba(108,92,231,0.12); }
+
+  /* ── HERO ──────────────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 50%, rgba(108,92,231,0.08) 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 2rem 2.5rem; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(108,92,231,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-size: clamp(1.6rem, 4vw, 2.5rem); font-weight: 900;
+    background: linear-gradient(135deg, #fff 0%, var(--primary-light) 50%, var(--secondary) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 0.75rem;
+  }
+  .hero p { color: var(--text-muted); font-size: 1rem; max-width: 600px; margin: 0 auto; }
+
+  /* ── MAIN ──────────────────────────────────────────── */
+  main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  section { margin-bottom: 3rem; }
+
+  /* ── SECTION HEADERS ───────────────────────────────── */
+  .section-header {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .section-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; flex-shrink: 0;
+  }
+  .section-icon.purple { background: rgba(108,92,231,0.2); border: 1px solid rgba(108,92,231,0.4); }
+  .section-icon.green  { background: rgba(0,184,148,0.2);  border: 1px solid rgba(0,184,148,0.4); }
+  .section-icon.orange { background: rgba(225,112,85,0.2);  border: 1px solid rgba(225,112,85,0.4); }
+  .section-icon.yellow { background: rgba(253,203,110,0.2); border: 1px solid rgba(253,203,110,0.4); }
+  .section-title h2 { font-size: 1.3rem; font-weight: 700; }
+  .section-title p { color: var(--text-muted); font-size: 0.82rem; margin-top: 0.15rem; }
+
+  /* ── SHOWCASE AREA ─────────────────────────────────── */
+  .showcase {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    display: flex; flex-wrap: wrap; gap: 1.25rem;
+    align-items: center; justify-content: center;
+  }
+  .showcase.col {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .showcase-row {
+    display: flex; flex-wrap: wrap; gap: 1rem;
+    align-items: center; justify-content: center;
+    width: 100%;
+  }
+  .showcase-label {
+    width: 100%; text-align: center;
+    color: var(--text-muted); font-size: 0.78rem;
+    font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.05em; margin-bottom: 0.25rem;
+  }
+
+  /* ── GAME BUTTONS ──────────────────────────────────── */
+  @keyframes game-btn-pulse {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.6; }
+  }
+
+  .game-btn {
+    position: relative;
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 0.5rem;
+    font-family: 'Heebo', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    cursor: pointer;
+    border: none;
+    color: white;
+    user-select: none;
+    outline: none;
+    /* Spring-like transition */
+    transition: transform 0.12s cubic-bezier(0.34,1.56,0.64,1),
+                box-shadow 0.12s ease,
+                filter 0.12s ease;
+  }
+
+  .game-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    filter: brightness(1.1);
+  }
+  .game-btn:active {
+    transform: scale(0.93) translateY(2px) !important;
+    filter: brightness(0.95);
+  }
+  .game-btn:focus-visible {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 3px;
+  }
+
+  /* ── SIZES ─────────────────────────────────────────── */
+  .game-btn.sm {
+    min-height: 36px; padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    border-radius: 10px 8px 10px 8px;
+  }
+  .game-btn.md {
+    min-height: 48px; padding: 0.625rem 1.25rem;
+    font-size: 1rem;
+    border-radius: 14px 10px 14px 10px;
+  }
+  .game-btn.lg {
+    min-height: 56px; padding: 0.75rem 1.75rem;
+    font-size: 1.125rem; font-weight: 800;
+    border-radius: 16px 12px 16px 12px;
+  }
+  .game-btn.xl {
+    min-height: 64px; padding: 1rem 2.25rem;
+    font-size: 1.25rem; font-weight: 900;
+    border-radius: 20px 14px 20px 14px;
+  }
+
+  /* ── PRIMARY ───────────────────────────────────────── */
+  .game-btn.primary {
+    background: linear-gradient(135deg, #6C5CE7, #8B7EF8);
+    border-bottom: 3px solid var(--primary-dark);
+    box-shadow: 0 4px 20px rgba(108,92,231,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .game-btn.primary:hover {
+    box-shadow: 0 6px 28px rgba(108,92,231,0.7), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .game-btn.primary:active {
+    border-bottom: 0; margin-top: 3px;
+    box-shadow: 0 2px 12px rgba(108,92,231,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  /* Glow pulse on primary */
+  .game-btn.primary::before {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle, rgba(108,92,231,0.3) 0%, transparent 70%);
+    pointer-events: none;
+    animation: game-btn-pulse 2s ease-in-out infinite;
+  }
+
+  /* ── SECONDARY ─────────────────────────────────────── */
+  .game-btn.secondary {
+    background: linear-gradient(135deg, #00B894, #00d4a8);
+    border-bottom: 3px solid var(--secondary-dark);
+    box-shadow: 0 4px 20px rgba(0,184,148,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .game-btn.secondary:hover {
+    box-shadow: 0 6px 28px rgba(0,184,148,0.7), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .game-btn.secondary:active {
+    border-bottom: 0; margin-top: 3px;
+    box-shadow: 0 2px 12px rgba(0,184,148,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+
+  /* ── DANGER ────────────────────────────────────────── */
+  .game-btn.danger {
+    background: linear-gradient(135deg, #E17055, #fd7979);
+    border-bottom: 3px solid var(--danger-dark);
+    box-shadow: 0 4px 20px rgba(225,112,85,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .game-btn.danger:hover {
+    box-shadow: 0 6px 28px rgba(225,112,85,0.7), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .game-btn.danger:active {
+    border-bottom: 0; margin-top: 3px;
+    box-shadow: 0 2px 12px rgba(225,112,85,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+
+  /* ── WARNING ───────────────────────────────────────── */
+  .game-btn.warning {
+    background: linear-gradient(135deg, #FDCB6E, #FFEAA7);
+    border-bottom: 3px solid var(--warning-dark);
+    color: #1A1A2E;
+    box-shadow: 0 4px 20px rgba(253,203,110,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .game-btn.warning:hover {
+    box-shadow: 0 6px 28px rgba(253,203,110,0.7), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .game-btn.warning:active {
+    border-bottom: 0; margin-top: 3px;
+    box-shadow: 0 2px 12px rgba(253,203,110,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+
+  /* ── GHOST ─────────────────────────────────────────── */
+  .game-btn.ghost {
+    background: transparent;
+    border-bottom: 3px solid transparent;
+    color: var(--primary-light);
+    box-shadow: none;
+  }
+  .game-btn.ghost:hover {
+    box-shadow: 0 4px 20px rgba(108,92,231,0.2);
+    background: rgba(108,92,231,0.08);
+  }
+  .game-btn.ghost:active {
+    border-bottom: 0; margin-top: 3px;
+    background: rgba(108,92,231,0.12);
+  }
+
+  /* ── DISABLED ──────────────────────────────────────── */
+  .game-btn.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    filter: saturate(0.5);
+  }
+  .game-btn.disabled::before { display: none; }
+
+  /* ── LOADING ───────────────────────────────────────── */
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  .game-btn .spinner {
+    display: inline-block;
+    width: 1.2em; height: 1.2em;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+
+  /* ── INFO CARD ─────────────────────────────────────── */
+  .info-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .info-card h3 {
+    font-size: 1.05rem; font-weight: 700;
+    margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .info-list {
+    display: flex; flex-direction: column; gap: 0.45rem;
+  }
+  .info-row {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    padding: 0.45rem 0.65rem;
+    background: var(--bg2);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-size: 0.85rem;
+  }
+  .info-key {
+    color: var(--text-muted); min-width: 120px;
+    font-size: 0.8rem; flex-shrink: 0;
+  }
+  .info-val { color: var(--text); font-weight: 500; }
+
+  /* ── CODE BLOCK ────────────────────────────────────── */
+  pre {
+    background: #080612;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    font-size: 0.82rem;
+    line-height: 1.65;
+    margin: 0.75rem 0;
+    direction: ltr;
+    text-align: left;
+  }
+  code { font-family: 'Fira Code', 'Courier New', monospace; }
+  .code-label {
+    font-size: 0.72rem; color: var(--text-muted);
+    background: var(--bg2); display: inline-block;
+    padding: 0.2rem 0.6rem; border-radius: 4px 4px 0 0;
+    margin-bottom: -1px; border: 1px solid var(--border);
+    border-bottom: none; direction: ltr;
+  }
+  .kw { color: #c792ea; }
+  .fn { color: #82aaff; }
+  .str { color: #c3e88d; }
+  .cm { color: #546e7a; }
+  .num { color: #f78c6c; }
+  .type { color: #ffcb6b; }
+
+  /* ── COMPARISON TABLE ──────────────────────────────── */
+  .compare-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 0.85rem; margin: 0.75rem 0;
+  }
+  .compare-table th {
+    background: var(--bg2); color: var(--text-muted);
+    padding: 0.6rem 0.9rem; text-align: right;
+    border-bottom: 1px solid var(--border); font-weight: 600;
+  }
+  .compare-table td {
+    padding: 0.55rem 0.9rem;
+    border-bottom: 1px solid rgba(42,37,80,0.5);
+  }
+  .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 2.5rem 0; }
+
+  @media (max-width: 600px) {
+    .showcase { padding: 1.25rem; gap: 0.75rem; }
+    .game-btn.xl { font-size: 1.1rem; padding: 0.75rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">&#129399; Ninja Keyboard</span>
+  <a href="#variants">וריאנטים</a>
+  <a href="#sizes">גדלים</a>
+  <a href="#states">מצבים</a>
+  <a href="#specs">מפרט טכני</a>
+  <a href="#usage">שימוש בקוד</a>
+</nav>
+
+<div class="hero">
+  <h1>&#9889; Game Buttons &#8212; Brawl Stars Style</h1>
+  <p>כפתורים אסימטריים עם אפקט 3D, glow pulse, ואנימציית spring &#8212; בהשראת Brawl Stars, מותאם ל-Ninja Keyboard</p>
+</div>
+
+<main>
+
+<!-- ═════════════════════════════════════════════════════════ -->
+<!-- SECTION 1: VARIANTS                                      -->
+<!-- ═════════════════════════════════════════════════════════ -->
+<section id="variants">
+  <div class="section-header">
+    <div class="section-icon purple">&#127918;</div>
+    <div class="section-title">
+      <h2>וריאנטים &#8212; 5 סגנונות</h2>
+      <p>כל וריאנט עם gradient, border-bottom 3D, ו-box-shadow glow ייחודי</p>
+    </div>
+  </div>
+
+  <div class="showcase">
+    <button class="game-btn primary md">&#129399; התחל שיעור</button>
+    <button class="game-btn secondary md">&#9989; המשך</button>
+    <button class="game-btn danger md">&#10060; עצור</button>
+    <button class="game-btn warning md">&#9888;&#65039; אזהרה</button>
+    <button class="game-btn ghost md">&#128123; רפאים</button>
+  </div>
+
+  <div class="info-card">
+    <h3>&#127912; מאפייני וריאנט</h3>
+    <div class="info-list">
+      <div class="info-row"><span class="info-key">Primary</span><span class="info-val">סגול #6C5CE7 &#8594; #8B7EF8 | border-bottom: #4a3cb0 | glow pulse מובנה</span></div>
+      <div class="info-row"><span class="info-key">Secondary</span><span class="info-val">ירוק #00B894 &#8594; #00d4a8 | border-bottom: #007d65 | ללא pulse</span></div>
+      <div class="info-row"><span class="info-key">Danger</span><span class="info-val">אדום #E17055 &#8594; #fd7979 | border-bottom: #c0392b | לפעולות הרסניות</span></div>
+      <div class="info-row"><span class="info-key">Warning</span><span class="info-val">צהוב #FDCB6E &#8594; #FFEAA7 | border-bottom: #d4a017 | טקסט כהה</span></div>
+      <div class="info-row"><span class="info-key">Ghost</span><span class="info-val">שקוף עם טקסט סגול | hover: רקע חצי-שקוף | ללא border-bottom</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═════════════════════════════════════════════════════════ -->
+<!-- SECTION 2: SIZES                                         -->
+<!-- ═════════════════════════════════════════════════════════ -->
+<section id="sizes">
+  <div class="section-header">
+    <div class="section-icon green">&#128207;</div>
+    <div class="section-title">
+      <h2>גדלים &#8212; SM / MD / LG / XL</h2>
+      <p>כל הגדלים עם min-height &#8805; 36px, WCAG AA touch target (48px+) ב-MD ומעלה</p>
+    </div>
+  </div>
+
+  <div class="showcase">
+    <div class="showcase-label">Primary</div>
+    <div class="showcase-row">
+      <button class="game-btn primary sm">SM קטן</button>
+      <button class="game-btn primary md">MD בינוני</button>
+      <button class="game-btn primary lg">LG גדול</button>
+      <button class="game-btn primary xl">XL ענק</button>
+    </div>
+  </div>
+
+  <div class="showcase">
+    <div class="showcase-label">Secondary</div>
+    <div class="showcase-row">
+      <button class="game-btn secondary sm">SM קטן</button>
+      <button class="game-btn secondary md">MD בינוני</button>
+      <button class="game-btn secondary lg">LG גדול</button>
+      <button class="game-btn secondary xl">XL ענק</button>
+    </div>
+  </div>
+
+  <div class="showcase">
+    <div class="showcase-label">Danger</div>
+    <div class="showcase-row">
+      <button class="game-btn danger sm">SM קטן</button>
+      <button class="game-btn danger md">MD בינוני</button>
+      <button class="game-btn danger lg">LG גדול</button>
+      <button class="game-btn danger xl">XL ענק</button>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <h3>&#128207; פירוט גדלים</h3>
+    <table class="compare-table">
+      <thead>
+        <tr><th>גודל</th><th>min-height</th><th>padding</th><th>font-size</th><th>font-weight</th><th>border-radius</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>SM</strong></td><td>36px</td><td>6px 12px</td><td>0.875rem</td><td>700</td><td>10px 8px 10px 8px</td></tr>
+        <tr><td><strong>MD</strong></td><td>48px</td><td>10px 20px</td><td>1rem</td><td>700</td><td>14px 10px 14px 10px</td></tr>
+        <tr><td><strong>LG</strong></td><td>56px</td><td>12px 28px</td><td>1.125rem</td><td>800</td><td>16px 12px 16px 12px</td></tr>
+        <tr><td><strong>XL</strong></td><td>64px</td><td>16px 36px</td><td>1.25rem</td><td>900</td><td>20px 14px 20px 14px</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═════════════════════════════════════════════════════════ -->
+<!-- SECTION 3: STATES                                        -->
+<!-- ═════════════════════════════════════════════════════════ -->
+<section id="states">
+  <div class="section-header">
+    <div class="section-icon orange">&#128161;</div>
+    <div class="section-title">
+      <h2>מצבים &#8212; Hover, Active, Disabled, Loading</h2>
+      <p>הדגמת כל מצב אינטראקטיבי</p>
+    </div>
+  </div>
+
+  <div class="showcase">
+    <div class="showcase-label">מצב רגיל &#8594; העבירו עכבר &#8594; לחצו</div>
+    <div class="showcase-row">
+      <button class="game-btn primary lg">&#129399; לחצו עליי!</button>
+      <button class="game-btn secondary lg">&#128170; לחצו עליי!</button>
+    </div>
+  </div>
+
+  <div class="showcase">
+    <div class="showcase-label">Disabled</div>
+    <div class="showcase-row">
+      <button class="game-btn primary md disabled">&#128274; סגור</button>
+      <button class="game-btn secondary md disabled">&#128274; סגור</button>
+      <button class="game-btn danger md disabled">&#128274; סגור</button>
+    </div>
+  </div>
+
+  <div class="showcase">
+    <div class="showcase-label">Loading</div>
+    <div class="showcase-row">
+      <button class="game-btn primary md"><span class="spinner"></span> טוען...</button>
+      <button class="game-btn secondary md"><span class="spinner"></span> שומר...</button>
+    </div>
+  </div>
+
+  <div class="showcase">
+    <div class="showcase-label">עם אייקונים</div>
+    <div class="showcase-row">
+      <button class="game-btn primary md">&#127942; אתגר יומי</button>
+      <button class="game-btn secondary md">&#9889; מבחן מהירות</button>
+      <button class="game-btn danger md">&#128165; Battle</button>
+      <button class="game-btn warning md">&#128293; Streak &#215; 7</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═════════════════════════════════════════════════════════ -->
+<!-- SECTION 4: SPECS                                         -->
+<!-- ═════════════════════════════════════════════════════════ -->
+<section id="specs">
+  <div class="section-header">
+    <div class="section-icon yellow">&#128208;</div>
+    <div class="section-title">
+      <h2>מפרט טכני &#8212; Brawl Stars DNA</h2>
+      <p>כל הפרמטרים שמרכיבים את ה-game feel</p>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <h3>&#9889; אנימציות</h3>
+    <div class="info-list">
+      <div class="info-row"><span class="info-key">Hover</span><span class="info-val">translateY(-3px) + scale(1.03) | Spring: stiffness 400, damping 15</span></div>
+      <div class="info-row"><span class="info-key">Active/Tap</span><span class="info-val">scale(0.93) + translateY(2px) | border-bottom &#8594; 0 | mt +3px</span></div>
+      <div class="info-row"><span class="info-key">Glow Pulse</span><span class="info-val">radial-gradient opacity 0 &#8594; 0.6 &#8594; 0 | 2s ease-in-out infinite | Primary בלבד</span></div>
+      <div class="info-row"><span class="info-key">Duration</span><span class="info-val">&#8804; 200ms | Spring physics, לא linear</span></div>
+      <div class="info-row"><span class="info-key">Properties</span><span class="info-val">transform + opacity בלבד (GPU accelerated, no layout shift)</span></div>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <h3>&#127912; עיצוב</h3>
+    <div class="info-list">
+      <div class="info-row"><span class="info-key">צורה</span><span class="info-val">אסימטרית &#8212; border-radius שונה בכל פינה (14px 10px 14px 10px)</span></div>
+      <div class="info-row"><span class="info-key">3D Depth</span><span class="info-val">border-bottom 3px בצבע כהה יותר &#8212; מדמה הגבהה פיזית</span></div>
+      <div class="info-row"><span class="info-key">Gradient</span><span class="info-val">135deg, בהיר למעלה-שמאל, כהה למטה-ימין (סימולציית אור)</span></div>
+      <div class="info-row"><span class="info-key">Inset Highlight</span><span class="info-val">inset 0 1px 0 rgba(255,255,255,0.2) &#8212; זוהר פנימי עדין</span></div>
+      <div class="info-row"><span class="info-key">Glow Shadow</span><span class="info-val">0 4px 20px &#8212; צבע הכפתור ב-50% שקיפות</span></div>
+      <div class="info-row"><span class="info-key">RTL</span><span class="info-val">CSS logical properties | dir="rtl" תואם | אין ml/mr/pl/pr</span></div>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <h3>&#9855; נגישות</h3>
+    <div class="info-list">
+      <div class="info-row"><span class="info-key">Touch Target</span><span class="info-val">min-height 48px (MD ומעלה) &#8212; WCAG AA 2.5.8</span></div>
+      <div class="info-row"><span class="info-key">Focus Visible</span><span class="info-val">ring 2px solid var(--game-accent-purple) + offset 3px</span></div>
+      <div class="info-row"><span class="info-key">aria-label</span><span class="info-val">נתמך כ-prop, נדרש כשהילד הוא לא טקסט</span></div>
+      <div class="info-row"><span class="info-key">Keyboard</span><span class="info-val">Enter + Space מפעילים, Tab navigable</span></div>
+      <div class="info-row"><span class="info-key">Loading State</span><span class="info-val">role="status" + aria-label="טוען..." על ה-spinner</span></div>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <h3>&#128266; סאונד</h3>
+    <div class="info-list">
+      <div class="info-row"><span class="info-key">Click Sound</span><span class="info-val">soundManager.playButtonClick() &#8212; Web Audio 523Hz triangle 80ms</span></div>
+      <div class="info-row"><span class="info-key">MP3 Fallback</span><span class="info-val">keyboard-click.mp3 &#8212; preloaded on mount</span></div>
+      <div class="info-row"><span class="info-key">Silent Mode</span><span class="info-val">prop silent=true &#8212; מבטל צליל ללא השפעה על אנימציות</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═════════════════════════════════════════════════════════ -->
+<!-- SECTION 5: USAGE                                         -->
+<!-- ═════════════════════════════════════════════════════════ -->
+<section id="usage">
+  <div class="section-header">
+    <div class="section-icon purple">&#128187;</div>
+    <div class="section-title">
+      <h2>שימוש בקוד &#8212; React + Framer Motion</h2>
+      <p>דוגמאות ייבוא ושימוש ב-GameButton</p>
+    </div>
+  </div>
+
+  <div class="code-label">TypeScript &mdash; Basic Usage</div>
+<pre><code><span class="kw">import</span> { <span class="fn">GameButton</span> } <span class="kw">from</span> <span class="str">'@/components/ui/game-button'</span>
+
+<span class="cm">// Primary (default) - with glow pulse</span>
+&lt;<span class="fn">GameButton</span>&gt;&#129399; &#1492;&#1514;&#1495;&#1500; &#1513;&#1497;&#1506;&#1493;&#1512;&lt;/<span class="fn">GameButton</span>&gt;
+
+<span class="cm">// Secondary - green</span>
+&lt;<span class="fn">GameButton</span> <span class="type">variant</span>=<span class="str">"secondary"</span>&gt;&#9989; &#1492;&#1502;&#1513;&#1498;&lt;/<span class="fn">GameButton</span>&gt;
+
+<span class="cm">// Danger - red</span>
+&lt;<span class="fn">GameButton</span> <span class="type">variant</span>=<span class="str">"danger"</span>&gt;&#10060; &#1506;&#1510;&#1493;&#1512;&lt;/<span class="fn">GameButton</span>&gt;
+
+<span class="cm">// Warning - yellow with dark text</span>
+&lt;<span class="fn">GameButton</span> <span class="type">variant</span>=<span class="str">"warning"</span>&gt;&#9888;&#65039; &#1488;&#1494;&#1492;&#1512;&#1492;&lt;/<span class="fn">GameButton</span>&gt;
+
+<span class="cm">// Ghost - transparent</span>
+&lt;<span class="fn">GameButton</span> <span class="type">variant</span>=<span class="str">"ghost"</span>&gt;&#128123; &#1512;&#1508;&#1488;&#1497;&#1501;&lt;/<span class="fn">GameButton</span>&gt;</code></pre>
+
+  <div class="code-label">TypeScript &mdash; Sizes</div>
+<pre><code>&lt;<span class="fn">GameButton</span> <span class="type">size</span>=<span class="str">"sm"</span>&gt;&#1511;&#1496;&#1503;&lt;/<span class="fn">GameButton</span>&gt;
+&lt;<span class="fn">GameButton</span> <span class="type">size</span>=<span class="str">"md"</span>&gt;&#1489;&#1497;&#1504;&#1493;&#1504;&#1497;&lt;/<span class="fn">GameButton</span>&gt;  <span class="cm">// default</span>
+&lt;<span class="fn">GameButton</span> <span class="type">size</span>=<span class="str">"lg"</span>&gt;&#1490;&#1491;&#1493;&#1500;&lt;/<span class="fn">GameButton</span>&gt;
+&lt;<span class="fn">GameButton</span> <span class="type">size</span>=<span class="str">"xl"</span>&gt;&#1506;&#1504;&#1511;&lt;/<span class="fn">GameButton</span>&gt;</code></pre>
+
+  <div class="code-label">TypeScript &mdash; States &amp; Features</div>
+<pre><code><span class="cm">// Disabled</span>
+&lt;<span class="fn">GameButton</span> <span class="type">disabled</span>&gt;&#128274; &#1505;&#1490;&#1493;&#1512;&lt;/<span class="fn">GameButton</span>&gt;
+
+<span class="cm">// Loading</span>
+&lt;<span class="fn">GameButton</span> <span class="type">loading</span>&gt;&#1496;&#1493;&#1506;&#1503;...&lt;/<span class="fn">GameButton</span>&gt;
+
+<span class="cm">// Silent (no click sound)</span>
+&lt;<span class="fn">GameButton</span> <span class="type">silent</span>&gt;&#1513;&#1511;&#1496;&lt;/<span class="fn">GameButton</span>&gt;
+
+<span class="cm">// With onClick</span>
+&lt;<span class="fn">GameButton</span>
+  <span class="type">variant</span>=<span class="str">"primary"</span>
+  <span class="type">size</span>=<span class="str">"lg"</span>
+  <span class="type">onClick</span>={() =&gt; <span class="fn">router</span>.<span class="fn">push</span>(<span class="str">'/lessons'</span>)}
+&gt;
+  &#129399; &#1492;&#1514;&#1495;&#1500; &#1500;&#1500;&#1502;&#1493;&#1491;!
+&lt;/<span class="fn">GameButton</span>&gt;
+
+<span class="cm">// Custom className</span>
+&lt;<span class="fn">GameButton</span> <span class="type">className</span>=<span class="str">"w-full"</span>&gt;&#1512;&#1493;&#1495;&#1489; &#1502;&#1500;&#1488;&lt;/<span class="fn">GameButton</span>&gt;</code></pre>
+
+  <div class="code-label">TypeScript &mdash; Component Props Interface</div>
+<pre><code><span class="kw">interface</span> <span class="type">GameButtonProps</span> {
+  <span class="fn">variant</span>?: <span class="str">'primary'</span> | <span class="str">'secondary'</span> | <span class="str">'danger'</span> | <span class="str">'warning'</span> | <span class="str">'ghost'</span>
+  <span class="fn">size</span>?: <span class="str">'sm'</span> | <span class="str">'md'</span> | <span class="str">'lg'</span> | <span class="str">'xl'</span>
+  <span class="fn">loading</span>?: <span class="type">boolean</span>     <span class="cm">// Shows spinner + disables</span>
+  <span class="fn">silent</span>?: <span class="type">boolean</span>      <span class="cm">// Mutes click sound</span>
+  <span class="fn">disabled</span>?: <span class="type">boolean</span>    <span class="cm">// Grayed out, no interaction</span>
+  <span class="fn">children</span>: <span class="type">React.ReactNode</span>
+  <span class="cm">// + all standard button props (onClick, aria-label, etc.)</span>
+}</code></pre>
+</section>
+
+</main>
+
+</body>
+</html>

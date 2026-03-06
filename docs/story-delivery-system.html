@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ninja Keyboard - מערכת הספרת סיפור</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#0d0b1a;--card:rgba(108,92,231,0.06);--border:rgba(108,92,231,0.18);
+    --purple:#6C5CE7;--green:#00B894;--red:#ef4444;--amber:#f59e0b;--blue:#74B9FF;
+    --pink:#FD79A8;--cyan:#00CEC9;--gold:#F9CA24;--text:#e0e0ff;--dim:#8B86A6;
+    --phantom:#9B59B6;--dark-card:#12101f;
+  }
+  body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);line-height:1.8;padding:0;}
+  .container{max-width:1060px;margin:0 auto;padding:1.5rem 2rem 4rem;}
+
+  h1{font-size:2.6rem;font-weight:900;background:linear-gradient(135deg,var(--purple),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:0.3rem;}
+  h2{font-size:1.7rem;font-weight:900;color:var(--purple);border-bottom:2px solid var(--purple);padding-bottom:0.5rem;margin:2.5rem 0 1rem;}
+  h3{font-size:1.25rem;font-weight:700;color:var(--green);margin:1.2rem 0 0.5rem;}
+  h4{font-size:1.05rem;color:#a78bfa;margin:0.8rem 0 0.3rem;}
+  .subtitle{text-align:center;color:var(--dim);margin-bottom:2rem;font-size:1.05rem;}
+
+  nav.sticky-nav{position:sticky;top:0;background:rgba(13,11,26,0.97);backdrop-filter:blur(12px);padding:0.7rem 1rem;border-radius:0 0 14px 14px;margin-bottom:2rem;z-index:100;display:flex;flex-wrap:wrap;gap:5px;justify-content:center;border-bottom:1px solid var(--border);}
+  nav a{color:#a78bfa;text-decoration:none;font-size:0.8rem;padding:4px 10px;border-radius:10px;border:1px solid transparent;transition:all .2s;}
+  nav a:hover{color:var(--purple);background:rgba(108,92,231,0.12);border-color:rgba(108,92,231,0.3);}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.3rem;margin:0.8rem 0;}
+  .card-green{background:rgba(0,184,148,0.06);border-color:rgba(0,184,148,0.2);}
+  .card-red{background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.2);}
+  .card-amber{background:rgba(245,158,11,0.06);border-color:rgba(245,158,11,0.2);}
+  .card-pink{background:rgba(253,121,168,0.06);border-color:rgba(253,121,168,0.2);}
+  .card-cyan{background:rgba(0,206,201,0.06);border-color:rgba(0,206,201,0.2);}
+  .card-blue{background:rgba(116,185,255,0.06);border-color:rgba(116,185,255,0.2);}
+  .card-phantom{background:rgba(155,89,182,0.06);border-color:rgba(155,89,182,0.25);}
+
+  table{width:100%;border-collapse:collapse;margin:0.7rem 0;font-size:0.9rem;}
+  th{background:rgba(108,92,231,0.12);color:#a78bfa;padding:0.55rem;text-align:right;font-weight:700;}
+  td{padding:0.55rem;border-bottom:1px solid rgba(255,255,255,0.04);}
+  tr:hover td{background:rgba(108,92,231,0.04);}
+
+  .tag{display:inline-block;padding:2px 9px;border-radius:7px;font-size:0.76rem;font-weight:700;margin-left:4px;}
+  .tag-hades{background:linear-gradient(135deg,#ff6b35,#e63946);color:white;}
+  .tag-new{background:var(--amber);color:#1a1a1a;}
+  .tag-tech{background:var(--cyan);color:#1a1a1a;}
+  .tag-design{background:var(--pink);color:white;}
+  .tag-act{background:var(--purple);color:white;}
+
+  details{margin:0.7rem 0;}
+  details summary{cursor:pointer;padding:0.7rem 1.1rem;background:rgba(108,92,231,0.08);border:1px solid var(--border);border-radius:12px;font-weight:700;font-size:0.95rem;color:var(--purple);list-style:none;transition:all .2s;}
+  details summary::-webkit-details-marker{display:none;}
+  details summary::before{content:'+ ';color:var(--green);font-weight:900;}
+  details[open] summary::before{content:'- ';}
+  details[open] summary{border-radius:12px 12px 0 0;border-bottom:none;}
+  details .detail-body{padding:1.1rem;background:rgba(13,11,26,0.5);border:1px solid var(--border);border-top:none;border-radius:0 0 12px 12px;font-size:0.92rem;}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;}
+  .grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0.9rem;}
+  @media(max-width:720px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+
+  .quote-box{background:rgba(108,92,231,0.07);border-right:4px solid var(--purple);padding:0.9rem 1.2rem;border-radius:0 12px 12px 0;margin:0.7rem 0;font-style:italic;color:var(--blue);}
+  .warn-box{background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.25);border-radius:12px;padding:0.9rem 1.2rem;margin:0.7rem 0;font-size:0.88rem;color:var(--amber);}
+  .info-box{background:rgba(116,185,255,0.06);border:1px solid rgba(116,185,255,0.2);border-radius:12px;padding:0.9rem 1.2rem;margin:0.7rem 0;font-size:0.88rem;color:var(--blue);}
+  .success-box{background:rgba(0,184,148,0.06);border:1px solid rgba(0,184,148,0.25);border-radius:12px;padding:0.9rem 1.2rem;margin:0.7rem 0;font-size:0.88rem;color:var(--green);}
+
+  code{background:rgba(108,92,231,0.12);color:var(--cyan);padding:2px 6px;border-radius:4px;font-size:0.85rem;font-family:'Courier New',monospace;direction:ltr;display:inline-block;}
+  pre{background:rgba(13,11,26,0.8);border:1px solid var(--border);border-radius:10px;padding:1rem;overflow-x:auto;font-size:0.82rem;line-height:1.6;direction:ltr;text-align:left;color:var(--cyan);}
+
+  .comparison-row{display:flex;gap:1rem;align-items:stretch;margin:0.8rem 0;}
+  .comparison-row .col{flex:1;padding:1rem;border-radius:12px;border:1px solid var(--border);}
+  .comparison-row .col-hades{background:rgba(255,107,53,0.06);border-color:rgba(255,107,53,0.25);}
+  .comparison-row .col-ninja{background:rgba(108,92,231,0.06);border-color:rgba(108,92,231,0.25);}
+  @media(max-width:720px){.comparison-row{flex-direction:column;}}
+
+  .flow-diagram{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0.5rem;margin:1rem 0;font-size:0.85rem;direction:ltr;}
+  .flow-box{background:rgba(108,92,231,0.1);border:1px solid var(--border);border-radius:10px;padding:0.5rem 1rem;text-align:center;color:var(--text);}
+  .flow-box.active{background:rgba(0,184,148,0.12);border-color:var(--green);color:var(--green);}
+  .flow-arrow{color:var(--purple);font-weight:900;font-size:1.2rem;}
+
+  /* ===== DIALOG MOCKUP SYSTEM ===== */
+  .dialog-scene{background:linear-gradient(180deg,#0a081a 0%,#161230 100%);border-radius:16px;border:2px solid var(--border);overflow:hidden;margin:1rem 0;position:relative;}
+  .dialog-bg{padding:1.5rem;min-height:220px;display:flex;align-items:flex-end;gap:1rem;position:relative;}
+  .dialog-portrait{width:120px;height:120px;border-radius:14px;border:3px solid var(--purple);background:rgba(108,92,231,0.15);display:flex;align-items:center;justify-content:center;font-size:2.5rem;flex-shrink:0;position:relative;}
+  .dialog-portrait .mood-dot{position:absolute;bottom:4px;left:4px;width:14px;height:14px;border-radius:50%;border:2px solid var(--bg);}
+  .dialog-portrait.ki{border-color:var(--purple);}
+  .dialog-portrait.yuki{border-color:var(--cyan);}
+  .dialog-portrait.sensei{border-color:var(--gold);}
+  .dialog-portrait.glitch{border-color:var(--red);}
+  .dialog-portrait.mika{border-color:var(--pink);}
+  .dialog-bubble{flex:1;position:relative;}
+  .dialog-nameplate{display:inline-block;background:var(--purple);color:white;padding:3px 14px;border-radius:8px 8px 0 0;font-weight:700;font-size:0.85rem;margin-bottom:0;}
+  .dialog-nameplate.ki{background:var(--purple);}
+  .dialog-nameplate.yuki{background:var(--cyan);color:#0d0b1a;}
+  .dialog-nameplate.sensei{background:var(--gold);color:#0d0b1a;}
+  .dialog-nameplate.glitch{background:var(--red);}
+  .dialog-nameplate.mika{background:var(--pink);}
+  .dialog-text{background:rgba(255,255,255,0.07);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.12);border-radius:0 14px 14px 14px;padding:1rem 1.2rem;font-size:1rem;line-height:1.8;color:var(--text);position:relative;}
+  .dialog-text .typing-cursor{display:inline-block;width:2px;height:1em;background:var(--green);animation:blink 1s infinite;margin-right:4px;vertical-align:text-bottom;}
+  @keyframes blink{0%,50%{opacity:1;}51%,100%{opacity:0;}}
+  .dialog-controls{display:flex;justify-content:space-between;align-items:center;padding:0.6rem 1.2rem;background:rgba(0,0,0,0.3);border-top:1px solid rgba(255,255,255,0.05);}
+  .dialog-controls .skip-btn{color:var(--dim);font-size:0.78rem;cursor:pointer;border:1px solid var(--border);padding:3px 10px;border-radius:6px;}
+  .dialog-controls .advance-btn{color:var(--green);font-size:0.85rem;cursor:pointer;font-weight:700;}
+  .dialog-type-badge{position:absolute;top:8px;left:8px;font-size:0.7rem;padding:2px 8px;border-radius:6px;font-weight:700;}
+  .dialog-type-dialog{background:rgba(108,92,231,0.2);color:var(--purple);}
+  .dialog-type-thought{background:rgba(116,185,255,0.2);color:var(--blue);}
+  .dialog-type-narration{background:rgba(249,202,36,0.2);color:var(--gold);}
+
+  /* ===== CUTSCENE MOCKUP ===== */
+  .cutscene-frame{background:linear-gradient(135deg,#0a0818,#1a0a2e,#0a0818);border:2px solid rgba(239,68,68,0.3);border-radius:16px;overflow:hidden;margin:1rem 0;position:relative;}
+  .cutscene-bars{background:black;height:30px;}
+  .cutscene-content{padding:2rem;text-align:center;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;}
+  .cutscene-text{font-size:1.3rem;font-weight:700;color:var(--text);text-shadow:0 0 20px rgba(108,92,231,0.5);margin:0.5rem 0;}
+  .cutscene-subtitle{font-size:0.9rem;color:var(--dim);margin-top:0.3rem;}
+  .cutscene-char{font-size:4rem;margin:0.8rem 0;}
+  .cutscene-emotion{display:inline-block;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:var(--red);padding:4px 12px;border-radius:8px;font-size:0.8rem;font-weight:700;margin-top:0.5rem;}
+
+  /* ===== CHOICE SYSTEM MOCKUP ===== */
+  .choice-panel{background:rgba(13,11,26,0.9);border:1px solid var(--border);border-radius:14px;padding:1.2rem;margin:0.8rem 0;}
+  .choice-question{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.8rem;text-align:center;}
+  .choice-options{display:flex;flex-direction:column;gap:0.5rem;}
+  .choice-option{background:rgba(108,92,231,0.08);border:1px solid var(--border);border-radius:10px;padding:0.7rem 1rem;cursor:pointer;transition:all .2s;font-size:0.92rem;}
+  .choice-option:hover{background:rgba(108,92,231,0.15);border-color:var(--purple);transform:translateX(-4px);}
+  .choice-option .choice-icon{margin-left:8px;}
+  .choice-effect{color:var(--dim);font-size:0.75rem;margin-top:2px;}
+
+  /* ===== JOURNAL MOCKUP ===== */
+  .journal{background:rgba(13,11,26,0.7);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin:1rem 0;}
+  .journal-header{background:rgba(108,92,231,0.1);padding:0.8rem 1.2rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+  .journal-tabs{display:flex;gap:0.5rem;}
+  .journal-tab{padding:4px 12px;border-radius:8px;font-size:0.82rem;cursor:pointer;border:1px solid transparent;}
+  .journal-tab.active{background:var(--purple);color:white;border-color:var(--purple);}
+  .journal-tab:not(.active){color:var(--dim);border-color:var(--border);}
+  .journal-content{padding:1rem 1.2rem;}
+  .journal-entry{display:flex;align-items:center;gap:0.8rem;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.03);}
+  .journal-entry .entry-icon{font-size:1.3rem;}
+  .journal-entry .entry-text{flex:1;}
+  .journal-entry .entry-title{font-weight:700;font-size:0.9rem;}
+  .journal-entry .entry-desc{color:var(--dim);font-size:0.8rem;}
+  .journal-entry .entry-status{font-size:0.75rem;padding:2px 8px;border-radius:6px;}
+  .journal-entry .seen{background:rgba(0,184,148,0.15);color:var(--green);}
+  .journal-entry .locked{background:rgba(139,134,166,0.15);color:var(--dim);}
+
+  .section-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--purple);color:white;font-weight:900;font-size:0.9rem;margin-left:8px;}
+
+  ul,ol{padding-right:24px;color:var(--dim);font-size:0.9rem;}
+  li{margin:0.3rem 0;}
+  li strong{color:var(--text);}
+
+  .badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:0.78rem;font-weight:700;margin:2px;}
+  .badge-purple{background:rgba(108,92,231,0.15);color:var(--purple);}
+  .badge-green{background:rgba(0,184,148,0.15);color:var(--green);}
+  .badge-red{background:rgba(239,68,68,0.12);color:var(--red);}
+  .badge-amber{background:rgba(245,158,11,0.12);color:var(--amber);}
+  .badge-blue{background:rgba(116,185,255,0.12);color:var(--blue);}
+  .badge-pink{background:rgba(253,121,168,0.12);color:var(--pink);}
+
+  .meter{height:8px;border-radius:4px;background:rgba(255,255,255,0.06);overflow:hidden;margin:4px 0;}
+  .meter-fill{height:100%;border-radius:4px;transition:width .5s;}
+
+  footer{text-align:center;padding:2rem 0;color:var(--dim);font-size:0.8rem;border-top:1px solid var(--border);margin-top:3rem;}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>מערכת הספרת סיפור</h1>
+<p class="subtitle">Ninja Keyboard -- איך הסיפור מגיע לשחקן: דיאלוגים, קאטסצנות, בחירות ואינטגרציה עם משחקיות<br>
+<span class="tag tag-hades">בהשראת Hades</span> <span class="tag tag-new">מרץ 2026</span></p>
+
+<nav class="sticky-nav">
+  <a href="#hades">השראת Hades</a>
+  <a href="#dialog">מערכת דיאלוג</a>
+  <a href="#cutscenes">רגעי וידאו</a>
+  <a href="#choices">מערכת בחירות</a>
+  <a href="#gameplay">אינטגרציה</a>
+  <a href="#journal">מערכת זיכרונות</a>
+  <a href="#emotion-music">רגשות ומוזיקה</a>
+  <a href="#tech">ספציפיקציה טכנית</a>
+  <a href="#examples">דוגמאות חיות</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 1: HADES INSPIRATION -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="hades"><span class="section-num">1</span> השראה -- סגנון Hades</h2>
+
+<div class="quote-box">
+"ב-Hades, הסיפור לא עוצר את המשחק -- הוא חלק ממנו. כל ריצה מביאה שיחה חדשה, יחס חדש, סוד חדש. השחקן לא 'צופה' בסיפור -- הוא חי אותו תוך כדי משחק."
+</div>
+
+<h3>מה הופך את Hades ליוצא דופן?</h3>
+
+<div class="grid-2">
+  <div class="card card-amber">
+    <h4>חשיפה הדרגתית (Progressive Revelation)</h4>
+    <ul>
+      <li>ב-Hades, <strong>כל ריצה</strong> (run) חושפת דיאלוג חדש עם NPC</li>
+      <li>לא משנה כמה פעמים מפסידים -- תמיד יש <strong>תוכן נרטיבי חדש</strong></li>
+      <li>השחקן לעולם לא רואה את <strong>אותו דיאלוג פעמיים</strong></li>
+      <li>יחסים בין דמויות <strong>מתפתחים לאט</strong> לאורך עשרות ריצות</li>
+      <li>סודות מתגלים רק אחרי <strong>הצלבת שיחות</strong> עם דמויות שונות</li>
+    </ul>
+  </div>
+  <div class="card card-green">
+    <h4>הסיפור לא עוצר את המשחק</h4>
+    <ul>
+      <li>דיאלוגים קצרים (2-4 משפטים) -- <strong>לא cutscenes ארוכים</strong></li>
+      <li>השחקן בוחר מתי לדבר (גישה ל-NPC = אופציונלית)</li>
+      <li>השיחות קורות <strong>בין ריצות</strong> (בבית = Hub)</li>
+      <li>אין "קיר סיפור" שחוסם התקדמות</li>
+      <li>רגעי שיא נרטיביים <strong>משולבים בתוך</strong> הלחימה</li>
+    </ul>
+  </div>
+</div>
+
+<h3>התאמה לנינג'ה מקלדת</h3>
+
+<div class="comparison-row">
+  <div class="col col-hades">
+    <h4 style="color:#ff6b35;">Hades</h4>
+    <table>
+      <tr><td>ריצה (Run)</td><td>ניסיון בוס / שלב</td></tr>
+      <tr><td>Hub (בית הייאדס)</td><td>מסך בית + דוג'ו</td></tr>
+      <tr><td>NPC בהאב</td><td>דמויות במסכי המשחק</td></tr>
+      <tr><td>מתנות NPC</td><td>בדג'ים + סקינים + מוזיקה</td></tr>
+      <tr><td>יחסים (Hearts)</td><td>ציון קשר עם כל דמות</td></tr>
+      <tr><td>Codex (אנציקלופדיה)</td><td>יומן סיפור (Story Journal)</td></tr>
+    </table>
+  </div>
+  <div class="col col-ninja">
+    <h4 style="color:var(--purple);">נינג'ה מקלדת -- התאמה</h4>
+    <table>
+      <tr><td><strong>שיעור</strong> = ריצה</td><td>כל שיעור מקדם את הסיפור</td></tr>
+      <tr><td><strong>מסך בית</strong> = Hub</td><td>דמויות מחכות עם דיאלוג חדש</td></tr>
+      <tr><td><strong>עמוד תרגול</strong> = NPC</td><td>לונה מדברת לפני/אחרי תרגול</td></tr>
+      <tr><td><strong>הישגים</strong> = מתנות</td><td>פתיחת תוכן חדש כתגמול</td></tr>
+      <tr><td><strong>ציון קשר</strong> = Hearts</td><td>כל דמות עם סקאלה 0-100</td></tr>
+      <tr><td><strong>יומן</strong> = Codex</td><td>כל מה שראית -- מאורגן</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="info-box">
+  <strong>העיקרון המנחה:</strong> כל פעם שהשחקן נכנס למשחק, יש לו סיבה לבדוק מה חדש. דמות חדשה מדברת, רמז חדש מופיע, או יחס משתנה. זה מה ש-Hades עושה מעולה -- וזה מה שאנחנו רוצים.
+</div>
+
+<h3>עקרונות ליבה (6 חוקים)</h3>
+
+<table>
+  <tr><th>#</th><th>עיקרון</th><th>פירוש</th><th>דוגמה</th></tr>
+  <tr>
+    <td>1</td>
+    <td><strong>תמיד משהו חדש</strong></td>
+    <td>כל כניסה = לפחות דיאלוג אחד חדש</td>
+    <td>קי: "שמעתי שיוקי תרגלה כל הלילה..."</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><strong>קצר ומתוק</strong></td>
+    <td>דיאלוג 1-3 משפטים, לא יותר</td>
+    <td>סנסאי זן: "סבלנות, תלמיד. האצבעות זוכרות."</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td><strong>לא חוסם</strong></td>
+    <td>אפשר לדלג על כל דיאלוג</td>
+    <td>כפתור "דלג" תמיד נגיש</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td><strong>מתגמל סקרנות</strong></td>
+    <td>מי שקורא -- מקבל רמזים וסיפורי צד</td>
+    <td>לונה מגלה סוד רק למי שמדבר איתה 5 פעמים</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td><strong>מחובר לביצועים</strong></td>
+    <td>הדיאלוג מגיב למה שהשחקן עשה</td>
+    <td>אחרי WPM 40+: יוקי: "!לא רע... כמעט כמוני"</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td><strong>רגעי שיא נדירים</strong></td>
+    <td>קאטסצנות רק ב-5-8 רגעים דרמטיים</td>
+    <td>הקרבת גליץ' = קאטסצנה מלאה עם מוזיקה</td>
+  </tr>
+</table>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 2: AVATAR DIALOG SYSTEM -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="dialog"><span class="section-num">2</span> מערכת דיאלוג אווטאר</h2>
+
+<p>הלב של מערכת הספרת הסיפור. כל אינטראקציה נרטיבית עוברת דרך מערכת הדיאלוג.</p>
+
+<h3>מבנה חזותי</h3>
+
+<div class="card">
+<pre style="font-size:0.8rem;color:var(--dim);text-align:center;">
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━+
+|                                    [סוג: דיאלוג]   |
+|                                                     |
+|  +━━━━━━━━━━━━━━━━━━━━━━━━━━━━━+   +━━━━━━━━━━━━+  |
+|  |         [שם הדמות]          |   |            |  |
+|  |                              |   |  פורטרט   |  |
+|  |  טקסט הדיאלוג מוצג כאן      |   |  דמות     |  |
+|  |  עם אנימציית הקלדה...▊       |   |  + מצב    |  |
+|  |                              |   |  רוח      |  |
+|  +━━━━━━━━━━━━━━━━━━━━━━━━━━━━━+   +━━━━━━━━━━━━+  |
+|                                                     |
+|  [דלג]                              [המשך ▸]       |
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━+
+</pre>
+<p style="font-size:0.82rem;color:var(--dim);text-align:center;margin-top:0.5rem;">תרשים מבנה: פורטרט בצד שמאל (RTL), בועת דיאלוג במרכז, פקדים בתחתית</p>
+</div>
+
+<h3>אלמנטים של הדיאלוג</h3>
+
+<div class="grid-2">
+  <div class="card">
+    <h4>פורטרט דמות</h4>
+    <ul>
+      <li><strong>גודל:</strong> 120x120 פיקסלים (מובייל: 80x80)</li>
+      <li><strong>מיקום:</strong> צד שמאל (RTL -- שמאל = סוף השורה)</li>
+      <li><strong>מצב רוח:</strong> נקודה צבעונית (ירוק=שמח, כתום=חושב, אדום=עצוב)</li>
+      <li><strong>אנימציה:</strong> נשימה עדינה (scale 0.98-1.02) + כניסה עם fade</li>
+      <li><strong>מקור:</strong> מ-expression sheets שכבר קיימים (48 שיטים)</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>בועת דיאלוג</h4>
+    <ul>
+      <li><strong>רקע:</strong> שקוף למחצה עם blur (glass morphism)</li>
+      <li><strong>טקסט:</strong> Heebo 400, גודל 1rem, line-height 1.8</li>
+      <li><strong>אנימציית הקלדה:</strong> תו-תו עם cursor מהבהב (typewriter effect)</li>
+      <li><strong>מהירות הקלדה:</strong> 30ms לתו (ילדים צעירים: 50ms)</li>
+      <li><strong>פינות:</strong> מעוגלות, חוץ מפינה של ה-nameplate</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>שלט שם (Nameplate)</h4>
+    <ul>
+      <li><strong>צבע:</strong> צבע ייחודי לכל דמות (סגול=קי, ציאן=יוקי...)</li>
+      <li><strong>מיקום:</strong> מעל בועת הדיאלוג, צמוד לקצה</li>
+      <li><strong>פונט:</strong> Heebo 700, 0.85rem</li>
+      <li><strong>תוכן:</strong> שם הדמות בעברית</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>פקדי שליטה</h4>
+    <ul>
+      <li><strong>"דלג" (Skip):</strong> תמיד נגיש, מדלג על כל הדיאלוג</li>
+      <li><strong>"המשך" (Advance):</strong> עובר למשפט הבא / סוגר</li>
+      <li><strong>מקש Space:</strong> שקול ל"המשך" (מותאם למשחק הקלדה!)</li>
+      <li><strong>מקש Escape:</strong> שקול ל"דלג"</li>
+      <li><strong>אוטומטי:</strong> אפשרות לילדים צעירים -- עובר אוטומטית אחרי 5 שניות</li>
+    </ul>
+  </div>
+</div>
+
+<h3>4 סוגי דיאלוג</h3>
+
+<table>
+  <tr><th>סוג</th><th>תיאור</th><th>סגנון חזותי</th><th>דוגמה</th></tr>
+  <tr>
+    <td><span class="badge badge-purple">דיאלוג</span></td>
+    <td>דמות מדברת לשחקן ישירות</td>
+    <td>בועה רגילה + פורטרט</td>
+    <td>מיקה: "!בוא ננסה ביחד, קי"</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-blue">מחשבה</span></td>
+    <td>דמות חושבת בלי לדבר</td>
+    <td>בועה מקווקוות + פורטרט מטושטש קצת</td>
+    <td>קי: <em>(מה זו המקלדת הזו...?)</em></td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-amber">נרטור</span></td>
+    <td>מספר חיצוני (אין דמות)</td>
+    <td>טקסט מרכזי בלי פורטרט, פונט גדול</td>
+    <td>"הדוג'ו שקט. רק צליל המקשים נשמע."</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-pink">מונולוג</span></td>
+    <td>דמות מדברת לעצמה</td>
+    <td>בועה עם גבול מקווקו + פורטרט מוקטן</td>
+    <td>גליץ': "הם לא יבינו... עדיין לא."</td>
+  </tr>
+</table>
+
+<h3>התאמת גיל</h3>
+
+<table>
+  <tr><th>שכבת גיל</th><th>מהירות טקסט</th><th>אורך משפט מקסימלי</th><th>אוטומטי?</th><th>גודל פורטרט</th></tr>
+  <tr><td><span class="badge badge-green">שתיל (6-8)</span></td><td>50ms/תו</td><td>15 מילים</td><td>כן (5 שניות)</td><td>100px</td></tr>
+  <tr><td><span class="badge badge-blue">נבט (8-10)</span></td><td>40ms/תו</td><td>20 מילים</td><td>אופציונלי</td><td>100px</td></tr>
+  <tr><td><span class="badge badge-purple">גזע (10-12)</span></td><td>30ms/תו</td><td>30 מילים</td><td>לא</td><td>90px</td></tr>
+  <tr><td><span class="badge badge-amber">ענף (12-14)</span></td><td>25ms/תו</td><td>40 מילים</td><td>לא</td><td>80px</td></tr>
+  <tr><td><span class="badge badge-red">צמרת (14-16+)</span></td><td>20ms/תו</td><td>ללא הגבלה</td><td>לא</td><td>70px</td></tr>
+</table>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 3: DRAMATIC VIDEO MOMENTS -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="cutscenes"><span class="section-num">3</span> רגעי וידאו דרמטיים</h2>
+
+<p>לא כל רגע סיפורי שווה קאטסצנה. כמו ב-Hades, רוב הסיפור מועבר בדיאלוגים קצרים. אבל <strong>5-8 רגעי שיא</strong> ראויים לטיפול מיוחד.</p>
+
+<h3>3 רמות הפקה</h3>
+
+<div class="grid-3">
+  <div class="card card-green">
+    <h4>רמה A: פרלקס + נרטור</h4>
+    <p style="font-size:0.85rem;color:var(--dim);">אמנות דמות קיימת עם תנועת פרלקס + טקסט נרטור + מוזיקה. <strong>הכי חסכוני.</strong></p>
+    <ul>
+      <li>שכבות רקע זזות לאט</li>
+      <li>דמות slide-in עם scale</li>
+      <li>טקסט מופיע תו-תו</li>
+      <li>מוזיקה מותאמת</li>
+    </ul>
+    <p style="font-size:0.78rem;color:var(--green);margin-top:0.5rem;"><strong>עלות:</strong> אמנות קיימת + CSS בלבד</p>
+  </div>
+  <div class="card card-amber">
+    <h4>רמה B: קומיקס תנועה</h4>
+    <p style="font-size:0.85rem;color:var(--dim);">פאנלים מחליקים פנימה בסגנון motion comic. <strong>ביניים.</strong></p>
+    <ul>
+      <li>3-5 פאנלים מצוירים</li>
+      <li>כל פאנל מחליק ב-transition</li>
+      <li>אפקטי zoom + shake</li>
+      <li>בועות דיאלוג על הפאנלים</li>
+    </ul>
+    <p style="font-size:0.78rem;color:var(--amber);margin-top:0.5rem;"><strong>עלות:</strong> 3-5 ציורי Gemini + אנימציית CSS/Framer</p>
+  </div>
+  <div class="card card-red">
+    <h4>רמה C: אנימציה מלאה</h4>
+    <p style="font-size:0.85rem;color:var(--dim);">סיקוונס אנימציה עם תנועת דמויות, אפקטים, ומוזיקה דרמטית. <strong>רק לרגעים הכי גדולים.</strong></p>
+    <ul>
+      <li>אנימציית Lottie / Rive / R3F</li>
+      <li>תנועת דמות מלאה</li>
+      <li>אפקטי חלקיקים</li>
+      <li>מוזיקה אורקסטרלית</li>
+    </ul>
+    <p style="font-size:0.78rem;color:var(--red);margin-top:0.5rem;"><strong>עלות:</strong> הפקה מלאה (3D pipeline / אנימטור)</p>
+  </div>
+</div>
+
+<h3>8 רגעי קאטסצנה מתוכננים</h3>
+
+<table>
+  <tr><th>#</th><th>מעשה</th><th>רגע</th><th>רמה</th><th>תיאור</th><th>משך</th></tr>
+  <tr>
+    <td>1</td><td><span class="badge badge-purple">מעשה 1</span></td>
+    <td><strong>קי מגלה את המקלדת</strong></td>
+    <td><span class="badge badge-green">A</span></td>
+    <td>מקלדת זוהרת בחדר חשוך. קי נוגע -- אור פורץ. נרטור: "וכך התחיל הכל."</td>
+    <td>15 שניות</td>
+  </tr>
+  <tr>
+    <td>2</td><td><span class="badge badge-purple">מעשה 1</span></td>
+    <td><strong>באג מופיע לראשונה</strong></td>
+    <td><span class="badge badge-amber">B</span></td>
+    <td>המסך "נשבר" -- פאנלים מתפוררים. באג צוחק מ-glitch בפינת המסך.</td>
+    <td>20 שניות</td>
+  </tr>
+  <tr>
+    <td>3</td><td><span class="badge badge-purple">מעשה 2</span></td>
+    <td><strong>סנסאי זן מספר על העבר</strong></td>
+    <td><span class="badge badge-green">A</span></td>
+    <td>פלאשבק -- צלליות עם פרלקס. סנסאי זן צעיר מתאמן עם תלמיד אחר (רז/פאנטום).</td>
+    <td>25 שניות</td>
+  </tr>
+  <tr>
+    <td>4</td><td><span class="badge badge-purple">מעשה 3</span></td>
+    <td><strong>וירוס מציג עצמו כחבר</strong></td>
+    <td><span class="badge badge-amber">B</span></td>
+    <td>וירוס מגיע לטורניר. נראה ידידותי. מוזיקה חשודה ברקע. "אני כאן לעזור."</td>
+    <td>20 שניות</td>
+  </tr>
+  <tr>
+    <td>5</td><td><span class="badge badge-purple">מעשה 4</span></td>
+    <td><strong>בגידת הוירוס</strong></td>
+    <td><span class="badge badge-red">C</span></td>
+    <td>וירוס מתמזג עם גליץ'. המסך נסדק. מוזיקה עוצמתית. כל הדמויות בהלם.</td>
+    <td>30 שניות</td>
+  </tr>
+  <tr>
+    <td>6</td><td><span class="badge badge-purple">מעשה 4</span></td>
+    <td><strong>גליץ' נלקחת</strong></td>
+    <td><span class="badge badge-red">C</span></td>
+    <td>גליץ' הולכת עם וירוס מרצון. מיקה צועקת. דמעות. "סלחי לי, מיקה." <strong>רגע הדמעות #1.</strong></td>
+    <td>35 שניות</td>
+  </tr>
+  <tr>
+    <td>7</td><td><span class="badge badge-purple">מעשה 5</span></td>
+    <td><strong>הקרבת גליץ'</strong></td>
+    <td><span class="badge badge-red">C</span></td>
+    <td>גליץ' נלחמת מבפנים. משמידה את מגה-וירוס. נעלמת. מיקה: "...גליץ'?" שקט. <strong>רגע הדמעות #2 -- הגדול.</strong></td>
+    <td>45 שניות</td>
+  </tr>
+  <tr>
+    <td>8</td><td><span class="badge badge-purple">מעשה 6</span></td>
+    <td><strong>אבא של קי חוזר</strong></td>
+    <td><span class="badge badge-red">C</span></td>
+    <td>אחרי המלחמה הגדולה. הדלת נפתחת. צללית. קי: "...אבא?" מוזיקה. חיבוק.</td>
+    <td>30 שניות</td>
+  </tr>
+</table>
+
+<div class="warn-box">
+  <strong>חוק ברזל:</strong> קאטסצנה רמה C (אנימציה מלאה) רק ל-4 רגעים: בגידת הוירוס, גליץ' נלקחת, הקרבת גליץ', חזרת אבא. כל השאר = רמה A או B. חסכוני ואפקטיבי.
+</div>
+
+<details>
+  <summary>טכניקות ביצוע חסכוניות</summary>
+  <div class="detail-body">
+    <h4>רמה A -- CSS בלבד</h4>
+    <ul>
+      <li><strong>פרלקס:</strong> 2-3 שכבות <code>background-attachment: fixed</code> עם <code>transform: translateY()</code></li>
+      <li><strong>כניסת דמות:</strong> <code>transform: translateX(100%) -> translateX(0)</code> + <code>opacity: 0 -> 1</code></li>
+      <li><strong>זום דרמטי:</strong> <code>transform: scale(1) -> scale(1.1)</code> על פורטרט</li>
+      <li><strong>רעידה:</strong> <code>@keyframes shake</code> -- 5 פריימים של <code>translateX(+-2px)</code></li>
+    </ul>
+    <h4>רמה B -- Framer Motion + Gemini Art</h4>
+    <ul>
+      <li>3-5 תמונות פאנל מ-<strong>Gemini nano-banana-poster</strong></li>
+      <li><code>motion.div</code> עם <code>initial/animate</code> לכל פאנל</li>
+      <li><code>AnimatePresence</code> למעברים</li>
+      <li>שימוש ב-<code>layoutId</code> לאנימציית דמות בין פאנלים</li>
+    </ul>
+    <h4>רמה C -- Pipeline מלא</h4>
+    <ul>
+      <li><strong>Lottie:</strong> אנימציות 2D קלות ב-JSON (After Effects export)</li>
+      <li><strong>Rive:</strong> אנימציות אינטראקטיביות (State Machine)</li>
+      <li><strong>R3F:</strong> לסצנות 3D עתידיות (Rodin + Tripo לדמויות)</li>
+      <li><strong>Lazy loading:</strong> חובה -- לא לטעון 45 שניות של אנימציה מראש</li>
+    </ul>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 4: CHOICE SYSTEM -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="choices"><span class="section-num">4</span> מערכת בחירות</h2>
+
+<p>בחירות קלות שמשפיעות על דיאלוג ויחסים -- <strong>לא על מהלך הסיפור</strong>. הסיפור הוא ליניארי (כמו Hades), אבל הבחירות משנות את <strong>הטון</strong> ואת <strong>עומק היחסים</strong>.</p>
+
+<h3>סוגי בחירות</h3>
+
+<div class="grid-2">
+  <div class="card">
+    <h4>בחירת תגובה (הנפוצה ביותר)</h4>
+    <p style="font-size:0.85rem;color:var(--dim);">"איך אתה מגיב?" -- 2-3 אפשרויות שמשפיעות על דיאלוג הבא ועל ציון קשר עם הדמות.</p>
+    <ul>
+      <li>לא משנה את עלילת הסיפור</li>
+      <li>משנה את <strong>הטון</strong> של הדיאלוג הבא</li>
+      <li>משפיע על <strong>ציון קשר</strong> עם הדמות (0-100)</li>
+      <li>בחירות שליליות לא נענשות -- רק מקבלים פחות "לבבות"</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>בחירת פעולה (נדירה)</h4>
+    <p style="font-size:0.85rem;color:var(--dim);">"מה אתה עושה?" -- בחירה שפותחת סיפור צד או דיאלוג בונוס. לא חוסמת.</p>
+    <ul>
+      <li>אפשרות A = עלילה ראשית (תמיד זמינה)</li>
+      <li>אפשרות B = סיפור צד / דיאלוג בונוס</li>
+      <li>אפשרות B לא חוסמת -- אפשר לחזור אליה מאוחר יותר</li>
+    </ul>
+  </div>
+</div>
+
+<h3>דוגמת בחירה (מוקאפ)</h3>
+
+<div class="choice-panel">
+  <div class="choice-question">יוקי אומרת: "בוא נתחרה! מי מקליד יותר מהר?" -- מה אתה עונה?</div>
+  <div class="choice-options">
+    <div class="choice-option">
+      <span class="choice-icon">&#9889;</span> <strong>"!יאללה, אני מוכן"</strong>
+      <div class="choice-effect">&#10084; +5 קשר עם יוקי | יוקי תגיב בהתלהבות</div>
+    </div>
+    <div class="choice-option">
+      <span class="choice-icon">&#128172;</span> <strong>"...אולי אחר כך?"</strong>
+      <div class="choice-effect">&#128172; +2 קשר עם יוקי | יוקי תגיד "בסדר, אני ממתינה"</div>
+    </div>
+    <div class="choice-option">
+      <span class="choice-icon">&#128526;</span> <strong>"!את בטוחה שאת מוכנה"</strong>
+      <div class="choice-effect">&#10084; +8 קשר עם יוקי | יוקי תצחק: "!זה מה שאני אוהבת"</div>
+    </div>
+  </div>
+</div>
+
+<h3>ציון קשר (Relationship Score)</h3>
+
+<table>
+  <tr><th>ציון</th><th>רמת יחס</th><th>השפעה</th></tr>
+  <tr>
+    <td>0-20</td><td>מכר</td>
+    <td>דיאלוגים בסיסיים, ברכות סטנדרטיות</td>
+  </tr>
+  <tr>
+    <td>21-40</td><td>חבר</td>
+    <td>דיאלוגים אישיים יותר, שיתוף קטן</td>
+  </tr>
+  <tr>
+    <td>41-60</td><td>חבר קרוב</td>
+    <td>סיפורי צד נפתחים, הדמות משתפת סודות</td>
+  </tr>
+  <tr>
+    <td>61-80</td><td>שותף</td>
+    <td>דיאלוגים ייחודיים בקרבות בוס, עזרה מיוחדת</td>
+  </tr>
+  <tr>
+    <td>81-100</td><td>נאמן</td>
+    <td>סקין בונוס נפתח, דיאלוגי סיום ייחודיים, הדמות מזכירה רגעים מוקדמים</td>
+  </tr>
+</table>
+
+<div class="success-box">
+  <strong>עיקרון Hades:</strong> אין "בחירה לא נכונה". כל בחירה נותנת תוכן -- רק שתוכן שונה. שחקן שבוחר תמיד "את הבדיחות" יקבל יותר הומור מרקס. שחקן "רציני" יקבל יותר פילוסופיה מסנסאי זן.
+</div>
+
+<h3>התאמת גיל לבחירות</h3>
+
+<table>
+  <tr><th>שכבת גיל</th><th>מספר אפשרויות</th><th>מורכבות</th><th>דוגמה</th></tr>
+  <tr><td><span class="badge badge-green">שתיל (6-8)</span></td><td>2</td><td>רגש פשוט</td><td>"שמח" / "מפוחד"</td></tr>
+  <tr><td><span class="badge badge-blue">נבט (8-10)</span></td><td>2</td><td>פעולה</td><td>"עזור ללונה" / "תרגל עוד"</td></tr>
+  <tr><td><span class="badge badge-purple">גזע (10-12)</span></td><td>3</td><td>יחס + פעולה</td><td>"עודד" / "התחרה" / "שתוק"</td></tr>
+  <tr><td><span class="badge badge-amber">ענף (12-14)</span></td><td>3</td><td>מורלי + יחס</td><td>"סלח לגליץ'" / "אל תסלח" / "תן לה זמן"</td></tr>
+  <tr><td><span class="badge badge-red">צמרת (14-16+)</span></td><td>3</td><td>מורכב</td><td>"וירוס אולי צודק" / "הוא שקרן" / "צריך להקשיב"</td></tr>
+</table>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 5: GAMEPLAY INTEGRATION -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="gameplay"><span class="section-num">5</span> אינטגרציה עם משחקיות</h2>
+
+<p>הסיפור לא מנותק מהמשחק -- הוא <strong>מגיב</strong> למה שהשחקן עושה. ככל שמשחקים יותר, הסיפור מתעשר.</p>
+
+<h3>טריגרים להפעלת סיפור</h3>
+
+<table>
+  <tr><th>סוג טריגר</th><th>תיאור</th><th>דוגמה</th><th>פרטים</th></tr>
+  <tr>
+    <td><span class="badge badge-purple">שיעור</span></td>
+    <td>סיום שיעור ספציפי</td>
+    <td>שיעור 5 = הופעת באג</td>
+    <td>pre-lesson + post-lesson beats</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-green">WPM</span></td>
+    <td>הגעה לציון מהירות</td>
+    <td>WPM 30 = יוקי מתעניינת</td>
+    <td>one-time trigger, saved in storyFlags</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-amber">בדג'</span></td>
+    <td>קבלת הישג</td>
+    <td>10 בדג'ים = רקס מקנא</td>
+    <td>triggers bonus dialog</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-red">קרב בוס</span></td>
+    <td>ניצחון/הפסד בוס</td>
+    <td>ניצחון שאדו = קאי מתרשם</td>
+    <td>conditional beats based on result</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-blue">רצף</span></td>
+    <td>X ימים רצופים</td>
+    <td>7 ימים = סנסאי זן גאה</td>
+    <td>streak-based encouragement</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-pink">כישלון</span></td>
+    <td>3+ כישלונות רצופים</td>
+    <td>נועה מופיעה לעזור</td>
+    <td>anti-frustration system integration</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-amber">חג</span></td>
+    <td>תאריך חג ישראלי</td>
+    <td>חנוכה = דמויות בסקינים</td>
+    <td>holiday event story content</td>
+  </tr>
+</table>
+
+<h3>הערות Companion לפי עמוד</h3>
+
+<div class="grid-3">
+  <div class="card card-green">
+    <h4>סנסאי זן -- שיעורים</h4>
+    <ul>
+      <li>הערת פתיחה לכל שיעור</li>
+      <li>חוכמה/פתגם בסיום</li>
+      <li>אם WPM ירד: "סבלנות..."</li>
+      <li>אם WPM עלה: "!מתקדם"</li>
+    </ul>
+  </div>
+  <div class="card card-cyan">
+    <h4>יוקי -- מבחן מהירות</h4>
+    <ul>
+      <li>אתגר לפני כל מבחן</li>
+      <li>תגובה לתוצאה (חדש/ירידה)</li>
+      <li>אם שיא: "!אין מצב..."</li>
+      <li>אם ירידה: "!ננסה שוב"</li>
+    </ul>
+  </div>
+  <div class="card card-blue">
+    <h4>לונה -- תרגול חופשי</h4>
+    <ul>
+      <li>"!נשימה עמוקה" בפתיחה</li>
+      <li>עידוד שקט בתרגול</li>
+      <li>אם מרבה שגיאות: "לאט..."</li>
+      <li>אם מדויק: "!יופי של זרימה"</li>
+    </ul>
+  </div>
+  <div class="card card-pink">
+    <h4>מיקה -- קיצורים</h4>
+    <ul>
+      <li>טיפ קיצור חדש בכל כניסה</li>
+      <li>אתגרי הקלדה עם קיצורים</li>
+      <li>אם הצליח: "!כמו האקרית"</li>
+      <li>אם נכשל: "!בואי ננסה שוב"</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>פיקסל -- סטטיסטיקות</h4>
+    <ul>
+      <li>נתון מעניין בכל כניסה</li>
+      <li>"!שיפור של 12% השבוע"</li>
+      <li>גרפים עם תגובות</li>
+      <li>השוואה לממוצע גיל</li>
+    </ul>
+  </div>
+  <div class="card card-amber">
+    <h4>רקס -- משחקים</h4>
+    <ul>
+      <li>בדיחה לפני כל משחק</li>
+      <li>ריאקציות מוגזמות לניצחון</li>
+      <li>אם הפסד: "...היי, קרה לכולם"</li>
+      <li>אסטר אגים ומשחקי מילים</li>
+    </ul>
+  </div>
+</div>
+
+<h3>דיאלוג בוס (לפני + אחרי)</h3>
+
+<div class="card card-red">
+<table>
+  <tr><th>בוס</th><th>לפני הקרב</th><th>אחרי ניצחון</th><th>אחרי הפסד</th></tr>
+  <tr>
+    <td><strong>באג</strong></td>
+    <td>באג: "!בואו נראה מי באמת יודע להקליד" | קי: "!אנחנו מוכנים"</td>
+    <td>באג: "...עוד פעם" | קי: "!כן, ניצחנו"</td>
+    <td>נועה: "!בואו ננסה שוב, ביחד" | באג צוחק</td>
+  </tr>
+  <tr>
+    <td><strong>שאדו</strong></td>
+    <td>שאדו: "..." (שתיקה) | קאי: "!אל תפחד ממנו"</td>
+    <td>שאדו מרכין ראש | קאי: "!קרב מכובד"</td>
+    <td>קאי: "!הוא חזק, אבל אנחנו נתאמן"</td>
+  </tr>
+  <tr>
+    <td><strong>מגה-וירוס</strong></td>
+    <td>וירוס+גליץ': "אתם מאוחרים מדי" | מיקה: "!גליץ'... את שם?"</td>
+    <td>גליץ': "...סלחו לי" (הקרבה) | מיקה בדמעות</td>
+    <td>סנסאי: "!ננסה שוב. אנחנו לא מוותרים על גליץ'"</td>
+  </tr>
+</table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 6: MEMORY/FLASHBACK SYSTEM -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="journal"><span class="section-num">6</span> מערכת זיכרונות (יומן סיפור)</h2>
+
+<p>כמו ה-Codex ב-Hades -- מקום לחזור ולקרוא את כל מה שראית. מאורגן, יפה, ומעודד לגלות עוד.</p>
+
+<h3>מוקאפ יומן סיפור</h3>
+
+<div class="journal">
+  <div class="journal-header">
+    <strong style="color:var(--purple);">&#128214; יומן הנינג'ה</strong>
+    <div class="journal-tabs">
+      <div class="journal-tab active">מעשה 1</div>
+      <div class="journal-tab">מעשה 2</div>
+      <div class="journal-tab">מעשה 3</div>
+      <div class="journal-tab">דמויות</div>
+    </div>
+  </div>
+  <div class="journal-content">
+    <div style="margin-bottom:0.5rem;color:var(--dim);font-size:0.82rem;">
+      מעשה 1: ההתעוררות -- <strong style="color:var(--green);">85%</strong> הושלם
+      <div class="meter"><div class="meter-fill" style="width:85%;background:var(--green);"></div></div>
+    </div>
+    <div class="journal-entry">
+      <div class="entry-icon">&#9889;</div>
+      <div class="entry-text">
+        <div class="entry-title">גילוי המקלדת</div>
+        <div class="entry-desc">קי מוצא מקלדת זוהרת בדוג'ו הנטוש</div>
+      </div>
+      <span class="entry-status seen">&#10003; נצפה</span>
+    </div>
+    <div class="journal-entry">
+      <div class="entry-icon">&#128105;</div>
+      <div class="entry-text">
+        <div class="entry-title">מיקה מצטרפת</div>
+        <div class="entry-desc">האקרית מסתורית שיודעת כל קיצור</div>
+      </div>
+      <span class="entry-status seen">&#10003; נצפה</span>
+    </div>
+    <div class="journal-entry">
+      <div class="entry-icon">&#128027;</div>
+      <div class="entry-text">
+        <div class="entry-title">הופעת באג</div>
+        <div class="entry-desc">וירוס ראשון תוקף את הדוג'ו</div>
+      </div>
+      <span class="entry-status seen">&#10003; נצפה</span>
+    </div>
+    <div class="journal-entry">
+      <div class="entry-icon">&#128274;</div>
+      <div class="entry-text">
+        <div class="entry-title">הסוד של סנסאי זן</div>
+        <div class="entry-desc">???</div>
+      </div>
+      <span class="entry-status locked">&#128274; נעול</span>
+    </div>
+    <div class="journal-entry">
+      <div class="entry-icon">&#128274;</div>
+      <div class="entry-text">
+        <div class="entry-title">ציורי L.</div>
+        <div class="entry-desc">???</div>
+      </div>
+      <span class="entry-status locked">&#128274; נעול</span>
+    </div>
+  </div>
+</div>
+
+<h3>מבנה היומן</h3>
+
+<div class="grid-2">
+  <div class="card">
+    <h4>ארגון לפי מעשה</h4>
+    <ul>
+      <li><strong>מעשה 1:</strong> ההתעוררות (שיעורים 1-7)</li>
+      <li><strong>מעשה 2:</strong> הדוג'ו (שיעורים 8-14)</li>
+      <li><strong>מעשה 3:</strong> הטורניר (שיעורים 15-20)</li>
+      <li><strong>מעשה 4:</strong> הבגידה (שיעורים 21-27)</li>
+      <li><strong>מעשה 5:</strong> הקרב האחרון (שיעורים 28-35)</li>
+      <li><strong>מעשה 6:</strong> המלחמה הגדולה (שיעורים 36+)</li>
+      <li><strong>סיפורי צד:</strong> לפי דמות</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>תכונות</h4>
+    <ul>
+      <li><strong>השמעה חוזרת:</strong> כל דיאלוג ניתן להשמעה מחדש</li>
+      <li><strong>קאטסצנות:</strong> ניתנות לצפייה חוזרת (כפתור "Play")</li>
+      <li><strong>אחוז השלמה:</strong> לכל מעשה ולכל דמות</li>
+      <li><strong>רכיבי Foreshadowing:</strong> מסומנים רטרואקטיבית אחרי שהסוד מתגלה</li>
+      <li><strong>גלריית דמויות:</strong> ביו + expression sheet + קולות לכל דמות</li>
+      <li><strong>ציר זמן:</strong> תצוגת timeline ויזואלית של העלילה</li>
+    </ul>
+  </div>
+</div>
+
+<div class="info-box">
+  <strong>פיצ'ר Foreshadowing:</strong> אחרי שהשחקן מגלה שגליץ' הייתה חברה של מיקה (מעשה 4), כל ההערות הקודמות של מיקה על "קובץ ישן" (מעשה 1.3) מסומנות ביומן עם <span class="badge badge-amber">Foreshadowing!</span> -- ילדים חוזרים לקרוא ומגלים רמזים שפספסו.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 7: EMOTION & MUSIC -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="emotion-music"><span class="section-num">7</span> מערכת רגשות ומוזיקה</h2>
+
+<p>כל רגע סיפורי מתויג ברגש. המוזיקה, הסאונד, ואפילו צבעי הממשק -- הכל מגיב לטון הרגשי.</p>
+
+<h3>תגי רגש (Mood Tags)</h3>
+
+<table>
+  <tr><th>תג</th><th>מוזיקה</th><th>צבע ממשק</th><th>SFX</th><th>דוגמה</th></tr>
+  <tr>
+    <td><span class="badge badge-green">happy</span></td>
+    <td>Main Theme V2 (עליז)</td>
+    <td>ירוק + סגול בהיר</td>
+    <td>צלילי פעמון</td>
+    <td>קי מגלה כוח חדש</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-amber">tense</span></td>
+    <td>Boss Theme V2 (מיני-בוס)</td>
+    <td>כתום + אדום כהה</td>
+    <td>תיפוף נמוך</td>
+    <td>באג מופיע</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-blue">sad</span></td>
+    <td>פסנתר איטי + כינור</td>
+    <td>כחול כהה + אפור</td>
+    <td>גשם / רוח</td>
+    <td>גליץ' נלקחת</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-red">epic</span></td>
+    <td>Boss Theme V1 (בוס גדול)</td>
+    <td>אדום + זהב</td>
+    <td>תופי טאיקו</td>
+    <td>קרב סופי מגה-וירוס</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-amber">funny</span></td>
+    <td>מנגינת רקס (קצבית)</td>
+    <td>כתום + ירוק בהיר</td>
+    <td>צלילי קומדיה</td>
+    <td>רקס נופל מהכיסא</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-purple">mysterious</span></td>
+    <td>אמביינט + גלים</td>
+    <td>סגול כהה + שחור</td>
+    <td>לחישות</td>
+    <td>הפלאשבק של סנסאי</td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-pink">heartwarming</span></td>
+    <td>Main Theme V2 (גרסה איטית)</td>
+    <td>ורוד + זהב חם</td>
+    <td>פעימת לב</td>
+    <td>אבא של קי חוזר</td>
+  </tr>
+</table>
+
+<h3>טכניקות מוזיקליות מיוחדות</h3>
+
+<div class="grid-2">
+  <div class="card card-red">
+    <h4>שקט דרמטי (הנשק הסודי)</h4>
+    <p style="font-size:0.85rem;color:var(--dim);">לפני רגע דרמטי -- <strong>5 שניות של שקט מוחלט</strong>. לא מוזיקה, לא SFX. רק שקט. ואז BOOM -- הרגע.</p>
+    <ul>
+      <li><strong>לפני הקרבת גליץ':</strong> המוזיקה נעצרת. שקט. גליץ' לוחשת: "סלחי לי." ואז -- אור.</li>
+      <li><strong>לפני חזרת אבא:</strong> דלת נפתחת בשקט. צעד. צעד. "...אבא?"</li>
+      <li><strong>חוק:</strong> שקט דרמטי לא יותר מ-3 פעמים בכל המשחק. אחרת מאבד כוח.</li>
+    </ul>
+  </div>
+  <div class="card card-green">
+    <h4>מעבר מוזיקלי (Crossfade)</h4>
+    <p style="font-size:0.85rem;color:var(--dim);">כשמצב הרוח משתנה, המוזיקה <strong>לא קופצת</strong> -- היא עוברת ב-crossfade של 2-3 שניות.</p>
+    <ul>
+      <li><strong>MusicManager</strong> כבר תומך ב-crossfade (קיים בקוד)</li>
+      <li>כל story beat מעביר <code>moodTag</code> ל-<code>music-store</code></li>
+      <li>ה-store מתרגם mood ל-track ומפעיל transition</li>
+      <li>אם אותו mood -- לא מחליף track</li>
+    </ul>
+  </div>
+</div>
+
+<h3>אינטגרציה עם MusicManager</h3>
+
+<div class="flow-diagram">
+  <div class="flow-box">StoryBeat<br><small>mood: "sad"</small></div>
+  <div class="flow-arrow">&#10145;</div>
+  <div class="flow-box">story-store<br><small>setCurrentMood()</small></div>
+  <div class="flow-arrow">&#10145;</div>
+  <div class="flow-box">music-store<br><small>moodToTrack()</small></div>
+  <div class="flow-arrow">&#10145;</div>
+  <div class="flow-box active">MusicManager<br><small>crossfade(track)</small></div>
+  <div class="flow-arrow">&#10145;</div>
+  <div class="flow-box">Web Audio<br><small>playing...</small></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 8: TECHNICAL SPECIFICATION -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="tech"><span class="section-num">8</span> ספציפיקציה טכנית</h2>
+
+<h3>ארכיטקטורת קומפוננטות</h3>
+
+<div class="card">
+<pre>
+src/
+├── components/
+│   └── story/
+│       ├── dialog-box.tsx          # בועת דיאלוג + פורטרט + nameplate
+│       ├── speech-bubble.tsx       # (קיים) בועת דיבור בסיסית
+│       ├── story-beat-wrapper.tsx  # (קיים) עטיפת story beat לשיעור
+│       ├── cutscene-player.tsx     # נגן קאטסצנות (lazy loaded)
+│       ├── choice-panel.tsx        # מערכת בחירות
+│       ├── narrator-text.tsx       # טקסט נרטור (ללא דמות)
+│       ├── story-journal.tsx       # יומן סיפור מלא
+│       ├── character-gallery.tsx   # גלריית דמויות ביומן
+│       └── timeline-view.tsx       # ציר זמן ויזואלי
+├── lib/
+│   └── story/
+│       ├── story-script.ts        # (קיים) כל הטקסטים + beats
+│       ├── story-triggers.ts      # מערכת טריגרים (WPM, badge, streak...)
+│       ├── cutscene-data.ts       # הגדרות קאטסצנות (סצנות, שכבות, תזמון)
+│       ├── choice-data.ts         # הגדרות בחירות + תוצאות
+│       ├── relationship-engine.ts # מנוע ציון קשר
+│       └── mood-music-map.ts      # מיפוי mood -> track
+├── stores/
+│   └── story-store.ts             # (קיים) + הרחבה: choices, relationships, journal
+└── types/
+    └── story.ts                   # (קיים) + הרחבה: Choice, Cutscene, Journal types
+</pre>
+</div>
+
+<h3>סכימת נתונים (JSON)</h3>
+
+<details>
+  <summary>StoryBeat -- מורחב</summary>
+  <div class="detail-body">
+<pre>
+{
+  "id": "act1-lesson5-pre",
+  "lessonNumber": 5,
+  "phase": "pre",
+  "speaker": "bug",
+  "text": "הו הו... נינג'ה חדש? בוא נראה מה אתה שווה!",
+  "mood": "mischievous",
+  "duration": 3500,
+  "dialogType": "dialog",        // dialog | thought | narration | monologue
+  "moodTag": "tense",            // mood tag for music system
+  "voiceClip": "bug-first-appear.mp3",   // optional voice line
+  "condition": null,              // optional condition key
+  "choiceAfter": "choice-bug-response",  // optional choice ID
+  "triggerFlag": "bugFirstAppearance",   // flag to set when shown
+  "ageFilter": {                  // optional age-specific adjustments
+    "shatil": { "text": "אוי! מי זה?!", "duration": 4000 },
+    "tzameret": null              // null = use default text
+  }
+}
+</pre>
+  </div>
+</details>
+
+<details>
+  <summary>Choice -- מערכת בחירות</summary>
+  <div class="detail-body">
+<pre>
+{
+  "id": "choice-bug-response",
+  "questionText": "באג מאיים עליך. מה אתה עושה?",
+  "ageVariants": {
+    "shatil": { "questionText": "הבאג מפחיד! מה עושים?" }
+  },
+  "options": [
+    {
+      "id": "brave",
+      "text": "אני לא מפחד ממך!",
+      "icon": "&#9889;",
+      "relationshipEffects": { "ki": 3, "mika": 2 },
+      "followUpBeatId": "act1-lesson5-brave-response",
+      "moodTag": "tense"
+    },
+    {
+      "id": "cautious",
+      "text": "...בואו נחשוב על תוכנית",
+      "icon": "&#128161;",
+      "relationshipEffects": { "mika": 5, "senseiZen": 3 },
+      "followUpBeatId": "act1-lesson5-cautious-response",
+      "moodTag": "mysterious"
+    },
+    {
+      "id": "humor",
+      "text": "באג? אני חשבתי שאתה פיצ'ר!",
+      "icon": "&#128514;",
+      "relationshipEffects": { "rex": 5, "ki": 1 },
+      "followUpBeatId": "act1-lesson5-humor-response",
+      "moodTag": "funny",
+      "ageMinimum": "geza"
+    }
+  ]
+}
+</pre>
+  </div>
+</details>
+
+<details>
+  <summary>CutsceneScene -- קאטסצנה</summary>
+  <div class="detail-body">
+<pre>
+{
+  "id": "cutscene-glitch-sacrifice",
+  "level": "C",
+  "durationMs": 45000,
+  "musicTrack": "sad-piano-glitch",
+  "preloadAssets": [
+    "characters/glitch-sacrifice.jpg",
+    "backgrounds/dark-void.jpg",
+    "audio/music/sad-piano.mp3"
+  ],
+  "scenes": [
+    {
+      "type": "dialog",
+      "speaker": "glitch",
+      "text": "סלחי לי, מיקה. זה הדרך היחידה.",
+      "mood": "sad",
+      "durationMs": 5000,
+      "effects": ["screen-shake", "color-desaturate"]
+    },
+    {
+      "type": "silence",
+      "durationMs": 5000,
+      "effects": ["fade-to-white"]
+    },
+    {
+      "type": "narration",
+      "text": "ואז... שקט.",
+      "durationMs": 4000,
+      "effects": ["slow-fade-in"]
+    },
+    {
+      "type": "dialog",
+      "speaker": "mika",
+      "text": "...גליץ'?",
+      "mood": "sad",
+      "durationMs": 6000,
+      "effects": ["tears-particle", "heartbeat-sfx"]
+    }
+  ]
+}
+</pre>
+  </div>
+</details>
+
+<details>
+  <summary>JournalEntry -- יומן</summary>
+  <div class="detail-body">
+<pre>
+{
+  "id": "journal-act1-discovery",
+  "act": 1,
+  "order": 1,
+  "title": "גילוי המקלדת",
+  "description": "קי מוצא מקלדת זוהרת בדוג'ו הנטוש",
+  "icon": "&#9889;",
+  "beatIds": ["act1-lesson1-pre", "act1-lesson1-post"],
+  "cutsceneId": "cutscene-discovery",
+  "unlockCondition": { "type": "lesson", "value": 1 },
+  "isForeshadowing": false,
+  "revealedBy": null,
+  "characterFocus": "ki"
+}
+</pre>
+  </div>
+</details>
+
+<h3>הרחבת story-store</h3>
+
+<details>
+  <summary>StoryState מורחב (Zustand)</summary>
+  <div class="detail-body">
+<pre>
+interface StoryState {
+  // === קיים ===
+  currentAct: 1 | 2 | 3 | 4 | 5 | 6
+  unlockedCharacters: CharacterName[]
+  storyFlags: StoryFlags
+  seenStoryBeats: Record&lt;string, boolean&gt;   // changed to beat ID
+  bossResults: Record&lt;number, BossResult&gt;
+  storyEnabled: boolean
+
+  // === חדש ===
+  // בחירות
+  choicesMade: Record&lt;string, string&gt;         // choiceId -> optionId
+  // יחסים
+  relationships: Record&lt;CharacterName, number&gt; // 0-100 per character
+  // יומן
+  journalUnlocked: string[]                    // journal entry IDs
+  journalSeen: string[]                        // entries user has opened
+  // קאטסצנות
+  cutscenesSeen: string[]                      // cutscene IDs watched
+  // מצב רוח נוכחי
+  currentMood: MoodTag | null
+
+  // === פעולות חדשות ===
+  makeChoice: (choiceId: string, optionId: string) => void
+  addRelationship: (character: CharacterName, delta: number) => void
+  unlockJournalEntry: (entryId: string) => void
+  setCurrentMood: (mood: MoodTag) => void
+  markCutsceneSeen: (cutsceneId: string) => void
+}
+</pre>
+  </div>
+</details>
+
+<h3>מערכת טריגרים</h3>
+
+<div class="card">
+<pre>
+// story-triggers.ts
+
+type TriggerType = 'lesson' | 'wpm' | 'badge' | 'boss' | 'streak' | 'failure' | 'holiday'
+
+interface StoryTrigger {
+  type: TriggerType
+  condition: (state: GameState) => boolean
+  beatId: string                    // which story beat to show
+  priority: number                  // higher = shows first if multiple triggers fire
+  oneTime: boolean                  // if true, only fires once
+}
+
+// Example triggers
+const TRIGGERS: StoryTrigger[] = [
+  {
+    type: 'wpm',
+    condition: (s) => s.bestWpm >= 30 && !s.storyFlags.yukiIntroduced,
+    beatId: 'yuki-notices-speed',
+    priority: 10,
+    oneTime: true,
+  },
+  {
+    type: 'failure',
+    condition: (s) => s.consecutiveFailures >= 3,
+    beatId: 'noa-comfort',
+    priority: 100,     // high priority -- anti-frustration
+    oneTime: false,    // can repeat
+  },
+  {
+    type: 'streak',
+    condition: (s) => s.loginStreak >= 7,
+    beatId: 'sensei-proud-7day',
+    priority: 5,
+    oneTime: true,
+  },
+]
+</pre>
+</div>
+
+<h3>ביצועים ונגישות</h3>
+
+<div class="grid-2">
+  <div class="card card-green">
+    <h4>ביצועים</h4>
+    <ul>
+      <li><strong>Lazy loading:</strong> קאטסצנות רמה B+C נטענות <code>React.lazy()</code></li>
+      <li><strong>Preload:</strong> הסצנה הבאה מתחילה preload ברגע שהקודמת מושמעת</li>
+      <li><strong>אמנות דמות:</strong> WebP + srcset לגדלים שונים</li>
+      <li><strong>מוזיקה:</strong> streaming, לא טעינה מלאה מראש</li>
+      <li><strong>בועת דיאלוג:</strong> <code>will-change: transform, opacity</code></li>
+      <li><strong>יומן:</strong> virtualized list (רק 20 entries גלויים)</li>
+    </ul>
+  </div>
+  <div class="card card-blue">
+    <h4>נגישות (WCAG 2.2 AA)</h4>
+    <ul>
+      <li><strong>כל הדיאלוג קריא:</strong> <code>role="dialog"</code> + <code>aria-label</code></li>
+      <li><strong>כתוביות:</strong> לכל קליפ קול + קאטסצנה</li>
+      <li><strong>דלג:</strong> כפתור <code>Skip</code> תמיד נגיש במקלדת (Escape)</li>
+      <li><strong>ניגודיות:</strong> כל טקסט 4.5:1 מינימום</li>
+      <li><strong>מקלדת:</strong> Space=המשך, Escape=דלג, Tab=ניווט בחירות</li>
+      <li><strong>הקראת מסך:</strong> <code>aria-live="polite"</code> על טקסט דיאלוג</li>
+      <li><strong>תנועה מופחתת:</strong> <code>prefers-reduced-motion</code> מבטל typewriter + אנימציות</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 9: LIVE EXAMPLES -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="examples"><span class="section-num">9</span> דוגמאות חיות</h2>
+
+<p>שלוש דוגמאות אינטראקטיביות שמדגימות את מערכת הדיאלוג.</p>
+
+<h3>דוגמה 1: קי פוגש את סנסאי זן (מבוא שיעור)</h3>
+
+<div class="dialog-scene">
+  <div class="dialog-bg">
+    <div class="dialog-bubble">
+      <div class="dialog-nameplate sensei">&#128034; סנסאי זן</div>
+      <div class="dialog-text">
+        <span class="dialog-type-badge dialog-type-dialog">דיאלוג</span>
+        אהה, תלמיד חדש? &#128034; הידיים שלך... כן, יש בהן פוטנציאל. כל נינג'ה מתחיל עם <strong>שורת הבית</strong>. שים את האצבעות... כאן. נשימה עמוקה. ו...<span class="typing-cursor"></span>
+      </div>
+    </div>
+    <div class="dialog-portrait sensei" style="background:rgba(249,202,36,0.12);">
+      &#128034;
+      <div class="mood-dot" style="background:var(--gold);"></div>
+    </div>
+  </div>
+  <div class="dialog-controls">
+    <span class="skip-btn">Esc דלג</span>
+    <span class="advance-btn">Space &#9654; המשך</span>
+  </div>
+</div>
+
+<h3>דוגמה 2: יוקי מאתגרת למבחן מהירות (מפגש יריבה)</h3>
+
+<div class="dialog-scene">
+  <div class="dialog-bg">
+    <div class="dialog-bubble">
+      <div class="dialog-nameplate yuki">&#9889; יוקי</div>
+      <div class="dialog-text">
+        <span class="dialog-type-badge dialog-type-dialog">דיאלוג</span>
+        היי, אתה! &#128064; שמעתי שאתה מתאמן על מהירות. חמוד. אני מקלידה <strong>60 מילים בדקה</strong>. בואנראהאם אתהמצליח להגיעלחצי מזה... &#128521; מוכן?<span class="typing-cursor"></span>
+      </div>
+    </div>
+    <div class="dialog-portrait yuki" style="background:rgba(0,206,201,0.12);">
+      &#9889;
+      <div class="mood-dot" style="background:var(--cyan);"></div>
+    </div>
+  </div>
+  <div class="dialog-controls">
+    <span class="skip-btn">Esc דלג</span>
+    <span class="advance-btn">Space &#9654; המשך</span>
+  </div>
+</div>
+
+<div class="choice-panel" style="margin-top:-0.5rem;border-radius:0 0 14px 14px;">
+  <div class="choice-question">יוקי מחכה לתשובה שלך...</div>
+  <div class="choice-options">
+    <div class="choice-option">
+      <span class="choice-icon">&#9889;</span> <strong>"!יאללה, בואי נראה מי הנינג'ה האמיתית"</strong>
+      <div class="choice-effect">&#10084; +8 קשר עם יוקי | מצב רוח: מתח</div>
+    </div>
+    <div class="choice-option">
+      <span class="choice-icon">&#128172;</span> <strong>"אממ... אני עדיין מתאמן"</strong>
+      <div class="choice-effect">&#128172; +2 קשר עם יוקי | יוקי: "!גם אני התחלתי מאפס"</div>
+    </div>
+    <div class="choice-option">
+      <span class="choice-icon">&#128526;</span> <strong>"60? סנסאי זן מקליד 80 בעיניים עצומות"</strong>
+      <div class="choice-effect">&#10084; +5 יוקי, +3 סנסאי | יוקי: "!...מה?! אני צריכה לתרגל"</div>
+    </div>
+  </div>
+</div>
+
+<h3>דוגמה 3: הקרבת גליץ' (קאטסצנה דרמטית)</h3>
+
+<div class="cutscene-frame">
+  <div class="cutscene-bars"></div>
+  <div class="cutscene-content">
+    <div style="font-size:0.75rem;color:var(--red);margin-bottom:0.5rem;letter-spacing:2px;">&#9632; מעשה 5 -- רגע השיא &#9632;</div>
+    <div class="cutscene-char">&#128128; &#10145; &#128150;</div>
+    <div class="cutscene-text" style="color:var(--pink);">סלחי לי, מיקה.<br>זה הדרך היחידה.</div>
+    <div class="cutscene-subtitle">-- גליץ', רגע לפני ההקרבה</div>
+    <div style="margin:1rem 0;height:1px;background:rgba(239,68,68,0.2);width:60%;"></div>
+    <div style="color:var(--dim);font-size:0.85rem;max-width:500px;">
+      <em>[5 שניות שקט מוחלט]</em><br><br>
+      המסך מתמלא באור לבן. גליץ' נעלמת.<br>
+      הוירוס צורח. קולו נשבר. ואז...<br><br>
+      <em>[שקט]</em>
+    </div>
+    <div style="margin-top:1rem;">
+      <div class="cutscene-text" style="font-size:1.1rem;color:var(--text);">...גליץ'?</div>
+      <div class="cutscene-subtitle">-- מיקה, בדמעות</div>
+    </div>
+    <div class="cutscene-emotion">&#128167; רגע הדמעות הגדול</div>
+  </div>
+  <div class="cutscene-bars"></div>
+</div>
+
+<div class="card card-red" style="text-align:center;">
+  <h4>פירוט טכני של הסצנה</h4>
+  <table>
+    <tr><th>שלב</th><th>משך</th><th>חזותי</th><th>שמע</th></tr>
+    <tr><td>1. גליץ' מדברת</td><td>5 שניות</td><td>פורטרט עם דמעות + screen shake</td><td>מוזיקה עצובה (פסנתר)</td></tr>
+    <tr><td>2. שקט</td><td>5 שניות</td><td>desaturate הדרגתי</td><td><strong>שקט מוחלט</strong></td></tr>
+    <tr><td>3. אור</td><td>3 שניות</td><td>fade to white</td><td>צליל גבוה יחיד (sine wave)</td></tr>
+    <tr><td>4. נרטור</td><td>4 שניות</td><td>"ואז... שקט." -- טקסט מרכזי</td><td>רוח עדינה</td></tr>
+    <tr><td>5. מיקה</td><td>6 שניות</td><td>פורטרט מיקה -- דמעות, פוקוס הדרגתי</td><td>SFX פעימת לב</td></tr>
+    <tr><td>6. סיום</td><td>8 שניות</td><td>fade to black + credits style text</td><td>פסנתר חוזר, איטי</td></tr>
+  </table>
+  <p style="color:var(--dim);font-size:0.82rem;margin-top:0.8rem;"><strong>סה"כ: ~45 שניות</strong> | רמה C (אנימציה מלאה) | <code>React.lazy()</code> + preload בזמן הקרב</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- SUMMARY TABLE -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2><span class="section-num">&#10003;</span> סיכום -- מפת מימוש</h2>
+
+<table>
+  <tr><th>רכיב</th><th>סטטוס</th><th>עדיפות</th><th>הערות</th></tr>
+  <tr>
+    <td>מערכת דיאלוג בסיסית</td>
+    <td><span class="badge badge-green">קיים</span></td>
+    <td>-</td>
+    <td>StoryBeatWrapper + SpeechBubble + story-script</td>
+  </tr>
+  <tr>
+    <td>DialogBox (מורחב עם פורטרט)</td>
+    <td><span class="badge badge-amber">לבנות</span></td>
+    <td>P0</td>
+    <td>שדרוג ה-SpeechBubble הקיים</td>
+  </tr>
+  <tr>
+    <td>4 סוגי דיאלוג</td>
+    <td><span class="badge badge-amber">לבנות</span></td>
+    <td>P0</td>
+    <td>dialog, thought, narration, monologue</td>
+  </tr>
+  <tr>
+    <td>מערכת בחירות</td>
+    <td><span class="badge badge-amber">לבנות</span></td>
+    <td>P1</td>
+    <td>ChoicePanel + choice-data + relationship effects</td>
+  </tr>
+  <tr>
+    <td>ציון קשר (Relationships)</td>
+    <td><span class="badge badge-amber">לבנות</span></td>
+    <td>P1</td>
+    <td>relationship-engine + הרחבת story-store</td>
+  </tr>
+  <tr>
+    <td>קאטסצנות רמה A</td>
+    <td><span class="badge badge-amber">לבנות</span></td>
+    <td>P1</td>
+    <td>פרלקס + נרטור -- CSS בלבד</td>
+  </tr>
+  <tr>
+    <td>קאטסצנות רמה B</td>
+    <td><span class="badge badge-red">עתידי</span></td>
+    <td>P2</td>
+    <td>Gemini art + Framer Motion</td>
+  </tr>
+  <tr>
+    <td>קאטסצנות רמה C</td>
+    <td><span class="badge badge-red">עתידי</span></td>
+    <td>P3</td>
+    <td>Lottie/Rive/R3F -- דורש הפקה</td>
+  </tr>
+  <tr>
+    <td>יומן סיפור</td>
+    <td><span class="badge badge-amber">לבנות</span></td>
+    <td>P1</td>
+    <td>StoryJournal + timeline-view</td>
+  </tr>
+  <tr>
+    <td>מערכת טריגרים</td>
+    <td><span class="badge badge-amber">לבנות</span></td>
+    <td>P0</td>
+    <td>story-triggers.ts -- event-based + milestone-based</td>
+  </tr>
+  <tr>
+    <td>אינטגרציית מוזיקה</td>
+    <td><span class="badge badge-green">חלקי</span></td>
+    <td>P1</td>
+    <td>MusicManager קיים, צריך mood-music-map</td>
+  </tr>
+  <tr>
+    <td>התאמת גיל</td>
+    <td><span class="badge badge-amber">לבנות</span></td>
+    <td>P1</td>
+    <td>ageFilter על beats + choices</td>
+  </tr>
+  <tr>
+    <td>Companion הערות</td>
+    <td><span class="badge badge-amber">לבנות</span></td>
+    <td>P1</td>
+    <td>דיאלוגים קונטקסטואליים לכל עמוד</td>
+  </tr>
+  <tr>
+    <td>Foreshadowing marking</td>
+    <td><span class="badge badge-red">עתידי</span></td>
+    <td>P2</td>
+    <td>סימון רטרואקטיבי ביומן</td>
+  </tr>
+</table>
+
+<div class="success-box" style="text-align:center;">
+  <strong>שלב ראשון (P0):</strong> DialogBox מורחב + 4 סוגי דיאלוג + מערכת טריגרים = <strong>הבסיס לסיפור סגנון Hades</strong><br>
+  <strong>שלב שני (P1):</strong> בחירות + יחסים + יומן + מוזיקה + companions = <strong>חוויה עשירה</strong><br>
+  <strong>שלב שלישי (P2-P3):</strong> קאטסצנות מתקדמות + foreshadowing = <strong>WOW factor</strong>
+</div>
+
+<footer>
+  <p>Ninja Keyboard -- מערכת הספרת סיפור | בהשראת Hades | מרץ 2026</p>
+  <p style="font-size:0.75rem;margin-top:0.3rem;">קומפוננטות קיימות: StoryBeatWrapper, SpeechBubble, story-script.ts, story-store.ts, MusicManager</p>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,134 @@
+{
+  "A": {
+    "label": "Sabra Speed Runner",
+    "description": "An energetic Israeli woman speaking extremely fast Hebrew with pure Sabra accent. Youthful, high-pitched voice. Competitive, like a speed runner commentating. No Russian or Eastern European accent whatsoever. Natural Israeli Hebrew intonation. Her Rs are guttural, her vowels warm and Mediterranean. She sounds like she grew up in Tel Aviv and speaks a mile a minute. Bright, peppy, breathless excitement.",
+    "ttsSettings": {
+      "stability": 0.4,
+      "similarity_boost": 0.95,
+      "style": 0.95,
+      "use_speaker_boost": true
+    },
+    "previews": [
+      {
+        "index": 0,
+        "filename": "var-A-preview-0-9.8s.mp3",
+        "voiceId": "6NlcQRSCMdkyhZrr6JKY",
+        "duration": 9.85,
+        "size": 236400
+      },
+      {
+        "index": 1,
+        "filename": "var-A-preview-1-11.7s.mp3",
+        "voiceId": "yKEOBQ7UTgEHZW6rFubH",
+        "duration": 11.704708333333333,
+        "size": 280913
+      },
+      {
+        "index": 2,
+        "filename": "var-A-preview-2-12.4s.mp3",
+        "voiceId": "v6GnYP9k6mcfcHA1lXLA",
+        "duration": 12.357791666666667,
+        "size": 296587
+      }
+    ]
+  },
+  "B": {
+    "label": "Tel Aviv Sports Announcer",
+    "description": "A youthful Israeli woman with rapid-fire Hebrew speech like an excited sports announcer. Pure Tel Aviv accent. High-pitched, bubbly, breathless energy. Speaking so fast it is almost hard to keep up. NO Russian or Eastern European tonality - 100 percent Israeli born and raised. Staccato delivery, infectious competitive spirit. Think anime dub voice actress doing Hebrew.",
+    "ttsSettings": {
+      "stability": 0.35,
+      "similarity_boost": 0.95,
+      "style": 1,
+      "use_speaker_boost": true
+    },
+    "previews": [
+      {
+        "index": 0,
+        "filename": "var-B-preview-0-15.7s.mp3",
+        "voiceId": "ce3rzEWWd7g1xtfVPRys",
+        "duration": 15.727583333333333,
+        "size": 377462
+      },
+      {
+        "index": 1,
+        "filename": "var-B-preview-1-13.3s.mp3",
+        "voiceId": "d8KIs5cwGo6ctAWregUC",
+        "duration": 13.272041666666667,
+        "size": 318529
+      },
+      {
+        "index": 2,
+        "filename": "var-B-preview-2-9.9s.mp3",
+        "voiceId": "HpMube8zlNeuLeOhkw5V",
+        "duration": 9.928375,
+        "size": 238281
+      }
+    ]
+  },
+  "C": {
+    "label": "Ninja Lightning Voice",
+    "description": "A Hebrew-speaking ninja character with lightning-fast speech and a youthful, high-pitched female voice. Pure Israeli Sabra accent. Excited, competitive energy. Each sentence bursts out rapidly. Sharp intonation changes - never monotone. Voice rises and falls dramatically. Warm Mediterranean vowels, guttural R, absolutely ZERO Eastern European influence. Fierce and fun.",
+    "ttsSettings": {
+      "stability": 0.45,
+      "similarity_boost": 0.95,
+      "style": 0.9,
+      "use_speaker_boost": true
+    },
+    "previews": [
+      {
+        "index": 0,
+        "filename": "var-C-preview-0-12.8s.mp3",
+        "voiceId": "cUv2pl7qV3KYj50keoaR",
+        "duration": 12.801875,
+        "size": 307245
+      },
+      {
+        "index": 1,
+        "filename": "var-C-preview-1-15.2s.mp3",
+        "voiceId": "CzuUUxkbvyHf19DpVtLK",
+        "duration": 15.23125,
+        "size": 365550
+      },
+      {
+        "index": 2,
+        "filename": "var-C-preview-2-15.3s.mp3",
+        "voiceId": "mYtZVeNemmNqaI5sEwzq",
+        "duration": 15.309625,
+        "size": 367431
+      }
+    ]
+  },
+  "D": {
+    "label": "Hyper Sabra Gamer",
+    "description": "A hyperactive Israeli woman gamer who speaks Hebrew at breakneck speed. Youthful, high-pitched voice. Born and raised in Israel - pure Sabra through and through. Accent is warm, Mediterranean, with natural guttural Hebrew sounds. Sounds like live-streaming a speed run and cannot contain the excitement. Dramatic intonation swings - whisper-to-shout energy shifts within a single sentence. Absolutely NO Eastern European, Russian, or Slavic undertones. Peppy, fierce, unstoppable.",
+    "ttsSettings": {
+      "stability": 0.38,
+      "similarity_boost": 0.92,
+      "style": 1,
+      "use_speaker_boost": true
+    },
+    "previews": [
+      {
+        "index": 0,
+        "filename": "var-D-preview-0-9.7s.mp3",
+        "voiceId": "Ka5cMRVq1bVqog2geKZo",
+        "duration": 9.693291666666667,
+        "size": 232639
+      },
+      {
+        "index": 1,
+        "filename": "var-D-preview-1-10.4s.mp3",
+        "voiceId": "UHa9ImzGKDX7i7Of3mt0",
+        "duration": 10.398583333333333,
+        "size": 249566
+      },
+      {
+        "index": 2,
+        "filename": "var-D-preview-2-9.6s.mp3",
+        "voiceId": "svFzGI0ewo7PyrO1RHP1",
+        "duration": 9.614916666666666,
+        "size": 230758
+      }
+    ]
+  }
+}

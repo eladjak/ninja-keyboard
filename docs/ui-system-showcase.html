@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מערכת UI גיימינג - Ninja Keyboard Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Assistant:wght@400;600;700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ── Base Theme (mirrors globals.css gaming theme) ────────── */
+  :root {
+    --bg: #0d0b1a;
+    --bg2: #13102a;
+    --bg3: #1a1735;
+    --surface: #16132e;
+    --surface2: #1e1a3d;
+    --primary: #6C5CE7;
+    --primary-light: #8B7EF8;
+    --primary-dark: #4a3cb0;
+    --secondary: #00B894;
+    --secondary-light: #00d4a8;
+    --accent-gold: #FFD700;
+    --accent-pink: #fd79a8;
+    --accent-orange: #e17055;
+    --text: #e8e6f0;
+    --text-muted: #9990bb;
+    --text-dim: #6b6590;
+    --border: #2a2550;
+    --glow-purple: 0 0 20px rgba(108,92,231,0.4);
+    --glow-green: 0 0 20px rgba(0,184,148,0.4);
+    --glow-gold: 0 0 20px rgba(255,215,0,0.4);
+
+    /* Gaming variables (from globals.css) */
+    --game-radius-sm: 8px;
+    --game-radius-md: 12px;
+    --game-radius-lg: 16px;
+    --game-radius-xl: 20px;
+    --game-radius-pill: 9999px;
+    --game-radius-asymm: 20px 12px 20px 12px;
+    --game-duration-fast: 100ms;
+    --game-duration-normal: 150ms;
+    --game-ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --game-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --game-stripe-color: rgba(255,255,255,0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    direction: rtl;
+  }
+
+  /* ── Navigation ──────────────────────────────────────────── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,11,26,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    height: 56px; overflow-x: auto;
+  }
+  nav a {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 0.8rem; font-weight: 500; white-space: nowrap;
+    padding: 0.3rem 0.65rem; border-radius: 6px;
+    transition: all 0.15s;
+  }
+  nav a:hover { color: var(--primary-light); background: rgba(108,92,231,0.12); }
+  .brand {
+    font-weight: 900; font-size: 0.95rem;
+    background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-left: auto; flex-shrink: 0;
+  }
+
+  /* ── Hero ─────────────────────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, var(--bg2), var(--bg3), rgba(108,92,231,0.08));
+    border-bottom: 1px solid var(--border);
+    padding: 4rem 2rem 3rem; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(108,92,231,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900;
+    background: linear-gradient(135deg, #fff 0%, var(--primary-light) 50%, var(--secondary) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 0.75rem; position: relative;
+  }
+  .hero p { color: var(--text-muted); font-size: 1rem; max-width: 640px; margin: 0 auto 1.5rem; position: relative; }
+  .hero-badges { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; position: relative; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.25rem;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 20px; padding: 0.25rem 0.7rem;
+    font-size: 0.75rem; color: var(--text-muted);
+  }
+  .hero-badge.purple { border-color: var(--primary); color: var(--primary-light); background: rgba(108,92,231,0.12); }
+  .hero-badge.green { border-color: var(--secondary); color: var(--secondary); background: rgba(0,184,148,0.12); }
+
+  /* ── Main ─────────────────────────────────────────────────── */
+  main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  /* ── Section ──────────────────────────────────────────────── */
+  section { margin-bottom: 3.5rem; }
+  .section-title {
+    font-size: 1.5rem; font-weight: 900; margin-bottom: 0.4rem;
+    background: linear-gradient(135deg, var(--text) 0%, var(--primary-light) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .section-subtitle { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem; }
+
+  /* ── Demo Box ─────────────────────────────────────────────── */
+  .demo-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .demo-label {
+    font-size: 0.72rem; font-weight: 700; color: var(--primary-light);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .demo-label::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--primary-light); flex-shrink: 0;
+  }
+
+  /* ── Code Block ───────────────────────────────────────────── */
+  .code-block {
+    background: #080612;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    overflow-x: auto;
+    font-size: 0.78rem;
+    line-height: 1.65;
+    direction: ltr;
+    text-align: left;
+    margin-top: 1rem;
+    color: #d4d0e8;
+    font-family: 'Fira Code', 'Courier New', monospace;
+  }
+  .code-tag {
+    display: inline-block; font-size: 0.68rem; font-weight: 700;
+    background: var(--bg2); color: var(--text-muted);
+    padding: 0.15rem 0.5rem; border-radius: 4px 4px 0 0;
+    border: 1px solid var(--border); border-bottom: none;
+    margin-bottom: -1px; direction: ltr;
+  }
+  .hl-class { color: #a78bfa; }
+  .hl-prop { color: #34d399; }
+  .hl-val { color: #fdcb6e; }
+  .hl-tag { color: #fd79a8; }
+  .hl-comment { color: #6b6590; }
+
+  /* ── Grid Demo ────────────────────────────────────────────── */
+  .grid-demo {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .grid-demo-item {
+    height: 80px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; font-weight: 600;
+  }
+
+  /* ── Divider ──────────────────────────────────────────────── */
+  .divider {
+    height: 1px; margin: 3rem 0;
+    background: linear-gradient(90deg, transparent, var(--border), rgba(108,92,231,0.3), var(--border), transparent);
+  }
+
+  /* ── Inline helpers ───────────────────────────────────────── */
+  .flex-row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+  .flex-col { display: flex; flex-direction: column; gap: 1rem; }
+  .gap-sm { gap: 0.5rem; }
+  .gap-lg { gap: 1.5rem; }
+  .center { display: flex; align-items: center; justify-content: center; }
+  .mt-1 { margin-top: 0.5rem; }
+  .mt-2 { margin-top: 1rem; }
+  .mb-1 { margin-bottom: 0.5rem; }
+
+  /* ══════════════════════════════════════════════════════════
+     LIVE DEMOS: These replicate the CSS from globals.css
+     so the showcase works standalone
+     ══════════════════════════════════════════════════════════ */
+
+  /* === game-card === */
+  .showcase-card {
+    position: relative;
+    background: linear-gradient(135deg, rgba(21,17,46,0.8) 0%, rgba(18,14,40,0.9) 100%);
+    border: 1.5px solid rgba(108,92,231,0.25);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3), 0 0 0 1px rgba(58,49,110,0.5);
+    transition: transform 150ms cubic-bezier(0.25,0.46,0.45,0.94),
+                box-shadow 150ms cubic-bezier(0.25,0.46,0.45,0.94),
+                border-color 150ms cubic-bezier(0.25,0.46,0.45,0.94);
+    overflow: hidden;
+  }
+  .showcase-card::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    background: linear-gradient(135deg, rgba(108,92,231,0.06) 0%, transparent 50%, rgba(0,184,148,0.04) 100%);
+    pointer-events: none;
+  }
+  .showcase-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(108,92,231,0.5);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 20px rgba(108,92,231,0.15);
+  }
+  .showcase-card:active { transform: translateY(0) scale(0.99); }
+  .showcase-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .showcase-card p { font-size: 0.85rem; color: var(--text-muted); }
+
+  /* === game-panel === */
+  .showcase-panel {
+    position: relative;
+    background: linear-gradient(180deg, rgba(20,16,42,1) 0%, rgba(17,13,34,1) 100%);
+    border: 2px solid rgba(50,42,100,0.6);
+    border-radius: 20px 12px 20px 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3), 0 0 0 1px rgba(58,49,110,0.5);
+  }
+  .showcase-panel::after {
+    content: ''; position: absolute;
+    right: 8px; left: 8px; top: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    border-radius: 1px;
+  }
+
+  /* === game-header === */
+  .showcase-header {
+    font-family: 'Heebo', sans-serif; font-weight: 900;
+    font-size: 1.875rem; letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #e8e6f0 0%, #8B7EF8 50%, #00B894 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 4px rgba(108,92,231,0.3));
+  }
+  .showcase-header-sm {
+    font-family: 'Heebo', sans-serif; font-weight: 800;
+    font-size: 1.25rem; letter-spacing: -0.01em;
+    background: linear-gradient(135deg, #d4d0e8 0%, #8B7EF8 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 1px 2px rgba(108,92,231,0.2));
+  }
+
+  /* === game-badge === */
+  .showcase-badge {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    padding: 0.2rem 0.65rem; border-radius: 9999px;
+    font-size: 0.75rem; font-weight: 700; line-height: 1.4;
+    border: 1.5px solid rgba(108,92,231,0.35);
+    background: rgba(21,17,46,0.7); color: #c4bfff;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 8px rgba(108,92,231,0.15);
+    white-space: nowrap;
+    transition: box-shadow 150ms;
+  }
+  .showcase-badge:hover { box-shadow: 0 0 16px rgba(108,92,231,0.3); }
+  .showcase-badge.green {
+    border-color: rgba(0,184,148,0.35);
+    background: rgba(10,30,25,0.7); color: #55efc4;
+    box-shadow: 0 0 8px rgba(0,184,148,0.15);
+  }
+  .showcase-badge.green:hover { box-shadow: 0 0 16px rgba(0,184,148,0.3); }
+  .showcase-badge.gold {
+    border-color: rgba(255,215,0,0.4);
+    background: rgba(40,35,15,0.7); color: #ffd700;
+    box-shadow: 0 0 8px rgba(255,215,0,0.15);
+  }
+  .showcase-badge.gold:hover { box-shadow: 0 0 16px rgba(255,215,0,0.3); }
+  .showcase-badge.danger {
+    border-color: rgba(225,112,85,0.4);
+    background: rgba(40,20,15,0.7); color: #fab1a0;
+    box-shadow: 0 0 8px rgba(225,112,85,0.15);
+  }
+
+  /* === game-progress-bar === */
+  .showcase-progress {
+    position: relative; height: 14px;
+    background: rgba(18,14,40,1);
+    border-radius: 9999px;
+    border: 1px solid rgba(58,49,110,0.6);
+    overflow: hidden;
+  }
+  .showcase-progress-fill {
+    height: 100%; border-radius: 9999px;
+    background: linear-gradient(90deg, #6C5CE7 0%, #8B7EF8 50%, #00B894 100%);
+    box-shadow: 0 0 12px rgba(108,92,231,0.5);
+    position: relative;
+    transition: width 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .showcase-progress-fill::before {
+    content: ''; position: absolute;
+    top: 2px; right: 8px; left: 8px; height: 3px;
+    background: rgba(255,255,255,0.25); border-radius: 2px;
+  }
+  .showcase-progress-fill::after {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(-45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.1) 6px, transparent 6px, transparent 12px);
+    animation: stripe-move 1s linear infinite;
+    border-radius: inherit;
+  }
+  @keyframes stripe-move {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(12px); }
+  }
+  .showcase-progress-fill.green {
+    background: linear-gradient(90deg, #009975 0%, #00B894 100%);
+    box-shadow: 0 0 12px rgba(0,184,148,0.5);
+  }
+  .showcase-progress-fill.gold {
+    background: linear-gradient(90deg, #FF8C00 0%, #FFD700 100%);
+    box-shadow: 0 0 12px rgba(255,215,0,0.5);
+  }
+
+  /* === game-avatar-frame === */
+  .showcase-avatar-frame {
+    position: relative; display: inline-flex;
+    align-items: center; justify-content: center;
+    border-radius: 16px; padding: 3px;
+    background: conic-gradient(from 0deg, #6C5CE7, #00B894, #FFD700, #6C5CE7);
+    animation: avatar-spin 4s linear infinite;
+    box-shadow: 0 0 16px rgba(108,92,231,0.3);
+  }
+  .showcase-avatar-frame > * { border-radius: 13px; display: block; }
+  @keyframes avatar-spin {
+    0%   { background: conic-gradient(from 0deg, #6C5CE7, #00B894, #FFD700, #6C5CE7); }
+    25%  { background: conic-gradient(from 90deg, #6C5CE7, #00B894, #FFD700, #6C5CE7); }
+    50%  { background: conic-gradient(from 180deg, #6C5CE7, #00B894, #FFD700, #6C5CE7); }
+    75%  { background: conic-gradient(from 270deg, #6C5CE7, #00B894, #FFD700, #6C5CE7); }
+    100% { background: conic-gradient(from 360deg, #6C5CE7, #00B894, #FFD700, #6C5CE7); }
+  }
+  .showcase-avatar-frame.sm { border-radius: 12px; padding: 2px; }
+  .showcase-avatar-frame.sm > * { border-radius: 10px; }
+  .showcase-avatar-frame.lg { border-radius: 20px; padding: 4px; box-shadow: 0 0 24px rgba(108,92,231,0.4); }
+  .showcase-avatar-frame.lg > * { border-radius: 16px; }
+
+  /* Avatar placeholder */
+  .avatar-placeholder {
+    width: 64px; height: 64px;
+    background: linear-gradient(135deg, var(--bg2), var(--bg3));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+  }
+  .avatar-placeholder.sm { width: 40px; height: 40px; font-size: 1rem; }
+  .avatar-placeholder.lg { width: 96px; height: 96px; font-size: 2.5rem; }
+
+  /* === game-xp-counter === */
+  .showcase-xp {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: 'Inter', 'Heebo', sans-serif;
+    font-size: 1.5rem; font-weight: 800;
+    color: #FFD700;
+    text-shadow: 0 0 12px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,0.4);
+    font-variant-numeric: tabular-nums; direction: ltr;
+  }
+  .showcase-xp-label {
+    font-size: 0.875rem; font-weight: 700;
+    color: rgba(255,215,0,0.7);
+    text-shadow: none; letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .showcase-xp.sm { font-size: 1.125rem; gap: 0.3rem; }
+  .showcase-xp.sm .showcase-xp-label { font-size: 0.75rem; }
+  @keyframes xp-bump {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.15); }
+    60% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+  }
+
+  /* === game-notification === */
+  .showcase-notification {
+    position: relative;
+    min-width: 280px; max-width: 400px;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, rgba(22,18,46,0.95), rgba(19,15,42,0.98));
+    border: 1.5px solid rgba(108,92,231,0.35);
+    border-radius: 16px; backdrop-filter: blur(16px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(50,42,100,0.6);
+    display: flex; align-items: center; gap: 16px;
+  }
+  .showcase-notification.success { border-color: rgba(0,184,148,0.4); }
+  .showcase-notification.warning { border-color: rgba(255,215,0,0.4); }
+  .showcase-notification.error { border-color: rgba(225,112,85,0.4); }
+  .notif-icon {
+    flex-shrink: 0; width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 12px; font-size: 1.2rem;
+    background: rgba(108,92,231,0.15);
+  }
+  .notif-content { flex: 1; min-width: 0; }
+  .notif-title { font-size: 0.875rem; font-weight: 700; }
+  .notif-msg { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+
+  /* === game-tooltip === */
+  .showcase-tooltip {
+    position: relative; display: inline-block; cursor: default;
+  }
+  .showcase-tooltip-content {
+    position: absolute; bottom: calc(100% + 8px);
+    right: 50%; transform: translateX(50%) translateY(4px);
+    padding: 0.4rem 0.75rem;
+    background: rgba(28,23,56,0.95);
+    border: 1px solid rgba(108,92,231,0.3);
+    border-radius: 8px; backdrop-filter: blur(8px);
+    color: #d4d0e8; font-size: 0.75rem; font-weight: 600;
+    white-space: nowrap; pointer-events: none;
+    opacity: 0;
+    transition: opacity 150ms, transform 150ms;
+    z-index: 50;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  }
+  .showcase-tooltip-content::after {
+    content: ''; position: absolute; top: 100%;
+    right: 50%; transform: translateX(50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(108,92,231,0.3);
+  }
+  .showcase-tooltip:hover .showcase-tooltip-content {
+    opacity: 1; transform: translateX(50%) translateY(0);
+  }
+
+  /* === Transition presets demo === */
+  .transition-demo-card {
+    padding: 1.5rem; border-radius: 12px;
+    background: var(--surface); border: 1px solid var(--border);
+    text-align: center; cursor: pointer; user-select: none;
+    font-size: 0.85rem; font-weight: 600; color: var(--text-muted);
+  }
+  .td-hover-lift {
+    transition: transform 150ms cubic-bezier(0.25,0.46,0.45,0.94),
+                box-shadow 150ms cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .td-hover-lift:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+  .td-hover-glow {
+    transition: box-shadow 150ms cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .td-hover-glow:hover { box-shadow: var(--glow-purple); }
+  .td-hover-glow-green:hover { box-shadow: var(--glow-green); }
+  .td-press-scale {
+    transition: transform 100ms cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .td-press-scale:active { transform: scale(0.95); }
+
+  @keyframes demo-slide-up {
+    0% { opacity: 0; transform: translateY(12px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .td-entrance {
+    animation: demo-slide-up 0.3s cubic-bezier(0.25,0.46,0.45,0.94) both;
+  }
+  .td-entrance-1 { animation-delay: 0ms; }
+  .td-entrance-2 { animation-delay: 60ms; }
+  .td-entrance-3 { animation-delay: 120ms; }
+  .td-entrance-4 { animation-delay: 180ms; }
+
+  /* === Typography demo === */
+  .typo-demo { display: flex; flex-direction: column; gap: 0.75rem; }
+  .typo-row { display: flex; align-items: baseline; gap: 1rem; }
+  .typo-label { font-size: 0.7rem; color: var(--text-dim); min-width: 110px; text-align: left; direction: ltr; font-family: 'Inter', monospace; }
+
+  /* === Layout demo === */
+  .layout-demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 24px;
+  }
+  .layout-demo-grid-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    transition: transform 150ms cubic-bezier(0.25,0.46,0.45,0.94),
+                box-shadow 150ms cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .layout-demo-grid-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  }
+
+  /* === Divider demo === */
+  .showcase-divider {
+    height: 1px; margin: 24px 0;
+    background: linear-gradient(90deg, transparent, rgba(108,92,231,0.3), rgba(0,184,148,0.2), rgba(108,92,231,0.3), transparent);
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .flex-row { flex-direction: column; align-items: stretch; }
+    .layout-demo-grid { grid-template-columns: 1fr; }
+    main { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">&#129399; UI System</span>
+  <a href="#cards">Cards</a>
+  <a href="#panels">Panels</a>
+  <a href="#headers">Headers</a>
+  <a href="#badges">Badges</a>
+  <a href="#progress">Progress</a>
+  <a href="#avatars">Avatars</a>
+  <a href="#xp">XP Counter</a>
+  <a href="#notifications">Notifications</a>
+  <a href="#tooltips">Tooltips</a>
+  <a href="#typography">Typography</a>
+  <a href="#transitions">Transitions</a>
+  <a href="#layout">Layout</a>
+</nav>
+
+<div class="hero">
+  <h1>&#127918; מערכת UI גיימינג — Ninja Keyboard</h1>
+  <p>Showcase אינטראקטיבי של כל ה-CSS utilities החדשים. מבוסס על מחקר UI מ-Brawl Stars, Clash Royale, Duolingo ועוד.</p>
+  <div class="hero-badges">
+    <span class="hero-badge purple">15 CSS Utilities</span>
+    <span class="hero-badge green">RTL-First</span>
+    <span class="hero-badge">CSS Logical Properties</span>
+    <span class="hero-badge">transform/opacity Only</span>
+    <span class="hero-badge">prefers-reduced-motion</span>
+  </div>
+</div>
+
+<main>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 1. GAME CARD                                                -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="cards">
+  <h2 class="section-title">1. .game-card</h2>
+  <p class="section-subtitle">Card עם gradient border, hover lift, glass morphism. רחף מעל הכרטיסים כדי לראות את האפקט.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">דמו חי — רחף מעל</div>
+    <div class="flex-row gap-lg" style="align-items: stretch;">
+      <div class="showcase-card" style="flex: 1; min-width: 200px;">
+        <h3>&#128218; שיעור חדש</h3>
+        <p>למד את השורה האמצעית של המקלדת העברית</p>
+      </div>
+      <div class="showcase-card" style="flex: 1; min-width: 200px;">
+        <h3>&#9889; אתגר יומי</h3>
+        <p>הקלד 50 מילים ב-60 שניות!</p>
+      </div>
+      <div class="showcase-card" style="flex: 1; min-width: 200px;">
+        <h3>&#127942; הישג חדש</h3>
+        <p>סיימת 10 שיעורים ברצף — כל הכבוד!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="code-tag">CSS</div>
+  <div class="code-block"><span class="hl-comment">/* Usage: */</span>
+&lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-card"</span>&gt;
+  &lt;h3&gt;כותרת&lt;/h3&gt;
+  &lt;p&gt;תוכן הכרטיס&lt;/p&gt;
+&lt;/div&gt;
+
+<span class="hl-comment">/* Features:
+   - Glass morphism background with backdrop-filter
+   - Gradient inner shine (::before pseudo-element)
+   - Hover: translateY(-2px) + enhanced shadow + border glow
+   - Active: scale(0.99) for press feedback
+   - 150ms ease-out transitions (transform/opacity/box-shadow)
+   - Light theme override included */</span></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 2. GAME PANEL                                               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="panels">
+  <h2 class="section-title">2. .game-panel</h2>
+  <p class="section-subtitle">Panel עם פינות אסימטריות (20px 12px 20px 12px) בסגנון Brawl Stars וקו highlight עליון.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">דמו חי</div>
+    <div class="showcase-panel">
+      <div style="font-weight: 800; font-size: 1.1rem; margin-bottom: 0.5rem;">&#128161; טיפ מ-Ki</div>
+      <div style="color: var(--text-muted); font-size: 0.9rem;">
+        הנח את האצבעות על שורת הבית — אצבע שמאלית על ד, ימנית על כ. זו נקודת ההתחלה של כל נינג'ה מקלדת אמיתי!
+      </div>
+    </div>
+  </div>
+
+  <div class="code-tag">CSS</div>
+  <div class="code-block">&lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-panel"</span>&gt;
+  <span class="hl-comment">&lt;!-- Asymmetric corners: 20px 12px 20px 12px --&gt;</span>
+  <span class="hl-comment">&lt;!-- Top highlight line via ::after pseudo-element --&gt;</span>
+  &lt;h3&gt;כותרת&lt;/h3&gt;
+  &lt;p&gt;תוכן&lt;/p&gt;
+&lt;/div&gt;</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 3. GAME HEADER                                              -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="headers">
+  <h2 class="section-title">3. .game-header / .game-header-sm</h2>
+  <p class="section-subtitle">כותרות עם gradient text, drop-shadow ו-letter-spacing צמוד. שתי גרסאות: גדולה וקטנה.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">דמו חי</div>
+    <div class="flex-col" style="gap: 1.5rem;">
+      <div class="showcase-header">נינג'ה מקלדת — מאסטר ההקלדה</div>
+      <div class="showcase-header-sm">שיעורים אחרונים</div>
+      <div class="showcase-header-sm" style="background: linear-gradient(135deg, #d4d0e8, #00B894); -webkit-background-clip: text; background-clip: text;">סטטיסטיקות מהירות</div>
+    </div>
+  </div>
+
+  <div class="code-tag">CSS</div>
+  <div class="code-block"><span class="hl-comment">/* Large header: */</span>
+&lt;h1 <span class="hl-prop">class</span>=<span class="hl-val">"game-header"</span>&gt;כותרת ראשית&lt;/h1&gt;
+
+<span class="hl-comment">/* Small header: */</span>
+&lt;h2 <span class="hl-prop">class</span>=<span class="hl-val">"game-header-sm"</span>&gt;כותרת משנית&lt;/h2&gt;
+
+<span class="hl-comment">/* Properties:
+   - game-header: 900 weight, 1.875rem, -0.02em spacing
+   - game-header-sm: 800 weight, 1.25rem, -0.01em spacing
+   - Both: gradient text (white → purple → green)
+   - drop-shadow for depth (not text-shadow, works with gradient)
+   - Light theme adjustments included */</span></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 4. GAME BADGE                                               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="badges">
+  <h2 class="section-title">4. .game-badge</h2>
+  <p class="section-subtitle">תגית pill עם glow effect. ארבע וריאנטים: ברירת מחדל (סגול), ירוק, זהב, סכנה. רחף לראות את ה-glow.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">דמו חי — רחף מעל</div>
+    <div class="flex-row gap-sm" style="flex-wrap: wrap;">
+      <span class="showcase-badge">&#128293; רמה 12</span>
+      <span class="showcase-badge">&#9889; 1,240 XP</span>
+      <span class="showcase-badge green">&#9989; הושלם</span>
+      <span class="showcase-badge green">&#127942; מבחן עבר</span>
+      <span class="showcase-badge gold">&#11088; שיא חדש!</span>
+      <span class="showcase-badge gold">&#128081; מושלם</span>
+      <span class="showcase-badge danger">&#9888; זמן אוזל</span>
+      <span class="showcase-badge danger">&#10060; נכשל</span>
+    </div>
+  </div>
+
+  <div class="code-tag">CSS</div>
+  <div class="code-block"><span class="hl-comment">/* Default (purple): */</span>
+&lt;span <span class="hl-prop">class</span>=<span class="hl-val">"game-badge"</span>&gt;&#128293; רמה 12&lt;/span&gt;
+
+<span class="hl-comment">/* Variants: */</span>
+&lt;span <span class="hl-prop">class</span>=<span class="hl-val">"game-badge game-badge--green"</span>&gt;&#9989; הושלם&lt;/span&gt;
+&lt;span <span class="hl-prop">class</span>=<span class="hl-val">"game-badge game-badge--gold"</span>&gt;&#11088; שיא חדש!&lt;/span&gt;
+&lt;span <span class="hl-prop">class</span>=<span class="hl-val">"game-badge game-badge--danger"</span>&gt;&#9888; זמן אוזל&lt;/span&gt;</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 5. GAME PROGRESS BAR                                        -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="progress">
+  <h2 class="section-title">5. .game-progress-bar</h2>
+  <p class="section-subtitle">Progress bar אנימטיבי עם animated stripes, shine line ו-glow. שלושה צבעים: סגול-ירוק (ברירת מחדל), ירוק, זהב.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">דמו חי — animated stripes</div>
+    <div class="flex-col" style="gap: 1.5rem;">
+      <div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.5rem;">
+          <span style="color: var(--text-muted);">רמה 8</span>
+          <span style="color: var(--text-muted);">2,340 / 3,000 XP</span>
+        </div>
+        <div class="showcase-progress">
+          <div class="showcase-progress-fill" style="width: 78%;"></div>
+        </div>
+      </div>
+
+      <div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.5rem;">
+          <span style="color: #55efc4;">&#127942; Trophy Road</span>
+          <span style="color: var(--text-muted);">4,200 / 5,000</span>
+        </div>
+        <div class="showcase-progress">
+          <div class="showcase-progress-fill gold" style="width: 84%;"></div>
+        </div>
+      </div>
+
+      <div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.5rem;">
+          <span style="color: #55efc4;">&#9989; שיעור נוכחי</span>
+          <span style="color: var(--text-muted);">45%</span>
+        </div>
+        <div class="showcase-progress">
+          <div class="showcase-progress-fill green" style="width: 45%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="code-tag">HTML</div>
+  <div class="code-block"><span class="hl-comment">&lt;!-- Default (purple-to-green gradient): --&gt;</span>
+&lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-progress-bar"</span>&gt;
+  &lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-progress-bar__fill"</span> <span class="hl-prop">style</span>=<span class="hl-val">"width: 78%"</span>&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+<span class="hl-comment">&lt;!-- Green variant: --&gt;</span>
+&lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-progress-bar game-progress-bar--green"</span>&gt;...&lt;/div&gt;
+
+<span class="hl-comment">&lt;!-- Gold variant: --&gt;</span>
+&lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-progress-bar game-progress-bar--gold"</span>&gt;...&lt;/div&gt;
+
+<span class="hl-comment">/* Features:
+   - 14px height with pill border-radius
+   - ::before = shine highlight at top
+   - ::after = animated diagonal stripes (1s linear infinite)
+   - Colored glow shadow matching fill
+   - Smooth width transition (0.6s ease-out) */</span></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 6. GAME AVATAR FRAME                                        -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="avatars">
+  <h2 class="section-title">6. .game-avatar-frame</h2>
+  <p class="section-subtitle">מסגרת דמות עם animated conic-gradient border (סגול &#8594; ירוק &#8594; זהב). שלוש גדלים: sm, default, lg.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">דמו חי — animated spinning border</div>
+    <div class="flex-row gap-lg" style="align-items: center;">
+      <div style="text-align: center;">
+        <div class="showcase-avatar-frame sm">
+          <div class="avatar-placeholder sm">&#128025;</div>
+        </div>
+        <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.5rem;">sm</div>
+      </div>
+      <div style="text-align: center;">
+        <div class="showcase-avatar-frame">
+          <div class="avatar-placeholder">&#129399;</div>
+        </div>
+        <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.5rem;">default</div>
+      </div>
+      <div style="text-align: center;">
+        <div class="showcase-avatar-frame lg">
+          <div class="avatar-placeholder lg">&#128009;</div>
+        </div>
+        <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.5rem;">lg</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="code-tag">HTML</div>
+  <div class="code-block">&lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-avatar-frame"</span>&gt;
+  &lt;img <span class="hl-prop">src</span>=<span class="hl-val">"/characters/ki.jpg"</span> <span class="hl-prop">alt</span>=<span class="hl-val">"Ki"</span> /&gt;
+&lt;/div&gt;
+
+<span class="hl-comment">&lt;!-- Sizes: --&gt;</span>
+&lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-avatar-frame game-avatar-frame--sm"</span>&gt;...&lt;/div&gt;
+&lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-avatar-frame game-avatar-frame--lg"</span>&gt;...&lt;/div&gt;
+
+<span class="hl-comment">/* Features:
+   - conic-gradient border: purple → green → gold → purple
+   - 4s linear infinite rotation animation
+   - Outer glow shadow
+   - Auto border-radius inheritance for child elements
+   - Respects prefers-reduced-motion */</span></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 7. GAME XP COUNTER                                          -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="xp">
+  <h2 class="section-title">7. .game-xp-counter</h2>
+  <p class="section-subtitle">תצוגת XP עם glow זהוב, tabular-nums ואנימציית bump כשמשתנה הערך. לחץ על הכפתור לראות.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">דמו חי — לחץ "+100 XP"</div>
+    <div class="flex-row gap-lg" style="align-items: center;">
+      <div style="text-align: center;">
+        <div class="showcase-xp" id="xp-display">
+          <span class="showcase-xp-label">XP</span>
+          <span id="xp-value">2,340</span>
+        </div>
+        <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.5rem;">default</div>
+      </div>
+      <div style="text-align: center;">
+        <div class="showcase-xp sm">
+          <span class="showcase-xp-label">XP</span>
+          <span>850</span>
+        </div>
+        <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.5rem;">sm</div>
+      </div>
+      <button onclick="bumpXp()" style="
+        padding: 0.5rem 1.2rem;
+        background: linear-gradient(135deg, #6C5CE7, #8B7EF8);
+        color: white; font-weight: 700; font-family: 'Heebo';
+        border: none; border-radius: 10px; cursor: pointer;
+        box-shadow: 0 3px 12px rgba(108,92,231,0.4);
+        transition: transform 100ms;
+      " onmousedown="this.style.transform='scale(0.93)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'">
+        +100 XP
+      </button>
+    </div>
+  </div>
+
+  <div class="code-tag">HTML</div>
+  <div class="code-block">&lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-xp-counter"</span>&gt;
+  &lt;span <span class="hl-prop">class</span>=<span class="hl-val">"game-xp-counter__label"</span>&gt;XP&lt;/span&gt;
+  &lt;span&gt;2,340&lt;/span&gt;
+&lt;/div&gt;
+
+<span class="hl-comment">&lt;!-- Small variant: --&gt;</span>
+&lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-xp-counter game-xp-counter--sm"</span>&gt;...&lt;/div&gt;
+
+<span class="hl-comment">&lt;!-- Add bump animation on change: --&gt;</span>
+&lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-xp-counter game-xp-counter--animate"</span>&gt;...&lt;/div&gt;
+
+<span class="hl-comment">/* Uses Inter font for tabular-nums
+   direction: ltr for numbers
+   Golden glow text-shadow */</span></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 8. GAME NOTIFICATION                                        -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="notifications">
+  <h2 class="section-title">8. .game-notification</h2>
+  <p class="section-subtitle">Toast-style notification עם slide-in מהצד. ארבעה סגנונות: default, success, warning, error.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">דמו (סטטי) — באפליקציה מונפש עם slide-in</div>
+    <div class="flex-col gap-lg">
+      <div class="showcase-notification">
+        <div class="notif-icon">&#128276;</div>
+        <div class="notif-content">
+          <div class="notif-title">הודעה חדשה</div>
+          <div class="notif-msg">יוקי מחכה לך באתגר מהירות!</div>
+        </div>
+      </div>
+
+      <div class="showcase-notification success">
+        <div class="notif-icon" style="background: rgba(0,184,148,0.15);">&#9989;</div>
+        <div class="notif-content">
+          <div class="notif-title" style="color: #55efc4;">שיעור הושלם!</div>
+          <div class="notif-msg">קיבלת +150 XP &#11088;</div>
+        </div>
+      </div>
+
+      <div class="showcase-notification warning">
+        <div class="notif-icon" style="background: rgba(255,215,0,0.15);">&#9888;&#65039;</div>
+        <div class="notif-content">
+          <div class="notif-title" style="color: #ffd700;">ה-streak שלך בסכנה!</div>
+          <div class="notif-msg">השלם שיעור אחד היום כדי לשמור על 7 ימי רצף</div>
+        </div>
+      </div>
+
+      <div class="showcase-notification error">
+        <div class="notif-icon" style="background: rgba(225,112,85,0.15);">&#10060;</div>
+        <div class="notif-content">
+          <div class="notif-title" style="color: #fab1a0;">שגיאת חיבור</div>
+          <div class="notif-msg">בדוק את חיבור האינטרנט ונסה שוב</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="code-tag">HTML + CSS</div>
+  <div class="code-block">&lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-notification game-notification--visible"</span>&gt;
+  &lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-notification__icon"</span>&gt;&#128276;&lt;/div&gt;
+  &lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-notification__content"</span>&gt;
+    &lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-notification__title"</span>&gt;כותרת&lt;/div&gt;
+    &lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-notification__message"</span>&gt;הודעה&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+<span class="hl-comment">/* Variants: --success, --warning, --error
+   Animation: translateX(120%) → translateX(0) with spring easing
+   RTL auto-adjust: translateX(-120%) in [dir='rtl']
+   Fixed position: top-right (inset-inline-end) */</span></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 9. GAME TOOLTIP                                             -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="tooltips">
+  <h2 class="section-title">9. .game-tooltip</h2>
+  <p class="section-subtitle">Tooltip גיימינג עם backdrop-blur ו-arrow. רחף מעל האלמנטים כדי לראות.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">דמו חי — רחף מעל</div>
+    <div class="flex-row gap-lg" style="justify-content: center; padding: 3rem 0;">
+      <div class="showcase-tooltip">
+        <span class="showcase-badge">&#128293; Streak: 7</span>
+        <div class="showcase-tooltip-content">7 ימים רצופים של אימון!</div>
+      </div>
+
+      <div class="showcase-tooltip">
+        <span class="showcase-badge green">&#9989; מאסטר</span>
+        <div class="showcase-tooltip-content">השלמת את כל השיעורים</div>
+      </div>
+
+      <div class="showcase-tooltip">
+        <span class="showcase-badge gold">&#127942; מקום 3</span>
+        <div class="showcase-tooltip-content">טבלת המובילים — השבוע</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="code-tag">HTML</div>
+  <div class="code-block">&lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-tooltip"</span>&gt;
+  &lt;span&gt;Trigger Element&lt;/span&gt;
+  &lt;div <span class="hl-prop">class</span>=<span class="hl-val">"game-tooltip__content"</span>&gt;
+    טקסט ה-tooltip
+  &lt;/div&gt;
+&lt;/div&gt;
+
+<span class="hl-comment">/* Features:
+   - Positioned above trigger with arrow
+   - backdrop-filter: blur(8px)
+   - Fade + slide-up animation on hover/focus
+   - RTL-compatible positioning
+   - 150ms ease-out transitions */</span></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 10. TYPOGRAPHY                                              -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="typography">
+  <h2 class="section-title">10. Typography System</h2>
+  <p class="section-subtitle">סקאלת טיפוגרפיה גיימינג (game-text-xs עד game-text-4xl) + font utilities ייעודיות.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">סקאלת גדלים</div>
+    <div class="typo-demo">
+      <div class="typo-row">
+        <span class="typo-label">--game-text-xs (12px)</span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">תגית · מטה-דאטה · label</span>
+      </div>
+      <div class="typo-row">
+        <span class="typo-label">--game-text-sm (14px)</span>
+        <span style="font-size: 0.875rem; color: var(--text-muted);">ניווט · כיתוב · caption</span>
+      </div>
+      <div class="typo-row">
+        <span class="typo-label">--game-text-base (16px)</span>
+        <span style="font-size: 1rem;">טקסט גוף רגיל — שיעורים, תיאורים</span>
+      </div>
+      <div class="typo-row">
+        <span class="typo-label">--game-text-lg (18px)</span>
+        <span style="font-size: 1.125rem; font-weight: 600;">הדגשות וכותרות משנה</span>
+      </div>
+      <div class="typo-row">
+        <span class="typo-label">--game-text-xl (20px)</span>
+        <span style="font-size: 1.25rem; font-weight: 700;">כותרות חלקים</span>
+      </div>
+      <div class="typo-row">
+        <span class="typo-label">--game-text-2xl (24px)</span>
+        <span style="font-size: 1.5rem; font-weight: 800;">כותרות כרטיסים</span>
+      </div>
+      <div class="typo-row">
+        <span class="typo-label">--game-text-3xl (30px)</span>
+        <span style="font-size: 1.875rem; font-weight: 900; text-shadow: 0 0 10px rgba(108,92,231,0.3);">כותרות עמודים</span>
+      </div>
+      <div class="typo-row">
+        <span class="typo-label">--game-text-4xl (36px)</span>
+        <span style="font-size: 2.25rem; font-weight: 900; background: linear-gradient(135deg, #e8e6f0, #8B7EF8, #00B894); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Hero Headlines</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-box">
+    <div class="demo-label">Font Utilities</div>
+    <div class="flex-col" style="gap: 1.2rem;">
+      <div>
+        <div style="font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.3rem; direction: ltr; text-align: left;">.game-font-display — Heebo 900, -0.02em, text-glow</div>
+        <div style="font-weight: 900; font-size: 1.5rem; letter-spacing: -0.02em; text-shadow: 0 0 10px rgba(108,92,231,0.4);">אלוף המקלדת — 120 מ/ד!</div>
+      </div>
+      <div>
+        <div style="font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.3rem; direction: ltr; text-align: left;">.game-font-title — Heebo 800, -0.01em, text-glow-sm</div>
+        <div style="font-weight: 800; font-size: 1.25rem; letter-spacing: -0.01em; text-shadow: 0 0 8px rgba(108,92,231,0.25);">שיעור 5: אותיות סופיות</div>
+      </div>
+      <div>
+        <div style="font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.3rem; direction: ltr; text-align: left;">.game-font-body — Assistant 600</div>
+        <div style="font-family: 'Assistant', 'Heebo', sans-serif; font-weight: 600; line-height: 1.6;">
+          בשיעור הזה נלמד את האותיות הסופיות — ם, ן, ף, ץ, ך. אלה אותיות חשובות שמופיעות בסוף מילים רבות בעברית.
+        </div>
+      </div>
+      <div>
+        <div style="font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.3rem; direction: ltr; text-align: left;">.game-font-data — Inter 700, tabular-nums</div>
+        <div style="font-family: 'Inter', sans-serif; font-weight: 700; font-variant-numeric: tabular-nums; direction: ltr; font-size: 1.5rem; color: #FFD700; text-shadow: 0 0 10px rgba(255,215,0,0.3);">
+          WPM: 85.3 &nbsp; ACC: 97.2% &nbsp; TIME: 02:34
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="code-tag">CSS Classes</div>
+  <div class="code-block"><span class="hl-class">.game-font-display</span> { <span class="hl-comment">/* Heebo 900 — scores, hero numbers, WPM */</span> }
+<span class="hl-class">.game-font-title</span>   { <span class="hl-comment">/* Heebo 800 — section headers, card titles */</span> }
+<span class="hl-class">.game-font-body</span>    { <span class="hl-comment">/* Assistant 600 — lesson content, explanations */</span> }
+<span class="hl-class">.game-font-data</span>    { <span class="hl-comment">/* Inter 700 — WPM, timers, stats (tabular-nums, ltr) */</span> }
+
+<span class="hl-comment">/* CSS Variables for sizes: */</span>
+font-size: <span class="hl-val">var(--game-text-xs)</span>;   <span class="hl-comment">/* 0.75rem = 12px */</span>
+font-size: <span class="hl-val">var(--game-text-sm)</span>;   <span class="hl-comment">/* 0.875rem = 14px */</span>
+font-size: <span class="hl-val">var(--game-text-base)</span>; <span class="hl-comment">/* 1rem = 16px */</span>
+font-size: <span class="hl-val">var(--game-text-lg)</span>;   <span class="hl-comment">/* 1.125rem = 18px */</span>
+font-size: <span class="hl-val">var(--game-text-xl)</span>;   <span class="hl-comment">/* 1.25rem = 20px */</span>
+font-size: <span class="hl-val">var(--game-text-2xl)</span>;  <span class="hl-comment">/* 1.5rem = 24px */</span>
+font-size: <span class="hl-val">var(--game-text-3xl)</span>;  <span class="hl-comment">/* 1.875rem = 30px */</span>
+font-size: <span class="hl-val">var(--game-text-4xl)</span>;  <span class="hl-comment">/* 2.25rem = 36px */</span></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 11. TRANSITIONS                                             -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="transitions">
+  <h2 class="section-title">11. Transition & Animation Presets</h2>
+  <p class="section-subtitle">חמישה presets מוכנים לשימוש. רחף / לחץ / צפה באנימציות כניסה.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">רחף ולחץ</div>
+    <div class="flex-row gap-lg" style="align-items: stretch;">
+      <div class="transition-demo-card td-hover-lift" style="flex: 1;">
+        <div style="font-size: 1.2rem; margin-bottom: 0.3rem;">&#128316;</div>
+        <div>.hover-lift</div>
+        <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.3rem;">translateY(-2px) on hover</div>
+      </div>
+      <div class="transition-demo-card td-hover-glow" style="flex: 1;">
+        <div style="font-size: 1.2rem; margin-bottom: 0.3rem;">&#10024;</div>
+        <div>.hover-glow</div>
+        <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.3rem;">Purple glow on hover</div>
+      </div>
+      <div class="transition-demo-card td-hover-glow td-hover-glow-green" style="flex: 1;">
+        <div style="font-size: 1.2rem; margin-bottom: 0.3rem;">&#128994;</div>
+        <div>.hover-glow--green</div>
+        <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.3rem;">Green glow variant</div>
+      </div>
+      <div class="transition-demo-card td-press-scale" style="flex: 1;">
+        <div style="font-size: 1.2rem; margin-bottom: 0.3rem;">&#128070;</div>
+        <div>.press-scale</div>
+        <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.3rem;">scale(0.95) on active</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-box">
+    <div class="demo-label">כניסות מונפשות — לחץ כדי לאתחל</div>
+    <div id="entrance-demo" class="flex-row gap-lg" style="align-items: stretch;">
+      <div class="transition-demo-card td-entrance td-entrance-1" style="flex: 1;">
+        <div style="font-size: 0.72rem; color: var(--text-dim);">delay: 0ms</div>
+        <div>.entrance-slide-up</div>
+      </div>
+      <div class="transition-demo-card td-entrance td-entrance-2" style="flex: 1;">
+        <div style="font-size: 0.72rem; color: var(--text-dim);">delay: 60ms</div>
+        <div>.entrance-slide-up</div>
+      </div>
+      <div class="transition-demo-card td-entrance td-entrance-3" style="flex: 1;">
+        <div style="font-size: 0.72rem; color: var(--text-dim);">delay: 120ms</div>
+        <div>.entrance-slide-up</div>
+      </div>
+      <div class="transition-demo-card td-entrance td-entrance-4" style="flex: 1;">
+        <div style="font-size: 0.72rem; color: var(--text-dim);">delay: 180ms</div>
+        <div>.entrance-slide-up</div>
+      </div>
+    </div>
+    <button onclick="replayEntrance()" style="
+      margin-top: 1rem; padding: 0.4rem 1rem;
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text-muted); font-family: 'Heebo'; font-size: 0.8rem;
+      border-radius: 8px; cursor: pointer;
+    ">&#128260; הפעל שוב</button>
+  </div>
+
+  <div class="code-tag">CSS Classes</div>
+  <div class="code-block"><span class="hl-class">.transition-game</span>    <span class="hl-comment">/* Standard: transform, opacity, box-shadow, border-color — 150ms ease-out */</span>
+<span class="hl-class">.hover-lift</span>          <span class="hl-comment">/* translateY(-2px) on :hover */</span>
+<span class="hl-class">.hover-glow</span>          <span class="hl-comment">/* Purple box-shadow glow on :hover */</span>
+<span class="hl-class">.hover-glow--green</span>   <span class="hl-comment">/* Green variant */</span>
+<span class="hl-class">.press-scale</span>         <span class="hl-comment">/* scale(0.95) on :active, 100ms */</span>
+<span class="hl-class">.entrance-slide-up</span>   <span class="hl-comment">/* Slide up 12px + fade in, 300ms */</span>
+<span class="hl-class">.entrance-slide-inline</span> <span class="hl-comment">/* Slide from inline-end, RTL-aware */</span>
+<span class="hl-class">.entrance-scale</span>      <span class="hl-comment">/* Scale from 0.85 + fade, spring easing */</span>
+
+<span class="hl-comment">/* Stagger support: */</span>
+&lt;div <span class="hl-prop">class</span>=<span class="hl-val">"entrance-slide-up"</span> <span class="hl-prop">style</span>=<span class="hl-val">"--stagger-index: 0"</span>&gt;...&lt;/div&gt;
+&lt;div <span class="hl-prop">class</span>=<span class="hl-val">"entrance-slide-up"</span> <span class="hl-prop">style</span>=<span class="hl-val">"--stagger-index: 1"</span>&gt;...&lt;/div&gt;
+&lt;div <span class="hl-prop">class</span>=<span class="hl-val">"entrance-slide-up"</span> <span class="hl-prop">style</span>=<span class="hl-val">"--stagger-index: 2"</span>&gt;...&lt;/div&gt;
+<span class="hl-comment">/* Each gets 60ms more delay */</span></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 12. LAYOUT                                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="layout">
+  <h2 class="section-title">12. Layout Patterns</h2>
+  <p class="section-subtitle">Grid, Sidebar ו-Main content layouts. רספונסיביים מובנים.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">.game-grid — auto-fill responsive grid</div>
+    <div class="layout-demo-grid">
+      <div class="layout-demo-grid-item">&#128218; שיעור 1<br><span style="font-size: 0.72rem;">שורת הבית</span></div>
+      <div class="layout-demo-grid-item">&#128218; שיעור 2<br><span style="font-size: 0.72rem;">שורה עליונה</span></div>
+      <div class="layout-demo-grid-item">&#128218; שיעור 3<br><span style="font-size: 0.72rem;">שורה תחתונה</span></div>
+      <div class="layout-demo-grid-item">&#128218; שיעור 4<br><span style="font-size: 0.72rem;">מספרים</span></div>
+      <div class="layout-demo-grid-item">&#128218; שיעור 5<br><span style="font-size: 0.72rem;">סופיות</span></div>
+    </div>
+  </div>
+
+  <div class="demo-box">
+    <div class="demo-label">.game-divider — Gradient divider</div>
+    <div style="padding: 0.5rem;">
+      <div style="font-size: 0.9rem; margin-bottom: 0.5rem;">תוכן מעל</div>
+      <div class="showcase-divider"></div>
+      <div style="font-size: 0.9rem; margin-top: 0.5rem;">תוכן מתחת</div>
+    </div>
+  </div>
+
+  <div class="code-tag">CSS Classes</div>
+  <div class="code-block"><span class="hl-class">.game-grid</span>     <span class="hl-comment">/* auto-fill, minmax(200px, 1fr), gap: 24px */</span>
+<span class="hl-class">.game-grid--sm</span>  <span class="hl-comment">/* minmax(160px, 1fr), gap: 16px */</span>
+<span class="hl-class">.game-grid--lg</span>  <span class="hl-comment">/* minmax(280px, 1fr), gap: 32px */</span>
+
+<span class="hl-class">.game-sidebar</span>   <span class="hl-comment">/* 280px sticky sidebar, full height, character area */</span>
+<span class="hl-class">.game-sidebar__character</span> <span class="hl-comment">/* Centered character display */</span>
+
+<span class="hl-class">.game-main</span>      <span class="hl-comment">/* flex: 1, max-width: 1200px, responsive padding */</span>
+<span class="hl-comment">/* Mobile: 16px padding + 60px bottom for tabs */</span>
+
+<span class="hl-class">.game-divider</span>   <span class="hl-comment">/* Gradient line: transparent → purple → green → transparent */</span>
+
+<span class="hl-comment">/* CSS Variables for customization: */</span>
+<span class="hl-val">--game-sidebar-width</span>: 280px;
+<span class="hl-val">--game-header-height</span>: 60px;
+<span class="hl-val">--game-card-min-width</span>: 200px;</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 13. QUICK REFERENCE                                         -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section>
+  <h2 class="section-title">&#128221; סיכום מהיר — כל ה-Utilities</h2>
+  <p class="section-subtitle">טבלת reference מהירה לכל הכלאסים שנוספו.</p>
+
+  <div class="demo-box" style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem;">
+      <thead>
+        <tr>
+          <th style="text-align: right; padding: 0.6rem; border-bottom: 1px solid var(--border); color: var(--text-muted); font-weight: 600;">קטגוריה</th>
+          <th style="text-align: right; padding: 0.6rem; border-bottom: 1px solid var(--border); color: var(--text-muted); font-weight: 600; direction: ltr;">CSS Class</th>
+          <th style="text-align: right; padding: 0.6rem; border-bottom: 1px solid var(--border); color: var(--text-muted); font-weight: 600;">תיאור</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);">Components</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); direction: ltr; color: #a78bfa; font-family: 'Fira Code', monospace; font-size: 0.78rem;">.game-card</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);">כרטיס עם gradient border, hover lift, glass morphism</td></tr>
+        <tr><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);"></td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); direction: ltr; color: #a78bfa; font-family: 'Fira Code', monospace; font-size: 0.78rem;">.game-panel</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);">פאנל עם פינות אסימטריות (Brawl Stars)</td></tr>
+        <tr><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);"></td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); direction: ltr; color: #a78bfa; font-family: 'Fira Code', monospace; font-size: 0.78rem;">.game-header / .game-header-sm</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);">כותרת gradient עם drop-shadow</td></tr>
+        <tr><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);"></td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); direction: ltr; color: #a78bfa; font-family: 'Fira Code', monospace; font-size: 0.78rem;">.game-badge (--green/--gold/--danger)</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);">תגית pill עם glow</td></tr>
+        <tr><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);"></td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); direction: ltr; color: #a78bfa; font-family: 'Fira Code', monospace; font-size: 0.78rem;">.game-progress-bar + __fill</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);">Progress bar עם stripes ו-glow</td></tr>
+        <tr><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);"></td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); direction: ltr; color: #a78bfa; font-family: 'Fira Code', monospace; font-size: 0.78rem;">.game-avatar-frame (--sm/--lg)</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);">מסגרת אווטאר עם animated conic border</td></tr>
+        <tr><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);"></td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); direction: ltr; color: #a78bfa; font-family: 'Fira Code', monospace; font-size: 0.78rem;">.game-xp-counter (--sm/--animate)</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);">תצוגת XP זהובה עם bump animation</td></tr>
+        <tr><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);"></td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); direction: ltr; color: #a78bfa; font-family: 'Fira Code', monospace; font-size: 0.78rem;">.game-notification (--visible/--success/...)</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);">Toast notification עם slide-in</td></tr>
+        <tr><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);"></td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); direction: ltr; color: #a78bfa; font-family: 'Fira Code', monospace; font-size: 0.78rem;">.game-tooltip + __content</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);">Tooltip עם backdrop-blur ו-arrow</td></tr>
+
+        <tr><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); color: var(--secondary);">Typography</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); direction: ltr; color: #34d399; font-family: 'Fira Code', monospace; font-size: 0.78rem;">.game-font-display / -title / -body / -data</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);">Font utilities ל-4 שימושים שונים</td></tr>
+        <tr><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);"></td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); direction: ltr; color: #34d399; font-family: 'Fira Code', monospace; font-size: 0.78rem;">--game-text-xs...--game-text-4xl</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);">8 CSS variables לגדלי טקסט</td></tr>
+
+        <tr><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); color: #fdcb6e;">Transitions</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); direction: ltr; color: #fdcb6e; font-family: 'Fira Code', monospace; font-size: 0.78rem;">.transition-game</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);">Standard 150ms ease-out transition</td></tr>
+        <tr><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);"></td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); direction: ltr; color: #fdcb6e; font-family: 'Fira Code', monospace; font-size: 0.78rem;">.hover-lift / .hover-glow / .press-scale</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);">Hover/active interaction presets</td></tr>
+        <tr><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);"></td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); direction: ltr; color: #fdcb6e; font-family: 'Fira Code', monospace; font-size: 0.78rem;">.entrance-slide-up / -inline / -scale</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);">3 entrance animations + stagger support</td></tr>
+
+        <tr><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); color: #fd79a8;">Layout</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); direction: ltr; color: #fd79a8; font-family: 'Fira Code', monospace; font-size: 0.78rem;">.game-grid (--sm/--lg)</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);">Responsive auto-fill grid</td></tr>
+        <tr><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);"></td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4); direction: ltr; color: #fd79a8; font-family: 'Fira Code', monospace; font-size: 0.78rem;">.game-sidebar / .game-main</td><td style="padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(42,37,80,0.4);">Sidebar + main content layout</td></tr>
+        <tr><td style="padding: 0.5rem 0.6rem;"></td><td style="padding: 0.5rem 0.6rem; direction: ltr; color: #fd79a8; font-family: 'Fira Code', monospace; font-size: 0.78rem;">.game-divider</td><td style="padding: 0.5rem 0.6rem;">Gradient divider line</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- DESIGN PRINCIPLES REMINDER                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section>
+  <h2 class="section-title">&#128736; עקרונות עיצוב</h2>
+  <p class="section-subtitle">כללים שכל ה-utilities למעלה מקיימים.</p>
+
+  <div class="demo-box">
+    <div class="flex-col" style="gap: 0.75rem; font-size: 0.88rem;">
+      <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+        <span style="color: var(--secondary); font-weight: 700; min-width: 24px;">&#9989;</span>
+        <span><strong>CSS Logical Properties</strong> — ms- ולא ml-, ps- ולא pl-, inset-inline-start ולא left</span>
+      </div>
+      <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+        <span style="color: var(--secondary); font-weight: 700; min-width: 24px;">&#9989;</span>
+        <span><strong>CSS Custom Properties</strong> — כל הערכים דרך --game-* variables לקסטומיזציה</span>
+      </div>
+      <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+        <span style="color: var(--secondary); font-weight: 700; min-width: 24px;">&#9989;</span>
+        <span><strong>transform/opacity Only</strong> — כל האנימציות רק transform ו-opacity (GPU accelerated)</span>
+      </div>
+      <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+        <span style="color: var(--secondary); font-weight: 700; min-width: 24px;">&#9989;</span>
+        <span><strong>RTL-First</strong> — כל ה-utilities תומכים ב-[dir='rtl'] באופן מובנה</span>
+      </div>
+      <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+        <span style="color: var(--secondary); font-weight: 700; min-width: 24px;">&#9989;</span>
+        <span><strong>prefers-reduced-motion</strong> — כל האנימציות מושבתות כש-reduce מופעל</span>
+      </div>
+      <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+        <span style="color: var(--secondary); font-weight: 700; min-width: 24px;">&#9989;</span>
+        <span><strong>Light Theme</strong> — כל ה-utilities כוללים .light overrides</span>
+      </div>
+      <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+        <span style="color: var(--secondary); font-weight: 700; min-width: 24px;">&#9989;</span>
+        <span><strong>Max 200ms</strong> — כל ה-transitions עד 150ms, animations עד 300ms (כניסות)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="text-align: center; padding: 2rem 0 1rem; color: var(--text-dim); font-size: 0.78rem;">
+  &#129399; Ninja Keyboard — Gaming UI System Showcase<br>
+  Based on UI research from Brawl Stars, Clash Royale, Duolingo, Among Us & Fall Guys
+</div>
+
+</main>
+
+<script>
+  // XP counter bump demo
+  let currentXp = 2340;
+  function bumpXp() {
+    currentXp += 100;
+    const el = document.getElementById('xp-display');
+    const val = document.getElementById('xp-value');
+    val.textContent = currentXp.toLocaleString();
+    el.style.animation = 'none';
+    el.offsetHeight; // trigger reflow
+    el.style.animation = 'xp-bump 0.35s cubic-bezier(0.34,1.56,0.64,1)';
+  }
+
+  // Entrance animation replay
+  function replayEntrance() {
+    const container = document.getElementById('entrance-demo');
+    const cards = container.querySelectorAll('.td-entrance');
+    cards.forEach(card => {
+      card.style.animation = 'none';
+      card.offsetHeight;
+    });
+    cards.forEach(card => {
+      card.style.animation = '';
+    });
+  }
+</script>
+
+</body>
+</html>

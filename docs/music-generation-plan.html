@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ninja Keyboard - תוכנית הפקת מוזיקה AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #0d0b1a;
+      --bg-card: #12102a;
+      --bg-card2: #1a1735;
+      --bg-card3: #1e1b3a;
+      --border: oklch(0.28 0.06 292);
+      --border-glow: oklch(0.45 0.2 292);
+      --purple: #6C5CE7;
+      --purple-light: #8B7CF8;
+      --purple-dim: rgba(108,92,231,0.15);
+      --green: #00B894;
+      --green-light: #00d4a4;
+      --yellow: #FDCB6E;
+      --orange: #E17055;
+      --red: #D63031;
+      --cyan: #00CEC9;
+      --pink: #fd79a8;
+      --text: #e8e3ff;
+      --text-muted: #9990cc;
+      --text-dim: #554f88;
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg-base);
+      color: var(--text);
+      line-height: 1.7;
+      direction: rtl;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13, 11, 26, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      height: 52px;
+    }
+    nav::-webkit-scrollbar { display: none; }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    nav a:hover { color: var(--text); background: var(--bg-card2); }
+    nav .nav-logo {
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--purple-light);
+      margin-left: 1.5rem;
+      white-space: nowrap;
+    }
+
+    .hero {
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(108,92,231,0.15) 0%, transparent 70%);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(108,92,231,0.15);
+      border: 1px solid rgba(108,92,231,0.4);
+      border-radius: 999px;
+      padding: 0.3rem 1rem;
+      font-size: 0.75rem;
+      color: var(--purple-light);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, #fff 0%, var(--purple-light) 50%, var(--green) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto 2rem;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat .num {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--purple-light);
+    }
+    .hero-stat .lbl {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: 4rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    section:last-of-type { border-bottom: none; }
+
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-sub {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      max-width: 700px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .card:hover { border-color: var(--border-glow); }
+    .card-title {
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+    }
+    .card-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    th {
+      text-align: right;
+      padding: 0.75rem 1rem;
+      background: var(--bg-card2);
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(108,92,231,0.04); }
+
+    .table-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .info-box {
+      background: rgba(108,92,231,0.08);
+      border: 1px solid rgba(108,92,231,0.25);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .info-box-title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--purple-light);
+    }
+    .info-box p, .info-box li {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .info-box ul, .info-box ol { padding-right: 1.25rem; }
+    .info-box li { margin-bottom: 0.25rem; }
+
+    .warning-box {
+      background: rgba(225,112,85,0.08);
+      border: 1px solid rgba(225,112,85,0.25);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      color: #ffb3a0;
+    }
+
+    .success-box {
+      background: rgba(0,184,148,0.08);
+      border: 1px solid rgba(0,184,148,0.25);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--green-light);
+    }
+
+    .decision-box {
+      background: rgba(253,203,110,0.08);
+      border: 1px solid rgba(253,203,110,0.25);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .decision-box-title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--yellow);
+    }
+    .decision-box p, .decision-box li {
+      font-size: 0.88rem;
+      color: #ffe0a0;
+    }
+    .decision-box ul { padding-right: 1.25rem; }
+    .decision-box li { margin-bottom: 0.25rem; }
+
+    .tag {
+      font-size: 0.68rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-weight: 600;
+      display: inline-block;
+    }
+    .tag-best { background: rgba(0,184,148,0.2); color: var(--green); border: 1px solid rgba(0,184,148,0.4); }
+    .tag-good { background: rgba(108,92,231,0.2); color: var(--purple-light); border: 1px solid rgba(108,92,231,0.3); }
+    .tag-ok { background: rgba(253,203,110,0.15); color: var(--yellow); border: 1px solid rgba(253,203,110,0.3); }
+    .tag-bad { background: rgba(214,48,49,0.15); color: #ff8080; border: 1px solid rgba(214,48,49,0.3); }
+    .tag-rec { background: rgba(0,206,201,0.15); color: var(--cyan); border: 1px solid rgba(0,206,201,0.3); }
+
+    .area-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2.5rem 0 1.25rem;
+    }
+    .area-header-icon { font-size: 1.5rem; }
+    .area-header-title { font-size: 1.15rem; font-weight: 700; color: var(--text); }
+    .area-header-line { flex: 1; height: 1px; background: var(--border); }
+
+    .flow-diagram {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 1.5rem 0;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+    }
+    .flow-step {
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.6rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-align: center;
+      min-width: 100px;
+    }
+    .flow-arrow {
+      color: var(--purple-light);
+      font-size: 1.2rem;
+      font-weight: 900;
+    }
+
+    .cost-highlight {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--green);
+      display: block;
+      margin: 0.5rem 0;
+    }
+
+    .prompt-box {
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      margin-top: 0.75rem;
+    }
+    .prompt-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--purple-light);
+      margin-bottom: 0.4rem;
+      font-weight: 700;
+    }
+    .prompt-code {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'Courier New', monospace;
+      line-height: 1.5;
+      direction: ltr;
+      text-align: left;
+      white-space: pre-wrap;
+    }
+
+    .timeline {
+      position: relative;
+      padding-right: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      right: 0.5rem;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--purple), var(--green));
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      right: -1.75rem;
+      top: 0.5rem;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--purple);
+      border: 2px solid var(--bg-base);
+    }
+    .timeline-item .t-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+    .timeline-item .t-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .timeline-item .t-tracks {
+      font-size: 0.75rem;
+      color: var(--purple-light);
+      margin-top: 0.25rem;
+    }
+
+    .verdict {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius);
+      margin-top: 1rem;
+      font-weight: 700;
+    }
+    .verdict-winner {
+      background: rgba(0,184,148,0.12);
+      border: 1px solid rgba(0,184,148,0.3);
+      color: var(--green-light);
+    }
+
+    .compare-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.5rem;
+      transition: border-color 0.2s;
+    }
+    .compare-card:hover { border-color: var(--border-glow); }
+    .compare-card .cc-name {
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    .compare-card .cc-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    .cc-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid rgba(108,92,231,0.08);
+      font-size: 0.82rem;
+    }
+    .cc-row:last-child { border-bottom: none; }
+    .cc-label { color: var(--text-muted); }
+
+    .score-bar {
+      display: flex;
+      gap: 2px;
+      margin-top: 0.25rem;
+    }
+    .score-bar .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--bg-card3);
+    }
+    .score-bar .dot.filled { background: var(--purple-light); }
+    .score-bar .dot.green { background: var(--green); }
+
+    @media (max-width: 640px) {
+      section { padding: 2.5rem 1rem; }
+      .card-grid, .card-grid-3 { grid-template-columns: 1fr; }
+      .hero { padding: 3rem 1rem 2rem; }
+      nav { padding: 0 1rem; }
+      .flow-diagram { flex-direction: column; }
+      .flow-arrow { transform: rotate(90deg); }
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">🎵 תוכנית הפקת מוזיקה</span>
+  <a href="#tools">השוואת כלים</a>
+  <a href="#recommendation">המלצה</a>
+  <a href="#pipeline">צינור הפקה</a>
+  <a href="#style">סגנון: Chiptune vs Cinematic</a>
+  <a href="#priority">סדר עדיפויות</a>
+  <a href="#batches">אצוות יצירה</a>
+  <a href="#cost">עלויות</a>
+  <a href="#integration">אינטגרציה טכנית</a>
+  <a href="#jukebox-tech">ג'וקבוקס טכני</a>
+  <a href="#holidays">מוזיקת חגים</a>
+  <a href="#prompts">הנדסת פרומפטים</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">מסמך תכנון — מרץ 2026</div>
+  <h1>תוכנית הפקת מוזיקה AI</h1>
+  <p>מחקר מעמיק על כלי יצירת מוזיקה, אסטרטגיית הפקה, אינטגרציה טכנית, מערכת ג'וקבוקס, ומוזיקת חגים — 48 רצועות לנינג'ה מקלדת</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">48</div><div class="lbl">רצועות מתוכננות</div></div>
+    <div class="hero-stat"><div class="num">2</div><div class="lbl">קיימות כבר</div></div>
+    <div class="hero-stat"><div class="num">~$50</div><div class="lbl">עלות משוערת</div></div>
+    <div class="hero-stat"><div class="num">5</div><div class="lbl">אצוות יצירה</div></div>
+    <div class="hero-stat"><div class="num">12</div><div class="lbl">חגי ישראל</div></div>
+  </div>
+</div>
+
+<!-- ===== SECTION: TOOL COMPARISON ===== -->
+<section id="tools">
+  <div class="container">
+    <div class="section-title">🔍 השוואת כלי יצירת מוזיקה AI</div>
+    <div class="section-sub">ניתוח מעמיק של כל הפלטפורמות הזמינות בשוק — מי הכי טוב למוזיקת משחק לילדים?</div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>קריטריון</th>
+            <th>Suno V5</th>
+            <th>Udio</th>
+            <th>Stable Audio</th>
+            <th>MusicGen (Meta)</th>
+            <th>AIVA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>איכות כללית</strong></td>
+            <td>
+              <span class="tag tag-best">מצוין</span>
+              <div class="score-bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot green"></div></div>
+            </td>
+            <td>
+              <span class="tag tag-best">מצוין</span>
+              <div class="score-bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot green"></div></div>
+            </td>
+            <td>
+              <span class="tag tag-good">טוב</span>
+              <div class="score-bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>
+            </td>
+            <td>
+              <span class="tag tag-ok">סביר</span>
+              <div class="score-bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+            </td>
+            <td>
+              <span class="tag tag-good">טוב</span>
+              <div class="score-bar"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>מוזיקה אינסטרומנטלית</strong></td>
+            <td><span class="tag tag-good">טוב מאוד</span></td>
+            <td><span class="tag tag-best">מוביל</span></td>
+            <td><span class="tag tag-best">מצוין</span></td>
+            <td><span class="tag tag-ok">סביר</span></td>
+            <td><span class="tag tag-best">מצוין</span></td>
+          </tr>
+          <tr>
+            <td><strong>Chiptune / 8-bit</strong></td>
+            <td><span class="tag tag-best">מצוין</span></td>
+            <td><span class="tag tag-good">טוב</span></td>
+            <td><span class="tag tag-ok">מוגבל</span></td>
+            <td><span class="tag tag-ok">סביר</span></td>
+            <td><span class="tag tag-ok">מוגבל</span></td>
+          </tr>
+          <tr>
+            <td><strong>לולאה (Loop)</strong></td>
+            <td><span class="tag tag-good">Loop Mode</span></td>
+            <td><span class="tag tag-ok">ידני</span></td>
+            <td><span class="tag tag-good">תמיכה מובנית</span></td>
+            <td><span class="tag tag-ok">ידני</span></td>
+            <td><span class="tag tag-good">מובנה</span></td>
+          </tr>
+          <tr>
+            <td><strong>זמן יצירה</strong></td>
+            <td>~30 שניות</td>
+            <td>~90 שניות</td>
+            <td>~45 שניות</td>
+            <td>~20 שניות (לוקלי)</td>
+            <td>~60 שניות</td>
+          </tr>
+          <tr>
+            <td><strong>API רשמי</strong></td>
+            <td><span class="tag tag-bad">אין רשמי</span></td>
+            <td><span class="tag tag-bad">אין רשמי</span></td>
+            <td><span class="tag tag-best">יש!</span></td>
+            <td><span class="tag tag-best">חופשי (HuggingFace)</span></td>
+            <td><span class="tag tag-good">יש API</span></td>
+          </tr>
+          <tr>
+            <td><strong>API לא רשמי / MCP</strong></td>
+            <td><span class="tag tag-good">MCP + npm</span></td>
+            <td><span class="tag tag-ok">צד שלישי בלבד</span></td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>מחיר לרצועה</strong></td>
+            <td>~$0.40 (V4.5)<br>~$0.50 (V5)</td>
+            <td>~$0.50</td>
+            <td>~$0.30</td>
+            <td>חינם (GPU לוקלי)</td>
+            <td>~$0.30</td>
+          </tr>
+          <tr>
+            <td><strong>זכויות מסחריות</strong></td>
+            <td>Pro/Premier — כן</td>
+            <td>Standard/Pro — כן</td>
+            <td>כן (בתשלום)</td>
+            <td>CC-BY-NC</td>
+            <td>Pro — כן</td>
+          </tr>
+          <tr>
+            <td><strong>Stems (הפרדת ערוצים)</strong></td>
+            <td>Pro/Premier</td>
+            <td>כן — מוביל!</td>
+            <td>לא</td>
+            <td>לא</td>
+            <td>MIDI export</td>
+          </tr>
+          <tr>
+            <td><strong>Inpainting / עריכה</strong></td>
+            <td>מוגבל</td>
+            <td><span class="tag tag-best">מוביל!</span></td>
+            <td>לא</td>
+            <td>לא</td>
+            <td>עריכת MIDI</td>
+          </tr>
+          <tr>
+            <td><strong>התאמה לפרויקט שלנו</strong></td>
+            <td>
+              <span class="tag tag-rec">מומלץ ראשי</span>
+            </td>
+            <td>
+              <span class="tag tag-good">משלים</span>
+            </td>
+            <td>
+              <span class="tag tag-ok">גיבוי</span>
+            </td>
+            <td>
+              <span class="tag tag-bad">לא מתאים</span>
+            </td>
+            <td>
+              <span class="tag tag-ok">אלטרנטיבי</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-grid-3">
+      <div class="compare-card" style="border-color: rgba(0,184,148,0.4);">
+        <div class="cc-name" style="color: var(--green);">Suno V5</div>
+        <div class="cc-sub">הכלי הראשי שלנו — כבר מוכח בפרויקט</div>
+        <div class="cc-row"><span class="cc-label">יתרונות</span></div>
+        <ul style="font-size:0.78rem; color:var(--text-muted); padding-right:1rem; margin-bottom:0.75rem;">
+          <li>כבר נוצרו 2 רצועות מצוינות (Main Theme + Boss)</li>
+          <li>Chiptune / 8-bit — האיכות הכי טובה בשוק</li>
+          <li>MCP Server קיים ומוכן לאוטומציה</li>
+          <li>Loop Mode מובנה — קריטי למוזיקת משחק</li>
+          <li>V5 — איכות ללא תקדים, 30 שניות ליצירה</li>
+          <li>Extend — להאריך רצועות קיימות</li>
+        </ul>
+        <div class="cc-row"><span class="cc-label">חסרונות</span></div>
+        <ul style="font-size:0.78rem; color:var(--text-muted); padding-right:1rem;">
+          <li>אין API רשמי — תלות ב-MCP / cookie auth</li>
+          <li>שליטה מוגבלת באורך מדויק</li>
+          <li>בעיות לפעמים עם loop חלק</li>
+        </ul>
+      </div>
+
+      <div class="compare-card">
+        <div class="cc-name" style="color: var(--purple-light);">Udio</div>
+        <div class="cc-sub">כלי משלים — לרצועות שדורשות שליטה מדויקת</div>
+        <div class="cc-row"><span class="cc-label">יתרונות</span></div>
+        <ul style="font-size:0.78rem; color:var(--text-muted); padding-right:1rem; margin-bottom:0.75rem;">
+          <li>הפרדת ערוצים (Stems) — מעולה</li>
+          <li>Inpainting — שינוי חלקים ספציפיים</li>
+          <li>איכות אינסטרומנטלית מובילה בשוק</li>
+          <li>שליטה מדויקת יותר בעריכה</li>
+        </ul>
+        <div class="cc-row"><span class="cc-label">חסרונות</span></div>
+        <ul style="font-size:0.78rem; color:var(--text-muted); padding-right:1rem;">
+          <li>אין API רשמי — רק צד שלישי</li>
+          <li>90 שניות ליצירה (כפול מ-Suno)</li>
+          <li>Chiptune פחות טוב מ-Suno</li>
+          <li>אין MCP מוכן</li>
+        </ul>
+      </div>
+
+      <div class="compare-card">
+        <div class="cc-name" style="color: var(--yellow);">Stable Audio / AIVA</div>
+        <div class="cc-sub">אלטרנטיבות — לרצועות ambient ספציפיות</div>
+        <div class="cc-row"><span class="cc-label">Stable Audio</span></div>
+        <ul style="font-size:0.78rem; color:var(--text-muted); padding-right:1rem; margin-bottom:0.75rem;">
+          <li>API רשמי — אוטומציה נוחה</li>
+          <li>מצוין ל-ambient ו-background</li>
+          <li>זול יותר (~$0.30/רצועה)</li>
+          <li>אין vocals — מושלם לנו</li>
+        </ul>
+        <div class="cc-row"><span class="cc-label">AIVA</span></div>
+        <ul style="font-size:0.78rem; color:var(--text-muted); padding-right:1rem;">
+          <li>API רשמי עם MIDI export</li>
+          <li>מצוינת לאורקסטרלי ו-cinematic</li>
+          <li>שליטה מלאה ב-MIDI לעריכה</li>
+          <li>פחות מתאימה ל-chiptune</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="verdict verdict-winner" style="margin-top: 1.5rem;">
+      <span style="font-size: 1.5rem;">🏆</span>
+      <div>
+        <div>הפסק: Suno V5 ככלי ראשי + Udio לעריכה מדויקת</div>
+        <div style="font-weight: 400; font-size: 0.82rem; margin-top: 0.25rem;">Suno מוכח בפרויקט, MCP מוכן, Chiptune מעולה. Udio כגיבוי לרצועות שדורשות inpainting או stems.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION: RECOMMENDATION ===== -->
+<section id="recommendation">
+  <div class="container">
+    <div class="section-title">🎯 המלצת אסטרטגיה: Suno כמנוע ראשי</div>
+    <div class="section-sub">למה Suno, ואיך לשלב עם שאר הכלים.</div>
+
+    <div class="info-box">
+      <div class="info-box-title">מצב ה-API של Suno — מרץ 2026</div>
+      <ul>
+        <li><strong>אין API רשמי ציבורי</strong> — Suno לא מפרסם REST API פתוח עם API key</li>
+        <li><strong>Suno MCP Server קיים</strong> — כבר מותקן אצלנו ב-<code>C:\Users\eladj\suno-mcp-direct</code></li>
+        <li><strong>suno-api (GitHub)</strong> — פרויקט open-source שעושה reverse-engineer ל-Suno עם Playwright + 2Captcha</li>
+        <li><strong>API של צד שלישי</strong> — sunoapi.org ו-udioapi.pro מציעים REST API מנוהל (~$0.40-0.50/רצועה)</li>
+        <li><strong>Cookie Auth</strong> — כל הפתרונות הלא רשמיים דורשים cookie מהדפדפן (מתעדכן כל ~30 ימים)</li>
+      </ul>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title" style="color: var(--green);">Approach A: Suno MCP (מומלץ)</div>
+        <ul style="font-size:0.82rem; color:var(--text-muted); padding-right:1.25rem; line-height:2;">
+          <li>כבר מותקן ועובד בפרויקט</li>
+          <li>אינטגרציה ישירה עם Claude Code</li>
+          <li>פקודות: <code>suno_generate_track</code>, <code>suno_download_track</code></li>
+          <li>חצי-אוטומטי: Claude שולח prompt, מוריד תוצאה</li>
+          <li>מתאים ליצירת 5-8 רצועות ב-session אחת</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color: var(--purple-light);">Approach B: ידני דרך suno.com</div>
+        <ul style="font-size:0.82rem; color:var(--text-muted); padding-right:1.25rem; line-height:2;">
+          <li>גמישות מלאה — שליטה על כל פרמטר</li>
+          <li>Preview מיידי בדפדפן</li>
+          <li>Extend ו-Remix נוחים</li>
+          <li>מתאים לרצועות שדורשות fine-tuning</li>
+          <li>חלופה כש-MCP נשבר (cookie expires)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color: var(--cyan);">Approach C: Udio לעריכה (משלים)</div>
+        <ul style="font-size:0.82rem; color:var(--text-muted); padding-right:1.25rem; line-height:2;">
+          <li>Inpainting — שינוי סקשן ספציפי ברצועה</li>
+          <li>Stems — הפרדה לערוצים (drums, melody, bass)</li>
+          <li>שימושי לרצועות שהן "כמעט מושלמות"</li>
+          <li>Remix של רצועת Suno קיימת עם סגנון אחר</li>
+          <li>מחיר דומה ל-Suno</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="decision-box">
+      <div class="decision-box-title">החלטה ממתינה: Suno Pro או Premier?</div>
+      <ul>
+        <li><strong>Pro ($10/חודש)</strong> — 2,500 קרדיטים = ~250 רצועות V4.5 / ~210 רצועות V5. מספיק ל-48 רצועות + ניסיונות.</li>
+        <li><strong>Premier ($30/חודש)</strong> — 10,000 קרדיטים. מוגזם לפרויקט בודד, אלא אם רוצים גרסאות רבות לכל רצועה.</li>
+        <li><strong>המלצה: Pro לחודש אחד ($10)</strong> — יספיק ל-48 רצועות + ~100 ניסיונות נוספים. סה"כ: <strong>$10</strong>.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION: STYLE DEBATE ===== -->
+<section id="style">
+  <div class="container">
+    <div class="section-title">🎨 הדיון הגדול: Chiptune/Pixel vs Cinematic</div>
+    <div class="section-sub">המשתמש מתלבט בין סגנון pixel/chiptune לבין סגנון קולנועי יותר. הנה הניתוח המלא.</div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title" style="color: var(--cyan);">Chiptune / 8-bit / Pixel</div>
+        <ul style="font-size:0.82rem; color:var(--text-muted); padding-right:1.25rem; line-height:2;">
+          <li><strong>נוסטלגיה</strong> — צלילי 8-bit מייצרים חיבור רגשי מיידי</li>
+          <li><strong>פשטות</strong> — מנגינות פשוטות וקליטות, קלות לזכור</li>
+          <li><strong>BPM גבוה</strong> — 120-160 BPM טבעי, מתאים לאנרגיית הקלדה</li>
+          <li><strong>לולאה מושלמת</strong> — chiptune עושה loop חלק בצורה טבעית</li>
+          <li><strong>גודל קובץ קטן</strong> — MP3 קל, טעינה מהירה</li>
+          <li><strong>עקביות</strong> — קל לשמור סגנון אחיד בין 48 רצועות</li>
+          <li><strong>מותג מוכר</strong> — Main Theme V2 כבר chiptune מצוין!</li>
+        </ul>
+        <div style="margin-top:1rem; padding:0.75rem; background:rgba(0,206,201,0.08); border-radius:8px; font-size:0.82rem; color:var(--cyan);">
+          <strong>מתאים ל:</strong> גילאי 6-12 (שתיל, נבט, גזע). רפרנסים: Brawl Stars, Minecraft, Undertale, Pokemon
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="color: var(--orange);">Cinematic / Orchestral</div>
+        <ul style="font-size:0.82rem; color:var(--text-muted); padding-right:1.25rem; line-height:2;">
+          <li><strong>רגש</strong> — מוזיקה אורקסטרלית מייצרת עומק רגשי</li>
+          <li><strong>דרמה</strong> — מושלם ל-boss battles ו-climax</li>
+          <li><strong>בגרות</strong> — נשמע "רציני" יותר לנוער (ענף, צמרת)</li>
+          <li><strong>סיפור</strong> — מתאים ל-cutscenes ולרגעי narrative</li>
+          <li><strong>Dynamic</strong> — שכבות אורקסטרליות מאפשרות adaptive music</li>
+        </ul>
+        <div style="margin-top:1rem; padding:0.75rem; background:rgba(225,112,85,0.08); border-radius:8px; font-size:0.82rem; color:var(--orange);">
+          <strong>מתאים ל:</strong> גילאי 12-16+ (ענף, צמרת) + boss battles. רפרנסים: Zelda, Genshin Impact, Final Fantasy
+        </div>
+      </div>
+    </div>
+
+    <div class="success-box" style="margin-top:1.5rem;">
+      <strong style="display:block; margin-bottom:0.5rem; font-size:1rem;">ההמלצה: גישה היברידית — Chiptune כבסיס + Cinematic לרגעי שיא</strong>
+      <div style="font-size:0.85rem;">
+        זה בדיוק מה שעושים המשחקים הכי מצליחים לילדים. <strong>Undertale</strong> הוא הדוגמה המושלמת: chiptune בזרימה הרגילה, אורקסטרה אפית ברגעי boss. <strong>Pokemon</strong> מתחיל chiptune ומתפתח לסינתטי. <strong>Brawl Stars</strong> משלב EDM עם chiptune.
+      </div>
+    </div>
+
+    <div class="table-wrap" style="margin-top:1.5rem;">
+      <table>
+        <thead>
+          <tr>
+            <th>אזור במשחק</th>
+            <th>סגנון מומלץ</th>
+            <th>סיבה</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>תפריט ראשי</strong></td>
+            <td><span class="tag tag-best">Chiptune</span></td>
+            <td>Main Theme V2 כבר קיים ומושלם. משמר את הזהות.</td>
+          </tr>
+          <tr>
+            <td><strong>תרגול הקלדה</strong></td>
+            <td><span class="tag tag-good">Lo-fi / Ambient</span></td>
+            <td>לא מסיח, מאפשר flow state. לא chiptune ולא cinematic.</td>
+          </tr>
+          <tr>
+            <td><strong>מבחן מהירות</strong></td>
+            <td><span class="tag tag-best">EDM + Chiptune</span></td>
+            <td>אנרגיה גבוהה, תחרותי, builds momentum.</td>
+          </tr>
+          <tr>
+            <td><strong>קרבות רגילים</strong></td>
+            <td><span class="tag tag-best">Chiptune Battle</span></td>
+            <td>אנרגטי, כיפי, תחרותי — כמו Brawl Stars.</td>
+          </tr>
+          <tr>
+            <td><strong>Boss Battles</strong></td>
+            <td><span class="tag tag-rec">Orchestral + Glitch</span></td>
+            <td>רגע דרמטי — Boss Battle V1 כבר orchestral.</td>
+          </tr>
+          <tr>
+            <td><strong>ערכות דמויות</strong></td>
+            <td><span class="tag tag-best">Chiptune Leitmotifs</span></td>
+            <td>קצרים (20 שניות), קליטים, מזוהים מיד.</td>
+          </tr>
+          <tr>
+            <td><strong>אירועי ניצחון</strong></td>
+            <td><span class="tag tag-best">Chiptune Jingles</span></td>
+            <td>RPG vibes — Level Up, Victory Fanfare.</td>
+          </tr>
+          <tr>
+            <td><strong>שתיל (6-8)</strong></td>
+            <td><span class="tag tag-good">Toybox / Music Box</span></td>
+            <td>קסום, חם, פשוט — לילדים הכי קטנים.</td>
+          </tr>
+          <tr>
+            <td><strong>נבט (8-10)</strong></td>
+            <td><span class="tag tag-best">Adventure Chiptune</span></td>
+            <td>Pokemon Town Music vibes — הרפתקני ושמח.</td>
+          </tr>
+          <tr>
+            <td><strong>גזע (10-12)</strong></td>
+            <td><span class="tag tag-best">Dark Synthwave</span></td>
+            <td>Neon gaming — ה-sweet spot הנוכחי.</td>
+          </tr>
+          <tr>
+            <td><strong>ענף (12-14)</strong></td>
+            <td><span class="tag tag-good">Lo-fi Minimal</span></td>
+            <td>בוגר, לא ילדותי — Discord dark mode vibes.</td>
+          </tr>
+          <tr>
+            <td><strong>צמרת (14-16+)</strong></td>
+            <td><span class="tag tag-good">Minimal Electronic</span></td>
+            <td>כמעט ללא מוזיקה — Monkeytype energy.</td>
+          </tr>
+          <tr>
+            <td><strong>סיפור / Cutscenes</strong></td>
+            <td><span class="tag tag-rec">Cinematic</span></td>
+            <td>רגעי narrative דורשים עומק רגשי.</td>
+          </tr>
+          <tr>
+            <td><strong>חגים</strong></td>
+            <td><span class="tag tag-rec">Holiday + Motif</span></td>
+            <td>מוטיבים מהתמה הראשית + אלמנטים חגיגיים.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-box">
+      <div class="info-box-title">מסקנה: ה-Main Theme Motif הוא "הדבק"</div>
+      <p>המנגינה של Main Theme V2 צריכה להופיע כ-<strong>motif חוזר</strong> בוריאציות שונות לאורך כל הסאונדטרק. זה מה שיוצר תחושת <strong>עולם מוזיקלי מגובש</strong> למרות מגוון הסגנונות:</p>
+      <ul>
+        <li>Lo-fi practice — motif בפסנתר רגוע</li>
+        <li>Boss battle — motif באורקסטרה דרמטית</li>
+        <li>Victory fanfare — motif בטראמפטים</li>
+        <li>Holiday — motif עם כלים מסורתיים</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION: PRODUCTION PIPELINE ===== -->
+<section id="pipeline">
+  <div class="container">
+    <div class="section-title">🏭 צינור הפקה מומלץ</div>
+    <div class="section-sub">Workflow מלא מ-prompt ועד קובץ MP3 סופי בפרויקט.</div>
+
+    <div class="flow-diagram">
+      <div class="flow-step" style="border-color: var(--purple); color: var(--purple-light);">
+        Prompt<br><small>הכנת תיאור</small>
+      </div>
+      <div class="flow-arrow">&larr;</div>
+      <div class="flow-step" style="border-color: var(--cyan); color: var(--cyan);">
+        Generate x2<br><small>Suno MCP / Web</small>
+      </div>
+      <div class="flow-arrow">&larr;</div>
+      <div class="flow-step" style="border-color: var(--yellow); color: var(--yellow);">
+        Review<br><small>בחירת גרסה</small>
+      </div>
+      <div class="flow-arrow">&larr;</div>
+      <div class="flow-step" style="border-color: var(--green); color: var(--green);">
+        Post-Process<br><small>ffmpeg normalize</small>
+      </div>
+      <div class="flow-arrow">&larr;</div>
+      <div class="flow-step" style="border-color: var(--orange); color: var(--orange);">
+        Loop Test<br><small>בדיקת לולאה</small>
+      </div>
+      <div class="flow-arrow">&larr;</div>
+      <div class="flow-step" style="border-color: var(--pink); color: var(--pink);">
+        Deploy<br><small>public/audio/</small>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title" style="color: var(--purple-light);">שלב 1: הכנת Prompt</div>
+        <ol style="font-size:0.82rem; color:var(--text-muted); padding-right:1.25rem; line-height:2;">
+          <li>בחר רצועה מרשימת ה-48 ב-soundtrack-master-plan</li>
+          <li>קח את ה-prompt המוכן (כבר כתוב לכל רצועה)</li>
+          <li>הוסף "anchor tags" לעקביות: <code>ninja game, kids friendly, loopable</code></li>
+          <li>ציין BPM מדויק (ראה טבלה בסקשן פרומפטים)</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="color: var(--cyan);">שלב 2: יצירה (Generate)</div>
+        <ol style="font-size:0.82rem; color:var(--text-muted); padding-right:1.25rem; line-height:2;">
+          <li>צור 2 גרסאות לכל רצועה (Suno מייצר 2 בכל פעם)</li>
+          <li>אם שתיהן לא טובות — שנה prompt ונסה שוב</li>
+          <li>אם אחת "כמעט" — השתמש ב-Extend או שלח ל-Udio inpainting</li>
+          <li>לרצועות background — השתמש ב-<code>duration="long"</code></li>
+          <li>לjingles — <code>duration="short"</code> (5-15 שניות)</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="color: var(--green);">שלב 3: Post-Processing (ffmpeg)</div>
+        <div class="prompt-box">
+          <div class="prompt-label">Normalize ל--14 LUFS</div>
+          <div class="prompt-code">ffmpeg -i input.mp3 -af loudnorm=I=-14:TP=-1:LRA=11 output.mp3</div>
+        </div>
+        <div class="prompt-box">
+          <div class="prompt-label">Fade-in/Fade-out (loop חלק)</div>
+          <div class="prompt-code">ffmpeg -i input.mp3 -af "afade=t=in:st=0:d=0.5,afade=t=out:st=END-0.5:d=0.5" output.mp3</div>
+        </div>
+        <div class="prompt-box">
+          <div class="prompt-label">Trim ל-loop point מדויק</div>
+          <div class="prompt-code">ffmpeg -i input.mp3 -ss 0.1 -to 120.0 -c:a libmp3lame -q:a 2 output.mp3</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:1rem;">
+      <div class="card-title" style="color: var(--yellow);">שלב 4-5: בדיקת Loop + Deploy</div>
+      <div class="card-grid" style="margin-top:0.75rem;">
+        <div>
+          <div style="font-weight:600; font-size:0.85rem; margin-bottom:0.5rem;">בדיקת לולאה</div>
+          <ol style="font-size:0.82rem; color:var(--text-muted); padding-right:1.25rem; line-height:2;">
+            <li>השמע ברצף 3 פעמים — האם יש "קפיצה" במעבר?</li>
+            <li>בדוק ש-BPM עקבי (אין האצה/האטה)</li>
+            <li>וודא שאין silence בסוף הקובץ</li>
+            <li>אם לא חלק — trim עם ffmpeg</li>
+          </ol>
+        </div>
+        <div>
+          <div style="font-weight:600; font-size:0.85rem; margin-bottom:0.5rem;">Deploy</div>
+          <ol style="font-size:0.82rem; color:var(--text-muted); padding-right:1.25rem; line-height:2;">
+            <li>שמור ב-<code>public/audio/music/[name].mp3</code></li>
+            <li>עדכן <code>music-manifest.json</code></li>
+            <li>עדכן <code>PROGRESS.md</code></li>
+            <li>Commit: <code>feat: add [track-name] music track</code></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION: PRIORITY ORDER ===== -->
+<section id="priority">
+  <div class="container">
+    <div class="section-title">📋 סדר עדיפויות — 48 רצועות</div>
+    <div class="section-sub">מה ליצור קודם? סדר עדיפויות לפי השפעה על חוויית המשחק.</div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>עדיפות</th>
+            <th>מזהה</th>
+            <th>שם</th>
+            <th>סגנון</th>
+            <th>Duration</th>
+            <th>השפעה</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background: rgba(214,48,49,0.05);">
+            <td style="color: var(--red); font-weight:800;">P0</td>
+            <td><code>PLAY-001</code></td>
+            <td>Practice Easy — Lo-fi</td>
+            <td>Lo-fi Hip Hop</td>
+            <td>long</td>
+            <td>כל session תרגול. קריטי!</td>
+          </tr>
+          <tr style="background: rgba(214,48,49,0.05);">
+            <td style="color: var(--red); font-weight:800;">P0</td>
+            <td><code>EVENT-001</code></td>
+            <td>Victory Fanfare</td>
+            <td>Brass/Chiptune</td>
+            <td>short</td>
+            <td>כל סיום שיעור/קרב</td>
+          </tr>
+          <tr style="background: rgba(214,48,49,0.05);">
+            <td style="color: var(--red); font-weight:800;">P0</td>
+            <td><code>EVENT-002</code></td>
+            <td>Level Up Jingle</td>
+            <td>Chiptune</td>
+            <td>short</td>
+            <td>כל עליית רמה</td>
+          </tr>
+          <tr style="background: rgba(214,48,49,0.05);">
+            <td style="color: var(--red); font-weight:800;">P0</td>
+            <td><code>EVENT-003</code></td>
+            <td>Character Unlock</td>
+            <td>Magical</td>
+            <td>short</td>
+            <td>רגע קריטי — "wow!"</td>
+          </tr>
+          <tr style="background: rgba(225,112,85,0.05);">
+            <td style="color: var(--orange); font-weight:800;">P1</td>
+            <td><code>BATTLE-002</code></td>
+            <td>Shadow Cat Battle</td>
+            <td>Chiptune Battle</td>
+            <td>long</td>
+            <td>קרב ראשון — חוויה ראשונה</td>
+          </tr>
+          <tr style="background: rgba(225,112,85,0.05);">
+            <td style="color: var(--orange); font-weight:800;">P1</td>
+            <td><code>BATTLE-003</code></td>
+            <td>Storm Fox Battle</td>
+            <td>Electro Rock</td>
+            <td>long</td>
+            <td>קרב בינוני</td>
+          </tr>
+          <tr style="background: rgba(225,112,85,0.05);">
+            <td style="color: var(--orange); font-weight:800;">P1</td>
+            <td><code>PLAY-004</code></td>
+            <td>Speed Test Adrenaline</td>
+            <td>EDM/Dubstep</td>
+            <td>long</td>
+            <td>מבחן מהירות — תחרותי</td>
+          </tr>
+          <tr style="background: rgba(225,112,85,0.05);">
+            <td style="color: var(--orange); font-weight:800;">P1</td>
+            <td><code>EVENT-004</code></td>
+            <td>Achievement Unlock</td>
+            <td>Power Chord</td>
+            <td>short</td>
+            <td>כל אצ'יבמנט</td>
+          </tr>
+          <tr style="background: rgba(253,203,110,0.05);">
+            <td style="color: var(--yellow); font-weight:800;">P2</td>
+            <td><code>PLAY-002</code></td>
+            <td>Practice Medium</td>
+            <td>Indie Electronic</td>
+            <td>long</td>
+            <td>גיוון בתרגול</td>
+          </tr>
+          <tr style="background: rgba(253,203,110,0.05);">
+            <td style="color: var(--yellow); font-weight:800;">P2</td>
+            <td><code>BATTLE-001</code></td>
+            <td>Pre-Battle Tension</td>
+            <td>Orchestral</td>
+            <td>medium</td>
+            <td>בניית מתח</td>
+          </tr>
+          <tr style="background: rgba(253,203,110,0.05);">
+            <td style="color: var(--yellow); font-weight:800;">P2</td>
+            <td><code>CHAR-001</code></td>
+            <td>Ki Hero Theme</td>
+            <td>Adventure Chiptune</td>
+            <td>short</td>
+            <td>הגיבור הראשי!</td>
+          </tr>
+          <tr style="background: rgba(253,203,110,0.05);">
+            <td style="color: var(--yellow); font-weight:800;">P2</td>
+            <td><code>CHAR-003</code></td>
+            <td>Sensei Zen Theme</td>
+            <td>Japanese Traditional</td>
+            <td>short</td>
+            <td>דמות מרכזית</td>
+          </tr>
+          <tr style="background: rgba(253,203,110,0.05);">
+            <td style="color: var(--yellow); font-weight:800;">P2</td>
+            <td><code>CHAR-004</code></td>
+            <td>Bug Villain Theme</td>
+            <td>Glitch</td>
+            <td>short</td>
+            <td>הנבל הראשי</td>
+          </tr>
+          <tr style="background: rgba(253,203,110,0.05);">
+            <td style="color: var(--yellow); font-weight:800;">P2</td>
+            <td><code>WORLD-003</code></td>
+            <td>Geza Ninja Arena</td>
+            <td>Dark Synthwave</td>
+            <td>long</td>
+            <td>ה-default world</td>
+          </tr>
+          <tr>
+            <td style="color: var(--green); font-weight:800;">P3</td>
+            <td><code>MENU-002..006</code></td>
+            <td>שאר תפריטים (5)</td>
+            <td>מגוון</td>
+            <td>long</td>
+            <td>העשרה, לא קריטי</td>
+          </tr>
+          <tr>
+            <td style="color: var(--green); font-weight:800;">P3</td>
+            <td><code>WORLD-001,002</code></td>
+            <td>שתיל + נבט</td>
+            <td>Toybox, Adventure</td>
+            <td>long</td>
+            <td>עולמות גיל נוספים</td>
+          </tr>
+          <tr>
+            <td style="color: var(--green); font-weight:800;">P3</td>
+            <td><code>CHAR-002,005,006,007</code></td>
+            <td>שאר דמויות (4)</td>
+            <td>מגוון</td>
+            <td>short</td>
+            <td>leitmotifs</td>
+          </tr>
+          <tr>
+            <td style="color: var(--green); font-weight:800;">P3</td>
+            <td><code>EVENT-005..008</code></td>
+            <td>Streak, Season, PB, Defeat</td>
+            <td>מגוון</td>
+            <td>short</td>
+            <td>jingles נוספים</td>
+          </tr>
+          <tr>
+            <td style="color: var(--text-muted); font-weight:800;">P4</td>
+            <td><code>BATTLE-004..008</code></td>
+            <td>Blaze + Bug stages + Glitch</td>
+            <td>Metal, Glitch</td>
+            <td>long</td>
+            <td>תלוי בפיצ'ר הקרבות</td>
+          </tr>
+          <tr>
+            <td style="color: var(--text-muted); font-weight:800;">P4</td>
+            <td><code>PLAY-003,005</code></td>
+            <td>Practice Hard + Accuracy</td>
+            <td>D&B, Techno</td>
+            <td>long</td>
+            <td>unlock tracks</td>
+          </tr>
+          <tr>
+            <td style="color: var(--text-muted); font-weight:800;">P4</td>
+            <td><code>WORLD-004,005</code></td>
+            <td>ענף + צמרת</td>
+            <td>Lo-fi, Minimal</td>
+            <td>long</td>
+            <td>גילאי 12-16</td>
+          </tr>
+          <tr>
+            <td style="color: var(--text-muted); font-weight:800;">P4</td>
+            <td><code>CHAR-008</code></td>
+            <td>Glitch Chaos Theme</td>
+            <td>Noise/Glitch</td>
+            <td>short</td>
+            <td>בוס סודי</td>
+          </tr>
+          <tr>
+            <td style="color: var(--text-muted); font-weight:800;">P4</td>
+            <td><code>BATTLE-009</code></td>
+            <td>Boss Defeated Fanfare</td>
+            <td>Orchestral</td>
+            <td>short</td>
+            <td>תלוי בפיצ'ר הקרבות</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION: BATCHES ===== -->
+<section id="batches">
+  <div class="container">
+    <div class="section-title">📦 אצוות יצירה (Batch Plan)</div>
+    <div class="section-sub">5 אצוות מתוכננות. כל אצווה — session אחת של 1-2 שעות.</div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="t-title" style="color: var(--red);">Batch 1 — ליבת המשחק (P0)</div>
+        <div class="t-desc">4 רצועות קריטיות שמשפיעות על כל session. ללא אלה המשחק "שקט".</div>
+        <div class="t-tracks">PLAY-001 (lo-fi practice), EVENT-001 (victory), EVENT-002 (level up), EVENT-003 (character unlock)</div>
+        <div style="font-size:0.75rem; color:var(--text-dim); margin-top:0.25rem;">
+          ~40 קרדיטים Suno | ~20 דקות יצירה | 1 long + 3 short
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="t-title" style="color: var(--orange);">Batch 2 — קרבות ותחרות (P1)</div>
+        <div class="t-desc">מוזיקת קרב לשלושת הריבלים + מבחן מהירות + achievement jingle.</div>
+        <div class="t-tracks">BATTLE-002 (Shadow), BATTLE-003 (Storm), PLAY-004 (Speed Test), EVENT-004 (Achievement)</div>
+        <div style="font-size:0.75rem; color:var(--text-dim); margin-top:0.25rem;">
+          ~60 קרדיטים Suno | ~30 דקות יצירה | 3 long + 1 short
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="t-title" style="color: var(--yellow);">Batch 3 — דמויות ועולם (P2)</div>
+        <div class="t-desc">Character leitmotifs לדמויות המרכזיות + ambient לעולם הראשי (גזע).</div>
+        <div class="t-tracks">CHAR-001 (Ki), CHAR-003 (Sensei), CHAR-004 (Bug), WORLD-003 (Geza), PLAY-002 (Practice Medium), BATTLE-001 (Pre-Battle)</div>
+        <div style="font-size:0.75rem; color:var(--text-dim); margin-top:0.25rem;">
+          ~70 קרדיטים Suno | ~35 דקות יצירה | 2 long + 1 medium + 3 short
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="t-title" style="color: var(--green);">Batch 4 — העשרה (P3)</div>
+        <div class="t-desc">תפריטים, עולמות גיל, שאר דמויות, jingles נוספים.</div>
+        <div class="t-tracks">MENU-002..006, WORLD-001, WORLD-002, CHAR-002, CHAR-005..007, EVENT-005..008</div>
+        <div style="font-size:0.75rem; color:var(--text-dim); margin-top:0.25rem;">
+          ~140 קרדיטים Suno | ~70 דקות יצירה | ~16 רצועות
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="t-title" style="color: var(--text-muted);">Batch 5 — Endgame + Unlock (P4)</div>
+        <div class="t-desc">רצועות שתלויות בפיתוח פיצ'רים — boss battles, unlock tracks, עולמות מתקדמים.</div>
+        <div class="t-tracks">BATTLE-004..009, PLAY-003, PLAY-005, WORLD-004, WORLD-005, CHAR-008</div>
+        <div style="font-size:0.75rem; color:var(--text-dim); margin-top:0.25rem;">
+          ~120 קרדיטים Suno | ~60 דקות יצירה | ~12 רצועות
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box" style="margin-top:2rem;">
+      <div class="info-box-title">טיפ: יצירה "חכמה" — לא ליצור הכל ביום אחד</div>
+      <ul>
+        <li>כל batch — session נפרדת. לא לערבב סגנונות שונים.</li>
+        <li>Batch 1 (jingles) + Batch 2 (battle) = יום אחד אפשרי.</li>
+        <li>Batch 3 (character themes) — צריך אוזן רעננה, לא באותו יום.</li>
+        <li>Batch 4-5 — רק אחרי שהפיצ'רים הרלוונטיים מפותחים.</li>
+        <li>בין batch ל-batch: עדכן manifest, בדוק loop, commit.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION: COST ===== -->
+<section id="cost">
+  <div class="container">
+    <div class="section-title">💰 עלויות וזמנים</div>
+    <div class="section-sub">הערכת עלויות מפורטת לכל הפרויקט.</div>
+
+    <div class="card-grid-3">
+      <div class="card" style="text-align:center;">
+        <div class="card-title" style="color: var(--green);">Suno Pro — חודש אחד</div>
+        <span class="cost-highlight">$10</span>
+        <div style="font-size:0.82rem; color:var(--text-muted);">
+          2,500 קרדיטים<br>
+          ~210 רצועות V5<br>
+          ~250 רצועות V4.5<br>
+          מספיק ל-48 רצועות + ~160 ניסיונות
+        </div>
+      </div>
+
+      <div class="card" style="text-align:center;">
+        <div class="card-title" style="color: var(--purple-light);">Udio Standard (אופציונלי)</div>
+        <span class="cost-highlight">$10</span>
+        <div style="font-size:0.82rem; color:var(--text-muted);">
+          2,400 קרדיטים<br>
+          Inpainting + Stems<br>
+          גיבוי לרצועות בעייתיות<br>
+          לא חובה — רק אם צריך
+        </div>
+      </div>
+
+      <div class="card" style="text-align:center;">
+        <div class="card-title" style="color: var(--yellow);">סה"כ מקסימום</div>
+        <span class="cost-highlight">$10-$20</span>
+        <div style="font-size:0.82rem; color:var(--text-muted);">
+          48 רצועות מוזיקה<br>
+          ~$0.20-0.40 לרצועה<br>
+          זול פי 100 ממוזיקאי אנושי<br>
+          כולל holiday variations
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrap" style="margin-top:1.5rem;">
+      <table>
+        <thead>
+          <tr>
+            <th>סעיף</th>
+            <th>עלות</th>
+            <th>זמן</th>
+            <th>הערות</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Suno Pro (חודש)</td>
+            <td><strong>$10</strong></td>
+            <td>—</td>
+            <td>2,500 קרדיטים, מספיק בשפע</td>
+          </tr>
+          <tr>
+            <td>Batch 1 (P0 — 4 tracks)</td>
+            <td>~40 credits</td>
+            <td>~1 שעה</td>
+            <td>כולל review ו-post-processing</td>
+          </tr>
+          <tr>
+            <td>Batch 2 (P1 — 4 tracks)</td>
+            <td>~60 credits</td>
+            <td>~1.5 שעות</td>
+            <td>Battle tracks דורשים יותר ניסיונות</td>
+          </tr>
+          <tr>
+            <td>Batch 3 (P2 — 6 tracks)</td>
+            <td>~70 credits</td>
+            <td>~1.5 שעות</td>
+            <td>Character themes — fine-tuning</td>
+          </tr>
+          <tr>
+            <td>Batch 4 (P3 — 16 tracks)</td>
+            <td>~140 credits</td>
+            <td>~3 שעות</td>
+            <td>Volume batch — פחות fine-tuning</td>
+          </tr>
+          <tr>
+            <td>Batch 5 (P4 — 12 tracks)</td>
+            <td>~120 credits</td>
+            <td>~2.5 שעות</td>
+            <td>Boss/Unlock tracks</td>
+          </tr>
+          <tr>
+            <td>Holiday Variations (~12)</td>
+            <td>~100 credits</td>
+            <td>~2 שעות</td>
+            <td>וריאציות על ה-main theme</td>
+          </tr>
+          <tr>
+            <td>ניסיונות נוספים / retakes</td>
+            <td>~200 credits</td>
+            <td>—</td>
+            <td>buffer לניסיונות כושלים</td>
+          </tr>
+          <tr style="background: rgba(0,184,148,0.06);">
+            <td><strong>סה"כ</strong></td>
+            <td><strong>~730 credits + $10</strong></td>
+            <td><strong>~12 שעות</strong></td>
+            <td><strong>בתוך מכסת Pro!</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION: TECHNICAL INTEGRATION ===== -->
+<section id="integration">
+  <div class="container">
+    <div class="section-title">🔌 אינטגרציה טכנית — Music Manager</div>
+    <div class="section-sub">איך המוזיקה מתנגנת בפועל בתוך המשחק. Web Audio API + Zustand.</div>
+
+    <div class="info-box">
+      <div class="info-box-title">ארכיטקטורה: שכבות מוזיקה</div>
+      <ul>
+        <li><strong>שכבה 1 — Background Music:</strong> רצועת רקע אחת בכל רגע (loop אינסופי). Fade between zones.</li>
+        <li><strong>שכבה 2 — Stingers/Jingles:</strong> מתנגנים מעל הרקע בלי לעצור אותו. Volume duck לרקע.</li>
+        <li><strong>שכבה 3 — SFX:</strong> sound effects (כבר קיימים). ערוץ נפרד לחלוטין.</li>
+      </ul>
+    </div>
+
+    <div class="prompt-box" style="margin-bottom:1.5rem;">
+      <div class="prompt-label">קובץ חדש: src/lib/audio/music-manager.ts</div>
+      <div class="prompt-code">// Architecture Overview
+
+type GameZone =
+  | 'home' | 'lessons' | 'practice-easy' | 'practice-medium'
+  | 'practice-hard' | 'speed-test' | 'accuracy-challenge'
+  | 'battle-pre' | 'battle-shadow' | 'battle-storm' | 'battle-blaze'
+  | 'boss-bug-1' | 'boss-bug-2' | 'boss-bug-king' | 'boss-glitch'
+  | 'games' | 'profile' | 'settings'
+  | 'world-shatil' | 'world-nevet' | 'world-geza'
+  | 'world-anaf' | 'world-tzameret';
+
+interface MusicManager {
+  // Core playback
+  playZone(zone: GameZone): void;     // Start zone music (with crossfade)
+  stopAll(fadeDuration?: number): void;
+
+  // Stinger layer (plays over background)
+  playStinger(stingerId: string): void;  // Victory, Level Up, etc.
+
+  // Volume control
+  setMusicVolume(volume: number): void;  // 0-1, separate from SFX
+  setMuted(muted: boolean): void;
+
+  // Jukebox overrides
+  setZoneOverride(zone: GameZone, trackId: string | null): void;
+  getZoneOverride(zone: GameZone): string | null;
+
+  // Unlock system
+  isTrackUnlocked(trackId: string): boolean;
+  getUnlockedTracks(): string[];
+}
+
+// Web Audio API Architecture:
+//
+// AudioContext
+//   |
+//   +-- GainNode (masterGain)
+//        |
+//        +-- GainNode (musicGain) ---- musicVolume control
+//        |    |
+//        |    +-- AudioBufferSourceNode (current track, looping)
+//        |    +-- AudioBufferSourceNode (crossfade target)
+//        |
+//        +-- GainNode (stingerGain) -- stinger volume
+//        |    |
+//        |    +-- AudioBufferSourceNode (one-shot stingers)
+//        |
+//        +-- GainNode (sfxGain) ------ already exists in sound-manager
+//
+// Crossfade: Equal-power curve over 2-3 seconds
+// Duck: When stinger plays, musicGain drops to 0.3 for duration</div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title" style="color: var(--cyan);">Crossfade בין מסכים</div>
+        <ul style="font-size:0.82rem; color:var(--text-muted); padding-right:1.25rem; line-height:2;">
+          <li><strong>Equal-power curve:</strong> שימוש ב-<code>Math.cos</code> ו-<code>Math.sin</code> ליצירת עקומת fade חלקה</li>
+          <li><strong>Duration:</strong> 2-3 שניות (configurable)</li>
+          <li><strong>Pre-load:</strong> הרצועה הבאה נטענת מראש (buffer)</li>
+          <li><strong>linearRampToValueAtTime:</strong> Web Audio scheduler</li>
+          <li><strong>אותו BPM:</strong> רצועות באותו BPM = crossfade חלק יותר</li>
+        </ul>
+        <div class="prompt-box">
+          <div class="prompt-label">Crossfade Implementation Pattern</div>
+          <div class="prompt-code">// Equal-power crossfade
+const fadeDuration = 2.5; // seconds
+const now = audioContext.currentTime;
+
+// Fade out current
+currentGain.gain.setValueAtTime(1, now);
+currentGain.gain.linearRampToValueAtTime(0, now + fadeDuration);
+
+// Fade in next
+nextGain.gain.setValueAtTime(0, now);
+nextGain.gain.linearRampToValueAtTime(1, now + fadeDuration);
+
+// Stop old source after fade completes
+currentSource.stop(now + fadeDuration + 0.1);</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="color: var(--green);">Adaptive Music (עתידי)</div>
+        <ul style="font-size:0.82rem; color:var(--text-muted); padding-right:1.25rem; line-height:2;">
+          <li><strong>Layer System:</strong> כל רצועה מחולקת לשכבות (drums, melody, bass)</li>
+          <li><strong>Intensity:</strong> ככל ששחקן מקליד מהר, יותר שכבות מתווספות</li>
+          <li><strong>קושי:</strong> BPM עולה עם רמת הקושי (stretch time playback)</li>
+          <li><strong>Combo:</strong> שכבות נוספות מתווספות ב-combo streaks</li>
+          <li><strong>דורש Stems:</strong> Udio export stems → שכבות נפרדות</li>
+        </ul>
+        <div class="warning-box" style="margin-top:0.75rem;">
+          Phase 2+ — דורש stems מ-Udio ופיתוח layer manager. לא ב-MVP.
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:1rem;">
+      <div class="card-title" style="color: var(--purple-light);">אינטגרציה עם Zustand Stores</div>
+      <div class="prompt-box">
+        <div class="prompt-label">settings-store.ts — מפתחות חדשים</div>
+        <div class="prompt-code">interface MusicSettings {
+  musicEnabled: boolean;          // global music on/off
+  musicVolume: number;            // 0-1
+  sfxVolume: number;              // 0-1 (already exists)
+  zoneOverrides: Record&lt;GameZone, string | null&gt;; // Jukebox
+}
+
+// badge-store.ts — unlock check
+const isTrackUnlocked = (trackId: string): boolean => {
+  const conditions = TRACK_UNLOCK_CONDITIONS[trackId];
+  return conditions.every(c => badgeStore.hasBadge(c));
+};</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION: JUKEBOX TECH ===== -->
+<section id="jukebox-tech">
+  <div class="container">
+    <div class="section-title">🎮 ג'וקבוקס — מערכת ביטול נעילה</div>
+    <div class="section-sub">איך שחקנים פותחים, בוחרים, ושומעים מוזיקה. הגיימיפיקציה של הסאונדטרק.</div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title" style="color: var(--yellow);">מנגנון ביטול נעילה</div>
+        <ol style="font-size:0.82rem; color:var(--text-muted); padding-right:1.25rem; line-height:2;">
+          <li><strong>חינמי מההתחלה (24 רצועות):</strong> תפריטים, תרגול קל/בינוני, קרבות בסיסיים, jingles</li>
+          <li><strong>הישגים קלים (8 רצועות):</strong> 40 WPM, 95% דיוק, השלם שיעורים</li>
+          <li><strong>הישגים בינוניים (6 רצועות):</strong> נצח ריבלים, עולמות גיל</li>
+          <li><strong>הישגים קשים (6 רצועות):</strong> נצח Bug bosses, שליטה מלאה</li>
+          <li><strong>אגדיים (4 רצועות):</strong> Bug King 90%+, Glitch boss, secret tracks</li>
+        </ol>
+        <div style="margin-top:1rem; font-size:0.82rem; color:var(--text-muted);">
+          <strong style="color:var(--yellow);">עקרון:</strong> 50% מהמוזיקה חינמית. 50% מתגלה בהדרגה. אף פעם לא מרגיש "חסום".
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="color: var(--green);">חוויית ביטול נעילה (UX)</div>
+        <ol style="font-size:0.82rem; color:var(--text-muted); padding-right:1.25rem; line-height:2;">
+          <li><strong>Toast:</strong> "🎵 רצועה חדשה! [שם] — בדוק בג'וקבוקס"</li>
+          <li><strong>Jingle:</strong> EVENT-003 (Character Unlock) מתנגן אוטומטית</li>
+          <li><strong>אנימציה:</strong> כרטיס הרצועה מתגלה עם confetti effect</li>
+          <li><strong>Preview:</strong> 15 שניות נשמעות מיד</li>
+          <li><strong>Collection:</strong> "X/48 רצועות נאספו" — progress bar בפרופיל</li>
+          <li><strong>Hint:</strong> רצועות נעולות מציגות "מה צריך לעשות" (מוטיבציה!)</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:1rem;">
+      <div class="card-title" style="color: var(--purple-light);">מבנה Jukebox UI</div>
+      <div style="font-size:0.82rem; color:var(--text-muted); line-height:2;">
+        <strong>מיקום:</strong> Settings > מוזיקה > ג'וקבוקס<br>
+        <strong>עיצוב:</strong> Grid של zones (כמו ב-soundtrack-master-plan) — כל zone מציג:
+      </div>
+      <div class="prompt-box" style="margin-top:0.75rem;">
+        <div class="prompt-label">Jukebox Component Structure</div>
+        <div class="prompt-code">&lt;JukeboxPage&gt;
+  &lt;CollectionProgress&gt;  "23/48 רצועות נאספו"  &lt;/CollectionProgress&gt;
+  &lt;ZoneGrid&gt;
+    &lt;ZoneCard zone="home"&gt;
+      &lt;CurrentTrack&gt; Main Theme V2 &lt;/CurrentTrack&gt;
+      &lt;TrackSelector&gt;
+        &lt;TrackOption unlocked={true}&gt; Main Theme V1 &lt;/TrackOption&gt;
+        &lt;TrackOption unlocked={true}&gt; Main Theme V2 &lt;/TrackOption&gt;
+        &lt;TrackOption unlocked={false} hint="השג 50 WPM"&gt; ??? &lt;/TrackOption&gt;
+      &lt;/TrackSelector&gt;
+      &lt;PreviewButton /&gt;  {/* 15 sec preview */}
+    &lt;/ZoneCard&gt;
+    ...more zones
+  &lt;/ZoneGrid&gt;
+  &lt;ResetButton&gt; "איפוס לברירת מחדל" &lt;/ResetButton&gt;
+&lt;/JukeboxPage&gt;</div>
+      </div>
+    </div>
+
+    <div class="info-box" style="margin-top:1.5rem;">
+      <div class="info-box-title">מוטיבציה מחקרית: למה מוזיקה כפרס עובד?</div>
+      <ul>
+        <li><strong>Autonomy:</strong> שחקנים שולטים במוזיקה שלהם — תחושת בעלות</li>
+        <li><strong>Competence:</strong> ביטול נעילה = הוכחה שהשתפרת</li>
+        <li><strong>Relatedness:</strong> "שמע מה פתחתי!" — שיתוף עם חברים (עתידי)</li>
+        <li><strong>Collection:</strong> אינסטינקט איסוף — "רוצה את כולן!" (כמו Pokemon)</li>
+        <li><strong>Personalization:</strong> "הג'וקבוקס שלי" = זהות אישית</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION: HOLIDAY MUSIC ===== -->
+<section id="holidays">
+  <div class="container">
+    <div class="section-title">🕎 מוזיקת חגי ישראל</div>
+    <div class="section-sub">כל חג משנה סקינים, רקעים, ומוזיקה. איך ליצור וריאציות של ה-Main Theme לכל חג.</div>
+
+    <div class="info-box">
+      <div class="info-box-title">גישה: Main Theme Motif + כלים/סגנון חגיגי</div>
+      <ul>
+        <li>כל חג מקבל <strong>וריאציה של Main Theme V2</strong> — אותה מנגינה, אלמנטים שונים</li>
+        <li>הפרומפט ל-Suno: לקחת את ה-motif ולהוסיף אלמנטים ספציפיים לחג</li>
+        <li>עקרון: <strong>שומעים את ה-main theme אבל מרגישים את החג</strong></li>
+        <li>ניתן להשתמש ב-Suno Extend/Remix על ה-Main Theme הקיים</li>
+        <li>אורך: כמו Main Theme (~3-4 דקות), loop</li>
+      </ul>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>חג</th>
+            <th>תקופה</th>
+            <th>כלים/סגנון</th>
+            <th>Suno Prompt Direction</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>🕎 חנוכה</strong></td>
+            <td>כסלו (דצמבר)</td>
+            <td>Klezmer + Chiptune, נרות, סביבון</td>
+            <td>Hanukkah klezmer chiptune remix, spinning dreidel melody, candle lighting warmth, 8-bit with clarinet and accordion</td>
+          </tr>
+          <tr>
+            <td><strong>🎭 פורים</strong></td>
+            <td>אדר (מרץ)</td>
+            <td>Carnival, party, מגילה, רעשנים</td>
+            <td>Purim carnival party remix, noisemaker sounds, festive chaotic celebration, masquerade energy, Middle Eastern party</td>
+          </tr>
+          <tr>
+            <td><strong>🍷 פסח</strong></td>
+            <td>ניסן (אפריל)</td>
+            <td>אורקסטרלי, חגיגי, "מה נשתנה"</td>
+            <td>Passover liberation orchestral remix, grand freedom melody, spring celebration, traditional Jewish motifs modernized</td>
+          </tr>
+          <tr>
+            <td><strong>🇮🇱 יום העצמאות</strong></td>
+            <td>אייר (מאי)</td>
+            <td>Israeli pop-rock, דגלים, שמחה לאומית</td>
+            <td>Israeli Independence Day celebration remix, patriotic pop-rock, hopeful and proud, modern Hebrew pop energy</td>
+          </tr>
+          <tr>
+            <td><strong>🍎 ראש השנה</strong></td>
+            <td>תשרי (ספטמבר)</td>
+            <td>שופר, מלכותי, דבש ותפוח</td>
+            <td>Rosh Hashana majestic remix, shofar horn, royal orchestral, sweet honey melody, new year hope and renewal</td>
+          </tr>
+          <tr>
+            <td><strong>🌿 סוכות</strong></td>
+            <td>תשרי (אוקטובר)</td>
+            <td>Acoustic, טבע, שמחה רגועה</td>
+            <td>Sukkot harvest festival remix, acoustic folk, nature sounds, gentle celebration, outdoor autumn warmth</td>
+          </tr>
+          <tr>
+            <td><strong>📜 שבועות</strong></td>
+            <td>סיוון (יוני)</td>
+            <td>Ethereal, Torah, לילה לבן, חלב</td>
+            <td>Shavuot night of study remix, ethereal midnight atmosphere, soft angelic tones, wisdom and light</td>
+          </tr>
+          <tr>
+            <td><strong>🔥 ל"ג בעומר</strong></td>
+            <td>אייר (מאי)</td>
+            <td>Bonfire drums, tribal, חץ וקשת</td>
+            <td>Lag BaOmer bonfire remix, tribal drums, fire crackling, outdoor adventure, archery and bravery energy</td>
+          </tr>
+          <tr>
+            <td><strong>🌳 ט"ו בשבט</strong></td>
+            <td>שבט (ינואר)</td>
+            <td>Nature ambient, ציפורים, פריחה</td>
+            <td>Tu BiShvat nature remix, birdsong, blooming flowers, gentle growth, tree of life ambient, spring awakening</td>
+          </tr>
+          <tr>
+            <td><strong>😔 יום הזיכרון</strong></td>
+            <td>אייר (מאי)</td>
+            <td>Piano solo, צפירה, כבוד</td>
+            <td>Yom HaZikaron memorial remix, solemn piano, slow and respectful, dignified remembrance, minimal and emotional</td>
+          </tr>
+          <tr>
+            <td><strong>🕯️ יום השואה</strong></td>
+            <td>ניסן (אפריל)</td>
+            <td>כינור, מינימלי, "אני מאמין"</td>
+            <td>Yom HaShoah memorial remix, solo violin, haunting and beautiful, hope through darkness, minimal and sacred</td>
+          </tr>
+          <tr>
+            <td><strong>🎊 שמחת תורה</strong></td>
+            <td>תשרי (אוקטובר)</td>
+            <td>Dancing, klezmer, שמחה פרועה</td>
+            <td>Simchat Torah wild dance remix, klezmer celebration, jumping and spinning joy, Torah scroll party, ecstatic</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-grid" style="margin-top:1.5rem;">
+      <div class="card">
+        <div class="card-title" style="color: var(--cyan);">אסטרטגיית יצירה לחגים</div>
+        <ol style="font-size:0.82rem; color:var(--text-muted); padding-right:1.25rem; line-height:2;">
+          <li><strong>Remix:</strong> השתמש ב-Suno Remix על Main Theme V2</li>
+          <li><strong>Prompt:</strong> "Remix of [main theme description] with [holiday elements]"</li>
+          <li><strong>Motif:</strong> וודא שהמנגינה המרכזית נשמעת</li>
+          <li><strong>כלים:</strong> הוסף כלים אופייניים לחג (שופר, כינור, klezmer)</li>
+          <li><strong>עדיפות:</strong> חנוכה > פורים > פסח > ראש השנה > שאר</li>
+          <li><strong>טון:</strong> ימי זיכרון — soft ומכובד. חגים שמחים — אנרגטי.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color: var(--yellow);">טכנית: Holiday Music Manager</div>
+        <div class="prompt-box">
+          <div class="prompt-label">Holiday detection + music override</div>
+          <div class="prompt-code">// Holiday calendar check (Hebrew calendar)
+const currentHoliday = getHebrewHoliday(new Date());
+
+// If holiday active, override zone music:
+if (currentHoliday) {
+  const holidayTrack = HOLIDAY_TRACKS[currentHoliday];
+  // Override home + menu zones
+  musicManager.setTemporaryOverride('home', holidayTrack);
+  // Keep gameplay zones unchanged
+  // (player shouldn't hear klezmer during speed test!)
+}
+
+// Holiday tracks folder:
+// public/audio/music/holidays/
+//   hanukkah-theme.mp3
+//   purim-theme.mp3
+//   ...etc</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION: PROMPT ENGINEERING ===== -->
+<section id="prompts">
+  <div class="container">
+    <div class="section-title">🎯 הנדסת פרומפטים — עקביות סגנונית</div>
+    <div class="section-sub">איך לכתוב prompts ל-Suno שמייצרים סגנון אחיד בין 48 רצועות.</div>
+
+    <div class="info-box">
+      <div class="info-box-title">5 כללי ברזל לפרומפטים</div>
+      <ol>
+        <li><strong>תאר, אל תפקד:</strong> "Relaxing lo-fi with jazzy piano" ולא "Create a relaxing song"</li>
+        <li><strong>Anchor Tags:</strong> תמיד כלול <code>ninja game, kids friendly, loopable, no vocals, instrumental</code></li>
+        <li><strong>ציין BPM:</strong> מספר מדויק, לא "fast" או "slow"</li>
+        <li><strong>השתמש ב-Reference:</strong> "Undertale battle music style" או "Pokemon town music inspired"</li>
+        <li><strong>Loop Mode:</strong> תמיד הוסף <code>loopable, seamless loop</code> לרצועות רקע</li>
+      </ol>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title" style="color: var(--green);">Prompt Template — Background Track</div>
+        <div class="prompt-box">
+          <div class="prompt-label">Template</div>
+          <div class="prompt-code">[GENRE] [MOOD] music for ninja typing game,
+[INSTRUMENTS], [BPM] BPM,
+[REFERENCE GAME/ARTIST] inspired,
+kids friendly, no vocals, instrumental,
+loopable seamless loop, [ADDITIONAL DETAILS]</div>
+        </div>
+        <div class="prompt-box" style="margin-top:0.5rem;">
+          <div class="prompt-label">דוגמה — Practice Easy</div>
+          <div class="prompt-code">Relaxing lo-fi hip hop study music for ninja typing game,
+soft jazzy piano, warm bass, vinyl crackle,
+85 BPM, Lofi Girl YouTube stream inspired,
+kids friendly, no vocals, instrumental,
+loopable seamless loop, gentle and calming,
+Japanese aesthetic touches</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="color: var(--purple-light);">Prompt Template — Jingle/Stinger</div>
+        <div class="prompt-box">
+          <div class="prompt-label">Template</div>
+          <div class="prompt-code">Short [GENRE] [EVENT] jingle,
+[DURATION] seconds, [MOOD],
+[INSTRUMENTS], [REFERENCE],
+video game [EVENT TYPE] sound,
+kids friendly, impactful, memorable</div>
+        </div>
+        <div class="prompt-box" style="margin-top:0.5rem;">
+          <div class="prompt-label">דוגמה — Victory Fanfare</div>
+          <div class="prompt-code">Short triumphant victory fanfare jingle,
+10 seconds, proud celebration burst,
+bright brass section with chiptune synths,
+Final Fantasy victory theme inspired,
+video game level complete achievement sound,
+kids friendly, impactful, memorable,
+ascending major chord resolution</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:1rem;">
+      <div class="card-title" style="color: var(--cyan);">BPM Reference Table — כל אזור במשחק</div>
+      <div class="table-wrap" style="margin-top:0.75rem;">
+        <table>
+          <thead>
+            <tr>
+              <th>אזור</th>
+              <th>BPM</th>
+              <th>סיבה</th>
+              <th>רפרנס</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Settings / Profile</td>
+              <td>60-70</td>
+              <td>רגוע, לא מסיח</td>
+              <td>Ambient music</td>
+            </tr>
+            <tr>
+              <td>Practice Easy</td>
+              <td>80-85</td>
+              <td>ריכוז, flow state</td>
+              <td>Lofi Girl</td>
+            </tr>
+            <tr>
+              <td>Lessons Menu</td>
+              <td>80</td>
+              <td>מכין ללמידה</td>
+              <td>Study music</td>
+            </tr>
+            <tr>
+              <td>World Shatil (6-8)</td>
+              <td>60</td>
+              <td>קסום ואיטי לקטנים</td>
+              <td>Music box</td>
+            </tr>
+            <tr>
+              <td>World Nevet (8-10)</td>
+              <td>100-105</td>
+              <td>הרפתקני ושמח</td>
+              <td>Pokemon Town</td>
+            </tr>
+            <tr>
+              <td>Practice Medium</td>
+              <td>110</td>
+              <td>אנרגטי אבל לא מלחיץ</td>
+              <td>Indie electronic</td>
+            </tr>
+            <tr>
+              <td>Home / Main Menu</td>
+              <td>120-140</td>
+              <td>אנרגיה, Main Theme</td>
+              <td>Brawl Stars lobby</td>
+            </tr>
+            <tr>
+              <td>Games Hub</td>
+              <td>125</td>
+              <td>שובב ומשחקי</td>
+              <td>Arcade</td>
+            </tr>
+            <tr>
+              <td>World Geza (10-12)</td>
+              <td>125</td>
+              <td>gaming, neon</td>
+              <td>Synthwave</td>
+            </tr>
+            <tr>
+              <td>Battle Menu</td>
+              <td>130</td>
+              <td>מתח ואנטיציפציה</td>
+              <td>Synthwave</td>
+            </tr>
+            <tr>
+              <td>Battle Storm</td>
+              <td>135</td>
+              <td>קרב בינוני</td>
+              <td>Electro Rock</td>
+            </tr>
+            <tr>
+              <td>Speed Test</td>
+              <td>140</td>
+              <td>אדרנלין, תחרות</td>
+              <td>EDM</td>
+            </tr>
+            <tr>
+              <td>Battle Blaze</td>
+              <td>145</td>
+              <td>קרב קשה</td>
+              <td>Epic Metal</td>
+            </tr>
+            <tr>
+              <td>Boss Bug King</td>
+              <td>150</td>
+              <td>שיא המתח</td>
+              <td>Orchestral + Glitch</td>
+            </tr>
+            <tr>
+              <td>Practice Hard</td>
+              <td>160</td>
+              <td>zone מהיר</td>
+              <td>Drum & Bass</td>
+            </tr>
+            <tr>
+              <td>Yuki Theme</td>
+              <td>160</td>
+              <td>מהירה מאוד</td>
+              <td>J-Pop</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:1rem;">
+      <div class="card-title" style="color: var(--orange);">Suno Style Tags — מדריך מהיר</div>
+      <div class="card-grid-3">
+        <div>
+          <div style="font-weight:600; font-size:0.85rem; margin-bottom:0.5rem; color:var(--purple-light);">Genre Tags</div>
+          <ul style="font-size:0.78rem; color:var(--text-muted); padding-right:1rem; line-height:1.8;">
+            <li>chiptune, 8-bit, retro game</li>
+            <li>lo-fi, lo-fi hip hop, study beats</li>
+            <li>synthwave, dark synthwave</li>
+            <li>orchestral, cinematic, epic</li>
+            <li>EDM, dubstep, drum and bass</li>
+            <li>J-pop, kawaii future bass</li>
+            <li>klezmer, Middle Eastern</li>
+            <li>ambient, minimal, drone</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-weight:600; font-size:0.85rem; margin-bottom:0.5rem; color:var(--green);">Mood Tags</div>
+          <ul style="font-size:0.78rem; color:var(--text-muted); padding-right:1rem; line-height:1.8;">
+            <li>energetic, upbeat, happy</li>
+            <li>calm, peaceful, serene</li>
+            <li>intense, aggressive, fierce</li>
+            <li>mysterious, dark, brooding</li>
+            <li>triumphant, victorious, proud</li>
+            <li>playful, mischievous, fun</li>
+            <li>magical, whimsical, wonder</li>
+            <li>solemn, respectful, emotional</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-weight:600; font-size:0.85rem; margin-bottom:0.5rem; color:var(--yellow);">Anchor Tags (תמיד כלול)</div>
+          <ul style="font-size:0.78rem; color:var(--text-muted); padding-right:1rem; line-height:1.8;">
+            <li><strong>ninja game</strong> — זהות המשחק</li>
+            <li><strong>kids friendly</strong> — קהל יעד</li>
+            <li><strong>no vocals</strong> — אינסטרומנטלי</li>
+            <li><strong>instrumental</strong> — חיזוק no vocals</li>
+            <li><strong>loopable</strong> — לולאה חלקה</li>
+            <li><strong>seamless loop</strong> — חיזוק loopable</li>
+            <li><strong>[BPM] BPM</strong> — קצב מדויק</li>
+            <li><strong>video game</strong> — הקשר</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="warning-box" style="margin-top:1.5rem;">
+      <strong>שגיאות נפוצות בפרומפטים:</strong>
+      <ul style="padding-right:1.25rem; margin-top:0.5rem;">
+        <li>אל תכתוב "Create a..." או "Make me..." — תאר את המוזיקה ישירות</li>
+        <li>אל תשתמש ב-"fast" או "slow" — ציין BPM מספרי</li>
+        <li>אל תכתוב prompts ארוכים מדי (>200 מילים) — Suno מתעלם</li>
+        <li>אל תשכח "no vocals" — בלי זה Suno עלול להוסיף שירה</li>
+        <li>אל תערבב ז'אנרים סותרים ("peaceful aggressive") — בחר כיוון</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer style="padding:3rem 2rem; text-align:center; border-top:1px solid var(--border); color:var(--text-dim); font-size:0.82rem;">
+  <div style="margin-bottom:0.5rem; font-weight:700; color:var(--text-muted);">נינג'ה מקלדת — תוכנית הפקת מוזיקה AI</div>
+  <div>גרסה 1.0 | מרץ 2026 | מחקר + תכנון</div>
+  <div style="margin-top:1rem; display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; font-size:0.75rem;">
+    <span>📄 soundtrack-master-plan.html (48 רצועות)</span>
+    <span>🤖 Suno MCP: suno-mcp-direct</span>
+    <span>📁 public/audio/music/</span>
+  </div>
+  <div style="margin-top:1.5rem; max-width:700px; margin-left:auto; margin-right:auto; font-size:0.72rem; color:var(--text-dim); line-height:1.6;">
+    מקורות מחקר: Suno AI, Udio, Stable Audio, AIVA, sunoapi.org, Web Audio API (MDN), Suno Prompt Guides
+  </div>
+</footer>
+
+</body>
+</html>
