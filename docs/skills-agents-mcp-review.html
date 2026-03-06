@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>נינג'ה מקלדת - סקילים, סוכנים ושרתי MCP</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: #0d0b1a;
+      color: #e0e0ff;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* === Header === */
+    .hdr {
+      background: linear-gradient(135deg, #1a1535, #0d0b1a, #1a0a2e);
+      border-bottom: 3px solid #6C5CE7;
+      padding: 40px 5%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hdr::before {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      width: 200%;
+      height: 200%;
+      background:
+        radial-gradient(circle at 30% 50%, rgba(108,92,231,0.08), transparent 50%),
+        radial-gradient(circle at 70% 50%, rgba(0,184,148,0.06), transparent 50%);
+      pointer-events: none;
+    }
+    .hdr h1 {
+      font-size: 2.6em;
+      font-weight: 900;
+      background: linear-gradient(135deg, #6C5CE7, #a29bfe, #00B894);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+    .hdr .sub {
+      font-size: 1.1em;
+      color: #a0a0cc;
+      margin-bottom: 16px;
+    }
+    .hdr .meta {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      font-size: 0.9em;
+      color: #8888bb;
+    }
+
+    /* === Container === */
+    .cnt { max-width: 1100px; margin: 0 auto; padding: 30px 20px 60px; }
+
+    /* === Table of Contents === */
+    .toc {
+      background: #13102a;
+      border: 1px solid #2a2555;
+      border-radius: 16px;
+      padding: 24px 30px;
+      margin-bottom: 30px;
+    }
+    .toc h3 {
+      font-size: 1.2em;
+      color: #a29bfe;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+    .toc ol {
+      list-style: none;
+      counter-reset: toc-counter;
+    }
+    .toc li {
+      counter-increment: toc-counter;
+      margin-bottom: 8px;
+    }
+    .toc li::before {
+      content: counter(toc-counter) ".";
+      color: #6C5CE7;
+      font-weight: 700;
+      margin-left: 8px;
+      display: inline-block;
+      min-width: 24px;
+    }
+    .toc a {
+      color: #c0c0ee;
+      text-decoration: none;
+      transition: color 0.2s;
+      font-size: 0.95em;
+    }
+    .toc a:hover { color: #6C5CE7; }
+
+    /* === Sections (collapsible) === */
+    .sec {
+      background: #13102a;
+      border: 1px solid #2a2555;
+      border-radius: 16px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .sec:hover { border-color: #6C5CE7; }
+
+    .sh {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 24px;
+      cursor: pointer;
+      user-select: none;
+      background: #16133a;
+      border-bottom: 1px solid #2a2555;
+      transition: background 0.2s;
+    }
+    .sh:hover { background: #1d1948; }
+    .sh h2 {
+      font-size: 1.3em;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .tgl {
+      font-size: 1.4em;
+      color: #6C5CE7;
+      transition: transform 0.3s;
+    }
+    .sec.c .tgl { transform: rotate(-90deg); }
+    .sec.c .sb { display: none; }
+    .sb { padding: 24px; }
+
+    /* === Section number badge === */
+    .sn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      font-size: 0.8em;
+      font-weight: 700;
+      background: linear-gradient(135deg, #6C5CE7, #a29bfe);
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    /* === Status badges === */
+    .b {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      font-weight: 500;
+    }
+    .bd { background: rgba(0,184,148,0.15); color: #00B894; border: 1px solid rgba(0,184,148,0.3); }
+    .bp { background: rgba(253,203,110,0.15); color: #fdcb6e; border: 1px solid rgba(253,203,110,0.3); }
+    .bl { background: rgba(108,92,231,0.15); color: #a29bfe; border: 1px solid rgba(108,92,231,0.3); }
+    .br { background: rgba(255,107,107,0.15); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.3); }
+
+    /* === Category badges === */
+    .cat-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-size: 0.75em;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .cat-build { background: #6C5CE7; color: #fff; }
+    .cat-review { background: #00B894; color: #fff; }
+    .cat-domain { background: #fdcb6e; color: #0d0b1a; }
+    .cat-workflow { background: #e17055; color: #fff; }
+    .cat-ui { background: #74b9ff; color: #0d0b1a; }
+    .cat-test { background: #a29bfe; color: #0d0b1a; }
+    .cat-fw { background: #fab1a0; color: #0d0b1a; }
+    .cat-git { background: #55efc4; color: #0d0b1a; }
+    .cat-content { background: #fd79a8; color: #fff; }
+
+    /* === Tables === */
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    th {
+      background: #1a1740;
+      color: #a29bfe;
+      padding: 10px 14px;
+      text-align: right;
+      font-weight: 700;
+      font-size: 0.85em;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    td { padding: 10px 14px; border-bottom: 1px solid #1e1a3a; font-size: 0.9em; }
+    tr:hover td { background: rgba(108,92,231,0.05); }
+
+    /* === MCP Cards === */
+    .mcp-card {
+      background: #1a1625;
+      border: 1px solid #2a2555;
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 18px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .mcp-card:hover {
+      border-color: #6C5CE7;
+      box-shadow: 0 0 20px rgba(108,92,231,0.1);
+    }
+    .mcp-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 0 14px 14px 0;
+    }
+    .mcp-card.active::before { background: linear-gradient(180deg, #00B894, #6C5CE7); }
+    .mcp-card.available::before { background: linear-gradient(180deg, #a29bfe, #6C5CE7); }
+    .mcp-card.script::before { background: linear-gradient(180deg, #fdcb6e, #e17055); }
+
+    .mcp-title {
+      font-size: 1.15em;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .mcp-desc {
+      color: #a0a0cc;
+      font-size: 0.9em;
+      margin-bottom: 12px;
+    }
+    .mcp-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .tool-tag {
+      background: #1e1a3a;
+      border: 1px solid #2a2555;
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 0.78em;
+      color: #a29bfe;
+      font-family: 'Courier New', monospace;
+      direction: ltr;
+      unicode-bidi: embed;
+    }
+    .mcp-usage {
+      font-size: 0.85em;
+      color: #8888bb;
+      padding-top: 8px;
+      border-top: 1px solid #1e1a3a;
+    }
+
+    /* === Agent Grid === */
+    .agent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .agent-card {
+      background: #1a1740;
+      border: 1px solid #2a2555;
+      border-radius: 12px;
+      padding: 16px;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .agent-card:hover { border-color: #6C5CE7; transform: translateY(-2px); }
+    .agent-name {
+      font-weight: 700;
+      font-size: 0.95em;
+      color: #fff;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .agent-model {
+      display: inline-block;
+      padding: 1px 8px;
+      border-radius: 4px;
+      font-size: 0.7em;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .model-haiku { background: rgba(116,185,255,0.2); color: #74b9ff; }
+    .model-sonnet { background: rgba(0,184,148,0.2); color: #00B894; }
+    .model-opus { background: rgba(108,92,231,0.2); color: #a29bfe; }
+    .agent-desc {
+      font-size: 0.85em;
+      color: #a0a0cc;
+      margin-top: 6px;
+    }
+
+    /* === Skill Groups === */
+    .skill-group {
+      background: #1a1625;
+      border: 1px solid #2a2555;
+      border-radius: 14px;
+      margin-bottom: 18px;
+      overflow: hidden;
+    }
+    .skill-group-header {
+      padding: 14px 20px;
+      background: #16133a;
+      border-bottom: 1px solid #2a2555;
+      font-weight: 700;
+      font-size: 1.05em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .skill-list {
+      padding: 16px 20px;
+    }
+    .skill-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #1e1a3a;
+    }
+    .skill-item:last-child { border-bottom: none; }
+    .skill-name {
+      font-weight: 600;
+      color: #fff;
+      font-size: 0.9em;
+      min-width: 140px;
+      direction: ltr;
+      unicode-bidi: embed;
+      text-align: left;
+    }
+    .skill-desc {
+      color: #a0a0cc;
+      font-size: 0.88em;
+    }
+
+    /* === Stats grid === */
+    .sg {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .sc {
+      background: #1a1740;
+      border: 1px solid #2a2555;
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .sc:hover { border-color: #6C5CE7; transform: translateY(-2px); }
+    .sv {
+      font-size: 2em;
+      font-weight: 900;
+      background: linear-gradient(135deg, #6C5CE7, #00B894);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .sl { font-size: 0.85em; color: #8888bb; margin-top: 4px; }
+
+    /* === Architecture Diagram === */
+    .arch {
+      background: #13102a;
+      border: 1px solid #2a2555;
+      border-radius: 16px;
+      padding: 40px 20px;
+      margin: 20px 0;
+      text-align: center;
+      overflow-x: auto;
+    }
+    .arch-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .arch-box {
+      background: #1a1740;
+      border: 2px solid #2a2555;
+      border-radius: 12px;
+      padding: 14px 22px;
+      font-weight: 600;
+      font-size: 0.9em;
+      color: #e0e0ff;
+      min-width: 130px;
+      text-align: center;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .arch-box:hover {
+      border-color: #6C5CE7;
+      box-shadow: 0 0 15px rgba(108,92,231,0.2);
+    }
+    .arch-box.primary {
+      background: linear-gradient(135deg, #1a1740, #241f52);
+      border-color: #6C5CE7;
+      box-shadow: 0 0 20px rgba(108,92,231,0.15);
+    }
+    .arch-box.highlight {
+      background: linear-gradient(135deg, #0d2a1f, #1a1740);
+      border-color: #00B894;
+    }
+    .arch-box.output {
+      background: linear-gradient(135deg, #2a1a0d, #1a1740);
+      border-color: #fdcb6e;
+    }
+    .arch-box-label {
+      font-size: 0.72em;
+      color: #8888bb;
+      margin-top: 4px;
+    }
+    .arch-arrow {
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+      color: #6C5CE7;
+      font-size: 1.6em;
+    }
+    .arch-mcp-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* === Custom Tool Cards === */
+    .custom-tool {
+      background: #1a1625;
+      border: 1px solid #2a2555;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 16px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      transition: border-color 0.3s;
+    }
+    .custom-tool:hover { border-color: #6C5CE7; }
+    .custom-tool-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      font-size: 0.9em;
+      font-weight: 900;
+      background: linear-gradient(135deg, #6C5CE7, #a29bfe);
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .custom-tool-title {
+      font-weight: 700;
+      font-size: 1em;
+      color: #fff;
+      margin-bottom: 4px;
+      direction: ltr;
+      unicode-bidi: embed;
+    }
+    .custom-tool-desc {
+      color: #a0a0cc;
+      font-size: 0.88em;
+    }
+    .custom-tool-details {
+      margin-top: 8px;
+      list-style: none;
+    }
+    .custom-tool-details li {
+      color: #8888bb;
+      font-size: 0.83em;
+      padding: 2px 0;
+      padding-right: 14px;
+      position: relative;
+    }
+    .custom-tool-details li::before {
+      content: '>';
+      position: absolute;
+      right: 0;
+      color: #6C5CE7;
+      font-weight: 700;
+    }
+
+    /* === Subsection headers === */
+    .sub-h {
+      font-size: 1.05em;
+      font-weight: 700;
+      color: #a29bfe;
+      margin: 20px 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #2a2555;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* === Info block === */
+    .info {
+      background: rgba(108,92,231,0.08);
+      border: 1px solid rgba(108,92,231,0.2);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 0.9em;
+      color: #c0c0ee;
+    }
+
+    /* === Footer === */
+    .ftr {
+      text-align: center;
+      padding: 30px 20px;
+      color: #555580;
+      font-size: 0.85em;
+      border-top: 1px solid #1e1a3a;
+    }
+    .ftr a { color: #6C5CE7; text-decoration: none; }
+    .ftr a:hover { text-decoration: underline; }
+
+    /* === Responsive === */
+    @media (max-width: 768px) {
+      .hdr h1 { font-size: 1.8em; }
+      .agent-grid { grid-template-columns: 1fr; }
+      .sg { grid-template-columns: repeat(2, 1fr); }
+      .arch-mcp-row { grid-template-columns: repeat(2, 1fr); }
+      .custom-tool { flex-direction: column; }
+    }
+</style>
+</head>
+<body>
+
+<!-- ====== HEADER ====== -->
+<header class="hdr">
+  <h1>סקילים, סוכנים ושרתי MCP</h1>
+  <div class="sub">קטלוג מלא של כל הכלים, הסוכנים והשירותים בפרויקט נינג'ה מקלדת</div>
+  <div class="meta">
+    <span>פרויקט: נינג'ה מקלדת</span>
+    <span>גרסה: 1.0</span>
+    <span>עדכון אחרון: מרץ 2026</span>
+    <span>סה"כ כלים: 70+</span>
+  </div>
+</header>
+
+<div class="cnt">
+
+  <!-- ====== TABLE OF CONTENTS ====== -->
+  <nav class="toc">
+    <h3>תוכן עניינים</h3>
+    <ol>
+      <li><a href="#sec-mcp">שרתי MCP - שירותי AI חיצוניים</a></li>
+      <li><a href="#sec-agents">סוכני OMC - Oh-My-ClaudeCode</a></li>
+      <li><a href="#sec-skills">סקילים בשימוש בפרויקט</a></li>
+      <li><a href="#sec-custom">כלים ייחודיים לפרויקט</a></li>
+      <li><a href="#sec-stats">סטטיסטיקות ותמונת מצב</a></li>
+      <li><a href="#sec-arch">דיאגרמת ארכיטקטורה</a></li>
+    </ol>
+  </nav>
+
+  <!-- ====== SECTION 1: MCP SERVERS ====== -->
+  <section class="sec" id="sec-mcp">
+    <div class="sh" onclick="this.parentElement.classList.toggle('c')">
+      <h2><span class="sn">1</span> שרתי MCP - שירותי AI חיצוניים</h2>
+      <span class="tgl">&#9660;</span>
+    </div>
+    <div class="sb">
+      <div class="info">
+        שרתי MCP (Model Context Protocol) הם שירותים חיצוניים שמתחברים ל-Claude Code ומרחיבים את היכולות שלו. כל שרת מספק כלים ייעודיים שניתן לקרוא להם ישירות מתוך סביבת העבודה.
+      </div>
+
+      <!-- Context7 -->
+      <div class="mcp-card active">
+        <div class="mcp-title">
+          Context7
+          <span class="b bd">פעיל</span>
+        </div>
+        <div class="mcp-desc">תיעוד ספריות עדכני - מאפשר לקרוא דוקומנטציה מעודכנת של ספריות JavaScript/TypeScript, כולל Next.js, React, Tailwind ועוד. פותר את בעיית ה-knowledge cutoff של מודלי AI.</div>
+        <div class="mcp-tools">
+          <span class="tool-tag">resolve-library-id</span>
+          <span class="tool-tag">query-docs</span>
+        </div>
+        <div class="mcp-usage">שימוש: לפני כתיבת כל קוד - בדיקת syntax ו-API עדכני. חיוני במיוחד ל-Next.js 15 App Router, React 19, Tailwind CSS 4.</div>
+      </div>
+
+      <!-- Octocode -->
+      <div class="mcp-card active">
+        <div class="mcp-title">
+          Octocode
+          <span class="b bd">פעיל</span>
+        </div>
+        <div class="mcp-desc">חיפוש קוד אמיתי ב-GitHub - מאפשר למצוא implementations אמיתיים מפרויקטים בפרודקשן. משלים את Context7 עם דוגמאות מעשיות מהעולם האמיתי.</div>
+        <div class="mcp-tools">
+          <span class="tool-tag">githubSearchCode</span>
+          <span class="tool-tag">githubGetFileContent</span>
+          <span class="tool-tag">githubViewRepoStructure</span>
+          <span class="tool-tag">githubSearchRepositories</span>
+          <span class="tool-tag">githubSearchPullRequests</span>
+          <span class="tool-tag">packageSearch</span>
+        </div>
+        <div class="mcp-usage">שימוש: חיפוש דפוסי שימוש אמיתיים, השוואת implementations, מציאת best practices. משולב עם Context7 לקבלת תמונה מלאה.</div>
+      </div>
+
+      <!-- DeepWiki -->
+      <div class="mcp-card active">
+        <div class="mcp-title">
+          DeepWiki
+          <span class="b bd">פעיל</span>
+        </div>
+        <div class="mcp-desc">תיעוד ריפוזיטורי GitHub מונע AI - שואל שאלות על ריפוזיטוריז ספציפיים ומקבל תשובות מבוססות על הקוד והתיעוד שלהם.</div>
+        <div class="mcp-tools">
+          <span class="tool-tag">read_wiki_structure</span>
+          <span class="tool-tag">read_wiki_contents</span>
+          <span class="tool-tag">ask_question</span>
+        </div>
+        <div class="mcp-usage">שימוש: הבנה מעמיקה של ריפוזיטוריז ספציפיים כמו shadcn/ui, Zustand, next-intl. גיבוי ל-Context7.</div>
+      </div>
+
+      <!-- Stitch -->
+      <div class="mcp-card active">
+        <div class="mcp-title">
+          Stitch (Google)
+          <span class="b bd">פעיל</span>
+        </div>
+        <div class="mcp-desc">עיצוב UI מונחה AI מ-Google Labs. מייצר עיצובים, מסכים וקוד HTML/Tailwind ישירות. חובה לכל עבודת UI לפני כתיבת קוד.</div>
+        <div class="mcp-tools">
+          <span class="tool-tag">build_site</span>
+          <span class="tool-tag">get_screen_code</span>
+          <span class="tool-tag">get_screen_image</span>
+        </div>
+        <div class="mcp-usage">שימוש: עיצוב מסכים חדשים, בניית אתרים מרובי עמודים, יצירת קומפוננטות UI. משולב עם סקילי Stitch (react-components, design-md).</div>
+      </div>
+
+      <!-- ElevenLabs -->
+      <div class="mcp-card script">
+        <div class="mcp-title">
+          ElevenLabs
+          <span class="b bd">פעיל</span>
+          <span class="b bp">סקריפט</span>
+        </div>
+        <div class="mcp-desc">יצירת קולות AI לדמויות המשחק. משתמשים ב-Voice Design v3 API ליצירת קולות ייחודיים לכל דמות, עם עיבוד ffmpeg לאפקטים מיוחדים.</div>
+        <div class="mcp-tools">
+          <span class="tool-tag">Voice Design v3 API</span>
+          <span class="tool-tag">Text-to-Speech</span>
+          <span class="tool-tag">ffmpeg post-processing</span>
+        </div>
+        <div class="mcp-usage">שימוש: 10 דמויות עם קולות מותאמים, 40+ שורות דיאלוג בעברית, אפקטים כמו pitch/echo/tremolo. יוקי כרגע ב-V7.</div>
+      </div>
+
+      <!-- Exa -->
+      <div class="mcp-card available">
+        <div class="mcp-title">
+          Exa
+          <span class="b bl">זמין</span>
+        </div>
+        <div class="mcp-desc">חיפוש אינטרנט מתקדם מונע AI - חיפוש סמנטי, מחקר חברות, crawling של אתרים, ומחקר עמוק עם סוכנים.</div>
+        <div class="mcp-tools">
+          <span class="tool-tag">web_search_exa</span>
+          <span class="tool-tag">web_search_advanced_exa</span>
+          <span class="tool-tag">crawling_exa</span>
+          <span class="tool-tag">deep_researcher_start</span>
+          <span class="tool-tag">deep_researcher_check</span>
+          <span class="tool-tag">company_research_exa</span>
+          <span class="tool-tag">people_search_exa</span>
+          <span class="tool-tag">get_code_context_exa</span>
+        </div>
+        <div class="mcp-usage">שימוש: מחקר מתחרים, חיפוש פתרונות טכניים, ניתוח שוק משחקי הקלדה לילדים.</div>
+      </div>
+
+      <!-- Skill Registry -->
+      <div class="mcp-card available">
+        <div class="mcp-title">
+          Skill Registry
+          <span class="b bl">זמין</span>
+        </div>
+        <div class="mcp-desc">רישום וניהול סקילים - מאפשר חיפוש, המלצות ואימות של סקילים זמינים ב-Claude Code.</div>
+        <div class="mcp-tools">
+          <span class="tool-tag">list_skills</span>
+          <span class="tool-tag">search_skills</span>
+          <span class="tool-tag">get_skill</span>
+          <span class="tool-tag">recommend_skill</span>
+          <span class="tool-tag">validate_skill</span>
+          <span class="tool-tag">refresh_registry</span>
+        </div>
+        <div class="mcp-usage">שימוש: גילוי סקילים חדשים, אימות תקינות סקילים קיימים, המלצות לסקילים רלוונטיים למשימה.</div>
+      </div>
+
+      <!-- Team MCP -->
+      <div class="mcp-card available">
+        <div class="mcp-title">
+          Team MCP (OMC)
+          <span class="b bl">זמין</span>
+        </div>
+        <div class="mcp-desc">תיאום צוותי סוכנים - מאפשר הרצת צוותים של סוכני Claude Code במקביל, עם ניהול סטטוס ותיאום משימות.</div>
+        <div class="mcp-tools">
+          <span class="tool-tag">omc_run_team_start</span>
+          <span class="tool-tag">omc_run_team_wait</span>
+          <span class="tool-tag">omc_run_team_status</span>
+          <span class="tool-tag">omc_run_team_cleanup</span>
+        </div>
+        <div class="mcp-usage">שימוש: משימות מרובות-סוכנים כמו refactoring מקביל, סקירות קוד מרובות, build + test + lint בו-זמנית.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====== SECTION 2: OMC AGENTS ====== -->
+  <section class="sec" id="sec-agents">
+    <div class="sh" onclick="this.parentElement.classList.toggle('c')">
+      <h2><span class="sn">2</span> סוכני OMC - Oh-My-ClaudeCode</h2>
+      <span class="tgl">&#9660;</span>
+    </div>
+    <div class="sb">
+      <div class="info">
+        Oh-My-ClaudeCode (OMC) היא שכבת אורקסטרציה מרובת-סוכנים ל-Claude Code. כל סוכן מתמחה בתחום ספציפי ומשתמש במודל AI שמתאים למורכבות המשימה: Haiku למשימות קלות, Sonnet למימוש, Opus לארכיטקטורה ואנליזה עמוקה.
+      </div>
+
+      <!-- Build/Analysis Lane -->
+      <div class="sub-h">
+        <span class="cat-badge cat-build">BUILD</span>
+        נתיב בנייה וניתוח
+      </div>
+      <div class="agent-grid">
+        <div class="agent-card">
+          <div class="agent-name">
+            explore
+            <span class="agent-model model-haiku">haiku</span>
+          </div>
+          <div class="agent-desc">סריקת קוד פנימית, מיפוי קבצים וסמלים. משמש לגילוי ראשוני של מבנה הפרויקט.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">
+            analyst
+            <span class="agent-model model-opus">opus</span>
+          </div>
+          <div class="agent-desc">ניתוח דרישות, בהירות קריטריונים, זיהוי אילוצים נסתרים. מפרק דרישות עסקיות לטכניות.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">
+            planner
+            <span class="agent-model model-opus">opus</span>
+          </div>
+          <div class="agent-desc">תכנון רצף משימות, יצירת תוכניות ביצוע, זיהוי סיכונים. מוודא שהעבודה מסודרת לפני מימוש.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">
+            architect
+            <span class="agent-model model-opus">opus</span>
+          </div>
+          <div class="agent-desc">עיצוב מערכת, גבולות רכיבים, ממשקים, החלטות ארוכות-טווח. אחראי על ארכיטקטורה כוללת.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">
+            debugger
+            <span class="agent-model model-sonnet">sonnet</span>
+          </div>
+          <div class="agent-desc">ניתוח שורש-בעיה, בידוד רגרסיות, אבחון כשלים. מומחה באיתור ותיקון באגים.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">
+            executor
+            <span class="agent-model model-sonnet">sonnet</span>
+          </div>
+          <div class="agent-desc">מימוש קוד, רפקטורינג, עבודת פיצ'רים. הסוכן העיקרי לכתיבת קוד בפרויקט.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">
+            deep-executor
+            <span class="agent-model model-opus">opus</span>
+          </div>
+          <div class="agent-desc">משימות אוטונומיות מורכבות, ביצוע מכוון-מטרה. לפיצ'רים גדולים שדורשים חשיבה עמוקה.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">
+            verifier
+            <span class="agent-model model-sonnet">sonnet</span>
+          </div>
+          <div class="agent-desc">אימות השלמה, בדיקת טענות, ראיות לנכונות. מוודא שהעבודה באמת הושלמה כנדרש.</div>
+        </div>
+      </div>
+
+      <!-- Review Lane -->
+      <div class="sub-h">
+        <span class="cat-badge cat-review">REVIEW</span>
+        נתיב סקירה
+      </div>
+      <div class="agent-grid">
+        <div class="agent-card">
+          <div class="agent-name">
+            quality-reviewer
+            <span class="agent-model model-sonnet">sonnet</span>
+          </div>
+          <div class="agent-desc">פגמי לוגיקה, תחזוקתיות, anti-patterns, פורמט, שמות, ביצועים, מורכבות. סקירת איכות מקיפה.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">
+            security-reviewer
+            <span class="agent-model model-sonnet">sonnet</span>
+          </div>
+          <div class="agent-desc">פגיעויות, גבולות אמון, אימות/הרשאות. חיוני לפרויקט עם משתמשים ילדים (RLS, הסכמת הורים).</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">
+            code-reviewer
+            <span class="agent-model model-opus">opus</span>
+          </div>
+          <div class="agent-desc">סקירה מקיפה חוצת-תחומים, חוזי API, גרסאות, תאימות לאחור. הסוכן הכי מקיף לסקירה.</div>
+        </div>
+      </div>
+
+      <!-- Domain Specialists -->
+      <div class="sub-h">
+        <span class="cat-badge cat-domain">SPECIALIST</span>
+        מומחי תחום
+      </div>
+      <div class="agent-grid">
+        <div class="agent-card">
+          <div class="agent-name">
+            test-engineer
+            <span class="agent-model model-sonnet">sonnet</span>
+          </div>
+          <div class="agent-desc">אסטרטגיית בדיקות, כיסוי קוד, חיזוק בדיקות לא יציבות. מנהל את 1,093 הטסטים.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">
+            build-fixer
+            <span class="agent-model model-sonnet">sonnet</span>
+          </div>
+          <div class="agent-desc">תיקון שגיאות בנייה, toolchain, שגיאות TypeScript. מתמחה בהחזרת ה-build לעבודה.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">
+            designer
+            <span class="agent-model model-sonnet">sonnet</span>
+          </div>
+          <div class="agent-desc">ארכיטקטורת UX/UI, עיצוב אינטראקציות. עוזר בעיצוב חווית המשתמש ל-5 קבוצות גיל.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">
+            writer
+            <span class="agent-model model-haiku">haiku</span>
+          </div>
+          <div class="agent-desc">תיעוד, הערות מיגרציה, הנחיות למשתמש. כותב את 24 מסמכי ה-HTML של הפרויקט.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">
+            document-specialist
+            <span class="agent-model model-sonnet">sonnet</span>
+          </div>
+          <div class="agent-desc">חיפוש תיעוד חיצוני ומסמכי עזר. מומחה ב-APIs, SDKs ותיעוד ספריות.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">
+            qa-tester
+            <span class="agent-model model-sonnet">sonnet</span>
+          </div>
+          <div class="agent-desc">אימות CLI/שירות אינטראקטיבי. בודק שהמשחק עובד נכון בזמן ריצה.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">
+            critic
+            <span class="agent-model model-opus">opus</span>
+          </div>
+          <div class="agent-desc">אתגור ביקורתי של תוכניות ועיצובים. מוצא חורים בלוגיקה ובקבלת החלטות.</div>
+        </div>
+      </div>
+
+      <!-- Usage Table -->
+      <div class="sub-h">תרשים שימוש בפרויקט</div>
+      <table>
+        <thead>
+          <tr>
+            <th>תהליך</th>
+            <th>סוכנים</th>
+            <th>תדירות</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>פיתוח פיצ'ר</td>
+            <td style="direction:ltr;text-align:left;font-size:0.85em;color:#a29bfe">analyst → planner → executor → test-engineer → quality-reviewer → verifier</td>
+            <td><span class="b bd">גבוהה</span></td>
+          </tr>
+          <tr>
+            <td>חקירת באג</td>
+            <td style="direction:ltr;text-align:left;font-size:0.85em;color:#a29bfe">explore + debugger + executor + test-engineer + verifier</td>
+            <td><span class="b bd">גבוהה</span></td>
+          </tr>
+          <tr>
+            <td>סקירת קוד</td>
+            <td style="direction:ltr;text-align:left;font-size:0.85em;color:#a29bfe">quality-reviewer + security-reviewer + code-reviewer</td>
+            <td><span class="b bp">בינונית</span></td>
+          </tr>
+          <tr>
+            <td>תכנון ארכיטקטורה</td>
+            <td style="direction:ltr;text-align:left;font-size:0.85em;color:#a29bfe">architect + planner + critic</td>
+            <td><span class="b bp">בינונית</span></td>
+          </tr>
+          <tr>
+            <td>יצירת תוכן</td>
+            <td style="direction:ltr;text-align:left;font-size:0.85em;color:#a29bfe">designer + writer + executor</td>
+            <td><span class="b bl">נמוכה</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </section>
+
+  <!-- ====== SECTION 3: SKILLS ====== -->
+  <section class="sec" id="sec-skills">
+    <div class="sh" onclick="this.parentElement.classList.toggle('c')">
+      <h2><span class="sn">3</span> סקילים בשימוש בפרויקט</h2>
+      <span class="tgl">&#9660;</span>
+    </div>
+    <div class="sb">
+      <div class="info">
+        סקילים הם פקודות מיוחדות שמפעילים זרימות עבודה מוגדרות מראש. כל סקיל מביא ידע ודפוסים ספציפיים לתחום שלו.
+      </div>
+
+      <!-- Workflow & Orchestration -->
+      <div class="skill-group">
+        <div class="skill-group-header">
+          <span class="cat-badge cat-workflow">WORKFLOW</span>
+          תזמור וביצוע
+        </div>
+        <div class="skill-list">
+          <div class="skill-item">
+            <div class="skill-name">autopilot</div>
+            <div class="skill-desc">ביצוע אוטונומי מלא מרעיון לקוד עובד. מזהה, מתכנן, מממש, בודק ומאמת באופן אוטומטי.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">team</div>
+            <div class="skill-desc">N סוכני Claude מתואמים עם pipeline שלבי: plan → prd → exec → verify → fix. מנגנון ברירת המחדל למשימות מורכבות.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">ultrawork (ulw)</div>
+            <div class="skill-desc">מקסימום מקביליות עם תזמור סוכנים מקביל. לעבודה שדורשת מהירות מקסימלית.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">ralph</div>
+            <div class="skill-desc">לולאת התמדה עם אימות - ממשיך לעבוד עד שהמשימה מושלמת ומאומתת. כולל ultrawork.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">pipeline</div>
+            <div class="skill-desc">שרשור סוכנים עם העברת נתונים בין שלבים. לתהליכים ליניאריים מובנים.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">plan</div>
+            <div class="skill-desc">תכנון אסטרטגי עם תמיכה ב-consensus ו-review. מצב ralplan למחלוקות מורכבות.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">ultrapilot</div>
+            <div class="skill-desc">חזית תאימות מעל Team - ממפה ל-pipeline השלבי. לבנייה מקבילית.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">ralplan</div>
+            <div class="skill-desc">תכנון איטרטיבי עם Planner, Architect, Critic עד קונצנזוס. למשימות בסיכון גבוה.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Code Quality -->
+      <div class="skill-group">
+        <div class="skill-group-header">
+          <span class="cat-badge cat-review">QUALITY</span>
+          איכות קוד
+        </div>
+        <div class="skill-list">
+          <div class="skill-item">
+            <div class="skill-name">code-review</div>
+            <div class="skill-desc">סקירת קוד מקיפה עם code-reviewer. מזהה פגמי לוגיקה, anti-patterns, בעיות ביצועים.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">better-result-adopt</div>
+            <div class="skill-desc">מעבר ל-Result types מ-better-result. מחליף try/catch בלוגיקה עסקית ב-Result.ok/Result.err.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">composition-patterns</div>
+            <div class="skill-desc">דפוסי הרכבה ב-React - compound components, render props, hooks composition.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">systematic-debugging</div>
+            <div class="skill-desc">דיבאג ב-5 שלבים: זהה → שחזר → בודד → תקן → אמת. גישה שיטתית לאיתור באגים.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">verification-before-completion</div>
+            <div class="skill-desc">אימות מלא לפני סיום - טיפוסים, לינט, בדיקות, כיסוי. חובה לפני "done".</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">requesting-code-review</div>
+            <div class="skill-desc">הגשת קוד לסקירה - מכין את הקוד ומפעיל סוכני סקירה רלוונטיים.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">receiving-code-review</div>
+            <div class="skill-desc">עיבוד פידבק מסקירת קוד - מטפל בהערות CRITICAL, HIGH, MEDIUM לפי סדר עדיפות.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UI & Design -->
+      <div class="skill-group">
+        <div class="skill-group-header">
+          <span class="cat-badge cat-ui">UI/DESIGN</span>
+          עיצוב וממשק משתמש
+        </div>
+        <div class="skill-list">
+          <div class="skill-item">
+            <div class="skill-name">ui-skills</div>
+            <div class="skill-desc">אילוצי UI כלליים - נגישות, קומפוננטות, אנימציות. בסיס לכל עבודת UI.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">nano-banana-poster</div>
+            <div class="skill-desc">יצירת תמונות עם Gemini (חינם!) - heroes, איורים, אייקונים, תגים. 14 model sheets + 8 רקעים יוצרו עם הכלי הזה.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">stitch-loop</div>
+            <div class="skill-desc">יצירת אתרים מרובי-עמודים מפרומפט אחד דרך Google Stitch MCP.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">design-motion-principles</div>
+            <div class="skill-desc">עקרונות אנימציה - transform/opacity בלבד, מקסימום 200ms לפידבק.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">react-components</div>
+            <div class="skill-desc">המרת עיצובי Stitch לקומפוננטות React. יוצר קוד TSX מוכן לשימוש.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">enhance-prompt</div>
+            <div class="skill-desc">שיפור פרומפטים ל-Stitch - הופך רעיונות UI לפרומפטים אופטימליים.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">shadcn-ui</div>
+            <div class="skill-desc">אינטגרציית shadcn/ui - קומפוננטות בסיסיות עם New York variant. עיצוב RTL מותאם.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">design-md</div>
+            <div class="skill-desc">תיעוד עיצוב מפרויקטי Stitch. מתעד החלטות עיצוביות ודפוסים.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">ui-ux-pro-max</div>
+            <div class="skill-desc">סוכן מעצב-מפתח UI/UX מתקדם. לעיצוב חוויות משתמש מורכבות.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testing -->
+      <div class="skill-group">
+        <div class="skill-group-header">
+          <span class="cat-badge cat-test">TESTING</span>
+          בדיקות ואיכות
+        </div>
+        <div class="skill-list">
+          <div class="skill-item">
+            <div class="skill-name">test-driven-development</div>
+            <div class="skill-desc">זרימת TDD: RED → GREEN → REFACTOR. כותב טסט ראשון, ממש מינימלי, משפר.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">agent-browser</div>
+            <div class="skill-desc">בדיקות דפדפן אוטומטיות - ניווט, צילומי מסך, אינטראקציה עם אלמנטים. Playwright מתחת למכסה.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">vitest-patterns</div>
+            <div class="skill-desc">דפוסי Vitest - מבנה טסטים, mocking, snapshot testing. 1,093 טסטים ב-62 suites.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Frameworks -->
+      <div class="skill-group">
+        <div class="skill-group-header">
+          <span class="cat-badge cat-fw">FRAMEWORKS</span>
+          פריימוורקים וספריות
+        </div>
+        <div class="skill-list">
+          <div class="skill-item">
+            <div class="skill-name">nextjs-patterns</div>
+            <div class="skill-desc">Next.js 15 App Router - Server Components, Route Groups, Middleware, Metadata API.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">react-best-practices</div>
+            <div class="skill-desc">React 19 + Next.js - Hooks, Suspense, Server Components, Concurrent Features.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">zustand-patterns</div>
+            <div class="skill-desc">ניהול state עם Zustand - slices, selectors, middleware. 6 stores בפרויקט.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">tailwind-patterns</div>
+            <div class="skill-desc">Tailwind CSS 4 - CSS logical properties, custom themes, RTL utilities, dark mode.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">framer-motion-patterns</div>
+            <div class="skill-desc">אנימציות Framer Motion - variants, AnimatePresence, layout animations. transform/opacity בלבד.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Git & DevOps -->
+      <div class="skill-group">
+        <div class="skill-group-header">
+          <span class="cat-badge cat-git">GIT/DEVOPS</span>
+          Git ותפעול
+        </div>
+        <div class="skill-list">
+          <div class="skill-item">
+            <div class="skill-name">commit</div>
+            <div class="skill-desc">יצירת commits עם conventional commits: feat/fix/refactor/docs/test/chore.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">using-git-worktrees</div>
+            <div class="skill-desc">פיתוח מבודד ב-git worktrees - כל פיצ'ר בסביבת עבודה נפרדת.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">finishing-a-development-branch</div>
+            <div class="skill-desc">סיום branch פיתוח - cleanup, squash, PR, merge. זרימה מסודרת.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">writing-plans</div>
+            <div class="skill-desc">כתיבת תוכניות עבודה מובנות - שלבים, תלויות, סיכונים, קריטריוני הצלחה.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">executing-plans</div>
+            <div class="skill-desc">ביצוע תוכניות עבודה - מעקב אחר שלבים, סימון התקדמות, דיווח.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">dispatching-parallel-agents</div>
+            <div class="skill-desc">שיגור סוכנים מקביליים - הפצת תת-משימות עצמאיות ל-2+ סוכנים בו-זמנית.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Generation -->
+      <div class="skill-group">
+        <div class="skill-group-header">
+          <span class="cat-badge cat-content">CONTENT</span>
+          יצירת תוכן
+        </div>
+        <div class="skill-list">
+          <div class="skill-item">
+            <div class="skill-name">nano-banana-poster</div>
+            <div class="skill-desc">יצירת תמונות עם Gemini Image API (חינם!) - heroes, איורים, model sheets, רקעים, UI assets.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">fal-ai</div>
+            <div class="skill-desc">יצירת וידאו ותמונות מתקדמות - image-to-image, ControlNet, background removal. לכשצריך מעבר ל-Gemini.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">remotion</div>
+            <div class="skill-desc">יצירת סרטוני walkthrough מעיצובים - הדגמת UI, תיעוד וידאו.</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">brainstorming</div>
+            <div class="skill-desc">סיעור מוחות מובנה - רעיונות, הרחבות, אלטרנטיבות. לתכנון narrative ודמויות.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====== SECTION 4: CUSTOM TOOLS ====== -->
+  <section class="sec" id="sec-custom">
+    <div class="sh" onclick="this.parentElement.classList.toggle('c')">
+      <h2><span class="sn">4</span> כלים ייחודיים לפרויקט</h2>
+      <span class="tgl">&#9660;</span>
+    </div>
+    <div class="sb">
+      <div class="info">
+        כלים וסקריפטים שנוצרו במיוחד עבור פרויקט נינג'ה מקלדת - מנועי משחק, מערכות סאונד, מחוללי קולות ועוד.
+      </div>
+
+      <!-- Tool 1: Voice Generate -->
+      <div class="custom-tool">
+        <div class="custom-tool-num">1</div>
+        <div>
+          <div class="custom-tool-title">voice-generate-all-hebrew.mjs</div>
+          <div class="custom-tool-desc">סקריפט מרכזי ליצירת קולות עברית לכל דמויות המשחק</div>
+          <ul class="custom-tool-details">
+            <li>10 דמויות עם קולות ייחודיים (ElevenLabs Voice Design v3)</li>
+            <li>40+ שורות דיאלוג בעברית לכל דמות</li>
+            <li>עיבוד ffmpeg: pitch shifting, echo, tremolo, vibrato</li>
+            <li>Rex (pitch 95%), Bug (pitch 115%+vibrato), BugKing (pitch 85%+echo)</li>
+            <li>תיקיית פלט: public/audio/voices/</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tool 2: Yuki V7 Generate -->
+      <div class="custom-tool">
+        <div class="custom-tool-num">2</div>
+        <div>
+          <div class="custom-tool-title">yuki-v7-generate.mjs</div>
+          <div class="custom-tool-desc">סקריפט ייעודי לקול יוקי - הצברית האולטימטיבית</div>
+          <ul class="custom-tool-details">
+            <li>4 וריאציות (A-D) עם הגדרות קול שונות</li>
+            <li>4 עיבודי ffmpeg לכל וריאציה</li>
+            <li>תיקון content filter של ElevenLabs</li>
+            <li>מיקוד: מבטא ישראלי צברי, מהיר, ללא גוון רוסי</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tool 3: Gemini Art Pipeline -->
+      <div class="custom-tool">
+        <div class="custom-tool-num">3</div>
+        <div>
+          <div class="custom-tool-title">nano-banana-poster (Gemini Art Pipeline)</div>
+          <div class="custom-tool-desc">צינור יצירת אסטים ויזואליים עם Gemini Image API</div>
+          <ul class="custom-tool-details">
+            <li>17 model sheets של דמויות (סגנון אחיד, מאושרים)</li>
+            <li>Expression sheets לכל דמות</li>
+            <li>8 רקעי סביבה (דוג'ו, יער, עיר, חלל...)</li>
+            <li>UI assets: כפתורים, תגים, מסגרות</li>
+            <li>תיקיית פלט: public/images/</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tool 4: Dialog & Story Engine -->
+      <div class="custom-tool">
+        <div class="custom-tool-num">4</div>
+        <div>
+          <div class="custom-tool-title">DialogBox + StoryPlayer</div>
+          <div class="custom-tool-desc">מנוע סיפור ודיאלוגים אינטראקטיבי</div>
+          <ul class="custom-tool-details">
+            <li>אפקט typewriter עם מהירות מותאמת</li>
+            <li>4 סגנונות דיאלוג: רגיל, קריטי, חשיבה, הומור</li>
+            <li>בחירות שחקן עם השפעה על העלילה</li>
+            <li>26 story beats בפרקים 1-3</li>
+            <li>מנגנון speech-bubble מונפש</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tool 5: Sound System -->
+      <div class="custom-tool">
+        <div class="custom-tool-num">5</div>
+        <div>
+          <div class="custom-tool-title">useSoundEffect + Web Audio</div>
+          <div class="custom-tool-desc">מערכת סאונד היברידית - קבצי MP3 + סינתזה</div>
+          <ul class="custom-tool-details">
+            <li>16 צלילי SFX מבוססי AI (קבצי MP3 ראשיים)</li>
+            <li>12 צלילי UI מסונתזים (Web Audio API כגיבוי)</li>
+            <li>Preloading על mount - אפס דיליי</li>
+            <li>Zero dependencies - עובד ללא קבצים חיצוניים</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tool 6: AI Typing Engine -->
+      <div class="custom-tool">
+        <div class="custom-tool-num">6</div>
+        <div>
+          <div class="custom-tool-title">AI Typing Engine</div>
+          <div class="custom-tool-desc">מנוע הקלדת AI לסימולציה של יריבים</div>
+          <ul class="custom-tool-details">
+            <li>סימולציה אנושית עם Gaussian jitter</li>
+            <li>Rubber-banding דינמי (מתאים קושי לשחקן)</li>
+            <li>3 יריבים: Shadow (חתול), Storm (שועל), Blaze (דרקון)</li>
+            <li>פרופילי קושי מותאמים לגיל</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tool 7: Music System -->
+      <div class="custom-tool">
+        <div class="custom-tool-num">7</div>
+        <div>
+          <div class="custom-tool-title">MusicManager + MusicProvider</div>
+          <div class="custom-tool-desc">מערכת מוזיקה עם AudioContext וניהול מצבים</div>
+          <ul class="custom-tool-details">
+            <li>AudioContext + GainNode לשליטה בווליום</li>
+            <li>Crossfade אוטומטי בניווט בין עמודים</li>
+            <li>Suno Main Theme V2 = התימה הרשמית</li>
+            <li>Boss V1 = בוס ראשי, V2 = מיני בוס</li>
+            <li>מנגנון unlock מוזיקה כאצ'יבמנטים</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====== SECTION 5: STATISTICS ====== -->
+  <section class="sec" id="sec-stats">
+    <div class="sh" onclick="this.parentElement.classList.toggle('c')">
+      <h2><span class="sn">5</span> סטטיסטיקות ותמונת מצב</h2>
+      <span class="tgl">&#9660;</span>
+    </div>
+    <div class="sb">
+
+      <div class="sg">
+        <div class="sc">
+          <div class="sv">8</div>
+          <div class="sl">שרתי MCP</div>
+        </div>
+        <div class="sc">
+          <div class="sv">15+</div>
+          <div class="sl">סוכני OMC</div>
+        </div>
+        <div class="sc">
+          <div class="sv">40+</div>
+          <div class="sl">סקילים בשימוש</div>
+        </div>
+        <div class="sc">
+          <div class="sv">7</div>
+          <div class="sl">כלים ייחודיים</div>
+        </div>
+        <div class="sc">
+          <div class="sv">60+</div>
+          <div class="sl">אסטים שנוצרו</div>
+        </div>
+        <div class="sc">
+          <div class="sv">1,093</div>
+          <div class="sl">טסטים יחידה</div>
+        </div>
+        <div class="sc">
+          <div class="sv">26</div>
+          <div class="sl">story beats</div>
+        </div>
+        <div class="sc">
+          <div class="sv">82+</div>
+          <div class="sl">קבצי קול</div>
+        </div>
+        <div class="sc">
+          <div class="sv">24</div>
+          <div class="sl">מסמכי HTML</div>
+        </div>
+      </div>
+
+      <!-- Detailed Stats Table -->
+      <div class="sub-h">פירוט לפי קטגוריה</div>
+      <table>
+        <thead>
+          <tr>
+            <th>קטגוריה</th>
+            <th>פריט</th>
+            <th>כמות</th>
+            <th>סטטוס</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="3">MCP</td>
+            <td>שרתים פעילים</td>
+            <td>5</td>
+            <td><span class="b bd">פעיל</span></td>
+          </tr>
+          <tr>
+            <td>שרתים זמינים</td>
+            <td>3</td>
+            <td><span class="b bl">זמין</span></td>
+          </tr>
+          <tr>
+            <td>כלי MCP סה"כ</td>
+            <td>28</td>
+            <td><span class="b bd">פעיל</span></td>
+          </tr>
+          <tr>
+            <td rowspan="4">סוכנים</td>
+            <td>Build/Analysis</td>
+            <td>8</td>
+            <td><span class="b bd">פעיל</span></td>
+          </tr>
+          <tr>
+            <td>Review</td>
+            <td>3</td>
+            <td><span class="b bd">פעיל</span></td>
+          </tr>
+          <tr>
+            <td>Domain Specialists</td>
+            <td>7</td>
+            <td><span class="b bd">פעיל</span></td>
+          </tr>
+          <tr>
+            <td>תהליכים מוגדרים</td>
+            <td>5</td>
+            <td><span class="b bd">פעיל</span></td>
+          </tr>
+          <tr>
+            <td rowspan="6">סקילים</td>
+            <td>Workflow & Orchestration</td>
+            <td>8</td>
+            <td><span class="b bd">פעיל</span></td>
+          </tr>
+          <tr>
+            <td>Code Quality</td>
+            <td>7</td>
+            <td><span class="b bd">פעיל</span></td>
+          </tr>
+          <tr>
+            <td>UI & Design</td>
+            <td>9</td>
+            <td><span class="b bd">פעיל</span></td>
+          </tr>
+          <tr>
+            <td>Testing</td>
+            <td>3</td>
+            <td><span class="b bd">פעיל</span></td>
+          </tr>
+          <tr>
+            <td>Frameworks</td>
+            <td>5</td>
+            <td><span class="b bd">פעיל</span></td>
+          </tr>
+          <tr>
+            <td>Git & Content</td>
+            <td>10</td>
+            <td><span class="b bd">פעיל</span></td>
+          </tr>
+          <tr>
+            <td rowspan="4">אסטים</td>
+            <td>Model Sheets (דמויות)</td>
+            <td>17</td>
+            <td><span class="b bd">מאושר</span></td>
+          </tr>
+          <tr>
+            <td>רקעי סביבה</td>
+            <td>8</td>
+            <td><span class="b bd">מאושר</span></td>
+          </tr>
+          <tr>
+            <td>קבצי קול (V5-V7)</td>
+            <td>82+</td>
+            <td><span class="b bp">בתהליך</span></td>
+          </tr>
+          <tr>
+            <td>מסמכי HTML סקירה</td>
+            <td>24</td>
+            <td><span class="b bd">מושלם</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </section>
+
+  <!-- ====== SECTION 6: ARCHITECTURE ====== -->
+  <section class="sec" id="sec-arch">
+    <div class="sh" onclick="this.parentElement.classList.toggle('c')">
+      <h2><span class="sn">6</span> דיאגרמת ארכיטקטורה</h2>
+      <span class="tgl">&#9660;</span>
+    </div>
+    <div class="sb">
+      <div class="info">
+        תרשים זרימה של הכלים והשירותים - מבקשת משתמש ועד לפלט סופי. כל שכבה מביאה יכולות ייחודיות לתהליך הפיתוח.
+      </div>
+
+      <div class="arch">
+        <!-- Layer 1: User -->
+        <div class="arch-row">
+          <div class="arch-box primary" style="min-width:250px;">
+            <div style="font-size:1.1em;">בקשת משתמש</div>
+            <div class="arch-box-label">קלט: רעיון, באג, פיצ'ר, עיצוב</div>
+          </div>
+        </div>
+
+        <div class="arch-arrow">&#8595;</div>
+
+        <!-- Layer 2: Claude Code -->
+        <div class="arch-row">
+          <div class="arch-box primary" style="min-width:300px;border-color:#a29bfe;">
+            <div style="font-size:1.1em;">Claude Code (Opus 4)</div>
+            <div class="arch-box-label">מודל AI ראשי - ניתוח, תכנון, מימוש</div>
+          </div>
+        </div>
+
+        <div class="arch-arrow">&#8595;</div>
+
+        <!-- Layer 3: OMC Router -->
+        <div class="arch-row">
+          <div class="arch-box highlight" style="min-width:350px;">
+            <div style="font-size:1.05em;">OMC Router (Oh-My-ClaudeCode)</div>
+            <div class="arch-box-label">ניתוב לסוכנים, סקילים ו-MCP לפי סוג המשימה</div>
+          </div>
+        </div>
+
+        <div class="arch-arrow" style="display:flex;gap:40px;justify-content:center;">
+          <span>&#8601;</span>
+          <span>&#8595;</span>
+          <span>&#8600;</span>
+        </div>
+
+        <!-- Layer 4: Three pillars -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;max-width:750px;margin:0 auto;">
+          <div class="arch-box" style="border-color:#a29bfe;">
+            <div>סוכנים</div>
+            <div class="arch-box-label">18 סוכנים מתמחים<br>Haiku / Sonnet / Opus</div>
+          </div>
+          <div class="arch-box" style="border-color:#00B894;">
+            <div>סקילים</div>
+            <div class="arch-box-label">40+ זרימות עבודה<br>Workflow / Quality / UI</div>
+          </div>
+          <div class="arch-box" style="border-color:#fdcb6e;">
+            <div>כלים ייחודיים</div>
+            <div class="arch-box-label">7 מנועים מותאמים<br>Voice / Art / Story</div>
+          </div>
+        </div>
+
+        <div class="arch-arrow">&#8595;</div>
+
+        <!-- Layer 5: MCP Servers -->
+        <div style="max-width:750px;margin:0 auto;">
+          <div style="text-align:center;color:#a29bfe;font-weight:700;font-size:0.9em;margin-bottom:10px;">שרתי MCP חיצוניים</div>
+          <div class="arch-mcp-row">
+            <div class="arch-box" style="padding:10px 14px;font-size:0.85em;border-color:#6C5CE7;">
+              <div>Context7</div>
+              <div class="arch-box-label">תיעוד ספריות</div>
+            </div>
+            <div class="arch-box" style="padding:10px 14px;font-size:0.85em;border-color:#6C5CE7;">
+              <div>Octocode</div>
+              <div class="arch-box-label">קוד GitHub</div>
+            </div>
+            <div class="arch-box" style="padding:10px 14px;font-size:0.85em;border-color:#6C5CE7;">
+              <div>Stitch</div>
+              <div class="arch-box-label">עיצוב UI</div>
+            </div>
+            <div class="arch-box" style="padding:10px 14px;font-size:0.85em;border-color:#6C5CE7;">
+              <div>ElevenLabs</div>
+              <div class="arch-box-label">קולות AI</div>
+            </div>
+            <div class="arch-box" style="padding:10px 14px;font-size:0.85em;border-color:#6C5CE7;">
+              <div>DeepWiki</div>
+              <div class="arch-box-label">תיעוד ריפו</div>
+            </div>
+            <div class="arch-box" style="padding:10px 14px;font-size:0.85em;border-color:#474280;">
+              <div>Exa</div>
+              <div class="arch-box-label">חיפוש אינטרנט</div>
+            </div>
+            <div class="arch-box" style="padding:10px 14px;font-size:0.85em;border-color:#474280;">
+              <div>Skill Registry</div>
+              <div class="arch-box-label">רישום סקילים</div>
+            </div>
+            <div class="arch-box" style="padding:10px 14px;font-size:0.85em;border-color:#474280;">
+              <div>Team MCP</div>
+              <div class="arch-box-label">תיאום צוותים</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="arch-arrow">&#8595;</div>
+
+        <!-- Layer 6: Output -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));gap:10px;max-width:750px;margin:0 auto;">
+          <div class="arch-box output" style="padding:12px;font-size:0.88em;">
+            <div>קוד TSX</div>
+            <div class="arch-box-label">קומפוננטות React</div>
+          </div>
+          <div class="arch-box output" style="padding:12px;font-size:0.88em;">
+            <div>אסטים ויזואליים</div>
+            <div class="arch-box-label">תמונות, אנימציות</div>
+          </div>
+          <div class="arch-box output" style="padding:12px;font-size:0.88em;">
+            <div>קבצי קול</div>
+            <div class="arch-box-label">דיאלוגים, SFX</div>
+          </div>
+          <div class="arch-box output" style="padding:12px;font-size:0.88em;">
+            <div>מסמכי סקירה</div>
+            <div class="arch-box-label">HTML, תכנון</div>
+          </div>
+          <div class="arch-box output" style="padding:12px;font-size:0.88em;">
+            <div>טסטים</div>
+            <div class="arch-box-label">Vitest + Playwright</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pipeline Diagram -->
+      <div class="sub-h">Pipeline שלבי של Team Mode</div>
+      <div class="arch" style="padding:30px 20px;">
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;">
+          <div class="arch-box" style="padding:10px 16px;font-size:0.85em;border-color:#6C5CE7;min-width:auto;">
+            <div>team-plan</div>
+            <div class="arch-box-label">explore + planner</div>
+          </div>
+          <span style="color:#6C5CE7;font-size:1.2em;">&#8592;</span>
+          <div class="arch-box" style="padding:10px 16px;font-size:0.85em;border-color:#a29bfe;min-width:auto;">
+            <div>team-prd</div>
+            <div class="arch-box-label">analyst + critic</div>
+          </div>
+          <span style="color:#6C5CE7;font-size:1.2em;">&#8592;</span>
+          <div class="arch-box" style="padding:10px 16px;font-size:0.85em;border-color:#00B894;min-width:auto;">
+            <div>team-exec</div>
+            <div class="arch-box-label">executor + specialists</div>
+          </div>
+          <span style="color:#6C5CE7;font-size:1.2em;">&#8592;</span>
+          <div class="arch-box" style="padding:10px 16px;font-size:0.85em;border-color:#fdcb6e;min-width:auto;">
+            <div>team-verify</div>
+            <div class="arch-box-label">verifier + reviewers</div>
+          </div>
+          <span style="color:#6C5CE7;font-size:1.2em;">&#8592;</span>
+          <div class="arch-box" style="padding:10px 16px;font-size:0.85em;border-color:#ff6b6b;min-width:auto;">
+            <div>team-fix</div>
+            <div class="arch-box-label">executor / debugger</div>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:14px;">
+          <span style="color:#8888bb;font-size:0.82em;">&#8635; לולאת fix חוזרת ל-exec או verify עד להשלמה</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<!-- ====== FOOTER ====== -->
+<footer class="ftr">
+  <p>נינג'ה מקלדת &copy; 2026 | סקילים, סוכנים ושרתי MCP</p>
+  <p>נוצר עם Claude Code + Oh-My-ClaudeCode | עדכון אחרון: מרץ 2026</p>
+</footer>
+
+<script>
+// Collapsible sections
+document.querySelectorAll('.sh').forEach(sh => {
+  sh.addEventListener('click', () => {
+    sh.parentElement.classList.toggle('c');
+  });
+});
+</script>
+</body>
+</html>

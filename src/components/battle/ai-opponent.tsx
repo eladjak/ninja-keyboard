@@ -41,18 +41,14 @@ interface AIOpponentProps {
 
 // ── Mood Animations ─────────────────────────────────────────────────
 
-const MOOD_VARIANTS: Record<AIOpponentMood, {
-  scale: number
-  rotate: number
-  transition: { duration: number; ease: string }
-}> = {
-  neutral: { scale: 1, rotate: 0, transition: { duration: 0.3, ease: 'easeOut' } },
-  confident: { scale: 1.05, rotate: 2, transition: { duration: 0.4, ease: 'easeOut' } },
-  struggling: { scale: 0.95, rotate: -2, transition: { duration: 0.3, ease: 'easeOut' } },
-  surprised: { scale: 1.08, rotate: -3, transition: { duration: 0.2, ease: 'easeOut' } },
-  defeated: { scale: 0.9, rotate: -5, transition: { duration: 0.5, ease: 'easeOut' } },
-  victorious: { scale: 1.1, rotate: 3, transition: { duration: 0.4, ease: 'easeOut' } },
-}
+const MOOD_VARIANTS = {
+  neutral: { scale: 1, rotate: 0, transition: { duration: 0.3, ease: 'easeOut' as const } },
+  confident: { scale: 1.05, rotate: 2, transition: { duration: 0.4, ease: 'easeOut' as const } },
+  struggling: { scale: 0.95, rotate: -2, transition: { duration: 0.3, ease: 'easeOut' as const } },
+  surprised: { scale: 1.08, rotate: -3, transition: { duration: 0.2, ease: 'easeOut' as const } },
+  defeated: { scale: 0.9, rotate: -5, transition: { duration: 0.5, ease: 'easeOut' as const } },
+  victorious: { scale: 1.1, rotate: 3, transition: { duration: 0.4, ease: 'easeOut' as const } },
+} satisfies Record<AIOpponentMood, { scale: number; rotate: number; transition: { duration: number; ease: 'easeOut' } }>
 
 // ── WPM Display Colors ─────────────────────────────────────────────
 

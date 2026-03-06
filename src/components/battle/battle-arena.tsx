@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { BattleResults } from '@/components/battle/battle-results'
-import { RivalNinja } from '@/components/characters/rival-ninja'
+import { AIOpponent } from '@/components/battle/ai-opponent'
 import { soundManager } from '@/lib/audio/sound-manager'
 import {
   type BattleConfig,
@@ -17,32 +17,45 @@ import {
   type BattleWinner,
   createBattle,
   updatePlayerProgress,
-  updateAiProgress,
   checkWinner,
   calculateBattleXp,
   calculatePlayerWpm,
   calculatePlayerAccuracy,
-  calculateAiEffectiveWpm,
-  getAiWpm,
 } from '@/lib/battle/battle-engine'
+import { RIVAL_DISPLAY } from '@/lib/battle/ai-typing-engine'
 import { useXpStore } from '@/stores/xp-store'
+import { useAIOpponentStore } from '@/stores/ai-opponent-store'
+import type { RivalName, DifficultyLevel, AIMatchResult } from '@/types/ai-opponent'
 
 // ── Constants ──────────────────────────────────────────────────────
 
 const COUNTDOWN_STEPS = ['3', '2', '1', 'קדימה!'] as const
 const COUNTDOWN_INTERVAL_MS = 1000
-const AI_UPDATE_INTERVAL_MS = 50
 const DEFAULT_TEXT_LENGTH = 80
 
-const DIFFICULTY_OPTIONS: Array<{
-  value: BattleDifficulty
+/** Map old difficulty to rival character and difficulty level */
+const DIFFICULTY_TO_RIVAL: Record<BattleDifficulty, {
+  rival: RivalName
+  level: DifficultyLevel
+}> = {
+  easy: { rival: 'bug', level: 2 },
+  medium: { rival: 'shadow', level: 3 },
+  hard: { rival: 'storm', level: 4 },
+}
+
+/** Rival selection options for the new 6-rival picker */
+const RIVAL_OPTIONS: Array<{
+  rival: RivalName
+  difficulty: DifficultyLevel
   label: string
   description: string
-  wpm: number
 }> = [
-  { value: 'easy', label: 'קל', description: 'נינג\u05F3ה מתחיל', wpm: 15 },
-  { value: 'medium', label: 'בינוני', description: 'נינג\u05F3ה מנוסה', wpm: 30 },
-  { value: 'hard', label: 'קשה', description: 'מאסטר נינג\u05F3ה', wpm: 50 },
+  { rival: 'bug', difficulty: 2, label: 'באג', description: 'כאוטי, הרבה טעויות' },
+  { rival: 'shadow', difficulty: 3, label: 'צל', description: 'יציב ומדויק' },
+  { rival: 'storm', difficulty: 3, label: 'סערה', description: 'פרצים בלתי צפויים' },
+  { rival: 'blaze', difficulty: 4, label: 'להבה', description: 'מתחיל חם, נשרף' },
+  { rival: 'virus', difficulty: 4, label: 'וירוס', description: 'מתחיל לאט, מאיץ' },
+  { rival: 'yuki', difficulty: 5, label: 'יוקי', description: 'שותפת אימונים קשוחה' },
 ]
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -54,16 +67,19 @@ type Phase = 'select' | 'countdown' | 'battle' | 'results'
 export function BattleArena() {
   const [phase, setPhase] = useState<Phase>('select')
   const [difficulty, setDifficulty] = useState<BattleDifficulty>('easy')
+  const [selectedRival, setSelectedRival] = useState<RivalName>('bug')
+  const [selectedLevel, setSelectedLevel] = useState<DifficultyLevel>(2)
   const [battleState, setBattleState] = useState<BattleState | null>(null)
   const [countdownIndex, setCountdownIndex] = useState(0)
   const [winner, setWinner] = useState<BattleWinner>(null)
   const [xpEarned, setXpEarned] = useState(0)
+  const [battleStarted, setBattleStarted] = useState(false)
 
-  const aiIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
-  const lastAiUpdateRef = useRef<number>(0)
   const inputRef = useRef<HTMLInputElement>(null)
+  const battleEndedRef = useRef(false)
 
   const addXp = useXpStore((s) => s.addXp)
+  const aiOpponentState = useAIOpponentStore((s) => s.opponentState)
 
   // ── Countdown Logic ────────────────────────────────────────────
 
@@ -96,68 +112,45 @@ export function BattleArena() {
     }
   }, [countdownIndex, phase])
 
-  // ── Battle start sound ─────────────────────────────────────────
+  // ── Battle start ─────────────────────────────────────────────
 
   useEffect(() => {
     if (phase === 'battle') {
       soundManager.playBattleStart()
-    }
-  }, [phase])
-
-  // ── Focus input on battle start ────────────────────────────────
-
-  useEffect(() => {
-    if (phase === 'battle') {
+      setBattleStarted(true)
+      battleEndedRef.current = false
       inputRef.current?.focus()
     }
   }, [phase])
 
-  // ── AI Progress Loop ───────────────────────────────────────────
+  // ── Check if AI completed (AI won) ───────────────────────────
 
-  useEffect(() => {
-    if (phase !== 'battle' || !battleState) return
-
-    lastAiUpdateRef.current = performance.now()
-
-    aiIntervalRef.current = setInterval(() => {
-      const now = performance.now()
-      const delta = now - lastAiUpdateRef.current
-      lastAiUpdateRef.current = now
+  const handleAIComplete = useCallback(
+    (result: AIMatchResult) => {
+      if (battleEndedRef.current) return
 
       setBattleState((prev) => {
         if (!prev || prev.status === 'finished') return prev
 
-        const updated = updateAiProgress(
-          { ...prev, status: 'playing' },
-          delta,
-        )
-
-        // Check if AI won
-        const battleWinner = checkWinner(updated, updated.text.length)
-        if (battleWinner === 'ai') {
-          return { ...updated, status: 'finished', winner: 'ai' }
+        // Only mark AI as winner if player hasn't already won
+        if (prev.playerProgress < prev.text.length) {
+          battleEndedRef.current = true
+          return { ...prev, status: 'finished', winner: 'ai', aiProgress: prev.text.length }
         }
-
-        return updated
+        return prev
       })
-    }, AI_UPDATE_INTERVAL_MS)
-
-    return () => {
-      if (aiIntervalRef.current) {
-        clearInterval(aiIntervalRef.current)
-        aiIntervalRef.current = null
-      }
-    }
-  }, [phase, battleState?.text.length])
+    },
+    [],
+  )
 
   // ── Check for battle end ───────────────────────────────────────
 
   useEffect(() => {
     if (!battleState) return
-    if (battleState.status !== 'finished' && phase !== 'battle') return
+    if (phase !== 'battle' && battleState.status !== 'finished') return
 
     const w = battleState.winner
-    if (w) {
+    if (w && !winner) {
       setWinner(w)
       const playerWpm = calculatePlayerWpm(battleState)
       const xp = calculateBattleXp(
@@ -168,24 +161,44 @@ export function BattleArena() {
       setXpEarned(xp)
       addXp(xp)
       setPhase('results')
+      setBattleStarted(false)
       if (w === 'player') {
         soundManager.playVictoryCheers()
       }
-
-      if (aiIntervalRef.current) {
-        clearInterval(aiIntervalRef.current)
-        aiIntervalRef.current = null
-      }
     }
-  }, [battleState?.winner, battleState?.status, phase, addXp, battleState])
+  }, [battleState, battleState?.winner, battleState?.status, phase, addXp, winner])
+
+  // ── Sync AI position into battle state (for progress bar) ────
+
+  useEffect(() => {
+    if (phase !== 'battle' || !battleState) return
+
+    setBattleState((prev) => {
+      if (!prev || prev.status === 'finished') return prev
+      return {
+        ...prev,
+        aiProgress: aiOpponentState.currentPosition,
+        timeElapsed: prev.timeElapsed,
+      }
+    })
+  }, [aiOpponentState.currentPosition, phase, battleState?.status])
 
   // ── Handlers ───────────────────────────────────────────────────
 
-  const handleStartBattle = useCallback(
-    (selectedDifficulty: BattleDifficulty) => {
-      setDifficulty(selectedDifficulty)
+  const handleSelectRival = useCallback(
+    (rival: RivalName, level: DifficultyLevel) => {
+      setSelectedRival(rival)
+      setSelectedLevel(level)
+
+      // Map to old difficulty for backward compat with BattleResults
+      const difficultyMap: Record<number, BattleDifficulty> = {
+        1: 'easy', 2: 'easy', 3: 'medium', 4: 'hard', 5: 'hard',
+      }
+      const mappedDifficulty = difficultyMap[level] ?? 'medium'
+      setDifficulty(mappedDifficulty)
+
       const config: BattleConfig = {
-        difficulty: selectedDifficulty,
+        difficulty: mappedDifficulty,
         textLength: DEFAULT_TEXT_LENGTH,
       }
       const state = createBattle(config)
@@ -194,13 +207,23 @@ export function BattleArena() {
       setPhase('countdown')
       setWinner(null)
       setXpEarned(0)
+      setBattleStarted(false)
+      battleEndedRef.current = false
     },
     [],
   )
 
+  const handleStartBattle = useCallback(
+    (selectedDifficulty: BattleDifficulty) => {
+      const { rival, level } = DIFFICULTY_TO_RIVAL[selectedDifficulty]
+      handleSelectRival(rival, level)
+    },
+    [handleSelectRival],
+  )
+
   const handleKeyInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (phase !== 'battle' || !battleState) return
+      if (phase !== 'battle' || !battleState || battleEndedRef.current) return
 
       const value = e.target.value
       if (value.length === 0) return
@@ -210,7 +233,7 @@ export function BattleArena() {
       const isCorrect = typed === expected
 
       setBattleState((prev) => {
-        if (!prev) return prev
+        if (!prev || prev.status === 'finished') return prev
 
         const updated = updatePlayerProgress(
           { ...prev, status: 'playing' },
@@ -221,6 +244,7 @@ export function BattleArena() {
         // Check if player won
         const battleWinner = checkWinner(updated, updated.text.length)
         if (battleWinner === 'player') {
+          battleEndedRef.current = true
           return { ...updated, status: 'finished', winner: 'player' }
         }
 
@@ -234,14 +258,16 @@ export function BattleArena() {
   )
 
   const handlePlayAgain = useCallback(() => {
-    handleStartBattle(difficulty)
-  }, [difficulty, handleStartBattle])
+    handleSelectRival(selectedRival, selectedLevel)
+  }, [selectedRival, selectedLevel, handleSelectRival])
 
   const handleBack = useCallback(() => {
     setPhase('select')
     setBattleState(null)
     setWinner(null)
     setXpEarned(0)
+    setBattleStarted(false)
+    battleEndedRef.current = false
   }, [])
 
   // ── Derived Values ─────────────────────────────────────────────
@@ -253,14 +279,14 @@ export function BattleArena() {
     ? Math.round((battleState.aiProgress / battleState.text.length) * 100)
     : 0
   const playerWpm = battleState ? calculatePlayerWpm(battleState) : 0
-  const aiWpm = battleState ? calculateAiEffectiveWpm(battleState) : 0
   const playerAccuracy = battleState ? calculatePlayerAccuracy(battleState) : 100
+  const rivalDisplay = RIVAL_DISPLAY[selectedRival]
 
-  // ── Render: Difficulty Selection ───────────────────────────────
+  // ── Render: Rival Selection ──────────────────────────────────
 
   if (phase === 'select') {
     return (
-      <div className="relative mx-auto max-w-2xl space-y-6 overflow-hidden">
+      <div className="relative mx-auto max-w-3xl space-y-6 overflow-hidden">
         <Image src="/images/backgrounds/battle-bg.jpg" alt="" fill className="object-cover opacity-20 pointer-events-none" />
         <Card>
           <CardHeader className="text-center">
@@ -269,28 +295,74 @@ export function BattleArena() {
               זירת קרב
             </CardTitle>
             <p className="text-muted-foreground mt-1">
-              בחר רמת קושי להתמודדות מול הנינג&apos;ה בוט
+              בחר יריב להתמודדות
             </p>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-4 sm:grid-cols-3">
-              {DIFFICULTY_OPTIONS.map((option) => (
-                <button
-                  key={option.value}
-                  onClick={() => handleStartBattle(option.value)}
-                  className="rounded-xl border-2 border-transparent bg-muted/50 p-6 text-center transition-all hover:border-primary hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  data-testid={`difficulty-${option.value}`}
-                >
-                  <div className="text-3xl font-bold">{option.label}</div>
-                  <div className="text-muted-foreground mt-1 text-sm">
-                    {option.description}
-                  </div>
-                  <div className="mt-3 flex items-center justify-center gap-1 text-sm font-medium text-primary">
-                    <Zap className="size-3.5" />
-                    {option.wpm} מ/ד
-                  </div>
-                </button>
-              ))}
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {RIVAL_OPTIONS.map((option) => {
+                const display = RIVAL_DISPLAY[option.rival]
+                return (
+                  <button
+                    key={option.rival}
+                    onClick={() => handleSelectRival(option.rival, option.difficulty)}
+                    className="group rounded-xl border-2 border-transparent bg-muted/50 p-5 text-center transition-all hover:border-primary hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    data-testid={`rival-${option.rival}`}
+                  >
+                    <div className="mx-auto mb-3 overflow-hidden rounded-full border-2 border-muted-foreground/20 group-hover:border-primary/50 transition-colors"
+                      style={{ width: 56, height: 56, boxShadow: `0 0 16px ${display.glowColor}` }}
+                    >
+                      <Image
+                        src={display.image}
+                        alt={display.nameHe}
+                        width={56}
+                        height={56}
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex items-center justify-center gap-1.5 text-lg font-bold">
+                      <span>{display.emoji}</span>
+                      <span>{option.label}</span>
+                    </div>
+                    <div className="text-muted-foreground mt-1 text-xs">
+                      {option.description}
+                    </div>
+                    <div className="mt-2 flex items-center justify-center gap-1">
+                      {Array.from({ length: 5 }, (_, i) => (
+                        <div
+                          key={i}
+                          className={`size-2 rounded-full ${
+                            i < option.difficulty
+                              ? 'bg-primary'
+                              : 'bg-muted-foreground/20'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Legacy difficulty buttons (smaller, below) */}
+            <div className="mt-6 border-t border-border pt-4">
+              <p className="text-muted-foreground text-center text-xs mb-3">
+                או בחר לפי רמת קושי:
+              </p>
+              <div className="flex justify-center gap-3">
+                {(['easy', 'medium', 'hard'] as const).map((d) => (
+                  <Button
+                    key={d}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleStartBattle(d)}
+                    data-testid={`difficulty-${d}`}
+                  >
+                    <Zap className="size-3.5 me-1" />
+                    {d === 'easy' ? 'קל' : d === 'medium' ? 'בינוני' : 'קשה'}
+                  </Button>
+                ))}
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -302,7 +374,13 @@ export function BattleArena() {
 
   if (phase === 'countdown') {
     return (
-      <div className="flex min-h-[400px] items-center justify-center">
+      <div className="flex min-h-[400px] flex-col items-center justify-center gap-6">
+        {/* Show rival info during countdown */}
+        <div className="flex items-center gap-3 text-muted-foreground">
+          <span className="text-2xl">{rivalDisplay.emoji}</span>
+          <span className="text-lg font-bold">{rivalDisplay.nameHe}</span>
+          <span className="text-sm">({rivalDisplay.description})</span>
+        </div>
         <AnimatePresence mode="wait">
           <motion.div
             key={countdownIndex}
@@ -354,7 +432,7 @@ export function BattleArena() {
               <Image src="/images/characters/ki-mascot.jpg" alt="Ki" width={28} height={28} className="rounded-full border border-primary/50" />
               <span className="font-bold">אתה</span>
             </div>
-            <div className="mt-2 text-2xl font-black text-primary" data-testid="player-wpm">
+            <div className="mt-2 text-2xl font-black text-primary tabular-nums" data-testid="player-wpm">
               {playerWpm} <span className="text-sm font-normal">מ/ד</span>
             </div>
             <div className="text-muted-foreground text-xs">
@@ -364,18 +442,19 @@ export function BattleArena() {
         </Card>
 
         {/* AI card - left side (RTL) */}
-        <Card className="border-red-500/50">
-          <CardContent className="p-4 text-center">
-            <div className="flex items-center justify-center gap-2">
-              <RivalNinja difficulty={difficulty} size={24} animated={false} />
-              <span className="font-bold text-red-500">נינג&apos;ה בוט</span>
-            </div>
-            <div className="mt-2 text-2xl font-black text-red-500" data-testid="ai-wpm">
-              {aiWpm} <span className="text-sm font-normal">מ/ד</span>
-            </div>
-            <div className="text-muted-foreground text-xs">
-              {getAiWpm(difficulty)} מ/ד מטרה
-            </div>
+        <Card style={{ borderColor: `${rivalDisplay.glowColor}` }}>
+          <CardContent className="p-4">
+            {battleState && (
+              <AIOpponent
+                rivalId={selectedRival}
+                targetText={battleState.text}
+                difficulty={selectedLevel}
+                rubberBandEnabled={true}
+                isStarted={battleStarted}
+                playerPosition={battleState.playerProgress}
+                onComplete={handleAIComplete}
+              />
+            )}
           </CardContent>
         </Card>
       </div>
@@ -387,12 +466,14 @@ export function BattleArena() {
           <div className="flex-1">
             <Progress value={playerPercent} className="h-3" data-testid="player-progress" />
           </div>
-          <span className="text-muted-foreground w-10 text-end text-sm">
+          <span className="text-muted-foreground w-10 text-end text-sm tabular-nums">
             {playerPercent}%
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium w-12 text-red-500">בוט</span>
+          <span className="text-sm font-medium w-12" style={{ color: rivalDisplay.themeColor }}>
+            {rivalDisplay.nameHe}
+          </span>
           <div className="flex-1">
             <Progress
               value={aiPercent}
@@ -400,7 +481,7 @@ export function BattleArena() {
               data-testid="ai-progress"
             />
           </div>
-          <span className="text-muted-foreground w-10 text-end text-sm">
+          <span className="text-muted-foreground w-10 text-end text-sm tabular-nums">
             {aiPercent}%
           </span>
         </div>
@@ -452,7 +533,7 @@ export function BattleArena() {
           winner={winner}
           stats={{
             playerWpm,
-            aiWpm,
+            aiWpm: aiOpponentState.currentWPM,
             playerAccuracy,
             timeSeconds: Math.round(battleState.timeElapsed / 1000),
           }}

@@ -1,42 +1,42 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>נינג'ה מקלדת - סקירת איטרציות 6-8</title>
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>נינג'ה מקלדת - סקירת איטרציות 6-8</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: 'Heebo', sans-serif;
       background: #0d0b1a;
       color: #e0e0ff;
       line-height: 1.7;
-      padding: 0;
       min-height: 100vh;
     }
 
     /* === Header === */
-    .header {
-      background: linear-gradient(135deg, #1a1535 0%, #0d0b1a 50%, #1a0a2e 100%);
+    .hdr {
+      background: linear-gradient(135deg, #1a1535, #0d0b1a, #1a0a2e);
       border-bottom: 3px solid #6C5CE7;
       padding: 40px 5%;
       text-align: center;
       position: relative;
       overflow: hidden;
     }
-    .header::before {
+    .hdr::before {
       content: '';
       position: absolute;
-      top: -50%;
-      left: -50%;
+      inset: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle at 30% 50%, rgba(108,92,231,0.08) 0%, transparent 50%),
-                  radial-gradient(circle at 70% 50%, rgba(0,184,148,0.06) 0%, transparent 50%);
+      background:
+        radial-gradient(circle at 30% 50%, rgba(108,92,231,0.08), transparent 50%),
+        radial-gradient(circle at 70% 50%, rgba(0,184,148,0.06), transparent 50%);
       pointer-events: none;
     }
-    .header h1 {
+    .hdr h1 {
       font-size: 2.6em;
       font-weight: 900;
       background: linear-gradient(135deg, #6C5CE7, #a29bfe, #00B894);
@@ -44,12 +44,12 @@
       -webkit-text-fill-color: transparent;
       margin-bottom: 8px;
     }
-    .header .subtitle {
+    .hdr .sub {
       font-size: 1.1em;
       color: #a0a0cc;
       margin-bottom: 16px;
     }
-    .header .meta {
+    .hdr .meta {
       display: flex;
       justify-content: center;
       gap: 30px;
@@ -57,38 +57,33 @@
       font-size: 0.9em;
       color: #8888bb;
     }
-    .header .meta span { display: flex; align-items: center; gap: 6px; }
 
     /* === Progress Bar === */
-    .progress-bar-container {
-      max-width: 500px;
-      margin: 20px auto 0;
-    }
-    .progress-bar-label {
+    .pb-c { max-width: 500px; margin: 20px auto 0; }
+    .pb-l {
       display: flex;
       justify-content: space-between;
       font-size: 0.85em;
       color: #a0a0cc;
       margin-bottom: 6px;
     }
-    .progress-bar {
+    .pb {
       height: 10px;
       background: #1e1a3a;
       border-radius: 5px;
       overflow: hidden;
     }
-    .progress-fill {
+    .pf {
       height: 100%;
       border-radius: 5px;
       background: linear-gradient(90deg, #6C5CE7, #00B894);
-      transition: width 0.8s ease;
     }
 
-    /* === Main === */
-    .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px 60px; }
+    /* === Container === */
+    .cnt { max-width: 1100px; margin: 0 auto; padding: 30px 20px 60px; }
 
-    /* === Sections === */
-    .section {
+    /* === Sections (collapsible) === */
+    .sec {
       background: #13102a;
       border: 1px solid #2a2555;
       border-radius: 16px;
@@ -96,8 +91,9 @@
       overflow: hidden;
       transition: border-color 0.3s;
     }
-    .section:hover { border-color: #6C5CE7; }
-    .section-header {
+    .sec:hover { border-color: #6C5CE7; }
+
+    .sh {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -108,23 +104,25 @@
       border-bottom: 1px solid #2a2555;
       transition: background 0.2s;
     }
-    .section-header:hover { background: #1d1948; }
-    .section-header h2 {
+    .sh:hover { background: #1d1948; }
+    .sh h2 {
       font-size: 1.3em;
       font-weight: 700;
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    .section-header .toggle {
+    .tgl {
       font-size: 1.4em;
       color: #6C5CE7;
       transition: transform 0.3s;
     }
-    .section.collapsed .toggle { transform: rotate(-90deg); }
-    .section.collapsed .section-body { display: none; }
-    .section-body { padding: 24px; }
-    .section-number {
+    .sec.c .tgl { transform: rotate(-90deg); }
+    .sec.c .sb { display: none; }
+    .sb { padding: 24px; }
+
+    /* === Section number badge === */
+    .sn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -138,29 +136,15 @@
       flex-shrink: 0;
     }
 
-    /* === Status Badges === */
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 3px 12px;
-      border-radius: 20px;
-      font-size: 0.8em;
-      font-weight: 500;
-    }
-    .badge-done { background: rgba(0,184,148,0.15); color: #00B894; border: 1px solid rgba(0,184,148,0.3); }
-    .badge-progress { background: rgba(253,203,110,0.15); color: #fdcb6e; border: 1px solid rgba(253,203,110,0.3); }
-    .badge-planned { background: rgba(108,92,231,0.15); color: #a29bfe; border: 1px solid rgba(108,92,231,0.3); }
-    .badge-iter {
-      padding: 2px 10px;
-      border-radius: 6px;
-      font-size: 0.75em;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-    .badge-iter6 { background: #6C5CE7; color: #fff; }
-    .badge-iter7 { background: #00B894; color: #fff; }
-    .badge-iter8 { background: #fdcb6e; color: #0d0b1a; }
+    /* === Badges === */
+    .b { display: inline-flex; align-items: center; gap: 5px; padding: 3px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 500; }
+    .bd { background: rgba(0,184,148,0.15); color: #00B894; border: 1px solid rgba(0,184,148,0.3); }
+    .bp { background: rgba(253,203,110,0.15); color: #fdcb6e; border: 1px solid rgba(253,203,110,0.3); }
+    .bl { background: rgba(108,92,231,0.15); color: #a29bfe; border: 1px solid rgba(108,92,231,0.3); }
+    .bi { padding: 2px 10px; border-radius: 6px; font-size: 0.75em; font-weight: 700; letter-spacing: 0.5px; }
+    .bi6 { background: #6C5CE7; color: #fff; }
+    .bi7 { background: #00B894; color: #fff; }
+    .bi8 { background: #fdcb6e; color: #0d0b1a; }
 
     /* === Tables === */
     table { width: 100%; border-collapse: collapse; margin: 16px 0; }
@@ -174,16 +158,12 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    td {
-      padding: 10px 14px;
-      border-bottom: 1px solid #1e1a3a;
-      font-size: 0.9em;
-    }
+    td { padding: 10px 14px; border-bottom: 1px solid #1e1a3a; font-size: 0.9em; }
     tr:hover td { background: rgba(108,92,231,0.05); }
 
-    /* === Task List === */
-    .task-list { list-style: none; }
-    .task-item {
+    /* === Task list === */
+    .tl { list-style: none; }
+    .ti {
       display: flex;
       align-items: flex-start;
       gap: 12px;
@@ -191,205 +171,107 @@
       border-bottom: 1px solid #1e1a3a;
       transition: background 0.15s;
     }
-    .task-item:hover { background: rgba(108,92,231,0.04); }
-    .task-item:last-child { border-bottom: none; }
-    .task-icon {
-      flex-shrink: 0;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7em;
-      margin-top: 3px;
-    }
-    .task-icon.done { background: rgba(0,184,148,0.2); color: #00B894; }
-    .task-icon.progress { background: rgba(253,203,110,0.2); color: #fdcb6e; }
-    .task-icon.planned { background: rgba(108,92,231,0.2); color: #a29bfe; }
-    .task-title { font-weight: 500; }
-    .task-desc { color: #8888bb; font-size: 0.88em; margin-top: 3px; }
+    .ti:hover { background: rgba(108,92,231,0.04); }
+    .ti:last-child { border-bottom: none; }
 
-    /* === Stats Grid === */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 14px;
-      margin: 16px 0;
-    }
-    .stat-card {
-      background: #1a1740;
-      border: 1px solid #2a2555;
-      border-radius: 12px;
-      padding: 18px;
-      text-align: center;
-      transition: border-color 0.2s, transform 0.15s;
-    }
-    .stat-card:hover { border-color: #6C5CE7; transform: translateY(-2px); }
-    .stat-number {
-      font-size: 2em;
-      font-weight: 900;
-      background: linear-gradient(135deg, #6C5CE7, #00B894);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .stat-label { font-size: 0.85em; color: #8888bb; margin-top: 4px; }
+    .ic { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7em; margin-top: 3px; }
+    .ic.d { background: rgba(0,184,148,0.2); color: #00B894; }
+    .ic.p { background: rgba(253,203,110,0.2); color: #fdcb6e; }
+    .ic.l { background: rgba(108,92,231,0.2); color: #a29bfe; }
+    .tt { font-weight: 500; }
+    .td { color: #8888bb; font-size: 0.88em; margin-top: 3px; }
 
-    /* === Gallery === */
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 14px;
-      margin: 16px 0;
-    }
-    .gallery-item {
-      background: #1a1740;
-      border: 1px solid #2a2555;
-      border-radius: 12px;
-      overflow: hidden;
-      transition: border-color 0.2s, transform 0.15s;
-    }
-    .gallery-item:hover { border-color: #6C5CE7; transform: translateY(-2px); }
-    .gallery-item img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      display: block;
-    }
-    .gallery-item .caption {
-      padding: 10px 12px;
-      font-size: 0.82em;
-      color: #a0a0cc;
-      text-align: center;
-    }
-    .gallery-subtitle {
-      font-size: 1.05em;
-      font-weight: 700;
-      color: #a29bfe;
-      margin: 20px 0 10px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid #2a2555;
-    }
+    /* === Stats + Gallery === */
+    .sg { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 16px 0; }
+    .sc { background: #1a1740; border: 1px solid #2a2555; border-radius: 12px; padding: 18px; text-align: center; transition: border-color 0.2s, transform 0.15s; }
+    .sc:hover { border-color: #6C5CE7; transform: translateY(-2px); }
+    .sv { font-size: 2em; font-weight: 900; background: linear-gradient(135deg, #6C5CE7, #00B894); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .sl { font-size: 0.85em; color: #8888bb; margin-top: 4px; }
+    .gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin: 16px 0; }
+    .gi { background: #1a1740; border: 1px solid #2a2555; border-radius: 12px; overflow: hidden; transition: border-color 0.2s, transform 0.15s; }
+    .gi:hover { border-color: #6C5CE7; transform: translateY(-2px); }
+    .gi img { width: 100%; height: 130px; object-fit: cover; display: block; }
+    .gi .cap { padding: 8px 10px; font-size: 0.78em; color: #a0a0cc; text-align: center; }
+    .gs { font-size: 1.05em; font-weight: 700; color: #a29bfe; margin: 20px 0 10px; padding-bottom: 6px; border-bottom: 1px solid #2a2555; }
 
-    /* === Code block === */
-    .code-path {
-      font-family: 'Courier New', monospace;
-      background: #1a1740;
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 0.85em;
-      color: #00B894;
-      direction: ltr;
-      unicode-bidi: embed;
-    }
+    /* === Utilities === */
+    .cp { font-family: 'Courier New', monospace; background: #1a1740; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; color: #00B894; direction: ltr; unicode-bidi: embed; }
+    .at { background: #0d0b1a; border: 1px solid #2a2555; border-radius: 10px; padding: 18px 22px; font-family: 'Courier New', monospace; font-size: 0.85em; direction: ltr; text-align: left; line-height: 1.9; color: #a0a0cc; }
+    .at .f { color: #fdcb6e; }
+    .at .c { color: #6C5CE7; }
+    .at .ds { color: #8888bb; font-family: 'Heebo', sans-serif; }
+    .ph { border-right: 3px solid #ff6b6b; padding-right: 12px; }
+    .pm { border-right: 3px solid #fdcb6e; padding-right: 12px; }
+    .pl { border-right: 3px solid #6C5CE7; padding-right: 12px; }
+    .ft { text-align: center; padding: 40px 20px; border-top: 1px solid #2a2555; margin-top: 40px; color: #666; font-size: 0.85em; }
+    .ft .ver { font-size: 1.1em; color: #a29bfe; margin-bottom: 8px; }
 
-    /* === Archive Tree === */
-    .archive-tree {
-      background: #0d0b1a;
-      border: 1px solid #2a2555;
-      border-radius: 10px;
-      padding: 18px 22px;
-      font-family: 'Courier New', monospace;
-      font-size: 0.85em;
-      direction: ltr;
-      text-align: left;
-      line-height: 1.9;
-      color: #a0a0cc;
-    }
-    .archive-tree .folder { color: #fdcb6e; }
-    .archive-tree .count { color: #6C5CE7; }
-    .archive-tree .desc { color: #8888bb; font-family: 'Heebo', sans-serif; }
-
-    /* === Next Steps === */
-    .priority-high { border-right: 3px solid #ff6b6b; padding-right: 12px; }
-    .priority-medium { border-right: 3px solid #fdcb6e; padding-right: 12px; }
-    .priority-low { border-right: 3px solid #6C5CE7; padding-right: 12px; }
-
-    /* === Footer === */
-    .footer {
-      text-align: center;
-      padding: 40px 20px;
-      border-top: 1px solid #2a2555;
-      margin-top: 40px;
-      color: #666;
-      font-size: 0.85em;
-    }
-    .footer .version {
-      font-size: 1.1em;
-      color: #a29bfe;
-      margin-bottom: 8px;
-    }
-
-    /* === Responsive === */
     @media (max-width: 768px) {
-      .header h1 { font-size: 1.8em; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .gallery { grid-template-columns: repeat(2, 1fr); }
-      .header .meta { flex-direction: column; gap: 8px; }
+      .hdr h1 { font-size: 1.8em; }
+      .sg { grid-template-columns: repeat(2, 1fr); }
+      .gal { grid-template-columns: repeat(2, 1fr); }
+      .hdr .meta { flex-direction: column; gap: 8px; }
     }
-  </style>
+</style>
 </head>
 <body>
 
-<!-- ============ HEADER ============ -->
-<div class="header">
+<div class="hdr">
   <h1>נינג'ה מקלדת - סקירת איטרציות 6-8</h1>
-  <p class="subtitle">תיקונים קריטיים, קוד חדש, ואינטגרציה מתקדמת</p>
+  <p class="sub">תיקונים קריטיים, קוד חדש, ואינטגרציה מתקדמת</p>
   <div class="meta">
     <span>תאריך: 7 במרץ 2026</span>
     <span>ספרינט: Character World Expansion</span>
     <span>גרסה: 0.8.0</span>
   </div>
-  <div class="progress-bar-container">
-    <div class="progress-bar-label">
-      <span>התקדמות כוללת - איטרציות 6-8</span>
-      <span>82%</span>
-    </div>
-    <div class="progress-bar">
-      <div class="progress-fill" style="width: 82%"></div>
-    </div>
+  <div class="pb-c">
+    <div class="pb-l"><span>התקדמות כוללת - איטרציות 6-8</span><span>82%</span></div>
+    <div class="pb"><div class="pf" style="width:82%"></div></div>
   </div>
 </div>
 
-<div class="container">
+<div class="cnt">
 
-<!-- ============ SECTION 1: Summary ============ -->
-<div class="section">
-  <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-    <h2><span class="section-number">1</span> סיכום כללי</h2>
-    <span class="toggle">&#9660;</span>
+<!-- ================================ -->
+<!-- SECTION 1: סיכום כללי           -->
+<!-- ================================ -->
+<div class="sec">
+  <div class="sh" onclick="this.parentElement.classList.toggle('c')">
+    <h2><span class="sn">1</span> סיכום כללי</h2>
+    <span class="tgl">&#9660;</span>
   </div>
-  <div class="section-body">
+  <div class="sb">
     <p style="font-size: 1.05em; color: #c0c0ee; margin-bottom: 20px;">
       שלוש איטרציות שסגרו פערים קריטיים, בנו תשתיות קוד חדשות, והתחילו אינטגרציה של מערכות ליבה.
-      מ-<strong>תיקוני זכויות יוצרים וקולות</strong> (Iter 6), דרך <strong>קוד מוכן לפרודקשן</strong> (Iter 7),
+      מ-<strong>תיקוני זכויות יוצרים וקולות</strong> (Iter 6),
+      דרך <strong>קוד מוכן לפרודקשן</strong> (Iter 7),
       ועד ל<strong>אינטגרציה ופיתוח מתקדם</strong> (Iter 8).
     </p>
 
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-number">22</div>
-        <div class="stat-label">משימות שהושלמו</div>
+    <div class="sg">
+      <div class="sc">
+        <div class="sv">22</div>
+        <div class="sl">משימות שהושלמו</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">3,620</div>
-        <div class="stat-label">שורות קוד חדשות</div>
+      <div class="sc">
+        <div class="sv">3,620</div>
+        <div class="sl">שורות קוד חדשות</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">5,015</div>
-        <div class="stat-label">שורות תיעוד (HTML)</div>
+      <div class="sc">
+        <div class="sv">5,015</div>
+        <div class="sl">שורות תיעוד (HTML)</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">135</div>
-        <div class="stat-label">קבצים בארכיון</div>
+      <div class="sc">
+        <div class="sv">135</div>
+        <div class="sl">קבצים בארכיון</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">82</div>
-        <div class="stat-label">קבצי קול Yuki V8</div>
+      <div class="sc">
+        <div class="sv">82</div>
+        <div class="sl">קבצי קול Yuki V8</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">15</div>
-        <div class="stat-label">אסטים חדשים (תגים/הבעות)</div>
+      <div class="sc">
+        <div class="sv">15</div>
+        <div class="sl">אסטים חדשים</div>
       </div>
     </div>
 
@@ -404,14 +286,14 @@
       <tr>
         <td>קוד (קומפוננטות/hooks)</td>
         <td>0</td>
-        <td>4 (dialog, story, sound, hook)</td>
-        <td>3 (battle, music, button)</td>
+        <td>4 קומפוננטות</td>
+        <td>3 קומפוננטות</td>
         <td><strong>7</strong></td>
       </tr>
       <tr>
-        <td>תוכן ותיעוד (HTML)</td>
+        <td>תיעוד HTML</td>
         <td>4 מסמכים (5,015 שורות)</td>
-        <td>1 עדכון (story V2.2)</td>
+        <td>1 עדכון</td>
         <td>0</td>
         <td><strong>5</strong></td>
       </tr>
@@ -425,7 +307,7 @@
       <tr>
         <td>ארגון/ארכיון</td>
         <td>סידור ראשוני</td>
-        <td>העברת v1-v7 לארכיון</td>
+        <td>העברת v1-v7</td>
         <td>ניקוי docs ישנים</td>
         <td><strong>135 קבצים</strong></td>
       </tr>
@@ -433,550 +315,409 @@
   </div>
 </div>
 
-<!-- ============ SECTION 2: Iteration 6 ============ -->
-<div class="section">
-  <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+<!-- ================================ -->
+<!-- SECTION 2: איטרציה 6             -->
+<!-- ================================ -->
+<div class="sec">
+  <div class="sh" onclick="this.parentElement.classList.toggle('c')">
     <h2>
-      <span class="section-number">2</span>
+      <span class="sn">2</span>
       איטרציה 6 - תיקונים קריטיים ומערכות חדשות
-      <span class="badge badge-iter badge-iter6">ITER 6</span>
+      <span class="b bi bi6">ITER 6</span>
     </h2>
-    <span class="toggle">&#9660;</span>
+    <span class="tgl">&#9660;</span>
   </div>
-  <div class="section-body">
+  <div class="sb">
     <p style="color: #a0a0cc; margin-bottom: 16px;">
       איטרציה שהתמקדה בתיקון בעיות חמורות מפידבק המשתמש, ובניית 4 מסמכי תכנון מעמיקים למערכות עתידיות.
     </p>
 
     <h3 style="color: #ff6b6b; margin-bottom: 12px;">תיקונים קריטיים (4/4)</h3>
-    <ul class="task-list">
-      <li class="task-item">
-        <span class="task-icon done">&#10003;</span>
+    <ul class="tl">
+      <li class="ti">
+        <span class="ic d">&#10003;</span>
         <div>
-          <div class="task-title">תיקון זכויות יוצרים - תגים</div>
-          <div class="task-desc">
+          <div class="tt">תיקון זכויות יוצרים - תגים</div>
+          <div class="td">
             4 תגים שוחזרו מאפס בלי דמיון לנארוטו:
-            <span class="code-path">rank-bronze.jpg</span>,
-            <span class="code-path">rank-silver.jpg</span>,
-            <span class="code-path">rank-gold.jpg</span>,
-            <span class="code-path">badge-achievement-gold.jpg</span>.
-            התג הישן <span class="code-path">achievement-star.jpg</span> הועבר לארכיון.
+            <span class="cp">rank-bronze.jpg</span>,
+            <span class="cp">rank-silver.jpg</span>,
+            <span class="cp">rank-gold.jpg</span>,
+            <span class="cp">badge-achievement-gold.jpg</span>.
+            התג הישן <span class="cp">achievement-star.jpg</span> הועבר לארכיון.
           </div>
         </div>
-        <span class="badge badge-done">הושלם</span>
+        <span class="b bd">הושלם</span>
       </li>
-      <li class="task-item">
-        <span class="task-icon done">&#10003;</span>
+      <li class="ti">
+        <span class="ic d">&#10003;</span>
         <div>
-          <div class="task-title">הבעות גיבורים V2 - התאמה ל-V5</div>
-          <div class="task-desc">
+          <div class="tt">הבעות גיבורים V2 - התאמה ל-V5</div>
+          <div class="td">
             4 דפי הבעות חדשים שמתאימים ל-V5 model sheets:
-            <span class="code-path">ki-expressions-v2.jpg</span> (עם פנים מלאות!),
-            <span class="code-path">mika-expressions-v2.jpg</span> (יותר נשית),
-            <span class="code-path">luna-expressions-v2.jpg</span>,
-            <span class="code-path">noa-expressions-v2.jpg</span>.
-            הגרסאות הישנות (V1) הועברו ל-<span class="code-path">archive/expressions/v1-heroes-old/</span>.
+            <span class="cp">ki-expressions-v2.jpg</span> (עם פנים מלאות!),
+            <span class="cp">mika-expressions-v2.jpg</span> (יותר נשית),
+            <span class="cp">luna-expressions-v2.jpg</span>,
+            <span class="cp">noa-expressions-v2.jpg</span>.
+            הגרסאות הישנות (V1) הועברו ל-<span class="cp">archive/expressions/v1-heroes-old/</span>.
           </div>
         </div>
-        <span class="badge badge-done">הושלם</span>
+        <span class="b bd">הושלם</span>
       </li>
-      <li class="task-item">
-        <span class="task-icon done">&#10003;</span>
+      <li class="ti">
+        <span class="ic d">&#10003;</span>
         <div>
-          <div class="task-title">תיקוני נרטיב V2.1</div>
-          <div class="task-desc">
-            גליץ' הולכת מרצון (פרק 4) ונלחמת בחברים (פרק 5) ומקריבה מבפנים.
+          <div class="tt">תיקוני נרטיב V2.1</div>
+          <div class="td">
+            גליץ' הולכת מרצון (פרק 4) ומקריבה מבפנים (פרק 5).
             הנה&#8206; הפכה לסאקורה (קשר עם סנסיי זן).
             וירוס בשני עיצובים (ידידותי לפני חשיפה, רשע אחרי).
             Storm = נקבה, אחותו של ברק.
             Blaze = לטאת אש קטנה (לא דרקון ענק).
             Shadow = חתול שובב ומתוק.
-            דמויות משניות מופיעות כבר בפרקים 1-2.
+            דמויות משניות מופיעות כבר בפרקים 1-2 (foreshadowing).
             פאנטום: הנחיות רגישות למוצא תימני.
           </div>
         </div>
-        <span class="badge badge-done">הושלם</span>
+        <span class="b bd">הושלם</span>
       </li>
-      <li class="task-item">
-        <span class="task-icon done">&#10003;</span>
+      <li class="ti">
+        <span class="ic d">&#10003;</span>
         <div>
-          <div class="task-title">Yuki V8 - קולות סברה ישראלית</div>
-          <div class="task-desc">
-            82 קבצים שנוצרו ב-4 וריאציות: Sabra Speed, Tel Aviv Announcer, Ninja Lightning, Hyper Sabra.
+          <div class="tt">Yuki V8 - 82 קבצי קול סברה ישראלית</div>
+          <div class="td">
+            4 וריאציות: Sabra Speed, Tel Aviv Announcer, Ninja Lightning, Hyper Sabra.
             כל וריאציה עם 4 עיבודים (raw, tempo110, tempo115, energized).
-            פילטר תוכן ElevenLabs תוקן. V8-D (Hyper Sabra energized) נבחר כרשמי.
+            פילטר תוכן ElevenLabs תוקן בסקריפט <span class="cp">yuki-v8-generate.mjs</span>.
+            V8-D (Hyper Sabra energized) נבחר בסופו של דבר כקול הרשמי.
           </div>
         </div>
-        <span class="badge badge-done">הושלם</span>
+        <span class="b bd">הושלם</span>
       </li>
     </ul>
 
     <h3 style="color: #a29bfe; margin: 24px 0 12px;">מסמכי תכנון חדשים (4/4)</h3>
-    <ul class="task-list">
-      <li class="task-item">
-        <span class="task-icon done">&#10003;</span>
+    <ul class="tl">
+      <li class="ti">
+        <span class="ic d">&#10003;</span>
         <div>
-          <div class="task-title">מערכת הובלת סיפור (Hades-style)</div>
-          <div class="task-desc">
-            <span class="code-path">docs/story-delivery-system.html</span> - 1,472 שורות.
+          <div class="tt">מערכת הובלת סיפור (Hades-style)</div>
+          <div class="td">
+            <span class="cp">docs/story-delivery-system.html</span> - 1,472 שורות.
             9 סעיפים: מערכת דיאלוג, cutscenes, בחירות שחקן, יומן, רגש+מוזיקה, 3 mockups חיים.
           </div>
         </div>
-        <span class="badge badge-done">1,472 שורות</span>
+        <span class="b bd">1,472 שורות</span>
       </li>
-      <li class="task-item">
-        <span class="task-icon done">&#10003;</span>
+      <li class="ti">
+        <span class="ic d">&#10003;</span>
         <div>
-          <div class="task-title">מחקר פדגוגי</div>
-          <div class="task-desc">
-            <span class="code-path">docs/pedagogical-research.html</span> - 1,022 שורות.
+          <div class="tt">מחקר פדגוגי</div>
+          <div class="td">
+            <span class="cp">docs/pedagogical-research.html</span> - 1,022 שורות.
             8 סעיפים: WPM benchmarks לפי גיל, מדריכי מורים/הורים, ממשק מובייל, מיפוי כישורים, FAQ.
           </div>
         </div>
-        <span class="badge badge-done">1,022 שורות</span>
+        <span class="b bd">1,022 שורות</span>
       </li>
-      <li class="task-item">
-        <span class="task-icon done">&#10003;</span>
+      <li class="ti">
+        <span class="ic d">&#10003;</span>
         <div>
-          <div class="task-title">עיצוב יריבי AI</div>
-          <div class="task-desc">
-            <span class="code-path">docs/ai-opponents-design.html</span> - 1,823 שורות.
+          <div class="tt">עיצוב יריבי AI</div>
+          <div class="td">
+            <span class="cp">docs/ai-opponents-design.html</span> - 1,823 שורות.
             7 סעיפים: מודל הקלדה אנושי, 6 פרופילי יריבים, קושי דינמי, אלגוריתם מלא.
           </div>
         </div>
-        <span class="badge badge-done">1,823 שורות</span>
+        <span class="b bd">1,823 שורות</span>
       </li>
-      <li class="task-item">
-        <span class="task-icon done">&#10003;</span>
+      <li class="ti">
+        <span class="ic d">&#10003;</span>
         <div>
-          <div class="task-title">מערכת אפקטי UI</div>
-          <div class="task-desc">
-            <span class="code-path">docs/ui-sound-effects-system.html</span> - 1,698 שורות.
+          <div class="tt">מערכת אפקטי UI</div>
+          <div class="td">
+            <span class="cp">docs/ui-sound-effects-system.html</span> - 1,698 שורות.
             7 סעיפים: 55 מיפויי אינטראקציה, hook של useSoundEffect, תכנית 4 שלבים, 41 אסטים חדשים.
           </div>
         </div>
-        <span class="badge badge-done">1,698 שורות</span>
+        <span class="b bd">1,698 שורות</span>
       </li>
     </ul>
   </div>
 </div>
 
-<!-- ============ SECTION 3: Iteration 7 ============ -->
-<div class="section">
-  <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+<!-- ================================ -->
+<!-- SECTION 3: איטרציה 7             -->
+<!-- ================================ -->
+<div class="sec">
+  <div class="sh" onclick="this.parentElement.classList.toggle('c')">
     <h2>
-      <span class="section-number">3</span>
+      <span class="sn">3</span>
       איטרציה 7 - קוד ותוכן
-      <span class="badge badge-iter badge-iter7">ITER 7</span>
+      <span class="b bi bi7">ITER 7</span>
     </h2>
-    <span class="toggle">&#9660;</span>
+    <span class="tgl">&#9660;</span>
   </div>
-  <div class="section-body">
+  <div class="sb">
     <p style="color: #a0a0cc; margin-bottom: 16px;">
-      האיטרציה הראשונה שייצרה <strong>קוד פרודקשן</strong> ממש - מערכת דיאלוגים ומערכת סאונד, יחד עם אסטים חדשים ותוכן עשיר.
+      האיטרציה הראשונה שייצרה <strong>קוד פרודקשן</strong> ממש -
+      מערכת דיאלוגים מלאה ומערכת סאונד מסונתזת, יחד עם אסטים חדשים ותוכן עשיר.
     </p>
 
     <h3 style="color: #00B894; margin-bottom: 12px;">קוד - מימוש (2/2)</h3>
-    <ul class="task-list">
-      <li class="task-item">
-        <span class="task-icon done">&#10003;</span>
+    <ul class="tl">
+      <li class="ti">
+        <span class="ic d">&#10003;</span>
         <div>
-          <div class="task-title">DialogBox + StoryPlayer - מערכת סיפור</div>
-          <div class="task-desc">
-            <span class="code-path">dialog-box.tsx</span> (459 שורות): אפקט מכונת כתיבה, 4 סגנונות דיאלוג
+          <div class="tt">DialogBox + StoryPlayer - מערכת סיפור</div>
+          <div class="td">
+            <span class="cp">dialog-box.tsx</span> (459 שורות): אפקט מכונת כתיבה, 4 סגנונות דיאלוג
             (normal, dramatic, whisper, system), בחירות שחקן, אנימציות כניסה/יציאה.
-            <span class="code-path">story-player.tsx</span> (140 שורות): מנהל רצף beats עם portal overlay ומעברים חלקים.
+            <span class="cp">story-player.tsx</span> (140 שורות): מנהל רצף beats עם portal overlay ומעברים חלקים.
             תומך ב-tutorial mode עם דוגמה מובנית.
           </div>
         </div>
-        <span class="badge badge-done">599 שורות</span>
+        <span class="b bd">599 שורות</span>
       </li>
-      <li class="task-item">
-        <span class="task-icon done">&#10003;</span>
+      <li class="ti">
+        <span class="ic d">&#10003;</span>
         <div>
-          <div class="task-title">useSoundEffect + Web Audio - 12 צלילי UI</div>
-          <div class="task-desc">
-            <span class="code-path">use-sound-effect.ts</span> (77 שורות): React hook לנגינת אפקטים קוליים עם caching.
-            <span class="code-path">ui-sounds.ts</span> (315 שורות): 12 צלילים מסונתזים ב-Web Audio API -
-            click, hover, navigate, success, error, notification, achievement, levelup, countdown, battle-start, battle-win, battle-lose.
+          <div class="tt">useSoundEffect + Web Audio - 12 צלילי UI</div>
+          <div class="td">
+            <span class="cp">use-sound-effect.ts</span> (77 שורות): React hook לנגינת אפקטים קוליים עם caching.
+            <span class="cp">ui-sounds.ts</span> (315 שורות): 12 צלילים מסונתזים ב-Web Audio API -
+            click, hover, navigate, success, error, notification,
+            achievement, levelup, countdown, battle-start, battle-win, battle-lose.
             אפס תלות חיצונית, גודל 0 bytes!
           </div>
         </div>
-        <span class="badge badge-done">392 שורות</span>
+        <span class="b bd">392 שורות</span>
       </li>
     </ul>
 
     <h3 style="color: #00B894; margin: 24px 0 12px;">תוכן ואסטים (4/4)</h3>
-    <ul class="task-list">
-      <li class="task-item">
-        <span class="task-icon done">&#10003;</span>
+    <ul class="tl">
+      <li class="ti">
+        <span class="ic d">&#10003;</span>
         <div>
-          <div class="task-title">Yuki V8-D = קול רשמי</div>
-          <div class="task-desc">
+          <div class="tt">Yuki V8-D = קול רשמי</div>
+          <div class="td">
             Hyper Sabra energized נבחר מתוך 4 וריאציות. 5 קבצים הועתקו לתיקיה הראשית:
             challenge, win, encourage, taunt, speed.
-            <span class="code-path">account-voices-v4.json</span> עודכן. גרסאות V1-V7 הועברו לארכיון.
+            <span class="cp">account-voices-v4.json</span> עודכן. גרסאות V1-V7 הועברו לארכיון.
           </div>
         </div>
-        <span class="badge badge-done">הושלם</span>
+        <span class="b bd">הושלם</span>
       </li>
-      <li class="task-item">
-        <span class="task-icon done">&#10003;</span>
+      <li class="ti">
+        <span class="ic d">&#10003;</span>
         <div>
-          <div class="task-title">7 תגים חדשים + גביע</div>
-          <div class="task-desc">
-            <span class="code-path">badge-first-lesson.jpg</span> - שיעור ראשון,
-            <span class="code-path">badge-perfect-lesson.jpg</span> - שיעור מושלם,
-            <span class="code-path">badge-10-lessons.jpg</span> - 10 שיעורים,
-            <span class="code-path">badge-speed-50wpm.jpg</span> - מהירות 50 WPM,
-            <span class="code-path">badge-battle-winner.jpg</span> - ניצחון בקרב,
-            <span class="code-path">badge-7day-streak.jpg</span> - רצף 7 ימים,
-            <span class="code-path">trophy.jpg</span> - גביע ראשי (החלפה).
+          <div class="tt">7 תגים חדשים + גביע</div>
+          <div class="td">
+            <span class="cp">badge-first-lesson.jpg</span> - שיעור ראשון,
+            <span class="cp">badge-perfect-lesson.jpg</span> - שיעור מושלם,
+            <span class="cp">badge-10-lessons.jpg</span> - 10 שיעורים,
+            <span class="cp">badge-speed-50wpm.jpg</span> - מהירות 50 WPM,
+            <span class="cp">badge-battle-winner.jpg</span> - ניצחון בקרב,
+            <span class="cp">badge-7day-streak.jpg</span> - רצף 7 ימים,
+            <span class="cp">trophy.jpg</span> - גביע ראשי (החלפה).
           </div>
         </div>
-        <span class="badge badge-done">7 + 1 = 8</span>
+        <span class="b bd">8 אסטים</span>
       </li>
-      <li class="task-item">
-        <span class="task-icon done">&#10003;</span>
+      <li class="ti">
+        <span class="ic d">&#10003;</span>
         <div>
-          <div class="task-title">פרק 6 V2.2 - שכתוב מלא</div>
-          <div class="task-desc">
-            גליץ' קמה לתחייה, 6 צוותים בהרפתקאות צד:
+          <div class="tt">פרק 6 V2.2 - שכתוב מלא</div>
+          <div class="td">
+            גליץ' קמה לתחייה. 6 צוותים בהרפתקאות צד:
             קי+יוקי (Core), לונה+נועה (Nature), מיקה+קאי (Tech),
             רקס+בלוק (Creative), פיקסל+לנס (Data), ברק+יוני+סטורם (Speed).
-            שמות ליריבים: Bug Queen = זארה, Bug King = קרס.
-            כל היריבים הופכים לחברים בסוף.
+            שמות ליריבים: Bug Queen = זארה, Bug King = קרס. כל היריבים הופכים לחברים.
           </div>
         </div>
-        <span class="badge badge-done">הושלם</span>
+        <span class="b bd">הושלם</span>
       </li>
-      <li class="task-item">
-        <span class="task-icon done">&#10003;</span>
+      <li class="ti">
+        <span class="ic d">&#10003;</span>
         <div>
-          <div class="task-title">3 דמויות חדשות - עיצוב מלא</div>
-          <div class="task-desc">
+          <div class="tt">3 דמויות חדשות - עיצוב מלא</div>
+          <div class="td">
             <strong>ברק</strong> (שועל מהירות) - model sheet + הבעות,
             <strong>בלוק</strong> (יריב קובייתי של רקס) - model sheet + הבעות,
             <strong>לנס</strong> (צלם AI, יריב של פיקסל) - model sheet + הבעות.
             כל אחד עם 6 הבעות (שמחה, עצב, כעס, הפתעה, מחשבה, קרב).
           </div>
         </div>
-        <span class="badge badge-done">6 אסטים</span>
+        <span class="b bd">6 אסטים</span>
       </li>
     </ul>
   </div>
 </div>
 
-<!-- ============ SECTION 4: Iteration 8 ============ -->
-<div class="section">
-  <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+<!-- ================================ -->
+<!-- SECTION 4: איטרציה 8             -->
+<!-- ================================ -->
+<div class="sec">
+  <div class="sh" onclick="this.parentElement.classList.toggle('c')">
     <h2>
-      <span class="section-number">4</span>
+      <span class="sn">4</span>
       איטרציה 8 - אינטגרציה ופיתוח
-      <span class="badge badge-iter badge-iter8">ITER 8</span>
+      <span class="b bi bi8">ITER 8</span>
     </h2>
-    <span class="toggle">&#9660;</span>
+    <span class="tgl">&#9660;</span>
   </div>
-  <div class="section-body">
+  <div class="sb">
     <p style="color: #a0a0cc; margin-bottom: 16px;">
-      איטרציה מתמשכת שמתמקדת באינטגרציה של כל המערכות שנבנו: מוזיקה, קרבות AI, ארנת קרב, וסידור תיקיות.
+      איטרציה מתמשכת שמתמקדת באינטגרציה של כל המערכות שנבנו:
+      מוזיקה, קרבות AI, ארנת קרב, וסידור תיקיות.
     </p>
 
-    <ul class="task-list">
-      <li class="task-item">
-        <span class="task-icon progress">&#9679;</span>
+    <ul class="tl">
+      <li class="ti">
+        <span class="ic p">&#9679;</span>
         <div>
-          <div class="task-title">MusicProvider - אינטגרציה</div>
-          <div class="task-desc">
-            <span class="code-path">src/lib/audio/music-manager.ts</span> (844 שורות) - מנהל מוזיקה שלם עם
-            crossfade, playlists, volume control, theme-based tracks. צריך להתחבר ל-<span class="code-path">app-providers.tsx</span>.
+          <div class="tt">MusicProvider - אינטגרציה</div>
+          <div class="td">
+            <span class="cp">src/lib/audio/music-manager.ts</span> (844 שורות) -
+            מנהל מוזיקה שלם עם crossfade, playlists, volume control, theme-based tracks.
+            צריך להתחבר ל-<span class="cp">app-providers.tsx</span>.
           </div>
         </div>
-        <span class="badge badge-progress">בתהליך</span>
+        <span class="b bp">בתהליך</span>
       </li>
-      <li class="task-item">
-        <span class="task-icon progress">&#9679;</span>
+      <li class="ti">
+        <span class="ic p">&#9679;</span>
         <div>
-          <div class="task-title">AI Opponent - קומפוננטה</div>
-          <div class="task-desc">
-            <span class="code-path">src/lib/battle/battle-engine.ts</span> (258 שורות) - מנוע קרב עם מודל הקלדה
-            אנושי, קושי דינמי, 6 פרופילי יריבים. ממתין לאינטגרציה עם ה-UI.
+          <div class="tt">AI Opponent - קומפוננטה</div>
+          <div class="td">
+            <span class="cp">src/lib/battle/battle-engine.ts</span> (258 שורות) -
+            מנוע קרב עם מודל הקלדה אנושי, קושי דינמי, 6 פרופילי יריבים.
+            ממתין לאינטגרציה עם ה-UI.
           </div>
         </div>
-        <span class="badge badge-progress">בתהליך</span>
+        <span class="b bp">בתהליך</span>
       </li>
-      <li class="task-item">
-        <span class="task-icon progress">&#9679;</span>
+      <li class="ti">
+        <span class="ic p">&#9679;</span>
         <div>
-          <div class="task-title">Battle Arena - זירת קרבות</div>
-          <div class="task-desc">
-            <span class="code-path">src/components/battle/battle-arena.tsx</span> (467 שורות) - זירה מלאה עם
-            split-screen, טיימר, progress bars, אנימציות ניצחון/הפסד.
-            <span class="code-path">battle-results.tsx</span> (158 שורות) - מסך תוצאות עם סטטיסטיקות.
+          <div class="tt">Battle Arena - זירת קרבות</div>
+          <div class="td">
+            <span class="cp">src/components/battle/battle-arena.tsx</span> (467 שורות) -
+            זירה מלאה עם split-screen, טיימר, progress bars, אנימציות ניצחון/הפסד.
+            <span class="cp">battle-results.tsx</span> (158 שורות) - מסך תוצאות עם סטטיסטיקות.
           </div>
         </div>
-        <span class="badge badge-progress">בתהליך</span>
+        <span class="b bp">בתהליך</span>
       </li>
-      <li class="task-item">
-        <span class="task-icon done">&#10003;</span>
+      <li class="ti">
+        <span class="ic d">&#10003;</span>
         <div>
-          <div class="task-title">GameButton - אינטגרציית סאונד</div>
-          <div class="task-desc">
-            <span class="code-path">src/components/ui/game-button.tsx</span> (192 שורות) - כפתור gaming עם
-            אפקטים קוליים משולבים (click, hover) דרך useSoundEffect hook.
+          <div class="tt">GameButton - אינטגרציית סאונד</div>
+          <div class="td">
+            <span class="cp">src/components/ui/game-button.tsx</span> (192 שורות) -
+            כפתור gaming עם אפקטים קוליים משולבים (click, hover) דרך useSoundEffect hook.
             אנימציות כניסה, לחיצה, ו-ripple effect.
           </div>
         </div>
-        <span class="badge badge-done">הושלם</span>
+        <span class="b bd">הושלם</span>
       </li>
-      <li class="task-item">
-        <span class="task-icon done">&#10003;</span>
+      <li class="ti">
+        <span class="ic d">&#10003;</span>
         <div>
-          <div class="task-title">סידור תיקיות וארכיון</div>
-          <div class="task-desc">
-            העברה מסודרת של כל הגרסאות הישנות לארכיון: קולות Yuki (V1-V7),
-            model sheets ישנים (V4), הבעות ישנות (V1), תגים בעייתיים,
-            מסמכי MD ישנים, reviews ישנים. 135 קבצים סה"כ בארכיון.
+          <div class="tt">סידור תיקיות וארכיון</div>
+          <div class="td">
+            העברה מסודרת של כל הגרסאות הישנות לארכיון:
+            קולות Yuki (V1-V7), model sheets ישנים (V4), הבעות ישנות (V1),
+            תגים בעייתיים, מסמכי MD ישנים, reviews ישנים. 135 קבצים סה"כ.
           </div>
         </div>
-        <span class="badge badge-done">135 קבצים</span>
+        <span class="b bd">135 קבצים</span>
       </li>
     </ul>
   </div>
 </div>
 
-<!-- ============ SECTION 5: Asset Gallery ============ -->
-<div class="section">
-  <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-    <h2><span class="section-number">5</span> גלריית אסטים</h2>
-    <span class="toggle">&#9660;</span>
+<!-- ================================ -->
+<!-- SECTION 5: גלריית אסטים          -->
+<!-- ================================ -->
+<div class="sec">
+  <div class="sh" onclick="this.parentElement.classList.toggle('c')">
+    <h2><span class="sn">5</span> גלריית אסטים</h2>
+    <span class="tgl">&#9660;</span>
   </div>
-  <div class="section-body">
-
-    <!-- Badges -->
-    <div class="gallery-subtitle">תגים ודרגות (15 אסטים)</div>
-    <div class="gallery">
-      <div class="gallery-item">
-        <img src="../public/images/badges/badge-first-lesson.jpg" alt="תג שיעור ראשון">
-        <div class="caption">שיעור ראשון<br><span class="badge badge-iter badge-iter7">חדש</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/badges/badge-perfect-lesson.jpg" alt="תג שיעור מושלם">
-        <div class="caption">שיעור מושלם<br><span class="badge badge-iter badge-iter7">חדש</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/badges/badge-10-lessons.jpg" alt="תג 10 שיעורים">
-        <div class="caption">10 שיעורים<br><span class="badge badge-iter badge-iter7">חדש</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/badges/badge-speed-50wpm.jpg" alt="תג מהירות 50">
-        <div class="caption">מהירות 50 WPM<br><span class="badge badge-iter badge-iter7">חדש</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/badges/badge-battle-winner.jpg" alt="תג ניצחון בקרב">
-        <div class="caption">ניצחון בקרב<br><span class="badge badge-iter badge-iter7">חדש</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/badges/badge-7day-streak.jpg" alt="תג רצף 7 ימים">
-        <div class="caption">רצף 7 ימים<br><span class="badge badge-iter badge-iter7">חדש</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/badges/trophy.jpg" alt="גביע">
-        <div class="caption">גביע ראשי<br><span class="badge badge-iter badge-iter7">חדש</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/badges/rank-bronze.jpg" alt="דרגת ארד">
-        <div class="caption">דרגת ארד<br><span class="badge badge-iter badge-iter6">תוקן</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/badges/rank-silver.jpg" alt="דרגת כסף">
-        <div class="caption">דרגת כסף<br><span class="badge badge-iter badge-iter6">תוקן</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/badges/rank-gold.jpg" alt="דרגת זהב">
-        <div class="caption">דרגת זהב<br><span class="badge badge-iter badge-iter6">תוקן</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/badges/badge-achievement-gold.jpg" alt="הישג זהב">
-        <div class="caption">הישג זהב<br><span class="badge badge-iter badge-iter6">תוקן</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/badges/badge-speed.jpg" alt="תג מהירות">
-        <div class="caption">מהירות</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/badges/badge-accuracy.jpg" alt="תג דיוק">
-        <div class="caption">דיוק</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/badges/badge-streak.jpg" alt="תג רצף">
-        <div class="caption">רצף</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/badges/badge-level-up.jpg" alt="תג עלייה ברמה">
-        <div class="caption">עלייה ברמה</div>
-      </div>
+  <div class="sb">
+    <div class="gs">תגים ודרגות (15)</div>
+    <div class="gal">
+      <div class="gi"><img src="../public/images/badges/badge-first-lesson.jpg" alt="שיעור ראשון"><div class="cap">שיעור ראשון <span class="b bi bi7">חדש</span></div></div>
+      <div class="gi"><img src="../public/images/badges/badge-perfect-lesson.jpg" alt="שיעור מושלם"><div class="cap">שיעור מושלם <span class="b bi bi7">חדש</span></div></div>
+      <div class="gi"><img src="../public/images/badges/badge-10-lessons.jpg" alt="10 שיעורים"><div class="cap">10 שיעורים <span class="b bi bi7">חדש</span></div></div>
+      <div class="gi"><img src="../public/images/badges/badge-speed-50wpm.jpg" alt="50 WPM"><div class="cap">50 WPM <span class="b bi bi7">חדש</span></div></div>
+      <div class="gi"><img src="../public/images/badges/badge-battle-winner.jpg" alt="ניצחון"><div class="cap">ניצחון <span class="b bi bi7">חדש</span></div></div>
+      <div class="gi"><img src="../public/images/badges/badge-7day-streak.jpg" alt="רצף"><div class="cap">רצף 7 ימים <span class="b bi bi7">חדש</span></div></div>
+      <div class="gi"><img src="../public/images/badges/trophy.jpg" alt="גביע"><div class="cap">גביע <span class="b bi bi7">חדש</span></div></div>
+      <div class="gi"><img src="../public/images/badges/rank-bronze.jpg" alt="ארד"><div class="cap">ארד <span class="b bi bi6">תוקן</span></div></div>
+      <div class="gi"><img src="../public/images/badges/rank-silver.jpg" alt="כסף"><div class="cap">כסף <span class="b bi bi6">תוקן</span></div></div>
+      <div class="gi"><img src="../public/images/badges/rank-gold.jpg" alt="זהב"><div class="cap">זהב <span class="b bi bi6">תוקן</span></div></div>
+      <div class="gi"><img src="../public/images/badges/badge-achievement-gold.jpg" alt="הישג"><div class="cap">הישג <span class="b bi bi6">תוקן</span></div></div>
+      <div class="gi"><img src="../public/images/badges/badge-speed.jpg" alt="מהירות"><div class="cap">מהירות</div></div>
+      <div class="gi"><img src="../public/images/badges/badge-accuracy.jpg" alt="דיוק"><div class="cap">דיוק</div></div>
+      <div class="gi"><img src="../public/images/badges/badge-streak.jpg" alt="רצף"><div class="cap">רצף</div></div>
+      <div class="gi"><img src="../public/images/badges/badge-level-up.jpg" alt="רמה"><div class="cap">עלייה ברמה</div></div>
     </div>
-
-    <!-- Model Sheets -->
-    <div class="gallery-subtitle">דפי דמויות - Model Sheets (22 אסטים)</div>
-    <div class="gallery">
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/ki-boy-v5.jpg" alt="קי">
-        <div class="caption">קי - גיבור ראשי (V5)</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/yuki-girl-v5.jpg" alt="יוקי">
-        <div class="caption">יוקי - נינג'ה מהירה (V5)</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/luna-girl-v5.jpg" alt="לונה">
-        <div class="caption">לונה - אמנית ביישנית (V5)</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/mika-girl-v5.jpg" alt="מיקה">
-        <div class="caption">מיקה - האקרית (V5)</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/noa-girl-v5.jpg" alt="נועה">
-        <div class="caption">נועה - מרפאה (V5)</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/kai-boy-v5.jpg" alt="קאי">
-        <div class="caption">קאי - בחור מופנם (V5)</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/sensei-zen-v5.jpg" alt="סנסיי זן">
-        <div class="caption">סנסיי זן (V5)</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/rex-dino-v5.jpg" alt="רקס">
-        <div class="caption">רקס - דינוזאור יצירתי (V5)</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/pixel-robot-v5.jpg" alt="פיקסל">
-        <div class="caption">פיקסל - רובוט צלם (V5)</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/shadow-cat-v5.jpg" alt="שאדו">
-        <div class="caption">שאדו - חתול שובב (V5)</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/storm-fox-v5.jpg" alt="סטורם">
-        <div class="caption">סטורם - שועלת (V5)</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/blaze-dragon-v5.jpg" alt="בלייז">
-        <div class="caption">בלייז - לטאת אש (V5)</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/bug-creature-v5.jpg" alt="באג">
-        <div class="caption">באג - יצור וירוס (V5)</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/bugking-boss-v5.jpg" alt="מלך הבאגים">
-        <div class="caption">מלך הבאגים (V5)</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/glitch-entity-v5.jpg" alt="גליץ'">
-        <div class="caption">גליץ' (V5)</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/bug-model-sheet.jpg" alt="באג דף דמות">
-        <div class="caption">באג - דף דמות</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/bug-portrait.jpg" alt="באג פורטרט">
-        <div class="caption">באג - פורטרט</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/glitch-model-sheet.jpg" alt="גליץ' דף דמות">
-        <div class="caption">גליץ' - דף דמות</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/glitch-portrait.jpg" alt="גליץ' פורטרט">
-        <div class="caption">גליץ' - פורטרט</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/barak-model-sheet-v1.jpg" alt="ברק">
-        <div class="caption">ברק - שועל מהירות<br><span class="badge badge-iter badge-iter7">חדש</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/block-model-sheet-v1.jpg" alt="בלוק">
-        <div class="caption">בלוק - יריב קובייתי<br><span class="badge badge-iter badge-iter7">חדש</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/model-sheets/lens-model-sheet-v1.jpg" alt="לנס">
-        <div class="caption">לנס - צלם AI<br><span class="badge badge-iter badge-iter7">חדש</span></div>
-      </div>
+    <div class="gs">דפי דמויות - Model Sheets (22)</div>
+    <div class="gal">
+      <div class="gi"><img src="../public/images/characters/model-sheets/ki-boy-v5.jpg" alt="קי"><div class="cap">קי - גיבור ראשי</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/yuki-girl-v5.jpg" alt="יוקי"><div class="cap">יוקי - נינג'ה</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/luna-girl-v5.jpg" alt="לונה"><div class="cap">לונה - אמנית</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/mika-girl-v5.jpg" alt="מיקה"><div class="cap">מיקה - האקרית</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/noa-girl-v5.jpg" alt="נועה"><div class="cap">נועה - מרפאה</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/kai-boy-v5.jpg" alt="קאי"><div class="cap">קאי - מופנם</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/sensei-zen-v5.jpg" alt="סנסיי"><div class="cap">סנסיי זן</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/rex-dino-v5.jpg" alt="רקס"><div class="cap">רקס - דינו</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/pixel-robot-v5.jpg" alt="פיקסל"><div class="cap">פיקסל - רובוט</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/shadow-cat-v5.jpg" alt="שאדו"><div class="cap">שאדו - חתול</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/storm-fox-v5.jpg" alt="סטורם"><div class="cap">סטורם - שועלה</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/blaze-dragon-v5.jpg" alt="בלייז"><div class="cap">בלייז - לטאה</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/bug-creature-v5.jpg" alt="באג"><div class="cap">באג - יצור</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/bugking-boss-v5.jpg" alt="באג קינג"><div class="cap">מלך הבאגים</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/glitch-entity-v5.jpg" alt="גליץ'"><div class="cap">גליץ'</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/bug-model-sheet.jpg" alt="באג"><div class="cap">באג - דף דמות</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/glitch-model-sheet.jpg" alt="גליץ'"><div class="cap">גליץ' - דף דמות</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/bug-portrait.jpg" alt="באג"><div class="cap">באג - פורטרט</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/glitch-portrait.jpg" alt="גליץ'"><div class="cap">גליץ' - פורטרט</div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/barak-model-sheet-v1.jpg" alt="ברק"><div class="cap">ברק <span class="b bi bi7">חדש</span></div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/block-model-sheet-v1.jpg" alt="בלוק"><div class="cap">בלוק <span class="b bi bi7">חדש</span></div></div>
+      <div class="gi"><img src="../public/images/characters/model-sheets/lens-model-sheet-v1.jpg" alt="לנס"><div class="cap">לנס <span class="b bi bi7">חדש</span></div></div>
     </div>
-
-    <!-- Expression Sheets -->
-    <div class="gallery-subtitle">דפי הבעות (13 אסטים)</div>
-    <div class="gallery">
-      <div class="gallery-item">
-        <img src="../public/images/characters/expressions/ki-expressions-v2.jpg" alt="קי הבעות">
-        <div class="caption">קי - V2<br><span class="badge badge-iter badge-iter6">תוקן</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/expressions/mika-expressions-v2.jpg" alt="מיקה הבעות">
-        <div class="caption">מיקה - V2 נשית<br><span class="badge badge-iter badge-iter6">תוקן</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/expressions/luna-expressions-v2.jpg" alt="לונה הבעות">
-        <div class="caption">לונה - V2<br><span class="badge badge-iter badge-iter6">תוקן</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/expressions/noa-expressions-v2.jpg" alt="נועה הבעות">
-        <div class="caption">נועה - V2<br><span class="badge badge-iter badge-iter6">תוקן</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/expressions/barak-expressions-v1.jpg" alt="ברק הבעות">
-        <div class="caption">ברק<br><span class="badge badge-iter badge-iter7">חדש</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/expressions/block-expressions-v1.jpg" alt="בלוק הבעות">
-        <div class="caption">בלוק<br><span class="badge badge-iter badge-iter7">חדש</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/expressions/lens-expressions-v1.jpg" alt="לנס הבעות">
-        <div class="caption">לנס<br><span class="badge badge-iter badge-iter7">חדש</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/expressions/bug-expressions-v1.jpg" alt="באג הבעות">
-        <div class="caption">באג</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/expressions/bugking-expressions-v1.jpg" alt="מלך הבאגים הבעות">
-        <div class="caption">מלך הבאגים</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/expressions/glitch-expressions-v1.jpg" alt="גליץ' הבעות">
-        <div class="caption">גליץ'</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/expressions/shadow-expressions-v1.jpg" alt="שאדו הבעות">
-        <div class="caption">שאדו</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/expressions/storm-expressions-v1.jpg" alt="סטורם הבעות">
-        <div class="caption">סטורם</div>
-      </div>
-      <div class="gallery-item">
-        <img src="../public/images/characters/expressions/blaze-expressions-v1.jpg" alt="בלייז הבעות">
-        <div class="caption">בלייז</div>
-      </div>
+    <div class="gs">דפי הבעות (13)</div>
+    <div class="gal">
+      <div class="gi"><img src="../public/images/characters/expressions/ki-expressions-v2.jpg" alt="קי"><div class="cap">קי V2 <span class="b bi bi6">תוקן</span></div></div>
+      <div class="gi"><img src="../public/images/characters/expressions/mika-expressions-v2.jpg" alt="מיקה"><div class="cap">מיקה V2 <span class="b bi bi6">תוקן</span></div></div>
+      <div class="gi"><img src="../public/images/characters/expressions/luna-expressions-v2.jpg" alt="לונה"><div class="cap">לונה V2 <span class="b bi bi6">תוקן</span></div></div>
+      <div class="gi"><img src="../public/images/characters/expressions/noa-expressions-v2.jpg" alt="נועה"><div class="cap">נועה V2 <span class="b bi bi6">תוקן</span></div></div>
+      <div class="gi"><img src="../public/images/characters/expressions/barak-expressions-v1.jpg" alt="ברק"><div class="cap">ברק <span class="b bi bi7">חדש</span></div></div>
+      <div class="gi"><img src="../public/images/characters/expressions/block-expressions-v1.jpg" alt="בלוק"><div class="cap">בלוק <span class="b bi bi7">חדש</span></div></div>
+      <div class="gi"><img src="../public/images/characters/expressions/lens-expressions-v1.jpg" alt="לנס"><div class="cap">לנס <span class="b bi bi7">חדש</span></div></div>
+      <div class="gi"><img src="../public/images/characters/expressions/bug-expressions-v1.jpg" alt="באג"><div class="cap">באג</div></div>
+      <div class="gi"><img src="../public/images/characters/expressions/bugking-expressions-v1.jpg" alt="באג קינג"><div class="cap">מלך הבאגים</div></div>
+      <div class="gi"><img src="../public/images/characters/expressions/glitch-expressions-v1.jpg" alt="גליץ'"><div class="cap">גליץ'</div></div>
+      <div class="gi"><img src="../public/images/characters/expressions/shadow-expressions-v1.jpg" alt="שאדו"><div class="cap">שאדו</div></div>
+      <div class="gi"><img src="../public/images/characters/expressions/storm-expressions-v1.jpg" alt="סטורם"><div class="cap">סטורם</div></div>
+      <div class="gi"><img src="../public/images/characters/expressions/blaze-expressions-v1.jpg" alt="בלייז"><div class="cap">בלייז</div></div>
     </div>
   </div>
 </div>
 
-<!-- ============ SECTION 6: New Code Files ============ -->
-<div class="section">
-  <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-    <h2><span class="section-number">6</span> קבצי קוד חדשים</h2>
-    <span class="toggle">&#9660;</span>
+<!-- ================================ -->
+<!-- SECTION 6: קבצי קוד חדשים        -->
+<!-- ================================ -->
+<div class="sec">
+  <div class="sh" onclick="this.parentElement.classList.toggle('c')">
+    <h2><span class="sn">6</span> קבצי קוד חדשים</h2>
+    <span class="tgl">&#9660;</span>
   </div>
-  <div class="section-body">
+  <div class="sb">
     <table>
       <tr>
         <th>קובץ</th>
@@ -987,298 +728,301 @@
       </tr>
       <tr>
         <td><strong>dialog-box.tsx</strong></td>
-        <td><span class="code-path">src/components/story/</span></td>
+        <td><span class="cp">src/components/story/</span></td>
         <td>459</td>
         <td>תיבת דיאלוג עם אפקט מכונת כתיבה, 4 סגנונות, בחירות שחקן</td>
-        <td><span class="badge badge-done">מוכן</span></td>
+        <td><span class="b bd">מוכן</span></td>
       </tr>
       <tr>
         <td><strong>story-player.tsx</strong></td>
-        <td><span class="code-path">src/components/story/</span></td>
+        <td><span class="cp">src/components/story/</span></td>
         <td>140</td>
-        <td>מנהל רצף beats עם portal overlay ומעברים</td>
-        <td><span class="badge badge-done">מוכן</span></td>
+        <td>מנהל רצף beats עם portal overlay</td>
+        <td><span class="b bd">מוכן</span></td>
       </tr>
       <tr>
         <td><strong>speech-bubble.tsx</strong></td>
-        <td><span class="code-path">src/components/story/</span></td>
+        <td><span class="cp">src/components/story/</span></td>
         <td>197</td>
         <td>בועות דיבור מאוירות עם אנימציה</td>
-        <td><span class="badge badge-done">מוכן</span></td>
+        <td><span class="b bd">מוכן</span></td>
       </tr>
       <tr>
         <td><strong>story-beat-wrapper.tsx</strong></td>
-        <td><span class="code-path">src/components/story/</span></td>
+        <td><span class="cp">src/components/story/</span></td>
         <td>99</td>
         <td>wrapper לביטים בסיפור עם מעברי כניסה/יציאה</td>
-        <td><span class="badge badge-done">מוכן</span></td>
+        <td><span class="b bd">מוכן</span></td>
       </tr>
       <tr>
         <td><strong>use-sound-effect.ts</strong></td>
-        <td><span class="code-path">src/hooks/</span></td>
+        <td><span class="cp">src/hooks/</span></td>
         <td>77</td>
-        <td>React hook לנגינת אפקטים קוליים עם caching ותמיכה ב-Web Audio</td>
-        <td><span class="badge badge-done">מוכן</span></td>
+        <td>React hook לנגינת אפקטים קוליים עם caching</td>
+        <td><span class="b bd">מוכן</span></td>
       </tr>
       <tr>
         <td><strong>ui-sounds.ts</strong></td>
-        <td><span class="code-path">src/lib/audio/</span></td>
+        <td><span class="cp">src/lib/audio/</span></td>
         <td>315</td>
-        <td>12 צלילי UI מסונתזים ב-Web Audio API - אפס תלויות</td>
-        <td><span class="badge badge-done">מוכן</span></td>
+        <td>12 צלילי UI מסונתזים ב-Web Audio API</td>
+        <td><span class="b bd">מוכן</span></td>
       </tr>
       <tr>
         <td><strong>sound-manager.ts</strong></td>
-        <td><span class="code-path">src/lib/audio/</span></td>
+        <td><span class="cp">src/lib/audio/</span></td>
         <td>250</td>
-        <td>מנהל סאונד מרכזי: preloading, volume, mute, MP3 + Web Audio</td>
-        <td><span class="badge badge-done">מוכן</span></td>
-      </tr>
-      <tr>
-        <td><strong>music-manager.ts</strong></td>
-        <td><span class="code-path">src/lib/audio/</span></td>
-        <td>844</td>
-        <td>מנהל מוזיקה: crossfade, playlists, theme tracks, volume control</td>
-        <td><span class="badge badge-progress">אינטגרציה</span></td>
+        <td>מנהל סאונד מרכזי: preloading, volume, mute</td>
+        <td><span class="b bd">מוכן</span></td>
       </tr>
       <tr>
         <td><strong>sounds.ts</strong></td>
-        <td><span class="code-path">src/lib/audio/</span></td>
+        <td><span class="cp">src/lib/audio/</span></td>
         <td>164</td>
-        <td>הגדרות קבצי סאונד, מיפוי אירועים לקבצים</td>
-        <td><span class="badge badge-done">מוכן</span></td>
-      </tr>
-      <tr>
-        <td><strong>battle-engine.ts</strong></td>
-        <td><span class="code-path">src/lib/battle/</span></td>
-        <td>258</td>
-        <td>מנוע קרב: מודל הקלדה אנושי, קושי דינמי, 6 פרופילי יריבים</td>
-        <td><span class="badge badge-progress">אינטגרציה</span></td>
-      </tr>
-      <tr>
-        <td><strong>battle-arena.tsx</strong></td>
-        <td><span class="code-path">src/components/battle/</span></td>
-        <td>467</td>
-        <td>זירת קרבות: split-screen, טיימר, progress bars, אנימציות</td>
-        <td><span class="badge badge-progress">אינטגרציה</span></td>
-      </tr>
-      <tr>
-        <td><strong>battle-results.tsx</strong></td>
-        <td><span class="code-path">src/components/battle/</span></td>
-        <td>158</td>
-        <td>מסך תוצאות קרב עם סטטיסטיקות מפורטות</td>
-        <td><span class="badge badge-progress">אינטגרציה</span></td>
+        <td>הגדרות קבצי סאונד, מיפוי אירועים</td>
+        <td><span class="b bd">מוכן</span></td>
       </tr>
       <tr>
         <td><strong>game-button.tsx</strong></td>
-        <td><span class="code-path">src/components/ui/</span></td>
+        <td><span class="cp">src/components/ui/</span></td>
         <td>192</td>
-        <td>כפתור gaming עם אפקטי סאונד, ripple, אנימציות</td>
-        <td><span class="badge badge-done">מוכן</span></td>
+        <td>כפתור gaming עם אפקטי סאונד + ripple</td>
+        <td><span class="b bd">מוכן</span></td>
+      </tr>
+      <tr>
+        <td><strong>music-manager.ts</strong></td>
+        <td><span class="cp">src/lib/audio/</span></td>
+        <td>844</td>
+        <td>מנהל מוזיקה: crossfade, playlists, theme tracks</td>
+        <td><span class="b bp">אינטגרציה</span></td>
+      </tr>
+      <tr>
+        <td><strong>battle-engine.ts</strong></td>
+        <td><span class="cp">src/lib/battle/</span></td>
+        <td>258</td>
+        <td>מנוע קרב: מודל הקלדה אנושי, קושי דינמי</td>
+        <td><span class="b bp">אינטגרציה</span></td>
+      </tr>
+      <tr>
+        <td><strong>battle-arena.tsx</strong></td>
+        <td><span class="cp">src/components/battle/</span></td>
+        <td>467</td>
+        <td>זירת קרבות split-screen עם אנימציות</td>
+        <td><span class="b bp">אינטגרציה</span></td>
+      </tr>
+      <tr>
+        <td><strong>battle-results.tsx</strong></td>
+        <td><span class="cp">src/components/battle/</span></td>
+        <td>158</td>
+        <td>מסך תוצאות קרב עם סטטיסטיקות</td>
+        <td><span class="b bp">אינטגרציה</span></td>
       </tr>
     </table>
 
-    <div class="stats-grid" style="margin-top: 20px;">
-      <div class="stat-card">
-        <div class="stat-number">13</div>
-        <div class="stat-label">קבצי קוד</div>
+    <div class="sg" style="margin-top: 20px;">
+      <div class="sc">
+        <div class="sv">13</div>
+        <div class="sl">קבצי קוד</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">3,620</div>
-        <div class="stat-label">שורות קוד סה"כ</div>
+      <div class="sc">
+        <div class="sv">3,620</div>
+        <div class="sl">שורות סה"כ</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">9</div>
-        <div class="stat-label">מוכנים לפרודקשן</div>
+      <div class="sc">
+        <div class="sv">9</div>
+        <div class="sl">מוכנים לפרודקשן</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">4</div>
-        <div class="stat-label">ממתינים לאינטגרציה</div>
+      <div class="sc">
+        <div class="sv">4</div>
+        <div class="sl">ממתינים לאינטגרציה</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ============ SECTION 7: Folder Organization ============ -->
-<div class="section">
-  <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-    <h2><span class="section-number">7</span> סידור תיקיות וארכיון</h2>
-    <span class="toggle">&#9660;</span>
+<!-- ================================ -->
+<!-- SECTION 7: סידור תיקיות          -->
+<!-- ================================ -->
+<div class="sec">
+  <div class="sh" onclick="this.parentElement.classList.toggle('c')">
+    <h2><span class="sn">7</span> סידור תיקיות וארכיון</h2>
+    <span class="tgl">&#9660;</span>
   </div>
-  <div class="section-body">
+  <div class="sb">
     <p style="color: #a0a0cc; margin-bottom: 16px;">
-      כל הגרסאות הישנות, קבצים בעייתיים, ומסמכים שהוחלפו הועברו לתיקיית <span class="code-path">archive/</span>
-      כדי לשמור על ניקיון ה-repository בלי לאבד היסטוריה.
+      כל הגרסאות הישנות, קבצים בעייתיים, ומסמכים שהוחלפו הועברו לתיקיית
+      <span class="cp">archive/</span> כדי לשמור על ניקיון ה-repository בלי לאבד היסטוריה.
     </p>
-
-    <div class="archive-tree">
-<span class="folder">archive/</span>
-<br>&nbsp;&nbsp;<span class="folder">badges/old/</span> <span class="count">(1 קובץ)</span>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;achievement-star.jpg <span class="desc">- תג עם דמיון לנארוטו (זכויות יוצרים)</span>
-<br>
-<br>&nbsp;&nbsp;<span class="folder">voices/yuki/</span> <span class="count">(~100 קבצים)</span>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">v1/</span> <span class="desc">- קול ראשון, רוסי מדי</span>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">v2/</span> <span class="desc">- ניסיון שני, לא מספיק ישראלי</span>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">v3/</span> <span class="desc">- עברית משופרת, עדיין לא סברה</span>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">v4/</span> <span class="desc">- Voice Design V4</span>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">v6/</span> <span class="desc">- Flash-like voice</span>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">v7/</span> <span class="desc">- Near-Sabra, tempo adjustments</span>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">v7-previews/</span> <span class="desc">- תצוגות מקדימות V7</span>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">v8-previews/</span> <span class="desc">- 82 קבצים, 4 וריאציות, V8-D נבחר</span>
-<br>
-<br>&nbsp;&nbsp;<span class="folder">model-sheets/v4-old/</span> <span class="count">(17 קבצים)</span>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc">כל ה-model sheets הישנים לפני V5 - סגנון לא אחיד</span>
-<br>
-<br>&nbsp;&nbsp;<span class="folder">expressions/v1-heroes-old/</span> <span class="count">(6 קבצים)</span>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc">הבעות גיבורים V1 שלא תואמות V5 model sheets</span>
-<br>
-<br>&nbsp;&nbsp;<span class="folder">docs/md-originals/</span> <span class="count">(5 קבצים)</span>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc">מסמכי MD מקוריים שהוחלפו ב-HTML מעוצב</span>
-<br>
-<br>&nbsp;&nbsp;<span class="folder">docs/old-reviews/</span> <span class="count">(4 קבצים)</span>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="desc">סקירות ישנות שהוחלפו (V2, V4, V4.1, story-expansion)</span>
+    <div class="at">
+<span class="f">archive/</span>
+<br>&nbsp;&nbsp;<span class="f">badges/old/</span> <span class="c">(1)</span> <span class="ds">- תג עם דמיון לנארוטו</span>
+<br>&nbsp;&nbsp;<span class="f">voices/yuki/</span> <span class="c">(~100)</span>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="f">v1/</span> <span class="ds">- רוסי מדי</span> | <span class="f">v2/</span> <span class="ds">- לא ישראלי</span> | <span class="f">v3/</span> <span class="ds">- עברית משופרת</span>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="f">v4/</span> <span class="ds">- Voice Design</span> | <span class="f">v6/</span> <span class="ds">- Flash-like</span> | <span class="f">v7/</span> <span class="ds">- Near-Sabra</span>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="f">v7-previews/</span> | <span class="f">v8-previews/</span> <span class="c">(78 קבצים)</span> <span class="ds">- V8-D נבחר כרשמי</span>
+<br>&nbsp;&nbsp;<span class="f">model-sheets/v4-old/</span> <span class="c">(17)</span> <span class="ds">- סגנון לא אחיד, לפני V5</span>
+<br>&nbsp;&nbsp;<span class="f">expressions/v1-heroes-old/</span> <span class="c">(6)</span> <span class="ds">- לא תואמות V5</span>
+<br>&nbsp;&nbsp;<span class="f">docs/md-originals/</span> <span class="c">(5)</span> <span class="ds">- MD שהוחלפו ב-HTML</span>
+<br>&nbsp;&nbsp;<span class="f">docs/old-reviews/</span> <span class="c">(4)</span> <span class="ds">- V2, V4, V4.1, story-expansion</span>
     </div>
-
-    <div class="stats-grid" style="margin-top: 20px;">
-      <div class="stat-card">
-        <div class="stat-number">135</div>
-        <div class="stat-label">קבצים בארכיון</div>
+    <div class="sg" style="margin-top: 20px;">
+      <div class="sc">
+        <div class="sv">135</div>
+        <div class="sl">קבצים בארכיון</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">6</div>
-        <div class="stat-label">תיקיות ראשיות</div>
+      <div class="sc">
+        <div class="sv">6</div>
+        <div class="sl">תיקיות ראשיות</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">0</div>
-        <div class="stat-label">קבצים שנמחקו</div>
+      <div class="sc">
+        <div class="sv">0</div>
+        <div class="sl">קבצים שנמחקו</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ============ SECTION 8: Next Steps ============ -->
-<div class="section">
-  <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-    <h2><span class="section-number">8</span> משימות הבאות</h2>
-    <span class="toggle">&#9660;</span>
+<!-- ================================ -->
+<!-- SECTION 8: משימות הבאות          -->
+<!-- ================================ -->
+<div class="sec">
+  <div class="sh" onclick="this.parentElement.classList.toggle('c')">
+    <h2><span class="sn">8</span> משימות הבאות</h2>
+    <span class="tgl">&#9660;</span>
   </div>
-  <div class="section-body">
+  <div class="sb">
 
     <h3 style="color: #ff6b6b; margin-bottom: 12px;">עדיפות גבוהה</h3>
-    <ul class="task-list">
-      <li class="task-item priority-high">
-        <span class="task-icon progress">&#9679;</span>
+    <ul class="tl">
+      <li class="ti ph">
+        <span class="ic p">&#9679;</span>
         <div>
-          <div class="task-title">אינטגרציית MusicProvider</div>
-          <div class="task-desc">חיבור music-manager.ts ל-app-providers.tsx, הוספת UI controls, crossfade בין דפים</div>
+          <div class="tt">אינטגרציית MusicProvider</div>
+          <div class="td">חיבור music-manager.ts ל-app-providers.tsx, הוספת UI controls, crossfade בין דפים</div>
         </div>
-        <span class="badge badge-progress">בתהליך</span>
+        <span class="b bp">בתהליך</span>
       </li>
-      <li class="task-item priority-high">
-        <span class="task-icon progress">&#9679;</span>
+      <li class="ti ph">
+        <span class="ic p">&#9679;</span>
         <div>
-          <div class="task-title">השלמת מערכת קרבות AI</div>
-          <div class="task-desc">חיבור battle-engine ל-battle-arena, הוספת 6 פרופילי יריבים, Web Worker לחישוב</div>
+          <div class="tt">השלמת מערכת קרבות AI</div>
+          <div class="td">חיבור battle-engine ל-battle-arena, הוספת 6 פרופילי יריבים, Web Worker לחישוב</div>
         </div>
-        <span class="badge badge-progress">בתהליך</span>
+        <span class="b bp">בתהליך</span>
       </li>
-      <li class="task-item priority-high">
-        <span class="task-icon planned">&#9670;</span>
+      <li class="ti ph">
+        <span class="ic l">&#9670;</span>
         <div>
-          <div class="task-title">יצירת טראקים מוזיקליים (Suno)</div>
-          <div class="task-desc">Batch 1: 8 טראקים בעדיפות - Theme ראשי, Battle, Boss, Dojo, Story dramatic, Victory, Menu, Tutorial</div>
+          <div class="tt">יצירת טראקים מוזיקליים (Suno)</div>
+          <div class="td">
+            Batch 1: 8 טראקים בעדיפות -
+            Theme ראשי, Battle, Boss, Dojo, Story dramatic, Victory, Menu, Tutorial
+          </div>
         </div>
-        <span class="badge badge-planned">מתוכנן</span>
+        <span class="b bl">מתוכנן</span>
       </li>
     </ul>
 
     <h3 style="color: #fdcb6e; margin: 24px 0 12px;">עדיפות בינונית</h3>
-    <ul class="task-list">
-      <li class="task-item priority-medium">
-        <span class="task-icon planned">&#9670;</span>
+    <ul class="tl">
+      <li class="ti pm">
+        <span class="ic l">&#9670;</span>
         <div>
-          <div class="task-title">POC דמות תלת-ממד</div>
-          <div class="task-desc">קי כדמות 3D: Rodin Gen-2 ליצירת מודל, Blender לניקוי, React Three Fiber להצגה, אנימציות בסיסיות</div>
+          <div class="tt">POC דמות תלת-ממד</div>
+          <div class="td">
+            קי כדמות 3D: Rodin Gen-2 ליצירת מודל, Blender לניקוי,
+            React Three Fiber להצגה, אנימציות בסיסיות
+          </div>
         </div>
-        <span class="badge badge-planned">מתוכנן</span>
+        <span class="b bl">מתוכנן</span>
       </li>
-      <li class="task-item priority-medium">
-        <span class="task-icon planned">&#9670;</span>
+      <li class="ti pm">
+        <span class="ic l">&#9670;</span>
         <div>
-          <div class="task-title">עיצובי דמויות נוספים</div>
-          <div class="task-desc">
+          <div class="tt">עיצובי דמויות נוספים</div>
+          <div class="td">
             סאקורה (מנטורית יוקי), פאנטום (יריב מסתורי), וירוס (בשני מצבים),
             יוני (אחות ברק), זארה (מלכת הבאגים).
             כל דמות = model sheet + הבעות + קול + מוזיקה.
           </div>
         </div>
-        <span class="badge badge-planned">מתוכנן</span>
+        <span class="b bl">מתוכנן</span>
       </li>
-      <li class="task-item priority-medium">
-        <span class="task-icon planned">&#9670;</span>
+      <li class="ti pm">
+        <span class="ic l">&#9670;</span>
         <div>
-          <div class="task-title">סקינים לחגים ישראליים</div>
-          <div class="task-desc">
-            12 חגים (חנוכה, פורים, פסח, שבועות...), כל חג = רקע + סקין לדמויות + מוזיקה + אפקטים.
+          <div class="tt">סקינים לחגים ישראליים</div>
+          <div class="td">
+            12 חגים (חנוכה, פורים, פסח, שבועות...), כל חג = רקע + סקין לדמויות + מוזיקה.
             מערכת unlock מבוססת XP. 798 וריאציות מתוכננות.
           </div>
         </div>
-        <span class="badge badge-planned">מתוכנן</span>
+        <span class="b bl">מתוכנן</span>
       </li>
-      <li class="task-item priority-medium">
-        <span class="task-icon planned">&#9670;</span>
+      <li class="ti pm">
+        <span class="ic l">&#9670;</span>
         <div>
-          <div class="task-title">כתיבת סיפור - כל הפרקים</div>
-          <div class="task-desc">
+          <div class="tt">כתיבת סיפור - כל הפרקים</div>
+          <div class="td">
             Acts 1-6 בפורמט story beats: דיאלוגים, cutscenes, בחירות, boss battles.
             פרק 6 V2.2 כתוב, צריך 1-5 + שיפור 6.
           </div>
         </div>
-        <span class="badge badge-planned">מתוכנן</span>
+        <span class="b bl">מתוכנן</span>
       </li>
     </ul>
 
     <h3 style="color: #a29bfe; margin: 24px 0 12px;">עדיפות נמוכה (עתידי)</h3>
-    <ul class="task-list">
-      <li class="task-item priority-low">
-        <span class="task-icon planned">&#9670;</span>
+    <ul class="tl">
+      <li class="ti pl">
+        <span class="ic l">&#9670;</span>
         <div>
-          <div class="task-title">Backend טורנירים (Supabase)</div>
-          <div class="task-desc">מערכת טורנירים בין תלמידים/בתי ספר/דוג'ו עם Supabase Realtime, leaderboards, matchmaking</div>
+          <div class="tt">Backend טורנירים (Supabase)</div>
+          <div class="td">
+            מערכת טורנירים בין תלמידים/בתי ספר/דוג'ו עם Supabase Realtime,
+            leaderboards, matchmaking
+          </div>
         </div>
-        <span class="badge badge-planned">מתוכנן</span>
+        <span class="b bl">מתוכנן</span>
       </li>
-      <li class="task-item priority-low">
-        <span class="task-icon planned">&#9670;</span>
+      <li class="ti pl">
+        <span class="ic l">&#9670;</span>
         <div>
-          <div class="task-title">אפליקציית מורים/הורים</div>
-          <div class="task-desc">PWA companion עם dashboard, מעקב התקדמות, הגדרת שיעורים, דוחות, התראות</div>
+          <div class="tt">אפליקציית מורים/הורים</div>
+          <div class="td">
+            PWA companion עם dashboard, מעקב התקדמות, הגדרת שיעורים, דוחות, התראות
+          </div>
         </div>
-        <span class="badge badge-planned">מתוכנן</span>
+        <span class="b bl">מתוכנן</span>
       </li>
-      <li class="task-item priority-low">
-        <span class="task-icon planned">&#9670;</span>
+      <li class="ti pl">
+        <span class="ic l">&#9670;</span>
         <div>
-          <div class="task-title">מערכת קהילה ותחרויות</div>
-          <div class="task-desc">טורנירים שבועיים, leaderboards, guild system, social features, chat בטוח לילדים</div>
+          <div class="tt">מערכת קהילה ותחרויות</div>
+          <div class="td">
+            טורנירים שבועיים, leaderboards, guild system, social features, chat בטוח לילדים
+          </div>
         </div>
-        <span class="badge badge-planned">מתוכנן</span>
+        <span class="b bl">מתוכנן</span>
       </li>
     </ul>
   </div>
 </div>
 
-</div><!-- /container -->
+</div>
 
 <!-- ============ FOOTER ============ -->
-<div class="footer">
-  <div class="version">נינג'ה מקלדת v0.8.0 - סקירת איטרציות 6-8</div>
+<div class="ft">
+  <div class="ver">נינג'ה מקלדת v0.8.0 - סקירת איטרציות 6-8</div>
   <p>7 במרץ 2026 | ספרינט: Character World Expansion</p>
   <p style="margin-top: 10px;">
     22 משימות | 3,620 שורות קוד | 5,015 שורות תיעוד | 100 אסטים | 135 קבצים בארכיון
   </p>
+  <p style="margin-top: 6px;">
+    1,093 unit tests | 0 TypeScript errors | 22 model sheets | 13 expression sheets
+  </p>
   <p style="margin-top: 10px; color: #444;">
-    נבנה עם Next.js 15, React 19, TypeScript, Tailwind CSS 4, Framer Motion
+    Next.js 15 | React 19 | TypeScript | Tailwind CSS 4 | Framer Motion | Zustand | ElevenLabs | Web Audio API
   </p>
 </div>
 
