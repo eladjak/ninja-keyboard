@@ -5,6 +5,9 @@ import { useMemo } from 'react'
 import { CHAPTER_1_BEATS } from '@/data/story/chapter-1'
 import { CHAPTER_2_BEATS } from '@/data/story/chapter-2'
 import { CHAPTER_3_BEATS } from '@/data/story/chapter-3'
+import { CHAPTER_4_BEATS } from '@/data/story/chapter-4'
+import { CHAPTER_5_BEATS } from '@/data/story/chapter-5'
+import { CHAPTER_6_BEATS } from '@/data/story/chapter-6'
 import { useStoryStore } from '@/stores/story-store'
 import type { DialogChoice, DialogStoryBeat, StoryTrigger } from '@/types/story'
 
@@ -16,6 +19,9 @@ const ALL_BEATS: DialogStoryBeat[] = [
   ...CHAPTER_1_BEATS,
   ...CHAPTER_2_BEATS,
   ...CHAPTER_3_BEATS,
+  ...CHAPTER_4_BEATS,
+  ...CHAPTER_5_BEATS,
+  ...CHAPTER_6_BEATS,
 ]
 
 // ---------------------------------------------------------------------------
