@@ -317,7 +317,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
 
   virus: {
     nameHe: 'וירוס',
-    image: '/images/characters/model-sheets/virus-friendly.jpg',
+    image: '/images/characters/model-sheets/virus-dual-form-v1.jpg',
     glowColor: '#D63031',
     soundProfile: {
       oscillatorType: 'sawtooth',
@@ -337,7 +337,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
 
   phantom: {
     nameHe: 'פאנטום',
-    image: '/images/characters/model-sheets/phantom-raz.jpg',
+    image: '/images/characters/model-sheets/raz-phantom-v1.jpg',
     glowColor: '#9B59B6',
     soundProfile: {
       oscillatorType: 'triangle',
@@ -368,6 +368,46 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
       rotate: [0, -3, 0],
       transition: {
         duration: 1.4,
+        repeat: INFINITE_REPEAT,
+        repeatType: 'reverse',
+        ease: 'easeInOut',
+      },
+    },
+  },
+
+  masterBeat: {
+    nameHe: 'מאסטר ביט',
+    image: '/images/characters/model-sheets/master-beat-v1.jpg',
+    glowColor: '#FFD700',
+    soundProfile: {
+      oscillatorType: 'sine',
+      frequencyRange: [100, 300],
+    },
+    idleAnimation: {
+      y: [0, -2, 0],
+      rotate: [0, 0.5, 0],
+      transition: {
+        duration: 4.0,
+        repeat: INFINITE_REPEAT,
+        repeatType: 'reverse',
+        ease: 'easeInOut',
+      },
+    },
+  },
+
+  sakura: {
+    nameHe: 'סאקורה',
+    image: '/images/characters/model-sheets/sakura-model-sheet-v2.jpg',
+    glowColor: '#FF69B4',
+    soundProfile: {
+      oscillatorType: 'sine',
+      frequencyRange: [350, 550],
+    },
+    idleAnimation: {
+      y: [0, -3, 0],
+      rotate: [0, 1, 0],
+      transition: {
+        duration: 2.8,
         repeat: INFINITE_REPEAT,
         repeatType: 'reverse',
         ease: 'easeInOut',

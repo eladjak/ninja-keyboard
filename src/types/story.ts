@@ -17,6 +17,8 @@ export type CharacterName =
   | 'virus'
   | 'phantom'
   | 'barak'
+  | 'masterBeat'
+  | 'sakura'
 
 /** Character emotional states for animations and expression */
 export type CharacterMood =
