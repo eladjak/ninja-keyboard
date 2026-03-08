@@ -31,6 +31,118 @@
       "cover": "boss-battle-cover.jpg"
     }
   ],
+  "pending_tracks": [
+    {
+      "id": "CHAR-001",
+      "name": "ki-theme",
+      "title": "Ki's Theme",
+      "titleHe": "ערכת קי — גיבור",
+      "description": "Adventurous chiptune hero theme with cinematic swell, young ninja main character anthem",
+      "style": "chiptune, orchestral, Japanese game music, adventure, heroic, 8-bit meets cinematic",
+      "category": "character",
+      "duration": "60-90s",
+      "status": "pending"
+    },
+    {
+      "id": "CHAR-002",
+      "name": "mika-theme",
+      "title": "Mika's Theme",
+      "titleHe": "ערכת מיקה — טק הקרית",
+      "description": "Cyberpunk electronic pop with chiptune glitch accents, edgy hacker girl theme",
+      "style": "cyberpunk, electronic pop, glitch, chiptune hybrid, neon, hacker aesthetic",
+      "category": "character",
+      "duration": "60-90s",
+      "status": "pending"
+    },
+    {
+      "id": "CHAR-005",
+      "name": "yuki-theme",
+      "title": "Yuki's Theme",
+      "titleHe": "ערכת יוקי — מהירות",
+      "description": "Ultra-fast J-pop electronic with chiptune racing pulse, speed demon melody",
+      "style": "J-pop, electronic, fast chiptune, racing, speed, competitive, anime energy",
+      "category": "character",
+      "duration": "60-90s",
+      "status": "pending"
+    },
+    {
+      "id": "CHAR-008",
+      "name": "glitch-theme",
+      "title": "Glitch's Theme",
+      "titleHe": "ערכת Glitch — כאוס טהור",
+      "description": "Corrupted vaporwave with hidden emotional melody, digital chaos with beautiful core",
+      "style": "glitch, vaporwave, bitcrushed, emotional electronic, corrupted beauty, noise art",
+      "category": "character",
+      "duration": "60-90s",
+      "status": "pending"
+    },
+    {
+      "id": "CHAR-003",
+      "name": "sensei-zen-theme",
+      "title": "Sensei Zen's Theme",
+      "titleHe": "ערכת סנסיי זן — חכם",
+      "description": "Peaceful Japanese shakuhachi and koto with chiptune warmth, ancient turtle master wisdom",
+      "style": "traditional Japanese, ambient, zen, shakuhachi, koto, meditation, chiptune undertone",
+      "category": "character",
+      "duration": "60-90s",
+      "status": "pending"
+    },
+    {
+      "id": "PLAY-001",
+      "name": "practice-room",
+      "title": "Practice Room",
+      "titleHe": "תרגול — קל",
+      "description": "Calm lo-fi study music with chiptune textures, gentle focus zone for keyboard practice",
+      "style": "lo-fi, study music, ambient, chiptune-warm, jazzy, calm focus, typing rhythm",
+      "category": "gameplay",
+      "duration": "120-180s",
+      "status": "pending"
+    },
+    {
+      "id": "PLAY-004",
+      "name": "speed-test",
+      "title": "Speed Test",
+      "titleHe": "אדרנלין — מבחן מהירות",
+      "description": "Adrenaline EDM with chiptune countdown, building tempo speed challenge anthem",
+      "style": "EDM, synthwave, chiptune, adrenaline, competitive, building tempo, countdown",
+      "category": "gameplay",
+      "duration": "120-180s",
+      "status": "pending"
+    },
+    {
+      "id": "BATTLE-010",
+      "name": "tournament-arena",
+      "title": "Tournament Arena",
+      "titleHe": "זירת טורנירים",
+      "description": "Epic tournament theme with orchestral power and chiptune accents, esports meets retro",
+      "style": "orchestral, epic, esports, chiptune hybrid, tournament, competitive, stadium",
+      "category": "gameplay",
+      "duration": "120-180s",
+      "status": "pending"
+    },
+    {
+      "id": "STORY-001",
+      "name": "story-emotional",
+      "title": "Story - Emotional Moment",
+      "titleHe": "סיפור — רגע רגשי",
+      "description": "Cinematic piano with strings and chiptune music box, tearful friendship and sacrifice theme",
+      "style": "cinematic, piano, strings, emotional, bittersweet, music box, Hebrew feel",
+      "category": "story",
+      "duration": "90-120s",
+      "status": "pending"
+    },
+    {
+      "id": "STORY-002",
+      "name": "story-victory",
+      "title": "Story - Victory/Celebration",
+      "titleHe": "סיפור — ניצחון וחגיגה",
+      "description": "Triumphant celebration with full orchestra, chiptune joy, and Middle Eastern percussion",
+      "style": "orchestral, triumphant, chiptune, celebration, Middle Eastern percussion, joyful",
+      "category": "story",
+      "duration": "90-120s",
+      "status": "pending"
+    }
+  ],
   "not_generated": [
     {
       "name": "practice-mode",

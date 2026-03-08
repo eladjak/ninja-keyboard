@@ -67,7 +67,7 @@ describe('Sidebar', () => {
     render(<Sidebar />)
     const nav = screen.getByRole('navigation', { name: 'ניווט ראשי' })
     const links = nav.querySelectorAll('a')
-    expect(links).toHaveLength(12) // Home, Lessons, Practice, Speed Test, Battle, Games, Shortcuts, Leaderboard, Certificates, Statistics, Profile, Settings
+    expect(links).toHaveLength(13) // Home, Lessons, Practice, Speed Test, Battle, Games, Shortcuts, Leaderboard, Certificates, Statistics, Profile, Jukebox, Settings
   })
 })
 
