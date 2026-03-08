@@ -1,0 +1,2181 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>נינג'ה מקלדת — תוכנית איטרציה 10</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0d0b1a;
+      --bg-secondary: #151227;
+      --bg-card: #1a1635;
+      --bg-card-hover: #221e42;
+      --bg-highlight: #2a2450;
+      --text-primary: #e0e0e0;
+      --text-secondary: #a0a0b0;
+      --text-muted: #6a6a80;
+      --accent-primary: #6C5CE7;
+      --accent-secondary: #00B894;
+      --accent-blue: #4FC3F7;
+      --accent-orange: #FF9800;
+      --accent-pink: #FF6B9D;
+      --accent-red: #FF4757;
+      --accent-gold: #FFD700;
+      --accent-teal: #00BCD4;
+      --border-color: #2d2955;
+      --shadow-glow: rgba(108, 92, 231, 0.2);
+      --gradient-primary: linear-gradient(135deg, #6C5CE7, #a855f7);
+      --gradient-success: linear-gradient(135deg, #00B894, #10b981);
+      --gradient-danger: linear-gradient(135deg, #FF4757, #ef4444);
+      --gradient-warning: linear-gradient(135deg, #FF9800, #f59e0b);
+      --gradient-info: linear-gradient(135deg, #4FC3F7, #3b82f6);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+    ::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #7c6df7; }
+
+    /* Hero Header */
+    .hero {
+      background: linear-gradient(180deg, #1a0e3a 0%, var(--bg-primary) 100%);
+      padding: 60px 0 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(108, 92, 231, 0.15), transparent 50%),
+        radial-gradient(circle at 80% 30%, rgba(0, 184, 148, 0.1), transparent 50%),
+        radial-gradient(circle at 50% 80%, rgba(255, 107, 157, 0.08), transparent 40%);
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-size: 3.2em;
+      font-weight: 900;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .hero .subtitle {
+      font-size: 1.5em;
+      font-weight: 300;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .hero .version-badge {
+      display: inline-block;
+      background: var(--gradient-primary);
+      color: white;
+      padding: 6px 24px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      font-weight: 600;
+      letter-spacing: 1px;
+      position: relative;
+    }
+
+    .hero .iteration-date {
+      margin-top: 12px;
+      color: var(--text-muted);
+      font-size: 0.9em;
+      position: relative;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 24px;
+    }
+
+    /* Summary Cards Row */
+    .summary-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .summary-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .summary-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px var(--shadow-glow);
+    }
+
+    .summary-card .icon {
+      font-size: 2em;
+      margin-bottom: 8px;
+    }
+
+    .summary-card .value {
+      font-size: 2.2em;
+      font-weight: 800;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .summary-card .label {
+      color: var(--text-secondary);
+      font-size: 0.85em;
+      margin-top: 4px;
+    }
+
+    .summary-card.success .value {
+      background: var(--gradient-success);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .summary-card.warning .value {
+      background: var(--gradient-warning);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .summary-card.danger .value {
+      background: var(--gradient-danger);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Section */
+    .section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      margin-bottom: 28px;
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+
+    .section:hover {
+      box-shadow: 0 4px 20px var(--shadow-glow);
+    }
+
+    .section-header {
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: default;
+    }
+
+    .section-header .section-icon {
+      font-size: 1.6em;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+
+    .section-header h2 {
+      font-size: 1.4em;
+      font-weight: 700;
+      flex-grow: 1;
+    }
+
+    .section-header .week-badge {
+      background: var(--bg-highlight);
+      color: var(--accent-blue);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      font-weight: 600;
+      border: 1px solid rgba(79, 195, 247, 0.3);
+    }
+
+    .section-body {
+      padding: 0 28px 24px;
+    }
+
+    /* Priority Tags */
+    .priority-critical {
+      background: rgba(255, 71, 87, 0.15);
+      color: #FF4757;
+      border: 1px solid rgba(255, 71, 87, 0.3);
+      padding: 3px 12px;
+      border-radius: 6px;
+      font-size: 0.75em;
+      font-weight: 600;
+      display: inline-block;
+      margin-inline-end: 8px;
+    }
+
+    .priority-high {
+      background: rgba(255, 152, 0, 0.15);
+      color: #FF9800;
+      border: 1px solid rgba(255, 152, 0, 0.3);
+      padding: 3px 12px;
+      border-radius: 6px;
+      font-size: 0.75em;
+      font-weight: 600;
+      display: inline-block;
+      margin-inline-end: 8px;
+    }
+
+    .priority-medium {
+      background: rgba(79, 195, 247, 0.15);
+      color: #4FC3F7;
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      padding: 3px 12px;
+      border-radius: 6px;
+      font-size: 0.75em;
+      font-weight: 600;
+      display: inline-block;
+      margin-inline-end: 8px;
+    }
+
+    .priority-low {
+      background: rgba(0, 184, 148, 0.15);
+      color: #00B894;
+      border: 1px solid rgba(0, 184, 148, 0.3);
+      padding: 3px 12px;
+      border-radius: 6px;
+      font-size: 0.75em;
+      font-weight: 600;
+      display: inline-block;
+      margin-inline-end: 8px;
+    }
+
+    /* Task Items */
+    .task-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--bg-secondary);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      border: 1px solid transparent;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .task-item:hover {
+      border-color: var(--border-color);
+      background: var(--bg-highlight);
+    }
+
+    .task-item .task-icon {
+      font-size: 1.1em;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .task-item .task-content {
+      flex-grow: 1;
+    }
+
+    .task-item .task-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .task-item .task-desc {
+      color: var(--text-secondary);
+      font-size: 0.88em;
+      line-height: 1.6;
+    }
+
+    .task-item .task-file {
+      display: inline-block;
+      background: rgba(108, 92, 231, 0.12);
+      color: var(--accent-primary);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.78em;
+      font-family: 'Courier New', monospace;
+      direction: ltr;
+      unicode-bidi: embed;
+      margin-top: 4px;
+    }
+
+    /* Progress Bars */
+    .progress-container {
+      margin-bottom: 18px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .progress-label .name {
+      font-weight: 600;
+      font-size: 0.95em;
+    }
+
+    .progress-label .percent {
+      font-size: 0.85em;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 10px;
+    }
+
+    .progress-bar {
+      height: 14px;
+      background: var(--bg-secondary);
+      border-radius: 7px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 7px;
+      transition: width 1s ease-in-out;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .progress-fill.red { background: var(--gradient-danger); }
+    .progress-fill.orange { background: var(--gradient-warning); }
+    .progress-fill.blue { background: var(--gradient-info); }
+    .progress-fill.green { background: var(--gradient-success); }
+    .progress-fill.purple { background: var(--gradient-primary); }
+    .progress-fill.gold { background: linear-gradient(135deg, #FFD700, #FFA000); }
+    .progress-fill.teal { background: linear-gradient(135deg, #00BCD4, #009688); }
+    .progress-fill.pink { background: linear-gradient(135deg, #FF6B9D, #e91e63); }
+
+    .percent-red { background: rgba(255,71,87,0.15); color: #FF4757; }
+    .percent-orange { background: rgba(255,152,0,0.15); color: #FF9800; }
+    .percent-blue { background: rgba(79,195,247,0.15); color: #4FC3F7; }
+    .percent-green { background: rgba(0,184,148,0.15); color: #00B894; }
+    .percent-purple { background: rgba(108,92,231,0.15); color: #a78bfa; }
+    .percent-gold { background: rgba(255,215,0,0.15); color: #FFD700; }
+    .percent-teal { background: rgba(0,188,212,0.15); color: #00BCD4; }
+    .percent-pink { background: rgba(255,107,157,0.15); color: #FF6B9D; }
+
+    /* Checkbox Goals */
+    .goal-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .goal-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .goal-item:last-child {
+      border-bottom: none;
+    }
+
+    .goal-checkbox {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--accent-primary);
+      border-radius: 6px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+    }
+
+    .goal-checkbox.partial {
+      border-color: var(--accent-orange);
+      background: rgba(255, 152, 0, 0.1);
+    }
+
+    .goal-checkbox.partial::after {
+      content: '~';
+      color: var(--accent-orange);
+      font-weight: 700;
+    }
+
+    .goal-text {
+      font-size: 0.95em;
+    }
+
+    .goal-text .goal-metric {
+      color: var(--accent-blue);
+      font-weight: 600;
+    }
+
+    /* Music Pipeline */
+    .music-pipeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .pipeline-step {
+      background: var(--bg-secondary);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      position: relative;
+      border: 1px solid var(--border-color);
+    }
+
+    .pipeline-step .step-num {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: var(--gradient-primary);
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8em;
+      font-weight: 700;
+    }
+
+    .pipeline-step .step-icon {
+      font-size: 1.8em;
+      margin-bottom: 8px;
+    }
+
+    .pipeline-step .step-title {
+      font-weight: 600;
+      font-size: 0.9em;
+      margin-bottom: 4px;
+    }
+
+    .pipeline-step .step-desc {
+      color: var(--text-muted);
+      font-size: 0.78em;
+    }
+
+    /* Track List */
+    .track-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .track-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      font-size: 0.88em;
+    }
+
+    .track-item .track-status {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .track-item .track-status.ready { background: #FF9800; }
+    .track-item .track-status.done { background: #00B894; }
+    .track-item .track-status.pending { background: #6a6a80; }
+
+    .track-item .track-name {
+      flex-grow: 1;
+    }
+
+    .track-item .track-cat {
+      color: var(--text-muted);
+      font-size: 0.8em;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding: 20px 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      right: 60px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--border-color);
+    }
+
+    .timeline-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .timeline-item .timeline-week {
+      width: 120px;
+      flex-shrink: 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .timeline-item .timeline-week .week-num {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .timeline-item .timeline-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent-primary);
+      border: 3px solid var(--bg-primary);
+      position: absolute;
+      right: 53px;
+      top: 8px;
+      z-index: 1;
+    }
+
+    .timeline-item .timeline-content {
+      flex-grow: 1;
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      padding: 16px 20px;
+      border: 1px solid var(--border-color);
+    }
+
+    .timeline-item .timeline-content h4 {
+      font-size: 1em;
+      margin-bottom: 8px;
+      color: var(--accent-blue);
+    }
+
+    .timeline-item .timeline-content ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .timeline-item .timeline-content li {
+      padding: 3px 0;
+      font-size: 0.88em;
+      color: var(--text-secondary);
+      padding-right: 18px;
+      position: relative;
+    }
+
+    .timeline-item .timeline-content li::before {
+      content: '\25B8';
+      position: absolute;
+      right: 0;
+      color: var(--accent-primary);
+    }
+
+    /* Status Chips */
+    .status-done {
+      background: rgba(0,184,148,0.15);
+      color: #00B894;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.75em;
+      font-weight: 600;
+    }
+
+    .status-progress {
+      background: rgba(79,195,247,0.15);
+      color: #4FC3F7;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.75em;
+      font-weight: 600;
+    }
+
+    .status-stuck {
+      background: rgba(255,71,87,0.15);
+      color: #FF4757;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.75em;
+      font-weight: 600;
+    }
+
+    .status-pending {
+      background: rgba(106,106,128,0.15);
+      color: #a0a0b0;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.75em;
+      font-weight: 600;
+    }
+
+    /* Info Box */
+    .info-box {
+      background: rgba(108, 92, 231, 0.08);
+      border: 1px solid rgba(108, 92, 231, 0.25);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin: 12px 0;
+      font-size: 0.9em;
+    }
+
+    .info-box.warning {
+      background: rgba(255, 152, 0, 0.08);
+      border-color: rgba(255, 152, 0, 0.25);
+    }
+
+    .info-box.danger {
+      background: rgba(255, 71, 87, 0.08);
+      border-color: rgba(255, 71, 87, 0.25);
+    }
+
+    .info-box.success {
+      background: rgba(0, 184, 148, 0.08);
+      border-color: rgba(0, 184, 148, 0.25);
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border-color);
+      margin: 16px 0;
+    }
+
+    /* Sub-heading */
+    .sub-heading {
+      font-size: 1.05em;
+      font-weight: 600;
+      color: var(--accent-blue);
+      margin: 16px 0 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Art Grid */
+    .art-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .art-item {
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+      border: 1px solid var(--border-color);
+      font-size: 0.85em;
+    }
+
+    .art-item .art-icon {
+      font-size: 1.6em;
+      margin-bottom: 6px;
+    }
+
+    .art-item .art-name {
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .art-item.has-model { border-color: rgba(0,184,148,0.3); }
+    .art-item.has-model .art-status { color: #00B894; }
+    .art-item.needs-expr { border-color: rgba(255,152,0,0.3); }
+    .art-item.needs-expr .art-status { color: #FF9800; }
+    .art-item.needs-redesign { border-color: rgba(255,71,87,0.3); }
+    .art-item.needs-redesign .art-status { color: #FF4757; }
+
+    /* Suno Prompts Table */
+    .prompts-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.88em;
+    }
+
+    .prompts-table th {
+      background: var(--bg-highlight);
+      padding: 10px 14px;
+      text-align: right;
+      font-weight: 600;
+      color: var(--text-primary);
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .prompts-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-secondary);
+    }
+
+    .prompts-table tr:hover td {
+      background: var(--bg-highlight);
+    }
+
+    .prompts-table .cat-badge {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.82em;
+      font-weight: 600;
+    }
+
+    .cat-character { background: rgba(108,92,231,0.15); color: var(--accent-primary); }
+    .cat-gameplay { background: rgba(0,184,148,0.15); color: var(--accent-secondary); }
+    .cat-story { background: rgba(255,107,157,0.15); color: var(--accent-pink); }
+    .cat-battle { background: rgba(255,152,0,0.15); color: var(--accent-orange); }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px 24px 30px;
+      border-top: 1px solid var(--border-color);
+      margin-top: 20px;
+    }
+
+    .footer .footer-logo {
+      font-size: 1.4em;
+      font-weight: 800;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+    }
+
+    .footer .footer-sub {
+      color: var(--text-muted);
+      font-size: 0.85em;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .summary-row { grid-template-columns: repeat(2, 1fr); }
+      .music-pipeline { grid-template-columns: repeat(2, 1fr); }
+      .track-list { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2.2em; }
+      .timeline::before { display: none; }
+      .timeline-item .timeline-dot { display: none; }
+      .timeline-item { flex-direction: column; gap: 8px; }
+      .timeline-item .timeline-week { width: auto; }
+    }
+
+    @media (max-width: 600px) {
+      .summary-row { grid-template-columns: 1fr; }
+      .music-pipeline { grid-template-columns: 1fr; }
+      .art-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ==================== HERO ==================== -->
+<div class="hero">
+  <h1>נינג'ה מקלדת</h1>
+  <div class="subtitle">תוכנית אב &mdash; איטרציה 10</div>
+  <div class="version-badge">ITERATION 10 MASTER PLAN</div>
+  <div class="iteration-date">מרץ 2026 &bull; שבועות 1-3 &bull; ~15 ימי עבודה</div>
+</div>
+
+<!-- ==================== CONTAINER ==================== -->
+<div class="container">
+
+  <!-- ==================== SUMMARY CARDS ==================== -->
+  <div class="summary-row">
+    <div class="summary-card danger">
+      <div class="icon">&#x1F534;</div>
+      <div class="value">5</div>
+      <div class="label">תיקונים קריטיים</div>
+    </div>
+    <div class="summary-card warning">
+      <div class="icon">&#x1F3B5;</div>
+      <div class="value">4/48</div>
+      <div class="label">שירים מוכנים (8%)</div>
+    </div>
+    <div class="summary-card success">
+      <div class="icon">&#x1F4D6;</div>
+      <div class="value">6/6</div>
+      <div class="label">פרקי סיפור שלמים</div>
+    </div>
+    <div class="summary-card">
+      <div class="icon">&#x1F9EA;</div>
+      <div class="value">1,096</div>
+      <div class="label">טסטים עוברים</div>
+    </div>
+  </div>
+
+  <!-- ==================== 1. CRITICAL FIXES ==================== -->
+  <div class="section" id="critical">
+    <div class="section-header" style="border-bottom: 2px solid rgba(255,71,87,0.3);">
+      <div class="section-icon" style="background: rgba(255,71,87,0.15); color: #FF4757;">&#x1F534;</div>
+      <h2>1. קריטי &mdash; תיקונים חובה</h2>
+      <span class="week-badge">שבוע 1</span>
+    </div>
+    <div class="section-body">
+      <div class="info-box danger">
+        <strong>חובה לתקן לפני כל עבודה אחרת!</strong> באגים שחוסמים התקדמות ופוגעים בעקביות הדמויות.
+      </div>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <span class="task-icon">&#x1F41B;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-critical">קריטי</span>
+              Glitch &mdash; נתיב תמונה שגוי ב-character-config
+            </div>
+            <div class="task-desc">
+              ב-<code>character-config.ts</code> יש הפניה ל-<code>bug-villain.jpg</code> במקום לתמונת Glitch הנכונה.
+              צריך לעדכן ל-<code>glitch-entity-v5.jpg</code> או לאחת מ-6 גרסאות Glitch (confused/forming/neutral/evil/broken/whole).
+            </div>
+            <span class="task-file">src/lib/story/character-config.ts:220, :240</span>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F41B;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-critical">קריטי</span>
+              getAllChapterBeats() &mdash; מחזיר רק פרקים 1-3
+            </div>
+            <div class="task-desc">
+              הפונקציה ב-<code>use-story-trigger.ts</code> שורה 144-148 מחזירה רק 3 פרקים למרות שקיימים 6 פרקים (chapter-1.ts עד chapter-6.ts) ב-<code>src/data/story/</code>.
+              צריך להוסיף import ל-CHAPTER_4_BEATS, CHAPTER_5_BEATS, CHAPTER_6_BEATS ולעדכן את המערך.
+            </div>
+            <span class="task-file">src/hooks/use-story-trigger.ts:139-149</span>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F469;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-critical">קריטי</span>
+              מיקה &mdash; עיצוב מחדש: יותר נשית/קלאסית
+            </div>
+            <div class="task-desc">
+              העיצוב הנוכחי &ldquo;טומבויישי&rdquo; מדי. בנות לא מתחברות לדמות.
+              צריך לעצב מחדש עם מראה יותר נשי/קלאסי תוך שמירה על הרוח ההאקרית.
+              העיצוב הקיים יעבור לדמות חדשה.
+            </div>
+            <span class="task-file">public/images/characters/model-sheets/mika-girl-v5.jpg</span>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F422;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-critical">קריטי</span>
+              סנסיי זן &mdash; לוודא צורת צב בכל המקומות
+            </div>
+            <div class="task-desc">
+              המשתמש <strong>דורש</strong> שזן יהיה צב! לעבור על כל ההפניות בקוד, בתמונות ובסיפור ולוודא שהוא צב בכל מקום.
+              גרסה V2 כבר נוצרה (<code>sensei-zen-v2.jpg</code>).
+              צריך לוודא שהגרסה הישנה לא בשימוש.
+            </div>
+            <span class="task-file">public/images/characters/model-sheets/sensei-zen-v2.jpg</span>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F3A8;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-high">גבוה</span>
+              דפי הבעות חסרים &mdash; 7+ דמויות
+            </div>
+            <div class="task-desc">
+              דמויות שעדיין צריכות דפי הבעות עקביים עם ה-model sheets:
+              <strong>Yuki, Rex, Pixel, Kai, Ki (V5 style), Mika (אחרי עיצוב מחדש)</strong>.
+              כמו כן: Storm, Blaze, Shadow &mdash; יש V1 אבל צריך בדיקת עקביות מול model sheets.
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="sub-heading">&#x1F4CA; סטטוס הבעות דמויות</div>
+      <div class="art-grid">
+        <div class="art-item has-model">
+          <div class="art-icon">&#x1F466;</div>
+          <div class="art-name">קי</div>
+          <div class="art-status">V2 &#10003; צריך עדכון</div>
+        </div>
+        <div class="art-item needs-redesign">
+          <div class="art-icon">&#x1F469;&#x200D;&#x1F4BB;</div>
+          <div class="art-name">מיקה</div>
+          <div class="art-status">&#x274C; עיצוב מחדש</div>
+        </div>
+        <div class="art-item has-model">
+          <div class="art-icon">&#x1F319;</div>
+          <div class="art-name">לונה</div>
+          <div class="art-status">V2 &#10003;</div>
+        </div>
+        <div class="art-item has-model">
+          <div class="art-icon">&#x1F33F;</div>
+          <div class="art-name">נועה</div>
+          <div class="art-status">V2 &#10003;</div>
+        </div>
+        <div class="art-item needs-expr">
+          <div class="art-icon">&#x26A1;</div>
+          <div class="art-name">יוקי</div>
+          <div class="art-status">&#x26A0; חסר expressions</div>
+        </div>
+        <div class="art-item needs-expr">
+          <div class="art-icon">&#x1F995;</div>
+          <div class="art-name">רקס</div>
+          <div class="art-status">&#x26A0; חסר expressions</div>
+        </div>
+        <div class="art-item needs-expr">
+          <div class="art-icon">&#x1F916;</div>
+          <div class="art-name">פיקסל</div>
+          <div class="art-status">&#x26A0; חסר expressions</div>
+        </div>
+        <div class="art-item needs-expr">
+          <div class="art-icon">&#x1F30A;</div>
+          <div class="art-name">קאי</div>
+          <div class="art-status">&#x26A0; חסר expressions</div>
+        </div>
+        <div class="art-item has-model">
+          <div class="art-icon">&#x1F422;</div>
+          <div class="art-name">סנסיי זן</div>
+          <div class="art-status">V3 &#10003;</div>
+        </div>
+        <div class="art-item has-model">
+          <div class="art-icon">&#x1F338;</div>
+          <div class="art-name">סאקורה</div>
+          <div class="art-status">V2 &#10003;</div>
+        </div>
+        <div class="art-item has-model">
+          <div class="art-icon">&#x1F49C;</div>
+          <div class="art-name">Glitch</div>
+          <div class="art-status">6 גרסאות &#10003;</div>
+        </div>
+        <div class="art-item has-model">
+          <div class="art-icon">&#x1F577;</div>
+          <div class="art-name">זרה</div>
+          <div class="art-status">V2 &#10003;</div>
+        </div>
+        <div class="art-item has-model">
+          <div class="art-icon">&#x1F451;</div>
+          <div class="art-name">קרס</div>
+          <div class="art-status">V2 &#10003;</div>
+        </div>
+        <div class="art-item has-model">
+          <div class="art-icon">&#x1F431;</div>
+          <div class="art-name">Shadow</div>
+          <div class="art-status">V1 &mdash; בדוק עקביות</div>
+        </div>
+        <div class="art-item has-model">
+          <div class="art-icon">&#x1F98A;</div>
+          <div class="art-name">Storm</div>
+          <div class="art-status">V1 &mdash; בדוק עקביות</div>
+        </div>
+        <div class="art-item has-model">
+          <div class="art-icon">&#x1F409;</div>
+          <div class="art-name">Blaze</div>
+          <div class="art-status">V1 &mdash; בדוק עקביות</div>
+        </div>
+        <div class="art-item has-model">
+          <div class="art-icon">&#x26A1;</div>
+          <div class="art-name">ברק</div>
+          <div class="art-status">V1 &#10003;</div>
+        </div>
+        <div class="art-item has-model">
+          <div class="art-icon">&#x1F47B;</div>
+          <div class="art-name">Phantom</div>
+          <div class="art-status">V1 &#10003;</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 2. MUSIC ==================== -->
+  <div class="section" id="music">
+    <div class="section-header" style="border-bottom: 2px solid rgba(255,152,0,0.3);">
+      <div class="section-icon" style="background: rgba(255,152,0,0.15); color: #FF9800;">&#x1F3B5;</div>
+      <h2>2. מוזיקה ופסקולים</h2>
+      <span class="week-badge">שבועות 1-2</span>
+    </div>
+    <div class="section-body">
+      <div class="info-box danger">
+        <strong>&#x26A0; תקוע מאז איטרציה 4!</strong>
+        רק 4 שירים מתוך 48 מתוכננים נוצרו (8%).
+        10 פרומפטים חדשים ל-Suno <strong>מוכנים ומחכים</strong> &mdash; צריך להתחיל ליצור <strong>עכשיו</strong>.
+      </div>
+
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F3B5; פסקול &mdash; התקדמות כוללת</span>
+          <span class="percent percent-red">4 / 48 &mdash; 8%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill red" style="width: 8%;"></div>
+        </div>
+      </div>
+
+      <div class="sub-heading">&#x1F527; צינור ייצור מוזיקה</div>
+      <div class="music-pipeline">
+        <div class="pipeline-step">
+          <div class="step-num">1</div>
+          <div class="step-icon">&#x1F3A4;</div>
+          <div class="step-title">Suno Premier</div>
+          <div class="step-desc">יצירת שירים עם פרומפטים מוכנים</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="step-num">2</div>
+          <div class="step-icon">&#x1F4E5;</div>
+          <div class="step-title">הורדה + עיבוד</div>
+          <div class="step-desc">ffmpeg &rarr; MP3, נרמול, גזירה</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="step-num">3</div>
+          <div class="step-icon">&#x1F4C1;</div>
+          <div class="step-title">מיקום בפרויקט</div>
+          <div class="step-desc">public/audio/music/ + כיסויים</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="step-num">4</div>
+          <div class="step-icon">&#x1F4CB;</div>
+          <div class="step-title">עדכון מניפסט</div>
+          <div class="step-desc">music-manifest.json + jukebox</div>
+        </div>
+      </div>
+
+      <div class="sub-heading">&#x1F4DD; 10 פרומפטים מוכנים &mdash; אצווה 1 (Batch 1)</div>
+      <table class="prompts-table">
+        <thead>
+          <tr>
+            <th>קוד</th>
+            <th>שם</th>
+            <th>סגנון</th>
+            <th>קטגוריה</th>
+            <th>סטטוס</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CHAR-001</td>
+            <td>ערכת קי &mdash; גיבור</td>
+            <td>Chiptune + orchestral + adventure</td>
+            <td><span class="cat-badge cat-character">דמות</span></td>
+            <td><span class="status-stuck">ממתין</span></td>
+          </tr>
+          <tr>
+            <td>CHAR-002</td>
+            <td>ערכת מיקה &mdash; טק האקרית</td>
+            <td>Cyberpunk + electronic pop + glitch</td>
+            <td><span class="cat-badge cat-character">דמות</span></td>
+            <td><span class="status-stuck">ממתין</span></td>
+          </tr>
+          <tr>
+            <td>CHAR-005</td>
+            <td>ערכת יוקי &mdash; מהירות</td>
+            <td>J-pop + electronic + fast chiptune</td>
+            <td><span class="cat-badge cat-character">דמות</span></td>
+            <td><span class="status-stuck">ממתין</span></td>
+          </tr>
+          <tr>
+            <td>CHAR-008</td>
+            <td>ערכת Glitch &mdash; כאוס טהור</td>
+            <td>Vaporwave + bitcrushed + emotional</td>
+            <td><span class="cat-badge cat-character">דמות</span></td>
+            <td><span class="status-stuck">ממתין</span></td>
+          </tr>
+          <tr>
+            <td>CHAR-003</td>
+            <td>ערכת סנסיי זן &mdash; חכם</td>
+            <td>Shakuhachi + koto + zen ambient</td>
+            <td><span class="cat-badge cat-character">דמות</span></td>
+            <td><span class="status-stuck">ממתין</span></td>
+          </tr>
+          <tr>
+            <td>PLAY-001</td>
+            <td>חדר תרגול</td>
+            <td>Lo-fi + study music + chiptune-warm</td>
+            <td><span class="cat-badge cat-gameplay">גיימפליי</span></td>
+            <td><span class="status-stuck">ממתין</span></td>
+          </tr>
+          <tr>
+            <td>PLAY-004</td>
+            <td>מבחן מהירות</td>
+            <td>EDM + synthwave + adrenaline</td>
+            <td><span class="cat-badge cat-gameplay">גיימפליי</span></td>
+            <td><span class="status-stuck">ממתין</span></td>
+          </tr>
+          <tr>
+            <td>BATTLE-010</td>
+            <td>זירת טורנירים</td>
+            <td>Orchestral + epic + esports</td>
+            <td><span class="cat-badge cat-battle">קרב</span></td>
+            <td><span class="status-stuck">ממתין</span></td>
+          </tr>
+          <tr>
+            <td>STORY-001</td>
+            <td>רגע רגשי</td>
+            <td>Piano + strings + music box</td>
+            <td><span class="cat-badge cat-story">סיפור</span></td>
+            <td><span class="status-stuck">ממתין</span></td>
+          </tr>
+          <tr>
+            <td>STORY-002</td>
+            <td>ניצחון וחגיגה</td>
+            <td>Triumphant + orchestral + Middle Eastern</td>
+            <td><span class="cat-badge cat-story">סיפור</span></td>
+            <td><span class="status-stuck">ממתין</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="sub-heading">&#x1F3AF; יעדי מוזיקה לאיטרציה 10</div>
+      <div class="track-list">
+        <div class="track-item">
+          <span class="track-status done"></span>
+          <span class="track-name">Main Theme (V1 + V2)</span>
+          <span class="track-cat">ראשי</span>
+        </div>
+        <div class="track-item">
+          <span class="track-status done"></span>
+          <span class="track-name">Boss Battle (V1 + V2)</span>
+          <span class="track-cat">קרב</span>
+        </div>
+        <div class="track-item">
+          <span class="track-status ready"></span>
+          <span class="track-name">ערכת קי &mdash; גיבור</span>
+          <span class="track-cat">דמות</span>
+        </div>
+        <div class="track-item">
+          <span class="track-status ready"></span>
+          <span class="track-name">ערכת מיקה &mdash; האקרית</span>
+          <span class="track-cat">דמות</span>
+        </div>
+        <div class="track-item">
+          <span class="track-status ready"></span>
+          <span class="track-name">ערכת יוקי &mdash; מהירות</span>
+          <span class="track-cat">דמות</span>
+        </div>
+        <div class="track-item">
+          <span class="track-status ready"></span>
+          <span class="track-name">ערכת Glitch &mdash; כאוס</span>
+          <span class="track-cat">דמות</span>
+        </div>
+        <div class="track-item">
+          <span class="track-status ready"></span>
+          <span class="track-name">ערכת סנסיי זן</span>
+          <span class="track-cat">דמות</span>
+        </div>
+        <div class="track-item">
+          <span class="track-status ready"></span>
+          <span class="track-name">חדר תרגול</span>
+          <span class="track-cat">גיימפליי</span>
+        </div>
+        <div class="track-item">
+          <span class="track-status ready"></span>
+          <span class="track-name">מבחן מהירות</span>
+          <span class="track-cat">גיימפליי</span>
+        </div>
+        <div class="track-item">
+          <span class="track-status ready"></span>
+          <span class="track-name">זירת טורנירים</span>
+          <span class="track-cat">קרב</span>
+        </div>
+        <div class="track-item">
+          <span class="track-status ready"></span>
+          <span class="track-name">רגע רגשי</span>
+          <span class="track-cat">סיפור</span>
+        </div>
+        <div class="track-item">
+          <span class="track-status ready"></span>
+          <span class="track-name">ניצחון וחגיגה</span>
+          <span class="track-cat">סיפור</span>
+        </div>
+        <div class="track-item">
+          <span class="track-status pending"></span>
+          <span class="track-name">Practice Mode (lo-fi)</span>
+          <span class="track-cat">גיימפליי</span>
+        </div>
+        <div class="track-item">
+          <span class="track-status pending"></span>
+          <span class="track-name">Victory Fanfare</span>
+          <span class="track-cat">אפקט</span>
+        </div>
+      </div>
+
+      <div class="info-box warning">
+        <strong>&#x1F3AF; יעד:</strong> 14 שירים מתוך 48 עד סוף איטרציה 10 (29%) &mdash; +10 שירים חדשים!
+        <br><strong>&#x1F3A7; מקור:</strong> Suno Premier (המשתמש בעל מנוי)
+        <br><strong>&#x1F4C5; באצ'ים הבאים:</strong> שאר ערכות הדמויות + מוזיקת קרבות + ערכות בוסים + וריאציות חגים
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 3. UI/UX ==================== -->
+  <div class="section" id="uiux">
+    <div class="section-header" style="border-bottom: 2px solid rgba(79,195,247,0.3);">
+      <div class="section-icon" style="background: rgba(79,195,247,0.15); color: #4FC3F7;">&#x1F3AE;</div>
+      <h2>3. פיתוח UI/UX</h2>
+      <span class="week-badge">שבועות 1-3</span>
+    </div>
+    <div class="section-body">
+      <ul class="task-list">
+        <li class="task-item">
+          <span class="task-icon">&#x1F3A8;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-high">גבוה</span>
+              ליאאוטים אסימטריים + מגוון פונטים
+            </div>
+            <div class="task-desc">
+              הממשק עכשיו &ldquo;שטוח&rdquo; מדי. צריך יותר חיים: ליאאוטים לא סימטריים, מגוון גדלי פונטים, אלמנטים דקורטיביים.
+              השראה מ-Brawl Stars, Genshin Impact &mdash; ממשקים שילדים אוהבים.
+            </div>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F50A;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-high">גבוה</span>
+              אפקטים קוליים לכל אינטראקציית UI
+            </div>
+            <div class="task-desc">
+              כבר יש 16 SFX MP3 + 12 Web Audio sounds. צריך להרחיב: hover, click, toggle, navigation, success, error לכל כפתור ואלמנט.
+              המערכת (<code>useSoundEffect</code>) קיימת &mdash; רק צריך לחבר אותה לכל הקומפוננטות.
+            </div>
+            <span class="task-file">src/hooks/use-sound-effect.ts</span>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F624;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-high">גבוה</span>
+              מנגנון אנטי-תסכול (Anti-Frustration)
+            </div>
+            <div class="task-desc">
+              מחקר נעשה (<code>anti-frustration-research.html</code>) ואושר. צריך לממש:
+              <br>&#x2022; זיהוי שגיאות חוזרות &rarr; הצעת עזרה
+              <br>&#x2022; הסתגלות קושי דינמית (DDA)
+              <br>&#x2022; מערכת עידוד &mdash; קי מעודד אחרי כישלונות
+              <br>&#x2022; Cool-down suggestions אחרי סשנים ארוכים
+            </div>
+            <span class="task-file">docs/anti-frustration-research.html</span>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F3AF;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-medium">בינוני</span>
+              UX קרבות בוסים &mdash; הנחיות ורמזים
+            </div>
+            <div class="task-desc">
+              קרבות בוסים צריכים להיות מובנים. רמזים ברורים מה לעשות, הסברים על בקשה,
+              מניעת יציאה מתוסכלת. UI מסוג &ldquo;תלחץ כאן לעזרה&rdquo; בזמן קרב.
+            </div>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F527;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-medium">בינוני</span>
+              בחירת רמת ממשק על ידי השחקן
+            </div>
+            <div class="task-desc">
+              לאפשר לכל שחקן לבחור את רמת המורכבות של הממשק. ילדים לא יבחרו ממשק ריק, מבוגרים אולי ירצו פחות עומס.
+              הגדרה ב-settings + שמירה ב-Zustand.
+            </div>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F3C6;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-medium">בינוני</span>
+              מערכת טורנירים &mdash; אב-טיפוס
+            </div>
+            <div class="task-desc">
+              טורנירים אוטומטיים, מסונכרנים עם לוח שנה בית-ספרי.
+              הפרדה בין Live לבין Time-Limited. הפרדת גילאים קריטית!
+              <br>סוגים: בין תלמידים, בין כיתות, בין בתי ספר/דוג'ו.
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="info-box success">
+        <strong>&#x2705; מה כבר מוכן:</strong>
+        מערכת קרבות AI (<code>battle-arena</code>), 3 יריבים (<code>Shadow, Storm, Blaze</code>),
+        <code>ai-typing-engine</code>, DialogBox + StoryPlayer,
+        MusicProvider + Jukebox, 16 SFX + 12 Web Audio sounds.
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 4. STORY & NARRATIVE ==================== -->
+  <div class="section" id="story">
+    <div class="section-header" style="border-bottom: 2px solid rgba(255,107,157,0.3);">
+      <div class="section-icon" style="background: rgba(255,107,157,0.15); color: #FF6B9D;">&#x1F4D6;</div>
+      <h2>4. סיפור ונרטיב</h2>
+      <span class="week-badge">שבוע 2</span>
+    </div>
+    <div class="section-body">
+      <div class="info-box success">
+        <strong>&#x2705; 6 פרקים שלמים!</strong>
+        53 beats, ~4,000 שורות עברית. פרקים 1-6 כתובים ב-<code>src/data/story/</code>.
+        אבל הקוד <strong>מציג רק 3 פרקים</strong> &mdash; באג קריטי!
+      </div>
+
+      <ul class="task-list">
+        <li class="task-item">
+          <span class="task-icon">&#x1F41B;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-critical">קריטי</span>
+              תיקון דף הסיפור &mdash; הצגת כל 6 הפרקים
+            </div>
+            <div class="task-desc">
+              <code>getAllChapterBeats()</code> מחזיר רק פרקים 1-3. צריך:
+              <br>1. Import ל-CHAPTER_4_BEATS, CHAPTER_5_BEATS, CHAPTER_6_BEATS
+              <br>2. הוספה למערך עם כותרות בעברית:
+              פרק 4 &mdash; &ldquo;הבגידה הגדולה&rdquo;, פרק 5 &mdash; &ldquo;ההקרבה&rdquo;, פרק 6 &mdash; &ldquo;המלחמה הגדולה&rdquo;
+            </div>
+            <span class="task-file">src/hooks/use-story-trigger.ts</span>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F3AD;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-high">גבוה</span>
+              שילוב דיאלוגים בסגנון Hades לתוך המשחק
+            </div>
+            <div class="task-desc">
+              DialogBox ו-StoryPlayer כבר ממומשים. צריך לחבר אותם לזרימת המשחק:
+              <br>&#x2022; טריגרים אוטומטיים בסיום שיעור
+              <br>&#x2022; דיאלוגים לפני ואחרי קרבות בוסים
+              <br>&#x2022; דיאלוגים רנדומליים ב-lobby/home
+              <br>&#x2022; וידאו לרגעים דרמטיים (בתקציב)
+            </div>
+            <span class="task-file">src/components/story/dialog-box.tsx, story-player.tsx</span>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F38A;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-medium">בינוני</span>
+              אירועים עונתיים &#x2194; סקינים של חגים
+            </div>
+            <div class="task-desc">
+              אירועי סיפור עונתיים צריכים להשתלב עם מערכת הסקינים של חגים ישראליים.
+              חנוכה, פורים, פסח &mdash; כל חג עם אירוע סיפורי ייחודי + סקינים + רקעים + מוזיקה.
+            </div>
+            <span class="task-file">docs/israeli-holiday-skins.html</span>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F9A0;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-medium">בינוני</span>
+              וירוס &mdash; צורה כפולה (חבר &rarr; מרושע)
+            </div>
+            <div class="task-desc">
+              הוירוס מוצג כחבר/נינג'ה חמוד לפני הבגידה, ואז צורת אמת מרושעת.
+              <code>virus-dual-form-v1.jpg</code> כבר נוצר. צריך לשלב את שתי הצורות בסיפור ובקרבות.
+            </div>
+            <span class="task-file">public/images/characters/model-sheets/virus-dual-form-v1.jpg</span>
+          </div>
+        </li>
+      </ul>
+
+      <div class="sub-heading">&#x1F4DC; מבנה הפרקים</div>
+      <table class="prompts-table">
+        <thead>
+          <tr>
+            <th>פרק</th>
+            <th>שם</th>
+            <th>beats</th>
+            <th>סטטוס תוכן</th>
+            <th>סטטוס בקוד</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>הקריאה</td>
+            <td>8</td>
+            <td><span class="status-done">כתוב &#10003;</span></td>
+            <td><span class="status-done">מוצג &#10003;</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>צעדים ראשונים</td>
+            <td>8</td>
+            <td><span class="status-done">כתוב &#10003;</span></td>
+            <td><span class="status-done">מוצג &#10003;</span></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>הסערה מתקרבת</td>
+            <td>10</td>
+            <td><span class="status-done">כתוב &#10003;</span></td>
+            <td><span class="status-done">מוצג &#10003;</span></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>הבגידה הגדולה</td>
+            <td>~9</td>
+            <td><span class="status-done">כתוב &#10003;</span></td>
+            <td><span class="status-stuck">&#x274C; לא מוצג</span></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>ההקרבה</td>
+            <td>~8</td>
+            <td><span class="status-done">כתוב &#10003;</span></td>
+            <td><span class="status-stuck">&#x274C; לא מוצג</span></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>המלחמה הגדולה</td>
+            <td>10</td>
+            <td><span class="status-done">כתוב &#10003;</span></td>
+            <td><span class="status-stuck">&#x274C; לא מוצג</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ==================== 5. ART & CHARACTERS ==================== -->
+  <div class="section" id="art">
+    <div class="section-header" style="border-bottom: 2px solid rgba(168,85,247,0.3);">
+      <div class="section-icon" style="background: rgba(168,85,247,0.15); color: #a855f7;">&#x1F3A8;</div>
+      <h2>5. אומנות ודמויות</h2>
+      <span class="week-badge">שבועות 2-3</span>
+    </div>
+    <div class="section-body">
+      <ul class="task-list">
+        <li class="task-item">
+          <span class="task-icon">&#x1F30D;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-high">גבוה</span>
+              גיוון דמויות &mdash; כור היתוך ישראלי
+            </div>
+            <div class="task-desc">
+              הדמויות &ldquo;לבנות&rdquo; מדי. צריך לשקף את המציאות הישראלית:
+              אשכנזים, אפריקאים, צפון-אפריקאים, תימנים, אסייתים, דרום-אמריקאים.
+              <br>&#x2022; קאי &mdash; אולי עור כהה יותר, יותר ביישן/חסר ביטחון
+              <br>&#x2022; Phantom &mdash; תימני, לטפל ברגישות! (לא לגעת בנושא חטיפות ילדי תימן)
+              <br>&#x2022; דמויות חדשות עם ייצוג מגוון
+            </div>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F3AD;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-high">גבוה</span>
+              דפי הבעות חסרים &mdash; יצירה עם consistency
+            </div>
+            <div class="task-desc">
+              דמויות שצריכות דפי הבעות חדשים/מעודכנים: <strong>Yuki, Rex, Pixel, Kai</strong>.
+              כל דף הבעות חייב להיות עקבי עם ה-model sheet &mdash; אותה דמות, אותו סגנון!
+              להשתמש במנגנון ה-consistency שנבנה (skill + reference images).
+            </div>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F52E;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-medium">בינוני</span>
+              POC לצינור דמויות תלת-מימדיות
+            </div>
+            <div class="task-desc">
+              תקציב מאושר: $150-$350. המטרה הסופית היא דמויות 3D עם אנימציות 3D.
+              <br>&#x2022; חקר כלים: Meshy, Tripo3D, Spline
+              <br>&#x2022; POC עם דמות אחת (קי?)
+              <br>&#x2022; הגדרת pipeline: 2D model sheet &rarr; 3D model &rarr; animations
+            </div>
+            <span class="task-file">docs/3d-animation-research.html</span>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F383;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-low">נמוך</span>
+              סקינים של חגים &mdash; השלמות
+            </div>
+            <div class="task-desc">
+              סקינים חסרים: Blaze, Shadow, Phantom + כל דמות עתידית.
+              חלוקה שווה על פני השנה &mdash; לא כל דמות צריכה כל חג.
+              ברונזה/כסף/זהב &mdash; סקינים לכל הדמויות כסמלי הישג.
+            </div>
+            <span class="task-file">docs/holiday-skins-expansion.html</span>
+          </div>
+        </li>
+      </ul>
+
+      <div class="sub-heading">&#x1F4CA; מצב אומנות &mdash; סיכום</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0;">
+        <div class="info-box success">
+          <strong>&#x2705; Model Sheets</strong>
+          <br>37 model sheets מוכנים
+          <br>כולל 6 גרסאות Glitch, Virus dual-form, Master Beat, Raz
+        </div>
+        <div class="info-box warning">
+          <strong>&#x26A0; Expression Sheets</strong>
+          <br>24 דפי הבעות (V1-V4)
+          <br>4 דמויות עדיין חסרות expressions
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 6. TOOLS & SKILLS ==================== -->
+  <div class="section" id="tools">
+    <div class="section-header" style="border-bottom: 2px solid rgba(0,188,212,0.3);">
+      <div class="section-icon" style="background: rgba(0,188,212,0.15); color: #00BCD4;">&#x1F6E0;</div>
+      <h2>6. כלים, סקילים ואוטומציה</h2>
+      <span class="week-badge">שבוע 2</span>
+    </div>
+    <div class="section-body">
+      <ul class="task-list">
+        <li class="task-item">
+          <span class="task-icon">&#x26A1;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-high">גבוה</span>
+              6 סקילים חדשים ליצור (מביקורת frontend)
+            </div>
+            <div class="task-desc">
+              מביקורת הסקילים (<code>frontend-skills-audit.html</code>):
+              <br>&#x2022; Character Consistency Skill &mdash; מבטיח עקביות בין דפי דגם להבעות
+              <br>&#x2022; Music Pipeline Skill &mdash; אוטומציה של יצירת שירים ב-Suno
+              <br>&#x2022; Story Integration Skill &mdash; חיבור סיפור לגיימפליי
+              <br>&#x2022; Holiday Theme Skill &mdash; ניהול סקינים עונתיים
+              <br>&#x2022; Sound Design Skill &mdash; ניהול אפקטי סאונד
+              <br>&#x2022; Tournament Builder Skill &mdash; בניית מערכות טורנירים
+            </div>
+            <span class="task-file">docs/frontend-skills-audit.html</span>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F4E6;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-medium">בינוני</span>
+              18 סקילים לאמץ cross-application
+            </div>
+            <div class="task-desc">
+              סקילים שקיימים בספרייה ורלוונטיים לפרויקט הזה &mdash; צריך לאמץ, להתאים, ולהטמיע.
+              כולל: UI patterns, animation skills, testing skills, deployment skills.
+            </div>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F916;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-medium">בינוני</span>
+              אוטומציה של pipeline מוזיקה
+            </div>
+            <div class="task-desc">
+              סקריפט שמקבל שם שיר &rarr; שולח ל-Suno &rarr; מוריד &rarr; מעבד עם ffmpeg &rarr; ממקם בפרויקט &rarr; מעדכן manifest.
+              לחסוך עבודה ידנית חוזרת על 44 שירים שנותרו.
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== 7. TEACHERS & PARENTS ==================== -->
+  <div class="section" id="teachers">
+    <div class="section-header" style="border-bottom: 2px solid rgba(0,184,148,0.3);">
+      <div class="section-icon" style="background: rgba(0,184,148,0.15); color: #00B894;">&#x1F468;&#x200D;&#x1F3EB;</div>
+      <h2>7. מורים והורים</h2>
+      <span class="week-badge">שבוע 3</span>
+    </div>
+    <div class="section-body">
+      <ul class="task-list">
+        <li class="task-item">
+          <span class="task-icon">&#x1F4F1;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-high">גבוה</span>
+              ממשק מובייל למורים/הורים
+            </div>
+            <div class="task-desc">
+              מורים צריכים לעקוב אחרי תלמידים מהטלפון. דשבורד מינימלי:
+              <br>&#x2022; מעקב התקדמות תלמידים
+              <br>&#x2022; ניהול כיתות וקודי כיתה
+              <br>&#x2022; דוחות פעילות שבועיים
+              <br>&#x2022; ניהול טורנירים
+              <br>Responsive design &mdash; PWA mobile-first.
+            </div>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F5FA;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-medium">בינוני</span>
+              מיפוי מיומנויות &mdash; איזו דמות מלמדת מה
+            </div>
+            <div class="task-desc">
+              מורים צריכים להבין בבירור:
+              <br>&#x2022; סנסיי זן &rarr; שיעורי הקלדה בסיסיים
+              <br>&#x2022; יוקי &rarr; מבחני מהירות
+              <br>&#x2022; לונה &rarr; תרגול חופשי
+              <br>&#x2022; מיקה &rarr; קיצורי מקלדת
+              <br>&#x2022; פיקסל &rarr; סטטיסטיקות
+              <br>&#x2022; רקס &rarr; משחקים
+              <br>מסמך ברור שמורה יכול להשתמש בו לתכנון שיעורים ללא נרטיב.
+            </div>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F4DA;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-medium">בינוני</span>
+              מחקר פדגוגי &mdash; איכות הדרכה
+            </div>
+            <div class="task-desc">
+              מחקר על שיטות הוראת הקלדה לילדים. שילוב עקרונות פדגוגיים מוכחים
+              בהדרכת ההורים/מורים.
+              קישור למקורות אקדמיים &rarr; אמינות.
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== 8. COMMUNITY FEATURES ==================== -->
+  <div class="section" id="community">
+    <div class="section-header" style="border-bottom: 2px solid rgba(255,215,0,0.3);">
+      <div class="section-icon" style="background: rgba(255,215,0,0.15); color: #FFD700;">&#x1F3C6;</div>
+      <h2>8. תכונות קהילתיות</h2>
+      <span class="week-badge">שבוע 3</span>
+    </div>
+    <div class="section-body">
+      <ul class="task-list">
+        <li class="task-item">
+          <span class="task-icon">&#x2694;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-high">גבוה</span>
+              מערכת טורנירים &mdash; אב-טיפוס בסיסי
+            </div>
+            <div class="task-desc">
+              סוגי טורנירים:
+              <br>&#x2022; <strong>Live</strong> &mdash; כולם מקלידים בו-זמנית
+              <br>&#x2022; <strong>Time-Limited</strong> &mdash; חלון זמן (24 שעות) להשלים אתגר
+              <br>&#x2022; <strong>League</strong> &mdash; דירוג שבועי מצטבר
+              <br>הפרדת גילאים חובה! סנכרון עם לוח שנה בית-ספרי.
+            </div>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F3EF;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-medium">בינוני</span>
+              מחולל שמות דוג'ו (20+ סוגים)
+            </div>
+            <div class="task-desc">
+              20 סוגי דוג'ו לא מספיקים! צריך מחולל דינמי:
+              <br>&#x2022; תבניות: [תואר] + [חיה/אלמנט] + [דוג'ו/מקדש/אקדמיה]
+              <br>&#x2022; דוגמאות: &ldquo;דוג'ו הדרקון הכסוף&rdquo;, &ldquo;אקדמיית הנשר הפלדה&rdquo;
+              <br>&#x2022; הגנה מפני שמות פוגעניים
+            </div>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F947;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-medium">בינוני</span>
+              סקינים ברונזה/כסף/זהב לכל הדמויות
+            </div>
+            <div class="task-desc">
+              כל דמות מקבלת 3 רמות סקין כסמל הישג:
+              <br>&#x2022; ברונזה &mdash; השלמת אתגר בסיסי
+              <br>&#x2022; כסף &mdash; השלמת אתגר מתקדם
+              <br>&#x2022; זהב &mdash; שליטה מלאה (bragging rights!)
+              <br>נראות כמדליות/שכבות מתכתיות על הדמות.
+            </div>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F4CA;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-low">נמוך</span>
+              לוחות הישגים ותעודות
+            </div>
+            <div class="task-desc">
+              Leaderboards לפי: מהירות, דיוק, רצף ימים, ניקוד סיפור.
+              תעודות דיגיטליות: &ldquo;נינג'ה הקלדה רמה X&rdquo; &mdash; ניתנות להדפסה/שיתוף.
+            </div>
+          </div>
+        </li>
+
+        <li class="task-item">
+          <span class="task-icon">&#x1F6E1;</span>
+          <div class="task-content">
+            <div class="task-title">
+              <span class="priority-low">נמוך</span>
+              הגבלת אמוג'ים ותוכן
+            </div>
+            <div class="task-desc">
+              Rate limiting על אמוג'ים ב-social features. מניעת spam.
+              סינון תוכן לשמות דוג'ו/משתמשים.
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== 9. TIMELINE & PROGRESS ==================== -->
+  <div class="section" id="progress">
+    <div class="section-header" style="border-bottom: 2px solid rgba(108,92,231,0.3);">
+      <div class="section-icon" style="background: rgba(108,92,231,0.15); color: #a78bfa;">&#x1F4CA;</div>
+      <h2>9. טיימליין וסטטוס כולל</h2>
+    </div>
+    <div class="section-body">
+
+      <div class="sub-heading">&#x1F4C8; התקדמות כוללת של הפרויקט</div>
+
+      <!-- Music -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F3B5; מוזיקה ופסקול</span>
+          <span class="percent percent-red">4 / 48 &mdash; 8%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill red" style="width: 8%;"></div>
+        </div>
+      </div>
+
+      <!-- Story -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F4D6; סיפור ונרטיב</span>
+          <span class="percent percent-green">6 / 6 &mdash; 100%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill green" style="width: 100%;"></div>
+        </div>
+      </div>
+
+      <!-- Characters Art -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F3A8; אומנות דמויות (model sheets + expressions)</span>
+          <span class="percent percent-purple">75%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill purple" style="width: 75%;"></div>
+        </div>
+      </div>
+
+      <!-- UI/UX -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F3AE; ממשק משתמש (UI/UX)</span>
+          <span class="percent percent-orange">40%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill orange" style="width: 40%;"></div>
+        </div>
+      </div>
+
+      <!-- Battle System -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x2694; מערכת קרבות AI</span>
+          <span class="percent percent-green">100%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill green" style="width: 100%;"></div>
+        </div>
+      </div>
+
+      <!-- Sound System -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F50A; מערכת סאונד (SFX + Web Audio)</span>
+          <span class="percent percent-purple">75%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill purple" style="width: 75%;"></div>
+        </div>
+      </div>
+
+      <!-- Voice System -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F399; קולות דמויות (ElevenLabs)</span>
+          <span class="percent percent-teal">85%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill teal" style="width: 85%;"></div>
+        </div>
+      </div>
+
+      <!-- Community -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F3C6; תכונות קהילתיות</span>
+          <span class="percent percent-orange">25%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill orange" style="width: 25%;"></div>
+        </div>
+      </div>
+
+      <!-- Teacher Portal -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F468;&#x200D;&#x1F3EB; פורטל מורים/הורים</span>
+          <span class="percent percent-red">10%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill red" style="width: 10%;"></div>
+        </div>
+      </div>
+
+      <!-- Tests -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F9EA; בדיקות (Unit + E2E)</span>
+          <span class="percent percent-green">1,096 עוברים</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill green" style="width: 95%;"></div>
+        </div>
+      </div>
+
+      <!-- TypeScript -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F537; TypeScript (ניקיון טיפוסים)</span>
+          <span class="percent percent-green">נקי &#10003;</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill green" style="width: 100%;"></div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="sub-heading">&#x1F4C5; טיימליין שבועי</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-week">
+            <span class="week-num">שבוע 1</span>
+          </div>
+          <div class="timeline-dot" style="background: var(--accent-red);"></div>
+          <div class="timeline-content">
+            <h4>&#x1F534; תיקונים קריטיים + מוזיקה באצ'ה 1</h4>
+            <ul>
+              <li>תיקון Glitch character-config (bug-villain.jpg)</li>
+              <li>תיקון getAllChapterBeats() &mdash; הוספת פרקים 4-6</li>
+              <li>סנסיי זן &mdash; אימות צורת צב בכל הקוד</li>
+              <li>התחלת Suno batch 1 (5 ערכות דמויות)</li>
+              <li>התחלת אפקטים קוליים ל-UI</li>
+              <li>מיקה redesign &mdash; התחלת עבודה</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-week">
+            <span class="week-num">שבוע 2</span>
+          </div>
+          <div class="timeline-dot" style="background: var(--accent-blue);"></div>
+          <div class="timeline-content">
+            <h4>&#x1F535; מוזיקה + סיפור + אומנות + כלים</h4>
+            <ul>
+              <li>השלמת Suno batch 1 (5 gameplay/story tracks)</li>
+              <li>שילוב דיאלוגים Hades-style בגיימפליי</li>
+              <li>יצירת דפי הבעות חסרים (Yuki, Rex, Pixel, Kai)</li>
+              <li>מימוש אנטי-תסכול (DDA, עידוד, cool-down)</li>
+              <li>יצירת 6 סקילים חדשים</li>
+              <li>גיוון דמויות &mdash; כור היתוך ישראלי</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-week">
+            <span class="week-num">שבוע 3</span>
+          </div>
+          <div class="timeline-dot" style="background: var(--accent-secondary);"></div>
+          <div class="timeline-content">
+            <h4>&#x1F7E2; קהילה + מורים + POC תלת-מימד</h4>
+            <ul>
+              <li>אב-טיפוס מערכת טורנירים</li>
+              <li>ממשק מובייל למורים/הורים</li>
+              <li>מיפוי מיומנויות דמות&#x2194;שיעור</li>
+              <li>POC צינור 3D (דמות אחת)</li>
+              <li>מחולל שמות דוג'ו</li>
+              <li>בדיקות, QA, ואיטרציה</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 10. ITERATION GOALS ==================== -->
+  <div class="section" id="goals">
+    <div class="section-header" style="border-bottom: 2px solid rgba(255,215,0,0.3);">
+      <div class="section-icon" style="background: rgba(255,215,0,0.15); color: #FFD700;">&#x1F3AF;</div>
+      <h2>10. יעדי איטרציה 10 &mdash; צ'קליסט</h2>
+    </div>
+    <div class="section-body">
+      <div class="info-box">
+        <strong>יעד מרכזי:</strong> להוציא את הפרויקט מהקיפאון במוזיקה, לתקן באגים קריטיים,
+        ולהתחיל לבנות את התשתית הקהילתית. בסוף איטרציה 10 המשחק צריך להרגיש <strong>שלם יותר</strong> &mdash;
+        עם סאונד, סיפור מלא, ודמויות עקביות.
+      </div>
+
+      <ul class="goal-list">
+        <li class="goal-item">
+          <div class="goal-checkbox"></div>
+          <span class="goal-text">
+            <span class="priority-critical">קריטי</span>
+            תיקון <code>character-config.ts</code> &mdash; Glitch נתיב תמונה
+          </span>
+        </li>
+        <li class="goal-item">
+          <div class="goal-checkbox"></div>
+          <span class="goal-text">
+            <span class="priority-critical">קריטי</span>
+            תיקון <code>getAllChapterBeats()</code> &mdash; הצגת כל 6 הפרקים
+          </span>
+        </li>
+        <li class="goal-item">
+          <div class="goal-checkbox"></div>
+          <span class="goal-text">
+            <span class="priority-critical">קריטי</span>
+            סנסיי זן &mdash; אימות צורת צב בכל המקומות
+          </span>
+        </li>
+        <li class="goal-item">
+          <div class="goal-checkbox"></div>
+          <span class="goal-text">
+            <span class="priority-high">גבוה</span>
+            <span class="goal-metric">14/48</span> שירים מוכנים (+10 מאצווה 1 של Suno)
+          </span>
+        </li>
+        <li class="goal-item">
+          <div class="goal-checkbox"></div>
+          <span class="goal-text">
+            <span class="priority-high">גבוה</span>
+            כל אומנות הדמויות הקריטית מתוקנת (expressions עקביים)
+          </span>
+        </li>
+        <li class="goal-item">
+          <div class="goal-checkbox"></div>
+          <span class="goal-text">
+            <span class="priority-high">גבוה</span>
+            מיקה &mdash; עיצוב מחדש נשי/קלאסי
+          </span>
+        </li>
+        <li class="goal-item">
+          <div class="goal-checkbox"></div>
+          <span class="goal-text">
+            <span class="priority-high">גבוה</span>
+            דף הסיפור מציג את כל 6 הפרקים עם דיאלוג Hades-style
+          </span>
+        </li>
+        <li class="goal-item">
+          <div class="goal-checkbox"></div>
+          <span class="goal-text">
+            <span class="priority-high">גבוה</span>
+            מנגנון אנטי-תסכול פעיל (DDA + עידוד + cool-down)
+          </span>
+        </li>
+        <li class="goal-item">
+          <div class="goal-checkbox"></div>
+          <span class="goal-text">
+            <span class="priority-high">גבוה</span>
+            אפקטים קוליים על <strong>כל</strong> אינטראקציות UI
+          </span>
+        </li>
+        <li class="goal-item">
+          <div class="goal-checkbox"></div>
+          <span class="goal-text">
+            <span class="priority-medium">בינוני</span>
+            אב-טיפוס מערכת טורנירים בסיסי
+          </span>
+        </li>
+        <li class="goal-item">
+          <div class="goal-checkbox"></div>
+          <span class="goal-text">
+            <span class="priority-medium">בינוני</span>
+            POC צינור 3D &mdash; התחלת עבודה
+          </span>
+        </li>
+        <li class="goal-item">
+          <div class="goal-checkbox"></div>
+          <span class="goal-text">
+            <span class="priority-medium">בינוני</span>
+            ממשק מובייל למורים &mdash; מסך ראשון
+          </span>
+        </li>
+        <li class="goal-item">
+          <div class="goal-checkbox"></div>
+          <span class="goal-text">
+            <span class="priority-medium">בינוני</span>
+            6 סקילים חדשים פעילים
+          </span>
+        </li>
+        <li class="goal-item">
+          <div class="goal-checkbox"></div>
+          <span class="goal-text">
+            <span class="priority-low">נמוך</span>
+            גיוון דמויות &mdash; לפחות 2 דמויות מעודכנות
+          </span>
+        </li>
+      </ul>
+
+      <div class="divider"></div>
+
+      <div class="sub-heading">&#x1F4CA; יעד התקדמות &mdash; סוף איטרציה 10</div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 16px 0;">
+        <div style="background: var(--bg-secondary); border-radius: 12px; padding: 20px; text-align: center; border: 1px solid var(--border-color);">
+          <div style="font-size: 2em; margin-bottom: 4px;">&#x1F3B5;</div>
+          <div style="font-size: 1.8em; font-weight: 800; color: #FF9800;">14</div>
+          <div style="color: var(--text-secondary); font-size: 0.85em;">שירים (מ-4)</div>
+          <div style="color: var(--text-muted); font-size: 0.75em; margin-top: 4px;">29% מתוך 48</div>
+        </div>
+        <div style="background: var(--bg-secondary); border-radius: 12px; padding: 20px; text-align: center; border: 1px solid var(--border-color);">
+          <div style="font-size: 2em; margin-bottom: 4px;">&#x1F3A8;</div>
+          <div style="font-size: 1.8em; font-weight: 800; color: #00B894;">90%</div>
+          <div style="color: var(--text-secondary); font-size: 0.85em;">אומנות דמויות</div>
+          <div style="color: var(--text-muted); font-size: 0.75em; margin-top: 4px;">מ-75% נוכחי</div>
+        </div>
+        <div style="background: var(--bg-secondary); border-radius: 12px; padding: 20px; text-align: center; border: 1px solid var(--border-color);">
+          <div style="font-size: 2em; margin-bottom: 4px;">&#x1F3AE;</div>
+          <div style="font-size: 1.8em; font-weight: 800; color: #4FC3F7;">55%</div>
+          <div style="color: var(--text-secondary); font-size: 0.85em;">UI/UX</div>
+          <div style="color: var(--text-muted); font-size: 0.75em; margin-top: 4px;">מ-40% נוכחי</div>
+        </div>
+      </div>
+
+      <div class="info-box success">
+        <strong>מדד הצלחה:</strong> בסוף איטרציה 10, שחקן שנכנס למשחק ישמע מוזיקה ייחודית בכל מסך,
+        יראה את כל 6 פרקי הסיפור, יחווה דיאלוגים עם דמויות עקביות ואטרקטיביות,
+        ולא יתסכל &mdash; כי המערכת תזהה ותעזור.
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- ==================== FOOTER ==================== -->
+<div class="footer">
+  <div class="footer-logo">נינג'ה מקלדת</div>
+  <div class="footer-sub">
+    תוכנית אב &mdash; איטרציה 10
+    <br>נוצר: מרץ 2026
+    <br>Ninja Keyboard &mdash; Iteration 10 Master Plan
+  </div>
+</div>
+
+</body>
+</html>

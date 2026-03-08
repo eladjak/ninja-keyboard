@@ -37,7 +37,7 @@ const INFINITE_REPEAT = Infinity
 export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
   ki: {
     nameHe: 'קי',
-    image: '/images/characters/model-sheets/ki-boy-v2.jpg',
+    image: '/images/characters/model-sheets/ki-boy.jpg',
     glowColor: '#6C5CE7',
     soundProfile: {
       oscillatorType: 'sine',
@@ -217,7 +217,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
 
   bug: {
     nameHe: 'באג',
-    image: '/images/characters/model-sheets/bug-villain.jpg',
+    image: '/images/characters/model-sheets/bug-creature.jpg',
     glowColor: '#D63031',
     soundProfile: {
       oscillatorType: 'sawtooth',
@@ -237,7 +237,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
 
   glitch: {
     nameHe: 'גליץ\'',
-    image: '/images/characters/model-sheets/bug-villain.jpg',
+    image: '/images/characters/model-sheets/glitch-entity.jpg',
     glowColor: '#E84393',
     soundProfile: {
       oscillatorType: 'sawtooth',
@@ -257,7 +257,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
 
   shadow: {
     nameHe: 'שאדו',
-    image: '/images/characters/model-sheets/shadow-v2.jpg',
+    image: '/images/characters/model-sheets/shadow-cat.jpg',
     glowColor: '#636E72',
     soundProfile: {
       oscillatorType: 'triangle',
@@ -277,7 +277,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
 
   storm: {
     nameHe: 'סטורם',
-    image: '/images/characters/model-sheets/storm-v2.jpg',
+    image: '/images/characters/model-sheets/storm-fox.jpg',
     glowColor: '#0984E3',
     soundProfile: {
       oscillatorType: 'square',
@@ -297,7 +297,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
 
   blaze: {
     nameHe: 'בלייז',
-    image: '/images/characters/model-sheets/blaze-v2.jpg',
+    image: '/images/characters/model-sheets/blaze-dragon.jpg',
     glowColor: '#E55039',
     soundProfile: {
       oscillatorType: 'sawtooth',
@@ -317,7 +317,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
 
   virus: {
     nameHe: 'וירוס',
-    image: '/images/characters/model-sheets/virus-dual-form-v1.jpg',
+    image: '/images/characters/model-sheets/virus-dual-form.jpg',
     glowColor: '#D63031',
     soundProfile: {
       oscillatorType: 'sawtooth',
@@ -337,7 +337,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
 
   phantom: {
     nameHe: 'פאנטום',
-    image: '/images/characters/model-sheets/raz-phantom-v1.jpg',
+    image: '/images/characters/model-sheets/raz-phantom.jpg',
     glowColor: '#9B59B6',
     soundProfile: {
       oscillatorType: 'triangle',
@@ -377,7 +377,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
 
   masterBeat: {
     nameHe: 'מאסטר ביט',
-    image: '/images/characters/model-sheets/master-beat-v1.jpg',
+    image: '/images/characters/model-sheets/master-beat.jpg',
     glowColor: '#FFD700',
     soundProfile: {
       oscillatorType: 'sine',
@@ -397,7 +397,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
 
   sakura: {
     nameHe: 'סאקורה',
-    image: '/images/characters/model-sheets/sakura-model-sheet-v2.jpg',
+    image: '/images/characters/model-sheets/sakura.jpg',
     glowColor: '#FF69B4',
     soundProfile: {
       oscillatorType: 'sine',

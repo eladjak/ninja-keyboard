@@ -58,7 +58,7 @@
         "anaf_12_14": "Icon only, minimal dialogue",
         "tzameret_14_16": "Optional (can be turned off in settings)"
       },
-      "latestApproved": "model-sheets/ki-boy-v5.jpg",
+      "latestApproved": "model-sheets/ki-boy.jpg",
       "version": "V5",
       "pageAssignment": "Home Dashboard (hero/welcome), Onboarding (guide), Profile/Settings (small icon)"
     },
@@ -94,7 +94,7 @@
         "drone companion presence",
         "orange mask (battle mode only)"
       ],
-      "latestApproved": "model-sheets/mika-girl-v5.jpg",
+      "latestApproved": "model-sheets/mika-girl.jpg",
       "version": "V5",
       "pageAssignment": "Keyboard Shortcuts (tech expert), Cyber Lab environment"
     },
@@ -128,7 +128,7 @@
         "goggles position (up on forehead or down over eyes)",
         "speed effect trails"
       ],
-      "latestApproved": "model-sheets/yuki-girl-v5.jpg",
+      "latestApproved": "model-sheets/yuki-girl.jpg",
       "version": "V5",
       "pageAssignment": "Speed Test (competitor), Speed Arena environment",
       "voice": {
@@ -168,7 +168,7 @@
         "paint splash colors on smock"
       ],
       "narrativeArc": "Shy girl who learns to be extroverted and show her art to the world",
-      "latestApproved": "model-sheets/luna-girl-v5.jpg",
+      "latestApproved": "model-sheets/luna-girl.jpg",
       "version": "V5",
       "pageAssignment": "Practice Mode (calm guide), Moonlit Garden environment"
     },
@@ -203,7 +203,7 @@
         "healing aura effects"
       ],
       "narrativeArc": "Noa heals/converts Bug Queen Zara instead of fighting her",
-      "latestApproved": "model-sheets/noa-girl-v5.jpg",
+      "latestApproved": "model-sheets/noa-girl.jpg",
       "version": "V5",
       "pageAssignment": "Error Help (contextual overlay, appears when player struggles)"
     },
@@ -238,7 +238,7 @@
         "flame intensity/aura effects",
         "battle stance variations"
       ],
-      "latestApproved": "model-sheets/kai-boy-v5.jpg",
+      "latestApproved": "model-sheets/kai-boy.jpg",
       "version": "V5",
       "pageAssignment": "Battle Arena (coach), Battle Colosseum environment"
     },
@@ -274,7 +274,7 @@
         "aura/wisdom effects",
         "meditation pose variations"
       ],
-      "latestApproved": "model-sheets/sensei-zen-v2.jpg",
+      "latestApproved": "model-sheets/sensei-zen.jpg",
       "version": "V2",
       "pageAssignment": "Lessons (guide), Training Dojo, Teacher/Admin dashboards",
       "voice": {
@@ -313,7 +313,7 @@
         "wing spread level",
         "cherry blossom petal effects"
       ],
-      "latestApproved": "model-sheets/sakura-model-sheet-v2.jpg",
+      "latestApproved": "model-sheets/sakura.jpg",
       "version": "V2",
       "pageAssignment": "Speed training mentor, appears with Yuki"
     },
@@ -348,7 +348,7 @@
         "LED color shifts for mood",
         "data stream patterns"
       ],
-      "latestApproved": "model-sheets/pixel-robot-v5.jpg",
+      "latestApproved": "model-sheets/pixel-robot.jpg",
       "version": "V5",
       "pageAssignment": "Statistics (data display), Cyber Lab (with Mika), Games Hub (scores)"
     },
@@ -383,7 +383,7 @@
         "VR headset position (on/off)"
       ],
       "narrativeArc": "Clumsy comedian who overcomes creative block (Block is his rival)",
-      "latestApproved": "model-sheets/rex-dino-v5.jpg",
+      "latestApproved": "model-sheets/rex-dino.jpg",
       "version": "V5",
       "pageAssignment": "Games Hub (buddy), Games Arcade environment"
     },
@@ -425,7 +425,7 @@
         "bug_boss_l7": "Slightly larger, more error symbols glowing",
         "bug_king_l20": "Wears tiny crown, chubby beetle, still adorable"
       },
-      "latestApproved": "model-sheets/bug-creature-v5.jpg",
+      "latestApproved": "model-sheets/bug-creature.jpg",
       "version": "V5",
       "pageAssignment": "Boss Battles, Error events, monthly Boss Events"
     },
@@ -520,7 +520,7 @@
         "shadow/smoke effects intensity",
         "cloak state (open/closed)"
       ],
-      "latestApproved": "model-sheets/shadow-cat-v5.jpg",
+      "latestApproved": "model-sheets/shadow-cat.jpg",
       "version": "V5",
       "pageAssignment": "Battle Arena (first opponent)"
     },
@@ -555,7 +555,7 @@
         "lightning effects intensity",
         "speed lines/trails"
       ],
-      "latestApproved": "model-sheets/storm-fox-v5.jpg",
+      "latestApproved": "model-sheets/storm-fox.jpg",
       "version": "V5",
       "pageAssignment": "Battle Arena (mid-level opponent)"
     },
@@ -591,7 +591,7 @@
         "size (can grow for battle scenes ONLY)",
         "ember crown glow level"
       ],
-      "latestApproved": "model-sheets/blaze-dragon-v5.jpg",
+      "latestApproved": "model-sheets/blaze-dragon.jpg",
       "version": "V5",
       "pageAssignment": "Battle Arena (final opponent)"
     },
@@ -626,7 +626,7 @@
         "lightning effects",
         "arrogance level in expression"
       ],
-      "latestApproved": "model-sheets/barak-model-sheet-v1.jpg",
+      "latestApproved": "model-sheets/barak-fox.jpg",
       "version": "V1",
       "pageAssignment": "Speed challenges, Tournament arc"
     },
@@ -662,7 +662,7 @@
         "wing state (folded/spread/active)",
         "corruption level (pre/post healing)"
       ],
-      "latestApproved": "model-sheets/zara-model-sheet-v1.jpg",
+      "latestApproved": "model-sheets/zara.jpg",
       "version": "V1",
       "pageAssignment": "Boss battles, Code Forest environment"
     },
@@ -697,7 +697,7 @@
         "armor crack state (battle damage)",
         "crown error messages content"
       ],
-      "latestApproved": "model-sheets/keres-model-sheet-v1.jpg",
+      "latestApproved": "model-sheets/keres.jpg",
       "version": "V1",
       "pageAssignment": "Chapter 6 boss battles"
     },
@@ -735,7 +735,7 @@
         "mask on/off"
       ],
       "narrativeArc": "Returns in Act 5. Mentor to Mika during grief over Glitch. 'Even ghosts leave fragments.' Becomes ally.",
-      "latestApproved": "model-sheets/phantom-model-sheet-v1.jpg",
+      "latestApproved": "model-sheets/raz-phantom.jpg",
       "version": "V1",
       "pageAssignment": "Unlocked after beating Blaze 3x, secret rival"
     },
@@ -906,7 +906,7 @@
         "crack/break state (when defeated by creativity)"
       ],
       "narrativeArc": "Embodies creative block. Rex's rival who learns that creativity breaks through blocks.",
-      "latestApproved": "model-sheets/block-model-sheet-v1.jpg",
+      "latestApproved": "model-sheets/block.jpg",
       "version": "V1",
       "pageAssignment": "Rex's story arc, creativity challenges"
     },
@@ -943,7 +943,7 @@
         "body angle/pose"
       ],
       "narrativeArc": "Perfect but soulless. Learns from Pixel that art needs emotion, not just technical perfection.",
-      "latestApproved": "model-sheets/lens-model-sheet-v1.jpg",
+      "latestApproved": "model-sheets/lens.jpg",
       "version": "V1",
       "pageAssignment": "Photography competition arc, Pixel's story"
     },
@@ -989,68 +989,68 @@
   "artInventory": {
     "modelSheets": {
       "generated": [
-        "ki-boy-v5.jpg",
-        "mika-girl-v5.jpg",
-        "yuki-girl-v5.jpg",
-        "luna-girl-v5.jpg",
-        "noa-girl-v5.jpg",
-        "kai-boy-v5.jpg",
-        "sensei-zen-v5.jpg",
-        "sensei-zen-v2.jpg",
-        "sakura-model-sheet-v1.jpg",
-        "sakura-model-sheet-v2.jpg",
-        "pixel-robot-v5.jpg",
-        "rex-dino-v5.jpg",
-        "bug-creature-v5.jpg",
-        "bugking-boss-v5.jpg",
-        "glitch-entity-v5.jpg",
+        "ki-boy.jpg",
+        "mika-girl.jpg",
+        "yuki-girl.jpg",
+        "luna-girl.jpg",
+        "noa-girl.jpg",
+        "kai-boy.jpg",
+        "sensei-zen-OLD-human.jpg",
+        "sensei-zen.jpg",
+        "sakura-OLD.jpg",
+        "sakura.jpg",
+        "pixel-robot.jpg",
+        "rex-dino.jpg",
+        "bug-creature.jpg",
+        "bugking.jpg",
+        "glitch-entity.jpg",
         "glitch-v1-confused.jpg",
         "glitch-v2-forming.jpg",
         "glitch-v3-neutral.jpg",
         "glitch-v4-evil.jpg",
         "glitch-v5-broken.jpg",
         "glitch-v6-whole.jpg",
-        "shadow-cat-v5.jpg",
-        "storm-fox-v5.jpg",
-        "blaze-dragon-v5.jpg",
-        "barak-model-sheet-v1.jpg",
-        "zara-model-sheet-v1.jpg",
-        "keres-model-sheet-v1.jpg",
-        "phantom-model-sheet-v1.jpg",
-        "block-model-sheet-v1.jpg",
-        "lens-model-sheet-v1.jpg"
+        "shadow-cat.jpg",
+        "storm-fox.jpg",
+        "blaze-dragon.jpg",
+        "barak-fox.jpg",
+        "zara.jpg",
+        "keres.jpg",
+        "raz-phantom.jpg",
+        "block.jpg",
+        "lens.jpg"
       ],
       "needed": [
         "virus-friendly-v1.jpg",
         "virus-evil-v1.jpg",
-        "raz-model-sheet-v1.jpg",
+        "raz-phantom.jpg",
         "shir-model-sheet-v1.jpg",
-        "master-beat-model-sheet-v1.jpg"
+        "master-beat.jpg"
       ]
     },
     "expressionSheets": {
       "generated": [
-        "ki-expressions-v2.jpg",
-        "mika-expressions-v2.jpg",
-        "luna-expressions-v2.jpg",
-        "noa-expressions-v2.jpg",
-        "bug-expressions-v1.jpg",
-        "bugking-expressions-v1.jpg",
-        "glitch-expressions-v1.jpg",
-        "shadow-expressions-v1.jpg",
-        "storm-expressions-v1.jpg",
-        "blaze-expressions-v1.jpg",
-        "barak-expressions-v1.jpg",
-        "block-expressions-v1.jpg",
-        "lens-expressions-v1.jpg",
-        "zara-expressions-v1.jpg",
-        "zara-expressions-v2.jpg",
-        "sakura-expressions-v1.jpg",
-        "sakura-expressions-v2.jpg",
-        "keres-expressions-v1.jpg",
-        "keres-expressions-v2.jpg",
-        "phantom-expressions-v1.jpg",
-        "zen-expressions-v2.jpg"
+        "ki-expressions.jpg",
+        "mika-expressions.jpg",
+        "luna-expressions.jpg",
+        "noa-expressions.jpg",
+        "bug-expressions.jpg",
+        "bugking-expressions.jpg",
+        "glitch-expressions.jpg",
+        "shadow-expressions.jpg",
+        "storm-expressions.jpg",
+        "blaze-expressions.jpg",
+        "barak-expressions.jpg",
+        "block-expressions.jpg",
+        "lens-expressions.jpg",
+        "zara-expressions-OLD.jpg",
+        "zara-expressions.jpg",
+        "sakura-expressions-OLD.jpg",
+        "sakura-expressions.jpg",
+        "keres-expressions-OLD.jpg",
+        "keres-expressions.jpg",
+        "phantom-expressions.jpg",
+        "zen-expressions-OLD.jpg"
       ],
       "needed": [
         "yuki-expressions (missing!)",

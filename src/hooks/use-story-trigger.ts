@@ -145,5 +145,8 @@ export function getAllChapterBeats(): {
     { chapter: 1, titleHe: 'הקריאה', beats: CHAPTER_1_BEATS },
     { chapter: 2, titleHe: 'צעדים ראשונים', beats: CHAPTER_2_BEATS },
     { chapter: 3, titleHe: 'הסערה מתקרבת', beats: CHAPTER_3_BEATS },
+    { chapter: 4, titleHe: 'מעבר לדוג\'ו', beats: CHAPTER_4_BEATS },
+    { chapter: 5, titleHe: 'הטורניר', beats: CHAPTER_5_BEATS },
+    { chapter: 6, titleHe: 'המלחמה הגדולה', beats: CHAPTER_6_BEATS },
   ]
 }
