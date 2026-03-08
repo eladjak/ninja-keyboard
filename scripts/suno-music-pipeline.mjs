@@ -20,7 +20,7 @@
  *   node scripts/suno-music-pipeline.mjs next
  */
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync, statSync } from 'node:fs'
+import { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync, statSync, readdirSync } from 'node:fs'
 import { resolve, dirname, basename, extname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { execSync } from 'node:child_process'
@@ -394,7 +394,7 @@ function getTrackStatuses() {
     const catDir = resolve(MUSIC_DIR, cat)
     if (existsSync(catDir)) {
       try {
-        const files = execSync(`ls "${catDir}" 2>/dev/null || true`, { encoding: 'utf-8' }).trim().split('\n').filter(Boolean)
+        const files = readdirSync(catDir).filter(f => !f.startsWith('.'))
         for (const f of files) {
           existingFiles.add(`${cat}/${f}`)
         }
@@ -614,29 +614,37 @@ function cmdCopy(trackId) {
   const prompt = promptTrack?.sunoPrompt || catalogTrack.sunoPrompt
   const style = promptTrack?.style || catalogTrack.style
 
-  // Copy to clipboard using Windows `clip` command
-  try {
-    execSync('echo ' + prompt.replace(/"/g, '\\"') + ' | clip', {
-      shell: 'cmd.exe',
-      stdio: ['pipe', 'pipe', 'pipe'],
-    })
-  } catch {
-    // Fallback: try writing to clip via stdin
+  // Copy to clipboard - try multiple methods for cross-platform support
+  let copied = false
+  // Method 1: Windows clip via stdin (most reliable)
+  if (!copied) {
     try {
-      execSync('clip', {
-        input: prompt,
-        shell: 'cmd.exe',
-        stdio: ['pipe', 'pipe', 'pipe'],
-      })
-    } catch (e2) {
-      console.error(`${c.yellow}Warning: Could not copy to clipboard automatically.${c.reset}`)
-      console.log('')
-      console.log(`${c.bold}Copy this prompt manually:${c.reset}`)
-      console.log('')
-      console.log(prompt)
-      console.log('')
-      return
-    }
+      execSync('clip', { input: prompt, shell: 'cmd.exe', stdio: ['pipe', 'pipe', 'pipe'] })
+      copied = true
+    } catch { /* try next method */ }
+  }
+  // Method 2: PowerShell Set-Clipboard
+  if (!copied) {
+    try {
+      execSync(`powershell -command "Set-Clipboard -Value '${prompt.replace(/'/g, "''")}'"`  , { stdio: ['pipe', 'pipe', 'pipe'] })
+      copied = true
+    } catch { /* try next method */ }
+  }
+  // Method 3: pbcopy (macOS) or xclip (Linux)
+  if (!copied) {
+    try {
+      execSync('pbcopy', { input: prompt, stdio: ['pipe', 'pipe', 'pipe'] })
+      copied = true
+    } catch { /* not macOS */ }
+  }
+  if (!copied) {
+    console.error(`${c.yellow}Warning: Could not copy to clipboard automatically.${c.reset}`)
+    console.log('')
+    console.log(`${c.bold}Copy this prompt manually:${c.reset}`)
+    console.log('')
+    console.log(prompt)
+    console.log('')
+    return
   }
 
   console.log('')
@@ -834,7 +842,7 @@ function cmdValidate() {
     const catDir = resolve(MUSIC_DIR, cat)
     if (existsSync(catDir)) {
       try {
-        const files = execSync(`ls "${catDir}" 2>/dev/null || true`, { encoding: 'utf-8' }).trim().split('\n').filter(Boolean)
+        const files = readdirSync(catDir).filter(f => !f.startsWith('.'))
         for (const f of files) {
           const relPath = `${cat}/${f}`
           if (!knownFiles.has(relPath)) {
@@ -850,9 +858,8 @@ function cmdValidate() {
 
   // Check for flat files that should be in categories
   try {
-    const flatFiles = execSync(`ls "${MUSIC_DIR}"/*.mp3 2>/dev/null || true`, { encoding: 'utf-8' }).trim().split('\n').filter(Boolean)
-    for (const f of flatFiles) {
-      const fileName = basename(f)
+    const allMusicFiles = readdirSync(MUSIC_DIR).filter(f => f.endsWith('.mp3'))
+    for (const fileName of allMusicFiles) {
       if (!knownFiles.has(fileName)) {
         // Check if it's a known generated track in old flat format
         const isKnownFlat = (manifest.generated_tracks || []).some(t => (t.files || []).includes(fileName))
