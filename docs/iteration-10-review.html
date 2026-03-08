@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>נינג'ה מקלדת — סיכום איטרציה 10</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0d0b1a;
+      --bg-secondary: #151227;
+      --bg-card: #1a1635;
+      --bg-card-hover: #221e42;
+      --bg-highlight: #2a2450;
+      --text-primary: #e0e0e0;
+      --text-secondary: #a0a0b0;
+      --text-muted: #6a6a80;
+      --accent-primary: #6C5CE7;
+      --accent-secondary: #00B894;
+      --accent-blue: #4FC3F7;
+      --accent-orange: #FF9800;
+      --accent-pink: #FF6B9D;
+      --accent-red: #FF4757;
+      --accent-gold: #FFD700;
+      --accent-teal: #00BCD4;
+      --border-color: #2d2955;
+      --shadow-glow: rgba(108, 92, 231, 0.2);
+      --gradient-primary: linear-gradient(135deg, #6C5CE7, #a855f7);
+      --gradient-success: linear-gradient(135deg, #00B894, #10b981);
+      --gradient-danger: linear-gradient(135deg, #FF4757, #ef4444);
+      --gradient-warning: linear-gradient(135deg, #FF9800, #f59e0b);
+      --gradient-info: linear-gradient(135deg, #4FC3F7, #3b82f6);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+    ::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #7c6df7; }
+
+    /* ─── Hero ──────────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(180deg, #1a0e3a 0%, var(--bg-primary) 100%);
+      padding: 60px 0 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(108, 92, 231, 0.15), transparent 50%),
+        radial-gradient(circle at 80% 30%, rgba(0, 184, 148, 0.1), transparent 50%),
+        radial-gradient(circle at 50% 80%, rgba(255, 107, 157, 0.08), transparent 40%);
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-size: 3.2em;
+      font-weight: 900;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .hero .subtitle {
+      font-size: 1.5em;
+      font-weight: 300;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .hero .version-badge {
+      display: inline-block;
+      background: var(--gradient-success);
+      color: white;
+      padding: 6px 24px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      font-weight: 600;
+      letter-spacing: 1px;
+      position: relative;
+    }
+
+    .hero .iteration-date {
+      margin-top: 12px;
+      color: var(--text-muted);
+      font-size: 0.9em;
+      position: relative;
+    }
+
+    /* ─── Container ─────────────────────────────────────────────────── */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 24px;
+    }
+
+    /* ─── Summary Cards ─────────────────────────────────────────────── */
+    .summary-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 900px) {
+      .summary-row { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 500px) {
+      .summary-row { grid-template-columns: 1fr; }
+    }
+
+    .summary-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .summary-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px var(--shadow-glow);
+    }
+
+    .summary-card .icon { font-size: 2em; margin-bottom: 8px; }
+
+    .summary-card .value {
+      font-size: 2.2em;
+      font-weight: 800;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .summary-card .label {
+      color: var(--text-secondary);
+      font-size: 0.85em;
+      margin-top: 4px;
+    }
+
+    .summary-card.success .value {
+      background: var(--gradient-success);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .summary-card.warning .value {
+      background: var(--gradient-warning);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .summary-card.danger .value {
+      background: var(--gradient-danger);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .summary-card.info .value {
+      background: var(--gradient-info);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ─── Section ───────────────────────────────────────────────────── */
+    .section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      margin-bottom: 28px;
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+
+    .section:hover {
+      box-shadow: 0 4px 20px var(--shadow-glow);
+    }
+
+    .section-header {
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: default;
+    }
+
+    .section-header .section-icon {
+      font-size: 1.6em;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+
+    .section-header h2 {
+      font-size: 1.4em;
+      font-weight: 700;
+      flex-grow: 1;
+    }
+
+    .section-header .status-badge {
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      font-weight: 600;
+    }
+
+    .badge-done {
+      background: rgba(0, 184, 148, 0.15);
+      color: var(--accent-secondary);
+      border: 1px solid rgba(0, 184, 148, 0.3);
+    }
+
+    .badge-ready {
+      background: rgba(79, 195, 247, 0.15);
+      color: var(--accent-blue);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+    }
+
+    .badge-partial {
+      background: rgba(255, 152, 0, 0.15);
+      color: var(--accent-orange);
+      border: 1px solid rgba(255, 152, 0, 0.3);
+    }
+
+    .badge-new {
+      background: rgba(108, 92, 231, 0.15);
+      color: var(--accent-primary);
+      border: 1px solid rgba(108, 92, 231, 0.3);
+    }
+
+    .section-body {
+      padding: 0 28px 24px;
+    }
+
+    /* ─── Stats Grid ────────────────────────────────────────────────── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+
+    .stat-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-box .stat-value {
+      font-size: 1.8em;
+      font-weight: 800;
+    }
+
+    .stat-box .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.85em;
+      margin-top: 4px;
+    }
+
+    .stat-value.green { color: var(--accent-secondary); }
+    .stat-value.blue { color: var(--accent-blue); }
+    .stat-value.purple { color: var(--accent-primary); }
+    .stat-value.orange { color: var(--accent-orange); }
+    .stat-value.gold { color: var(--accent-gold); }
+    .stat-value.red { color: var(--accent-red); }
+    .stat-value.pink { color: var(--accent-pink); }
+    .stat-value.teal { color: var(--accent-teal); }
+
+    /* ─── Bug Fix List ──────────────────────────────────────────────── */
+    .fix-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .fix-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--bg-secondary);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      border: 1px solid transparent;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .fix-item:hover {
+      border-color: var(--border-color);
+      background: var(--bg-highlight);
+    }
+
+    .fix-icon {
+      font-size: 1.3em;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .fix-content { flex-grow: 1; }
+
+    .fix-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .fix-desc {
+      color: var(--text-secondary);
+      font-size: 0.88em;
+      line-height: 1.6;
+    }
+
+    .fix-file {
+      display: inline-block;
+      background: rgba(108, 92, 231, 0.12);
+      color: var(--accent-primary);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.78em;
+      font-family: 'Courier New', monospace;
+      direction: ltr;
+      unicode-bidi: embed;
+      margin-top: 6px;
+    }
+
+    .fix-before-after {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .fix-before, .fix-after {
+      background: var(--bg-primary);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.82em;
+      font-family: 'Courier New', monospace;
+      direction: ltr;
+      unicode-bidi: embed;
+      overflow-x: auto;
+    }
+
+    .fix-before {
+      border: 1px solid rgba(255, 71, 87, 0.3);
+    }
+
+    .fix-after {
+      border: 1px solid rgba(0, 184, 148, 0.3);
+    }
+
+    .fix-label {
+      font-family: 'Heebo', sans-serif;
+      font-size: 0.75em;
+      font-weight: 700;
+      margin-bottom: 4px;
+      direction: rtl;
+    }
+
+    .fix-label.before { color: var(--accent-red); }
+    .fix-label.after { color: var(--accent-secondary); }
+
+    /* ─── File Grid ─────────────────────────────────────────────────── */
+    .file-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 8px;
+      margin: 14px 0;
+    }
+
+    .file-chip {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.82em;
+      direction: ltr;
+      unicode-bidi: embed;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+
+    .file-chip:hover {
+      border-color: var(--accent-primary);
+    }
+
+    .file-chip.new-file {
+      border-color: rgba(0, 184, 148, 0.4);
+      background: rgba(0, 184, 148, 0.05);
+    }
+
+    /* ─── Progress Bars ─────────────────────────────────────────────── */
+    .progress-container { margin-bottom: 18px; }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .progress-label .name { font-weight: 600; font-size: 0.95em; }
+
+    .progress-label .percent {
+      font-size: 0.85em;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 10px;
+    }
+
+    .progress-bar {
+      height: 14px;
+      background: var(--bg-secondary);
+      border-radius: 7px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 7px;
+      transition: width 1s ease-in-out;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .progress-fill.red { background: var(--gradient-danger); }
+    .progress-fill.orange { background: var(--gradient-warning); }
+    .progress-fill.blue { background: var(--gradient-info); }
+    .progress-fill.green { background: var(--gradient-success); }
+    .progress-fill.purple { background: var(--gradient-primary); }
+    .progress-fill.gold { background: linear-gradient(135deg, #FFD700, #FFA000); }
+    .progress-fill.teal { background: linear-gradient(135deg, #00BCD4, #009688); }
+    .progress-fill.pink { background: linear-gradient(135deg, #FF6B9D, #e91e63); }
+
+    .percent-red { background: rgba(255,71,87,0.15); color: #FF4757; }
+    .percent-orange { background: rgba(255,152,0,0.15); color: #FF9800; }
+    .percent-blue { background: rgba(79,195,247,0.15); color: #4FC3F7; }
+    .percent-green { background: rgba(0,184,148,0.15); color: #00B894; }
+    .percent-purple { background: rgba(108,92,231,0.15); color: #a78bfa; }
+    .percent-gold { background: rgba(255,215,0,0.15); color: #FFD700; }
+    .percent-teal { background: rgba(0,188,212,0.15); color: #00BCD4; }
+    .percent-pink { background: rgba(255,107,157,0.15); color: #FF6B9D; }
+
+    /* ─── Music Pipeline ────────────────────────────────────────────── */
+    .pipeline-flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    @media (max-width: 768px) {
+      .pipeline-flow { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .pipeline-step {
+      background: var(--bg-secondary);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      position: relative;
+      border: 1px solid var(--border-color);
+    }
+
+    .pipeline-step.active {
+      border-color: var(--accent-secondary);
+      box-shadow: 0 0 12px rgba(0, 184, 148, 0.2);
+    }
+
+    .pipeline-step.done {
+      border-color: var(--accent-secondary);
+      background: rgba(0, 184, 148, 0.08);
+    }
+
+    .pipeline-step.pending {
+      opacity: 0.6;
+    }
+
+    .pipeline-step .step-num {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: var(--gradient-primary);
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8em;
+      font-weight: 700;
+    }
+
+    .pipeline-step.done .step-num {
+      background: var(--gradient-success);
+    }
+
+    .pipeline-step .step-icon { font-size: 1.8em; margin-bottom: 8px; }
+    .pipeline-step .step-title { font-weight: 600; font-size: 0.9em; margin-bottom: 4px; }
+    .pipeline-step .step-desc { color: var(--text-secondary); font-size: 0.78em; }
+
+    /* ─── Track Table ───────────────────────────────────────────────── */
+    .track-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 14px 0;
+    }
+
+    .track-table th {
+      background: var(--bg-highlight);
+      padding: 10px 14px;
+      text-align: right;
+      font-weight: 600;
+      font-size: 0.85em;
+      color: var(--text-secondary);
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .track-table th:first-child { border-radius: 0 8px 0 0; }
+    .track-table th:last-child { border-radius: 8px 0 0 0; }
+
+    .track-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.88em;
+    }
+
+    .track-table tr:last-child td { border-bottom: none; }
+
+    .track-table tr:hover td { background: var(--bg-secondary); }
+
+    .track-status {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-size: 0.8em;
+      font-weight: 600;
+    }
+
+    .track-status.done {
+      background: rgba(0, 184, 148, 0.15);
+      color: var(--accent-secondary);
+    }
+
+    .track-status.pending {
+      background: rgba(255, 152, 0, 0.15);
+      color: var(--accent-orange);
+    }
+
+    .track-status.not-started {
+      background: rgba(106, 106, 128, 0.15);
+      color: var(--text-muted);
+    }
+
+    /* ─── Comparison Table ──────────────────────────────────────────── */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 16px 0;
+    }
+
+    @media (max-width: 768px) {
+      .compare-grid { grid-template-columns: 1fr; }
+    }
+
+    .compare-box {
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--border-color);
+    }
+
+    .compare-box h3 {
+      font-size: 1.1em;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .compare-box.before h3 { color: var(--accent-red); }
+    .compare-box.after h3 { color: var(--accent-secondary); }
+
+    .compare-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .compare-list li {
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(45, 41, 85, 0.5);
+      font-size: 0.88em;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .compare-list li:last-child { border-bottom: none; }
+
+    /* ─── Next Steps ────────────────────────────────────────────────── */
+    .next-list {
+      list-style: none;
+      padding: 0;
+      counter-reset: next-counter;
+    }
+
+    .next-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px;
+      background: var(--bg-secondary);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      border: 1px solid var(--border-color);
+      counter-increment: next-counter;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .next-item:hover {
+      border-color: var(--accent-primary);
+      background: var(--bg-highlight);
+    }
+
+    .next-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1em;
+      flex-shrink: 0;
+    }
+
+    .next-num.critical {
+      background: var(--gradient-danger);
+      color: white;
+    }
+
+    .next-num.high {
+      background: var(--gradient-warning);
+      color: white;
+    }
+
+    .next-num.medium {
+      background: var(--gradient-info);
+      color: white;
+    }
+
+    .next-content { flex-grow: 1; }
+    .next-title { font-weight: 600; margin-bottom: 4px; }
+    .next-desc { color: var(--text-secondary); font-size: 0.88em; line-height: 1.6; }
+
+    .priority-tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-size: 0.72em;
+      font-weight: 600;
+      margin-inline-start: 8px;
+      vertical-align: middle;
+    }
+
+    .priority-tag.critical {
+      background: rgba(255, 71, 87, 0.15);
+      color: #FF4757;
+      border: 1px solid rgba(255, 71, 87, 0.3);
+    }
+
+    .priority-tag.high {
+      background: rgba(255, 152, 0, 0.15);
+      color: #FF9800;
+      border: 1px solid rgba(255, 152, 0, 0.3);
+    }
+
+    .priority-tag.medium {
+      background: rgba(79, 195, 247, 0.15);
+      color: #4FC3F7;
+      border: 1px solid rgba(79, 195, 247, 0.3);
+    }
+
+    /* ─── Consistency Score ──────────────────────────────────────────── */
+    .score-ring {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      position: relative;
+    }
+
+    .score-ring::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      padding: 4px;
+      background: conic-gradient(var(--accent-secondary) 100%, var(--bg-secondary) 0%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+
+    .score-ring .score-text {
+      font-size: 2.2em;
+      font-weight: 900;
+      color: var(--accent-secondary);
+    }
+
+    .score-ring .score-unit {
+      font-size: 0.8em;
+      color: var(--text-secondary);
+    }
+
+    /* ─── Skill Card ────────────────────────────────────────────────── */
+    .skill-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--accent-primary);
+      border-radius: 14px;
+      padding: 20px;
+      margin: 16px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gradient-primary);
+    }
+
+    .skill-card h4 {
+      font-size: 1.1em;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--accent-primary);
+    }
+
+    .skill-phases {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    @media (max-width: 900px) {
+      .skill-phases { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .phase-chip {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      font-size: 0.82em;
+    }
+
+    .phase-chip .phase-num {
+      font-weight: 700;
+      color: var(--accent-primary);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .phase-chip .phase-name {
+      color: var(--text-secondary);
+      font-size: 0.9em;
+    }
+
+    /* ─── Separator ─────────────────────────────────────────────────── */
+    .section-sep {
+      border: none;
+      height: 1px;
+      background: var(--border-color);
+      margin: 18px 0;
+    }
+
+    /* ─── Footer ────────────────────────────────────────────────────── */
+    .footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--text-muted);
+      font-size: 0.85em;
+      border-top: 1px solid var(--border-color);
+      margin-top: 20px;
+    }
+
+    .footer .footer-brand {
+      font-size: 1.1em;
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+
+    /* ─── Utility ───────────────────────────────────────────────────── */
+    .text-green { color: var(--accent-secondary); }
+    .text-red { color: var(--accent-red); }
+    .text-blue { color: var(--accent-blue); }
+    .text-orange { color: var(--accent-orange); }
+    .text-gold { color: var(--accent-gold); }
+    .text-purple { color: var(--accent-primary); }
+    .text-pink { color: var(--accent-pink); }
+    .text-teal { color: var(--accent-teal); }
+    .text-muted { color: var(--text-muted); }
+
+    .highlight-box {
+      background: rgba(108, 92, 231, 0.08);
+      border: 1px solid rgba(108, 92, 231, 0.2);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 14px 0;
+    }
+
+    .inline-code {
+      background: rgba(108, 92, 231, 0.12);
+      color: var(--accent-primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.85em;
+      font-family: 'Courier New', monospace;
+      direction: ltr;
+      unicode-bidi: embed;
+    }
+
+    .emoji-bullet { margin-inline-end: 6px; }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0;
+    }
+
+    .tag {
+      background: var(--bg-highlight);
+      border: 1px solid var(--border-color);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.8em;
+      color: var(--text-secondary);
+    }
+
+    .tag.green { border-color: rgba(0,184,148,0.3); color: var(--accent-secondary); }
+    .tag.blue { border-color: rgba(79,195,247,0.3); color: var(--accent-blue); }
+    .tag.purple { border-color: rgba(108,92,231,0.3); color: var(--accent-primary); }
+    .tag.orange { border-color: rgba(255,152,0,0.3); color: var(--accent-orange); }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════════════════════════════ -->
+<header class="hero">
+  <h1>נינג'ה מקלדת</h1>
+  <div class="subtitle">סיכום איטרציה 10 — עקביות, תשתיות ותיקונים</div>
+  <span class="version-badge">ITERATION 10 COMPLETE</span>
+  <div class="iteration-date">מרץ 2026 &bull; מוזיקה &bull; עקביות דמויות &bull; תיקוני באגים קריטיים</div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     SUMMARY CARDS
+     ═══════════════════════════════════════════════════════════════════════ -->
+<div class="container">
+
+  <div class="summary-row">
+    <div class="summary-card success">
+      <div class="icon">&#x1F41B;</div>
+      <div class="value">14</div>
+      <div class="label">נתיבי תמונות שבורים תוקנו</div>
+    </div>
+    <div class="summary-card">
+      <div class="icon">&#x1F3B5;</div>
+      <div class="value">44</div>
+      <div class="label">טראקים מקוטלגים בפייפליין</div>
+    </div>
+    <div class="summary-card info">
+      <div class="icon">&#x1F9EA;</div>
+      <div class="value">1,096</div>
+      <div class="label">טסטים עוברים בהצלחה</div>
+    </div>
+    <div class="summary-card warning">
+      <div class="icon">&#x1F4C1;</div>
+      <div class="value">55</div>
+      <div class="label">קבצי דמויות ישנים הועברו לארכיון</div>
+    </div>
+  </div>
+
+
+  <!-- ═════════════════════════════════════════════════════════════════════
+       SECTION 1: סיכום ביצוע
+       ═════════════════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background: rgba(108,92,231,0.15);">&#x1F4CB;</div>
+      <h2>1. סיכום ביצוע — מה הושג באיטרציה 10</h2>
+      <span class="status-badge badge-done">הושלם</span>
+    </div>
+    <div class="section-body">
+
+      <p style="color: var(--text-secondary); margin-bottom: 16px;">
+        איטרציה 10 התמקדה בבניית תשתית מוזיקלית מלאה, מערכת עקביות דמויות חדשה, סדר בתיקיית התמונות,
+        ותיקון באגים קריטיים שמנעו מהמערכת לעבוד נכון. כל הבאגים תוקנו, כל הטסטים עוברים, וה-TypeScript נקי.
+      </p>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-value green">14</div>
+          <div class="stat-label">נתיבי תמונות שבורים תוקנו ב-character-config.ts</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value blue">6/6</div>
+          <div class="stat-label">פרקים מוחזרים מ-getAllChapterBeats() (היה 3!)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value purple">1,096</div>
+          <div class="stat-label">טסטים עוברים (0 כשלונות)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value orange">55</div>
+          <div class="stat-label">קבצים ישנים הועברו לארכיון</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value gold">30</div>
+          <div class="stat-label">Model Sheets בשמות נקיים וסטנדרטיים</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value teal">67</div>
+          <div class="stat-label">הפניות שמות קבצים עודכנו ב-Visual Bible</div>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <strong>&#x2705; תוצאה סופית:</strong>
+        TypeScript נקי לחלוטין &bull;
+        1,096 מתוך 1,096 טסטים עוברים &bull;
+        אפס שגיאות build &bull;
+        כל נתיבי התמונות תקינים &bull;
+        מנוע סיפור מחזיר את כל 6 הפרקים (53 beats)
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ═════════════════════════════════════════════════════════════════════
+       SECTION 2: תשתית מוזיקה
+       ═════════════════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background: rgba(255,152,0,0.15);">&#x1F3B6;</div>
+      <h2>2. תשתית מוזיקה — Suno Pipeline</h2>
+      <span class="status-badge badge-ready">תשתית מוכנה</span>
+    </div>
+    <div class="section-body">
+
+      <p style="color: var(--text-secondary); margin-bottom: 16px;">
+        נבנתה תשתית מוזיקלית מלאה: סקריפט פייפליין בן 983 שורות, קטלוג של 44 טראקים,
+        10 prompts מוכנים ליצירה מיידית ב-Suno, ו-manifest ניהול עם סטטוס לכל טראק.
+        המערכת מוכנה — חסר רק ייצור בפועל.
+      </p>
+
+      <!-- Pipeline Flow -->
+      <h3 style="font-weight: 600; margin-bottom: 12px;">&#x2699;&#xFE0F; שלבי הפייפליין</h3>
+      <div class="pipeline-flow">
+        <div class="pipeline-step done">
+          <div class="step-num">1</div>
+          <div class="step-icon">&#x1F4D6;</div>
+          <div class="step-title">קטלוג</div>
+          <div class="step-desc">44 טראקים ב-7 קטגוריות</div>
+        </div>
+        <div class="pipeline-step done">
+          <div class="step-num">2</div>
+          <div class="step-icon">&#x1F4DD;</div>
+          <div class="step-title">Prompts</div>
+          <div class="step-desc">10 prompts מוכנים</div>
+        </div>
+        <div class="pipeline-step active">
+          <div class="step-num">3</div>
+          <div class="step-icon">&#x1F3A4;</div>
+          <div class="step-title">ייצור</div>
+          <div class="step-desc">Suno generation — ממתין</div>
+        </div>
+        <div class="pipeline-step pending">
+          <div class="step-num">4</div>
+          <div class="step-icon">&#x1F4E5;</div>
+          <div class="step-title">ייבוא</div>
+          <div class="step-desc">import + validate</div>
+        </div>
+      </div>
+
+      <hr class="section-sep">
+
+      <!-- Track Categories -->
+      <h3 style="font-weight: 600; margin-bottom: 12px;">&#x1F4CA; חלוקת טראקים לפי קטגוריה</h3>
+      <table class="track-table">
+        <thead>
+          <tr>
+            <th>קטגוריה</th>
+            <th>סה"כ טראקים</th>
+            <th>קיימים</th>
+            <th>ממתינים</th>
+            <th>סטטוס</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>&#x1F3AE; Menu</strong></td>
+            <td>6</td>
+            <td>1 <span class="text-muted">(main-theme)</span></td>
+            <td>5</td>
+            <td><span class="track-status pending">בייצור</span></td>
+          </tr>
+          <tr>
+            <td><strong>&#x1F3B9; Gameplay</strong></td>
+            <td>6</td>
+            <td>0</td>
+            <td>6</td>
+            <td><span class="track-status pending">בייצור</span></td>
+          </tr>
+          <tr>
+            <td><strong>&#x2694;&#xFE0F; Battle</strong></td>
+            <td>10</td>
+            <td>1 <span class="text-muted">(boss-battle)</span></td>
+            <td>9</td>
+            <td><span class="track-status pending">בייצור</span></td>
+          </tr>
+          <tr>
+            <td><strong>&#x1F464; Character</strong></td>
+            <td>10</td>
+            <td>0</td>
+            <td>10</td>
+            <td><span class="track-status pending">בייצור</span></td>
+          </tr>
+          <tr>
+            <td><strong>&#x1F4D6; Story</strong></td>
+            <td>6</td>
+            <td>0</td>
+            <td>6</td>
+            <td><span class="track-status not-started">טרם התחיל</span></td>
+          </tr>
+          <tr>
+            <td><strong>&#x1F389; Events</strong></td>
+            <td>4</td>
+            <td>0</td>
+            <td>4</td>
+            <td><span class="track-status not-started">טרם התחיל</span></td>
+          </tr>
+          <tr>
+            <td><strong>&#x1F384; Holiday</strong></td>
+            <td>2</td>
+            <td>0</td>
+            <td>2</td>
+            <td><span class="track-status not-started">טרם התחיל</span></td>
+          </tr>
+          <tr style="font-weight: 700; background: var(--bg-highlight);">
+            <td>&#x1F3AF; סה"כ</td>
+            <td>44</td>
+            <td>2</td>
+            <td>42</td>
+            <td><span class="track-status pending">5%</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr class="section-sep">
+
+      <!-- Next 10 Tracks -->
+      <h3 style="font-weight: 600; margin-bottom: 12px;">&#x1F3AF; 10 הטראקים הבאים לייצור (עדיפות ראשונה)</h3>
+      <table class="track-table">
+        <thead>
+          <tr>
+            <th>מזהה</th>
+            <th>שם</th>
+            <th>סגנון</th>
+            <th>קטגוריה</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="inline-code">CHAR-001</span></td>
+            <td>ערכת קי — גיבור</td>
+            <td>Chiptune + Orchestral</td>
+            <td>דמות</td>
+          </tr>
+          <tr>
+            <td><span class="inline-code">CHAR-002</span></td>
+            <td>ערכת מיקה — טק הקרית</td>
+            <td>Cyberpunk Electronic</td>
+            <td>דמות</td>
+          </tr>
+          <tr>
+            <td><span class="inline-code">CHAR-005</span></td>
+            <td>ערכת יוקי — מהירות</td>
+            <td>J-pop Electronic</td>
+            <td>דמות</td>
+          </tr>
+          <tr>
+            <td><span class="inline-code">CHAR-003</span></td>
+            <td>ערכת סנסיי זן — חכם</td>
+            <td>Shakuhachi + Koto</td>
+            <td>דמות</td>
+          </tr>
+          <tr>
+            <td><span class="inline-code">CHAR-008</span></td>
+            <td>ערכת גליץ' — כאוס טהור</td>
+            <td>Corrupted Vaporwave</td>
+            <td>דמות</td>
+          </tr>
+          <tr>
+            <td><span class="inline-code">PLAY-001</span></td>
+            <td>תרגול — קל</td>
+            <td>Lo-fi Study</td>
+            <td>Gameplay</td>
+          </tr>
+          <tr>
+            <td><span class="inline-code">PLAY-004</span></td>
+            <td>אדרנלין — מבחן מהירות</td>
+            <td>EDM + Synthwave</td>
+            <td>Gameplay</td>
+          </tr>
+          <tr>
+            <td><span class="inline-code">BATTLE-010</span></td>
+            <td>זירת טורנירים</td>
+            <td>Orchestral + Esports</td>
+            <td>Battle</td>
+          </tr>
+          <tr>
+            <td><span class="inline-code">STORY-001</span></td>
+            <td>סיפור — רגע רגשי</td>
+            <td>Cinematic Piano</td>
+            <td>Story</td>
+          </tr>
+          <tr>
+            <td><span class="inline-code">STORY-002</span></td>
+            <td>סיפור — ניצחון וחגיגה</td>
+            <td>Orchestral Triumphant</td>
+            <td>Story</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-box">
+        <strong>&#x1F4C2; קבצים רלוונטיים:</strong><br>
+        <span class="inline-code">scripts/suno-music-pipeline.mjs</span> — סקריפט פייפליין (983 שורות)<br>
+        <span class="inline-code">scripts/suno-prompts.json</span> — Prompts לכל טראק<br>
+        <span class="inline-code">public/audio/music/music-manifest.json</span> — מניפסט סטטוס
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ═════════════════════════════════════════════════════════════════════
+       SECTION 3: מערכת עקביות דמויות
+       ═════════════════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background: rgba(108,92,231,0.15);">&#x1F3A8;</div>
+      <h2>3. מערכת עקביות דמויות</h2>
+      <span class="status-badge badge-new">חדש</span>
+    </div>
+    <div class="section-body">
+
+      <p style="color: var(--text-secondary); margin-bottom: 16px;">
+        נוצרה מערכת שלמה לשמירה על עקביות ויזואלית בין כל גרסאות הדמויות.
+        הבעיה המרכזית שנפתרה: דמויות שנוצרו מחדש נראו שונות לחלוטין מהגרסאות הקודמות.
+        המערכת מגדירה 8 פרמטרים קריטיים, תנאי auto-fail, וסקריפט בדיקה אוטומטי.
+      </p>
+
+      <!-- Consistency Skill -->
+      <div class="skill-card">
+        <h4>&#x1F4E6; character-consistency.md — Skill חדש (630 שורות)</h4>
+        <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 12px;">
+          Skill מלא ב-8 שלבים שמבטיח שכל דמות שנוצרת תראה עקבית עם כל הגרסאות הקודמות שלה.
+        </p>
+        <div class="skill-phases">
+          <div class="phase-chip">
+            <span class="phase-num">&#x2460;</span>
+            <span class="phase-name">טעינת Bible</span>
+          </div>
+          <div class="phase-chip">
+            <span class="phase-num">&#x2461;</span>
+            <span class="phase-name">Checklist טרום-יצירה</span>
+          </div>
+          <div class="phase-chip">
+            <span class="phase-num">&#x2462;</span>
+            <span class="phase-name">בניית Prompt</span>
+          </div>
+          <div class="phase-chip">
+            <span class="phase-num">&#x2463;</span>
+            <span class="phase-name">יצירת תמונה</span>
+          </div>
+          <div class="phase-chip">
+            <span class="phase-num">&#x2464;</span>
+            <span class="phase-name">בדיקת 8 פרמטרים</span>
+          </div>
+          <div class="phase-chip">
+            <span class="phase-num">&#x2465;</span>
+            <span class="phase-name">ניקוד עקביות</span>
+          </div>
+          <div class="phase-chip">
+            <span class="phase-num">&#x2466;</span>
+            <span class="phase-name">auto-fail / אישור</span>
+          </div>
+          <div class="phase-chip">
+            <span class="phase-num">&#x2467;</span>
+            <span class="phase-name">עדכון Bible</span>
+          </div>
+        </div>
+      </div>
+
+      <hr class="section-sep">
+
+      <!-- 8 Parameters -->
+      <h3 style="font-weight: 600; margin-bottom: 12px;">&#x1F50D; 8 פרמטרי עקביות שנבדקים</h3>
+      <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="stat-box">
+          <div class="stat-value purple" style="font-size: 1.3em;">&#x1F3A8;</div>
+          <div class="stat-label">צבע עיניים</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value blue" style="font-size: 1.3em;">&#x1F488;</div>
+          <div class="stat-label">סגנון שיער</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value orange" style="font-size: 1.3em;">&#x1F455;</div>
+          <div class="stat-label">סכמת בגדים</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value green" style="font-size: 1.3em;">&#x1F4CF;</div>
+          <div class="stat-label">פרופורציות גוף</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value pink" style="font-size: 1.3em;">&#x2728;</div>
+          <div class="stat-label">אלמנטים ייחודיים</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value teal" style="font-size: 1.3em;">&#x1F308;</div>
+          <div class="stat-label">פלטת צבעים</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value gold" style="font-size: 1.3em;">&#x1F464;</div>
+          <div class="stat-label">צבע עור</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value red" style="font-size: 1.3em;">&#x1F5BC;&#xFE0F;</div>
+          <div class="stat-label">סגנון אמנותי</div>
+        </div>
+      </div>
+
+      <hr class="section-sep">
+
+      <!-- Glitch Score -->
+      <h3 style="font-weight: 600; margin-bottom: 12px;">&#x1F3C6; מבחן עקביות ראשון: Glitch v4</h3>
+      <div style="display: flex; align-items: center; gap: 30px; flex-wrap: wrap;">
+        <div style="text-align: center;">
+          <div class="score-ring">
+            <span class="score-text">100<span class="score-unit">/100</span></span>
+          </div>
+          <div style="color: var(--accent-secondary); font-weight: 700; font-size: 1.1em;">PASS</div>
+          <div class="text-muted" style="font-size: 0.85em;">ציון עקביות מושלם</div>
+        </div>
+        <div style="flex-grow: 1;">
+          <p style="color: var(--text-secondary); margin-bottom: 8px;">
+            הגרסאות החדשות של Glitch (v1-v6) עברו את מבחן העקביות בציון מלא.
+            כל 8 הפרמטרים נבדקו ואומתו מול ה-Visual Bible.
+          </p>
+          <div class="tag-row">
+            <span class="tag green">צבע עיניים: תואם</span>
+            <span class="tag green">אלמנטים ייחודיים: תואם</span>
+            <span class="tag green">פלטת צבעים: תואם</span>
+            <span class="tag green">סגנון אמנותי: תואם</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <strong>&#x1F4C2; קבצים רלוונטיים:</strong><br>
+        <span class="inline-code">~/.claude/skills/character-consistency.md</span> — Skill (630 שורות, 8 שלבים)<br>
+        <span class="inline-code">src/data/characters/character-visual-bible.json</span> — Visual Bible (1,074 שורות)<br>
+        <span class="inline-code">scripts/review-character-art.mjs</span> — סקריפט בדיקה (163 שורות)
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ═════════════════════════════════════════════════════════════════════
+       SECTION 4: מבנה תיקיות חדש
+       ═════════════════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background: rgba(79,195,247,0.15);">&#x1F4C1;</div>
+      <h2>4. מבנה תיקיות חדש — לפני ואחרי</h2>
+      <span class="status-badge badge-done">הושלם</span>
+    </div>
+    <div class="section-body">
+
+      <p style="color: var(--text-secondary); margin-bottom: 16px;">
+        תיקיית הדמויות עברה מהפכה מלאה: מבלגן של מספרי גרסאות מעורבבים, נתיבים שבורים וכפילויות
+        — למבנה נקי עם שמות סטנדרטיים, תיקיית ארכיון, וכל ההפניות תקינות.
+      </p>
+
+      <div class="compare-grid">
+        <div class="compare-box before">
+          <h3>&#x274C; לפני — בלגן</h3>
+          <ul class="compare-list">
+            <li>&#x26A0;&#xFE0F; שמות קבצים עם מספרי גרסאות (v2, v3, v5...)</li>
+            <li>&#x26A0;&#xFE0F; קבצים כפולים (גרסה ישנה + חדשה)</li>
+            <li>&#x26A0;&#xFE0F; 14 נתיבי תמונות שבורים בקוד</li>
+            <li>&#x26A0;&#xFE0F; שמות לא עקביים (ninja-boy, ki-hero-v5...)</li>
+            <li>&#x26A0;&#xFE0F; אין ארכיון — קבצים ישנים מעורבבים</li>
+            <li>&#x26A0;&#xFE0F; Visual Bible מפנה לקבצים שלא קיימים</li>
+          </ul>
+        </div>
+        <div class="compare-box after">
+          <h3>&#x2705; אחרי — סדר</h3>
+          <ul class="compare-list">
+            <li>&#x2705; שמות נקיים בלי מספרי גרסאות</li>
+            <li>&#x2705; קובץ אחד לכל דמות — ללא כפילויות</li>
+            <li>&#x2705; כל 30 הנתיבים ב-character-config תקינים</li>
+            <li>&#x2705; תבנית אחידה: <span class="inline-code">[name]-[type].jpg</span></li>
+            <li>&#x2705; תיקיית archive לגרסאות ישנות</li>
+            <li>&#x2705; 67 הפניות עודכנו ב-Visual Bible</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="section-sep">
+
+      <!-- Model Sheets -->
+      <h3 style="font-weight: 600; margin-bottom: 12px;">&#x1F5BC;&#xFE0F; 30 Model Sheets — רשימה מלאה</h3>
+      <div class="file-grid">
+        <div class="file-chip">ki-boy.jpg</div>
+        <div class="file-chip">mika-girl.jpg</div>
+        <div class="file-chip">yuki-girl.jpg</div>
+        <div class="file-chip">luna-girl.jpg</div>
+        <div class="file-chip">noa-girl.jpg</div>
+        <div class="file-chip">kai-boy.jpg</div>
+        <div class="file-chip">sensei-zen.jpg</div>
+        <div class="file-chip">pixel-robot.jpg</div>
+        <div class="file-chip">rex-dino.jpg</div>
+        <div class="file-chip">bug-creature.jpg</div>
+        <div class="file-chip">glitch-entity.jpg</div>
+        <div class="file-chip">shadow-cat.jpg</div>
+        <div class="file-chip">storm-fox.jpg</div>
+        <div class="file-chip">blaze-dragon.jpg</div>
+        <div class="file-chip">virus-dual-form.jpg</div>
+        <div class="file-chip">raz-phantom.jpg</div>
+        <div class="file-chip">barak-fox.jpg</div>
+        <div class="file-chip">master-beat.jpg</div>
+        <div class="file-chip">sakura.jpg</div>
+        <div class="file-chip">zara.jpg</div>
+        <div class="file-chip">keres.jpg</div>
+        <div class="file-chip">block.jpg</div>
+        <div class="file-chip">lens.jpg</div>
+        <div class="file-chip">bugking.jpg</div>
+        <div class="file-chip new-file">glitch-v1-confused.jpg</div>
+        <div class="file-chip new-file">glitch-v2-forming.jpg</div>
+        <div class="file-chip new-file">glitch-v3-neutral.jpg</div>
+        <div class="file-chip new-file">glitch-v4-evil.jpg</div>
+        <div class="file-chip new-file">glitch-v5-broken.jpg</div>
+        <div class="file-chip new-file">glitch-v6-whole.jpg</div>
+      </div>
+      <p class="text-muted" style="font-size: 0.82em; margin-top: 4px;">
+        &#x1F7E2; ירוק = קבצים חדשים שנוספו באיטרציה 10 (6 גרסאות Glitch)
+      </p>
+
+      <hr class="section-sep">
+
+      <!-- Expression Sheets -->
+      <h3 style="font-weight: 600; margin-bottom: 12px;">&#x1F60A; 18 Expression Sheets</h3>
+      <div class="file-grid">
+        <div class="file-chip">ki-expressions.jpg</div>
+        <div class="file-chip">mika-expressions.jpg</div>
+        <div class="file-chip">luna-expressions.jpg</div>
+        <div class="file-chip">noa-expressions.jpg</div>
+        <div class="file-chip">bug-expressions.jpg</div>
+        <div class="file-chip">glitch-expressions.jpg</div>
+        <div class="file-chip">shadow-expressions.jpg</div>
+        <div class="file-chip">storm-expressions.jpg</div>
+        <div class="file-chip">blaze-expressions.jpg</div>
+        <div class="file-chip">barak-expressions.jpg</div>
+        <div class="file-chip">phantom-expressions.jpg</div>
+        <div class="file-chip">sakura-expressions.jpg</div>
+        <div class="file-chip">zen-expressions.jpg</div>
+        <div class="file-chip">keres-expressions.jpg</div>
+        <div class="file-chip">zara-expressions.jpg</div>
+        <div class="file-chip">block-expressions.jpg</div>
+        <div class="file-chip">lens-expressions.jpg</div>
+        <div class="file-chip">bugking-expressions.jpg</div>
+      </div>
+      <p class="text-muted" style="font-size: 0.82em; margin-top: 4px;">
+        &#x26A0;&#xFE0F; חסרים: yuki, kai, pixel, rex — סה"כ 18/~24 (75%)
+      </p>
+
+    </div>
+  </div>
+
+
+  <!-- ═════════════════════════════════════════════════════════════════════
+       SECTION 5: באגים קריטיים שתוקנו
+       ═════════════════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background: rgba(255,71,87,0.15);">&#x1F41E;</div>
+      <h2>5. באגים קריטיים שתוקנו</h2>
+      <span class="status-badge badge-done">הכל תוקן</span>
+    </div>
+    <div class="section-body">
+
+      <ul class="fix-list">
+        <!-- Bug 1: Broken Image Paths -->
+        <li class="fix-item">
+          <span class="fix-icon">&#x1F6A8;</span>
+          <div class="fix-content">
+            <div class="fix-title">14 נתיבי תמונות שבורים ב-character-config.ts</div>
+            <div class="fix-desc">
+              רוב הדמויות הפנו לנתיבי תמונות שלא קיימים. כל נתיב עודכן לשם הקובץ הנכון והסופי.
+              למשל: Glitch הפנה ל-<span class="inline-code">bug-villain.jpg</span> שלא קיים
+              — עודכן ל-<span class="inline-code">glitch-entity.jpg</span>.
+            </div>
+            <div class="fix-file">src/lib/story/character-config.ts</div>
+            <div class="fix-before-after">
+              <div class="fix-before">
+                <div class="fix-label before">&#x274C; לפני</div>
+                <code>image: '/images/characters/model-sheets/bug-villain.jpg'</code>
+              </div>
+              <div class="fix-after">
+                <div class="fix-label after">&#x2705; אחרי</div>
+                <code>image: '/images/characters/model-sheets/glitch-entity.jpg'</code>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Bug 2: getAllChapterBeats -->
+        <li class="fix-item">
+          <span class="fix-icon">&#x1F6A8;</span>
+          <div class="fix-content">
+            <div class="fix-title">getAllChapterBeats() החזירה רק 3 מתוך 6 פרקים!</div>
+            <div class="fix-desc">
+              פונקציה קריטית שאמורה להחזיר את כל ה-story beats מכל הפרקים
+              — הייתה מחזירה רק פרקים 1-3. פרקים 4, 5, ו-6 לא הופיעו בכלל.
+              גם ה-imports של הפרקים החדשים חסרו, וגם ה-<span class="inline-code">ALL_BEATS</span> array
+              לא כלל אותם. כל הנתונים מ-53 beats בכל 6 הפרקים עכשיו נגישים.
+            </div>
+            <div class="fix-file">src/hooks/use-story-trigger.ts</div>
+            <div class="fix-before-after">
+              <div class="fix-before">
+                <div class="fix-label before">&#x274C; לפני (3 פרקים)</div>
+                <code>return [<br>  { chapter: 1, ... },<br>  { chapter: 2, ... },<br>  { chapter: 3, ... },<br>]</code>
+              </div>
+              <div class="fix-after">
+                <div class="fix-label after">&#x2705; אחרי (6 פרקים)</div>
+                <code>return [<br>  { chapter: 1, ... },<br>  { chapter: 2, ... },<br>  { chapter: 3, ... },<br>  { chapter: 4, ... },<br>  { chapter: 5, ... },<br>  { chapter: 6, ... },<br>]</code>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Bug 3: Navigation Test -->
+        <li class="fix-item">
+          <span class="fix-icon">&#x1F527;</span>
+          <div class="fix-content">
+            <div class="fix-title">טסט ניווט נכשל — 13 לינקים במקום 12</div>
+            <div class="fix-desc">
+              הוספת עמוד ה-Jukebox הוסיפה לינק ל-sidebar, אבל הטסט עדיין ציפה ל-12 לינקים.
+              עודכן ל-13.
+            </div>
+            <div class="fix-file">navigation.test.tsx</div>
+            <div class="fix-before-after">
+              <div class="fix-before">
+                <div class="fix-label before">&#x274C; לפני</div>
+                <code>expect(links).toHaveLength(12)</code>
+              </div>
+              <div class="fix-after">
+                <div class="fix-label after">&#x2705; אחרי</div>
+                <code>expect(links).toHaveLength(13)</code>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Bug 4: Visual Bible References -->
+        <li class="fix-item">
+          <span class="fix-icon">&#x1F527;</span>
+          <div class="fix-content">
+            <div class="fix-title">67 הפניות שבורות ב-Visual Bible JSON</div>
+            <div class="fix-desc">
+              אחרי שינוי שמות הקבצים למבנה נקי, ה-Visual Bible עדיין הפנה לשמות הישנים.
+              כל 67 ההפניות עודכנו ידנית כדי להתאים למבנה התיקיות החדש.
+            </div>
+            <div class="fix-file">src/data/characters/character-visual-bible.json</div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="highlight-box">
+        <strong>&#x2705; סטטוס סופי:</strong>
+        TypeScript: <span class="text-green">0 שגיאות</span> &bull;
+        Vitest: <span class="text-green">1,096/1,096 עוברים</span> &bull;
+        Build: <span class="text-green">נקי</span>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ═════════════════════════════════════════════════════════════════════
+       SECTION 6: סטטוס כולל
+       ═════════════════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background: rgba(0,184,148,0.15);">&#x1F4CA;</div>
+      <h2>6. סטטוס כולל — מפת התקדמות</h2>
+    </div>
+    <div class="section-body">
+
+      <!-- Story -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F4D6; סיפור (Story)</span>
+          <span class="percent percent-green">100%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill green" style="width: 100%;"></div>
+        </div>
+        <div class="text-muted" style="font-size: 0.8em; margin-top: 2px;">6 פרקים, 53 beats, כל הנתונים מוטמעים ונגישים</div>
+      </div>
+
+      <!-- Model Sheets -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F5BC;&#xFE0F; Model Sheets</span>
+          <span class="percent percent-green">100%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill green" style="width: 100%;"></div>
+        </div>
+        <div class="text-muted" style="font-size: 0.8em; margin-top: 2px;">30 קבצים סופיים עם שמות נקיים</div>
+      </div>
+
+      <!-- Battle Engine -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x2694;&#xFE0F; מנוע קרבות (Battle)</span>
+          <span class="percent percent-green">100%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill green" style="width: 100%;"></div>
+        </div>
+        <div class="text-muted" style="font-size: 0.8em; margin-top: 2px;">AI typing engine + battle arena + AI opponents</div>
+      </div>
+
+      <!-- Sound System -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F50A; מערכת צלילים</span>
+          <span class="percent percent-blue">80%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill blue" style="width: 80%;"></div>
+        </div>
+        <div class="text-muted" style="font-size: 0.8em; margin-top: 2px;">16 SFX + Web Audio fallback. חסר: UI sound effects על כל אינטראקציה</div>
+      </div>
+
+      <!-- Expression Sheets -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F60A; Expression Sheets</span>
+          <span class="percent percent-orange">75%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill orange" style="width: 75%;"></div>
+        </div>
+        <div class="text-muted" style="font-size: 0.8em; margin-top: 2px;">18 מתוך ~24 נדרשים. חסרים: Yuki, Kai, Pixel, Rex, Sensei Zen (full set), Virus</div>
+      </div>
+
+      <!-- UI/UX -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F3A8; UI/UX</span>
+          <span class="percent percent-orange">45%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill orange" style="width: 45%;"></div>
+        </div>
+        <div class="text-muted" style="font-size: 0.8em; margin-top: 2px;">Dark gaming theme + CSS vars. חסר: עיצוב אסימטרי, עוד פונטים, SFX על UI</div>
+      </div>
+
+      <!-- Community/Tournaments -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F3C6; קהילה/טורנירים</span>
+          <span class="percent percent-red">25%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill red" style="width: 25%;"></div>
+        </div>
+        <div class="text-muted" style="font-size: 0.8em; margin-top: 2px;">מבנה בסיסי בלבד. חסר: אוטומציה, Dojo battles, school leagues</div>
+      </div>
+
+      <!-- Teacher Interface -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F468;&#x200D;&#x1F3EB; ממשק מורים</span>
+          <span class="percent percent-red">10%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill red" style="width: 10%;"></div>
+        </div>
+        <div class="text-muted" style="font-size: 0.8em; margin-top: 2px;">DB schema מוכן. חסר: dashboard, skill mapping, student tracking</div>
+      </div>
+
+      <!-- Music -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F3B5; מוזיקה</span>
+          <span class="percent percent-red">5%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill red" style="width: 5%;"></div>
+        </div>
+        <div class="text-muted" style="font-size: 0.8em; margin-top: 2px;">2/44 טראקים קיימים. תשתית פייפליין מוכנה! ממתין לייצור Suno</div>
+      </div>
+
+      <!-- 3D Pipeline -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span class="name">&#x1F4A0; 3D Pipeline</span>
+          <span class="percent percent-red">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill red" style="width: 0%;"></div>
+        </div>
+        <div class="text-muted" style="font-size: 0.8em; margin-top: 2px;">ממתין לאישור concepts ותקציב. תוכנית מוגדרת בסעיף 14 של iteration-review-v4</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ═════════════════════════════════════════════════════════════════════
+       SECTION 7: צעדים הבאים
+       ═════════════════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background: rgba(255,215,0,0.15);">&#x1F680;</div>
+      <h2>7. צעדים הבאים — סדר עדיפויות</h2>
+    </div>
+    <div class="section-body">
+
+      <ul class="next-list">
+        <li class="next-item">
+          <div class="next-num critical">1</div>
+          <div class="next-content">
+            <div class="next-title">
+              &#x1F3B5; אוטומציית ייצור מוזיקה ב-Suno
+              <span class="priority-tag critical">קריטי</span>
+            </div>
+            <div class="next-desc">
+              חקירת Suno API לגישה אוטומטית. התשתית מוכנה (pipeline + prompts + manifest).
+              צריך: חשבון Suno Premier, API access, אוטומציה של copy prompt &rarr; generate &rarr; download &rarr; import.
+            </div>
+          </div>
+        </li>
+
+        <li class="next-item">
+          <div class="next-num critical">2</div>
+          <div class="next-content">
+            <div class="next-title">
+              &#x1F3A4; ייצור Batch 1 — 10 טראקים ראשונים
+              <span class="priority-tag critical">קריטי</span>
+            </div>
+            <div class="next-desc">
+              5 ערכות דמויות (Ki, Mika, Yuki, Sensei Zen, Glitch) +
+              3 gameplay (Practice, Speed Test, Tournament) +
+              2 story (Emotional, Victory).
+              כל ה-prompts מוכנים ב-<span class="inline-code">scripts/suno-prompts.json</span>.
+            </div>
+          </div>
+        </li>
+
+        <li class="next-item">
+          <div class="next-num high">3</div>
+          <div class="next-content">
+            <div class="next-title">
+              &#x1F3A8; Expression Sheets חסרים
+              <span class="priority-tag high">גבוה</span>
+            </div>
+            <div class="next-desc">
+              יצירת expression sheets לדמויות שעדיין חסרות: Yuki, Kai, Pixel, Rex, Virus.
+              שימוש ב-character-consistency skill כדי להבטיח עקביות עם model sheets קיימים.
+              סנסיי זן צריך סט מלא (הנוכחי חלקי).
+            </div>
+          </div>
+        </li>
+
+        <li class="next-item">
+          <div class="next-num high">4</div>
+          <div class="next-content">
+            <div class="next-title">
+              &#x1F469; עיצוב מחדש של מיקה — יותר נשית
+              <span class="priority-tag high">גבוה</span>
+            </div>
+            <div class="next-desc">
+              פידבק משתמש: מיקה נראית "tomboyish" מדי, בנות לא יתחברו אליה.
+              צריך עיצוב מחדש יותר נשי/קלאסי. העיצוב הנוכחי יכול לעבור לדמות חדשה.
+              שימוש ב-Visual Bible + Consistency Skill לעיצוב חדש.
+            </div>
+          </div>
+        </li>
+
+        <li class="next-item">
+          <div class="next-num medium">5</div>
+          <div class="next-content">
+            <div class="next-title">
+              &#x1F50A; אפקטי צליל על כל אינטראקציית UI
+              <span class="priority-tag medium">בינוני</span>
+            </div>
+            <div class="next-desc">
+              הוספת SFX לכל כפתור, מעבר עמוד, הצלחה, כשלון, hover, ואינטראקציית משתמש.
+              התשתית קיימת (Web Audio + MP3 SFX). צריך: מיפוי אירועים לצלילים + עטיפת כל הקומפוננטות.
+            </div>
+          </div>
+        </li>
+
+        <li class="next-item">
+          <div class="next-num medium">6</div>
+          <div class="next-content">
+            <div class="next-title">
+              &#x1F6E1;&#xFE0F; מנגנוני Anti-Frustration
+              <span class="priority-tag medium">בינוני</span>
+            </div>
+            <div class="next-desc">
+              מחקר ומימוש מנגנונים למניעת תסכול: עידוד אוטומטי, התאמת קושי דינמית,
+              hints על בקשה, מערכת עזרה נגישה. המשתמש אישר את כל המסקנות מ-game-ui-research.html.
+            </div>
+          </div>
+        </li>
+
+        <li class="next-item">
+          <div class="next-num medium">7</div>
+          <div class="next-content">
+            <div class="next-title">
+              &#x1F3C6; פרוטוטייפ מערכת טורנירים
+              <span class="priority-tag medium">בינוני</span>
+            </div>
+            <div class="next-desc">
+              טורנירים אוטומטיים מסונכרנים עם לוח שנה בית ספרי.
+              הפרדת גילים, live vs time-limited, הפרדת dojos.
+              צריך: backend schema, matchmaking logic, UI tournament bracket.
+            </div>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-brand">&#x1F977; Ninja Keyboard &#x2014; Iteration 10 Review</div>
+    <div>
+      &#x1F4C5; תאריך: מרץ 2026 &bull;
+      &#x1F4BB; סשן: Claude Code + Gemini Art Pipeline &bull;
+      &#x1F3AF; פוקוס: עקביות דמויות, תשתית מוזיקלית, תיקוני באגים קריטיים
+    </div>
+    <div style="margin-top: 8px;">
+      &#x1F4C4; קבצי תוכנית: <span class="inline-code">docs/iteration-10-plan.html</span> &bull;
+      &#x1F4CA; סיכום קודם: <span class="inline-code">docs/iteration-review-v4.html</span>
+    </div>
+    <div style="margin-top: 12px; font-size: 0.8em;">
+      Built with &#x2764;&#xFE0F; for Israeli kids learning to type
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>
