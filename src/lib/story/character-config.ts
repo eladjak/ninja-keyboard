@@ -314,6 +314,66 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
       },
     },
   },
+
+  virus: {
+    nameHe: 'וירוס',
+    image: '/images/characters/model-sheets/virus-friendly.jpg',
+    glowColor: '#D63031',
+    soundProfile: {
+      oscillatorType: 'sawtooth',
+      frequencyRange: [200, 600],
+    },
+    idleAnimation: {
+      y: [0, -6, 0],
+      rotate: [0, 5, 0],
+      transition: {
+        duration: 1.0,
+        repeat: INFINITE_REPEAT,
+        repeatType: 'reverse',
+        ease: 'easeInOut',
+      },
+    },
+  },
+
+  phantom: {
+    nameHe: 'פאנטום',
+    image: '/images/characters/model-sheets/phantom-raz.jpg',
+    glowColor: '#9B59B6',
+    soundProfile: {
+      oscillatorType: 'triangle',
+      frequencyRange: [200, 400],
+    },
+    idleAnimation: {
+      y: [0, -3, 0],
+      rotate: [0, 1, 0],
+      transition: {
+        duration: 3.0,
+        repeat: INFINITE_REPEAT,
+        repeatType: 'reverse',
+        ease: 'easeInOut',
+      },
+    },
+  },
+
+  barak: {
+    nameHe: 'ברק',
+    image: '/images/characters/model-sheets/barak-fox.jpg',
+    glowColor: '#F9CA24',
+    soundProfile: {
+      oscillatorType: 'square',
+      frequencyRange: [400, 650],
+    },
+    idleAnimation: {
+      y: [0, -5, 0],
+      rotate: [0, -3, 0],
+      transition: {
+        duration: 1.4,
+        repeat: INFINITE_REPEAT,
+        repeatType: 'reverse',
+        ease: 'easeInOut',
+      },
+    },
+  },
 }
 
 /** Characters considered heroes (player allies) */

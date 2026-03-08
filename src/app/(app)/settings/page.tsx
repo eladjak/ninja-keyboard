@@ -12,6 +12,7 @@ import type { KeyboardLayout, ThemePreference } from '@/stores/settings-store'
 import { themes } from '@/styles/themes'
 import type { AgeName } from '@/types/theme'
 import { cn } from '@/lib/utils'
+import { useClickSound } from '@/hooks/use-sound-effect'
 
 const KEYBOARD_LAYOUTS: { value: KeyboardLayout; label: string; description: string }[] = [
   { value: 'standard', label: 'תקנית', description: 'פריסת מקלדת עברית תקנית' },
@@ -26,6 +27,7 @@ const THEME_OPTIONS: { value: ThemePreference; label: string; icon: typeof Monit
 
 export default function SettingsPage() {
   const { ageName, setAgeName } = useThemeStore()
+  const playClick = useClickSound()
 
   const {
     soundEnabled,
@@ -68,7 +70,7 @@ export default function SettingsPage() {
                 return (
                   <button
                     key={option.value}
-                    onClick={() => setThemePreference(option.value)}
+                    onClick={() => { playClick(); setThemePreference(option.value) }}
                     className={cn(
                       'flex flex-col items-center gap-1.5 rounded-lg border p-3 text-sm transition-colors',
                       themePreference === option.value
@@ -92,7 +94,7 @@ export default function SettingsPage() {
               {themes.map((theme) => (
                 <button
                   key={theme.name}
-                  onClick={() => setAgeName(theme.name as AgeName)}
+                  onClick={() => { playClick(); setAgeName(theme.name as AgeName) }}
                   className={cn(
                     'flex items-center gap-2 rounded-lg border p-3 text-start transition-colors',
                     ageName === theme.name
@@ -168,7 +170,7 @@ export default function SettingsPage() {
             <Switch
               id="music-enabled"
               checked={musicEnabled}
-              onCheckedChange={toggleMusicEnabled}
+              onCheckedChange={() => { playClick(); toggleMusicEnabled() }}
             />
           </div>
 
@@ -177,7 +179,7 @@ export default function SettingsPage() {
             <Switch
               id="music-muted"
               checked={musicMuted}
-              onCheckedChange={toggleMusicMute}
+              onCheckedChange={() => { playClick(); toggleMusicMute() }}
             />
           </div>
 
@@ -233,7 +235,7 @@ export default function SettingsPage() {
             <Switch
               id="finger-guide"
               checked={showFingerGuide}
-              onCheckedChange={toggleFingerGuide}
+              onCheckedChange={() => { playClick(); toggleFingerGuide() }}
             />
           </div>
 
@@ -247,7 +249,7 @@ export default function SettingsPage() {
             <Switch
               id="keyboard-colors"
               checked={showKeyboardColors}
-              onCheckedChange={toggleKeyboardColors}
+              onCheckedChange={() => { playClick(); toggleKeyboardColors() }}
             />
           </div>
 
@@ -258,7 +260,7 @@ export default function SettingsPage() {
               {KEYBOARD_LAYOUTS.map((layout) => (
                 <button
                   key={layout.value}
-                  onClick={() => setKeyboardLayout(layout.value)}
+                  onClick={() => { playClick(); setKeyboardLayout(layout.value) }}
                   className={cn(
                     'flex flex-col items-start rounded-lg border p-3 text-start transition-colors',
                     keyboardLayout === layout.value

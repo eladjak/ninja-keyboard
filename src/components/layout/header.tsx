@@ -6,11 +6,14 @@ import { Moon, Sun, Settings, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useThemeStore } from '@/stores/theme-store'
 import { useXpStore } from '@/stores/xp-store'
+import { useClickSound, useNavigateSound } from '@/hooks/use-sound-effect'
 
 export function Header() {
   const { colorScheme, toggleDarkMode } = useThemeStore()
   const isDark = colorScheme === 'dark' || colorScheme === 'dark-high-contrast'
   const { level, totalXp } = useXpStore()
+  const playClick = useClickSound()
+  const playNavigate = useNavigateSound()
 
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--game-border)] bg-[var(--game-bg-primary)]/90 backdrop-blur-md">
@@ -53,14 +56,14 @@ export function Header() {
             asChild
             aria-label="הגדרות"
           >
-            <Link href="/settings">
+            <Link href="/settings" onClick={playNavigate}>
               <Settings className="size-5" />
             </Link>
           </Button>
           <Button
             variant="ghost"
             size="icon"
-            onClick={toggleDarkMode}
+            onClick={() => { playClick(); toggleDarkMode() }}
             aria-label={isDark ? 'מצב בהיר' : 'מצב כהה'}
           >
             {isDark ? <Sun className="size-5" /> : <Moon className="size-5" />}

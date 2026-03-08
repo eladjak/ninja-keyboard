@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frontend Skills Audit - ביקורת סקילים לעיצוב פרונטאנד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0d0b1a;
+    --bg-secondary: #161229;
+    --bg-card: #1a1533;
+    --bg-card-hover: #221d42;
+    --bg-highlight: #2a2350;
+    --accent-primary: #6C5CE7;
+    --accent-secondary: #00B894;
+    --accent-warning: #fdcb6e;
+    --accent-danger: #e17055;
+    --accent-info: #74b9ff;
+    --accent-pink: #fd79a8;
+    --accent-cyan: #00cec9;
+    --text-primary: #e8e6f0;
+    --text-secondary: #a09cb5;
+    --text-muted: #6c6888;
+    --border-color: #2d2754;
+    --border-glow: rgba(108, 92, 231, 0.3);
+    --shadow-glow: 0 0 20px rgba(108, 92, 231, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  /* Header */
+  .hero {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 50%, #1a0f2e 100%);
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(108, 92, 231, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(0, 184, 148, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero h1 {
+    font-size: 2.8rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+
+  .hero .subtitle {
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+
+  .hero .meta {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .hero .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .hero .meta-item strong {
+    color: var(--accent-primary);
+    font-weight: 700;
+  }
+
+  /* Stats Bar */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    text-align: center;
+    transition: all 0.2s ease;
+  }
+
+  .stat-card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
+  }
+
+  .stat-number {
+    font-size: 2.2rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .stat-number.purple { color: var(--accent-primary); }
+  .stat-number.green { color: var(--accent-secondary); }
+  .stat-number.yellow { color: var(--accent-warning); }
+  .stat-number.pink { color: var(--accent-pink); }
+  .stat-number.cyan { color: var(--accent-cyan); }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 0.3rem;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 3rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid var(--border-color);
+  }
+
+  .section-header h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+
+  .section-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .section-icon.active { background: rgba(0, 184, 148, 0.15); }
+  .section-icon.available { background: rgba(108, 92, 231, 0.15); }
+  .section-icon.missing { background: rgba(225, 112, 85, 0.15); }
+  .section-icon.table { background: rgba(116, 185, 255, 0.15); }
+  .section-icon.recommend { background: rgba(253, 203, 110, 0.15); }
+
+  /* Skill Cards */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 1rem;
+  }
+
+  .skill-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.4rem;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-glow);
+    background: var(--bg-card-hover);
+  }
+
+  .skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    border-radius: 0 12px 12px 0;
+  }
+
+  .skill-card.active::before { background: var(--accent-secondary); }
+  .skill-card.available::before { background: var(--accent-primary); }
+  .skill-card.missing::before { background: var(--accent-danger); }
+  .skill-card.high-priority::before { background: var(--accent-warning); }
+
+  .skill-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .skill-name code {
+    font-family: 'Courier New', monospace;
+    background: var(--bg-highlight);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--accent-cyan);
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+
+  .skill-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.6rem;
+    line-height: 1.6;
+  }
+
+  .skill-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .badge-active {
+    background: rgba(0, 184, 148, 0.15);
+    color: var(--accent-secondary);
+    border: 1px solid rgba(0, 184, 148, 0.3);
+  }
+
+  .badge-available {
+    background: rgba(108, 92, 231, 0.15);
+    color: var(--accent-primary);
+    border: 1px solid rgba(108, 92, 231, 0.3);
+  }
+
+  .badge-missing {
+    background: rgba(225, 112, 85, 0.15);
+    color: var(--accent-danger);
+    border: 1px solid rgba(225, 112, 85, 0.3);
+  }
+
+  .badge-high {
+    background: rgba(253, 203, 110, 0.15);
+    color: var(--accent-warning);
+    border: 1px solid rgba(253, 203, 110, 0.3);
+  }
+
+  .badge-medium {
+    background: rgba(116, 185, 255, 0.15);
+    color: var(--accent-info);
+    border: 1px solid rgba(116, 185, 255, 0.3);
+  }
+
+  .badge-low {
+    background: rgba(99, 110, 114, 0.15);
+    color: var(--text-muted);
+    border: 1px solid rgba(99, 110, 114, 0.3);
+  }
+
+  .badge-category {
+    background: rgba(253, 121, 168, 0.15);
+    color: var(--accent-pink);
+    border: 1px solid rgba(253, 121, 168, 0.3);
+  }
+
+  .badge-3d {
+    background: rgba(0, 206, 201, 0.15);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(0, 206, 201, 0.3);
+  }
+
+  .badge-stitch {
+    background: rgba(108, 92, 231, 0.12);
+    color: #b8b0ff;
+    border: 1px solid rgba(108, 92, 231, 0.25);
+  }
+
+  .badge-vercel {
+    background: rgba(255, 255, 255, 0.06);
+    color: #ddd;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  /* Comparison Table */
+  .comparison-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+  }
+
+  .comparison-table thead {
+    background: var(--bg-highlight);
+  }
+
+  .comparison-table th {
+    padding: 1rem;
+    text-align: right;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--accent-primary);
+    border-bottom: 2px solid var(--border-color);
+    white-space: nowrap;
+  }
+
+  .comparison-table td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid rgba(45, 39, 84, 0.5);
+    font-size: 0.88rem;
+    vertical-align: middle;
+  }
+
+  .comparison-table tbody tr {
+    background: var(--bg-card);
+    transition: background 0.15s ease;
+  }
+
+  .comparison-table tbody tr:hover {
+    background: var(--bg-card-hover);
+  }
+
+  .comparison-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .comparison-table td code {
+    font-family: 'Courier New', monospace;
+    background: var(--bg-highlight);
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    color: var(--accent-cyan);
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+
+  /* Recommendation Cards */
+  .rec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .rec-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+  }
+
+  .rec-card:hover {
+    border-color: var(--accent-secondary);
+    box-shadow: 0 0 20px rgba(0, 184, 148, 0.1);
+  }
+
+  .rec-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    color: var(--accent-secondary);
+  }
+
+  .rec-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
+  }
+
+  .rec-card .projects {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.6rem;
+    margin-top: 0.6rem;
+  }
+
+  .rec-card .projects strong {
+    color: var(--accent-info);
+  }
+
+  /* Priority indicator */
+  .priority-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .priority-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .priority-dot.critical { background: var(--accent-danger); }
+  .priority-dot.high { background: var(--accent-warning); }
+  .priority-dot.medium { background: var(--accent-info); }
+  .priority-dot.low { background: var(--text-muted); }
+
+  /* Sub-section */
+  .sub-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .sub-section h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin-bottom: 0.8rem;
+    padding-right: 0.5rem;
+    border-right: 3px solid var(--accent-primary);
+  }
+
+  /* Info box */
+  .info-box {
+    background: var(--bg-highlight);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .info-box strong {
+    color: var(--accent-primary);
+  }
+
+  /* Missing skill special card */
+  .missing-card {
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(225, 112, 85, 0.05) 100%);
+  }
+
+  .missing-card .skill-desc {
+    color: var(--text-secondary);
+  }
+
+  .missing-card .use-case {
+    font-size: 0.82rem;
+    color: var(--accent-warning);
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed rgba(225, 112, 85, 0.2);
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: 3rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 2rem; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .rec-grid { grid-template-columns: 1fr; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .comparison-table { font-size: 0.8rem; }
+    .comparison-table th, .comparison-table td { padding: 0.5rem; }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg-primary); }
+  ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>ביקורת סקילים לעיצוב פרונטאנד</h1>
+  <p class="subtitle">סריקה מקיפה של 230 סקילים מותקנים - זיהוי כלי עיצוב, UI/UX ואנימציה</p>
+  <div class="meta">
+    <div class="meta-item">תאריך: <strong>8 מרץ 2026</strong></div>
+    <div class="meta-item">סה"כ סקילים: <strong>230</strong></div>
+    <div class="meta-item">סקילים לפרונטאנד: <strong>42</strong></div>
+    <div class="meta-item">פרויקטים פעילים: <strong>32</strong></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-number green">14</div>
+      <div class="stat-label">סקילים בשימוש פעיל</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number purple">18</div>
+      <div class="stat-label">סקילים זמינים לאימוץ</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number yellow">6</div>
+      <div class="stat-label">סקילים חסרים ליצירה</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number pink">4</div>
+      <div class="stat-label">סקילים ל-3D (עתיד)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number cyan">32</div>
+      <div class="stat-label">פרויקטים שיירוויחו</div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- Section 1: Active Skills -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon active">&#9889;</div>
+      <h2>סקילים בשימוש פעיל</h2>
+    </div>
+
+    <div class="info-box">
+      אלה הסקילים שמוגדרים ב-<strong>CLAUDE.md</strong> ובקבצי ה-rules ומופעלים באופן שוטף בעבודה על פרויקטים.
+      כל סקיל כולל תיאור, קטגוריה ורמת רלוונטיות.
+    </div>
+
+    <div class="skills-grid">
+
+      <div class="skill-card active">
+        <div class="skill-name"><code>ui-skills</code></div>
+        <div class="skill-desc">אילוצים אופינייטיביים לבניית ממשקים - Stack, Components, Interaction, Animation, Typography, Design. זהה ל-baseline-ui אך נפוץ יותר.</div>
+        <div class="skill-meta">
+          <span class="badge badge-active">פעיל</span>
+          <span class="badge badge-category">UI Core</span>
+          <span class="badge badge-high">קריטי</span>
+        </div>
+      </div>
+
+      <div class="skill-card active">
+        <div class="skill-name"><code>nano-banana-poster</code></div>
+        <div class="skill-desc">יצירת תמונות AI עם Gemini - heroes, illustrations, icons, badges. קובץ CLI חינמי שמייצר תמונות מדהימות. 6 יחסי גובה-רוחב.</div>
+        <div class="skill-meta">
+          <span class="badge badge-active">פעיל</span>
+          <span class="badge badge-category">Visual Assets</span>
+          <span class="badge badge-high">קריטי</span>
+        </div>
+      </div>
+
+      <div class="skill-card active">
+        <div class="skill-name"><code>google-stitch</code></div>
+        <div class="skill-desc">עיצוב UI עם Gemini - ייצוא HTML/Tailwind ו-Figma. כולל MCP ישיר עם build_site, get_screen_code, get_screen_image.</div>
+        <div class="skill-meta">
+          <span class="badge badge-active">פעיל</span>
+          <span class="badge badge-stitch">Stitch</span>
+          <span class="badge badge-high">קריטי</span>
+        </div>
+      </div>
+
+      <div class="skill-card active">
+        <div class="skill-name"><code>stitch-loop</code></div>
+        <div class="skill-desc">בניית אתרים מרובי-דפים באופן אוטונומי עם מערכת baton - כל איטרציה מייצרת דף, משלבת באתר ומכינה הוראות לבאה.</div>
+        <div class="skill-meta">
+          <span class="badge badge-active">פעיל</span>
+          <span class="badge badge-stitch">Stitch</span>
+          <span class="badge badge-medium">בינוני</span>
+        </div>
+      </div>
+
+      <div class="skill-card active">
+        <div class="skill-name"><code>shadcn-ui</code></div>
+        <div class="skill-desc">קומפוננטות shadcn/ui - התקנה, התאמה אישית, Radix או Base UI primitives. קומפוננטות שחיות בקוד שלך, לא ב-node_modules.</div>
+        <div class="skill-meta">
+          <span class="badge badge-active">פעיל</span>
+          <span class="badge badge-category">Components</span>
+          <span class="badge badge-high">קריטי</span>
+        </div>
+      </div>
+
+      <div class="skill-card active">
+        <div class="skill-name"><code>design-motion-principles</code></div>
+        <div class="skill-desc">ביקורת אנימציות מבוססת 3 מעצבים: Emil Kowalski (מיעוט), Jakub Krehel (עידון), Jhey Tompkins (שובבות). משקלות לפי סוג הפרויקט.</div>
+        <div class="skill-meta">
+          <span class="badge badge-active">פעיל</span>
+          <span class="badge badge-category">Animation</span>
+          <span class="badge badge-high">קריטי</span>
+        </div>
+      </div>
+
+      <div class="skill-card active">
+        <div class="skill-name"><code>composition-patterns</code></div>
+        <div class="skill-desc">React Composition Patterns מ-Vercel - Compound Components, Context Providers, State Decoupling. נגד ריבוי boolean props.</div>
+        <div class="skill-meta">
+          <span class="badge badge-active">פעיל</span>
+          <span class="badge badge-vercel">Vercel</span>
+          <span class="badge badge-medium">בינוני</span>
+        </div>
+      </div>
+
+      <div class="skill-card active">
+        <div class="skill-name"><code>framer-motion-patterns</code></div>
+        <div class="skill-desc">דפוסי Framer Motion - Basic Animations, Variants, AnimatePresence, Layout Animations, Gestures, Scroll-triggered.</div>
+        <div class="skill-meta">
+          <span class="badge badge-active">פעיל</span>
+          <span class="badge badge-category">Animation</span>
+          <span class="badge badge-medium">בינוני</span>
+        </div>
+      </div>
+
+      <div class="skill-card active">
+        <div class="skill-name"><code>vercel-react-best-practices</code></div>
+        <div class="skill-desc">45 כללים מ-Vercel Engineering - Waterfalls, Bundle Size, Server-Side, Client-Side, Re-renders, Rendering, JS Performance.</div>
+        <div class="skill-meta">
+          <span class="badge badge-active">פעיל</span>
+          <span class="badge badge-vercel">Vercel</span>
+          <span class="badge badge-high">קריטי</span>
+        </div>
+      </div>
+
+      <div class="skill-card active">
+        <div class="skill-name"><code>tailwind-patterns</code></div>
+        <div class="skill-desc">דפוסי Tailwind CSS - Layout (Flex, Grid, Container), Spacing, Colors, Dark Mode, Responsive, Custom Utilities.</div>
+        <div class="skill-meta">
+          <span class="badge badge-active">פעיל</span>
+          <span class="badge badge-category">CSS</span>
+          <span class="badge badge-medium">בינוני</span>
+        </div>
+      </div>
+
+      <div class="skill-card active">
+        <div class="skill-name"><code>web-accessibility</code></div>
+        <div class="skill-desc">WCAG 2.1 - ARIA Patterns, Keyboard Navigation, Screen Reader Support, Focus Management, Semantic HTML.</div>
+        <div class="skill-meta">
+          <span class="badge badge-active">פעיל</span>
+          <span class="badge badge-category">A11y</span>
+          <span class="badge badge-high">קריטי</span>
+        </div>
+      </div>
+
+      <div class="skill-card active">
+        <div class="skill-name"><code>mobile-responsiveness</code></div>
+        <div class="skill-desc">Mobile-First Design - Breakpoints, Touch Interactions, Viewport Optimization, Responsive Tailwind.</div>
+        <div class="skill-meta">
+          <span class="badge badge-active">פעיל</span>
+          <span class="badge badge-category">Responsive</span>
+          <span class="badge badge-medium">בינוני</span>
+        </div>
+      </div>
+
+      <div class="skill-card active">
+        <div class="skill-name"><code>zustand-patterns</code></div>
+        <div class="skill-desc">Zustand State Management - Stores, Selectors, Async Actions, Middleware, Persist, Devtools. רלוונטי לכל פרויקט React.</div>
+        <div class="skill-meta">
+          <span class="badge badge-active">פעיל</span>
+          <span class="badge badge-category">State</span>
+          <span class="badge badge-medium">בינוני</span>
+        </div>
+      </div>
+
+      <div class="skill-card active">
+        <div class="skill-name"><code>nextjs-patterns</code></div>
+        <div class="skill-desc">Next.js App Router - File Conventions, Server/Client Components, Data Fetching, Streaming, Middleware, Layouts.</div>
+        <div class="skill-meta">
+          <span class="badge badge-active">פעיל</span>
+          <span class="badge badge-category">Framework</span>
+          <span class="badge badge-medium">בינוני</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- Section 2: Available Skills to Adopt -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon available">&#128640;</div>
+      <h2>סקילים זמינים שכדאי לאמץ</h2>
+    </div>
+
+    <div class="info-box">
+      סקילים אלה <strong>כבר מותקנים</strong> במערכת אבל לא מופעלים באופן שגרתי.
+      כל אחד מהם יכול לשפר באופן משמעותי את איכות העבודה אם יתווסף ל-workflow הקבוע.
+    </div>
+
+    <div class="sub-section">
+      <h3>עדיפות גבוהה - מומלץ לאמץ מיידית</h3>
+      <div class="skills-grid">
+
+        <div class="skill-card available high-priority">
+          <div class="skill-name"><code>baseline-ui</code></div>
+          <div class="skill-desc">אילוצי UI אופינייטיביים למניעת "AI slop" - כמעט זהה ל-ui-skills אבל עם כללים נוספים על z-index scale, safe-area-inset ו-Typography (text-balance, tabular-nums). מומלץ למזג לתוך ui-skills.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-high">עדיפות גבוהה</span>
+            <span class="badge badge-category">UI Core</span>
+          </div>
+        </div>
+
+        <div class="skill-card available high-priority">
+          <div class="skill-name"><code>ui-ux-pro-max</code></div>
+          <div class="skill-desc">מאגר עיצוב AI - 50+ סגנונות UI, 97 פלטות צבעים, 57 זוגות פונטים, המלצות לפי סוג מוצר. חיפוש BM25+regex. תומך ב-12 stacks (React, Next.js, Vue, Svelte ועוד).</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-high">עדיפות גבוהה</span>
+            <span class="badge badge-category">Design DB</span>
+          </div>
+        </div>
+
+        <div class="skill-card available high-priority">
+          <div class="skill-name"><code>fixing-accessibility</code></div>
+          <div class="skill-desc">תיקון בעיות נגישות ממוקד - 9 קטגוריות כללים לפי עדיפות: Accessible Names, Keyboard Access, Focus, Semantics, Forms, Announcements, Contrast, Media, Tool Boundaries.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-high">עדיפות גבוהה</span>
+            <span class="badge badge-category">A11y</span>
+          </div>
+        </div>
+
+        <div class="skill-card available high-priority">
+          <div class="skill-name"><code>fixing-motion-performance</code></div>
+          <div class="skill-desc">תיקון ביצועי אנימציה - Never Patterns, Mechanism Choice, Measurement, Scroll, Paint, Layers, Blur, View Transitions. מחולק לפי composite/paint/layout.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-high">עדיפות גבוהה</span>
+            <span class="badge badge-category">Animation</span>
+          </div>
+        </div>
+
+        <div class="skill-card available high-priority">
+          <div class="skill-name"><code>web-design-guidelines</code></div>
+          <div class="skill-desc">Web Interface Guidelines מ-Vercel Labs - סריקה דינמית של כללי עיצוב עדכניים ישירות מ-GitHub. מספק ביקורת לפי קובץ עם פורמט file:line.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-high">עדיפות גבוהה</span>
+            <span class="badge badge-vercel">Vercel</span>
+          </div>
+        </div>
+
+        <div class="skill-card available high-priority">
+          <div class="skill-name"><code>fixing-metadata</code></div>
+          <div class="skill-desc">Metadata נכון ומלא - Title/Description, Canonical, Open Graph, Twitter Cards, Favicons, Manifest, JSON-LD, Locale/Alternates. 8 קטגוריות לפי עדיפות.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-high">עדיפות גבוהה</span>
+            <span class="badge badge-category">SEO</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>עדיפות בינונית - שווה לשלב בזמן הנכון</h3>
+      <div class="skills-grid">
+
+        <div class="skill-card available">
+          <div class="skill-name"><code>design-lab</code></div>
+          <div class="skill-desc">מעבדת עיצוב אינטראקטיבית - ראיון עיצובי, 5 וריאציות UI, איסוף פידבק, עידון ותוכנית יישום. כולל זיהוי אוטומטי של Framework ו-Styling.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-medium">בינוני</span>
+            <span class="badge badge-category">Design Process</span>
+          </div>
+        </div>
+
+        <div class="skill-card available">
+          <div class="skill-name"><code>ux-design-systems</code></div>
+          <div class="skill-desc">בניית Design Systems - CSS Variables, TypeScript Tokens, Theme Switching, Component Library, Spacing Scale, Typography Scale.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-medium">בינוני</span>
+            <span class="badge badge-category">Design System</span>
+          </div>
+        </div>
+
+        <div class="skill-card available">
+          <div class="skill-name"><code>v0-to-claude</code></div>
+          <div class="skill-desc">Pipeline מ-v0.dev לקוד מלא - UI ב-v0, לוגיקה ב-Claude. חוסך טוקנים מסיביים על עיצוב UI מאפס.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-medium">בינוני</span>
+            <span class="badge badge-category">Design Pipeline</span>
+          </div>
+        </div>
+
+        <div class="skill-card available">
+          <div class="skill-name"><code>creative-ai-process</code></div>
+          <div class="skill-desc">תהליך יצירתי מובנה - Immersion, Constraints, Exploration (5+ וריאציות), Refinement, Polish. מונע קפיצה לפתרון ראשון.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-medium">בינוני</span>
+            <span class="badge badge-category">Creative</span>
+          </div>
+        </div>
+
+        <div class="skill-card available">
+          <div class="skill-name"><code>react-components</code> <small>(Stitch)</small></div>
+          <div class="skill-desc">המרת עיצובי Stitch לקומפוננטות React מודולריות - AST validation, mockData isolation, theme mapping, TypeScript interfaces.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-medium">בינוני</span>
+            <span class="badge badge-stitch">Stitch</span>
+          </div>
+        </div>
+
+        <div class="skill-card available">
+          <div class="skill-name"><code>enhance-prompt</code> <small>(Stitch)</small></div>
+          <div class="skill-desc">שיפור פרומפטים ל-Stitch - בדיקת Platform, Page Type, Structure, Visual Style, Colors, Components. Enhancement Pipeline מלא.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-medium">בינוני</span>
+            <span class="badge badge-stitch">Stitch</span>
+          </div>
+        </div>
+
+        <div class="skill-card available">
+          <div class="skill-name"><code>design-md</code> <small>(Stitch)</small></div>
+          <div class="skill-desc">תיעוד Design System מפרויקטי Stitch - Semantic Design System, Visual Descriptions, Color Values. Source of truth ל-DESIGN.md.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-medium">בינוני</span>
+            <span class="badge badge-stitch">Stitch</span>
+          </div>
+        </div>
+
+        <div class="skill-card available">
+          <div class="skill-name"><code>omc-frontend-ui-ux</code></div>
+          <div class="skill-desc">OMC Designer Agent - מנתב למעצב agent או Gemini MCP. קומפוננטות, Responsive Layouts, Design System Consistency, A11y.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-medium">בינוני</span>
+            <span class="badge badge-category">Agent</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>עדיפות נמוכה-בינונית - לפרויקטים ספציפיים</h3>
+      <div class="skills-grid">
+
+        <div class="skill-card available">
+          <div class="skill-name"><code>remotion</code> <small>(Stitch)</small></div>
+          <div class="skill-desc">סרטוני Walkthrough מפרויקטי Stitch - Remotion + Stitch MCP, זום, transitions, text overlays. מצוין לדמואים.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-low">נמוך</span>
+            <span class="badge badge-stitch">Stitch</span>
+          </div>
+        </div>
+
+        <div class="skill-card available">
+          <div class="skill-name"><code>figma</code></div>
+          <div class="skill-desc">Figma API Integration - Extract design tokens, generate code, sync design systems, build plugins, Dev Mode. דורש FIGMA_TOKEN.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-low">נמוך</span>
+            <span class="badge badge-category">Design Tool</span>
+          </div>
+        </div>
+
+        <div class="skill-card available">
+          <div class="skill-name"><code>kinetic-video-creator</code></div>
+          <div class="skill-desc">סרטוני Kinetic Typography - Pillow+FFmpeg (Python, מצוין לעברית RTL) או Remotion (Node.js). ElevenLabs TTS + word-level timing.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-low">נמוך</span>
+            <span class="badge badge-category">Video</span>
+          </div>
+        </div>
+
+        <div class="skill-card available">
+          <div class="skill-name"><code>fal-ai</code></div>
+          <div class="skill-desc">Serverless AI Platform - Image Generation (Flux/SDXL), Video, Image-to-Image, ControlNet, Face Swap, Background Removal. משלים את Gemini.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-low">נמוך</span>
+            <span class="badge badge-category">AI Gen</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>סקילים ל-3D - לעתיד (כשהדמויות יעברו ל-3D)</h3>
+      <div class="skills-grid">
+
+        <div class="skill-card available">
+          <div class="skill-name"><code>r3f-best-practices</code></div>
+          <div class="skill-desc">React Three Fiber - 60+ כללים ב-11 קטגוריות. Performance, useFrame, Drei, Loading, State, Events, Physics (Rapier). CRITICAL: re-renders.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-3d">3D / R3F</span>
+            <span class="badge badge-high">קריטי (בעתיד)</span>
+          </div>
+        </div>
+
+        <div class="skill-card available">
+          <div class="skill-name"><code>three-best-practices</code></div>
+          <div class="skill-desc">Three.js - 100+ כללים ב-17 קטגוריות. Memory, Render Loop, Geometry, Materials, Lighting, Shaders, TSL, WebXR, Physics, Mobile. v0.182.0+.</div>
+          <div class="skill-meta">
+            <span class="badge badge-available">זמין</span>
+            <span class="badge badge-3d">3D / Three.js</span>
+            <span class="badge badge-high">קריטי (בעתיד)</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- Section 3: Missing Skills to Create -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon missing">&#128296;</div>
+      <h2>סקילים חסרים שכדאי ליצור</h2>
+    </div>
+
+    <div class="info-box">
+      סקילים אלה <strong>לא קיימים עדיין</strong> ויצירתם תשפר משמעותית את העקביות והאיכות בפרויקטים.
+      כל סקיל מוגדר עם מטרה, תוכן מוצע ופרויקטים שיירוויחו.
+    </div>
+
+    <div class="skills-grid">
+
+      <div class="skill-card missing missing-card">
+        <div class="skill-name"><code>character-consistency</code></div>
+        <div class="skill-desc">מנגנון עקביות דמויות - reference-based generation עם model sheets, style guides, expression sheets. וידוא שכל דמות נראית אותו דבר בכל מקום.</div>
+        <div class="use-case">
+          <strong>תוכן מוצע:</strong> תבנית לדמות (model sheet + color palette + proportions + expressions), כללי prompt engineering עם ref images, בדיקת עקביות אוטומטית, תהליך review/correction.
+        </div>
+        <div class="skill-meta">
+          <span class="badge badge-missing">חסר</span>
+          <span class="badge badge-high">קריטי</span>
+          <span class="badge badge-category">Game Art</span>
+        </div>
+      </div>
+
+      <div class="skill-card missing missing-card">
+        <div class="skill-name"><code>game-ui-patterns</code></div>
+        <div class="skill-desc">דפוסי UI למשחקים - HUD, Health Bars, Progress Indicators, Achievement Popups, Inventory, Dialog Boxes, Battle UI, Leaderboards, Mini-maps.</div>
+        <div class="use-case">
+          <strong>תוכן מוצע:</strong> קומפוננטות משחקיות מוכנות (XP bar, combo counter, damage numbers), אנימציות game-specific (screen shake, flash), accessibility במשחקים, responsive game UI.
+        </div>
+        <div class="skill-meta">
+          <span class="badge badge-missing">חסר</span>
+          <span class="badge badge-high">קריטי</span>
+          <span class="badge badge-category">Game UI</span>
+        </div>
+      </div>
+
+      <div class="skill-card missing missing-card">
+        <div class="skill-name"><code>hebrew-rtl-patterns</code></div>
+        <div class="skill-desc">כללי RTL ועברית לכל פרויקט - CSS Logical Properties, bidirectional content, Hebrew font stacks, mixed content (Hebrew+English), number formatting.</div>
+        <div class="use-case">
+          <strong>תוכן מוצע:</strong> מיפוי ms/me/ps/pe מלא, כללי direction לאלמנטים ספציפיים (code blocks, numbers), Hebrew date formatting, Gemini prompt templates לעברית, בדיקות RTL אוטומטיות.
+        </div>
+        <div class="skill-meta">
+          <span class="badge badge-missing">חסר</span>
+          <span class="badge badge-high">קריטי</span>
+          <span class="badge badge-category">i18n</span>
+        </div>
+      </div>
+
+      <div class="skill-card missing missing-card">
+        <div class="skill-name"><code>sound-design-patterns</code></div>
+        <div class="skill-desc">דפוסי עיצוב סאונד למשחקים - Web Audio API, SFX preloading, music management, volume layers, spatial audio, adaptive soundtrack.</div>
+        <div class="use-case">
+          <strong>תוכן מוצע:</strong> Audio sprite sheets, crossfade patterns, SFX pooling, context-aware music (battle/exploration/menu), ElevenLabs TTS integration, Suno music pipeline.
+        </div>
+        <div class="skill-meta">
+          <span class="badge badge-missing">חסר</span>
+          <span class="badge badge-medium">בינוני</span>
+          <span class="badge badge-category">Audio</span>
+        </div>
+      </div>
+
+      <div class="skill-card missing missing-card">
+        <div class="skill-name"><code>story-engine-patterns</code></div>
+        <div class="skill-desc">דפוסי מנוע סיפור אינטראקטיבי - branching narratives, dialog systems, character mood states, cutscenes, quest tracking, save points.</div>
+        <div class="use-case">
+          <strong>תוכן מוצע:</strong> Script format (beats + choices), DialogBox patterns, StoryPlayer FSM, character emotion system, speech bubble styling, Hades-style avatar dialog, cinematic sequences.
+        </div>
+        <div class="skill-meta">
+          <span class="badge badge-missing">חסר</span>
+          <span class="badge badge-medium">בינוני</span>
+          <span class="badge badge-category">Narrative</span>
+        </div>
+      </div>
+
+      <div class="skill-card missing missing-card">
+        <div class="skill-name"><code>gemini-asset-pipeline</code></div>
+        <div class="skill-desc">Pipeline ליצירת assets עם Gemini - batch generation, style consistency, naming conventions, directory structure, optimization, format conversion.</div>
+        <div class="use-case">
+          <strong>תוכן מוצע:</strong> תהליך batch ליצירת סט דמויות/רקעים/אייקונים, prompt templates לסגנונות שונים, post-processing (resize, optimize, webp), ארגון תיקיות, manifest file ל-assets.
+        </div>
+        <div class="skill-meta">
+          <span class="badge badge-missing">חסר</span>
+          <span class="badge badge-medium">בינוני</span>
+          <span class="badge badge-category">Asset Pipeline</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- Section 4: Comparison Table -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon table">&#128202;</div>
+      <h2>טבלת השוואה מקיפה</h2>
+    </div>
+
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>שם הסקיל</th>
+          <th>סטטוס</th>
+          <th>קטגוריה</th>
+          <th>רלוונטיות לנינג'ה</th>
+          <th>רלוונטיות רוחבית</th>
+          <th>המלצה</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Active -->
+        <tr>
+          <td><code>ui-skills</code></td>
+          <td><span class="badge badge-active">פעיל</span></td>
+          <td>UI Core</td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td>להמשיך, למזג עם baseline-ui</td>
+        </tr>
+        <tr>
+          <td><code>nano-banana-poster</code></td>
+          <td><span class="badge badge-active">פעיל</span></td>
+          <td>Visual Assets</td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td>סטנדרט לכל פרויקט</td>
+        </tr>
+        <tr>
+          <td><code>google-stitch</code></td>
+          <td><span class="badge badge-active">פעיל</span></td>
+          <td>Design Tool</td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td>סטנדרט לכל UI</td>
+        </tr>
+        <tr>
+          <td><code>stitch-loop</code></td>
+          <td><span class="badge badge-active">פעיל</span></td>
+          <td>Design Tool</td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td>לאתרים מרובי-דפים</td>
+        </tr>
+        <tr>
+          <td><code>shadcn-ui</code></td>
+          <td><span class="badge badge-active">פעיל</span></td>
+          <td>Components</td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td>סטנדרט לכל פרויקט React</td>
+        </tr>
+        <tr>
+          <td><code>design-motion-principles</code></td>
+          <td><span class="badge badge-active">פעיל</span></td>
+          <td>Animation</td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td>חובה לכל UI עם אנימציה</td>
+        </tr>
+        <tr>
+          <td><code>composition-patterns</code></td>
+          <td><span class="badge badge-active">פעיל</span></td>
+          <td>React</td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td>לכל פרויקט React</td>
+        </tr>
+        <tr>
+          <td><code>framer-motion-patterns</code></td>
+          <td><span class="badge badge-active">פעיל</span></td>
+          <td>Animation</td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td>לכל פרויקט עם motion</td>
+        </tr>
+        <tr>
+          <td><code>vercel-react-best-practices</code></td>
+          <td><span class="badge badge-active">פעיל</span></td>
+          <td>React/Next.js</td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td>סטנדרט לכל React/Next.js</td>
+        </tr>
+        <tr>
+          <td><code>tailwind-patterns</code></td>
+          <td><span class="badge badge-active">פעיל</span></td>
+          <td>CSS</td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td>סטנדרט לכל פרויקט Tailwind</td>
+        </tr>
+        <tr>
+          <td><code>web-accessibility</code></td>
+          <td><span class="badge badge-active">פעיל</span></td>
+          <td>A11y</td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td>חובה - WCAG 2.2 AA</td>
+        </tr>
+        <tr>
+          <td><code>mobile-responsiveness</code></td>
+          <td><span class="badge badge-active">פעיל</span></td>
+          <td>Responsive</td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td>סטנדרט לכל פרויקט web</td>
+        </tr>
+        <tr>
+          <td><code>zustand-patterns</code></td>
+          <td><span class="badge badge-active">פעיל</span></td>
+          <td>State</td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td>לפרויקטים עם Zustand</td>
+        </tr>
+        <tr>
+          <td><code>nextjs-patterns</code></td>
+          <td><span class="badge badge-active">פעיל</span></td>
+          <td>Framework</td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td>לפרויקטי Next.js</td>
+        </tr>
+
+        <!-- Available - High Priority -->
+        <tr style="border-top: 3px solid var(--accent-primary);">
+          <td><code>baseline-ui</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>UI Core</td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td>למזג עם ui-skills</td>
+        </tr>
+        <tr>
+          <td><code>ui-ux-pro-max</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>Design DB</td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td>לאמץ! מאגר עיצוב עשיר</td>
+        </tr>
+        <tr>
+          <td><code>fixing-accessibility</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>A11y</td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td>לאמץ! משלים web-accessibility</td>
+        </tr>
+        <tr>
+          <td><code>fixing-motion-performance</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>Animation</td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td>לאמץ! למשחק עם הרבה אנימציה</td>
+        </tr>
+        <tr>
+          <td><code>web-design-guidelines</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>Design Review</td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td>לאמץ! ביקורת Vercel דינמית</td>
+        </tr>
+        <tr>
+          <td><code>fixing-metadata</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>SEO</td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td>לאמץ! חובה לכל אתר ציבורי</td>
+        </tr>
+
+        <!-- Available - Medium -->
+        <tr>
+          <td><code>design-lab</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>Design Process</td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td>לעיצוב עמודים חדשים</td>
+        </tr>
+        <tr>
+          <td><code>ux-design-systems</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>Design System</td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td>לפרויקטים עם design system</td>
+        </tr>
+        <tr>
+          <td><code>v0-to-claude</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>Design Pipeline</td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td>כאלטרנטיבה ל-Stitch</td>
+        </tr>
+        <tr>
+          <td><code>creative-ai-process</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>Creative</td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td>לעבודה יצירתית מובנית</td>
+        </tr>
+        <tr>
+          <td><code>react-components</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>Stitch</td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td>להמרת עיצובים ל-React</td>
+        </tr>
+        <tr>
+          <td><code>enhance-prompt</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>Stitch</td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td>לשיפור פרומפטים ל-Stitch</td>
+        </tr>
+        <tr>
+          <td><code>design-md</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>Stitch</td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td>לתיעוד Design Systems</td>
+        </tr>
+        <tr>
+          <td><code>omc-frontend-ui-ux</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>Agent</td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td>כ-agent מנתב לעיצוב</td>
+        </tr>
+
+        <!-- Available - Low -->
+        <tr>
+          <td><code>remotion</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>Video</td>
+          <td><span class="priority-indicator"><span class="priority-dot low"></span> נמוך</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td>לדמואים ומצגות</td>
+        </tr>
+        <tr>
+          <td><code>figma</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>Design Tool</td>
+          <td><span class="priority-indicator"><span class="priority-dot low"></span> נמוך</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td>רק אם עובדים ב-Figma</td>
+        </tr>
+        <tr>
+          <td><code>kinetic-video-creator</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>Video</td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td>לסרטוני שיווק בעברית</td>
+        </tr>
+        <tr>
+          <td><code>fal-ai</code></td>
+          <td><span class="badge badge-available">זמין</span></td>
+          <td>AI Gen</td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td>משלים Gemini (וידאו, face swap)</td>
+        </tr>
+
+        <!-- 3D -->
+        <tr style="border-top: 3px solid var(--accent-cyan);">
+          <td><code>r3f-best-practices</code></td>
+          <td><span class="badge badge-3d">3D</span></td>
+          <td>React Three Fiber</td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה (עתיד)</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td>כשדמויות עוברות ל-3D</td>
+        </tr>
+        <tr>
+          <td><code>three-best-practices</code></td>
+          <td><span class="badge badge-3d">3D</span></td>
+          <td>Three.js</td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה (עתיד)</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td>כשדמויות עוברות ל-3D</td>
+        </tr>
+
+        <!-- Missing -->
+        <tr style="border-top: 3px solid var(--accent-danger);">
+          <td><code>character-consistency</code></td>
+          <td><span class="badge badge-missing">חסר</span></td>
+          <td>Game Art</td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td>ליצור! בעיה #1 בפרויקט</td>
+        </tr>
+        <tr>
+          <td><code>game-ui-patterns</code></td>
+          <td><span class="badge badge-missing">חסר</span></td>
+          <td>Game UI</td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td>ליצור! HUD, battles, progress</td>
+        </tr>
+        <tr>
+          <td><code>hebrew-rtl-patterns</code></td>
+          <td><span class="badge badge-missing">חסר</span></td>
+          <td>i18n</td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot critical"></span> קריטי</span></td>
+          <td>ליצור! רלוונטי לכל פרויקט</td>
+        </tr>
+        <tr>
+          <td><code>sound-design-patterns</code></td>
+          <td><span class="badge badge-missing">חסר</span></td>
+          <td>Audio</td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot medium"></span> בינוני</span></td>
+          <td>ליצור! Web Audio + SFX</td>
+        </tr>
+        <tr>
+          <td><code>story-engine-patterns</code></td>
+          <td><span class="badge badge-missing">חסר</span></td>
+          <td>Narrative</td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot low"></span> נמוך</span></td>
+          <td>ליצור! מנוע סיפור מובנה</td>
+        </tr>
+        <tr>
+          <td><code>gemini-asset-pipeline</code></td>
+          <td><span class="badge badge-missing">חסר</span></td>
+          <td>Asset Pipeline</td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td><span class="priority-indicator"><span class="priority-dot high"></span> גבוה</span></td>
+          <td>ליצור! ייצור assets בקנה מידה</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- Section 5: Cross-Application Recommendations -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon recommend">&#127775;</div>
+      <h2>המלצות ליישום רוחבי</h2>
+    </div>
+
+    <div class="info-box">
+      המלצות אלה מתייחסות ל-<strong>כל 32 הפרויקטים</strong> של המשתמש - לא רק נינג'ה מקלדת.
+      הסקילים מחולקים ל-3 רמות: <strong>Core</strong> (חובה לכולם), <strong>Recommended</strong> (מומלץ לרוב), <strong>Specialized</strong> (לפי צורך).
+    </div>
+
+    <div class="sub-section">
+      <h3>Core - חובה בכל פרויקט</h3>
+      <div class="rec-grid">
+
+        <div class="rec-card">
+          <h3>ui-skills + baseline-ui (מיזוג)</h3>
+          <p>שני הסקילים כמעט זהים אך baseline-ui מוסיף כללים חשובים (z-index scale, text-balance, tabular-nums).
+          מומלץ <strong>למזג אותם לסקיל אחד</strong> שישמש כסטנדרט עבור כל הפרויקטים.</p>
+          <div class="projects"><strong>פרויקטים:</strong> כל 32 הפרויקטים עם UI</div>
+        </div>
+
+        <div class="rec-card">
+          <h3>nano-banana-poster (Gemini Images)</h3>
+          <p>כל פרויקט צריך תמונות. Gemini חינמי ומייצר תוצאות מעולות.
+          <strong>כלל ברזל:</strong> אף placeholder לא יישאר - כל תמונה תיוצר עם Gemini.</p>
+          <div class="projects"><strong>פרויקטים:</strong> ninja-keyboard, omanut-hakesher-website, portfolio-website, bayit-beseder, ey.ai-kids-playground, eitan-events, date-kirva, haderech-next, elad-score, content-studio, financial-manager</div>
+        </div>
+
+        <div class="rec-card">
+          <h3>google-stitch + shadcn-ui (Design Pipeline)</h3>
+          <p>Stitch לעיצוב ראשוני, shadcn/ui כבסיס קומפוננטות. יחד הם יוצרים pipeline שלם מעיצוב לקוד.
+          לוודא שמותקן ב-<strong>כל פרויקט React/Next.js</strong>.</p>
+          <div class="projects"><strong>פרויקטים:</strong> כל פרויקטי React/Next.js (20+)</div>
+        </div>
+
+        <div class="rec-card">
+          <h3>web-accessibility + fixing-accessibility</h3>
+          <p>שני סקילים משלימים: web-accessibility מספק דפוסי ARIA ו-Keyboard Nav, fixing-accessibility מספק <strong>ביקורת ממוקדת</strong> עם 9 קטגוריות עדיפות. יחד = כיסוי מלא של WCAG 2.2 AA.</p>
+          <div class="projects"><strong>פרויקטים:</strong> כל 32 הפרויקטים (חובה חוקית!)</div>
+        </div>
+
+        <div class="rec-card">
+          <h3>hebrew-rtl-patterns (ליצירה!)</h3>
+          <p>רוב הפרויקטים בעברית. אין סקיל מרכזי שמנהל את כללי RTL, CSS Logical Properties, Hebrew fonts ו-mixed content.
+          <strong>זה הסקיל הכי קריטי ליצירה</strong> - יחסוך שגיאות חוזרות בכל פרויקט.</p>
+          <div class="projects"><strong>פרויקטים:</strong> ninja-keyboard, bayit-beseder, omanut-hakesher-*, haderech-next, eitan-events, date-kirva, financial-manager, content-studio, elad-score, hitechkids, edutech, mens-circle ועוד</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Recommended - מומלץ לרוב הפרויקטים</h3>
+      <div class="rec-grid">
+
+        <div class="rec-card">
+          <h3>vercel-react-best-practices + composition-patterns</h3>
+          <p>45 כללי ביצועים מ-Vercel + דפוסי הרכבה. יחד מונעים waterfalls, bundle bloat ו-boolean prop proliferation. <strong>חובה בכל פרויקט React/Next.js.</strong></p>
+          <div class="projects"><strong>פרויקטים:</strong> כל פרויקטי Next.js (ninja-keyboard, haderech-next, portfolio, omanut-hakesher-website ועוד)</div>
+        </div>
+
+        <div class="rec-card">
+          <h3>fixing-metadata</h3>
+          <p>Metadata נכון = SEO טוב = משתמשים. Title, OG tags, canonical, favicons, JSON-LD. <strong>חובה לכל אתר ציבורי</strong> - רוב הפרויקטים חסרים metadata תקין.</p>
+          <div class="projects"><strong>פרויקטים:</strong> omanut-hakesher-website, portfolio-website, eitan-events, haderech-next, content-studio, creative-workshops, drumming-workshops</div>
+        </div>
+
+        <div class="rec-card">
+          <h3>web-design-guidelines (Vercel)</h3>
+          <p>ביקורת דינמית שמושכת כללים עדכניים מ-GitHub. משלים את ui-skills עם פרספקטיבה של Vercel Labs. <strong>להפעיל כ-post-review על כל UI חדש.</strong></p>
+          <div class="projects"><strong>פרויקטים:</strong> כל פרויקטי web (20+)</div>
+        </div>
+
+        <div class="rec-card">
+          <h3>ui-ux-pro-max (Design Intelligence DB)</h3>
+          <p>מאגר חיפוש עם 50+ סגנונות, 97 פלטות צבעים ו-57 זוגות פונטים. <strong>מצוין בתחילת כל פרויקט חדש</strong> לבחירת כיוון עיצובי מבוסס נתונים.</p>
+          <div class="projects"><strong>פרויקטים:</strong> פרויקטים חדשים, redesign, omanut-hakesher, date-kirva, eladjak-hub</div>
+        </div>
+
+        <div class="rec-card">
+          <h3>design-motion-principles + fixing-motion-performance</h3>
+          <p>ביקורת אנימציה (3 מעצבים) + תיקון ביצועים (composite vs paint vs layout). <strong>חובה לכל UI עם אנימציות</strong>, במיוחד משחקים ואפליקציות אינטראקטיביות.</p>
+          <div class="projects"><strong>פרויקטים:</strong> ninja-keyboard, ey.ai-kids-playground, date-kirva, bayit-beseder, elad-score</div>
+        </div>
+
+        <div class="rec-card">
+          <h3>creative-ai-process</h3>
+          <p>5 שלבים: Immersion, Constraints, Exploration, Refinement, Polish. <strong>מונע קפיצה לפתרון הראשון</strong>. מצוין לעבודה יצירתית כמו עיצוב דמויות, branding, תוכן שיווקי.</p>
+          <div class="projects"><strong>פרויקטים:</strong> ninja-keyboard (דמויות), omanut-hakesher (סדנאות), eitan-events (הצעות מחיר), content-studio</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>Specialized - לפי סוג פרויקט</h3>
+      <div class="rec-grid">
+
+        <div class="rec-card">
+          <h3>character-consistency (ליצירה!)</h3>
+          <p>ייחודי ל-Ninja Keyboard ופרויקטים עם דמויות. מגדיר תהליך ליצירת model sheets, expression sheets ו-style guides שמבטיחים עקביות.</p>
+          <div class="projects"><strong>פרויקטים:</strong> ninja-keyboard, ey.ai-kids-playground</div>
+        </div>
+
+        <div class="rec-card">
+          <h3>game-ui-patterns (ליצירה!)</h3>
+          <p>ייחודי לפרויקטי משחקים. HUD, battle UI, achievement systems, leaderboards. יחסוך זמן עצום ב-Ninja Keyboard ובפרויקטי gamification.</p>
+          <div class="projects"><strong>פרויקטים:</strong> ninja-keyboard, ey.ai-kids-playground, bayit-beseder (gamification)</div>
+        </div>
+
+        <div class="rec-card">
+          <h3>r3f + three-best-practices (3D עתידי)</h3>
+          <p>כשהדמויות עוברות ל-3D, שני הסקילים האלה יהיו קריטיים. R3F ל-React integration, Three.js ל-performance. <strong>לא לאמץ עכשיו</strong> - לשמור לשלב ה-3D.</p>
+          <div class="projects"><strong>פרויקטים:</strong> ninja-keyboard (בעתיד), portfolio-website (אפקטים 3D)</div>
+        </div>
+
+        <div class="rec-card">
+          <h3>gemini-asset-pipeline (ליצירה!)</h3>
+          <p>תהליך ייצור assets בקנה מידה - batch generation, style consistency, optimization. <strong>חוסך שעות</strong> כשצריך 20+ תמונות בסגנון אחיד.</p>
+          <div class="projects"><strong>פרויקטים:</strong> ninja-keyboard (17+ דמויות), omanut-hakesher (סדנאות), eitan-events (תבניות)</div>
+        </div>
+
+        <div class="rec-card">
+          <h3>kinetic-video-creator (שיווק)</h3>
+          <p>סרטוני Kinetic Typography בעברית. Pipeline מ-ElevenLabs TTS ל-Pillow+FFmpeg. <strong>מצוין לשיווק</strong> ולהפצת תוכן ב-social media.</p>
+          <div class="projects"><strong>פרויקטים:</strong> omanut-hakesher, eitan-events, creative-workshops, drumming-workshops</div>
+        </div>
+
+        <div class="rec-card">
+          <h3>sound-design-patterns (ליצירה!)</h3>
+          <p>Web Audio API, SFX management, adaptive music. ייחודי למשחקים ואפליקציות אינטראקטיביות שדורשות חוויית שמע עשירה.</p>
+          <div class="projects"><strong>פרויקטים:</strong> ninja-keyboard, ey.ai-kids-playground, elad-score (מוזיקה)</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Action Plan -->
+    <div class="sub-section">
+      <h3>תוכנית פעולה מומלצת</h3>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>שלב</th>
+            <th>פעולה</th>
+            <th>סקילים</th>
+            <th>זמן משוער</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-active">1</span></td>
+            <td>מיזוג ui-skills + baseline-ui לסקיל אחד חזק</td>
+            <td><code>ui-skills</code> + <code>baseline-ui</code></td>
+            <td>30 דקות</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-active">2</span></td>
+            <td>הוספת fixing-* לרשימת auto-invoke ב-CLAUDE.md</td>
+            <td><code>fixing-accessibility</code>, <code>fixing-motion-performance</code>, <code>fixing-metadata</code></td>
+            <td>15 דקות</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-active">3</span></td>
+            <td>יצירת hebrew-rtl-patterns (חסר וקריטי לכל פרויקט)</td>
+            <td><code>hebrew-rtl-patterns</code></td>
+            <td>שעה</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-available">4</span></td>
+            <td>הוספת web-design-guidelines + ui-ux-pro-max ל-workflow</td>
+            <td><code>web-design-guidelines</code>, <code>ui-ux-pro-max</code></td>
+            <td>15 דקות</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-available">5</span></td>
+            <td>יצירת character-consistency + game-ui-patterns (Ninja Keyboard)</td>
+            <td><code>character-consistency</code>, <code>game-ui-patterns</code></td>
+            <td>2 שעות</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-missing">6</span></td>
+            <td>יצירת gemini-asset-pipeline לייצור assets בקנה מידה</td>
+            <td><code>gemini-asset-pipeline</code></td>
+            <td>שעה</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-missing">7</span></td>
+            <td>יצירת sound-design-patterns + story-engine-patterns</td>
+            <td><code>sound-design-patterns</code>, <code>story-engine-patterns</code></td>
+            <td>2 שעות</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>Frontend Skills Audit | Ninja Keyboard Project | 8 מרץ 2026</p>
+  <p>נסרקו 230 סקילים מותקנים | זוהו 42 סקילי פרונטאנד | 32 פרויקטים פעילים</p>
+  <p style="margin-top: 0.5rem; color: var(--accent-primary);">נוצר על ידי Claude Code</p>
+</div>
+
+</body>
+</html>

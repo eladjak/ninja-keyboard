@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ninja Keyboard - מאסטר ביט ומשפחת קי</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#0d0b1a;--bg2:#080618;--card:#0c0a20;--elevated:#13102a;
+    --border:rgba(108,92,231,0.18);--purple:#6C5CE7;--green:#00B894;
+    --pink:#FD79A8;--orange:#FDCB6E;--red:#FF6B6B;--blue:#74B9FF;
+    --cyan:#00CEC9;--gold:#F9CA24;--text:#E8E6F0;--dim:#8B86A6;
+    --ancient:#D4A574;--ancient-dark:#8B6914;--ancient-glow:rgba(212,165,116,0.4);
+    --family:#74B9FF;--family-dark:#2980B9;--family-glow:rgba(116,185,255,0.4);
+    --virus-red:#E74C3C;--virus-glow:rgba(231,76,60,0.4);
+    --deep-code:#00CEC9;--deep-glow:rgba(0,206,201,0.4);
+    --glow:0 0 22px rgba(108,92,231,0.3);
+  }
+  body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);line-height:1.75;}
+
+  nav{position:sticky;top:0;z-index:100;background:rgba(13,11,26,0.96);backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--border);padding:10px 20px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+  nav .logo{font-size:17px;font-weight:900;color:var(--ancient);margin-left:14px;}
+  nav a{color:var(--dim);text-decoration:none;padding:5px 12px;border-radius:18px;
+    font-size:12px;font-weight:500;border:1px solid transparent;transition:all .18s;}
+  nav a:hover{color:var(--ancient);background:rgba(212,165,116,0.1);border-color:rgba(212,165,116,0.3);}
+
+  .hero{text-align:center;padding:56px 24px 36px;
+    background:linear-gradient(180deg,rgba(212,165,116,0.12) 0%,rgba(116,185,255,0.06) 50%,transparent 100%);}
+  .hero h1{font-size:44px;font-weight:900;
+    background:linear-gradient(135deg,var(--ancient),var(--gold),var(--family));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px;}
+  .hero p{color:var(--dim);font-size:17px;max-width:700px;margin:0 auto;}
+  .hero .badge{display:inline-block;margin-top:20px;padding:8px 20px;
+    background:rgba(212,165,116,0.12);border:1px solid rgba(212,165,116,0.35);
+    border-radius:24px;font-size:13px;color:var(--ancient);font-weight:600;}
+
+  .section{max-width:1100px;margin:0 auto;padding:40px 20px;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;
+    padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .section-header .emoji{font-size:36px;}
+  .section-header h2{font-size:26px;font-weight:900;}
+  .section-header .sub{font-size:14px;color:var(--dim);margin-top:3px;}
+
+  .tag{display:inline-block;padding:4px 12px;border-radius:14px;font-size:12px;font-weight:700;}
+  .tag-ancient{background:rgba(212,165,116,0.15);color:var(--ancient);border:1px solid rgba(212,165,116,0.3);}
+  .tag-green{background:rgba(0,184,148,0.12);color:var(--green);border:1px solid rgba(0,184,148,0.28);}
+  .tag-red{background:rgba(255,107,107,0.12);color:var(--red);border:1px solid rgba(255,107,107,0.28);}
+  .tag-gold{background:rgba(249,202,36,0.15);color:var(--gold);border:1px solid rgba(249,202,36,0.3);}
+  .tag-blue{background:rgba(116,185,255,0.1);color:var(--blue);border:1px solid rgba(116,185,255,0.25);}
+  .tag-purple{background:rgba(108,92,231,0.12);color:var(--purple);border:1px solid rgba(108,92,231,0.28);}
+  .tag-cyan{background:rgba(0,206,201,0.12);color:var(--cyan);border:1px solid rgba(0,206,201,0.28);}
+  .tag-pink{background:rgba(253,121,168,0.12);color:var(--pink);border:1px solid rgba(253,121,168,0.28);}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;
+    padding:22px 24px;margin-bottom:20px;transition:transform .2s,box-shadow .2s;}
+  .card:hover{transform:translateY(-2px);box-shadow:var(--glow);}
+  .card h3{font-size:18px;font-weight:700;color:var(--ancient);margin-bottom:12px;}
+  .card h4{font-size:15px;font-weight:700;color:var(--green);margin:14px 0 8px;}
+  .card-ancient{border-color:rgba(212,165,116,0.25);background:rgba(212,165,116,0.04);}
+  .card-green{border-color:rgba(0,184,148,0.25);background:rgba(0,184,148,0.04);}
+  .card-purple{border-color:rgba(108,92,231,0.3);background:rgba(108,92,231,0.06);}
+  .card-gold{border-color:rgba(249,202,36,0.25);background:rgba(249,202,36,0.04);}
+  .card-red{border-color:rgba(255,107,107,0.25);background:rgba(255,107,107,0.04);}
+  .card-blue{border-color:rgba(116,185,255,0.25);background:rgba(116,185,255,0.04);}
+  .card-cyan{border-color:rgba(0,206,201,0.25);background:rgba(0,206,201,0.04);}
+  .card-pink{border-color:rgba(253,121,168,0.25);background:rgba(253,121,168,0.04);}
+
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.93rem;}
+  th{background:rgba(212,165,116,0.12);color:var(--ancient);padding:10px 12px;text-align:right;font-weight:700;}
+  td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);}
+  tr:hover td{background:rgba(212,165,116,0.04);}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+  @media(max-width:700px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+
+  .quote-box{background:rgba(212,165,116,0.08);border-right:4px solid var(--ancient);
+    padding:16px 20px;border-radius:0 12px 12px 0;margin:12px 0;font-style:italic;color:var(--gold);}
+
+  .voice-line{background:var(--elevated);border:1px solid var(--border);border-radius:10px;
+    padding:10px 16px;margin:6px 0;display:flex;justify-content:space-between;align-items:center;}
+  .voice-line .text{font-weight:600;color:var(--text);}
+  .voice-line .context{font-size:12px;color:var(--dim);}
+
+  .timeline{position:relative;padding-right:40px;margin:20px 0;}
+  .timeline::before{content:'';position:absolute;right:14px;top:0;bottom:0;width:3px;
+    background:linear-gradient(180deg,var(--ancient),var(--green),var(--family),var(--gold));}
+  .tl-item{position:relative;margin-bottom:28px;padding-right:24px;}
+  .tl-item::before{content:'';position:absolute;right:-30px;top:8px;width:14px;height:14px;
+    border-radius:50%;border:3px solid var(--bg);}
+  .tl-ancient::before{background:var(--ancient);}
+  .tl-green::before{background:var(--green);}
+  .tl-blue::before{background:var(--family);}
+  .tl-gold::before{background:var(--gold);}
+  .tl-red::before{background:var(--red);}
+  .tl-cyan::before{background:var(--cyan);}
+  .tl-label{font-size:12px;font-weight:700;margin-bottom:2px;}
+  .tl-title{font-size:15px;font-weight:700;color:var(--text);}
+  .tl-desc{font-size:13px;color:var(--dim);margin-top:2px;}
+
+  /* Connection Map */
+  .map-container{background:var(--bg2);border:2px solid var(--border);border-radius:20px;
+    padding:40px 30px;margin:20px 0;position:relative;overflow:hidden;}
+  .map-container::before{content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse at center,rgba(212,165,116,0.06) 0%,transparent 70%);pointer-events:none;}
+  .map-row{display:flex;justify-content:center;align-items:center;gap:20px;margin:16px 0;flex-wrap:wrap;}
+  .map-node{padding:14px 22px;border-radius:14px;font-weight:700;font-size:14px;text-align:center;
+    min-width:130px;position:relative;transition:transform .2s,box-shadow .2s;}
+  .map-node:hover{transform:scale(1.05);}
+  .map-node.ancient{background:rgba(212,165,116,0.15);border:2px solid var(--ancient);color:var(--ancient);
+    box-shadow:0 0 20px rgba(212,165,116,0.2);}
+  .map-node.green{background:rgba(0,184,148,0.12);border:2px solid var(--green);color:var(--green);
+    box-shadow:0 0 20px rgba(0,184,148,0.2);}
+  .map-node.blue{background:rgba(116,185,255,0.12);border:2px solid var(--family);color:var(--family);
+    box-shadow:0 0 20px rgba(116,185,255,0.2);}
+  .map-node.purple{background:rgba(108,92,231,0.12);border:2px solid var(--purple);color:var(--purple);
+    box-shadow:0 0 20px rgba(108,92,231,0.2);}
+  .map-node.red{background:rgba(231,76,60,0.15);border:2px solid var(--virus-red);color:var(--virus-red);
+    box-shadow:0 0 20px var(--virus-glow);}
+  .map-node.pink{background:rgba(253,121,168,0.12);border:2px solid var(--pink);color:var(--pink);
+    box-shadow:0 0 20px rgba(253,121,168,0.2);}
+  .map-node.cyan{background:rgba(0,206,201,0.12);border:2px solid var(--cyan);color:var(--cyan);
+    box-shadow:0 0 20px var(--deep-glow);}
+  .map-node.gold{background:rgba(249,202,36,0.12);border:2px solid var(--gold);color:var(--gold);
+    box-shadow:0 0 20px rgba(249,202,36,0.2);}
+  .map-node .sub{font-size:11px;color:var(--dim);font-weight:400;margin-top:3px;}
+  .map-arrow{font-size:22px;color:var(--dim);font-weight:300;}
+  .map-arrow-down{text-align:center;font-size:22px;color:var(--dim);margin:6px 0;}
+  .map-label{font-size:11px;color:var(--dim);text-align:center;margin:-4px 0 8px;}
+  .map-vs{font-size:28px;color:var(--red);font-weight:900;text-shadow:0 0 15px var(--virus-glow);}
+  .map-section-title{text-align:center;font-size:13px;font-weight:700;color:var(--purple);
+    margin:30px 0 10px;padding:8px;border-top:1px dashed rgba(108,92,231,0.2);}
+
+  .stat-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600;}
+  .stat-pill.ancient{background:rgba(212,165,116,0.15);color:var(--ancient);border:1px solid rgba(212,165,116,0.3);}
+  .stat-pill.green{background:rgba(0,184,148,0.12);color:var(--green);border:1px solid rgba(0,184,148,0.25);}
+  .stat-pill.gold{background:rgba(249,202,36,0.12);color:var(--gold);border:1px solid rgba(249,202,36,0.25);}
+  .stat-pill.red{background:rgba(255,107,107,0.12);color:var(--red);border:1px solid rgba(255,107,107,0.25);}
+  .stat-pill.blue{background:rgba(116,185,255,0.08);color:var(--blue);border:1px solid rgba(116,185,255,0.2);}
+  .stat-pill.cyan{background:rgba(0,206,201,0.08);color:var(--cyan);border:1px solid rgba(0,206,201,0.2);}
+
+  .skin-card{background:var(--elevated);border:1px solid var(--border);border-radius:14px;
+    padding:16px 18px;transition:transform .2s,box-shadow .2s;}
+  .skin-card:hover{transform:translateY(-3px);box-shadow:var(--glow);}
+  .skin-card .skin-name{font-weight:700;font-size:15px;margin-bottom:6px;}
+  .skin-card .skin-desc{font-size:13px;color:var(--dim);line-height:1.6;}
+
+  .gameplay-card{background:linear-gradient(135deg,var(--card),var(--elevated));border:1px solid var(--border);
+    border-radius:16px;padding:24px;margin:14px 0;position:relative;overflow:hidden;}
+  .gameplay-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+    background:conic-gradient(from 0deg,transparent,rgba(212,165,116,0.03),transparent);
+    animation:rotate 12s linear infinite;pointer-events:none;}
+  @keyframes rotate{to{transform:rotate(360deg);}}
+  .gameplay-card h3{position:relative;z-index:1;}
+  .gameplay-card p,.gameplay-card ul{position:relative;z-index:1;}
+
+  ul{padding-right:20px;margin:8px 0;}
+  li{margin:4px 0;font-size:14px;}
+  li strong{color:var(--green);}
+
+  .divider{height:2px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:40px 0;}
+
+  .footer{text-align:center;padding:40px 20px;color:var(--dim);font-size:13px;
+    border-top:1px solid var(--border);margin-top:40px;}
+
+  .glow-text{text-shadow:0 0 12px currentColor;}
+  .highlight{color:var(--gold);font-weight:700;}
+
+  .spoiler-box{background:rgba(231,76,60,0.06);border:1px solid rgba(231,76,60,0.25);border-radius:12px;
+    padding:18px 22px;margin:12px 0;}
+  .spoiler-box h4{color:var(--red);margin-bottom:8px;}
+
+  .emotion-box{background:rgba(253,121,168,0.06);border:1px solid rgba(253,121,168,0.25);border-radius:12px;
+    padding:18px 22px;margin:12px 0;}
+  .emotion-box h4{color:var(--pink);margin-bottom:8px;}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">&#x1F422; מאסטר ביט &amp; משפחת קי</span>
+  <a href="#master-beat">מאסטר ביט</a>
+  <a href="#appearance">מראה</a>
+  <a href="#personality">אישיות</a>
+  <a href="#primal-virus">ווירוס קדמוני</a>
+  <a href="#story-role">תפקיד בסיפור</a>
+  <a href="#raz">אבא - רז</a>
+  <a href="#shir">אמא - שיר</a>
+  <a href="#ki-childhood">קי גדל</a>
+  <a href="#family-arc">הקשת המשפחתית</a>
+  <a href="#connection-map">מפת קשרים</a>
+  <a href="#gameplay">השלכות משחקיות</a>
+</nav>
+
+<!-- ========== HERO ========== -->
+<div class="hero">
+  <h1>מאסטר ביט ומשפחת קי</h1>
+  <p>שני עמודי התווך הנרטיביים של נינג'ה מקלדת: האגדה העתיקה שמחזיקה את כל העולם, והמשפחה השבורה שמניעה את הגיבור</p>
+  <div class="badge">&#x1F4DC; מסמך נרטיבי מרכזי - מרץ 2026</div>
+</div>
+
+<!-- ===================================================================== -->
+<!--                    PART 1: MASTER BEAT                                -->
+<!-- ===================================================================== -->
+
+<div class="section" id="master-beat">
+  <div class="section-header">
+    <span class="emoji">&#x1F422;</span>
+    <div>
+      <h2 style="background:linear-gradient(135deg,var(--ancient),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+        חלק 1: מאסטר ביט - המייסד האגדי
+      </h2>
+      <div class="sub">הצב הקדום, מייסד הדוג'ו הראשון, מגלה קוד הליבה</div>
+    </div>
+  </div>
+
+  <!-- Identity Card -->
+  <div class="card card-ancient">
+    <h3>&#x1F4CB; כרטיס זהות</h3>
+    <table>
+      <tr><th style="width:160px;">שם</th><td><strong style="color:var(--ancient);">מאסטר ביט (ביט)</strong></td></tr>
+      <tr><th>שם מלא</th><td>ביט הקדמוני / ביט ראשית הקוד</td></tr>
+      <tr><th>תפקיד</th><td>מייסד הדוג'ו הראשון, מגלה קוד הליבה, המורה של סנסיי זן</td></tr>
+      <tr><th>גיל</th><td>200+ שנה (עתיק ככתב עצמו)</td></tr>
+      <tr><th>מין</th><td>צב ענק עתיק</td></tr>
+      <tr><th>סטטוס</th><td><span class="tag tag-gold">אגדה חיה &#x2728;</span> <span class="tag tag-purple">נעלם/פעיל?</span></td></tr>
+      <tr><th>יחס לקי</th><td>סבא-רבא רוחני (מורה של מורה של אבא)</td></tr>
+      <tr><th>צבע מזהה</th><td><span style="display:inline-block;width:18px;height:18px;border-radius:50%;background:var(--ancient);vertical-align:middle;margin-left:6px;"></span> זהב-חום עתיק (#D4A574)</td></tr>
+      <tr><th>אלמנט</th><td>קוד ליבה (Core Code) - האלמנט הבסיסי ביותר</td></tr>
+      <tr><th>דוג'ו</th><td>דוג'ו ראשית (הדוג'ו הראשון שאי פעם הוקם)</td></tr>
+    </table>
+  </div>
+
+  <div class="quote-box">
+    "הקוד לא נכתב. הקוד תמיד היה כאן. אנחנו רק לומדים לקרוא אותו."
+    <br><span style="font-size:12px;color:var(--dim);font-style:normal;">— מאסטר ביט, מתוך כתבי ראשית</span>
+  </div>
+</div>
+
+<!-- ========== APPEARANCE ========== -->
+<div class="section" id="appearance">
+  <div class="section-header">
+    <span class="emoji">&#x1F3A8;</span>
+    <div>
+      <h2 style="color:var(--ancient);">מראה - צב ענק קדום</h2>
+      <div class="sub">כי סנסיי זן הוא צב, מאסטר ביט הוא הצב הקדום שלימד אותו</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card card-ancient">
+      <h3>&#x1F9B4; גוף ושריון</h3>
+      <ul>
+        <li><strong>צב ענק עתיק</strong> - גדול פי 3 מסנסיי זן, מלכותי ומרשים</li>
+        <li>שריון-צב <strong>חרוט בתווים עתיקים</strong> ובקוד ראשוני זוהר</li>
+        <li>השריון <strong>פועם באור דיגיטלי</strong> - כאילו קוד חי זורם בתוכו</li>
+        <li>סדקים בשריון שמהם בוקע <strong>אור זהוב-תכלת עתיק</strong></li>
+        <li>גודל משתנה - לפעמים נראה קטן ועתיק, לפעמים ענק ואימתני</li>
+        <li>תנועה <strong>איטית ומכוונת</strong> - כל צעד כמו מדיטציה</li>
+      </ul>
+    </div>
+
+    <div class="card card-gold">
+      <h3>&#x1F9D4; פנים וזקן</h3>
+      <ul>
+        <li><strong>זקן ארוך מאוד</strong> לבן-כסוף שגולש עד הרצפה</li>
+        <li>הזקן <strong>מנצנץ בחלקיקי קוד</strong> - אותיות ומספרים קטנים נעים בתוכו</li>
+        <li>עיניים <strong>זוהרות בתכלת-זהב</strong> - כמו שתי שמשות קטנות</li>
+        <li>קמטים עמוקים שבתוכם <strong>נראות שורות קוד קדומות</strong></li>
+        <li>חיוך חכם שאומר "אני יודע משהו שאתה לא"</li>
+        <li>כשכועס (נדיר!) - העיניים הופכות <strong>לזהב טהור ומסנוור</strong></li>
+      </ul>
+    </div>
+
+    <div class="card card-purple">
+      <h3>&#x1F9D9; ביגוד ואביזרים</h3>
+      <ul>
+        <li><strong>מטה עתיק</strong> - עשוי מעץ דיגיטלי מאובן, בראשו <strong>גביש דיגיטלי</strong> זוהר</li>
+        <li>הגביש מכיל את <strong>"קוד הליבה" המקורי</strong> - המפתח הקדום ביותר</li>
+        <li>גלימה בצבע <strong>חול-זהוב</strong> עם רקמת קוד בינארי עתיק</li>
+        <li>שרשרת עם <strong>ביט קריסטלי</strong> - האות הדיגיטלית הראשונה שנוצרה</li>
+        <li>סנדלים עתיקים שמשאירים <strong>עקבות קוד</strong> בכל מקום שהולך</li>
+        <li>על השריון חקוקים <strong>8 הסמלים הראשוניים</strong> - שפת הקוד הקדומה</li>
+      </ul>
+    </div>
+
+    <div class="card card-green">
+      <h3>&#x2728; אפקטים מיוחדים</h3>
+      <ul>
+        <li>כשמדבר - <strong>אותיות וקוד צפות באוויר</strong> מסביבו</li>
+        <li>הילה עדינה של <strong>קוד זהוב</strong> תמיד מקיפה אותו</li>
+        <li><strong>פרפרי קוד</strong> קטנים עפים סביב המטה שלו</li>
+        <li>כשנוגע במשהו - <strong>פרחי קוד</strong> צומחים לרגע ונעלמים</li>
+        <li>צילו על הקיר <strong>מראה גרסה צעירה</strong> של עצמו (רמז מסתורי)</li>
+        <li>באזורים שהוא נמצא בהם - <strong>הבאגים נרגעים</strong> מעצמם</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Design Comparison -->
+  <div class="card card-ancient" style="margin-top:10px;">
+    <h3>&#x1F50D; השוואת עיצוב: ביט מול זן</h3>
+    <table>
+      <tr><th>מאפיין</th><th style="color:var(--ancient);">מאסטר ביט</th><th style="color:var(--green);">סנסיי זן</th></tr>
+      <tr><td>גודל</td><td>ענק, מלכותי</td><td>בינוני, נוח</td></tr>
+      <tr><td>שריון</td><td>חרוט בקוד קדום, זוהר</td><td>חלק, מודרני</td></tr>
+      <tr><td>זקן</td><td>ארוך עד הרצפה, כסוף</td><td>קצר, מסודר</td></tr>
+      <tr><td>עיניים</td><td>תכלת-זהב, מסתוריות</td><td>ירוקות, חמות</td></tr>
+      <tr><td>אנרגיה</td><td>קוד קדום, זהוב</td><td>קוד מודרני, ירוק</td></tr>
+      <tr><td>אווירה</td><td>אניגמטי, מרהיב-יראה</td><td>חם, סבלני</td></tr>
+      <tr><td>מטה</td><td>עתיק עם גביש ליבה</td><td>פשוט מעץ</td></tr>
+      <tr><td>נוכחות</td><td>כל חדר משתנה כשנכנס</td><td>שקט, מרגיע</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ========== PERSONALITY ========== -->
+<div class="section" id="personality">
+  <div class="section-header">
+    <span class="emoji">&#x1F9E0;</span>
+    <div>
+      <h2 style="color:var(--ancient);">אישיות וקול</h2>
+      <div class="sub">חכם מאוד, אניגמטי, מדבר בחידות ובקוד</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card card-ancient">
+      <h3>&#x1F4A1; תכונות מרכזיות</h3>
+      <ul>
+        <li><strong>חכמה עמוקה</strong> - ראה הכל, חווה הכל, מבין דברים שאחרים לא יכולים</li>
+        <li><strong>אניגמטי</strong> - אף פעם לא נותן תשובה ישירה, תמיד חידה</li>
+        <li><strong>הומור יבש</strong> - בדיחות שלוקח 5 דקות להבין</li>
+        <li><strong>סבלנות אינסופית</strong> - חיכה 200 שנה, מה כבר עוד יום?</li>
+        <li><strong>נוסטלגי</strong> - זוכר את העולם הדיגיטלי כשהיה רק שורת קוד אחת</li>
+        <li><strong>מסתורי</strong> - יש לו סוד שלא סיפר לאף אחד, אפילו לא לזן</li>
+      </ul>
+    </div>
+
+    <div class="card card-gold">
+      <h3>&#x26A0;&#xFE0F; הפגם / החולשה</h3>
+      <ul>
+        <li><strong>חוסר אמון בדור הצעיר</strong> - חושב שרק הוא מסוגל להילחם בווירוס</li>
+        <li><strong>סודיות יתר</strong> - מסתיר מידע חיוני "לטובתם"</li>
+        <li><strong>אשמה</strong> - מרגיש אחראי לכך שהווירוס הקדמוני שרד</li>
+        <li><strong>פחד מהקשר</strong> - נעלם כי פחד שקרבה תסכן אחרים</li>
+        <li>ה-ARC שלו: ללמוד <strong>לסמוך על אחרים</strong> ולהפסיק לשאת הכל לבד</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Voice Lines -->
+  <div class="card card-ancient" style="margin-top:10px;">
+    <h3>&#x1F399;&#xFE0F; משפטים אופייניים</h3>
+
+    <div class="voice-line">
+      <span class="text">"הקוד מדבר למי שיודע להקשיב. אתה... עדיין צורח."</span>
+      <span class="context">לזן הצעיר, שנים רבות לפני</span>
+    </div>
+    <div class="voice-line">
+      <span class="text">"אל תחפש את התשובה. תהיה השאלה."</span>
+      <span class="context">חידה אופיינית</span>
+    </div>
+    <div class="voice-line">
+      <span class="text">"200 שנה, וגם אני עדיין לומד. זה המסר, ילד."</span>
+      <span class="context">לקי, פגישה ראשונה</span>
+    </div>
+    <div class="voice-line">
+      <span class="text">"הווירוס לא נוצר. הוא תמיד היה כאן. הוא הצל של הקוד."</span>
+      <span class="context">חשיפת האמת</span>
+    </div>
+    <div class="voice-line">
+      <span class="text">"סנסיי זן... התלמיד הכי עיקש שהיה לי. והכי טוב."</span>
+      <span class="context">על זן, ברגע רגשי</span>
+    </div>
+    <div class="voice-line">
+      <span class="text">"שלחתי לך רמזים. לא ציפיתי שתפתור אותם כל כך מהר. נו, בן של רז."</span>
+      <span class="context">לקי, כשמגלה שביט עקב אחריו</span>
+    </div>
+    <div class="voice-line">
+      <span class="text">"הכסא הריק? לא, הכסא מחכה. יש הבדל."</span>
+      <span class="context">על אבא של קי</span>
+    </div>
+  </div>
+
+  <!-- Emotional Range -->
+  <div class="card card-green">
+    <h3>&#x1F3AD; הבעות ומצבי רוח</h3>
+    <div class="grid-3">
+      <div class="skin-card">
+        <div class="skin-name" style="color:var(--ancient);">&#x1F9D8; מדיטטיבי (ברירת מחדל)</div>
+        <div class="skin-desc">עיניים עצומות למחצה, חיוך עדין, קוד זורם סביבו לאט</div>
+      </div>
+      <div class="skin-card">
+        <div class="skin-name" style="color:var(--gold);">&#x1F914; חידתי</div>
+        <div class="skin-desc">גבה מורמת, חיוך ערמומי, אצבע על הזקן, סימני שאלה מקוד צפים</div>
+      </div>
+      <div class="skin-card">
+        <div class="skin-name" style="color:var(--green);">&#x1F60A; גאה</div>
+        <div class="skin-desc">עיניים פקוחות וזוהרות, חיוך רחב נדיר, פרחי קוד פורחים</div>
+      </div>
+      <div class="skin-card">
+        <div class="skin-name" style="color:var(--blue);">&#x1F622; נוסטלגי</div>
+        <div class="skin-desc">עיניים רטובות, מביט לאופק, זקן זוהר בכחול חלש, שקט</div>
+      </div>
+      <div class="skin-card">
+        <div class="skin-name" style="color:var(--red);">&#x1F525; זועם (נדיר!)</div>
+        <div class="skin-desc">עיניים זהב מסנוור, שריון זוהר אדום, הקרקע רועדת, קוד הרסני בוקע</div>
+      </div>
+      <div class="skin-card">
+        <div class="skin-name" style="color:var(--cyan);">&#x1F31F; מלמד</div>
+        <div class="skin-desc">מוריד את עצמו לגובה התלמיד, מטה מאיר, סבלנות אינסופית</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PRIMAL VIRUS ========== -->
+<div class="section" id="primal-virus">
+  <div class="section-header">
+    <span class="emoji">&#x1F9A0;</span>
+    <div>
+      <h2 style="background:linear-gradient(135deg,var(--red),var(--virus-red));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+        היריב המקורי - הווירוס הקדמוני
+      </h2>
+      <div class="sub">Primal Virus - הישות השלילית הראשונה שנולדה בעולם הדיגיטלי</div>
+    </div>
+  </div>
+
+  <div class="card card-red">
+    <h3>&#x1F480; הווירוס הקדמוני - פרופיל</h3>
+    <table>
+      <tr><th style="width:160px;color:var(--red);">שם</th><td><strong style="color:var(--red);">הווירוס הקדמוני (Primal Virus)</strong></td></tr>
+      <tr><th style="color:var(--red);">מהות</th><td>הישות השלילית הראשונה שנולדה בעולם הדיגיטלי - הצל של קוד הליבה</td></tr>
+      <tr><th style="color:var(--red);">מקור</th><td>כשקוד הליבה נוצר, גם הצל שלו נולד - לכל אור יש חושך</td></tr>
+      <tr><th style="color:var(--red);">מעמד</th><td><span class="tag tag-red">כלוא (פרקים 1-6)</span> <span class="tag tag-gold">מתעורר (פרק 7+)</span></td></tr>
+      <tr><th style="color:var(--red);">כוח</th><td>הרסני לחלוטין - יכול לפרק קוד לביטים. חזק פי אלף מהווירוס הנוכחי</td></tr>
+    </table>
+
+    <h4 style="color:var(--red);">&#x1F4A5; הקרב העתיק</h4>
+    <ul>
+      <li>ביט והווירוס הקדמוני <strong>נלחמו בקרב שנמשך 7 ימים ו-7 לילות</strong></li>
+      <li>הקרב <strong>עיצב את הנוף של כל העולם הדיגיטלי</strong> - ההרים, הנהרות, הדוג'ואות</li>
+      <li>ביט לא הצליח להשמיד את הווירוס - <strong>רק לכלוא אותו</strong> בתוך "כלא הביטים"</li>
+      <li>המחיר: ביט <strong>איבד חלק מכוחו</strong> ומאז נחלש בהדרגה</li>
+      <li>האגדה על הקרב היא <strong>הסיפור הראשון שכל תלמיד נינג'ה לומד</strong></li>
+    </ul>
+  </div>
+
+  <div class="spoiler-box">
+    <h4>&#x1F4A3; TWIST מרכזי לפרק 7+</h4>
+    <ul>
+      <li>הווירוס הנוכחי (שקי ואוכלס נלחמים בו בפרקים 1-6) הוא <strong>רק "בן" או "שבר"</strong> מהווירוס הקדמוני</li>
+      <li>הוא <strong>בורח</strong> מהכלא דרך סדקים קטנים כ"רסיסים" שהופכים לווירוסים חדשים</li>
+      <li>כשהמגה-ווירוס (ווירוס + גליץ') מובס בסוף פרק 5-6, <strong>האנרגיה ההרסנית מעוררת את הווירוס הקדמוני</strong></li>
+      <li>פרק 7 פותח עם <strong>רעידת קוד עולמית</strong> - סימן שהכלא נשבר</li>
+      <li>עכשיו מובן <strong>למה ביט נעלם</strong> - הוא הלך לחזק את הכלא!</li>
+      <li>עכשיו מובן <strong>למה רז נכנס לקוד העמוק</strong> - הוא גילה שהכלא נסדק!</li>
+    </ul>
+  </div>
+
+  <div class="quote-box" style="border-right-color:var(--red);background:rgba(231,76,60,0.06);color:var(--red);">
+    "אתה חושב שניצחת? ילד, מה שניצחת זה אפילו לא צל של צל שלי."
+    <br><span style="font-size:12px;color:var(--dim);font-style:normal;">— הווירוס הקדמוני, כשמתעורר בפרק 7</span>
+  </div>
+</div>
+
+<!-- ========== STORY ROLE ========== -->
+<div class="section" id="story-role">
+  <div class="section-header">
+    <span class="emoji">&#x1F4D6;</span>
+    <div>
+      <h2 style="color:var(--purple);">תפקיד מאסטר ביט בסיפור</h2>
+      <div class="sub">נוכחות גוברת: אגדה &#x2192; רמזים &#x2192; חזרה &#x2192; מנטור &#x2192; מפתח</div>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item tl-ancient">
+      <div class="tl-label" style="color:var(--ancient);">פרקים 1-2: האגדה</div>
+      <div class="tl-title">מוזכר רק בסיפורי סנסיי זן</div>
+      <div class="tl-desc">
+        זן מספר לתלמידים על "המאסטר הגדול שייסד את הדוג'ו הראשון".
+        קי מקשיב בהנאה אבל חושב שזה סתם סיפור ישן.
+        <strong>רמז דק:</strong> כשקי נוגע במקלדת של אבא, הוא רואה סמל שמופיע גם בסיפורי ביט.
+      </div>
+    </div>
+
+    <div class="tl-item tl-green">
+      <div class="tl-label" style="color:var(--green);">פרקים 3-4: הרמזים</div>
+      <div class="tl-title">חידות ורמזים מתחילים להופיע</div>
+      <div class="tl-desc">
+        "מפת הביטים" של רז (אבא) מכילה סמלים שרק מאסטר ביט יכל ליצור.
+        קי מוצא מערה ישנה עם ציורי קיר דיגיטליים - תיעוד של הקרב העתיק.
+        <strong>שאלה מטרידה:</strong> אם ביט הלך לפני 100 שנה... מי צייר את הקירות האלה לפני 5 שנים?
+      </div>
+    </div>
+
+    <div class="tl-item tl-blue">
+      <div class="tl-label" style="color:var(--family);">פרקים 5-6: ההבנה</div>
+      <div class="tl-title">רמזים ברורים שביט עדיין "שם"</div>
+      <div class="tl-desc">
+        במהלך הקרב נגד המגה-ווירוס, קי מרגיש "יד בלתי נראית" שעוזרת לו.
+        זן מודה שהוא יודע שביט לא מת - "הוא הלך לשמור על משהו".
+        <strong>רגע מכונן:</strong> כשגליץ' מקריבה את עצמה, אנרגיה זהובה-עתיקה מגינה עליה לרגע. מי עשה את זה?
+      </div>
+    </div>
+
+    <div class="tl-item tl-gold">
+      <div class="tl-label" style="color:var(--gold);">פרק 7+: החזרה</div>
+      <div class="tl-title">מאסטר ביט חוזר! אבל...</div>
+      <div class="tl-desc">
+        הכלא נשבר. הווירוס הקדמוני מתעורר. ביט חוזר, אבל <strong>חלש ומותש</strong> מ-200 שנות שמירה.
+        <strong>הדילמה:</strong> האם הוא חוזר כבעל ברית שצריך הגנה? כאתגר שבוחן את קי?
+        או ש<strong>שניהם</strong> - קודם בוחן, ואז כשרואה שקי ראוי, הופך לבעל ברית?
+      </div>
+    </div>
+
+    <div class="tl-item tl-red">
+      <div class="tl-label" style="color:var(--red);">השיא</div>
+      <div class="tl-title">הסוד הגדול של ביט נחשף</div>
+      <div class="tl-desc">
+        ביט מגלה שהוא <strong>לא יכול להילחם שוב</strong> בווירוס הקדמוני. הכוח שלו אזל.
+        הסוד: <strong>הוא ידע מהתחלה שקי הוא הנבחר</strong> - ורז נשלח למצוא אותו כדי שקי יגדל מוכן.
+        ביט, זן, ורז - שלושתם <strong>תכננו מהתחלה</strong> שקי יהיה זה שינצח.
+        <strong>האם זה מאיים על הבחירה החופשית של קי? האם זה הוגן?</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===================================================================== -->
+<!--                    PART 2: KI'S FAMILY                                -->
+<!-- ===================================================================== -->
+
+<!-- ========== RAZ ========== -->
+<div class="section" id="raz">
+  <div class="section-header">
+    <span class="emoji">&#x1F468;&#x200D;&#x1F4BB;</span>
+    <div>
+      <h2 style="background:linear-gradient(135deg,var(--family),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+        חלק 2: משפחת קי - אבא: רז קודן
+      </h2>
+      <div class="sub">התלמיד המוכשר ביותר שזן אי פעם לימד. נעלם כשקי היה בן 4.</div>
+    </div>
+  </div>
+
+  <div class="card card-blue">
+    <h3>&#x1F4CB; כרטיס זהות - רז</h3>
+    <table>
+      <tr><th style="width:160px;color:var(--family);">שם מלא</th><td><strong style="color:var(--family);">רז קודן</strong></td></tr>
+      <tr><th style="color:var(--family);">כינוי בדוג'ו</th><td>"רוח הקוד" (Code Ghost) - כי היה כל כך מהיר שנעלם מהעין</td></tr>
+      <tr><th style="color:var(--family);">גיל</th><td>~38 (נעלם בגיל 28, כשקי היה בן 4)</td></tr>
+      <tr><th style="color:var(--family);">מראה</th><td>גבר ישראלי, שיער כהה קצר, עיניים חומות חמות, חיוך שובב</td></tr>
+      <tr><th style="color:var(--family);">מצב נוכחי</th><td><span class="tag tag-cyan">חי בקוד העמוק</span> <span class="tag tag-blue">שולח רמזים</span></td></tr>
+      <tr><th style="color:var(--family);">מקצוע (כיסוי)</th><td>מתכנת. "אבא עובד עם מחשבים" - מה שקי ידע</td></tr>
+      <tr><th style="color:var(--family);">רמז בפרק 1</th><td>הכיסא הריק ליד השולחן עם הכיתוב "רז" - כבר מוזכר!</td></tr>
+      <tr><th style="color:var(--family);">מקלדת</th><td>מקלדת מכנית ישנה - הפריט היחיד שהשאיר לקי</td></tr>
+    </table>
+  </div>
+
+  <div class="grid-2">
+    <div class="card card-cyan">
+      <h3>&#x1F3AF; רקע - התלמיד המושלם</h3>
+      <ul>
+        <li><strong>הכי מוכשר שזן לימד</strong> - הקליד מהר יותר מכל תלמיד בהיסטוריה</li>
+        <li>היחיד שזן סיפר לו על <strong>מאסטר ביט כאמת ולא כאגדה</strong></li>
+        <li>הצליח לפתח טכניקת "הקלדה עיוורת מוחלטת" - <strong>הקליד בלי להסתכל ובלי לחשוב</strong></li>
+        <li>היה גם <strong>הקר ביסט</strong> - ילד שובב, חייכן, אהב את החיים</li>
+        <li>כשפגש את שיר - <strong>הפסיק להתאמן כמעט לגמרי</strong> (זן היה מיואש)</li>
+        <li>חזר להתאמן רק כשנולד קי - <strong>"אני צריך להגן על המשפחה שלי"</strong></li>
+      </ul>
+    </div>
+
+    <div class="card card-red">
+      <h3>&#x1F4A8; ההיעלמות</h3>
+      <ul>
+        <li>קי היה בן 4. בוקר אחד אבא פשוט <strong>לא היה שם</strong></li>
+        <li>השאיר רק את <strong>המקלדת הישנה</strong> ופתק מוצפן שקי לא הצליח לקרוא</li>
+        <li><strong>האמת:</strong> רז גילה שסדקים מופיעים ב"כלא הביטים" של הווירוס הקדמוני</li>
+        <li>הלך לחפש את מאסטר ביט בתוך <strong>"הקוד העמוק"</strong> - שכבה נסתרת של העולם הדיגיטלי</li>
+        <li>לא יכול לחזור כי <strong>הכניסה חד-כיוונית</strong> - או שמוצאים פתרון, או שנתקעים</li>
+        <li>זן <strong>ידע</strong> אבל הבטיח לרז לא לספר לקי עד שיהיה מוכן</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-blue">
+    <h3>&#x1F4E1; "מפת הביטים" - קשר מרחוק</h3>
+    <p style="margin-bottom:12px;">למרות שנתקע בקוד העמוק, רז מצא דרך לשלוח רמזים:</p>
+    <ul>
+      <li><strong>חידות קריפטיות</strong> שמופיעות במקלדת הישנה של קי - מסך שפתאום נדלק, אותיות שמהבהבות</li>
+      <li><strong>רמזי כיוון</strong> בתוך שלבי המשחק - קי לא יודע שאבא שלו הוא זה שמשאיר אותם</li>
+      <li>כל רמז מכיל <strong>ביט (bit) מידע</strong> על מיקום מאסטר ביט</li>
+      <li>כשקי פותר חידה - <strong>רז מרגיש את זה</strong> בקוד העמוק, ומחייך</li>
+      <li>רז <strong>יודע על קי</strong>, עוקב מרחוק, גאה מאוד - אבל לא יכול לחזור עדיין</li>
+      <li><strong>הרגע שישנה הכל:</strong> כשקי יפתור את כל החידות, <strong>דלת תיפתח</strong> בין העולמות</li>
+    </ul>
+  </div>
+
+  <div class="quote-box" style="border-right-color:var(--family);background:rgba(116,185,255,0.06);color:var(--family);">
+    "אני כאן, קי. לא רואה אותי, אבל אני כאן. כל פעם שאתה מקליד, אני מרגיש את זה. המקלדת הזו? היא הלב שלי."
+    <br><span style="font-size:12px;color:var(--dim);font-style:normal;">— רז קודן, מתוך יומן הקוד העמוק</span>
+  </div>
+
+  <!-- Raz Voice Lines -->
+  <div class="card card-blue">
+    <h3>&#x1F399;&#xFE0F; משפטים אופייניים של רז</h3>
+    <div class="voice-line">
+      <span class="text">"זן, אני חייב ללכת. אם לא עכשיו, לא יהיה לאן לחזור."</span>
+      <span class="context">לזן, לפני ההיעלמות</span>
+    </div>
+    <div class="voice-line">
+      <span class="text">"תגיד לו שאבא אוהב אותו. וכשהוא יהיה מוכן... תגיד לו את האמת."</span>
+      <span class="context">לזן, על קי</span>
+    </div>
+    <div class="voice-line">
+      <span class="text">"חידה מספר 7: 'מה שנראה ריק - מלא. מה שנראה שבור - שלם. חפש בין השורות.' ...בן שלי, אני מקווה שתבין."</span>
+      <span class="context">רמז קריפטי מהקוד העמוק</span>
+    </div>
+    <div class="voice-line">
+      <span class="text">"הוא פתר את זה! זן, הילד פתר את החידה השלישית! הוא בן 10!"</span>
+      <span class="context">רז צופה בקי מהקוד העמוק</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SHIR ========== -->
+<div class="section" id="shir">
+  <div class="section-header">
+    <span class="emoji">&#x1F469;&#x200D;&#x1F4BC;</span>
+    <div>
+      <h2 style="background:linear-gradient(135deg,var(--pink),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+        אמא: שיר קודן
+      </h2>
+      <div class="sub">חמה, מציאותית, ויש לה סוד שקי לא יודע</div>
+    </div>
+  </div>
+
+  <div class="card card-pink">
+    <h3>&#x1F4CB; כרטיס זהות - שיר</h3>
+    <table>
+      <tr><th style="width:160px;color:var(--pink);">שם מלא</th><td><strong style="color:var(--pink);">שיר קודן (לפני הנישואין: שיר מזרחי)</strong></td></tr>
+      <tr><th style="color:var(--pink);">גיל</th><td>~36</td></tr>
+      <tr><th style="color:var(--pink);">מראה</th><td>אישה ישראלית חמה, שיער חום ארוך, עיניים חומות-ירוקות, חיוך מרגיע</td></tr>
+      <tr><th style="color:var(--pink);">עבודה</th><td>מזכירה/מנהלת משרד רגיל (לכאורה)</td></tr>
+      <tr><th style="color:var(--pink);">סטטוס</th><td><span class="tag tag-pink">אמא תומכת</span> <span class="tag tag-purple">נינג'ה בדימוס</span></td></tr>
+      <tr><th style="color:var(--pink);">הסוד</th><td>הייתה נינג'ת מקלדת מוכשרת - עזבה כשרז נעלם</td></tr>
+    </table>
+  </div>
+
+  <div class="grid-2">
+    <div class="card card-pink">
+      <h3>&#x1F338; המציאות - מה שקי רואה</h3>
+      <ul>
+        <li><strong>אמא חמה ואוהבת</strong> שתמיד שם בשבילו</li>
+        <li>עובדת עבודה "משעממת" במשרד - קי לא ממש יודע מה היא עושה</li>
+        <li><strong>מעולם לא דיברה רע על אבא</strong> - רק "אבא היה צריך ללכת"</li>
+        <li>תמיד <strong>מעודדת את קי עם המחשבים</strong> - "יש לך את זה מאבא"</li>
+        <li>קצת <strong>עצובה לפעמים</strong> כשקי לא שם לב, בעיקר ליד המקלדת הישנה</li>
+        <li>מכינה את האוכל האהוב של קי כשהוא עצוב - <strong>שקשוקה עם תוספות</strong></li>
+      </ul>
+    </div>
+
+    <div class="card card-purple">
+      <h3>&#x1F52E; הסוד - מה שקי לא יודע</h3>
+      <ul>
+        <li><strong>הייתה נינג'ת מקלדת!</strong> כינוי: "אקורד" (Chord) - הקלידה בצ'ורדים</li>
+        <li>פגשה את רז <strong>בדוג'ו</strong> - שניהם תלמידים של זן</li>
+        <li>הייתה <strong>השנייה הכי טובה</strong> (אחרי רז) - טכניקת הקלדה ייחודית</li>
+        <li>כשרז נעלם, <strong>שברה את המקלדת שלה</strong> ונשבעה לא לגעת עוד</li>
+        <li><strong>יודעת שרז לא באמת "נעלם"</strong> - יודעת על הקוד העמוק</li>
+        <li>זן <strong>מבקר אותה בסתר</strong> פעם בחודש - מעדכן אותה על קי</li>
+        <li>שומרת את <strong>המקלדת השבורה שלה</strong> בקופסה נעולה בארון</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="emotion-box">
+    <h4>&#x1F4A7; הסצנה הרגשית הגדולה (פרק 5-6)</h4>
+    <p style="margin-bottom:10px;">קי חוזר הביתה אחרי קרב קשה. מותש, שבור. שיר רואה את הסימנים - היא <strong>מזהה</strong> את הסימנים של קרב דיגיטלי.</p>
+    <ul>
+      <li>שיר מוציאה מהארון את <strong>הקופסה הנעולה</strong></li>
+      <li>פותחת - בפנים <strong>מקלדת שבורה</strong> עם הכיתוב "אקורד" חרוט</li>
+      <li>שיר אומרת: <strong>"אני יודעת, קי. תמיד ידעתי."</strong></li>
+      <li>מספרת על איך <strong>היא ורז היו שותפים בדוג'ו</strong></li>
+      <li>מספרת על <strong>הלילה שרז נעלם</strong> - ואיך הוא נישק את קי הישן</li>
+      <li>שיר: <strong>"לא עזבתי כי אני חלשה. עזבתי כי הייתי צריכה להיות כאן בשבילך."</strong></li>
+      <li>קי בוכה. שיר בוכה. <strong>השחקן בוכה.</strong></li>
+      <li>שיר נוגעת במקלדת השבורה - <strong>היא מאירה</strong>. הכוח עדיין שם.</li>
+    </ul>
+  </div>
+
+  <div class="card card-pink">
+    <h3>&#x1F399;&#xFE0F; משפטים אופייניים של שיר</h3>
+    <div class="voice-line">
+      <span class="text">"אבא היה צריך ללכת, מותק. יום אחד תבין למה."</span>
+      <span class="context">לקי הקטן, בלילות שבכה</span>
+    </div>
+    <div class="voice-line">
+      <span class="text">"יש לך את האצבעות של אבא שלך. והראש הקשה שלו."</span>
+      <span class="context">כשקי מתאמן בהקלדה</span>
+    </div>
+    <div class="voice-line">
+      <span class="text">"אני יודעת, קי. תמיד ידעתי. חשבת שאני לא שמה לב שאתה חוזר עם אור כחול בעיניים?"</span>
+      <span class="context">הסצנה הגדולה</span>
+    </div>
+    <div class="voice-line">
+      <span class="text">"הם קראו לי 'אקורד'. הייתי יכולה להקליד שלוש מילים במקביל. אבא שלך? הוא היה היחיד שניצח אותי."</span>
+      <span class="context">חושפת את העבר</span>
+    </div>
+    <div class="voice-line">
+      <span class="text">"לא עזבתי כי אני חלשה, קי. עזבתי כי מישהו היה צריך לשמור עליך כאן."</span>
+      <span class="context">הרגע הכי רגשי</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== KI CHILDHOOD ========== -->
+<div class="section" id="ki-childhood">
+  <div class="section-header">
+    <span class="emoji">&#x1F466;</span>
+    <div>
+      <h2 style="background:linear-gradient(135deg,var(--purple),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+        קי גדל - הילדות שעיצבה את הגיבור
+      </h2>
+      <div class="sub">דירה קטנה בפרבר, ילד בודד עם מקלדת ישנה וחלום</div>
+    </div>
+  </div>
+
+  <div class="card card-purple">
+    <h3>&#x1F3E0; הבית</h3>
+    <ul>
+      <li><strong>דירת 3 חדרים בפרבר</strong> - רגילה, צנועה, חמה</li>
+      <li>חדר של קי: <strong>פוסטרים של גיבורים דיגיטליים</strong>, מחשב ישן, ו<strong>המקלדת של אבא</strong> על שולחן קטן</li>
+      <li>מטבח שתמיד מריח טוב - שיר <strong>מבשלת כשהיא מודאגת</strong></li>
+      <li>ליד הסלון - <strong>כיסא ריק</strong>. שיר אף פעם לא הזיזה אותו. קי אף פעם לא שאל למה.</li>
+      <li>על הקיר - <strong>תמונה אחת</strong> של רז, שיר וקי התינוק. זו התמונה היחידה.</li>
+    </ul>
+  </div>
+
+  <div class="grid-2">
+    <div class="card card-blue">
+      <h3>&#x1F4C5; ציר זמן הילדות</h3>
+      <div class="timeline">
+        <div class="tl-item tl-blue">
+          <div class="tl-label" style="color:var(--family);">גיל 0-4: עם אבא</div>
+          <div class="tl-title">הזיכרונות העמומים</div>
+          <div class="tl-desc">זוכר ידיים גדולות על מקלדת, צחוק עמוק, ריח של קפה. "אבא לימד אותי את האות הראשונה - א'."</div>
+        </div>
+        <div class="tl-item tl-red">
+          <div class="tl-label" style="color:var(--red);">גיל 4: ההיעלמות</div>
+          <div class="tl-title">בוקר אחד, אבא לא היה</div>
+          <div class="tl-desc">על השולחן - המקלדת הישנה ופתק מוצפן. שיר בכתה שבוע. קי לא הבין.</div>
+        </div>
+        <div class="tl-item tl-blue">
+          <div class="tl-label" style="color:var(--family);">גיל 5-7: הבדידות</div>
+          <div class="tl-title">ילד שקט שאוהב מחשבים</div>
+          <div class="tl-desc">לא הרבה חברים. מעדיף לשבת ליד המחשב. מקליד על מקלדת אבא אפילו שלא קורה כלום. "מרגיש אותו ככה."</div>
+        </div>
+        <div class="tl-item tl-green">
+          <div class="tl-label" style="color:var(--green);">גיל 8: הפתק</div>
+          <div class="tl-title">לומד לפענח את הפתק!</div>
+          <div class="tl-desc">אחרי שנים, קי מצליח לפענח חלק מהפתק. כתוב: "חפש את הביטים, בני." לא מבין, אבל שומר.</div>
+        </div>
+        <div class="tl-item tl-gold">
+          <div class="tl-label" style="color:var(--gold);">גיל 10: הדוג'ו</div>
+          <div class="tl-title">סנסיי זן מופיע בחייו</div>
+          <div class="tl-desc">זן "מקרי" מגלה את קי. בעצם - זן חיכה לרגע הזה 6 שנים, מאז שרז ביקש ממנו לשמור על קי.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-purple">
+      <h3>&#x1F49C; מי זה קי - הפנימיות</h3>
+      <h4 style="color:var(--family);">מה שהוא מרגיש:</h4>
+      <ul>
+        <li><strong>"חור"</strong> במקום שאבא צריך להיות - לא כעס, בעיקר ריקנות</li>
+        <li><strong>בדידות</strong> - מרגיש שונה מילדים אחרים, לא יודע למה</li>
+        <li><strong>משיכה מסתורית</strong> למקלדות ולקוד - כאילו משהו קורא לו</li>
+        <li><strong>אשמה שקטה</strong> - "אולי אבא עזב בגללי?"</li>
+        <li><strong>תקווה</strong> - עמוק בפנים, מאמין שאבא יחזור</li>
+      </ul>
+
+      <h4 style="color:var(--green);">ה-ARC השלם:</h4>
+      <ul>
+        <li><strong>שלב 1:</strong> ילד בודד שמחפש אבא &#x2192; נכנס לדוג'ו</li>
+        <li><strong>שלב 2:</strong> תלמיד שמוצא משפחה חדשה &#x2192; הדוג'ו, החברים, קי (המנחה)</li>
+        <li><strong>שלב 3:</strong> נינג'ה שמגלה את האמת על אבא &#x2192; מוטיבציה חדשה</li>
+        <li><strong>שלב 4:</strong> לוחם שמציל את גליץ' &#x2192; מבין שמשפחה זה בחירה</li>
+        <li><strong>שלב 5:</strong> מנהיג שמאחד את כולם &#x2192; מוצא את אבא, מציל את העולם</li>
+        <li><strong>שלב 6:</strong> <strong>בוחר להישאר למרות שיכול לחזור</strong> &#x2192; "הדוג'ו צריך אותי"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="emotion-box">
+    <h4>&#x1F4A7; רגעים רגשיים מפתח של קי</h4>
+    <div class="grid-2">
+      <div>
+        <h4 style="color:var(--family);">&#x1F512; המקלדת נדלקת (פרק 1)</h4>
+        <p style="font-size:14px;color:var(--dim);">קי נוגע במקלדת הישנה של אבא ובפעם הראשונה - <strong>היא מגיבה</strong>. אורות, רטט, וצליל שהוא זוכר מהילדות. הדמעה הראשונה.</p>
+      </div>
+      <div>
+        <h4 style="color:var(--green);">&#x1F91D; "אתה דומה לו" (פרק 2)</h4>
+        <p style="font-size:14px;color:var(--dim);">סנסיי זן אומר בטעות "אתה מקליד בדיוק כמו אבא שלך." קי קופא. <strong>"מאיפה אתה מכיר את אבא שלי?"</strong></p>
+      </div>
+      <div>
+        <h4 style="color:var(--gold);">&#x1F4DC; חידה מספר 3 (פרק 3)</h4>
+        <p style="font-size:14px;color:var(--dim);">קי פותר חידה של רז ו<strong>מרגיש נוכחות</strong>. כמו חיבוק מרחוק. בוכה בלי לדעת למה. <strong>"אבא?"</strong></p>
+      </div>
+      <div>
+        <h4 style="color:var(--pink);">&#x1F3E0; שיר חושפת הכל (פרק 5-6)</h4>
+        <p style="font-size:14px;color:var(--dim);">הסצנה הגדולה - אמא מוציאה את המקלדת השבורה. <strong>כל מה שקי חשב שהוא יודע על המשפחה - משתנה.</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== FAMILY ARC ========== -->
+<div class="section" id="family-arc">
+  <div class="section-header">
+    <span class="emoji">&#x1F46A;</span>
+    <div>
+      <h2 style="color:var(--gold);">הקשת המשפחתית השלמה</h2>
+      <div class="sub">מפריקות &#x2192; לגילוי &#x2192; להבנה &#x2192; לאיחוד</div>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item tl-red">
+      <div class="tl-label" style="color:var(--red);">מצב פתיחה: שבירה</div>
+      <div class="tl-title">משפחה שבורה - חור בצורת אבא</div>
+      <div class="tl-desc">קי לא מבין למה אבא עזב. שיר שומרת סוד. רז לכוד. ביט נעלם. כולם לבד.</div>
+    </div>
+    <div class="tl-item tl-blue">
+      <div class="tl-label" style="color:var(--family);">פרקים 1-3: חיפוש</div>
+      <div class="tl-title">קי מוצא רמזים בלי להבין</div>
+      <div class="tl-desc">המקלדת נדלקת. חידות מופיעות. זן מתנהג מוזר. קי מרגיש שמשהו גדול מחכה.</div>
+    </div>
+    <div class="tl-item tl-green">
+      <div class="tl-label" style="color:var(--green);">פרקים 3-5: גילוי</div>
+      <div class="tl-title">האמת מתגלה בשכבות</div>
+      <div class="tl-desc">קי מגלה שזן הכיר את אבא. מגלה שהחידות מאבא. שיר חושפת הכל. עולם חדש.</div>
+    </div>
+    <div class="tl-item tl-gold">
+      <div class="tl-label" style="color:var(--gold);">פרק 6: הבנה</div>
+      <div class="tl-title">קי מבין את ההקרבה של כל אחד</div>
+      <div class="tl-desc">רז הקריב את המשפחה כדי להגן. שיר הקריבה את הקריירה כדי לגדל. זן שמר על הסוד מאהבה. ביט נעלם כדי לשמור על כולם.</div>
+    </div>
+    <div class="tl-item tl-ancient">
+      <div class="tl-label" style="color:var(--ancient);">פרק 7+: איחוד</div>
+      <div class="tl-title">המשפחה מתאחדת - אבל שונה</div>
+      <div class="tl-desc">קי מוצא את רז. רז פוגש את ביט. שיר חוזרת ללחום. <strong>אבל הם כבר לא אותה משפחה - הם משהו חדש וחזק יותר.</strong></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===================================================================== -->
+<!--                    PART 3: CONNECTION MAP                             -->
+<!-- ===================================================================== -->
+
+<div class="section" id="connection-map">
+  <div class="section-header">
+    <span class="emoji">&#x1F5FA;&#xFE0F;</span>
+    <div>
+      <h2 style="background:linear-gradient(135deg,var(--purple),var(--green),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+        חלק 3: מפת קשרים
+      </h2>
+      <div class="sub">כל הקשרים בין הדמויות - שושלת ההוראה, הקרבות, והמשפחה</div>
+    </div>
+  </div>
+
+  <!-- Main Lineage -->
+  <div class="map-container">
+    <h3 style="text-align:center;color:var(--gold);margin-bottom:20px;font-size:20px;">&#x1F3EF; שושלת ההוראה</h3>
+
+    <div class="map-row">
+      <div class="map-node ancient">
+        &#x1F422; מאסטר ביט
+        <div class="sub">מייסד הדוג'ו הראשון<br>200+ שנה</div>
+      </div>
+    </div>
+    <div class="map-arrow-down">&#x2B07;&#xFE0F;</div>
+    <div class="map-label">לימד את</div>
+
+    <div class="map-row">
+      <div class="map-node green">
+        &#x1F422; סנסיי זן
+        <div class="sub">ראש דוג'ו ראשית<br>מורה ומנטור</div>
+      </div>
+    </div>
+    <div class="map-arrow-down">&#x2B07;&#xFE0F;</div>
+    <div class="map-label">לימד את</div>
+
+    <div class="map-row">
+      <div class="map-node blue">
+        &#x1F468;&#x200D;&#x1F4BB; רז קודן
+        <div class="sub">התלמיד המוכשר ביותר<br>נעלם לקוד העמוק</div>
+      </div>
+      <span class="map-arrow">&#x2764;&#xFE0F;</span>
+      <div class="map-node pink">
+        &#x1F469;&#x200D;&#x1F4BC; שיר קודן
+        <div class="sub">"אקורד" - נינג'ה בדימוס<br>שומרת על קי</div>
+      </div>
+    </div>
+    <div class="map-arrow-down">&#x2B07;&#xFE0F;</div>
+    <div class="map-label">הולידו וגידלו את</div>
+
+    <div class="map-row">
+      <div class="map-node purple">
+        &#x26A1; קי קודן
+        <div class="sub">הגיבור הראשי<br>"הנבחר"</div>
+      </div>
+    </div>
+
+    <!-- Ancient Battle -->
+    <div class="map-section-title">&#x2694;&#xFE0F; הקרב העתיק</div>
+
+    <div class="map-row">
+      <div class="map-node ancient">
+        &#x1F422; מאסטר ביט
+        <div class="sub">מגן על העולם הדיגיטלי</div>
+      </div>
+      <span class="map-vs">VS</span>
+      <div class="map-node red">
+        &#x1F9A0; ווירוס קדמוני
+        <div class="sub">Primal Virus<br>נכלא אך לא נהרס</div>
+      </div>
+    </div>
+
+    <!-- Virus Lineage -->
+    <div class="map-section-title">&#x1F9EC; שושלת הווירוס</div>
+
+    <div class="map-row">
+      <div class="map-node red">
+        &#x1F9A0; ווירוס קדמוני
+        <div class="sub">כלוא בכלא הביטים</div>
+      </div>
+    </div>
+    <div class="map-arrow-down">&#x2B07;&#xFE0F;</div>
+    <div class="map-label">רסיס / שבר שברח</div>
+
+    <div class="map-row">
+      <div class="map-node red" style="opacity:0.8;">
+        &#x1F47E; הווירוס הנוכחי
+        <div class="sub">מתחזה לחבר &#x2192; בוגד<br>מתמזג עם גליץ'</div>
+      </div>
+    </div>
+
+    <!-- Deep Code Connection -->
+    <div class="map-section-title">&#x1F30A; הקוד העמוק</div>
+
+    <div class="map-row">
+      <div class="map-node blue">
+        &#x1F468;&#x200D;&#x1F4BB; רז קודן
+        <div class="sub">נכנס לחפש את ביט<br>גילה שהכלא נסדק</div>
+      </div>
+      <span class="map-arrow">&#x2192;</span>
+      <div class="map-node cyan">
+        &#x1F30A; הקוד העמוק
+        <div class="sub">שכבה נסתרת<br>כניסה חד-כיוונית</div>
+      </div>
+      <span class="map-arrow">&#x2190;</span>
+      <div class="map-node ancient">
+        &#x1F422; מאסטר ביט
+        <div class="sub">שומר על הכלא<br>נחלש בהדרגה</div>
+      </div>
+    </div>
+
+    <!-- Shir's Hidden Connection -->
+    <div class="map-section-title">&#x1F4A1; הקשר הנסתר של שיר</div>
+
+    <div class="map-row">
+      <div class="map-node pink">
+        &#x1F469;&#x200D;&#x1F4BC; שיר "אקורד"
+        <div class="sub">נינג'ת מקלדת מוכשרת<br>עזבה כשרז נעלם</div>
+      </div>
+      <span class="map-arrow">&#x1F50C;</span>
+      <div class="map-node green">
+        &#x1F422; סנסיי זן
+        <div class="sub">מבקר אותה בסתר<br>מעדכן על קי</div>
+      </div>
+    </div>
+    <div class="map-label">&#x2191; שניהם שומרים על הסוד מקי &#x2191;</div>
+
+    <!-- The Grand Plan -->
+    <div class="map-section-title">&#x1F3AF; התוכנית הגדולה (נחשפת בפרק 7+)</div>
+
+    <div class="map-row">
+      <div class="map-node gold">
+        &#x2728; התוכנית
+        <div class="sub">ביט &#x2192; שלח את זן &#x2192; ללמד את רז &#x2192; שייצור את קי &#x2192; שינצח</div>
+      </div>
+    </div>
+    <div class="map-label" style="color:var(--red);font-weight:700;">שאלה מוסרית: האם קי נבחר, או שנולד לבחירה?</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===================================================================== -->
+<!--                    PART 4: GAMEPLAY IMPLICATIONS                      -->
+<!-- ===================================================================== -->
+
+<div class="section" id="gameplay">
+  <div class="section-header">
+    <span class="emoji">&#x1F3AE;</span>
+    <div>
+      <h2 style="background:linear-gradient(135deg,var(--green),var(--cyan),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+        חלק 4: השלכות על המשחקיות
+      </h2>
+      <div class="sub">איך הנרטיב הזה הופך לתכונות משחק אמיתיות</div>
+    </div>
+  </div>
+
+  <!-- Bit Map -->
+  <div class="gameplay-card" style="border-color:rgba(116,185,255,0.3);">
+    <h3 style="color:var(--family);">&#x1F5FA;&#xFE0F; מפת הביטים - Collectible Gameplay</h3>
+    <p style="margin-bottom:14px;">חידות שרז השאיר לקי - מנגנון איסוף וגילוי מרכזי</p>
+
+    <div class="grid-2">
+      <div>
+        <h4 style="color:var(--family);">&#x1F9E9; מהם הביטים?</h4>
+        <ul>
+          <li>8 "ביטים" מוסתרים בכל פרק - <strong>סה"כ 48+ ביטים</strong></li>
+          <li>כל ביט הוא <strong>חידת הקלדה</strong> - צריך להקליד רצף מסוים בזמן מסוים</li>
+          <li>כל ביט מכיל <strong>שבר מידע</strong> על מיקום מאסטר ביט</li>
+          <li>איסוף 8 ביטים = <strong>1 "בייט" שלם</strong> = נפתח מידע חדש</li>
+          <li>איסוף כל הבייטים = <strong>"מפתח הקוד העמוק"</strong> = דלת לפרק 7</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color:var(--green);">&#x1F3AF; סוגי חידות</h4>
+        <ul>
+          <li><strong>חידת מהירות:</strong> הקלד את הרצף ב-5 שניות</li>
+          <li><strong>חידת דיוק:</strong> הקלד בלי שגיאה אחת (100 תווים)</li>
+          <li><strong>חידת תבנית:</strong> גלה את התבנית הנסתרת והשלם</li>
+          <li><strong>חידת קוד:</strong> פענח קוד מוצפן על ידי הקלדה</li>
+          <li><strong>חידת זיכרון:</strong> הקלד רצף שראית לרגע קצר</li>
+          <li><strong>חידת בוס:</strong> פתור 3 חידות ברצף בלי טעות</li>
+        </ul>
+      </div>
+    </div>
+
+    <table style="margin-top:16px;">
+      <tr><th>פרק</th><th>ביטים</th><th>דרגת קושי</th><th>תגמול</th></tr>
+      <tr><td>1 - ההתחלה</td><td>8 ביטים</td><td><span class="tag tag-green">קל</span></td><td>רמז ראשון על מיקום ביט</td></tr>
+      <tr><td>2 - הדוג'ו</td><td>8 ביטים</td><td><span class="tag tag-blue">בינוני</span></td><td>סיפור על הקרב העתיק</td></tr>
+      <tr><td>3 - הסערה</td><td>8 ביטים</td><td><span class="tag tag-blue">בינוני</span></td><td>מפה חלקית של הקוד העמוק</td></tr>
+      <tr><td>4 - הבגידה</td><td>8 ביטים</td><td><span class="tag tag-gold">קשה</span></td><td>הודעה מרז: "אני כאן"</td></tr>
+      <tr><td>5 - הקרבן</td><td>8 ביטים</td><td><span class="tag tag-gold">קשה</span></td><td>מיקום הכלא של הווירוס</td></tr>
+      <tr><td>6 - המלחמה</td><td>8 ביטים</td><td><span class="tag tag-red">אתגר</span></td><td><strong>מפתח הקוד העמוק!</strong></td></tr>
+    </table>
+  </div>
+
+  <!-- Master Beat Teachings -->
+  <div class="gameplay-card" style="border-color:rgba(212,165,116,0.3);">
+    <h3 style="color:var(--ancient);">&#x1F4DC; תורות מאסטר ביט - חוכמות שנפתחות</h3>
+    <p style="margin-bottom:14px;">כש"בייט" שלם נאסף, נפתחת תורה של ביט - חוכמת הקלדה עתיקה עם יתרונות משחקיים</p>
+
+    <div class="grid-3">
+      <div class="skin-card" style="border-color:rgba(212,165,116,0.3);">
+        <div class="skin-name" style="color:var(--ancient);">&#x1F4BF; בייט 1: "נשימת הקוד"</div>
+        <div class="skin-desc">
+          <strong>חוכמה:</strong> "לפני שמקלידים - נושמים. הקוד זורם עם הנשימה."
+          <br><strong>בונוס:</strong> +5% מהירות כשמקלידים בקצב קבוע (לא ספורדי)
+        </div>
+      </div>
+      <div class="skin-card" style="border-color:rgba(212,165,116,0.3);">
+        <div class="skin-name" style="color:var(--ancient);">&#x1F4BF; בייט 2: "אצבעות הרוח"</div>
+        <div class="skin-desc">
+          <strong>חוכמה:</strong> "האצבעות לא מכות. הן רוקדות. תן להן לזכור."
+          <br><strong>בונוס:</strong> שגיאות חוזרות מודגשות לפני שקורות (חיזוי)
+        </div>
+      </div>
+      <div class="skin-card" style="border-color:rgba(212,165,116,0.3);">
+        <div class="skin-name" style="color:var(--ancient);">&#x1F4BF; בייט 3: "עין הביט"</div>
+        <div class="skin-desc">
+          <strong>חוכמה:</strong> "אל תסתכל על האותיות. תסתכל דרכן."
+          <br><strong>בונוס:</strong> המילה הבאה מוצגת בחלון תצוגה מקדימה
+        </div>
+      </div>
+      <div class="skin-card" style="border-color:rgba(212,165,116,0.3);">
+        <div class="skin-name" style="color:var(--ancient);">&#x1F4BF; בייט 4: "קוד הלב"</div>
+        <div class="skin-desc">
+          <strong>חוכמה:</strong> "הקוד הכי חזק לא בא מהראש. הוא בא מכאן." (מצביע על הלב)
+          <br><strong>בונוס:</strong> חיים נוספים בקרבות (שני סיכויים במקום אחד)
+        </div>
+      </div>
+      <div class="skin-card" style="border-color:rgba(212,165,116,0.3);">
+        <div class="skin-name" style="color:var(--ancient);">&#x1F4BF; בייט 5: "שתיקת המקשים"</div>
+        <div class="skin-desc">
+          <strong>חוכמה:</strong> "בין הקשה להקשה - שם נמצאת האמת."
+          <br><strong>בונוס:</strong> מצב "זן" - 3 שניות של הקלדה מושלמת = האטת זמן
+        </div>
+      </div>
+      <div class="skin-card" style="border-color:rgba(212,165,116,0.3);">
+        <div class="skin-name" style="color:var(--ancient);">&#x1F4BF; בייט 6: "המפתח הקדום"</div>
+        <div class="skin-desc">
+          <strong>חוכמה:</strong> "כל מקלדת היא דלת. השאלה היא - לאן?"
+          <br><strong>בונוס:</strong> <span style="color:var(--gold);font-weight:700;">פותח את שער הקוד העמוק - גישה לפרק 7!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shir Reveal as Gameplay -->
+  <div class="gameplay-card" style="border-color:rgba(253,121,168,0.3);">
+    <h3 style="color:var(--pink);">&#x1F338; חשיפת שיר - רגע רגשי כמנגנון משחקי</h3>
+    <p style="margin-bottom:14px;">הסצנה שבה שיר חושפת לקי שהיא הייתה נינג'ה - לא רק cutscene, אלא <strong>אירוע משחקי</strong></p>
+
+    <div class="grid-2">
+      <div>
+        <h4 style="color:var(--pink);">&#x1F3AC; מהלך הסצנה:</h4>
+        <ul>
+          <li><strong>1.</strong> דיאלוג רגשי (cutscene עם אווטארים בסגנון Hades)</li>
+          <li><strong>2.</strong> שיר מוציאה את המקלדת השבורה</li>
+          <li><strong>3.</strong> <strong>שלב משחקי:</strong> השחקן מקליד יחד עם שיר - "דואט הקלדה"</li>
+          <li><strong>4.</strong> המקלדת השבורה <strong>מתחילה להתרפא</strong> עם כל מילה נכונה</li>
+          <li><strong>5.</strong> בסוף - המקלדת שלמה, ושיר בוכה-מחייכת</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color:var(--green);">&#x1F381; תגמולים:</h4>
+        <ul>
+          <li><strong>סקין "אקורד"</strong> - סקין נדיר למקלדת של קי (בסגנון של שיר)</li>
+          <li><strong>יכולת "הקלדת צ'ורד"</strong> - הקלדת 2 אותיות בו זמנית (כמו שיר)</li>
+          <li><strong>הישג "משפחה"</strong> - badge מיוחד</li>
+          <li><strong>גישה למשימות של שיר</strong> - שיעורים מיוחדים מאמא</li>
+          <li><strong>שיר כמנטורית זמנית</strong> - מלווה בפרק 6</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapter 7+ Foreshadowing -->
+  <div class="gameplay-card" style="border-color:rgba(231,76,60,0.3);">
+    <h3 style="color:var(--red);">&#x1F9A0; הקדמה לפרק 7+ - הווירוס הקדמוני</h3>
+    <p style="margin-bottom:14px;">איך מכינים את השחקנים לפרק 7 כבר מהיום</p>
+
+    <div class="grid-2">
+      <div>
+        <h4 style="color:var(--red);">&#x1F4A3; רמזים בפרקים 1-6:</h4>
+        <ul>
+          <li><strong>רעידות קוד קטנות</strong> - לפעמים המסך רועד לרגע ללא סיבה</li>
+          <li><strong>סמלים עתיקים</strong> - מופיעים ברקע בלי הסבר</li>
+          <li><strong>חלומות של קי</strong> - פלאשבקים קצרים לקרב העתיק</li>
+          <li><strong>אזהרות של זן</strong> - "יש דברים שגדולים מכולנו"</li>
+          <li><strong>תגובת המקלדת</strong> - המקלדת של רז רועדת לפעמים מעצמה</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color:var(--gold);">&#x1F31F; מה פרק 7 יציע:</h4>
+        <ul>
+          <li><strong>עולם חדש:</strong> "הקוד העמוק" - סביבה שונה לגמרי</li>
+          <li><strong>מכניקה חדשה:</strong> "הקלדה קדומה" - שפה דיגיטלית עתיקה</li>
+          <li><strong>דמויות חדשות:</strong> יצורים מהקוד העמוק</li>
+          <li><strong>פגישה עם רז:</strong> אבא ובן נפגשים סוף סוף</li>
+          <li><strong>פגישה עם ביט:</strong> האגדה הופכת לבשר ודם (ושריון)</li>
+          <li><strong>הווירוס הקדמוני:</strong> האיום הסופי, גדול מכל מה שהיה</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spoiler-box" style="margin-top:16px;">
+      <h4>&#x1F4A1; הטוויסט של פרק 7</h4>
+      <p style="font-size:14px;">כשקי סוף סוף פוגש את מאסטר ביט, הוא מגלה שביט <strong>תכנן את הכל מהתחלה</strong>. ביט בחר בזן. זן בחר ברז. רז יצר את קי. כל החידות, כל האימונים, כל ההרפתקה - <strong>הכל היה כדי להכין את קי לרגע הזה</strong>.</p>
+      <p style="font-size:14px;margin-top:8px;">קי צריך להתמודד עם השאלה: <strong>"אם הכל היה מתוכנן, האם הבחירות שלי אמיתיות?"</strong></p>
+      <p style="font-size:14px;margin-top:8px;">התשובה (שקי מגלה בעצמו): <strong>"הם יכלו לתכנן את הנתיב. אבל מה שעשיתי בו - זה היה שלי."</strong></p>
+    </div>
+  </div>
+
+  <!-- Summary Table -->
+  <div class="card card-green" style="margin-top:20px;">
+    <h3 style="color:var(--green);">&#x1F4CA; סיכום תכונות משחק חדשות</h3>
+    <table>
+      <tr>
+        <th>תכונה</th>
+        <th>סוג</th>
+        <th>פרק</th>
+        <th>השפעה</th>
+      </tr>
+      <tr>
+        <td><strong>מפת הביטים</strong></td>
+        <td><span class="tag tag-blue">Collectible</span></td>
+        <td>1-6</td>
+        <td>48 חידות הקלדה, 6 בייטים, מפתח לפרק 7</td>
+      </tr>
+      <tr>
+        <td><strong>תורות ביט</strong></td>
+        <td><span class="tag tag-ancient">Power-up</span></td>
+        <td>1-6</td>
+        <td>6 בונוסים קבועים שמשנים את המשחק</td>
+      </tr>
+      <tr>
+        <td><strong>חידות רז</strong></td>
+        <td><span class="tag tag-blue">Puzzle</span></td>
+        <td>2-5</td>
+        <td>חידות קריפטיות שחושפות את הסיפור</td>
+      </tr>
+      <tr>
+        <td><strong>דואט שיר</strong></td>
+        <td><span class="tag tag-pink">Story Event</span></td>
+        <td>5-6</td>
+        <td>רגע רגשי + סקין + יכולת חדשה</td>
+      </tr>
+      <tr>
+        <td><strong>הקוד העמוק</strong></td>
+        <td><span class="tag tag-cyan">New World</span></td>
+        <td>7+</td>
+        <td>אזור חדש עם מכניקות חדשות</td>
+      </tr>
+      <tr>
+        <td><strong>הקלדה קדומה</strong></td>
+        <td><span class="tag tag-ancient">New Mechanic</span></td>
+        <td>7+</td>
+        <td>שפת הקלדה עתיקה עם כללים שונים</td>
+      </tr>
+      <tr>
+        <td><strong>פגישה עם רז</strong></td>
+        <td><span class="tag tag-blue">Story Climax</span></td>
+        <td>7</td>
+        <td>רגע רגשי + יכולות אבא-בן</td>
+      </tr>
+      <tr>
+        <td><strong>ווירוס קדמוני</strong></td>
+        <td><span class="tag tag-red">Final Boss</span></td>
+        <td>7+</td>
+        <td>קרב סופי שדורש הכל</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<div class="footer">
+  <p>&#x1F422; נינג'ה מקלדת - מאסטר ביט ומשפחת קי</p>
+  <p>מסמך נרטיבי מרכזי | מרץ 2026</p>
+  <p style="margin-top:10px;font-size:11px;color:var(--dim);">
+    "הקוד לא נכתב. הקוד תמיד היה כאן. אנחנו רק לומדים לקרוא אותו." - מאסטר ביט
+  </p>
+</div>
+
+</body>
+</html>

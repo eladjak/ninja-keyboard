@@ -1,12 +1,13 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowRight, RotateCcw, Trophy, Star } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { StoryTriggerWrapper } from '@/components/story/story-trigger-wrapper'
 import { useTypingSessionStore } from '@/stores/typing-session-store'
 import { useXpStore } from '@/stores/xp-store'
 import {
@@ -16,6 +17,7 @@ import {
 } from '@/lib/typing-engine/engine'
 import { CHAR_TO_KEY } from '@/lib/typing-engine/keyboard-layout'
 import type { LessonDefinition, LessonContent } from '@/lib/typing-engine/types'
+import type { StoryTriggerEvent } from '@/hooks/use-story-trigger'
 
 interface LessonPageClientProps {
   lesson: LessonDefinition
@@ -31,9 +33,17 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
   const [pressedKey, setPressedKey] = useState<string | undefined>()
   const [lastCorrect, setLastCorrect] = useState<boolean | null>(null)
   const [showResults, setShowResults] = useState(false)
+  const [lessonCompleted, setLessonCompleted] = useState(false)
+  const [storyFinished, setStoryFinished] = useState(false)
   const [finalStats, setFinalStats] = useState<ReturnType<
     typeof computeSessionStats
   > | null>(null)
+
+  // Build the story trigger event: fires only after lesson is completed
+  const storyEvent = useMemo<StoryTriggerEvent | null>(() => {
+    if (!lessonCompleted) return null
+    return { type: 'lesson-complete', lessonId: lesson.id }
+  }, [lessonCompleted, lesson.id])
 
   // Initialize session with first line
   useEffect(() => {
@@ -99,6 +109,9 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
           xpStore.completeLesson(lesson.id, stats.wpm, stats.accuracy)
         }
       }
+      // Trigger the story system before showing results
+      setLessonCompleted(true)
+      setStoryFinished(false)
       setShowResults(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -132,9 +145,15 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
   const handleRetry = () => {
     setCurrentLineIndex(0)
     setShowResults(false)
+    setLessonCompleted(false)
+    setStoryFinished(false)
     setFinalStats(null)
     store.startSession(content.lines[0], lesson.id)
   }
+
+  const handleStoryComplete = useCallback(() => {
+    setStoryFinished(true)
+  }, [])
 
   const handleNextLesson = () => {
     const nextLevel = lesson.level + 1
@@ -156,6 +175,10 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
   }
 
   return (
+    <StoryTriggerWrapper
+      event={storyEvent}
+      onStoryComplete={handleStoryComplete}
+    >
     <div className="mx-auto flex max-w-4xl flex-col gap-4 p-4">
       {/* Header */}
       <div className="flex items-center justify-between">
@@ -346,5 +369,6 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
         )}
       </AnimatePresence>
     </div>
+    </StoryTriggerWrapper>
   )
 }

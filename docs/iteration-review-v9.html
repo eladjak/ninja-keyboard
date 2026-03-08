@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>נינג'ה מקלדת - סקירת איטרציה 9</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: #0d0b1a;
+      color: #e0e0ff;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* === Header === */
+    .hdr {
+      background: linear-gradient(135deg, #1a1535, #0d0b1a, #1a0a2e);
+      border-bottom: 3px solid #6C5CE7;
+      padding: 40px 5%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hdr::before {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      width: 200%;
+      height: 200%;
+      background:
+        radial-gradient(circle at 30% 50%, rgba(108,92,231,0.08), transparent 50%),
+        radial-gradient(circle at 70% 50%, rgba(0,184,148,0.06), transparent 50%);
+      pointer-events: none;
+    }
+    .hdr h1 {
+      font-size: 2.6em;
+      font-weight: 900;
+      background: linear-gradient(135deg, #6C5CE7, #a29bfe, #00B894);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    .hdr .sub {
+      font-size: 1.1em;
+      color: #a0a0cc;
+      margin-bottom: 16px;
+    }
+    .hdr .meta {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      font-size: 0.9em;
+      color: #8888bb;
+    }
+
+    /* === Progress Bar === */
+    .pb-c { max-width: 500px; margin: 20px auto 0; }
+    .pb-l {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85em;
+      color: #a0a0cc;
+      margin-bottom: 6px;
+    }
+    .pb {
+      height: 10px;
+      background: #1e1a3a;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .pf {
+      height: 100%;
+      border-radius: 5px;
+      background: linear-gradient(90deg, #6C5CE7, #00B894);
+    }
+
+    /* === Container === */
+    .cnt { max-width: 1200px; margin: 0 auto; padding: 30px 20px 60px; }
+
+    /* === Sections (collapsible) === */
+    .sec {
+      background: #13102a;
+      border: 1px solid #2a2555;
+      border-radius: 16px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .sec:hover { border-color: #6C5CE7; }
+
+    .sh {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 24px;
+      cursor: pointer;
+      user-select: none;
+      background: #16133a;
+      border-bottom: 1px solid #2a2555;
+      transition: background 0.2s;
+    }
+    .sh:hover { background: #1d1948; }
+    .sh h2 {
+      font-size: 1.3em;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .tgl {
+      font-size: 1.4em;
+      color: #6C5CE7;
+      transition: transform 0.3s;
+    }
+    .sec.c .tgl { transform: rotate(-90deg); }
+    .sec.c .sb { display: none; }
+    .sb { padding: 24px; }
+
+    /* === Section number badge === */
+    .sn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      font-size: 0.8em;
+      font-weight: 700;
+      background: linear-gradient(135deg, #6C5CE7, #a29bfe);
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    /* === Badges === */
+    .b { display: inline-flex; align-items: center; gap: 5px; padding: 3px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 500; }
+    .bd { background: rgba(0,184,148,0.15); color: #00B894; border: 1px solid rgba(0,184,148,0.3); }
+    .bp { background: rgba(253,203,110,0.15); color: #fdcb6e; border: 1px solid rgba(253,203,110,0.3); }
+    .bl { background: rgba(108,92,231,0.15); color: #a29bfe; border: 1px solid rgba(108,92,231,0.3); }
+    .br { background: rgba(255,107,107,0.15); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.3); }
+
+    /* === Tables === */
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    th {
+      background: #1a1740;
+      color: #a29bfe;
+      padding: 10px 14px;
+      text-align: right;
+      font-weight: 700;
+      font-size: 0.85em;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    td { padding: 10px 14px; border-bottom: 1px solid #1e1a3a; font-size: 0.9em; }
+    tr:hover td { background: rgba(108,92,231,0.05); }
+
+    /* === Task list === */
+    .tl { list-style: none; }
+    .ti {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid #1e1a3a;
+      transition: background 0.15s;
+    }
+    .ti:hover { background: rgba(108,92,231,0.04); }
+    .ti:last-child { border-bottom: none; }
+
+    .ic { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7em; margin-top: 3px; }
+    .ic.d { background: rgba(0,184,148,0.2); color: #00B894; }
+    .ic.p { background: rgba(253,203,110,0.2); color: #fdcb6e; }
+    .ic.w { background: rgba(108,92,231,0.2); color: #a29bfe; }
+    .tt { font-weight: 500; }
+    .td { color: #8888bb; font-size: 0.88em; margin-top: 3px; }
+
+    /* === Stats Grid === */
+    .sg { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 16px 0; }
+    .sc { background: #1a1740; border: 1px solid #2a2555; border-radius: 12px; padding: 18px; text-align: center; transition: border-color 0.2s, transform 0.15s; }
+    .sc:hover { border-color: #6C5CE7; transform: translateY(-2px); }
+    .sv { font-size: 2em; font-weight: 900; background: linear-gradient(135deg, #6C5CE7, #00B894); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .sl { font-size: 0.85em; color: #8888bb; margin-top: 4px; }
+
+    /* === Character Gallery (Iteration 9 Special) === */
+    .char-gallery {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      margin: 20px 0;
+    }
+
+    .char-card {
+      background: linear-gradient(145deg, #1a1740, #16133a);
+      border: 1px solid #2a2555;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+    }
+    .char-card:hover {
+      border-color: #6C5CE7;
+      box-shadow: 0 0 30px rgba(108,92,231,0.15), 0 8px 32px rgba(0,0,0,0.3);
+      transform: translateY(-3px);
+    }
+
+    .char-card-header {
+      padding: 16px 24px;
+      background: linear-gradient(135deg, rgba(108,92,231,0.12), rgba(0,184,148,0.08));
+      border-bottom: 1px solid #2a2555;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .char-card-header h3 {
+      font-size: 1.2em;
+      font-weight: 700;
+      color: #e0e0ff;
+    }
+    .char-card-header .char-badge {
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.78em;
+      font-weight: 600;
+    }
+    .char-badge-new { background: rgba(0,184,148,0.2); color: #00B894; border: 1px solid rgba(0,184,148,0.35); }
+    .char-badge-redesign { background: rgba(108,92,231,0.2); color: #a29bfe; border: 1px solid rgba(108,92,231,0.35); }
+    .char-badge-fix { background: rgba(253,203,110,0.2); color: #fdcb6e; border: 1px solid rgba(253,203,110,0.35); }
+
+    .char-card-body {
+      padding: 20px 24px;
+    }
+    .char-card-desc {
+      color: #a0a0cc;
+      font-size: 0.92em;
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+
+    .char-images {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .char-img-wrap {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #2a2555;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .char-img-wrap:hover {
+      border-color: #6C5CE7;
+      box-shadow: 0 0 20px rgba(108,92,231,0.2);
+    }
+    .char-img-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .char-img-wrap:hover img {
+      transform: scale(1.03);
+    }
+    .char-img-label {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      padding: 10px 16px;
+      background: linear-gradient(transparent, rgba(13,11,26,0.92));
+      color: #e0e0ff;
+      font-size: 0.85em;
+      font-weight: 500;
+    }
+
+    /* === Glitch Arc Gallery (6 versions) === */
+    .glitch-arc {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .glitch-card {
+      background: #1a1740;
+      border: 1px solid #2a2555;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+      position: relative;
+    }
+    .glitch-card:hover {
+      border-color: #ff6b6b;
+      box-shadow: 0 0 25px rgba(255,107,107,0.15);
+      transform: translateY(-3px);
+    }
+    .glitch-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .glitch-card:hover img {
+      transform: scale(1.03);
+    }
+    .glitch-card .g-label {
+      padding: 12px 14px;
+      text-align: center;
+    }
+    .glitch-card .g-version {
+      font-size: 0.75em;
+      font-weight: 700;
+      color: #ff6b6b;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .glitch-card .g-name {
+      font-size: 0.92em;
+      font-weight: 600;
+      color: #e0e0ff;
+      margin-top: 2px;
+    }
+    .glitch-card .g-desc {
+      font-size: 0.78em;
+      color: #8888bb;
+      margin-top: 4px;
+    }
+
+    /* arc flow arrow */
+    .arc-flow {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0 10px;
+      flex-wrap: wrap;
+    }
+    .arc-step {
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.82em;
+      font-weight: 600;
+      border: 1px solid;
+    }
+    .arc-arrow {
+      color: #6C5CE7;
+      font-size: 1.2em;
+    }
+
+    /* === Lightbox === */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,0.92);
+      justify-content: center;
+      align-items: center;
+      cursor: zoom-out;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 92vh;
+      border-radius: 12px;
+      box-shadow: 0 0 60px rgba(108,92,231,0.3);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: #fff;
+      font-size: 2em;
+      cursor: pointer;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(108,92,231,0.3);
+      border-radius: 50%;
+      transition: background 0.2s;
+    }
+    .lightbox-close:hover { background: rgba(108,92,231,0.6); }
+
+    /* === Feedback items === */
+    .fb-list { list-style: none; margin: 16px 0; }
+    .fb-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 18px;
+      border-bottom: 1px solid #1e1a3a;
+      transition: background 0.15s;
+    }
+    .fb-item:hover { background: rgba(108,92,231,0.04); }
+    .fb-item:last-child { border-bottom: none; }
+
+    .fb-status {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1em;
+      margin-top: 2px;
+    }
+    .fb-done { background: rgba(0,184,148,0.15); color: #00B894; }
+    .fb-wip { background: rgba(253,203,110,0.15); color: #fdcb6e; }
+    .fb-wait { background: rgba(108,92,231,0.15); color: #a29bfe; }
+    .fb-content { flex: 1; }
+    .fb-title { font-weight: 600; font-size: 1em; margin-bottom: 4px; }
+    .fb-desc { color: #8888bb; font-size: 0.88em; line-height: 1.6; }
+
+    /* === Next Steps === */
+    .next-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .next-card {
+      background: linear-gradient(145deg, #1a1740, #16133a);
+      border: 1px solid #2a2555;
+      border-radius: 14px;
+      padding: 20px 22px;
+      transition: border-color 0.3s, transform 0.2s;
+    }
+    .next-card:hover {
+      border-color: #6C5CE7;
+      transform: translateY(-2px);
+    }
+    .next-card h4 {
+      font-size: 1em;
+      font-weight: 700;
+      color: #a29bfe;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .next-card p {
+      color: #8888bb;
+      font-size: 0.88em;
+      line-height: 1.7;
+    }
+    .next-card .priority {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-size: 0.72em;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-top: 10px;
+    }
+    .pri-high { background: #ff6b6b; color: #fff; }
+    .pri-med { background: #fdcb6e; color: #0d0b1a; }
+    .pri-low { background: #6C5CE7; color: #fff; }
+
+    /* === Section subtitle === */
+    .gs { font-size: 1.05em; font-weight: 700; color: #a29bfe; margin: 20px 0 10px; padding-bottom: 6px; border-bottom: 1px solid #2a2555; }
+
+    /* === Utilities === */
+    .cp { font-family: 'Courier New', monospace; background: #1a1740; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; color: #00B894; direction: ltr; unicode-bidi: embed; }
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(108,92,231,0.08), rgba(0,184,148,0.05));
+      border: 1px solid #2a2555;
+      border-right: 3px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 16px 0;
+      line-height: 1.8;
+    }
+    .highlight-box strong { color: #a29bfe; }
+
+    .ft { text-align: center; padding: 40px 20px; border-top: 1px solid #2a2555; margin-top: 40px; color: #666; font-size: 0.85em; }
+    .ft .ver { font-size: 1.1em; color: #a29bfe; margin-bottom: 8px; }
+
+    @media (max-width: 768px) {
+      .hdr h1 { font-size: 1.8em; }
+      .sg { grid-template-columns: repeat(2, 1fr); }
+      .glitch-arc { grid-template-columns: 1fr 1fr; }
+      .char-images { grid-template-columns: 1fr; }
+      .next-grid { grid-template-columns: 1fr; }
+      .hdr .meta { flex-direction: column; gap: 8px; }
+      .arc-flow { font-size: 0.8em; }
+    }
+    @media (max-width: 480px) {
+      .glitch-arc { grid-template-columns: 1fr; }
+      .sg { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">&times;</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- ============ HEADER ============ -->
+<div class="hdr">
+  <h1>נינג'ה מקלדת - סקירת איטרציה 9</h1>
+  <p class="sub">עיצוב מחדש של דמויות, ארק ויזואלי מלא, ומשוב משתמש</p>
+  <div class="meta">
+    <span>תאריך: 8 במרץ 2026</span>
+    <span>ספרינט: Character Consistency & Redesign</span>
+    <span>גרסה: 0.9.0</span>
+  </div>
+  <div class="pb-c">
+    <div class="pb-l"><span>התקדמות איטרציה 9</span><span>75%</span></div>
+    <div class="pb"><div class="pf" style="width:75%"></div></div>
+  </div>
+</div>
+
+<div class="cnt">
+
+<!-- ================================ -->
+<!-- SECTION 1: סיכום איטרציה 9       -->
+<!-- ================================ -->
+<div class="sec">
+  <div class="sh" onclick="this.parentElement.classList.toggle('c')">
+    <h2><span class="sn">1</span> סיכום איטרציה 9</h2>
+    <span class="tgl">&#9660;</span>
+  </div>
+  <div class="sb">
+    <div class="highlight-box">
+      איטרציה 9 התמקדה ב<strong>עיצוב מחדש של דמויות מרכזיות</strong> בעקבות משוב המשתמש.
+      סנסיי זן חזר לצורתו כ<strong>צב</strong>, סאקורה עוצבה מחדש כ<strong>עגורה מבוגרת</strong>,
+      גליץ' קיבלה <strong>6 גרסאות ויזואליות</strong> שמייצגות את כל הארק שלה לאורך הסיפור,
+      ומלך ומלכת הבאגים קיבלו <strong>דפי הבעות מעודכנים</strong> לשמירה על עקביות.
+      בנוסף, הושקעה עבודה ב<strong>פרופיל מאסטר ביט</strong>, <strong>משפחת קי</strong>,
+      ו<strong>ביקורת סקילים</strong> לפרויקט.
+    </div>
+
+    <div class="sg">
+      <div class="sc">
+        <div class="sv">12</div>
+        <div class="sl">קבצי תמונה חדשים</div>
+      </div>
+      <div class="sc">
+        <div class="sv">4</div>
+        <div class="sl">דמויות עוצבו מחדש</div>
+      </div>
+      <div class="sc">
+        <div class="sv">6</div>
+        <div class="sl">גרסאות גליץ'</div>
+      </div>
+      <div class="sc">
+        <div class="sv">2</div>
+        <div class="sl">מסמכי HTML חדשים</div>
+      </div>
+    </div>
+
+    <table>
+      <tr>
+        <th>קטגוריה</th>
+        <th>פירוט</th>
+        <th>סטטוס</th>
+      </tr>
+      <tr>
+        <td>סנסיי זן - חזרה לצב</td>
+        <td>Model sheet + דף הבעות V2 בצורת צב</td>
+        <td><span class="b bd">הושלם</span></td>
+      </tr>
+      <tr>
+        <td>סאקורה - עגורה מבוגרת</td>
+        <td>Model sheet + דף הבעות V2 כעגורה בוגרת</td>
+        <td><span class="b bd">הושלם</span></td>
+      </tr>
+      <tr>
+        <td>גליץ' - 6 גרסאות</td>
+        <td>מבולבלת, מתגבשת, נייטרלית, מושחתת, שבורה, שלמה</td>
+        <td><span class="b bd">הושלם</span></td>
+      </tr>
+      <tr>
+        <td>מלכת הבאגים (זרה) V2</td>
+        <td>דף הבעות מעודכן ועקבי</td>
+        <td><span class="b bd">הושלם</span></td>
+      </tr>
+      <tr>
+        <td>מלך הבאגים (קרס) V2</td>
+        <td>דף הבעות מעודכן ועקבי</td>
+        <td><span class="b bd">הושלם</span></td>
+      </tr>
+      <tr>
+        <td>מאסטר ביט + משפחת קי</td>
+        <td>פרופיל מלא, סיפור רקע, רז (אבא)</td>
+        <td><span class="b bp">בעבודה</span></td>
+      </tr>
+      <tr>
+        <td>ביקורת סקילים פרונטאנד</td>
+        <td>בדיקת סקילים ואימוץ בין-פרויקטים</td>
+        <td><span class="b bp">בעבודה</span></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ================================ -->
+<!-- SECTION 2: גלריית דמויות         -->
+<!-- ================================ -->
+<div class="sec">
+  <div class="sh" onclick="this.parentElement.classList.toggle('c')">
+    <h2><span class="sn">2</span> גלריית דמויות - עיצוב מחדש</h2>
+    <span class="tgl">&#9660;</span>
+  </div>
+  <div class="sb">
+    <p style="color: #a0a0cc; margin-bottom: 24px; font-size: 0.95em;">
+      כל הדמויות עוצבו מחדש בעקבות משוב ישיר מהמשתמש. לחצו על תמונה להגדלה.
+    </p>
+
+    <div class="char-gallery">
+
+      <!-- === סנסיי זן V2 === -->
+      <div class="char-card">
+        <div class="char-card-header">
+          <h3>סנסיי זן V2 - צב חכם</h3>
+          <span class="char-badge char-badge-redesign">עיצוב מחדש</span>
+        </div>
+        <div class="char-card-body">
+          <p class="char-card-desc">
+            המשתמש דרש בתוקף: <strong>סנסיי זן חייב לחזור להיות צב!</strong>
+            הגרסה האנושית בוטלה לחלוטין. זן חזר לצורתו המקורית - צב חכם ושלו
+            שמלמד הקלדה בסבלנות אינסופית. העיצוב החדש שומר על האישיות הרגועה
+            והחוכמה העתיקה, עם אלמנטים של דוג'ו ומדיטציה.
+          </p>
+          <div class="char-images">
+            <div class="char-img-wrap" onclick="openLightbox(this.querySelector('img').src)">
+              <img src="../public/images/characters/model-sheets/sensei-zen-v2.jpg" alt="סנסיי זן V2 - Model Sheet">
+              <div class="char-img-label">Model Sheet - צב חכם עם גלימת סנסיי</div>
+            </div>
+            <div class="char-img-wrap" onclick="openLightbox(this.querySelector('img').src)">
+              <img src="../public/images/characters/expressions/zen-expressions-v2.jpg" alt="סנסיי זן V2 - הבעות">
+              <div class="char-img-label">דף הבעות - 8 מצבי רגש</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- === סאקורה V2 === -->
+      <div class="char-card">
+        <div class="char-card-header">
+          <h3>סאקורה V2 - עגורה מבוגרת</h3>
+          <span class="char-badge char-badge-redesign">עיצוב מחדש</span>
+        </div>
+        <div class="char-card-body">
+          <p class="char-card-desc">
+            סאקורה עוצבה מחדש כ<strong>עגורה מבוגרת</strong> - לא ילדה, אלא מנטורית בוגרת
+            בגילו של סנסיי זן. היא מייצגת חוכמה, חן, ודיוק - כמו עגורה יפנית אמיתית.
+            העיצוב החדש מדגיש את הקשר בינה לבין זן כשני מנטורים ותיקים שמשלימים זה את זה.
+          </p>
+          <div class="char-images">
+            <div class="char-img-wrap" onclick="openLightbox(this.querySelector('img').src)">
+              <img src="../public/images/characters/model-sheets/sakura-model-sheet-v2.jpg" alt="סאקורה V2 - Model Sheet">
+              <div class="char-img-label">Model Sheet - עגורה אלגנטית עם אלמנטים יפניים</div>
+            </div>
+            <div class="char-img-wrap" onclick="openLightbox(this.querySelector('img').src)">
+              <img src="../public/images/characters/expressions/sakura-expressions-v2.jpg" alt="סאקורה V2 - הבעות">
+              <div class="char-img-label">דף הבעות - 8 מצבי רגש</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- === גליץ' - 6 גרסאות === -->
+      <div class="char-card" style="border-color: rgba(255,107,107,0.3);">
+        <div class="char-card-header" style="background: linear-gradient(135deg, rgba(255,107,107,0.1), rgba(108,92,231,0.08));">
+          <h3>גליץ' - 6 גרסאות (ארק ויזואלי מלא)</h3>
+          <span class="char-badge char-badge-new">חדש!</span>
+        </div>
+        <div class="char-card-body">
+          <p class="char-card-desc">
+            גליץ' היא דמות מפתח בסיפור - <strong>נקבית, חמודה, ומורכבת</strong>.
+            היא לא מתה! במקום זאת, היא עוברת מסע מלא: מבלבול ראשוני, דרך התגבשות,
+            שחיתות על ידי הווירוס, שבירה רגשית, ולבסוף - שלמות ומיזוג מחדש.
+            כל 6 הגרסאות תוכננו כדי לשקף את הארק הרגשי המלא שלה לאורך 6 פרקים.
+          </p>
+
+          <!-- Arc Flow -->
+          <div class="arc-flow">
+            <span class="arc-step" style="border-color: #a29bfe; color: #a29bfe;">V1 מבולבלת</span>
+            <span class="arc-arrow">&larr;</span>
+            <span class="arc-step" style="border-color: #00B894; color: #00B894;">V2 מתגבשת</span>
+            <span class="arc-arrow">&larr;</span>
+            <span class="arc-step" style="border-color: #fdcb6e; color: #fdcb6e;">V3 נייטרלית</span>
+            <span class="arc-arrow">&larr;</span>
+            <span class="arc-step" style="border-color: #ff6b6b; color: #ff6b6b;">V4 מושחתת</span>
+            <span class="arc-arrow">&larr;</span>
+            <span class="arc-step" style="border-color: #ff6b6b; color: #ff6b6b;">V5 שבורה</span>
+            <span class="arc-arrow">&larr;</span>
+            <span class="arc-step" style="border-color: #00B894; color: #00B894;">V6 שלמה</span>
+          </div>
+
+          <div class="glitch-arc">
+            <!-- V1 -->
+            <div class="glitch-card" onclick="openLightbox(this.querySelector('img').src)">
+              <img src="../public/images/characters/model-sheets/glitch-v1-confused.jpg" alt="גליץ' V1 - מבולבלת">
+              <div class="g-label">
+                <div class="g-version">V1 - פרק 1</div>
+                <div class="g-name">מבולבלת</div>
+                <div class="g-desc">מופיעה לראשונה, לא יודעת מי היא</div>
+              </div>
+            </div>
+            <!-- V2 -->
+            <div class="glitch-card" onclick="openLightbox(this.querySelector('img').src)">
+              <img src="../public/images/characters/model-sheets/glitch-v2-forming.jpg" alt="גליץ' V2 - מתגבשת">
+              <div class="g-label">
+                <div class="g-version">V2 - פרק 2</div>
+                <div class="g-name">מתגבשת</div>
+                <div class="g-desc">מתחילה לגלות את הכוחות שלה</div>
+              </div>
+            </div>
+            <!-- V3 -->
+            <div class="glitch-card" onclick="openLightbox(this.querySelector('img').src)">
+              <img src="../public/images/characters/model-sheets/glitch-v3-neutral.jpg" alt="גליץ' V3 - נייטרלית">
+              <div class="g-label">
+                <div class="g-version">V3 - פרק 3</div>
+                <div class="g-name">נייטרלית</div>
+                <div class="g-desc">הגרסה היציבה - חברה של הצוות</div>
+              </div>
+            </div>
+            <!-- V4 -->
+            <div class="glitch-card" onclick="openLightbox(this.querySelector('img').src)">
+              <img src="../public/images/characters/model-sheets/glitch-v4-evil.jpg" alt="גליץ' V4 - מושחתת">
+              <div class="g-label">
+                <div class="g-version">V4 - פרק 4</div>
+                <div class="g-name">מושחתת</div>
+                <div class="g-desc">הווירוס השתלט - הולכת עם האויב</div>
+              </div>
+            </div>
+            <!-- V5 -->
+            <div class="glitch-card" onclick="openLightbox(this.querySelector('img').src)">
+              <img src="../public/images/characters/model-sheets/glitch-v5-broken.jpg" alt="גליץ' V5 - שבורה">
+              <div class="g-label">
+                <div class="g-version">V5 - פרק 5</div>
+                <div class="g-name">שבורה</div>
+                <div class="g-desc">מתפוררת לשברים - הרגע הקורע לב</div>
+              </div>
+            </div>
+            <!-- V6 -->
+            <div class="glitch-card" onclick="openLightbox(this.querySelector('img').src)">
+              <img src="../public/images/characters/model-sheets/glitch-v6-whole.jpg" alt="גליץ' V6 - שלמה">
+              <div class="g-label">
+                <div class="g-version">V6 - פרק 6</div>
+                <div class="g-name">שלמה</div>
+                <div class="g-desc">מתאחדת מחדש - חזקה מתמיד</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- === מלכת הבאגים (זרה) V2 === -->
+      <div class="char-card">
+        <div class="char-card-header">
+          <h3>מלכת הבאגים (זרה) V2 - דף הבעות מעודכן</h3>
+          <span class="char-badge char-badge-fix">תיקון עקביות</span>
+        </div>
+        <div class="char-card-body">
+          <p class="char-card-desc">
+            ה-model sheet של זרה היה מצוין, אבל דף ההבעות לא היה עקבי.
+            הגרסה החדשה מתוקנת ומבטיחה שכל 8 ההבעות נראות כמו <strong>אותה דמות</strong> -
+            עם אותו סגנון, פרופורציות, וצבעים.
+          </p>
+          <div class="char-images">
+            <div class="char-img-wrap" onclick="openLightbox(this.querySelector('img').src)">
+              <img src="../public/images/characters/expressions/zara-expressions-v2.jpg" alt="זרה V2 - הבעות">
+              <div class="char-img-label">דף הבעות V2 - עקבי עם ה-model sheet</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- === מלך הבאגים (קרס) V2 === -->
+      <div class="char-card">
+        <div class="char-card-header">
+          <h3>מלך הבאגים (קרס) V2 - דף הבעות מעודכן</h3>
+          <span class="char-badge char-badge-fix">תיקון עקביות</span>
+        </div>
+        <div class="char-card-body">
+          <p class="char-card-desc">
+            בדומה לזרה, גם דף ההבעות של קרס שודרג לגרסה V2 כדי להבטיח
+            <strong>עקביות מלאה</strong> עם ה-model sheet המקורי. כל ההבעות
+            משקפות את אותו עיצוב - חרקי, מאיים, ומלכותי.
+          </p>
+          <div class="char-images">
+            <div class="char-img-wrap" onclick="openLightbox(this.querySelector('img').src)">
+              <img src="../public/images/characters/expressions/keres-expressions-v2.jpg" alt="קרס V2 - הבעות">
+              <div class="char-img-label">דף הבעות V2 - עקבי עם ה-model sheet</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================================ -->
+<!-- SECTION 3: משוב המשתמש           -->
+<!-- ================================ -->
+<div class="sec">
+  <div class="sh" onclick="this.parentElement.classList.toggle('c')">
+    <h2><span class="sn">3</span> משוב המשתמש - מעקב ביצוע</h2>
+    <span class="tgl">&#9660;</span>
+  </div>
+  <div class="sb">
+    <p style="color: #a0a0cc; margin-bottom: 20px; font-size: 0.95em;">
+      המשוב מה-8 במרץ 2026 כלל דרישות ברורות לגבי עיצוב דמויות, עקביות ויזואלית, וסיפור רקע.
+      להלן סטטוס הביצוע לכל פריט:
+    </p>
+
+    <ul class="fb-list">
+      <li class="fb-item">
+        <div class="fb-status fb-done">&#10003;</div>
+        <div class="fb-content">
+          <div class="fb-title">סנסיי זן = צב!</div>
+          <div class="fb-desc">
+            המשתמש דרש בתוקף שזן יחזור להיות צב. לעולם לא להפוך אותו לאנושי שוב.
+            <strong>הושלם</strong> - model sheet + דף הבעות V2 בצורת צב.
+          </div>
+        </div>
+      </li>
+      <li class="fb-item">
+        <div class="fb-status fb-done">&#10003;</div>
+        <div class="fb-content">
+          <div class="fb-title">סאקורה = עגורה מבוגרת</div>
+          <div class="fb-desc">
+            סאקורה לא יכולה להיראות כמו ילדה. חייבת להיות בגילו של זן, מנטורית בוגרת.
+            עגורה הומלצה ואושרה. <strong>הושלם</strong> - model sheet + דף הבעות V2.
+          </div>
+        </div>
+      </li>
+      <li class="fb-item">
+        <div class="fb-status fb-done">&#10003;</div>
+        <div class="fb-content">
+          <div class="fb-title">גליץ' - 6 גרסאות (ארק מלא)</div>
+          <div class="fb-desc">
+            מבולבלת, מתגבשת, נייטרלית, מושחתת/Evil, שבורה/שטרד, שלמה/Complete.
+            חייבת להיות ברורות נקבית וחמודה.
+            <strong>הושלם</strong> - 6 model sheets מלאים.
+          </div>
+        </div>
+      </li>
+      <li class="fb-item">
+        <div class="fb-status fb-done">&#10003;</div>
+        <div class="fb-content">
+          <div class="fb-title">עקביות מלך ומלכת הבאגים</div>
+          <div class="fb-desc">
+            ה-model sheets מצוינים אבל ההבעות לא היו עקביות. חייבים לתקן מיידית.
+            <strong>הושלם</strong> - דפי הבעות V2 עקביים לזרה ולקרס.
+          </div>
+        </div>
+      </li>
+      <li class="fb-item">
+        <div class="fb-status fb-wip">&#9998;</div>
+        <div class="fb-content">
+          <div class="fb-title">מאסטר ביט + משפחת קי</div>
+          <div class="fb-desc">
+            מאסטר ביט - מייסד הדוג'ו הראשון, המורה של זן. צב עתיק?
+            רז (אבא של קי) - סיפור רקע מלא. שיר (אמא)? איך קי גדל.
+            <strong>בעבודה</strong> - פרופיל מלא ו-model sheets בפיתוח.
+          </div>
+        </div>
+      </li>
+      <li class="fb-item">
+        <div class="fb-status fb-wip">&#9998;</div>
+        <div class="fb-content">
+          <div class="fb-title">ביקורת סקילים פרונטאנד</div>
+          <div class="fb-desc">
+            המשתמש ביקש לבדוק את סקילים הפרונטאנד ולאמץ אותם בין-פרויקטים.
+            <strong>בעבודה</strong> - מיפוי סקילים ויצירת חדשים.
+          </div>
+        </div>
+      </li>
+      <li class="fb-item">
+        <div class="fb-status fb-wait">&#9679;</div>
+        <div class="fb-content">
+          <div class="fb-title">עקביות כללית - model sheets מול expressions</div>
+          <div class="fb-desc">
+            עדיפות מספר 1 של המשתמש: כל model sheet ודף הבעות חייבים להיראות כמו אותה דמות.
+            ערבוב גרסאות ישנות וחדשות = לא מקובל.
+            <strong>ממתין</strong> - מנגנון עקביות בפיתוח.
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- ================================ -->
+<!-- SECTION 4: סטטיסטיקות            -->
+<!-- ================================ -->
+<div class="sec">
+  <div class="sh" onclick="this.parentElement.classList.toggle('c')">
+    <h2><span class="sn">4</span> סטטיסטיקות איטרציה 9</h2>
+    <span class="tgl">&#9660;</span>
+  </div>
+  <div class="sb">
+
+    <div class="gs">אסטים ויזואליים</div>
+    <div class="sg">
+      <div class="sc">
+        <div class="sv">12</div>
+        <div class="sl">קבצי תמונה חדשים</div>
+      </div>
+      <div class="sc">
+        <div class="sv">2</div>
+        <div class="sl">model sheets חדשים</div>
+      </div>
+      <div class="sc">
+        <div class="sv">4</div>
+        <div class="sl">דפי הבעות מעודכנים</div>
+      </div>
+      <div class="sc">
+        <div class="sv">6</div>
+        <div class="sl">גרסאות גליץ'</div>
+      </div>
+    </div>
+
+    <div class="gs">דמויות ועיצוב</div>
+    <div class="sg">
+      <div class="sc">
+        <div class="sv">4</div>
+        <div class="sl">דמויות עוצבו מחדש</div>
+      </div>
+      <div class="sc">
+        <div class="sv">2</div>
+        <div class="sl">מסמכי HTML חדשים</div>
+      </div>
+      <div class="sc">
+        <div class="sv">1</div>
+        <div class="sl">ארק ויזואלי מלא</div>
+      </div>
+      <div class="sc">
+        <div class="sv">6</div>
+        <div class="sl">פרקים מכוסים בארק</div>
+      </div>
+    </div>
+
+    <div class="gs">פירוט קבצים חדשים</div>
+    <table>
+      <tr>
+        <th>קובץ</th>
+        <th>נתיב</th>
+        <th>סוג</th>
+      </tr>
+      <tr>
+        <td><strong>sensei-zen-v2.jpg</strong></td>
+        <td><span class="cp">public/images/characters/model-sheets/</span></td>
+        <td><span class="b bd">model sheet</span></td>
+      </tr>
+      <tr>
+        <td><strong>zen-expressions-v2.jpg</strong></td>
+        <td><span class="cp">public/images/characters/expressions/</span></td>
+        <td><span class="b bd">הבעות</span></td>
+      </tr>
+      <tr>
+        <td><strong>sakura-model-sheet-v2.jpg</strong></td>
+        <td><span class="cp">public/images/characters/model-sheets/</span></td>
+        <td><span class="b bd">model sheet</span></td>
+      </tr>
+      <tr>
+        <td><strong>sakura-expressions-v2.jpg</strong></td>
+        <td><span class="cp">public/images/characters/expressions/</span></td>
+        <td><span class="b bd">הבעות</span></td>
+      </tr>
+      <tr>
+        <td><strong>glitch-v1-confused.jpg</strong></td>
+        <td><span class="cp">public/images/characters/model-sheets/</span></td>
+        <td><span class="b br">גליץ' ארק</span></td>
+      </tr>
+      <tr>
+        <td><strong>glitch-v2-forming.jpg</strong></td>
+        <td><span class="cp">public/images/characters/model-sheets/</span></td>
+        <td><span class="b br">גליץ' ארק</span></td>
+      </tr>
+      <tr>
+        <td><strong>glitch-v3-neutral.jpg</strong></td>
+        <td><span class="cp">public/images/characters/model-sheets/</span></td>
+        <td><span class="b br">גליץ' ארק</span></td>
+      </tr>
+      <tr>
+        <td><strong>glitch-v4-evil.jpg</strong></td>
+        <td><span class="cp">public/images/characters/model-sheets/</span></td>
+        <td><span class="b br">גליץ' ארק</span></td>
+      </tr>
+      <tr>
+        <td><strong>glitch-v5-broken.jpg</strong></td>
+        <td><span class="cp">public/images/characters/model-sheets/</span></td>
+        <td><span class="b br">גליץ' ארק</span></td>
+      </tr>
+      <tr>
+        <td><strong>glitch-v6-whole.jpg</strong></td>
+        <td><span class="cp">public/images/characters/model-sheets/</span></td>
+        <td><span class="b br">גליץ' ארק</span></td>
+      </tr>
+      <tr>
+        <td><strong>zara-expressions-v2.jpg</strong></td>
+        <td><span class="cp">public/images/characters/expressions/</span></td>
+        <td><span class="b bp">תיקון</span></td>
+      </tr>
+      <tr>
+        <td><strong>keres-expressions-v2.jpg</strong></td>
+        <td><span class="cp">public/images/characters/expressions/</span></td>
+        <td><span class="b bp">תיקון</span></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ================================ -->
+<!-- SECTION 5: השלבים הבאים          -->
+<!-- ================================ -->
+<div class="sec">
+  <div class="sh" onclick="this.parentElement.classList.toggle('c')">
+    <h2><span class="sn">5</span> השלבים הבאים</h2>
+    <span class="tgl">&#9660;</span>
+  </div>
+  <div class="sb">
+    <p style="color: #a0a0cc; margin-bottom: 20px; font-size: 0.95em;">
+      איטרציה 9 הניחה את הבסיס הויזואלי לעקביות דמויות. השלבים הבאים מתמקדים
+      בבניית מנגנונים, תוכן חדש, ו-POC למעבר ל-3D.
+    </p>
+
+    <div class="next-grid">
+      <div class="next-card">
+        <h4>בניית מנגנון עקביות דמויות</h4>
+        <p>
+          יצירת תהליך מובנה ליצירת דמויות חדשות: הפקות reference, בדיקות עקביות אוטומטיות,
+          וציקל ביקורת/תיקון. המטרה: כל תמונה חדשה תיראה כמו אותה דמות.
+        </p>
+        <span class="priority pri-high">עדיפות גבוהה</span>
+      </div>
+
+      <div class="next-card">
+        <h4>Model Sheets - מאסטר ביט ורז</h4>
+        <p>
+          יצירת model sheets מלאים למאסטר ביט (מייסד הדוג'ו הראשון, המורה של זן)
+          ולרז (אבא של קי). כולל דפי הבעות וסיפור רקע מלא.
+        </p>
+        <span class="priority pri-high">עדיפות גבוהה</span>
+      </div>
+
+      <div class="next-card">
+        <h4>יצירת סקילים חדשים לפרויקט</h4>
+        <p>
+          בהתבסס על ביקורת הסקילים - יצירת סקילים ייעודיים לנינג'ה מקלדת:
+          יצירת דמויות, ניהול אסטים, אוטומציית תוכן, ועוד.
+        </p>
+        <span class="priority pri-med">עדיפות בינונית</span>
+      </div>
+
+      <div class="next-card">
+        <h4>המשך כתיבת סיפור (פרקים 4-6)</h4>
+        <p>
+          פרקים 1-3 כתובים. המשך עם פרק 4 (בגידת הווירוס),
+          פרק 5 (הקרב הגדול, גליץ' נלחמת נגד החברים),
+          ופרק 6 (המלחמה הגדולה - כל הדמויות ב-6 צוותים).
+        </p>
+        <span class="priority pri-med">עדיפות בינונית</span>
+      </div>
+
+      <div class="next-card">
+        <h4>יצירת מוזיקה (Suno Batch 1)</h4>
+        <p>
+          הפקת אצווה ראשונה של פסקולי משחק באמצעות Suno:
+          תמות דמויות, מוזיקת רקע לשלבים, ומוזיקת קרב.
+          סגנון היברידי פיקסל + קולנועי.
+        </p>
+        <span class="priority pri-med">עדיפות בינונית</span>
+      </div>
+
+      <div class="next-card">
+        <h4>POC דמויות 3D</h4>
+        <p>
+          פיילוט ראשוני למעבר דמויות ל-3D. בדיקת כלים, עלויות,
+          ואיכות. תקציב A-B: $150-350. המטרה: הוכחת היתכנות
+          לפני השקעה מלאה.
+        </p>
+        <span class="priority pri-low">עדיפות נמוכה</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- ============ FOOTER ============ -->
+<div class="ft">
+  <div class="ver">נינג'ה מקלדת v0.9.0 - סקירת איטרציה 9</div>
+  <p>8 במרץ 2026 | ספרינט: Character Consistency & Redesign</p>
+  <p style="margin-top: 10px;">
+    12 תמונות חדשות | 4 דמויות עוצבו מחדש | 6 גרסאות גליץ' | 2 מסמכי HTML
+  </p>
+  <p style="margin-top: 6px;">
+    1,093 unit tests | 0 TypeScript errors | 17+ model sheets | 12+ expression sheets
+  </p>
+  <p style="margin-top: 10px; color: #444;">
+    Next.js 15 | React 19 | TypeScript | Tailwind CSS 4 | Framer Motion | Zustand | Gemini (Image Gen)
+  </p>
+</div>
+
+<script>
+// Lightbox functionality
+function openLightbox(src) {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  img.src = src;
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  const lb = document.getElementById('lightbox');
+  lb.classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeLightbox();
+});
+</script>
+
+</body>
+</html>

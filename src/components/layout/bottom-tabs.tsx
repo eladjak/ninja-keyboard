@@ -5,8 +5,7 @@ import { usePathname } from 'next/navigation'
 import { Home, BookOpen, Keyboard, Swords, User } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { motion } from 'framer-motion'
-import { soundManager } from '@/lib/audio/sound-manager'
-import { useSettingsStore } from '@/stores/settings-store'
+import { useNavigateSound } from '@/hooks/use-sound-effect'
 
 const tabs = [
   { href: '/home', label: 'בית', icon: Home },
@@ -24,11 +23,11 @@ interface TabLinkProps {
 }
 
 function TabLink({ href, label, icon: Icon, isActive }: TabLinkProps) {
-  const { soundEnabled } = useSettingsStore()
+  const playNavigate = useNavigateSound()
 
   function handleClick() {
-    if (soundEnabled && !isActive) {
-      soundManager.playNavigate()
+    if (!isActive) {
+      playNavigate()
     }
   }
 

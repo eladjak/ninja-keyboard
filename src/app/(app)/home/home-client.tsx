@@ -24,7 +24,7 @@ import { GameCard } from '@/components/ui/game-card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { DailyChallengeCard } from '@/components/challenges/daily-challenge-card'
 import { DailyTip } from '@/components/tips/daily-tip'
@@ -34,6 +34,7 @@ import { useBadgeStore } from '@/stores/badge-store'
 import { usePracticeHistoryStore } from '@/stores/practice-history-store'
 import { LESSONS } from '@/lib/content/lessons'
 import { BADGE_DEFINITIONS } from '@/lib/gamification/badge-definitions'
+import { useSoundEffect, useNavigateSound } from '@/hooks/use-sound-effect'
 
 function getNextLesson(
   completedLessons: Record<string, unknown>,
@@ -128,6 +129,8 @@ export function HomeDashboard() {
     useXpStore()
   const { getRecentBadges, hasBadge } = useBadgeStore()
   const practiceResults = usePracticeHistoryStore((s) => s.results)
+  const playAchievement = useSoundEffect('achievement')
+  const playNavigate = useNavigateSound()
 
   // Derive WPM trend from practice results (memoized to avoid re-render loops)
   const wpmTrend = useMemo(() => {
@@ -148,6 +151,17 @@ export function HomeDashboard() {
     .map((id) => BADGE_DEFINITIONS.find((b) => b.id === id))
     .filter(Boolean)
   const progress = levelProgress()
+
+  // Play achievement sound once on mount when there are recent badges
+  const hasRecentBadges = recentBadges.length > 0
+  useEffect(() => {
+    if (hasRecentBadges) {
+      // Small delay so the user sees the page first
+      const timer = setTimeout(playAchievement, 600)
+      return () => clearTimeout(timer)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const statValues = {
     level,
@@ -263,7 +277,7 @@ export function HomeDashboard() {
 
       {/* Continue Lesson CTA */}
       {nextLesson ? (
-        <Link href={`/lessons/${nextLesson.id}`}>
+        <Link href={`/lessons/${nextLesson.id}`} onClick={playNavigate}>
           <Button size="lg" className="w-full text-lg gap-2 game-button" data-testid="continue-lesson-btn">
             <Target className="size-5" />
             המשך שיעור: {nextLesson.titleHe}
@@ -297,7 +311,7 @@ export function HomeDashboard() {
           data-testid="quick-links"
         >
           {QUICK_LINKS.map((link, i) => (
-            <Link key={link.href} href={link.href}>
+            <Link key={link.href} href={link.href} onClick={playNavigate}>
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}

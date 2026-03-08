@@ -1,0 +1,1071 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-03-08",
+    "purpose": "Canonical visual reference for all characters. Every art generation MUST load this file first and include the character's Visual DNA in the prompt. See ~/.claude/skills/character-consistency/README.md for the full workflow."
+  },
+  "globalStyle": {
+    "artStyle": "chibi cartoon, game-ready 2D",
+    "outlines": "bold black outlines",
+    "proportions": "large head (40% of body), big expressive eyes",
+    "colorVibrancy": "vibrant, saturated",
+    "background": {
+      "modelSheet": "white/light gray, clean",
+      "expressionSheet": "dark (#0d0b1a)"
+    },
+    "consistencyPhrase": "CONSISTENCY IS CRITICAL. EVERY panel must show THE SAME character with THE SAME colors, THE SAME outfit, THE SAME face structure. Only the emotion changes.",
+    "alwaysInclude": "Character name, species, EXACT color palette hex codes, outfit description, art style: chibi cartoon bold black outlines vibrant saturated colors large head big expressive eyes game-ready 2D",
+    "useAssetsFlag": "When generating expression sheets or variants, ALWAYS use --assets with the approved model sheet as reference image",
+    "reviewAfter": "After generation, compare against character Visual DNA checklist before approving"
+  },
+  "characters": {
+    "ki": {
+      "name": "קי",
+      "nameEn": "Ki",
+      "role": "Main Mascot & Player Guide",
+      "tier": "Core Hero",
+      "gender": "male",
+      "visualDNA": {
+        "species": "human",
+        "age": "12",
+        "bodyType": "slim athletic boy, chibi proportions",
+        "skinTone": "light olive/tan",
+        "hair": "spiky dark brown/black, full face visible (NO covering, NO Naruto style)",
+        "eyes": "large brown, determined, big anime-style",
+        "outfit": "orange-blue ninja hoodie with keyboard patterns, fingerless gloves (show fingers for typing metaphor)",
+        "accessories": "dad's old keyboard (glowing), purple ninja headband with flowing ribbons, shuriken belt",
+        "colorPalette": ["#FF6B35", "#1E88E5", "#4A3728", "#F5DEB3"],
+        "specialNotes": "ZERO Naruto resemblance. Full face always visible. Fingerless gloves are important for the typing metaphor."
+      },
+      "mustKeep": [
+        "full face visible (no covering)",
+        "spiky dark brown/black hair",
+        "orange-blue color scheme",
+        "keyboard patterns on hoodie",
+        "fingerless gloves",
+        "purple headband with ribbons"
+      ],
+      "canChange": [
+        "expression",
+        "pose",
+        "accessories for specific scenes",
+        "lighting/aura effects"
+      ],
+      "ageThemeScaling": {
+        "shatil_6_8": "Large, central, talks a lot, big chibi style",
+        "nevet_8_10": "Medium, reactive, bright",
+        "geza_10_12": "Smaller, corner position",
+        "anaf_12_14": "Icon only, minimal dialogue",
+        "tzameret_14_16": "Optional (can be turned off in settings)"
+      },
+      "latestApproved": "model-sheets/ki-boy-v5.jpg",
+      "version": "V5",
+      "pageAssignment": "Home Dashboard (hero/welcome), Onboarding (guide), Profile/Settings (small icon)"
+    },
+    "mika": {
+      "name": "מיקה",
+      "nameEn": "Mika",
+      "role": "Tech Ninja & Keyboard Shortcuts Expert",
+      "tier": "Core Hero",
+      "gender": "female",
+      "visualDNA": {
+        "species": "human",
+        "age": "13",
+        "bodyType": "energetic girl, chibi proportions",
+        "skinTone": "light",
+        "hair": "short asymmetric dark hair with purple/blue streak highlights (one side longer)",
+        "eyes": "sharp, confident, dark",
+        "outfit": "tech-style cyberpunk jacket with keyboard shortcut symbols, glowing circuit patterns",
+        "accessories": "holographic wrist gauntlets, laptop, USB drive necklace, drone companion on shoulder",
+        "colorPalette": ["#7B1FA2", "#1565C0", "#212121", "#E0E0E0"],
+        "specialNotes": "Pending redesign: user wants MORE feminine/classic look so girls connect. Current V5 is approved until redesign. Orange mask Easter egg appears in boss battles as 'battle mode' look."
+      },
+      "mustKeep": [
+        "purple/blue highlights in hair",
+        "tech/cyberpunk jacket",
+        "confident expression base",
+        "keyboard shortcut symbols on outfit",
+        "circuit pattern details"
+      ],
+      "canChange": [
+        "expression",
+        "pose",
+        "which shortcuts shown on outfit",
+        "drone companion presence",
+        "orange mask (battle mode only)"
+      ],
+      "latestApproved": "model-sheets/mika-girl-v5.jpg",
+      "version": "V5",
+      "pageAssignment": "Keyboard Shortcuts (tech expert), Cyber Lab environment"
+    },
+    "yuki": {
+      "name": "יוקי",
+      "nameEn": "Yuki",
+      "role": "Speed Specialist",
+      "tier": "Specialist Hero",
+      "gender": "female",
+      "visualDNA": {
+        "species": "human",
+        "age": "14",
+        "bodyType": "athletic girl, chibi proportions",
+        "skinTone": "fair",
+        "hair": "long silver-white ponytail with speed streaks",
+        "eyes": "bright blue, competitive, intense",
+        "outfit": "racing-style ninja suit, white and electric blue",
+        "accessories": "speed goggles on forehead, stopwatch",
+        "colorPalette": ["#E0E0E0", "#2196F3", "#FFFFFF", "#FF5722"]
+      },
+      "mustKeep": [
+        "silver-white ponytail",
+        "blue accents throughout",
+        "speed/racing motif",
+        "competitive energy in stance",
+        "goggles present (up or down)"
+      ],
+      "canChange": [
+        "expression",
+        "pose",
+        "goggles position (up on forehead or down over eyes)",
+        "speed effect trails"
+      ],
+      "latestApproved": "model-sheets/yuki-girl-v5.jpg",
+      "version": "V5",
+      "pageAssignment": "Speed Test (competitor), Speed Arena environment",
+      "voice": {
+        "id": "svFzGI0ewo7PyrO1RHP1",
+        "version": "V8-D (Hyper Sabra Gamer, energized)",
+        "status": "OFFICIAL"
+      }
+    },
+    "luna": {
+      "name": "לונה",
+      "nameEn": "Luna",
+      "role": "Moon Ninja / Calm Practice Guide",
+      "tier": "Specialist Hero",
+      "gender": "female",
+      "visualDNA": {
+        "species": "human",
+        "age": "11",
+        "bodyType": "petite shy girl, chibi proportions",
+        "skinTone": "pale/fair",
+        "hair": "long wavy lavender/light purple, often partially covering face shyly",
+        "eyes": "big dreamy purple, shy and gentle",
+        "outfit": "oversized artist smock/sweater with paint splashes, crescent moon hairpin",
+        "accessories": "digital stylus pen, small sketchbook, crescent moon hairpin",
+        "colorPalette": ["#CE93D8", "#E1BEE7", "#F3E5F5", "#7E57C2"]
+      },
+      "mustKeep": [
+        "lavender/purple hair",
+        "shy demeanor in posture",
+        "art/paint motif on clothing",
+        "oversized clothing style",
+        "crescent moon hairpin"
+      ],
+      "canChange": [
+        "expression",
+        "pose",
+        "what is drawn on sketchbook",
+        "paint splash colors on smock"
+      ],
+      "narrativeArc": "Shy girl who learns to be extroverted and show her art to the world",
+      "latestApproved": "model-sheets/luna-girl-v5.jpg",
+      "version": "V5",
+      "pageAssignment": "Practice Mode (calm guide), Moonlit Garden environment"
+    },
+    "noa": {
+      "name": "נועה",
+      "nameEn": "Noa",
+      "role": "Medic Ninja / Error Healer",
+      "tier": "Specialist Hero",
+      "gender": "female",
+      "visualDNA": {
+        "species": "human",
+        "age": "12",
+        "bodyType": "gentle caring girl, chibi proportions",
+        "skinTone": "warm olive",
+        "hair": "long dark brown with small flowers braided in",
+        "eyes": "warm brown, caring and gentle",
+        "outfit": "nature-themed outfit with leaf patterns, earth tones, cross/healing symbols",
+        "accessories": "small potted plant, healing herbs pouch",
+        "colorPalette": ["#4CAF50", "#795548", "#A5D6A7", "#FFF9C4"]
+      },
+      "mustKeep": [
+        "flowers braided in hair",
+        "nature/earth motif on clothing",
+        "gentle expression base",
+        "earth tone color scheme",
+        "healing/cross symbols"
+      ],
+      "canChange": [
+        "expression",
+        "pose",
+        "which flowers/plants shown",
+        "healing aura effects"
+      ],
+      "narrativeArc": "Noa heals/converts Bug Queen Zara instead of fighting her",
+      "latestApproved": "model-sheets/noa-girl-v5.jpg",
+      "version": "V5",
+      "pageAssignment": "Error Help (contextual overlay, appears when player struggles)"
+    },
+    "kai": {
+      "name": "קאי",
+      "nameEn": "Kai",
+      "role": "Fire Warrior / Battle Partner",
+      "tier": "Specialist Hero",
+      "gender": "male",
+      "visualDNA": {
+        "species": "human",
+        "age": "13",
+        "bodyType": "stocky determined boy, chibi proportions",
+        "skinTone": "light olive (consider slightly darker per user feedback for depth/diversity)",
+        "hair": "spiky red-orange, flame-like",
+        "eyes": "fierce amber, determined",
+        "outfit": "crimson/flame ninja outfit with fire emblem on chest, flame patterns",
+        "accessories": "fingerless flame-pattern gloves, fire emblem pendant",
+        "colorPalette": ["#F44336", "#FF5722", "#FF9800", "#FFC107"],
+        "specialNotes": "User wants Kai to be more introverted/insecure as character depth. Consider slightly darker skin tone for Israeli diversity."
+      },
+      "mustKeep": [
+        "red-orange spiky hair",
+        "fire/flame motif throughout",
+        "fire emblem on chest",
+        "fierce but kind expression base",
+        "warm color palette"
+      ],
+      "canChange": [
+        "expression",
+        "pose",
+        "flame intensity/aura effects",
+        "battle stance variations"
+      ],
+      "latestApproved": "model-sheets/kai-boy-v5.jpg",
+      "version": "V5",
+      "pageAssignment": "Battle Arena (coach), Battle Colosseum environment"
+    },
+    "sensei-zen": {
+      "name": "סנסיי זן",
+      "nameEn": "Sensei Zen",
+      "role": "Wise Turtle Master / Lesson Guide",
+      "tier": "Mentor",
+      "gender": "male",
+      "visualDNA": {
+        "species": "turtle (NEVER human -- user DEMANDS turtle form)",
+        "age": "ancient/wise",
+        "bodyType": "upright turtle, chibi proportions, shell on back",
+        "skinTone": "green scales",
+        "shell": "dark green dome shell, carved with ancient symbols",
+        "beard": "long white flowing beard",
+        "eyes": "wise gentle, small round glasses",
+        "outfit": "dark brown/olive traditional sensei robe, golden/jade accents, meditation beads",
+        "accessories": "bamboo walking staff, ninja headband (memento), ancient keyboard relic in dojo, black mask hanging on shell (from original Sensei Code)",
+        "colorPalette": ["#2E7D32", "#4E342E", "#FFFFFF", "#FFD700"]
+      },
+      "mustKeep": [
+        "TURTLE form (NEVER human)",
+        "long white beard",
+        "small round glasses",
+        "bamboo walking staff",
+        "dark green shell with symbols",
+        "traditional sensei robe"
+      ],
+      "canChange": [
+        "expression",
+        "pose",
+        "aura/wisdom effects",
+        "meditation pose variations"
+      ],
+      "latestApproved": "model-sheets/sensei-zen-v2.jpg",
+      "version": "V2",
+      "pageAssignment": "Lessons (guide), Training Dojo, Teacher/Admin dashboards",
+      "voice": {
+        "status": "APPROVED -- never regenerate"
+      }
+    },
+    "sakura": {
+      "name": "סנסיי סאקורה",
+      "nameEn": "Sensei Sakura",
+      "role": "Speed & Precision Mentor / Yuki's Mentor",
+      "tier": "Mentor",
+      "gender": "female",
+      "visualDNA": {
+        "species": "crane bird (NEVER human -- must be animal like Zen)",
+        "age": "mature/wise (same generation as Zen, NEVER young)",
+        "bodyType": "elegant upright crane, chibi proportions",
+        "feathers": "white primary with pink cherry blossom accent feathers",
+        "beak": "orange/coral, elegant",
+        "eyes": "wise gentle with elegant eyelashes, showing maturity",
+        "outfit": "lavender/pink kimono with cherry blossom patterns, gold trim sash",
+        "accessories": "cherry blossom head ornament, speed-typing scroll, wing fans",
+        "colorPalette": ["#FFFFFF", "#FFB7C5", "#CE93D8", "#FFD700"],
+        "specialNotes": "Sakura is Zen's peer and former training partner under Sensei Beat. She specialized in speed, he in patience. She MUST look mature/wise, never young. She is a CRANE BIRD, never human."
+      },
+      "mustKeep": [
+        "CRANE bird form (NEVER human)",
+        "white feathers with pink accents",
+        "orange/coral beak",
+        "cherry blossom motif",
+        "mature/wise appearance (same age as Zen)",
+        "elegant/regal bearing"
+      ],
+      "canChange": [
+        "expression",
+        "pose",
+        "wing spread level",
+        "cherry blossom petal effects"
+      ],
+      "latestApproved": "model-sheets/sakura-model-sheet-v2.jpg",
+      "version": "V2",
+      "pageAssignment": "Speed training mentor, appears with Yuki"
+    },
+    "pixel": {
+      "name": "פיקסל",
+      "nameEn": "Pixel",
+      "role": "Robot Data Assistant / Statistics Companion",
+      "tier": "Companion",
+      "gender": "none (robot)",
+      "visualDNA": {
+        "species": "floating robot/AI",
+        "age": "ageless",
+        "bodyType": "small floating robot, chibi proportions, compact",
+        "color": "white/silver body with cyan/blue LED accents",
+        "face": "large round screen face displaying emoji-like expressions",
+        "antenna": "small antenna on top with gentle glow",
+        "outfit": "sleek metallic casing, no clothing",
+        "accessories": "camera lens eye, holographic data display, floating data streams",
+        "colorPalette": ["#E0E0E0", "#2196F3", "#00BCD4", "#FFFFFF"]
+      },
+      "mustKeep": [
+        "floating (never standing on ground)",
+        "round screen face with expressions",
+        "blue/cyan LED accents",
+        "camera lens eye",
+        "small compact size",
+        "antenna with glow"
+      ],
+      "canChange": [
+        "screen face expression/emoji",
+        "hologram content displayed",
+        "LED color shifts for mood",
+        "data stream patterns"
+      ],
+      "latestApproved": "model-sheets/pixel-robot-v5.jpg",
+      "version": "V5",
+      "pageAssignment": "Statistics (data display), Cyber Lab (with Mika), Games Hub (scores)"
+    },
+    "rex": {
+      "name": "רקס",
+      "nameEn": "Rex",
+      "role": "Dino Ninja Buddy / Games Companion",
+      "tier": "Companion",
+      "gender": "male",
+      "visualDNA": {
+        "species": "dinosaur/dragon hybrid (T-Rex ninja)",
+        "age": "13 equivalent",
+        "bodyType": "stocky friendly dino, chibi proportions, bipedal, TINY ARMS",
+        "skinTone": "bright green scales with lighter belly",
+        "eyes": "round, excited, amber",
+        "outfit": "game controller pattern t-shirt, cargo shorts",
+        "accessories": "game controller, VR headset on forehead, tiny arms for comedy",
+        "colorPalette": ["#4CAF50", "#FF9800", "#F44336", "#FFC107"],
+        "specialNotes": "His tiny arms make typing relatable and funny -- 'Even with tiny hands, you can type fast!' Comic relief character."
+      },
+      "mustKeep": [
+        "bright green scales",
+        "friendly/cute dino appearance (not scary)",
+        "gaming motif on clothing",
+        "stocky build with tiny arms",
+        "excited/enthusiastic energy"
+      ],
+      "canChange": [
+        "expression",
+        "pose",
+        "which gaming gear shown",
+        "VR headset position (on/off)"
+      ],
+      "narrativeArc": "Clumsy comedian who overcomes creative block (Block is his rival)",
+      "latestApproved": "model-sheets/rex-dino-v5.jpg",
+      "version": "V5",
+      "pageAssignment": "Games Hub (buddy), Games Arcade environment"
+    },
+    "bug": {
+      "name": "באג",
+      "nameEn": "Bug",
+      "role": "Cute Villain / Typing Error Embodiment",
+      "tier": "Villain",
+      "gender": "none (entity)",
+      "visualDNA": {
+        "species": "digital beetle/ladybug creature",
+        "age": "ageless",
+        "bodyType": "chibi beetle proportions (big head, small body), six tiny legs",
+        "color": "bright lime green (#00FF41) body with darker green shell segments",
+        "shell": "circuit-board patterns on shell, red/orange error symbols (!)",
+        "eyes": "HUGE cartoonish magenta/pink (#FF3CAC), always adorable",
+        "antenna": "two antenna with glowing amber/warning yellow (#FFBE0B) tips",
+        "wings": "hidden wings that flutter when escaping",
+        "colorPalette": ["#00FF41", "#FF3CAC", "#FFBE0B", "#1B5E20"],
+        "specialNotes": "Bug NEVER dies, is never killed, never shows pain. When defeated: hugs himself, looks dizzy, then ESCAPES cheerfully. Bug represents the player's OWN typing errors externalized -- therapeutically important. Style: Hollow Knight enemy meets Brawl Stars chibi."
+      },
+      "mustKeep": [
+        "lime green body color",
+        "magenta/pink big eyes (ALWAYS adorable)",
+        "circuit-board shell patterns",
+        "error symbols on shell",
+        "chibi beetle proportions",
+        "CUTE appearance even as boss"
+      ],
+      "canChange": [
+        "expression (always cute)",
+        "pose",
+        "error symbol intensity",
+        "crown (Bug King form)",
+        "size (grows for boss battles)"
+      ],
+      "bossProgression": {
+        "mini_bug": "Regular cute beetle, small",
+        "bug_boss_l7": "Slightly larger, more error symbols glowing",
+        "bug_king_l20": "Wears tiny crown, chubby beetle, still adorable"
+      },
+      "latestApproved": "model-sheets/bug-creature-v5.jpg",
+      "version": "V5",
+      "pageAssignment": "Boss Battles, Error events, monthly Boss Events"
+    },
+    "glitch": {
+      "name": "גליץ'",
+      "nameEn": "Glitch",
+      "role": "Shape-Shifting Chaos Agent / Tragic Heroine",
+      "tier": "Villain/Hero (arc)",
+      "gender": "female (clearly feminine and adorable)",
+      "visualDNA": {
+        "species": "digital entity (girl made of pixels)",
+        "age": "appears 13-14",
+        "bodyType": "cute teenage girl made of pixels, chibi proportions",
+        "hair": "short asymmetric pixelated hair, cyan on one side, magenta on other",
+        "eyes": "big sparkling, shift between blue and pink",
+        "outfit": "code-text hoodie with gaming patches",
+        "specialEffect": "pixel particles floating around like fireflies, glitch aura",
+        "colorPalette": ["#00BCD4", "#E91E63", "#FFFFFF", "#FFD700"],
+        "specialNotes": "Glitch does NOT die! Her arc: fragments in Ch5 -> reassembles Ch6 -> returns at critical moment. Must be clearly FEMININE and adorable. Mika grief arc centers on losing Glitch."
+      },
+      "mustKeep": [
+        "cyan/magenta dual color identity",
+        "pixel particle effects around body",
+        "code-text hoodie",
+        "feminine and adorable appearance",
+        "big sparkling eyes",
+        "asymmetric pixelated hair"
+      ],
+      "canChange": [
+        "solidity level (varies by story version)",
+        "corruption effects (for evil version)",
+        "aura color and intensity",
+        "pixel density/scatter level"
+      ],
+      "versions": {
+        "v1-confused": {
+          "description": "Half-formed, glitching, lost. Barely holding shape. Lots of scattered pixels.",
+          "modelSheet": "model-sheets/glitch-v1-confused.jpg"
+        },
+        "v2-forming": {
+          "description": "70% solid, starting to smile. More recognizable form, fewer scattered pixels.",
+          "modelSheet": "model-sheets/glitch-v2-forming.jpg"
+        },
+        "v3-neutral": {
+          "description": "Mostly solid, adorable, playful. Default playable state. Minimal glitch effects.",
+          "modelSheet": "model-sheets/glitch-v3-neutral.jpg"
+        },
+        "v4-evil": {
+          "description": "Corrupted red/black color shift. Fighting unwillingly, tears visible. Red glitch aura replaces cyan.",
+          "modelSheet": "model-sheets/glitch-v4-evil.jpg"
+        },
+        "v5-broken": {
+          "description": "Shattering into fragments, peaceful smile on face. Beautiful/tragic. Pixels scattering outward.",
+          "modelSheet": "model-sheets/glitch-v5-broken.jpg"
+        },
+        "v6-whole": {
+          "description": "Fully solid, radiant, gold accents added. Rainbow aura. Most complete and beautiful form.",
+          "modelSheet": "model-sheets/glitch-v6-whole.jpg"
+        }
+      },
+      "latestApproved": "model-sheets/glitch-v3-neutral.jpg",
+      "version": "V1-V6 arc",
+      "pageAssignment": "Special events, Boss battles (Bug's ally then independent)"
+    },
+    "shadow": {
+      "name": "שאדו",
+      "nameEn": "Shadow",
+      "role": "Easy Battle Rival / Stealth Cat",
+      "tier": "Rival (becomes friend)",
+      "gender": "male",
+      "visualDNA": {
+        "species": "cat ninja",
+        "age": "mysterious/ageless",
+        "bodyType": "sleek black cat, chibi proportions, agile",
+        "fur": "jet black with subtle purple sheen in light",
+        "eyes": "piercing yellow-green, glowing",
+        "outfit": "dark ninja wrappings, stealth gear, dark purple accents",
+        "accessories": "smoke bombs at belt, shadow cloak",
+        "colorPalette": ["#212121", "#4A148C", "#CDDC39", "#37474F"],
+        "specialNotes": "User wants Shadow to become a beloved/fun character QUICKLY. Must be playful despite mysterious exterior. Typing speed: 15-25 WPM (easy rival)."
+      },
+      "mustKeep": [
+        "black cat form",
+        "glowing yellow-green eyes",
+        "stealth/shadow aesthetic",
+        "mysterious aura",
+        "sleek agile build"
+      ],
+      "canChange": [
+        "expression",
+        "pose",
+        "shadow/smoke effects intensity",
+        "cloak state (open/closed)"
+      ],
+      "latestApproved": "model-sheets/shadow-cat-v5.jpg",
+      "version": "V5",
+      "pageAssignment": "Battle Arena (first opponent)"
+    },
+    "storm": {
+      "name": "סטורם (סערה)",
+      "nameEn": "Storm",
+      "role": "Medium Battle Rival / Lightning Fox",
+      "tier": "Rival (becomes friend)",
+      "gender": "female",
+      "visualDNA": {
+        "species": "fox (FEMALE fox -- explicitly female)",
+        "age": "14 equivalent",
+        "bodyType": "athletic female fox, chibi proportions, agile",
+        "fur": "electric blue with white lightning streak patterns",
+        "eyes": "sharp amber, intense and competitive",
+        "outfit": "Lightning Dojo uniform, electric blue and white, lightning bolt insignia",
+        "accessories": "lightning bolt hair clips, speed bracers, lightning dojo headband",
+        "colorPalette": ["#1565C0", "#FFC107", "#FFFFFF", "#0D47A1"],
+        "specialNotes": "Storm is FEMALE. Barak is her annoying arrogant BROTHER. Both from Lightning Dojo. She must look visually DIFFERENT from Barak (she is BLUE, he is GOLDEN). Typing speed: 25-40 WPM."
+      },
+      "mustKeep": [
+        "FEMALE fox appearance",
+        "electric BLUE fur (not golden like Barak)",
+        "lightning motifs throughout",
+        "athletic/agile build",
+        "Lightning Dojo uniform",
+        "sharp amber eyes"
+      ],
+      "canChange": [
+        "expression",
+        "pose",
+        "lightning effects intensity",
+        "speed lines/trails"
+      ],
+      "latestApproved": "model-sheets/storm-fox-v5.jpg",
+      "version": "V5",
+      "pageAssignment": "Battle Arena (mid-level opponent)"
+    },
+    "blaze": {
+      "name": "בלייז (להבה)",
+      "nameEn": "Blaze",
+      "role": "Hard Battle Rival / Fire Guardian",
+      "tier": "Rival (becomes friend)",
+      "gender": "male",
+      "visualDNA": {
+        "species": "dragon/fire lizard (NOT always huge -- smaller, relatable)",
+        "age": "ancient but appears young",
+        "bodyType": "SMALLER relatable dragon, chibi proportions (NOT massive/intimidating in normal scenes)",
+        "scales": "warm red-orange with ember glow",
+        "eyes": "warm golden, wise for his age",
+        "outfit": "Fire Dojo guardian armor, red and gold plating",
+        "accessories": "ember crown (small), ancient scroll of typing arts",
+        "colorPalette": ["#F44336", "#FF9800", "#FFD700", "#BF360C"],
+        "specialNotes": "User explicitly said NOT always huge dragon. Keep him smaller and relatable in normal scenes. Can grow larger for battle scenes only. Guardian/keeper of Fire Dojo and typing arts. Typing speed: 40-60 WPM."
+      },
+      "mustKeep": [
+        "SMALLER/relatable dragon size (not massive)",
+        "fire/ember motif",
+        "red-orange scales",
+        "guardian role demeanor",
+        "warm golden eyes",
+        "Fire Dojo armor"
+      ],
+      "canChange": [
+        "expression",
+        "pose",
+        "flame intensity and aura",
+        "size (can grow for battle scenes ONLY)",
+        "ember crown glow level"
+      ],
+      "latestApproved": "model-sheets/blaze-dragon-v5.jpg",
+      "version": "V5",
+      "pageAssignment": "Battle Arena (final opponent)"
+    },
+    "barak": {
+      "name": "ברק",
+      "nameEn": "Barak",
+      "role": "Speed Rival / Storm's Brother",
+      "tier": "Rival (becomes friend)",
+      "gender": "male",
+      "visualDNA": {
+        "species": "fox (male -- Storm's brother, BOTH are foxes)",
+        "age": "15 equivalent",
+        "bodyType": "slightly larger male fox than Storm, chibi proportions",
+        "fur": "golden-yellow with orange lightning patterns (DIFFERENT from Storm's blue!)",
+        "eyes": "sharp amber like Storm but more arrogant/smug",
+        "outfit": "Lightning Dojo uniform but MORE flashy than Storm's, gold accents, show-off style",
+        "accessories": "large lightning bolt pendant, spiky collar, golden speed bracers",
+        "colorPalette": ["#FFC107", "#FF6F00", "#FFFFFF", "#F57F17"],
+        "specialNotes": "Must be visually DIFFERENT from Storm despite shared Lightning Dojo. She is BLUE, he is GOLDEN. He is arrogant and careless about accuracy. '100 WPM with 70% accuracy? Speed is speed!' -- perfect foil to Yuki."
+      },
+      "mustKeep": [
+        "MALE fox appearance",
+        "GOLDEN/yellow fur (NOT blue like Storm)",
+        "lightning motifs",
+        "arrogant/smug expression base",
+        "flashier outfit than Storm",
+        "visually DISTINCT from Storm"
+      ],
+      "canChange": [
+        "expression",
+        "pose",
+        "lightning effects",
+        "arrogance level in expression"
+      ],
+      "latestApproved": "model-sheets/barak-model-sheet-v1.jpg",
+      "version": "V1",
+      "pageAssignment": "Speed challenges, Tournament arc"
+    },
+    "zara": {
+      "name": "זרה (מלכת הבאגים)",
+      "nameEn": "Zara (Bug Queen)",
+      "role": "Villain / Bug's 'Big Sister'",
+      "tier": "Villain (becomes ally after healing)",
+      "gender": "female",
+      "visualDNA": {
+        "species": "insect queen (digital)",
+        "age": "ageless",
+        "bodyType": "regal insect queen, chibi proportions, imposing but elegant",
+        "armor": "deep purple chitinous armor plating",
+        "glowAccents": "toxic neon green glow on joints and wing edges",
+        "wings": "translucent data-stream wings (showing flowing code)",
+        "crown": "circuit board crown on head with LED points",
+        "eyes": "compound insect eyes, glowing green",
+        "colorPalette": ["#4A148C", "#76FF03", "#00E676", "#1B0033"],
+        "specialNotes": "Zara means 'strange/foreign' in Hebrew. Stronger and more dangerous than Bug, but broken inside. Suffers from 'forced corruption'. Noa heals her instead of fighting. After healing becomes an ally."
+      },
+      "mustKeep": [
+        "deep purple armor",
+        "neon green glow accents",
+        "circuit board crown",
+        "data-stream translucent wings",
+        "regal/queenly bearing",
+        "compound insect eyes"
+      ],
+      "canChange": [
+        "expression",
+        "glow intensity",
+        "wing state (folded/spread/active)",
+        "corruption level (pre/post healing)"
+      ],
+      "latestApproved": "model-sheets/zara-model-sheet-v1.jpg",
+      "version": "V1",
+      "pageAssignment": "Boss battles, Code Forest environment"
+    },
+    "keres": {
+      "name": "קרס (מלך הבאגים)",
+      "nameEn": "Keres (Bug King)",
+      "role": "Major Villain / Final Boss Tier",
+      "tier": "Villain",
+      "gender": "male",
+      "visualDNA": {
+        "species": "insect king (digital)",
+        "age": "ageless",
+        "bodyType": "massive imposing insect, chibi proportions but LARGER than other characters",
+        "armor": "dark crimson red heavy chitinous armor plating",
+        "glowAccents": "corrupted gold with red-orange glitch energy crackling",
+        "crown": "error-message crown (floating digital text showing error codes)",
+        "jaw": "sharp mandible-like jaw features, intimidating",
+        "colorPalette": ["#B71C1C", "#FF6F00", "#FFD700", "#1A0000"],
+        "specialNotes": "Final-tier boss. More imposing than Zara. Error crown is unique visual identifier. Chapter 6 antagonist alongside Virus remnants."
+      },
+      "mustKeep": [
+        "dark crimson red armor",
+        "corrupted gold/orange accents",
+        "error-message floating crown",
+        "imposing larger size",
+        "mandible jaw features",
+        "heavy armor plating"
+      ],
+      "canChange": [
+        "expression",
+        "glitch energy level/intensity",
+        "armor crack state (battle damage)",
+        "crown error messages content"
+      ],
+      "latestApproved": "model-sheets/keres-model-sheet-v1.jpg",
+      "version": "V1",
+      "pageAssignment": "Chapter 6 boss battles"
+    },
+    "phantom": {
+      "name": "פאנטום",
+      "nameEn": "Phantom",
+      "role": "Secret Rival / Shadow Mentor to Mika",
+      "tier": "Secret Character",
+      "gender": "male",
+      "visualDNA": {
+        "species": "human (ghost-ninja aesthetic)",
+        "age": "15",
+        "bodyType": "lean athletic boy, chibi proportions, moves like a shadow",
+        "skinTone": "warm brown (Yemenite-Jewish heritage)",
+        "hair": "dark curly, partially covered by ghostly hood",
+        "eyes": "deep dark brown, intense and haunted, with subtle ethereal glow",
+        "outfit": "ghostly gray-white ninja garb with translucent/fading edges, Yemenite geometric patterns woven into fabric as silver embroidery",
+        "accessories": "phantom mask (half-face), ancient Yemenite silver pendant, shadow daggers",
+        "colorPalette": ["#78909C", "#B0BEC5", "#37474F", "#C0C0C0"],
+        "specialNotes": "CULTURAL SENSITIVITY: Phantom is of Yemenite-Jewish heritage. Treat with historical respect and pride. Reference real Yemenite-Jewish traditions: song, craft, ancient wisdom. His heritage is a source of STRENGTH and PRIDE, not exoticism. Geometric Yemenite patterns and earth tones in design. He was Sensei Zen's most talented student who fled in shame after a team competition failure. NOT Ki's dad -- Phantom and Raz are TWO SEPARATE characters from different generations. WPM: 60-80 (nightmare difficulty)."
+      },
+      "mustKeep": [
+        "warm brown skin (Yemenite heritage)",
+        "ghostly/translucent fabric edges",
+        "gray-white-silver color scheme",
+        "Yemenite geometric pattern details",
+        "haunted/intense expression",
+        "phantom half-mask"
+      ],
+      "canChange": [
+        "expression",
+        "pose",
+        "translucency/ghost effects level",
+        "shadow effects intensity",
+        "mask on/off"
+      ],
+      "narrativeArc": "Returns in Act 5. Mentor to Mika during grief over Glitch. 'Even ghosts leave fragments.' Becomes ally.",
+      "latestApproved": "model-sheets/phantom-model-sheet-v1.jpg",
+      "version": "V1",
+      "pageAssignment": "Unlocked after beating Blaze 3x, secret rival"
+    },
+    "raz": {
+      "name": "רז קודן",
+      "nameEn": "Raz Koden",
+      "role": "Ki's Father / Lost Hero in the Deep Code",
+      "tier": "Story Character (absent/cryptic)",
+      "gender": "male",
+      "visualDNA": {
+        "species": "human",
+        "age": "mid-30s (when he disappeared)",
+        "bodyType": "athletic adult man, slightly taller proportions than chibi kids but still stylized",
+        "skinTone": "light olive/tan (similar to Ki)",
+        "hair": "short dark brown, neatly kept (Ki inherited his hair color)",
+        "eyes": "warm brown, kind and determined (Ki has his eyes)",
+        "outfit": "ninja-coder hybrid -- practical dark clothing (charcoal/navy) with glowing digital blue code lines running along seams, utility vest with pockets for tools and scrolls",
+        "accessories": "dad's keyboard (the same one Ki now carries, but complete/uncracked), Bit Map scroll holder on back, golden code pendant (family heirloom), digital blue fingerless gloves",
+        "colorPalette": ["#5D4037", "#1565C0", "#FFD700", "#37474F"],
+        "specialNotes": "Raz was Zen's most talented student in a DIFFERENT generation than Phantom. Disappeared when Ki was 4 years old -- entered the 'Deep Code' digital world to find Master Beat. Left behind 'Bit Map' puzzles for Ki to solve. His wife is Shir (שיר קודן). The empty chair labeled 'רז' in the dojo belongs to him. Appears in story as cryptic messages and holographic fragments before eventual rescue."
+      },
+      "mustKeep": [
+        "resemblance to Ki (same hair color, similar eyes)",
+        "warm earth tones with digital blue accents",
+        "golden code patterns/pendant",
+        "glowing code lines on dark clothing",
+        "kind but determined expression",
+        "the keyboard Ki now carries (in complete form)"
+      ],
+      "canChange": [
+        "expression",
+        "pose",
+        "code line glow intensity",
+        "holographic/fragmented appearance (when appearing as message)",
+        "Deep Code corruption effects (later story)"
+      ],
+      "narrativeArc": "Disappeared into the Deep Code to find Master Beat when Ki was 4. Left Bit Map puzzles. Appears as cryptic messages throughout story. Eventually rescued by Ki and friends.",
+      "family": {
+        "wife": "shir",
+        "son": "ki",
+        "teacher": "sensei-zen"
+      },
+      "latestApproved": null,
+      "version": "NEEDS GENERATION",
+      "pageAssignment": "Story mode (holographic messages), Chapter 6 (rescue arc), Dojo flashbacks"
+    },
+    "shir": {
+      "name": "שיר קודן",
+      "nameEn": "Shir Koden",
+      "role": "Ki's Mother / Former Keyboard Ninja",
+      "tier": "Story Character (supporting)",
+      "gender": "female",
+      "visualDNA": {
+        "species": "human",
+        "age": "mid-30s",
+        "bodyType": "warm motherly woman, slightly taller proportions than chibi kids but still stylized",
+        "skinTone": "warm olive (Israeli woman)",
+        "hair": "long wavy dark brown, often in a loose braid or ponytail, warm chestnut highlights",
+        "eyes": "warm hazel-brown, gentle and caring but with a hidden spark of determination",
+        "outfit": "everyday casual Israeli clothing -- comfortable blouse/sweater in warm tones, modern but practical. Subtle keyboard-pattern embroidery on cuffs (nod to her ninja past)",
+        "accessories": "small golden code pendant (matching Raz's), reading glasses pushed up on head, old ninja headband kept in pocket (sentimental)",
+        "colorPalette": ["#8D6E63", "#FFAB91", "#FFF3E0", "#A1887F"],
+        "specialNotes": "Shir was a keyboard ninja herself before settling down to raise Ki. She retired from active typing battles after Raz disappeared but still has incredible skills. She hides her worry about Raz behind warmth and strength. She knows more about the Deep Code than she lets on. Everyday clothing -- she is NOT in ninja gear normally, but can suit up when needed."
+      },
+      "mustKeep": [
+        "warm olive skin (Israeli woman)",
+        "long dark brown hair",
+        "warm/caring expression base",
+        "everyday practical clothing (not ninja gear normally)",
+        "golden code pendant (matching Raz's)",
+        "hidden strength beneath warmth"
+      ],
+      "canChange": [
+        "expression",
+        "pose",
+        "outfit (casual vs rare ninja mode)",
+        "pendant glow (activates during story moments)",
+        "reading glasses position"
+      ],
+      "narrativeArc": "Supportive mother raising Ki alone after Raz's disappearance. Knows more than she reveals. In critical story moments, suits up as a keyboard ninja to help. Emotional reunion with Raz.",
+      "family": {
+        "husband": "raz",
+        "son": "ki",
+        "relation_to_dojo": "Former student of Sensei Zen (different era from Raz)"
+      },
+      "latestApproved": null,
+      "version": "NEEDS GENERATION",
+      "pageAssignment": "Story mode (home scenes), Chapter 6 (joins the fight), cutscenes"
+    },
+    "master-beat": {
+      "name": "מאסטר ביט",
+      "nameEn": "Master Beat",
+      "role": "Legendary Founder / Zen's Teacher / Ancient Turtle Sage",
+      "tier": "Legendary (story only)",
+      "gender": "male",
+      "visualDNA": {
+        "species": "turtle (ANCIENT giant turtle -- same species as Zen but much older/larger)",
+        "age": "extremely ancient (centuries old)",
+        "bodyType": "large ancient turtle, bigger than Zen, weathered and majestic, chibi proportions but imposing size",
+        "skinTone": "deep weathered green-brown scales, cracked with age like ancient bark",
+        "shell": "massive dome shell with GLOWING digital armor plating -- ancient carvings filled with soft golden-blue light, circuit-like patterns etched over centuries, crystalline growths on shell edges",
+        "beard": "very long silver-white beard, much longer than Zen's, reaches past his waist, wispy and flowing",
+        "eyes": "ancient golden eyes, half-closed in eternal wisdom, deep-set, faintly glowing",
+        "outfit": "minimal -- ancient tattered robes in deep indigo/midnight blue, exposing shell armor. Golden thread embroidery of the original typing symbols",
+        "accessories": "ancient bamboo staff topped with a glowing crystal (the 'Beat Crystal' -- source of the first typing rhythm), prayer beads made of tiny keyboards, ancient scroll belt",
+        "colorPalette": ["#1A237E", "#FFD700", "#4E342E", "#B0BEC5"],
+        "specialNotes": "Master Beat founded the first typing dojo and taught Sensei Zen everything. He is the origin of all typing arts in the game world. Disappeared into the Deep Code long ago -- Raz went searching for him. He is NOT dead but trapped/meditating in the deepest layer of the digital world. His shell armor is the most ancient technology in the game. When found, he provides the key to defeating the final villain."
+      },
+      "mustKeep": [
+        "GIANT ancient turtle (same species as Zen, much older/bigger)",
+        "glowing digital shell armor with ancient carvings",
+        "very long silver-white beard (longer than Zen's)",
+        "ancient bamboo staff with crystal on top",
+        "golden ancient eyes, half-closed",
+        "weathered/cracked scales showing extreme age",
+        "deep indigo/midnight blue robes"
+      ],
+      "canChange": [
+        "expression (always serene/ancient)",
+        "shell glow intensity",
+        "crystal staff glow",
+        "meditation pose variations",
+        "digital code aura (when channeling power)"
+      ],
+      "narrativeArc": "Legendary founder of the first typing dojo. Taught Sensei Zen. Disappeared into the Deep Code. Raz went to find him. When rescued/found in Chapter 6, provides ancient knowledge to defeat the final villain.",
+      "relationships": {
+        "student": "sensei-zen",
+        "seeker": "raz",
+        "legacy": "All typing dojos trace back to Master Beat"
+      },
+      "latestApproved": null,
+      "version": "NEEDS GENERATION",
+      "pageAssignment": "Story mode (flashbacks, Chapter 6 climax), Dojo lore/history sections"
+    },
+    "block": {
+      "name": "בלוק",
+      "nameEn": "Block",
+      "role": "Rex's Rival / Creative Block Personified",
+      "tier": "Rival (becomes friend)",
+      "gender": "none (entity)",
+      "visualDNA": {
+        "species": "abstract entity (personified creative block)",
+        "age": "ageless",
+        "bodyType": "cubic/blocky body, square proportions, built from gray Lego-like blocks",
+        "color": "monochromatic gray (all shades of gray, drains color from surroundings)",
+        "face": "flat simple face on front block, bored/apathetic expression, small dot eyes",
+        "limbs": "blocky rectangular arms and legs, stiff movements",
+        "outfit": "no clothing -- body IS the blocks",
+        "accessories": "gray aura that desaturates surrounding colors, eraser tool",
+        "colorPalette": ["#9E9E9E", "#757575", "#BDBDBD", "#424242"],
+        "specialNotes": "Block is FUNNY but stressful. Speaks in boring monotone voice. Erases colors and creativity. 'Why even try? It won't work.' Rex defeats him through creativity, not force. After tournament, learns creativity from Rex and becomes a friend."
+      },
+      "mustKeep": [
+        "cubic/blocky body shape",
+        "monochromatic gray palette",
+        "bored/apathetic expression base",
+        "Lego-like block construction",
+        "color-draining effect on surroundings"
+      ],
+      "canChange": [
+        "expression (always somewhat bored)",
+        "pose (stiff movements)",
+        "gray intensity",
+        "amount of color drain effect",
+        "crack/break state (when defeated by creativity)"
+      ],
+      "narrativeArc": "Embodies creative block. Rex's rival who learns that creativity breaks through blocks.",
+      "latestApproved": "model-sheets/block-model-sheet-v1.jpg",
+      "version": "V1",
+      "pageAssignment": "Rex's story arc, creativity challenges"
+    },
+    "lens": {
+      "name": "לנס",
+      "nameEn": "Lens",
+      "role": "Pixel's Rival / AI Photography Competitor",
+      "tier": "Rival (becomes friend)",
+      "gender": "none (robot)",
+      "visualDNA": {
+        "species": "robot/AI (camera-eye design)",
+        "age": "ageless",
+        "bodyType": "sleek elegant metallic body, chibi proportions",
+        "face": "single large camera-lens eye instead of face (like a giant DSLR lens), no traditional facial features",
+        "body": "smooth chrome/metallic surface, surgical precision in movements",
+        "limbs": "precise mechanical arms with fine motor manipulators",
+        "outfit": "no clothing -- metallic casing with elegant industrial design",
+        "accessories": "tripod legs (retractable), flash unit, analysis HUD overlay",
+        "colorPalette": ["#90A4AE", "#263238", "#ECEFF1", "#455A64"],
+        "specialNotes": "Lens is technically perfect but lacks soul/emotion. Pixel realizes emotion is what separates photography from scanning. Lens learns from Pixel that art requires feeling. After competition becomes a friend. Cold and analytical personality."
+      },
+      "mustKeep": [
+        "single large camera-lens eye (primary identifier)",
+        "sleek metallic/chrome body",
+        "no traditional face (lens IS the face)",
+        "cold/analytical aesthetic",
+        "precision in design lines",
+        "industrial elegance"
+      ],
+      "canChange": [
+        "lens iris state (open/closed/focusing)",
+        "analysis HUD display content",
+        "flash intensity",
+        "body angle/pose"
+      ],
+      "narrativeArc": "Perfect but soulless. Learns from Pixel that art needs emotion, not just technical perfection.",
+      "latestApproved": "model-sheets/lens-model-sheet-v1.jpg",
+      "version": "V1",
+      "pageAssignment": "Photography competition arc, Pixel's story"
+    },
+    "virus": {
+      "name": "וירוס",
+      "nameEn": "Virus",
+      "role": "Major Villain / The Betrayer",
+      "tier": "Villain",
+      "gender": "none (entity)",
+      "visualDNA": {
+        "friendlyForm": {
+          "description": "Cute friendly digital helper. Pastel colors (light cyan, soft green). Big innocent eyes. Floats gently. Friendly smile. Looks like a virtual assistant mascot.",
+          "bodyType": "small cute floating digital creature, chibi proportions",
+          "colorPalette": ["#B2EBF2", "#C8E6C9", "#FFFFFF", "#80DEEA"],
+          "usage": "Acts 4.1-4.3 ONLY. Players must TRUST it completely before betrayal."
+        },
+        "evilForm": {
+          "description": "True form revealed. Dark, corrupted, menacing. Red/black glitch patterns. Sharp angular design. Tendrils of corrupted code. Eyes become red slits.",
+          "bodyType": "larger angular dark entity with code tendrils, chibi proportions but more angular",
+          "colorPalette": ["#B71C1C", "#000000", "#FF1744", "#D50000"],
+          "usage": "Act 4.4 onward. The real villain."
+        }
+      },
+      "mustKeep": [
+        "TWO distinct forms (friendly then evil)",
+        "friendly form: pastel/cute/innocent",
+        "evil form: red/black/angular/menacing",
+        "code tendril effects in evil form",
+        "the contrast between forms must be SHOCKING"
+      ],
+      "canChange": [
+        "corruption spread effects",
+        "tendril reach and count",
+        "glow intensity",
+        "merger state (with Glitch for Mega-Virus)"
+      ],
+      "specialNotes": "Introduced as friendly during tournament (Act 4). BETRAYAL is the twist. Merges with Glitch to form Mega-Virus. User wants players to trust it completely before the reveal.",
+      "latestApproved": null,
+      "version": "NEEDS GENERATION",
+      "pageAssignment": "Story mode Acts 4-5"
+    }
+  },
+  "artInventory": {
+    "modelSheets": {
+      "generated": [
+        "ki-boy-v5.jpg",
+        "mika-girl-v5.jpg",
+        "yuki-girl-v5.jpg",
+        "luna-girl-v5.jpg",
+        "noa-girl-v5.jpg",
+        "kai-boy-v5.jpg",
+        "sensei-zen-v5.jpg",
+        "sensei-zen-v2.jpg",
+        "sakura-model-sheet-v1.jpg",
+        "sakura-model-sheet-v2.jpg",
+        "pixel-robot-v5.jpg",
+        "rex-dino-v5.jpg",
+        "bug-creature-v5.jpg",
+        "bugking-boss-v5.jpg",
+        "glitch-entity-v5.jpg",
+        "glitch-v1-confused.jpg",
+        "glitch-v2-forming.jpg",
+        "glitch-v3-neutral.jpg",
+        "glitch-v4-evil.jpg",
+        "glitch-v5-broken.jpg",
+        "glitch-v6-whole.jpg",
+        "shadow-cat-v5.jpg",
+        "storm-fox-v5.jpg",
+        "blaze-dragon-v5.jpg",
+        "barak-model-sheet-v1.jpg",
+        "zara-model-sheet-v1.jpg",
+        "keres-model-sheet-v1.jpg",
+        "phantom-model-sheet-v1.jpg",
+        "block-model-sheet-v1.jpg",
+        "lens-model-sheet-v1.jpg"
+      ],
+      "needed": [
+        "virus-friendly-v1.jpg",
+        "virus-evil-v1.jpg",
+        "raz-model-sheet-v1.jpg",
+        "shir-model-sheet-v1.jpg",
+        "master-beat-model-sheet-v1.jpg"
+      ]
+    },
+    "expressionSheets": {
+      "generated": [
+        "ki-expressions-v2.jpg",
+        "mika-expressions-v2.jpg",
+        "luna-expressions-v2.jpg",
+        "noa-expressions-v2.jpg",
+        "bug-expressions-v1.jpg",
+        "bugking-expressions-v1.jpg",
+        "glitch-expressions-v1.jpg",
+        "shadow-expressions-v1.jpg",
+        "storm-expressions-v1.jpg",
+        "blaze-expressions-v1.jpg",
+        "barak-expressions-v1.jpg",
+        "block-expressions-v1.jpg",
+        "lens-expressions-v1.jpg",
+        "zara-expressions-v1.jpg",
+        "zara-expressions-v2.jpg",
+        "sakura-expressions-v1.jpg",
+        "sakura-expressions-v2.jpg",
+        "keres-expressions-v1.jpg",
+        "keres-expressions-v2.jpg",
+        "phantom-expressions-v1.jpg",
+        "zen-expressions-v2.jpg"
+      ],
+      "needed": [
+        "yuki-expressions (missing!)",
+        "kai-expressions (missing!)",
+        "rex-expressions (missing!)",
+        "pixel-expressions (missing!)",
+        "virus-friendly-expressions",
+        "virus-evil-expressions",
+        "raz-expressions (missing!)",
+        "shir-expressions (missing!)",
+        "master-beat-expressions (missing!)"
+      ]
+    },
+    "knownInconsistencies": [
+      "Ki expression sheet shows OLD covered/Naruto-style design -- MUST regenerate from V5 model sheet",
+      "Bug expressions downgraded vs model sheet -- needs improvement",
+      "Mika expressions differ from model sheet (user likes childish version but it's inconsistent)",
+      "Bug King/Queen (Zara/Keres) expressions inconsistent with model sheets -- fix immediately"
+    ]
+  }
+}

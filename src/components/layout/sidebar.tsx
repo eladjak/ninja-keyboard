@@ -24,6 +24,7 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { useXpStore } from '@/stores/xp-store'
+import { useNavigateSound } from '@/hooks/use-sound-effect'
 
 const navGroups = [
   {
@@ -64,6 +65,7 @@ const navGroups = [
 export function Sidebar() {
   const pathname = usePathname()
   const { level, streak, totalXp, levelProgress } = useXpStore()
+  const playNavigate = useNavigateSound()
   const progress = levelProgress()
 
   return (
@@ -117,6 +119,7 @@ export function Sidebar() {
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={() => { if (!isActive) playNavigate() }}
                     className={cn(
                       'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150 hover:translate-x-0.5',
                       isActive
