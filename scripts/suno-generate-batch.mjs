@@ -31,6 +31,25 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync, statSync, readdirSync } from "node:fs"
 import { resolve, dirname } from "node:path"
 import { fileURLToPath } from "node:url"
+import { execSync } from "node:child_process"
+
+// Load .env.suno for API key
+const __dirname_early = dirname(fileURLToPath(import.meta.url))
+const envSunoPath = resolve(__dirname_early, "..", ".env.suno")
+if (existsSync(envSunoPath)) {
+  for (const line of readFileSync(envSunoPath, "utf-8").split("\n")) {
+    const match = line.match(/^([A-Z_]+)=(.+)$/)
+    if (match && !process.env[match[1]]) process.env[match[1]] = match[2].trim()
+  }
+}
+import {
+  FULL_CATALOG,
+  DURATION_RANGES,
+  trackNameToSlug,
+  trackIdToFileName,
+  getPromptForTrack,
+  getPendingTracks,
+} from "./suno-track-catalog.mjs"
 
 // ============================================================================
 // Paths
@@ -59,70 +78,6 @@ const c = {
   cyan: "\x1b[36m",
   white: "\x1b[37m",
 }
-
-// ============================================================================
-// Full Track Catalog (duplicated from suno-music-pipeline.mjs for independence)
-// ============================================================================
-
-const FULL_CATALOG = [
-  // === MENU ===
-  { id: "MENU-001", name: "Home Screen Theme", nameHe: "\u05E2\u05E8\u05DB\u05EA \u05D4\u05DE\u05E1\u05DA \u05D4\u05E8\u05D0\u05E9\u05D9", category: "menu", priority: 1, existingFile: "main-theme.mp3", sunoPrompt: "Happy energetic chiptune ninja game theme for kids, Japanese 8-bit adventure music, upbeat melody, loopable", style: "Chiptune 8-bit", duration: "60-90s" },
-  { id: "MENU-002", name: "Lessons Menu", nameHe: "\u05EA\u05E4\u05E8\u05D9\u05D8 \u05D4\u05E9\u05D9\u05E2\u05D5\u05E8\u05D9\u05DD", category: "menu", priority: 2, sunoPrompt: "Calm focused lo-fi study music, soft piano, gentle synth pads, loopable ambient, 80 BPM, peaceful concentration music, Japanese inspired", style: "Lo-fi / Ambient", duration: "60-90s" },
-  { id: "MENU-003", name: "Battle Menu", nameHe: "\u05EA\u05E4\u05E8\u05D9\u05D8 \u05E7\u05E8\u05D1\u05D5\u05EA", category: "menu", priority: 2, sunoPrompt: "Intense synthwave battle lobby music, pulsing bass, building tension, electronic 130 BPM, dark neon aesthetic, gaming pre-battle theme, loopable", style: "Synthwave", duration: "60-90s" },
-  { id: "MENU-004", name: "Games Hub", nameHe: "\u05DE\u05E8\u05DB\u05D6 \u05D4\u05DE\u05E9\u05D7\u05E7\u05D9\u05DD", category: "menu", priority: 3, sunoPrompt: "Playful chiptune pop game hub music, bouncy melody, fun 8-bit sounds with modern electronic twist, 125 BPM, arcade energy, kids friendly, loopable", style: "Chiptune Pop", duration: "60-90s" },
-  { id: "MENU-005", name: "Profile / Progress", nameHe: "\u05E4\u05E8\u05D5\u05E4\u05D9\u05DC \u05D5\u05D4\u05EA\u05E7\u05D3\u05DE\u05D5\u05EA", category: "menu", priority: 3, sunoPrompt: "Reflective proud ambient orchestral music, soft strings with piano, gentle achievement melody, emotional warmth, 70 BPM, inspiring journey music, loopable", style: "Ambient Orchestral", duration: "60-90s" },
-  { id: "MENU-006", name: "Settings", nameHe: "\u05D4\u05D2\u05D3\u05E8\u05D5\u05EA", category: "menu", priority: 4, sunoPrompt: "Minimal neutral ambient background music, soft electronic pads, no melody, pure atmosphere, 60 BPM, very calm and unobtrusive, settings screen mood, loopable", style: "Minimal Ambient", duration: "60-90s" },
-
-  // === GAMEPLAY ===
-  { id: "PLAY-001", name: "Practice Easy", nameHe: "\u05EA\u05E8\u05D2\u05D5\u05DC \u2014 \u05E7\u05DC", category: "gameplay", priority: 1, sunoPrompt: "Calm lo-fi study music with soft chiptune textures, gentle piano over warm analog pads, mellow hip-hop beat with typing rhythm undertone, soft jazzy chords, Japanese aesthetic ambient, 80 BPM, peaceful concentration music, minimal melodic movement to avoid distraction, warm bass, focus zone for keyboard practice, kid-friendly calm, loopable, no vocals", style: "Lo-fi Hip Hop", duration: "120-180s" },
-  { id: "PLAY-002", name: "Practice Medium", nameHe: "\u05EA\u05E8\u05D2\u05D5\u05DC \u2014 \u05D1\u05D9\u05E0\u05D5\u05E0\u05D9", category: "gameplay", priority: 2, sunoPrompt: "Upbeat focus music, indie electronic, melodic synths, steady 110 BPM, energetic but not stressful, productivity flow state, no lyrics, loopable", style: "Indie Electronic", duration: "120-180s" },
-  { id: "PLAY-003", name: "Practice Hard", nameHe: "\u05EA\u05E8\u05D2\u05D5\u05DC \u2014 \u05E7\u05E9\u05D4", category: "gameplay", priority: 3, sunoPrompt: "High intensity drum and bass music, fast 160 BPM, electronic synths, driving beat, focus zone music, no vocals, intense typing session energy, loopable", style: "Drum and Bass", duration: "120-180s" },
-  { id: "PLAY-004", name: "Speed Test", nameHe: "\u05D0\u05D3\u05E8\u05E0\u05DC\u05D9\u05DF \u2014 \u05DE\u05D1\u05D7\u05DF \u05DE\u05D4\u05D9\u05E8\u05D5\u05EA", category: "gameplay", priority: 1, sunoPrompt: "Adrenaline rush EDM with chiptune countdown elements, building from 120 to 140 BPM, epic synthwave drop, racing heartbeat bass, competitive speed challenge anthem, ticking clock tension with 8-bit urgency, electronic builds and releases, intense but not scary for kids, pixel art meets stadium energy, typing speed test power music, loopable, no vocals", style: "EDM / Synthwave", duration: "120-180s" },
-  { id: "PLAY-005", name: "Accuracy Challenge", nameHe: "\u05D0\u05EA\u05D2\u05E8 \u05D3\u05D9\u05D5\u05E7", category: "gameplay", priority: 3, sunoPrompt: "Minimal techno precision music, clean 120 BPM, mathematical beats, surgical focus, no melodic distractions, pure rhythm typing music, loopable, accuracy and focus", style: "Minimal Techno", duration: "120-180s" },
-
-  // === BATTLE ===
-  { id: "BATTLE-001", name: "Pre-Battle Anticipation", nameHe: "\u05D0\u05E0\u05D8\u05D9\u05E1\u05D9\u05E4\u05E6\u05D9\u05D4 \u05DC\u05E4\u05E0\u05D9 \u05E7\u05E8\u05D1", category: "battle", priority: 2, sunoPrompt: "Pre-battle anticipation music, orchestral tension building, 30 seconds, dramatic strings, nervous energy, video game battle intro, not full combat yet, suspenseful", style: "Orchestral Tension", duration: "30-60s" },
-  { id: "BATTLE-002", name: "Shadow Cat Battle", nameHe: "Shadow Cat \u2014 \u05E7\u05E8\u05D1 \u05E7\u05DC", category: "battle", priority: 1, sunoPrompt: "Shadow ninja cat battle music, chiptune 8-bit, sneaky mysterious melody, 120 BPM, competitive but friendly, kids game battle theme, Japanese shadow aesthetic, loopable", style: "Chiptune Battle", duration: "120-180s" },
-  { id: "BATTLE-003", name: "Storm Fox Battle", nameHe: "Storm Fox \u2014 \u05E7\u05E8\u05D1 \u05D1\u05D9\u05E0\u05D5\u05E0\u05D9", category: "battle", priority: 1, sunoPrompt: "Storm fox battle music, electro rock with electric guitar riffs, powerful synths, 135 BPM, wind and thunder sounds woven in, intense competitive, loopable game battle", style: "Electro Rock", duration: "120-180s" },
-  { id: "BATTLE-004", name: "Blaze Dragon Battle", nameHe: "Blaze Dragon \u2014 \u05E7\u05E8\u05D1 \u05E7\u05E9\u05D4", category: "battle", priority: 2, sunoPrompt: "Blaze dragon epic metal battle, heavy guitars, orchestral brass, fire and fury, 145 BPM, epic boss battle intensity, no holds barred, loopable high energy gaming anthem", style: "Metal / Epic", duration: "120-180s" },
-  { id: "BATTLE-005", name: "Bug Boss Act 1", nameHe: "Bug \u2014 \u05DE\u05E2\u05E9\u05D4 \u05E8\u05D0\u05E9\u05D5\u05DF", category: "battle", priority: 1, existingFile: "boss-battle.mp3", sunoPrompt: "Bug monster boss act 1, glitchy electronic music, playful chaos, digital glitch sounds, mischievous 125 BPM, not too scary, whimsical evil, video game boss theme, loopable", style: "Glitchy Electronic", duration: "120-180s" },
-  { id: "BATTLE-006", name: "Bug Boss Act 2", nameHe: "Bug \u2014 \u05DE\u05E2\u05E9\u05D4 \u05E9\u05E0\u05D9", category: "battle", priority: 2, sunoPrompt: "Bug boss act 2, darker electronic battle, corrupted glitch synths, 140 BPM, increasing threat, digital corruption sounds, tense and dangerous, loopable boss fight escalation", style: "Dark Electronic", duration: "120-180s" },
-  { id: "BATTLE-007", name: "Bug King Final", nameHe: "Bug King \u2014 \u05DE\u05E2\u05E9\u05D4 \u05E9\u05DC\u05D9\u05E9\u05D9", category: "battle", priority: 2, sunoPrompt: "Bug King final boss epic orchestral with glitch corruption, massive choir, heavy bass drops, 150 BPM, apocalyptic video game finale, strings and glitch combined, ultimate showdown loopable", style: "Epic Orchestral + Glitch", duration: "120-180s" },
-  { id: "BATTLE-008", name: "Glitch Secret Boss", nameHe: "Glitch \u2014 \u05D1\u05D5\u05E1 \u05E1\u05D5\u05D3\u05D9", category: "battle", priority: 3, sunoPrompt: "Secret glitch boss corrupted vaporwave, reality breaking sounds, reversed melodies, time-stretched vocals, unsettling 100 BPM, reality corruption, mysterious and eerie, loopable hidden boss theme", style: "Vaporwave Corrupted", duration: "120-180s" },
-  { id: "BATTLE-009", name: "Boss Defeated Fanfare", nameHe: "\u05D1\u05D5\u05E1 \u05D4\u05D5\u05D1\u05E1!", category: "battle", priority: 2, sunoPrompt: "Boss defeated victory stinger, 8 seconds, triumphant brass fanfare, climactic resolution, epic orchestral sting, video game victory moment, short and powerful, celebration burst", style: "Orchestral Stinger", duration: "5-10s" },
-  { id: "BATTLE-010", name: "Tournament Arena", nameHe: "\u05D6\u05D9\u05E8\u05EA \u05D8\u05D5\u05E8\u05E0\u05D9\u05E8\u05D9\u05DD", category: "battle", priority: 2, sunoPrompt: "Epic tournament arena theme with full orchestral power and chiptune accents, competitive crowd energy, brass fanfare meets electronic bass drops, stadium anthem with 8-bit gaming nostalgia, building intensity, 135 BPM, majestic and competitive, esports meets retro gaming glory, Middle Eastern percussion undertone, champion energy, loopable, no vocals", style: "Orchestral / Esports", duration: "120-180s" },
-
-  // === EVENTS / STINGERS ===
-  { id: "EVENT-001", name: "Victory Fanfare", nameHe: "\u05E0\u05D9\u05E6\u05D7\u05D5\u05DF!", category: "events", priority: 1, sunoPrompt: "Short triumphant victory fanfare, 10 seconds, bright brass section, ascending melody, proud achievement celebration, video game level complete, chiptune brass hybrid, uplifting finale", style: "Brass Fanfare", duration: "5-10s" },
-  { id: "EVENT-002", name: "Level Up Jingle", nameHe: "\u05E2\u05DC\u05D9\u05EA \u05E8\u05DE\u05D4!", category: "events", priority: 1, sunoPrompt: "Level up RPG jingle, 5 seconds, ascending chiptune melody, classic video game level up sound, happy and energetic, 8-bit celebration, short burst of joy", style: "Chiptune Jingle", duration: "5s" },
-  { id: "EVENT-003", name: "Character Unlock", nameHe: "\u05D3\u05DE\u05D5\u05EA \u05D7\u05D3\u05E9\u05D4 \u05E0\u05E4\u05EA\u05D7\u05D4!", category: "events", priority: 1, sunoPrompt: "Character unlock magical discovery jingle, 8 seconds, sparkle sounds, wonder and delight, arpeggio ascending, whimsical bells and synth, new friend revealed music, magical surprise", style: "Magical Jingle", duration: "8s" },
-  { id: "EVENT-004", name: "Achievement Unlock", nameHe: "\u05D0\u05E6\u05F3\u05D9\u05D1\u05DE\u05E0\u05D8 \u05E0\u05E4\u05EA\u05D7!", category: "events", priority: 1, sunoPrompt: "Achievement unlocked power jingle, 6 seconds, bold power chord, gaming achievement sound, satisfying unlock, short impactful burst, proud moment music, Xbox achievement style", style: "Power Chord Jingle", duration: "6s" },
-  { id: "EVENT-005", name: "Streak Milestone", nameHe: "\u05E1\u05D8\u05E8\u05D9\u05E7!", category: "events", priority: 2, sunoPrompt: "Streak milestone fire jingle, 8 seconds, rising build with fire crackling sounds, momentum and heat, ascending intensity, combo achievement music, on fire gaming moment", style: "Rising Buildup", duration: "8s" },
-  { id: "EVENT-006", name: "Season Event Theme", nameHe: "\u05D0\u05D9\u05E8\u05D5\u05E2 \u05E2\u05D5\u05E0\u05D4", category: "events", priority: 4, sunoPrompt: "Festive season event music, celebratory electronic with Middle Eastern flavor, holiday special gaming theme, joyful and energetic, 125 BPM, seasonal celebration loopable", style: "Festive Electronic", duration: "60-90s" },
-  { id: "EVENT-007", name: "Personal Best", nameHe: "\u05E9\u05D9\u05D0 \u05D0\u05D9\u05E9\u05D9!", category: "events", priority: 2, sunoPrompt: "Personal best record stinger, 7 seconds, epic orchestral burst, new record achieved sound, triumphant moment, sports achievement style, huge and memorable, short but massive impact", style: "Epic Stinger", duration: "7s" },
-  { id: "EVENT-008", name: "Defeat / Try Again", nameHe: "\u05DB\u05D9\u05E9\u05DC\u05D5\u05DF \u2014 \u05E0\u05E1\u05D4 \u05E9\u05D5\u05D1", category: "events", priority: 2, sunoPrompt: "Playful defeat jingle, 6 seconds, descending melody, whimsical sad but hopeful, try again energy, kids game failure sound, not discouraging, bounce back vibe, chiptune wah-wah", style: "Sad Trombone Reimagined", duration: "6s" },
-
-  // === CHARACTERS ===
-  { id: "CHAR-001", name: "Ki\u2019s Theme", nameHe: "\u05E2\u05E8\u05DB\u05EA \u05E7\u05D9 \u2014 \u05D2\u05D9\u05D1\u05D5\u05E8", category: "characters", priority: 1, sunoPrompt: "Adventurous chiptune hero theme with cinematic orchestral swell, energetic young ninja melody, Japanese shakuhachi flute meets 8-bit synth, Hebrew/Middle Eastern scale undertone, brave ascending motif, plucky and determined, bright warm chords, loopable, 120 BPM, kids game main character anthem, no vocals", style: "Adventure Chiptune + Orchestral", duration: "60-90s" },
-  { id: "CHAR-002", name: "Mika\u2019s Theme", nameHe: "\u05E2\u05E8\u05DB\u05EA \u05DE\u05D9\u05E7\u05D4 \u2014 \u05D8\u05E7 \u05D4\u05E7\u05E8\u05D9\u05EA", category: "characters", priority: 1, sunoPrompt: "Cyberpunk electronic pop with chiptune glitch accents, edgy hacker girl theme, sharp digital circuit board sounds, neon synth arpeggios, confident and smart, bitcrushed hi-hats with clean melodic lead, dark purple aesthetic, keyboard typing rhythms woven into beat, 130 BPM, loopable, no vocals", style: "Cyberpunk Pop", duration: "60-90s" },
-  { id: "CHAR-003", name: "Sensei Zen\u2019s Theme", nameHe: "\u05E2\u05E8\u05DB\u05EA \u05E1\u05E0\u05E1\u05D9\u05D9 \u05D6\u05DF \u2014 \u05D7\u05DB\u05DD", category: "characters", priority: 1, sunoPrompt: "Peaceful traditional Japanese shakuhachi flute and koto strings with subtle chiptune warmth, ancient turtle master wisdom, meditation temple bells, gentle water flowing ambient, Hebrew/Middle Eastern pentatonic scale blended with Japanese harmony, slow dignified 70 BPM, serene and wise, deep calm guidance energy, zen garden atmosphere, loopable, no vocals", style: "Traditional Japanese / Zen", duration: "60-90s" },
-  { id: "CHAR-004", name: "Bug\u2019s Theme", nameHe: "\u05E2\u05E8\u05DB\u05EA Bug \u2014 \u05E7\u05D0\u05D5\u05E1", category: "characters", priority: 2, sunoPrompt: "Bug villain theme, 20 seconds, glitchy chaotic electronic, evil mischief, corrupted data sounds, menacing but cartoonish, digital bug monster leitmotif, erratic rhythm", style: "Glitch Villain", duration: "20s" },
-  { id: "CHAR-005", name: "Yuki\u2019s Theme", nameHe: "\u05E2\u05E8\u05DB\u05EA \u05D9\u05D5\u05E7\u05D9 \u2014 \u05DE\u05D4\u05D9\u05E8\u05D5\u05EA", category: "characters", priority: 1, sunoPrompt: "Ultra-fast J-pop electronic with chiptune racing pulse, wind rushing SFX, bright energetic female character speed theme, rapid arpeggios building intensity, competitive spirit, lightning-fast 160 BPM bursts alternating with 140 BPM groove, pixel art meets anime energy, triumphant speed demon melody, loopable, no vocals", style: "J-Pop / Fast Electronic", duration: "60-90s" },
-  { id: "CHAR-006", name: "Luna\u2019s Theme", nameHe: "\u05E2\u05E8\u05DB\u05EA \u05DC\u05D5\u05E0\u05D4 \u2014 \u05E9\u05DC\u05D5\u05D5\u05D4", category: "characters", priority: 2, sunoPrompt: "Luna calm companion theme, 20 seconds, dreamy ambient pop, soft violin, moonlight atmosphere, gentle encouragement music, slow and comforting, nocturnal serenity", style: "Dream Pop", duration: "20s" },
-  { id: "CHAR-007", name: "Rex\u2019s Theme", nameHe: "\u05E2\u05E8\u05DB\u05EA Rex \u2014 \u05DE\u05E9\u05D7\u05E7\u05D9\u05D5\u05EA", category: "characters", priority: 2, sunoPrompt: "Rex dinosaur theme, 20 seconds, cartoon rock with dinosaur roars, heavy stomp rhythm, funny and powerful, T-Rex gaming buddy, prehistoric meets arcade, fun character theme", style: "Dino Rock", duration: "20s" },
-  { id: "CHAR-008", name: "Glitch\u2019s Theme", nameHe: "\u05E2\u05E8\u05DB\u05EA Glitch \u2014 \u05DB\u05D0\u05D5\u05E1 \u05D8\u05D4\u05D5\u05E8", category: "characters", priority: 2, sunoPrompt: "Corrupted vaporwave meets emotional chiptune, digital noise and bitcrushed fragments, reality-breaking glitch sounds with hidden beautiful melody underneath, time-stretched reversed notes, stuttering rhythm that resolves into warm piano phrase, unstable yet fascinating, sad and mysterious, 100 BPM wobbling, secret boss theme with emotional depth, feminine energy, loopable, no vocals", style: "Glitch / Vaporwave", duration: "60-90s" },
-
-  // === STORY ===
-  { id: "STORY-001", name: "Emotional Moment", nameHe: "\u05E1\u05D9\u05E4\u05D5\u05E8 \u2014 \u05E8\u05D2\u05E2 \u05E8\u05D2\u05E9\u05D9", category: "story", priority: 1, sunoPrompt: "Emotional cinematic piano with gentle strings, tearful beautiful melody, chiptune music box undertone adding nostalgic innocence, heartfelt moment in a kids game story, soft violin solo over warm pads, Hebrew/Middle Eastern minor scale emotional progression, slow 65 BPM, bittersweet and touching, friendship and sacrifice theme, building to gentle emotional climax then resolving softly, no vocals", style: "Cinematic Piano / Strings", duration: "90-120s" },
-  { id: "STORY-002", name: "Victory/Celebration", nameHe: "\u05E1\u05D9\u05E4\u05D5\u05E8 \u2014 \u05E0\u05D9\u05E6\u05D7\u05D5\u05DF \u05D5\u05D7\u05D2\u05D9\u05D2\u05D4", category: "story", priority: 1, sunoPrompt: "Triumphant celebration theme combining full orchestra with chiptune joy, all instruments united in victorious melody, brass fanfare with 8-bit sparkle, Middle Eastern percussion celebration (darbuka, frame drum), ascending major key progression building to massive climax, 130 BPM, pure joy and accomplishment, kids game final victory anthem, heroes united moment, confetti energy, sunshine after storm, no vocals", style: "Orchestral Triumphant", duration: "90-120s" },
-
-  // === AGE WORLDS ===
-  { id: "WORLD-001", name: "Shatil - Magical Garden", nameHe: "\u05E9\u05EA\u05D9\u05DC \u2014 \u05D2\u05DF \u05E7\u05E1\u05D5\u05DD (6-8)", category: "worlds", priority: 2, sunoPrompt: "Magical garden ambient for young children, music box melody, bird chirping, gentle bells, 60 BPM, warm and safe, Duolingo kids energy, enchanted forest sounds, loopable lullaby ambient", style: "Toybox Ambient", duration: "120-180s" },
-  { id: "WORLD-002", name: "Nevet - Adventure Camp", nameHe: "\u05E0\u05D1\u05D8 \u2014 \u05DE\u05D7\u05E0\u05D4 \u05D4\u05E8\u05E4\u05EA\u05E7\u05D5\u05EA (8-10)", category: "worlds", priority: 2, sunoPrompt: "Adventure camp theme, upbeat adventure pop, outdoor exploration energy, friendly and exciting, 105 BPM, Pokemon game town music inspired, summer camp vibes, loopable kids adventure", style: "Adventure Pop", duration: "120-180s" },
-  { id: "WORLD-003", name: "Geza - Ninja Arena", nameHe: "\u05D2\u05D6\u05E2 \u2014 \u05D6\u05D9\u05E8\u05EA \u05E0\u05D9\u05E0\u05D2\u05F3\u05D4 (10-12)", category: "worlds", priority: 1, sunoPrompt: "Ninja arena dark synthwave, neon gaming ambient, competitive 125 BPM, Brawl Stars energy, dark neon aesthetic, electronic pulses, cool and intense, gaming lobby music, loopable", style: "Dark Synthwave", duration: "120-180s" },
-  { id: "WORLD-004", name: "Anaf - Training Hub", nameHe: "\u05E2\u05E0\u05E3 \u2014 \u05DE\u05E8\u05DB\u05D6 \u05D0\u05D9\u05DE\u05D5\u05DF (12-14)", category: "worlds", priority: 3, sunoPrompt: "Mature training hub lo-fi minimal, dark ambient with subtle beats, 90 BPM, professional productivity music, teen appropriate, Discord dark theme energy, clean and understated, loopable", style: "Lo-fi Minimal", duration: "120-180s" },
-  { id: "WORLD-005", name: "Tzameret - Professional", nameHe: "\u05E6\u05DE\u05E8\u05EA \u2014 \u05DE\u05E7\u05E6\u05D5\u05E2\u05D9 (14-16+)", category: "worlds", priority: 3, sunoPrompt: "Professional minimal electronic ambient, near silence with subtle texture, developer/programmer atmosphere, 70 BPM, mature and respectful, Monkeytype dark mode energy, barely there music, loopable", style: "Minimal Electronic", duration: "120-180s" },
-]
 
 // ============================================================================
 // Helpers
@@ -157,20 +112,8 @@ function formatDuration(seconds) {
   return m + ":" + String(s).padStart(2, "0")
 }
 
-/** Convert a track name to a file-system-safe slug. */
-function trackNameToSlug(name) {
-  return name
-    .toLowerCase()
-    .replace(/[\u2019']/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "")
-}
-
-function trackIdToFileName(id) {
-  const track = FULL_CATALOG.find(t => t.id === id)
-  if (!track) return null
-  return trackNameToSlug(track.name) + ".mp3"
-}
+// trackNameToSlug, trackIdToFileName, getPromptForTrack, getPendingTracks
+// imported from suno-track-catalog.mjs
 
 // ============================================================================
 // Data Loading
@@ -187,12 +130,6 @@ function saveManifest(manifest) {
   writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2), "utf-8")
 }
 
-/** Load detailed prompts from suno-prompts.json (curated, high-quality prompts). */
-function loadDetailedPrompts() {
-  if (!existsSync(PROMPTS_PATH)) return []
-  return JSON.parse(readFileSync(PROMPTS_PATH, "utf-8"))
-}
-
 function loadGenerationLog() {
   if (!existsSync(GENERATION_LOG_PATH)) return { runs: [] }
   return JSON.parse(readFileSync(GENERATION_LOG_PATH, "utf-8"))
@@ -202,93 +139,106 @@ function saveGenerationLog(log) {
   writeFileSync(GENERATION_LOG_PATH, JSON.stringify(log, null, 2), "utf-8")
 }
 
-/**
- * Get the best available prompt for a track ID.
- * Prefers suno-prompts.json (more detailed) over the catalog prompt.
- */
-function getPromptForTrack(trackId) {
-  const detailed = loadDetailedPrompts()
-  const detailedEntry = detailed.find(p => p.id === trackId)
-  const catalogEntry = FULL_CATALOG.find(t => t.id === trackId)
-  if (!catalogEntry) return null
-
-  return {
-    id: trackId,
-    name: catalogEntry.name,
-    nameHe: catalogEntry.nameHe,
-    category: catalogEntry.category,
-    priority: catalogEntry.priority,
-    style: detailedEntry?.style || catalogEntry.style,
-    duration: catalogEntry.duration,
-    sunoPrompt: detailedEntry?.sunoPrompt || catalogEntry.sunoPrompt,
-  }
-}
+// ============================================================================
+// Quality Gates (post-download validation)
+// ============================================================================
 
 /**
- * Determine which tracks still need to be generated.
- * A track is pending if it has no existingFile and no MP3 in the manifest/filesystem.
+ * Validate a downloaded audio file against quality criteria.
+ * Returns { pass: boolean, issues: string[] }
  */
-function getPendingTracks() {
-  const manifest = loadManifest()
+function qualityCheck(filePath, category) {
+  const issues = []
 
-  // Build set of existing file paths
-  const existingFiles = new Set()
-  for (const track of manifest.generated_tracks || []) {
-    for (const f of track.files || []) existingFiles.add(f)
-  }
-  const categories = ["characters", "gameplay", "battle", "story", "menu", "events", "worlds"]
-  for (const cat of categories) {
-    const catDir = resolve(MUSIC_DIR, cat)
-    if (existsSync(catDir)) {
-      try {
-        for (const f of readdirSync(catDir).filter(f => !f.startsWith("."))) {
-          existingFiles.add(cat + "/" + f)
-        }
-      } catch { /* ignore */ }
+  // 1. File size > 100KB
+  try {
+    const stats = statSync(filePath)
+    if (stats.size < 100 * 1024) {
+      issues.push("File too small (" + formatBytes(stats.size) + "), likely corrupt")
     }
+  } catch (err) {
+    issues.push("Cannot stat file: " + err.message)
+    return { pass: false, issues }
   }
 
-  const pending = []
-  for (const track of FULL_CATALOG) {
-    if (track.existingFile) continue
-    const expectedFile = trackIdToFileName(track.id)
-    const categoryPath = track.category + "/" + expectedFile
-    if (existingFiles.has(categoryPath) || existingFiles.has(expectedFile)) continue
-    const isGenerated = (manifest.generated_tracks || []).some(g =>
-      g.trackId === track.id || g.name === expectedFile?.replace(".mp3", "")
+  // 2. Duration check via ffprobe
+  const durationRange = DURATION_RANGES[category]
+  try {
+    const output = execSync(
+      'ffprobe -v quiet -show_entries format=duration -of csv=p=0 "' + filePath + '"',
+      { encoding: "utf-8", stdio: ["pipe", "pipe", "pipe"] }
+    ).trim()
+    const duration = parseFloat(output)
+    if (!isNaN(duration)) {
+      if (durationRange && duration < durationRange.min) {
+        issues.push("Too short: " + formatDuration(duration) + " (min " + durationRange.min + "s for " + durationRange.label + ")")
+      }
+      if (durationRange && duration > durationRange.max) {
+        issues.push("Too long: " + formatDuration(duration) + " (max " + durationRange.max + "s for " + durationRange.label + ")")
+      }
+    }
+  } catch {
+    // ffprobe not available, skip duration check
+  }
+
+  // 3. Silence detection (reject if >50% silent)
+  try {
+    const output = execSync(
+      'ffprobe -v quiet -af silencedetect=noise=-40dB:d=2 -f null - -i "' + filePath + '" 2>&1',
+      { encoding: "utf-8", stdio: ["pipe", "pipe", "pipe"], shell: true }
     )
-    if (isGenerated) continue
-    pending.push(track)
+    const silenceMatches = output.match(/silence_duration:\s*([\d.]+)/g) || []
+    let totalSilence = 0
+    for (const m of silenceMatches) {
+      const dur = parseFloat(m.replace("silence_duration: ", ""))
+      if (!isNaN(dur)) totalSilence += dur
+    }
+
+    // Get total duration for percentage calc
+    const durOutput = execSync(
+      'ffprobe -v quiet -show_entries format=duration -of csv=p=0 "' + filePath + '"',
+      { encoding: "utf-8", stdio: ["pipe", "pipe", "pipe"] }
+    ).trim()
+    const totalDur = parseFloat(durOutput)
+    if (!isNaN(totalDur) && totalDur > 0 && totalSilence / totalDur > 0.5) {
+      issues.push("Mostly silent (" + Math.round(totalSilence / totalDur * 100) + "% silence)")
+    }
+  } catch {
+    // ffprobe not available or parsing failed, skip
   }
 
-  // Sort: P1 first, then by ID
-  pending.sort((a, b) => a.priority !== b.priority ? a.priority - b.priority : a.id.localeCompare(b.id))
-  return pending
+  return { pass: issues.length === 0, issues }
 }
 
 // ============================================================================
-// Suno API Client (gcui-art/suno-api endpoints)
+// Suno API Client (sunoapi.org cloud API — no Docker needed)
 // ============================================================================
 
+const SUNO_API_KEY = process.env.SUNO_API_KEY || ""
+
 /**
- * Generic fetch wrapper with timeout and error handling.
+ * Generic fetch wrapper with timeout, Bearer auth, and error handling.
  */
 async function sunoFetch(baseUrl, path, options = {}) {
   const url = baseUrl + path
   const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), options.timeoutMs || 30000)
+  const timeout = setTimeout(() => controller.abort(), options.timeoutMs || 60000)
 
   try {
     const res = await fetch(url, {
       ...options,
       signal: controller.signal,
-      headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + SUNO_API_KEY,
+        ...(options.headers || {}),
+      },
     })
     clearTimeout(timeout)
 
     if (!res.ok) {
       const text = await res.text().catch(() => "")
-      throw new Error("HTTP " + res.status + ": " + text.slice(0, 200))
+      throw new Error("HTTP " + res.status + ": " + text.slice(0, 300))
     }
     return await res.json()
   } catch (err) {
@@ -297,76 +247,110 @@ async function sunoFetch(baseUrl, path, options = {}) {
   }
 }
 
-/** GET /api/get_limit - Check remaining credits. */
+/** Check remaining credits via sunoapi.org. */
 async function getCredits(baseUrl) {
   try {
-    const data = await sunoFetch(baseUrl, "/api/get_limit")
-    return {
-      remaining: data.credits_left ?? data.total_credits_left ?? data.remaining ?? null,
-      total: data.monthly_limit ?? data.total_credits ?? data.period ?? null,
+    // sunoapi.org: GET /api/v1/generate/record-info is for tasks;
+    // credits info may come from the generate response or a dedicated endpoint.
+    // For now, do a lightweight check by hitting the generate endpoint docs.
+    // If the API returns 401, key is bad. If 200, we're good.
+    const res = await fetch(baseUrl + "/api/v1/generate/record-info?taskId=test", {
+      headers: { "Authorization": "Bearer " + SUNO_API_KEY },
+    })
+    if (res.status === 401) {
+      return { remaining: null, total: null, error: "Invalid API key" }
     }
+    return { remaining: "available", total: "sunoapi.org", error: null }
   } catch (err) {
     return { remaining: null, total: null, error: err.message }
   }
 }
 
 /**
- * POST /api/custom_generate - Submit a generation request.
- * Returns an array of clip/song objects (usually 2) each with an `id`.
+ * POST /api/v1/generate - Submit a generation request to sunoapi.org.
+ * Returns a taskId that can be polled for completion.
+ * Custom mode: instrumental with style (tags) and title.
  */
 async function submitGeneration(baseUrl, prompt, tags, title) {
-  const body = { prompt, tags, title, make_instrumental: true, wait_audio: false }
+  // Sanitize title: replace curly quotes with straight ASCII to prevent encoding issues
+  const safeTitle = title
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"')
+    .replace(/[^\x20-\x7E\u0590-\u05FF]/g, "")  // keep ASCII + Hebrew only
+  const safeTags = tags
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"')
 
-  const data = await sunoFetch(baseUrl, "/api/custom_generate", {
+  const body = {
+    customMode: true,
+    instrumental: true,
+    style: safeTags,
+    title: safeTitle,
+    model: "V5",
+    callBackUrl: "https://httpbin.org/post",
+  }
+
+  const data = await sunoFetch(baseUrl, "/api/v1/generate", {
     method: "POST",
     body: JSON.stringify(body),
   })
 
-  // gcui-art/suno-api returns an array of clip objects, or wraps in { data: [...] }
-  const clips = Array.isArray(data) ? data : (data.data && Array.isArray(data.data)) ? data.data : [data]
-  const ids = clips.map(s => s.id).filter(Boolean)
-
-  if (ids.length === 0) {
-    throw new Error("No clip IDs in API response: " + JSON.stringify(data).slice(0, 200))
+  if (data.code !== 200 || !data.data?.taskId) {
+    throw new Error("Generate failed: " + (data.msg || JSON.stringify(data).slice(0, 300)))
   }
 
-  return clips
+  // Return a pseudo-clips array with the taskId so the pipeline can poll
+  return [{ id: data.data.taskId, _isTaskId: true }]
 }
 
 /**
- * GET /api/get?ids=id1,id2 - Poll for generation completion.
- * Returns array of clip objects with status and audio_url.
+ * Poll sunoapi.org for generation completion.
+ * GET /api/v1/generate/record-info?taskId=xxx
+ * Returns array of clip objects with audio_url when complete.
  */
 async function pollForCompletion(baseUrl, songIds, pollIntervalMs, pollTimeoutMs) {
-  const idsParam = songIds.join(",")
+  // songIds[0] is actually the taskId from sunoapi.org
+  const taskId = songIds[0]
   const startTime = Date.now()
 
   while (true) {
     const elapsed = Date.now() - startTime
     if (elapsed > pollTimeoutMs) {
-      throw new Error("Timeout: songs " + idsParam + " did not complete within " + (pollTimeoutMs / 1000) + "s")
+      throw new Error("Timeout: task " + taskId + " did not complete within " + (pollTimeoutMs / 1000) + "s")
     }
 
-    const data = await sunoFetch(baseUrl, "/api/get?ids=" + idsParam)
-    const clips = Array.isArray(data) ? data : (data.data && Array.isArray(data.data)) ? data.data : [data]
+    const data = await sunoFetch(baseUrl, "/api/v1/generate/record-info?taskId=" + taskId, {
+      method: "GET",
+      timeoutMs: 30000,
+    })
 
-    const anyFailed = clips.some(s => s.status === "error" || s.status === "failed")
-    if (anyFailed) {
-      throw new Error("Generation failed on Suno side for IDs: " + idsParam)
+    const status = data.data?.status
+    const sunoData = data.data?.response?.sunoData || []
+
+    // Check for terminal failure states
+    if (status === "CREATE_TASK_FAILED" || status === "GENERATE_AUDIO_FAILED" || status === "SENSITIVE_WORD_ERROR") {
+      throw new Error("Generation failed: " + status + " - " + (data.data?.errorMessage || ""))
     }
 
-    const allComplete = clips.every(s =>
-      s.status === "complete" || s.status === "streaming" || s.audio_url
-    )
-
-    if (allComplete) {
-      return clips
+    // SUCCESS = all tracks generated
+    if (status === "SUCCESS" && sunoData.length > 0) {
+      // Map sunoapi.org response to our expected clip format
+      return sunoData.map(track => ({
+        id: track.id,
+        audio_url: track.audioUrl,
+        image_url: track.imageUrl,
+        title: track.title,
+        tags: track.tags,
+        duration: track.duration,
+        status: "complete",
+      }))
     }
 
-    // Show progress inline
-    const statuses = clips.map(s => s.status || "unknown")
+    // FIRST_SUCCESS = first track done, second still generating — wait for full
+    // PENDING / TEXT_SUCCESS = still in progress
+
     const elapsedSec = Math.round(elapsed / 1000)
-    process.stdout.write("\r  " + c.dim + "[" + timestamp() + "]" + c.reset + " " + c.yellow + "..." + c.reset + " Waiting (" + elapsedSec + "s) - statuses: " + statuses.join(", ") + "    ")
+    process.stdout.write("\r  " + c.dim + "[" + timestamp() + "]" + c.reset + " " + c.yellow + "..." + c.reset + " Waiting (" + elapsedSec + "s) - status: " + (status || "unknown") + "    ")
 
     await sleep(pollIntervalMs)
   }
@@ -511,15 +495,48 @@ async function generateTrack(track, config) {
         }
       }
 
-      // Step 4: Update manifest
-      if (downloadedFiles.length > 0) {
-        updateManifest(track, downloadedFiles, durations, completedSongs)
-        logOk(track.id + ": Manifest updated.")
+      // Step 4: Quality gates
+      const qualityResults = []
+      for (const relPath of downloadedFiles) {
+        const absPath = resolve(config.outputDir, relPath)
+        const qr = qualityCheck(absPath, track.category)
+        qualityResults.push({ file: relPath, ...qr })
+        if (qr.pass) {
+          logOk(track.id + ": Quality PASS - " + relPath)
+        } else {
+          logWarn(track.id + ": Quality FAIL - " + relPath + " [" + qr.issues.join("; ") + "]")
+        }
+      }
+
+      const passedFiles = qualityResults.filter(q => q.pass).map(q => q.file)
+      const failedFiles = qualityResults.filter(q => !q.pass)
+
+      // Step 5: Update manifest
+      if (passedFiles.length > 0) {
+        updateManifest(track, passedFiles, durations, completedSongs)
+        logOk(track.id + ": Manifest updated with " + passedFiles.length + " file(s).")
+      }
+
+      // Track quality rejections in manifest
+      if (failedFiles.length > 0) {
+        const manifest = loadManifest()
+        manifest.quality_rejected = manifest.quality_rejected || []
+        for (const f of failedFiles) {
+          manifest.quality_rejected.push({
+            trackId: track.id,
+            file: f.file,
+            issues: f.issues,
+            rejectedAt: new Date().toISOString(),
+          })
+        }
+        saveManifest(manifest)
+        logWarn(track.id + ": " + failedFiles.length + " file(s) quality-rejected.")
       }
 
       return {
-        success: downloadedFiles.length > 0,
-        files: downloadedFiles,
+        success: passedFiles.length > 0,
+        files: passedFiles,
+        qualityFailed: failedFiles.length,
         songIds,
         creditsCost: 10,
         retryCount: attempt - 1,
@@ -598,7 +615,7 @@ async function processBatch(tracks, config) {
 function parseArgs() {
   const args = process.argv.slice(2)
   const options = {
-    baseUrl: process.env.SUNO_API_URL || "http://localhost:3000",
+    baseUrl: process.env.SUNO_API_URL || "https://api.sunoapi.org",
     batchSize: 2,
     outputDir: MUSIC_DIR,
     dryRun: false,
@@ -608,9 +625,11 @@ function parseArgs() {
     category: null,
     pick: false,
     retryFailed: false,
+    qualityCheck: false,
+    regenRejected: false,
     maxRetries: 3,
     pollIntervalMs: 5000,
-    pollTimeoutMs: 300000,
+    pollTimeoutMs: 600000,
   }
 
   for (let i = 0; i < args.length; i++) {
@@ -640,6 +659,10 @@ function parseArgs() {
         options.outputDir = resolve(args[++i]); break
       case "--retry-failed":
         options.retryFailed = true; break
+      case "--quality-check":
+        options.qualityCheck = true; break
+      case "--regen-rejected":
+        options.regenRejected = true; break
       case "--max-retries":
         options.maxRetries = parseInt(args[++i], 10); break
       case "--poll-interval":
@@ -677,6 +700,8 @@ function printHelp() {
   console.log("    " + c.cyan + "--category, -c <CAT>" + c.reset + "  Filter by category (menu, gameplay, battle, events, characters, story, worlds)")
   console.log("    " + c.cyan + "--limit, -l <N>" + c.reset + "       Generate at most N tracks")
   console.log("    " + c.cyan + "--retry-failed" + c.reset + "        Retry tracks that previously failed")
+  console.log("    " + c.cyan + "--quality-check" + c.reset + "       Validate existing files (no generation)")
+  console.log("    " + c.cyan + "--regen-rejected" + c.reset + "      Re-generate quality-rejected tracks")
   console.log("")
   console.log(c.bold + "  Execution:" + c.reset)
   console.log("    " + c.cyan + "--dry-run, -n" + c.reset + "         Preview without making API calls")
@@ -720,6 +745,86 @@ async function main() {
 
   if (options.dryRun) {
     console.log("  " + c.yellow + c.bold + "DRY RUN MODE" + c.reset + " - No API calls will be made")
+  }
+
+  // ── Quality check mode (validate existing files, no generation) ──────
+
+  if (options.qualityCheck) {
+    console.log("")
+    console.log("  " + c.bold + "Quality Check Mode" + c.reset + " - Validating existing files...")
+    console.log("")
+
+    const manifest = loadManifest()
+    const generated = manifest.generated_tracks || []
+    let passed = 0, failed = 0
+    const newRejections = []
+
+    for (const entry of generated) {
+      for (const relPath of entry.files || []) {
+        const absPath = resolve(options.outputDir, relPath)
+        if (!existsSync(absPath)) {
+          logWarn(entry.trackId + ": File missing - " + relPath)
+          failed++
+          continue
+        }
+        const qr = qualityCheck(absPath, entry.category)
+        if (qr.pass) {
+          logOk(entry.trackId + ": PASS - " + relPath)
+          passed++
+        } else {
+          logWarn(entry.trackId + ": FAIL - " + relPath + " [" + qr.issues.join("; ") + "]")
+          failed++
+          newRejections.push({
+            trackId: entry.trackId,
+            file: relPath,
+            issues: qr.issues,
+            rejectedAt: new Date().toISOString(),
+          })
+        }
+      }
+    }
+
+    if (newRejections.length > 0) {
+      manifest.quality_rejected = [...(manifest.quality_rejected || []), ...newRejections]
+      saveManifest(manifest)
+    }
+
+    console.log("")
+    console.log("  " + c.bold + "Results:" + c.reset + " " + c.green + passed + " passed" + c.reset + ", " + c.red + failed + " failed" + c.reset)
+    if (newRejections.length > 0) {
+      console.log("  " + c.yellow + newRejections.length + " new rejection(s) recorded in manifest." + c.reset)
+    }
+    console.log("")
+    return
+  }
+
+  // ── Regen-rejected mode (re-generate quality-rejected tracks) ────────
+
+  if (options.regenRejected) {
+    const manifest = loadManifest()
+    const rejected = manifest.quality_rejected || []
+    if (rejected.length === 0) {
+      console.log("")
+      logOk("No quality-rejected tracks to re-generate.")
+      console.log("")
+      return
+    }
+
+    // Get unique track IDs from rejected list
+    const rejectedIds = [...new Set(rejected.map(r => r.trackId))]
+    console.log("")
+    console.log("  " + c.bold + "Re-generating " + rejectedIds.length + " quality-rejected track(s):" + c.reset)
+    for (const id of rejectedIds) {
+      console.log("    " + c.cyan + id + c.reset)
+    }
+    console.log("")
+
+    // Clear rejected entries for these tracks (they'll be re-evaluated after regen)
+    manifest.quality_rejected = rejected.filter(r => !rejectedIds.includes(r.trackId))
+    saveManifest(manifest)
+
+    // Build track list and fall through to normal generation
+    options.ids = rejectedIds
   }
 
   // ── Determine tracks to generate ─────────────────────────────────────

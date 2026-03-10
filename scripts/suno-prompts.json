@@ -1,12 +1,237 @@
 [
   {
+    "id": "MENU-002",
+    "name": "Lessons Menu",
+    "nameHe": "תפריט השיעורים",
+    "sunoPrompt": "Calm focused lo-fi study music with soft piano melodies over warm analog pads, gentle Japanese wind chime accents, subtle chiptune warmth, dreamy reverb, 80 BPM, peaceful concentration music for kids, muted drum machine shuffle, zen garden atmosphere meets pixel art coziness, loopable ambient study vibes, no vocals",
+    "style": "lo-fi, study ambient, piano, Japanese inspired, gentle chiptune, zen, 80 BPM",
+    "duration": "60-90s",
+    "category": "menu"
+  },
+  {
+    "id": "MENU-003",
+    "name": "Battle Menu",
+    "nameHe": "תפריט קרבות",
+    "sunoPrompt": "Intense synthwave battle lobby music, pulsing deep bass with sidechain compression, building tension, dark neon aesthetic, electric blue and purple mood, 130 BPM, sharp snares, gated reverb on synths, gaming pre-battle countdown energy, ominous but exciting for kids, dramatic risers every 8 bars, loopable, no vocals",
+    "style": "synthwave, dark electronic, battle lobby, neon, pulsing bass, 130 BPM",
+    "duration": "60-90s",
+    "category": "menu"
+  },
+  {
+    "id": "MENU-004",
+    "name": "Games Hub",
+    "nameHe": "מרכז המשחקים",
+    "sunoPrompt": "Playful chiptune pop game hub music, bouncy 8-bit lead melody with modern electronic bass, fun arcade cabinet energy, coin collecting sound aesthetic, 125 BPM, bright major key progression, catchy hook that kids will hum, bubbly synth arpeggios, retro meets modern, kids friendly party vibes, loopable, no vocals",
+    "style": "chiptune pop, arcade, bouncy, 8-bit, modern electronic, 125 BPM, playful",
+    "duration": "60-90s",
+    "category": "menu"
+  },
+  {
+    "id": "MENU-005",
+    "name": "Profile / Progress",
+    "nameHe": "פרופיל והתקדמות",
+    "sunoPrompt": "Reflective proud ambient orchestral music, soft strings ensemble with solo piano, gentle achievement melody that feels like looking back on a journey, emotional warmth, 70 BPM, subtle Middle Eastern oud ornament, inspiring and hopeful, golden hour sunset energy, kids game personal growth moment, loopable, no vocals",
+    "style": "ambient orchestral, piano, strings, reflective, emotional, 70 BPM, inspiring",
+    "duration": "60-90s",
+    "category": "menu"
+  },
+  {
+    "id": "MENU-006",
+    "name": "Settings",
+    "nameHe": "הגדרות",
+    "sunoPrompt": "Minimal neutral ambient background music, soft electronic drone pads, no melody, pure atmospheric texture, 60 BPM or slower, very calm and unobtrusive like a gentle hum, settings screen mood, almost silence with subtle warmth, clean digital space, transparent and non-distracting, loopable, no vocals",
+    "style": "minimal ambient, drone pads, atmospheric, near-silence, 60 BPM, unobtrusive",
+    "duration": "60-90s",
+    "category": "menu"
+  },
+  {
+    "id": "PLAY-002",
+    "name": "Practice Medium",
+    "nameHe": "תרגול — בינוני",
+    "sunoPrompt": "Upbeat indie electronic focus music, melodic synth lead over driving 110 BPM beat, warm analog bass, energetic but not stressful, productivity flow state, subtle chiptune accents in the higher register, bright and motivating without distraction, steady groove that supports typing rhythm, clean mix with space for concentration, loopable, no vocals",
+    "style": "indie electronic, focus music, melodic synths, 110 BPM, upbeat, productivity",
+    "duration": "120-180s",
+    "category": "gameplay"
+  },
+  {
+    "id": "PLAY-003",
+    "name": "Practice Hard",
+    "nameHe": "תרגול — קשה",
+    "sunoPrompt": "High intensity drum and bass music, fast rolling 160 BPM breakbeats, heavy sub bass, aggressive electronic synths, driving beat that demands focus, industrial undertones, dark energy without being scary for kids, intense typing session power music, pounding rhythm with glitchy fills, relentless forward momentum, loopable, no vocals",
+    "style": "drum and bass, fast electronic, 160 BPM, intense, industrial, focus zone",
+    "duration": "120-180s",
+    "category": "gameplay"
+  },
+  {
+    "id": "PLAY-005",
+    "name": "Accuracy Challenge",
+    "nameHe": "אתגר דיוק",
+    "sunoPrompt": "Minimal techno precision music, clean crisp 120 BPM, mathematical mathematical beats, surgical focus, metronomic hi-hats, no melodic distractions, pure rhythm and timing, subtle digital clicks and taps woven into the beat, clean space between sounds, zen-like concentration through rhythm, Japanese ma (間) concept of space, loopable, no vocals",
+    "style": "minimal techno, precision, 120 BPM, mathematical, surgical focus, rhythm-only",
+    "duration": "120-180s",
+    "category": "gameplay"
+  },
+  {
+    "id": "BATTLE-001",
+    "name": "Pre-Battle Anticipation",
+    "nameHe": "אנטיסיפציה לפני קרב",
+    "sunoPrompt": "Pre-battle anticipation music, orchestral tension building, 45 seconds, dramatic tremolo strings, nervous energy building with timpani rolls, heartbeat-like bass drum pulse, video game battle loading screen intro, building dread and excitement, brass stabs foreshadowing combat, not full battle yet just suspense, kids-appropriate dark tension",
+    "style": "orchestral tension, suspense, tremolo strings, building anticipation, dramatic",
+    "duration": "30-60s",
+    "category": "battle"
+  },
+  {
+    "id": "BATTLE-002",
+    "name": "Shadow Cat Battle",
+    "nameHe": "Shadow Cat — קרב קל",
+    "sunoPrompt": "Shadow ninja cat battle music, chiptune 8-bit lead with sneaky pizzicato strings, mysterious minor key melody, 120 BPM, stealthy rhythmic pattern like cat footsteps, competitive but friendly kids game vibe, Japanese shadow aesthetic with neon purple accents, playful yet tense, quick staccato notes darting like a cat, Middle Eastern ornamental scales in bridge sections, loopable battle theme, no vocals",
+    "style": "chiptune battle, sneaky, 8-bit, Japanese shadow, mysterious, 120 BPM, competitive",
+    "duration": "120-180s",
+    "category": "battle"
+  },
+  {
+    "id": "BATTLE-003",
+    "name": "Storm Fox Battle",
+    "nameHe": "Storm Fox — קרב בינוני",
+    "sunoPrompt": "Storm fox battle music, electro rock with crunchy electric guitar power riffs over electronic beats, powerful synth pads, 135 BPM, wind whoosh SFX woven into rhythm, thunder crack accents on downbeats, lightning-fast arpeggios, intense competitive energy, stormy atmosphere meets pixel art, building intensity with multiple sections, kids game mid-tier rival battle, loopable, no vocals",
+    "style": "electro rock, electric guitar, storm, 135 BPM, intense, competitive, wind sounds",
+    "duration": "120-180s",
+    "category": "battle"
+  },
+  {
+    "id": "BATTLE-004",
+    "name": "Blaze Dragon Battle",
+    "nameHe": "Blaze Dragon — קרב קשה",
+    "sunoPrompt": "Blaze dragon epic battle theme, heavy distorted guitars with full orchestral brass fanfare, fire crackling ambient woven into the beat, 145 BPM, epic boss battle intensity, double bass drum pounding, choir-like synth pads, ascending chromatic tension building to massive drops, no holds barred gaming anthem energy, Middle Eastern percussion (darbuka) on fills, loopable high-stakes combat, no vocals",
+    "style": "metal, epic orchestral, fire, 145 BPM, boss battle, heavy guitar, brass",
+    "duration": "120-180s",
+    "category": "battle"
+  },
+  {
+    "id": "BATTLE-006",
+    "name": "Bug Boss Act 2",
+    "nameHe": "Bug — מעשה שני",
+    "sunoPrompt": "Bug boss act 2 escalation, darker electronic battle music with corrupted glitch synth textures, 140 BPM, increasing threat level, digital corruption spreading through the sound, tense and dangerous atmosphere, bitcrushed stabs, distorted bass growls, glitchy fills that sound like code breaking apart, more serious than Act 1, loopable boss fight escalation, no vocals",
+    "style": "dark electronic, glitch, corrupted, 140 BPM, boss escalation, digital corruption",
+    "duration": "120-180s",
+    "category": "battle"
+  },
+  {
+    "id": "BATTLE-007",
+    "name": "Bug King Final",
+    "nameHe": "Bug King — מעשה שלישי",
+    "sunoPrompt": "Bug King ultimate final boss music, epic orchestral strings and brass combined with massive glitch corruption effects, massive choir-like synth pads, earth-shaking bass drops at 150 BPM, apocalyptic video game finale energy, reality tearing apart with orchestra playing through the chaos, alternating sections of pure orchestral power and digital destruction, climactic showdown, loopable, no vocals",
+    "style": "epic orchestral, glitch corruption, choir, 150 BPM, final boss, apocalyptic",
+    "duration": "120-180s",
+    "category": "battle"
+  },
+  {
+    "id": "BATTLE-008",
+    "name": "Glitch Secret Boss",
+    "nameHe": "Glitch — בוס סודי",
+    "sunoPrompt": "Secret hidden boss corrupted vaporwave theme, reality-breaking reversed melodies played backwards, time-stretched ghostly vocal textures, unsettling wobbling 100 BPM that shifts slightly off-grid, bitcrushed fragments of beautiful piano emerging then dissolving, VHS tape degradation sounds, eerie yet hauntingly beautiful, mystery and sadness, feminine energy woven through digital corruption, loopable hidden boss encounter, no vocals",
+    "style": "vaporwave corrupted, reversed melodies, time-stretched, 100 BPM, eerie, hidden boss",
+    "duration": "120-180s",
+    "category": "battle"
+  },
+  {
+    "id": "BATTLE-009",
+    "name": "Boss Defeated Fanfare",
+    "nameHe": "בוס הובס!",
+    "sunoPrompt": "Boss defeated victory stinger, exactly 8 seconds long, triumphant full brass fanfare with timpani crash, climactic orchestral resolution chord, epic victory sting moment, short and massively powerful celebration burst, ascending brass melody resolving to a major chord with cymbal shimmer, video game boss defeated moment",
+    "style": "orchestral stinger, brass fanfare, 8 seconds, victory, triumphant, powerful",
+    "duration": "5-10s",
+    "category": "battle"
+  },
+  {
+    "id": "BATTLE-010",
+    "name": "Tournament Arena",
+    "nameHe": "זירת טורנירים",
+    "sunoPrompt": "Epic tournament arena theme with full orchestral power and chiptune accents, competitive crowd energy, brass fanfare meets electronic bass drops, stadium anthem with 8-bit gaming nostalgia, building intensity, 135 BPM, majestic and competitive, esports meets retro gaming glory, Middle Eastern percussion undertone, champion energy, loopable, no vocals",
+    "style": "orchestral, epic, esports, chiptune hybrid, tournament, competitive, stadium, 135 BPM",
+    "duration": "120-180s",
+    "category": "battle"
+  },
+  {
+    "id": "EVENT-001",
+    "name": "Victory Fanfare",
+    "nameHe": "ניצחון!",
+    "sunoPrompt": "Short triumphant victory fanfare, exactly 10 seconds, bright brass section with ascending major scale melody, proud achievement celebration energy, video game level complete classic feel, chiptune brass hybrid combining 8-bit sparkle with real instrument warmth, uplifting finale resolving on a bright sustained chord, celebration confetti energy",
+    "style": "brass fanfare, chiptune hybrid, 10 seconds, triumphant, ascending, level complete",
+    "duration": "5-10s",
+    "category": "events"
+  },
+  {
+    "id": "EVENT-002",
+    "name": "Level Up Jingle",
+    "nameHe": "עלית רמה!",
+    "sunoPrompt": "Level up RPG celebration jingle, ascending chiptune arpeggio melody going up in thirds over bright major chords, classic video game level up moment, happy energetic 8-bit celebration with sparkling high synth notes at the peak, warm bass foundation, nostalgic NES-era level up sound reimagined with modern polish, triumphant short burst of achievement joy, confetti energy, no vocals",
+    "style": "chiptune celebration, ascending arpeggio, RPG level up, 8-bit, sparkling, triumphant, short jingle",
+    "duration": "10-15s",
+    "category": "events"
+  },
+  {
+    "id": "EVENT-003",
+    "name": "Character Unlock",
+    "nameHe": "דמות חדשה נפתחה!",
+    "sunoPrompt": "Character unlock magical discovery jingle, exactly 8 seconds, sparkle and shimmer sounds, wonder and delight ascending arpeggio, whimsical bells and crystalline synth, new friend revealed magical moment, building from mystery to joy, pixie dust aesthetic meets gaming achievement, enchanted reveal energy",
+    "style": "magical jingle, 8 seconds, sparkle, whimsical, bells, discovery, enchanted",
+    "duration": "8s",
+    "category": "events"
+  },
+  {
+    "id": "EVENT-004",
+    "name": "Achievement Unlock",
+    "nameHe": "אצ'יבמנט נפתח!",
+    "sunoPrompt": "Achievement unlocked power jingle, exactly 6 seconds, bold power chord hit followed by ascending resolve, gaming achievement pop-up sound, satisfying deep impact burst then bright resolution, proud moment music with weight and authority, Xbox-style achievement ping reimagined as chiptune power chord",
+    "style": "power chord jingle, 6 seconds, bold, satisfying, achievement, impact burst",
+    "duration": "6s",
+    "category": "events"
+  },
+  {
+    "id": "EVENT-005",
+    "name": "Streak Milestone",
+    "nameHe": "סטריק!",
+    "sunoPrompt": "Streak milestone fire jingle, exactly 8 seconds, rising intensity build with fire crackling texture underneath, momentum and escalating heat, ascending pitch building to a fiery climax, combo achievement music that feels like being on fire in a game, rapid ascending notes, explosive finale burst",
+    "style": "rising buildup, 8 seconds, fire, momentum, ascending, combo, explosive",
+    "duration": "8s",
+    "category": "events"
+  },
+  {
+    "id": "EVENT-006",
+    "name": "Season Event Theme",
+    "nameHe": "אירוע עונה",
+    "sunoPrompt": "Festive seasonal event celebration music, electronic pop with Middle Eastern percussion (darbuka, frame drum), joyful Israeli-flavored holiday gaming theme, bright and celebratory, 125 BPM, confetti and streamers energy, special limited-time event excitement, Hebrew/Mediterranean scale ornaments, chiptune flourishes mixed with real instruments, loopable, no vocals",
+    "style": "festive electronic, Middle Eastern, holiday, 125 BPM, celebratory, Israeli flavor",
+    "duration": "60-90s",
+    "category": "events"
+  },
+  {
+    "id": "EVENT-007",
+    "name": "Personal Best",
+    "nameHe": "שיא אישי!",
+    "sunoPrompt": "Personal best new record stinger, exactly 7 seconds, epic orchestral burst opening with full brass and timpani, new world record achieved energy, triumphant moment bigger than a regular victory, sports championship celebration style, massive memorable impact in minimal time, stadium crowd roar feel, ends with resonant sustained brass chord",
+    "style": "epic stinger, 7 seconds, orchestral burst, record-breaking, massive, triumphant",
+    "duration": "7s",
+    "category": "events"
+  },
+  {
+    "id": "EVENT-008",
+    "name": "Defeat / Try Again",
+    "nameHe": "כישלון — נסה שוב",
+    "sunoPrompt": "Playful defeat jingle, exactly 6 seconds, descending melody that goes down in pitch, whimsical sad-but-hopeful energy, chiptune wah-wah descending notes, kids game failure sound that encourages trying again instead of discouraging, bounce-back vibe, comical not tragic, ends on a note that suggests getting back up",
+    "style": "sad trombone reimagined, 6 seconds, descending, whimsical, hopeful defeat, bounce-back",
+    "duration": "6s",
+    "category": "events"
+  },
+  {
     "id": "CHAR-001",
     "name": "Ki's Theme",
     "nameHe": "ערכת קי — גיבור",
     "sunoPrompt": "Adventurous chiptune hero theme with cinematic orchestral swell, energetic young ninja melody, Japanese shakuhachi flute meets 8-bit synth, Hebrew/Middle Eastern scale undertone, brave ascending motif, plucky and determined, bright warm chords, loopable, 120 BPM, kids game main character anthem, no vocals",
     "style": "chiptune, orchestral, Japanese game music, adventure, heroic, 8-bit meets cinematic",
     "duration": "60-90s",
-    "category": "character"
+    "category": "characters"
   },
   {
     "id": "CHAR-002",
@@ -15,25 +240,7 @@
     "sunoPrompt": "Cyberpunk electronic pop with chiptune glitch accents, edgy hacker girl theme, sharp digital circuit board sounds, neon synth arpeggios, confident and smart, bitcrushed hi-hats with clean melodic lead, dark purple aesthetic, keyboard typing rhythms woven into beat, 130 BPM, loopable, no vocals",
     "style": "cyberpunk, electronic pop, glitch, chiptune hybrid, neon, hacker aesthetic",
     "duration": "60-90s",
-    "category": "character"
-  },
-  {
-    "id": "CHAR-005",
-    "name": "Yuki's Theme",
-    "nameHe": "ערכת יוקי — מהירות",
-    "sunoPrompt": "Ultra-fast J-pop electronic with chiptune racing pulse, wind rushing SFX, bright energetic female character speed theme, rapid arpeggios building intensity, competitive spirit, lightning-fast 160 BPM bursts alternating with 140 BPM groove, pixel art meets anime energy, triumphant speed demon melody, loopable, no vocals",
-    "style": "J-pop, electronic, fast chiptune, racing, speed, competitive, anime energy",
-    "duration": "60-90s",
-    "category": "character"
-  },
-  {
-    "id": "CHAR-008",
-    "name": "Glitch's Theme",
-    "nameHe": "ערכת Glitch — כאוס טהור",
-    "sunoPrompt": "Corrupted vaporwave meets emotional chiptune, digital noise and bitcrushed fragments, reality-breaking glitch sounds with hidden beautiful melody underneath, time-stretched reversed notes, stuttering rhythm that resolves into warm piano phrase, unstable yet fascinating, sad and mysterious, 100 BPM wobbling, secret boss theme with emotional depth, feminine energy, loopable, no vocals",
-    "style": "glitch, vaporwave, bitcrushed, emotional electronic, corrupted beauty, noise art",
-    "duration": "60-90s",
-    "category": "character"
+    "category": "characters"
   },
   {
     "id": "CHAR-003",
@@ -42,7 +249,70 @@
     "sunoPrompt": "Peaceful traditional Japanese shakuhachi flute and koto strings with subtle chiptune warmth, ancient turtle master wisdom, meditation temple bells, gentle water flowing ambient, Hebrew/Middle Eastern pentatonic scale blended with Japanese harmony, slow dignified 70 BPM, serene and wise, deep calm guidance energy, zen garden atmosphere, loopable, no vocals",
     "style": "traditional Japanese, ambient, zen, shakuhachi, koto, meditation, chiptune undertone",
     "duration": "60-90s",
-    "category": "character"
+    "category": "characters"
+  },
+  {
+    "id": "CHAR-004",
+    "name": "Bug's Theme",
+    "nameHe": "ערכת Bug — קאוס",
+    "sunoPrompt": "Bug villain character theme, exactly 20 seconds, glitchy chaotic electronic with erratic stuttering rhythms, evil mischief energy, corrupted data transmission sounds, menacing but cartoonish not scary, digital bug monster leitmotif that sounds like code going haywire, bitcrushed chaos with a catchy underlying hook, chiptune villain motif",
+    "style": "glitch villain, 20 seconds, chaotic electronic, corrupted, cartoonish evil, erratic",
+    "duration": "20s",
+    "category": "characters"
+  },
+  {
+    "id": "CHAR-005",
+    "name": "Yuki's Theme",
+    "nameHe": "ערכת יוקי — מהירות",
+    "sunoPrompt": "Ultra-fast J-pop electronic with chiptune racing pulse, wind rushing SFX, bright energetic female character speed theme, rapid arpeggios building intensity, competitive spirit, lightning-fast 160 BPM bursts alternating with 140 BPM groove, pixel art meets anime energy, triumphant speed demon melody, loopable, no vocals",
+    "style": "J-pop, electronic, fast chiptune, racing, speed, competitive, anime energy",
+    "duration": "60-90s",
+    "category": "characters"
+  },
+  {
+    "id": "CHAR-006",
+    "name": "Luna's Theme",
+    "nameHe": "ערכת לונה — שלווה",
+    "sunoPrompt": "Luna shy artist companion theme, exactly 20 seconds, dreamy ambient pop with soft violin carrying a gentle melody, moonlight atmosphere with silver-blue tonal quality, soft encouragement music that feels like a quiet friend believing in you, slow and comforting, watercolor painting energy, nocturnal serenity with tiny chiptune sparkles like stars, artistic and delicate",
+    "style": "dream pop, 20 seconds, violin, moonlight, gentle, artistic, nocturnal, comforting",
+    "duration": "20s",
+    "category": "characters"
+  },
+  {
+    "id": "CHAR-007",
+    "name": "Rex's Theme",
+    "nameHe": "ערכת Rex — משחקיות",
+    "sunoPrompt": "Rex dinosaur gaming buddy theme, exactly 20 seconds, cartoon rock with heavy stomp rhythm like T-Rex footsteps, funny power guitar riff, prehistoric meets arcade energy, T-Rex roar texture woven into the beat, fun goofy and powerful simultaneously, kids love dinosaurs energy, heavy but playful, pixel art dinosaur in a video game",
+    "style": "dino rock, 20 seconds, cartoon rock, stomp rhythm, funny, powerful, prehistoric arcade",
+    "duration": "20s",
+    "category": "characters"
+  },
+  {
+    "id": "CHAR-008",
+    "name": "Glitch's Theme",
+    "nameHe": "ערכת Glitch — כאוס טהור",
+    "sunoPrompt": "Corrupted vaporwave meets emotional chiptune, digital noise and bitcrushed fragments, reality-breaking glitch sounds with hidden beautiful melody underneath, time-stretched reversed notes, stuttering rhythm that resolves into warm piano phrase, unstable yet fascinating, sad and mysterious, 100 BPM wobbling, secret boss theme with emotional depth, feminine energy, loopable, no vocals",
+    "style": "glitch, vaporwave, bitcrushed, emotional electronic, corrupted beauty, noise art",
+    "duration": "60-90s",
+    "category": "characters"
+  },
+  {
+    "id": "STORY-001",
+    "name": "Story - Emotional Moment",
+    "nameHe": "סיפור — רגע רגשי",
+    "sunoPrompt": "Emotional cinematic piano with gentle strings, tearful beautiful melody, chiptune music box undertone adding nostalgic innocence, heartfelt moment in a kids game story, soft violin solo over warm pads, Hebrew/Middle Eastern minor scale emotional progression, slow 65 BPM, bittersweet and touching, friendship and sacrifice theme, building to gentle emotional climax then resolving softly, no vocals",
+    "style": "cinematic, piano, strings, emotional, bittersweet, music box, Hebrew feel",
+    "duration": "90-120s",
+    "category": "story"
+  },
+  {
+    "id": "STORY-002",
+    "name": "Story - Victory/Celebration",
+    "nameHe": "סיפור — ניצחון וחגיגה",
+    "sunoPrompt": "Triumphant celebration theme combining full orchestra with chiptune joy, all instruments united in victorious melody, brass fanfare with 8-bit sparkle, Middle Eastern percussion celebration (darbuka, frame drum), ascending major key progression building to massive climax, 130 BPM, pure joy and accomplishment, kids game final victory anthem, heroes united moment, confetti energy, sunshine after storm, no vocals",
+    "style": "orchestral, triumphant, chiptune, celebration, Middle Eastern percussion, joyful",
+    "duration": "90-120s",
+    "category": "story"
   },
   {
     "id": "PLAY-001",
@@ -63,30 +333,48 @@
     "category": "gameplay"
   },
   {
-    "id": "BATTLE-010",
-    "name": "Tournament Arena",
-    "nameHe": "זירת טורנירים",
-    "sunoPrompt": "Epic tournament arena theme with full orchestral power and chiptune accents, competitive crowd energy, brass fanfare meets electronic bass drops, stadium anthem with 8-bit gaming nostalgia, building intensity, 135 BPM, majestic and competitive, esports meets retro gaming glory, Middle Eastern percussion undertone, champion energy, loopable, no vocals",
-    "style": "orchestral, epic, esports, chiptune hybrid, tournament, competitive, stadium",
+    "id": "WORLD-001",
+    "name": "Shatil - Magical Garden",
+    "nameHe": "שתיל — גן קסום (6-8)",
+    "sunoPrompt": "Magical enchanted garden ambient for young children ages 6-8, delicate music box melody with gentle chimes and bird chirping, soft xylophone and glockenspiel, warm lullaby harmonic base, 60 BPM, warm safe cozy energy like a blanket, toy piano accents, Duolingo kids cheerful innocence, enchanted forest sparkle sounds, fairy tale garden atmosphere, loopable, no vocals",
+    "style": "toybox ambient, music box, bird sounds, 60 BPM, magical garden, children's, warm",
     "duration": "120-180s",
-    "category": "gameplay"
+    "category": "worlds"
   },
   {
-    "id": "STORY-001",
-    "name": "Story - Emotional Moment",
-    "nameHe": "סיפור — רגע רגשי",
-    "sunoPrompt": "Emotional cinematic piano with gentle strings, tearful beautiful melody, chiptune music box undertone adding nostalgic innocence, heartfelt moment in a kids game story, soft violin solo over warm pads, Hebrew/Middle Eastern minor scale emotional progression, slow 65 BPM, bittersweet and touching, friendship and sacrifice theme, building to gentle emotional climax then resolving softly, no vocals",
-    "style": "cinematic, piano, strings, emotional, bittersweet, music box, Hebrew feel",
-    "duration": "90-120s",
-    "category": "story"
+    "id": "WORLD-002",
+    "name": "Nevet - Adventure Camp",
+    "nameHe": "נבט — מחנה הרפתקות (8-10)",
+    "sunoPrompt": "Adventure camp theme for ages 8-10, upbeat adventure pop with acoustic guitar strumming, outdoor exploration energy, friendly and exciting, 105 BPM, Pokemon game town music joyfulness, summer camp campfire warmth, adventure awaits optimism, bright ukulele and whistle melody, nature sounds subtly mixed in, kids adventure quest beginning, loopable, no vocals",
+    "style": "adventure pop, acoustic, 105 BPM, outdoor, summer camp, Pokemon town inspired",
+    "duration": "120-180s",
+    "category": "worlds"
   },
   {
-    "id": "STORY-002",
-    "name": "Story - Victory/Celebration",
-    "nameHe": "סיפור — ניצחון וחגיגה",
-    "sunoPrompt": "Triumphant celebration theme combining full orchestra with chiptune joy, all instruments united in victorious melody, brass fanfare with 8-bit sparkle, Middle Eastern percussion celebration (darbuka, frame drum), ascending major key progression building to massive climax, 130 BPM, pure joy and accomplishment, kids game final victory anthem, heroes united moment, confetti energy, sunshine after storm, no vocals",
-    "style": "orchestral, triumphant, chiptune, celebration, Middle Eastern percussion, joyful",
-    "duration": "90-120s",
-    "category": "story"
+    "id": "WORLD-003",
+    "name": "Geza - Ninja Arena",
+    "nameHe": "גזע — זירת נינג'ה (10-12)",
+    "sunoPrompt": "Ninja arena dark synthwave for ages 10-12, neon-lit gaming ambient with pulsing bass, competitive 125 BPM, Brawl Stars-like intensity, dark purple and electric blue neon aesthetic, electronic pulses and glitch accents, cool and intense gaming lobby, retro-futuristic ninja dojo with holographic displays, loopable, no vocals",
+    "style": "dark synthwave, neon, 125 BPM, gaming lobby, competitive, Brawl Stars energy",
+    "duration": "120-180s",
+    "category": "worlds"
+  },
+  {
+    "id": "WORLD-004",
+    "name": "Anaf - Training Hub",
+    "nameHe": "ענף — מרכז אימון (12-14)",
+    "sunoPrompt": "Mature training hub lo-fi minimal for ages 12-14, dark ambient with subtle beats and soft vinyl crackle, 90 BPM, professional productivity atmosphere, teen-appropriate cool aesthetic, Discord dark theme minimalist energy, soft Rhodes piano chords over muted drums, understated and clean, study session mood, loopable, no vocals",
+    "style": "lo-fi minimal, dark ambient, 90 BPM, teen, productivity, understated, Discord vibes",
+    "duration": "120-180s",
+    "category": "worlds"
+  },
+  {
+    "id": "WORLD-005",
+    "name": "Tzameret - Professional",
+    "nameHe": "צמרת — מקצועי (14-16+)",
+    "sunoPrompt": "Professional minimal electronic ambient for ages 14-16+, near-silence with subtle granular texture, developer IDE atmosphere, 70 BPM or slower, mature and respectful of concentration, Monkeytype dark mode energy, barely-there music that becomes invisible, gentle low-frequency warmth, sophisticated restraint, loopable, no vocals",
+    "style": "minimal electronic, near-silence, 70 BPM, developer ambient, sophisticated, mature",
+    "duration": "120-180s",
+    "category": "worlds"
   }
 ]

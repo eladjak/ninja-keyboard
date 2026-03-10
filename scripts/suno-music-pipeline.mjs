@@ -4,11 +4,14 @@
  * Suno Music Pipeline - Ninja Keyboard
  *
  * Manages the entire music production lifecycle:
- *   - status   : Dashboard of track completion by category
+ *   - status   : Dashboard of track completion by category (with quality stats)
  *   - list     : List all tracks with their current state
  *   - copy ID  : Copy Suno prompt for a track to clipboard
  *   - import ID PATH : Import a downloaded Suno track into the project
  *   - validate : Check all manifest tracks have matching files
+ *   - quality  : Run quality gates on all generated tracks
+ *   - regen    : Show tracks that failed quality and need re-generation
+ *   - sync     : Generate frontend TypeScript manifest from music-manifest.json
  *   - next     : Show the next priority track to generate
  *
  * Usage:
@@ -17,6 +20,9 @@
  *   node scripts/suno-music-pipeline.mjs copy CHAR-001
  *   node scripts/suno-music-pipeline.mjs import CHAR-001 ~/Downloads/suno-track.mp3
  *   node scripts/suno-music-pipeline.mjs validate
+ *   node scripts/suno-music-pipeline.mjs quality
+ *   node scripts/suno-music-pipeline.mjs regen
+ *   node scripts/suno-music-pipeline.mjs sync
  *   node scripts/suno-music-pipeline.mjs next
  */
 
@@ -24,6 +30,17 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync, statS
 import { resolve, dirname, basename, extname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { execSync } from 'node:child_process'
+import {
+  FULL_CATALOG,
+  CATEGORY_DIRS,
+  DURATION_RANGES,
+  trackNameToSlug,
+  trackIdToFileName,
+  getTrackById,
+  getTracksByCategory,
+  getPromptForTrack,
+  getPendingTracks,
+} from './suno-track-catalog.mjs'
 
 // ─── Paths ───────────────────────────────────────────────────────────────────
 
@@ -32,6 +49,7 @@ const PROJECT_ROOT = resolve(__dirname, '..')
 const PROMPTS_PATH = resolve(__dirname, 'suno-prompts.json')
 const MANIFEST_PATH = resolve(PROJECT_ROOT, 'public/audio/music/music-manifest.json')
 const MUSIC_DIR = resolve(PROJECT_ROOT, 'public/audio/music')
+const FRONTEND_MANIFEST_PATH = resolve(PROJECT_ROOT, 'src/data/track-manifest.ts')
 
 // ─── ANSI Colors ─────────────────────────────────────────────────────────────
 
@@ -53,306 +71,22 @@ const c = {
   bgMagenta: '\x1b[45m',
 }
 
-// ─── Full Track Catalog (from soundtrack-master-plan.html) ───────────────────
-
-const FULL_CATALOG = [
-  // === MENU ===
-  {
-    id: 'MENU-001', name: 'Home Screen Theme', nameHe: 'ערכת המסך הראשי',
-    category: 'menu', priority: 1, existingFile: 'main-theme.mp3',
-    sunoPrompt: 'Happy energetic chiptune ninja game theme for kids, Japanese 8-bit adventure music, upbeat melody, loopable',
-    style: 'Chiptune 8-bit', duration: '60-90s',
-  },
-  {
-    id: 'MENU-002', name: 'Lessons Menu', nameHe: 'תפריט השיעורים',
-    category: 'menu', priority: 2,
-    sunoPrompt: 'Calm focused lo-fi study music, soft piano, gentle synth pads, loopable ambient, 80 BPM, peaceful concentration music, Japanese inspired',
-    style: 'Lo-fi / Ambient', duration: '60-90s',
-  },
-  {
-    id: 'MENU-003', name: 'Battle Menu', nameHe: 'תפריט קרבות',
-    category: 'menu', priority: 2,
-    sunoPrompt: 'Intense synthwave battle lobby music, pulsing bass, building tension, electronic 130 BPM, dark neon aesthetic, gaming pre-battle theme, loopable',
-    style: 'Synthwave', duration: '60-90s',
-  },
-  {
-    id: 'MENU-004', name: 'Games Hub', nameHe: 'מרכז המשחקים',
-    category: 'menu', priority: 3,
-    sunoPrompt: 'Playful chiptune pop game hub music, bouncy melody, fun 8-bit sounds with modern electronic twist, 125 BPM, arcade energy, kids friendly, loopable',
-    style: 'Chiptune Pop', duration: '60-90s',
-  },
-  {
-    id: 'MENU-005', name: 'Profile / Progress', nameHe: 'פרופיל והתקדמות',
-    category: 'menu', priority: 3,
-    sunoPrompt: 'Reflective proud ambient orchestral music, soft strings with piano, gentle achievement melody, emotional warmth, 70 BPM, inspiring journey music, loopable',
-    style: 'Ambient Orchestral', duration: '60-90s',
-  },
-  {
-    id: 'MENU-006', name: 'Settings', nameHe: 'הגדרות',
-    category: 'menu', priority: 4,
-    sunoPrompt: 'Minimal neutral ambient background music, soft electronic pads, no melody, pure atmosphere, 60 BPM, very calm and unobtrusive, settings screen mood, loopable',
-    style: 'Minimal Ambient', duration: '60-90s',
-  },
-
-  // === GAMEPLAY ===
-  {
-    id: 'PLAY-001', name: 'Practice Easy', nameHe: 'תרגול — קל',
-    category: 'gameplay', priority: 1,
-    sunoPrompt: 'Calm lo-fi study music with soft chiptune textures, gentle piano over warm analog pads, mellow hip-hop beat with typing rhythm undertone, soft jazzy chords, Japanese aesthetic ambient, 80 BPM, peaceful concentration music, minimal melodic movement to avoid distraction, warm bass, focus zone for keyboard practice, kid-friendly calm, loopable, no vocals',
-    style: 'Lo-fi Hip Hop', duration: '120-180s',
-  },
-  {
-    id: 'PLAY-002', name: 'Practice Medium', nameHe: 'תרגול — בינוני',
-    category: 'gameplay', priority: 2,
-    sunoPrompt: 'Upbeat focus music, indie electronic, melodic synths, steady 110 BPM, energetic but not stressful, productivity flow state, no lyrics, loopable',
-    style: 'Indie Electronic', duration: '120-180s',
-  },
-  {
-    id: 'PLAY-003', name: 'Practice Hard', nameHe: 'תרגול — קשה',
-    category: 'gameplay', priority: 3,
-    sunoPrompt: 'High intensity drum and bass music, fast 160 BPM, electronic synths, driving beat, focus zone music, no vocals, intense typing session energy, loopable',
-    style: 'Drum and Bass', duration: '120-180s',
-  },
-  {
-    id: 'PLAY-004', name: 'Speed Test', nameHe: 'אדרנלין — מבחן מהירות',
-    category: 'gameplay', priority: 1,
-    sunoPrompt: 'Adrenaline rush EDM with chiptune countdown elements, building from 120 to 140 BPM, epic synthwave drop, racing heartbeat bass, competitive speed challenge anthem, ticking clock tension with 8-bit urgency, electronic builds and releases, intense but not scary for kids, pixel art meets stadium energy, typing speed test power music, loopable, no vocals',
-    style: 'EDM / Synthwave', duration: '120-180s',
-  },
-  {
-    id: 'PLAY-005', name: 'Accuracy Challenge', nameHe: 'אתגר דיוק',
-    category: 'gameplay', priority: 3,
-    sunoPrompt: 'Minimal techno precision music, clean 120 BPM, mathematical beats, surgical focus, no melodic distractions, pure rhythm typing music, loopable, accuracy and focus',
-    style: 'Minimal Techno', duration: '120-180s',
-  },
-
-  // === BATTLE ===
-  {
-    id: 'BATTLE-001', name: 'Pre-Battle Anticipation', nameHe: 'אנטיסיפציה לפני קרב',
-    category: 'battle', priority: 2,
-    sunoPrompt: 'Pre-battle anticipation music, orchestral tension building, 30 seconds, dramatic strings, nervous energy, video game battle intro, not full combat yet, suspenseful',
-    style: 'Orchestral Tension', duration: '30-60s',
-  },
-  {
-    id: 'BATTLE-002', name: 'Shadow Cat Battle', nameHe: 'Shadow Cat — קרב קל',
-    category: 'battle', priority: 1,
-    sunoPrompt: 'Shadow ninja cat battle music, chiptune 8-bit, sneaky mysterious melody, 120 BPM, competitive but friendly, kids game battle theme, Japanese shadow aesthetic, loopable',
-    style: 'Chiptune Battle', duration: '120-180s',
-  },
-  {
-    id: 'BATTLE-003', name: 'Storm Fox Battle', nameHe: 'Storm Fox — קרב בינוני',
-    category: 'battle', priority: 1,
-    sunoPrompt: 'Storm fox battle music, electro rock with electric guitar riffs, powerful synths, 135 BPM, wind and thunder sounds woven in, intense competitive, loopable game battle',
-    style: 'Electro Rock', duration: '120-180s',
-  },
-  {
-    id: 'BATTLE-004', name: 'Blaze Dragon Battle', nameHe: 'Blaze Dragon — קרב קשה',
-    category: 'battle', priority: 2,
-    sunoPrompt: 'Blaze dragon epic metal battle, heavy guitars, orchestral brass, fire and fury, 145 BPM, epic boss battle intensity, no holds barred, loopable high energy gaming anthem',
-    style: 'Metal / Epic', duration: '120-180s',
-  },
-  {
-    id: 'BATTLE-005', name: 'Bug Boss Act 1', nameHe: 'Bug — מעשה ראשון',
-    category: 'battle', priority: 1,
-    existingFile: 'boss-battle.mp3',
-    sunoPrompt: 'Bug monster boss act 1, glitchy electronic music, playful chaos, digital glitch sounds, mischievous 125 BPM, not too scary, whimsical evil, video game boss theme, loopable',
-    style: 'Glitchy Electronic', duration: '120-180s',
-  },
-  {
-    id: 'BATTLE-006', name: 'Bug Boss Act 2', nameHe: 'Bug — מעשה שני',
-    category: 'battle', priority: 2,
-    sunoPrompt: 'Bug boss act 2, darker electronic battle, corrupted glitch synths, 140 BPM, increasing threat, digital corruption sounds, tense and dangerous, loopable boss fight escalation',
-    style: 'Dark Electronic', duration: '120-180s',
-  },
-  {
-    id: 'BATTLE-007', name: 'Bug King Final', nameHe: 'Bug King — מעשה שלישי',
-    category: 'battle', priority: 2,
-    sunoPrompt: 'Bug King final boss epic orchestral with glitch corruption, massive choir, heavy bass drops, 150 BPM, apocalyptic video game finale, strings and glitch combined, ultimate showdown loopable',
-    style: 'Epic Orchestral + Glitch', duration: '120-180s',
-  },
-  {
-    id: 'BATTLE-008', name: 'Glitch Secret Boss', nameHe: 'Glitch — בוס סודי',
-    category: 'battle', priority: 3,
-    sunoPrompt: 'Secret glitch boss corrupted vaporwave, reality breaking sounds, reversed melodies, time-stretched vocals, unsettling 100 BPM, reality corruption, mysterious and eerie, loopable hidden boss theme',
-    style: 'Vaporwave Corrupted', duration: '120-180s',
-  },
-  {
-    id: 'BATTLE-009', name: 'Boss Defeated Fanfare', nameHe: 'בוס הובס!',
-    category: 'battle', priority: 2,
-    sunoPrompt: 'Boss defeated victory stinger, 8 seconds, triumphant brass fanfare, climactic resolution, epic orchestral sting, video game victory moment, short and powerful, celebration burst',
-    style: 'Orchestral Stinger', duration: '5-10s',
-  },
-  {
-    id: 'BATTLE-010', name: 'Tournament Arena', nameHe: 'זירת טורנירים',
-    category: 'battle', priority: 2,
-    sunoPrompt: 'Epic tournament arena theme with full orchestral power and chiptune accents, competitive crowd energy, brass fanfare meets electronic bass drops, stadium anthem with 8-bit gaming nostalgia, building intensity, 135 BPM, majestic and competitive, esports meets retro gaming glory, Middle Eastern percussion undertone, champion energy, loopable, no vocals',
-    style: 'Orchestral / Esports', duration: '120-180s',
-  },
-
-  // === EVENTS / STINGERS ===
-  {
-    id: 'EVENT-001', name: 'Victory Fanfare', nameHe: 'ניצחון!',
-    category: 'events', priority: 1,
-    sunoPrompt: 'Short triumphant victory fanfare, 10 seconds, bright brass section, ascending melody, proud achievement celebration, video game level complete, chiptune brass hybrid, uplifting finale',
-    style: 'Brass Fanfare', duration: '5-10s',
-  },
-  {
-    id: 'EVENT-002', name: 'Level Up Jingle', nameHe: 'עלית רמה!',
-    category: 'events', priority: 1,
-    sunoPrompt: 'Level up RPG jingle, 5 seconds, ascending chiptune melody, classic video game level up sound, happy and energetic, 8-bit celebration, short burst of joy',
-    style: 'Chiptune Jingle', duration: '5s',
-  },
-  {
-    id: 'EVENT-003', name: 'Character Unlock', nameHe: 'דמות חדשה נפתחה!',
-    category: 'events', priority: 1,
-    sunoPrompt: 'Character unlock magical discovery jingle, 8 seconds, sparkle sounds, wonder and delight, arpeggio ascending, whimsical bells and synth, new friend revealed music, magical surprise',
-    style: 'Magical Jingle', duration: '8s',
-  },
-  {
-    id: 'EVENT-004', name: 'Achievement Unlock', nameHe: 'אצ\'יבמנט נפתח!',
-    category: 'events', priority: 1,
-    sunoPrompt: 'Achievement unlocked power jingle, 6 seconds, bold power chord, gaming achievement sound, satisfying unlock, short impactful burst, proud moment music, Xbox achievement style',
-    style: 'Power Chord Jingle', duration: '6s',
-  },
-  {
-    id: 'EVENT-005', name: 'Streak Milestone', nameHe: 'סטריק!',
-    category: 'events', priority: 2,
-    sunoPrompt: 'Streak milestone fire jingle, 8 seconds, rising build with fire crackling sounds, momentum and heat, ascending intensity, combo achievement music, on fire gaming moment',
-    style: 'Rising Buildup', duration: '8s',
-  },
-  {
-    id: 'EVENT-006', name: 'Season Event Theme', nameHe: 'אירוע עונה',
-    category: 'events', priority: 4,
-    sunoPrompt: 'Festive season event music, celebratory electronic with Middle Eastern flavor, holiday special gaming theme, joyful and energetic, 125 BPM, seasonal celebration loopable',
-    style: 'Festive Electronic', duration: '60-90s',
-  },
-  {
-    id: 'EVENT-007', name: 'Personal Best', nameHe: 'שיא אישי!',
-    category: 'events', priority: 2,
-    sunoPrompt: 'Personal best record stinger, 7 seconds, epic orchestral burst, new record achieved sound, triumphant moment, sports achievement style, huge and memorable, short but massive impact',
-    style: 'Epic Stinger', duration: '7s',
-  },
-  {
-    id: 'EVENT-008', name: 'Defeat / Try Again', nameHe: 'כישלון — נסה שוב',
-    category: 'events', priority: 2,
-    sunoPrompt: 'Playful defeat jingle, 6 seconds, descending melody, whimsical sad but hopeful, try again energy, kids game failure sound, not discouraging, bounce back vibe, chiptune wah-wah',
-    style: 'Sad Trombone Reimagined', duration: '6s',
-  },
-
-  // === CHARACTERS ===
-  {
-    id: 'CHAR-001', name: "Ki's Theme", nameHe: 'ערכת קי — גיבור',
-    category: 'characters', priority: 1,
-    sunoPrompt: 'Adventurous chiptune hero theme with cinematic orchestral swell, energetic young ninja melody, Japanese shakuhachi flute meets 8-bit synth, Hebrew/Middle Eastern scale undertone, brave ascending motif, plucky and determined, bright warm chords, loopable, 120 BPM, kids game main character anthem, no vocals',
-    style: 'Adventure Chiptune + Orchestral', duration: '60-90s',
-  },
-  {
-    id: 'CHAR-002', name: "Mika's Theme", nameHe: 'ערכת מיקה — טק הקרית',
-    category: 'characters', priority: 1,
-    sunoPrompt: 'Cyberpunk electronic pop with chiptune glitch accents, edgy hacker girl theme, sharp digital circuit board sounds, neon synth arpeggios, confident and smart, bitcrushed hi-hats with clean melodic lead, dark purple aesthetic, keyboard typing rhythms woven into beat, 130 BPM, loopable, no vocals',
-    style: 'Cyberpunk Pop', duration: '60-90s',
-  },
-  {
-    id: 'CHAR-003', name: "Sensei Zen's Theme", nameHe: 'ערכת סנסיי זן — חכם',
-    category: 'characters', priority: 1,
-    sunoPrompt: 'Peaceful traditional Japanese shakuhachi flute and koto strings with subtle chiptune warmth, ancient turtle master wisdom, meditation temple bells, gentle water flowing ambient, Hebrew/Middle Eastern pentatonic scale blended with Japanese harmony, slow dignified 70 BPM, serene and wise, deep calm guidance energy, zen garden atmosphere, loopable, no vocals',
-    style: 'Traditional Japanese / Zen', duration: '60-90s',
-  },
-  {
-    id: 'CHAR-004', name: "Bug's Theme", nameHe: 'ערכת Bug — קאוס',
-    category: 'characters', priority: 2,
-    sunoPrompt: 'Bug villain theme, 20 seconds, glitchy chaotic electronic, evil mischief, corrupted data sounds, menacing but cartoonish, digital bug monster leitmotif, erratic rhythm',
-    style: 'Glitch Villain', duration: '20s',
-  },
-  {
-    id: 'CHAR-005', name: "Yuki's Theme", nameHe: 'ערכת יוקי — מהירות',
-    category: 'characters', priority: 1,
-    sunoPrompt: 'Ultra-fast J-pop electronic with chiptune racing pulse, wind rushing SFX, bright energetic female character speed theme, rapid arpeggios building intensity, competitive spirit, lightning-fast 160 BPM bursts alternating with 140 BPM groove, pixel art meets anime energy, triumphant speed demon melody, loopable, no vocals',
-    style: 'J-Pop / Fast Electronic', duration: '60-90s',
-  },
-  {
-    id: 'CHAR-006', name: "Luna's Theme", nameHe: 'ערכת לונה — שלווה',
-    category: 'characters', priority: 2,
-    sunoPrompt: 'Luna calm companion theme, 20 seconds, dreamy ambient pop, soft violin, moonlight atmosphere, gentle encouragement music, slow and comforting, nocturnal serenity',
-    style: 'Dream Pop', duration: '20s',
-  },
-  {
-    id: 'CHAR-007', name: "Rex's Theme", nameHe: 'ערכת Rex — משחקיות',
-    category: 'characters', priority: 2,
-    sunoPrompt: 'Rex dinosaur theme, 20 seconds, cartoon rock with dinosaur roars, heavy stomp rhythm, funny and powerful, T-Rex gaming buddy, prehistoric meets arcade, fun character theme',
-    style: 'Dino Rock', duration: '20s',
-  },
-  {
-    id: 'CHAR-008', name: "Glitch's Theme", nameHe: 'ערכת Glitch — כאוס טהור',
-    category: 'characters', priority: 2,
-    sunoPrompt: 'Corrupted vaporwave meets emotional chiptune, digital noise and bitcrushed fragments, reality-breaking glitch sounds with hidden beautiful melody underneath, time-stretched reversed notes, stuttering rhythm that resolves into warm piano phrase, unstable yet fascinating, sad and mysterious, 100 BPM wobbling, secret boss theme with emotional depth, feminine energy, loopable, no vocals',
-    style: 'Glitch / Vaporwave', duration: '60-90s',
-  },
-
-  // === STORY ===
-  {
-    id: 'STORY-001', name: 'Emotional Moment', nameHe: 'סיפור — רגע רגשי',
-    category: 'story', priority: 1,
-    sunoPrompt: 'Emotional cinematic piano with gentle strings, tearful beautiful melody, chiptune music box undertone adding nostalgic innocence, heartfelt moment in a kids game story, soft violin solo over warm pads, Hebrew/Middle Eastern minor scale emotional progression, slow 65 BPM, bittersweet and touching, friendship and sacrifice theme, building to gentle emotional climax then resolving softly, no vocals',
-    style: 'Cinematic Piano / Strings', duration: '90-120s',
-  },
-  {
-    id: 'STORY-002', name: 'Victory/Celebration', nameHe: 'סיפור — ניצחון וחגיגה',
-    category: 'story', priority: 1,
-    sunoPrompt: 'Triumphant celebration theme combining full orchestra with chiptune joy, all instruments united in victorious melody, brass fanfare with 8-bit sparkle, Middle Eastern percussion celebration (darbuka, frame drum), ascending major key progression building to massive climax, 130 BPM, pure joy and accomplishment, kids game final victory anthem, heroes united moment, confetti energy, sunshine after storm, no vocals',
-    style: 'Orchestral Triumphant', duration: '90-120s',
-  },
-
-  // === AGE WORLDS ===
-  {
-    id: 'WORLD-001', name: 'Shatil - Magical Garden', nameHe: 'שתיל — גן קסום (6-8)',
-    category: 'worlds', priority: 2,
-    sunoPrompt: 'Magical garden ambient for young children, music box melody, bird chirping, gentle bells, 60 BPM, warm and safe, Duolingo kids energy, enchanted forest sounds, loopable lullaby ambient',
-    style: 'Toybox Ambient', duration: '120-180s',
-  },
-  {
-    id: 'WORLD-002', name: 'Nevet - Adventure Camp', nameHe: 'נבט — מחנה הרפתקות (8-10)',
-    category: 'worlds', priority: 2,
-    sunoPrompt: 'Adventure camp theme, upbeat adventure pop, outdoor exploration energy, friendly and exciting, 105 BPM, Pokemon game town music inspired, summer camp vibes, loopable kids adventure',
-    style: 'Adventure Pop', duration: '120-180s',
-  },
-  {
-    id: 'WORLD-003', name: 'Geza - Ninja Arena', nameHe: 'גזע — זירת נינג\'ה (10-12)',
-    category: 'worlds', priority: 1,
-    sunoPrompt: 'Ninja arena dark synthwave, neon gaming ambient, competitive 125 BPM, Brawl Stars energy, dark neon aesthetic, electronic pulses, cool and intense, gaming lobby music, loopable',
-    style: 'Dark Synthwave', duration: '120-180s',
-  },
-  {
-    id: 'WORLD-004', name: 'Anaf - Training Hub', nameHe: 'ענף — מרכז אימון (12-14)',
-    category: 'worlds', priority: 3,
-    sunoPrompt: 'Mature training hub lo-fi minimal, dark ambient with subtle beats, 90 BPM, professional productivity music, teen appropriate, Discord dark theme energy, clean and understated, loopable',
-    style: 'Lo-fi Minimal', duration: '120-180s',
-  },
-  {
-    id: 'WORLD-005', name: 'Tzameret - Professional', nameHe: 'צמרת — מקצועי (14-16+)',
-    category: 'worlds', priority: 3,
-    sunoPrompt: 'Professional minimal electronic ambient, near silence with subtle texture, developer/programmer atmosphere, 70 BPM, mature and respectful, Monkeytype dark mode energy, barely there music, loopable',
-    style: 'Minimal Electronic', duration: '120-180s',
-  },
-]
-
-// Track ID -> file name convention mapping
-function trackIdToFileName(id) {
-  const track = FULL_CATALOG.find(t => t.id === id)
-  if (!track) return null
-
-  const nameSlug = track.name
-    .toLowerCase()
-    .replace(/['']/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '')
-
-  return `${nameSlug}.mp3`
-}
+// ─── Helpers (from shared catalog) ───────────────────────────────────────────
 
 function trackIdToCategory(id) {
-  const track = FULL_CATALOG.find(t => t.id === id)
-  return track?.category || 'misc'
+  return getTrackById(id)?.category || 'misc'
+}
+
+function formatBytes(bytes) {
+  if (bytes < 1024) return bytes + ' B'
+  if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB'
+  return (bytes / 1048576).toFixed(1) + ' MB'
+}
+
+function formatDuration(seconds) {
+  const m = Math.floor(seconds / 60)
+  const s = Math.round(seconds % 60)
+  return m > 0 ? `${m}m${s.toString().padStart(2, '0')}s` : `${s}s`
 }
 
 // ─── Load Data ───────────────────────────────────────────────────────────────
@@ -372,10 +106,10 @@ function loadManifest() {
 }
 
 function saveManifest(manifest) {
-  writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2), 'utf-8')
+  writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2) + '\n', 'utf-8')
 }
 
-// ─── Determine Track Status ─────────────────────────────────────────────────
+// ─── Track Status Resolution ─────────────────────────────────────────────────
 
 function getTrackStatuses() {
   const manifest = loadManifest()
@@ -439,6 +173,70 @@ function getTrackStatuses() {
   })
 }
 
+// ─── Quality Check ───────────────────────────────────────────────────────────
+
+function qualityCheck(filePath, category) {
+  const issues = []
+
+  // 1. File size > 100KB
+  try {
+    const stats = statSync(filePath)
+    if (stats.size < 100 * 1024) {
+      issues.push(`File too small (${formatBytes(stats.size)}), likely corrupt`)
+    }
+  } catch (err) {
+    issues.push(`Cannot stat file: ${err.message}`)
+    return { pass: false, issues }
+  }
+
+  // 2. Duration check via ffprobe
+  const durationRange = DURATION_RANGES[category]
+  try {
+    const output = execSync(
+      `ffprobe -v quiet -show_entries format=duration -of csv=p=0 "${filePath}"`,
+      { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'] }
+    ).trim()
+    const duration = parseFloat(output)
+    if (!isNaN(duration)) {
+      if (durationRange && duration < durationRange.min) {
+        issues.push(`Too short: ${formatDuration(duration)} (min ${durationRange.min}s for ${durationRange.label})`)
+      }
+      if (durationRange && duration > durationRange.max) {
+        issues.push(`Too long: ${formatDuration(duration)} (max ${durationRange.max}s for ${durationRange.label})`)
+      }
+    }
+  } catch {
+    // ffprobe not available, skip duration check
+  }
+
+  // 3. Silence detection (reject if >50% silent)
+  try {
+    const output = execSync(
+      `ffprobe -v quiet -af silencedetect=noise=-40dB:d=2 -f null - -i "${filePath}" 2>&1`,
+      { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'], shell: true }
+    )
+    const silenceMatches = output.match(/silence_duration:\s*([\d.]+)/g) || []
+    let totalSilence = 0
+    for (const m of silenceMatches) {
+      const dur = parseFloat(m.replace('silence_duration: ', ''))
+      if (!isNaN(dur)) totalSilence += dur
+    }
+
+    const durOutput = execSync(
+      `ffprobe -v quiet -show_entries format=duration -of csv=p=0 "${filePath}"`,
+      { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'] }
+    ).trim()
+    const totalDur = parseFloat(durOutput)
+    if (!isNaN(totalDur) && totalDur > 0 && totalSilence / totalDur > 0.5) {
+      issues.push(`Mostly silent (${Math.round(totalSilence / totalDur * 100)}% silence)`)
+    }
+  } catch {
+    // ffprobe not available or parsing failed, skip
+  }
+
+  return { pass: issues.length === 0, issues }
+}
+
 // ─── Commands ────────────────────────────────────────────────────────────────
 
 function cmdStatus() {
@@ -494,6 +292,13 @@ function cmdStatus() {
   console.log(`  ${c.green}Done:${c.reset}         ${totalDone} tracks (existing MP3 files)`)
   console.log(`  ${c.cyan}Prompt Ready:${c.reset} ${totalPromptReady} tracks (prompts written, ready to generate)`)
   console.log(`  ${c.dim}Planned:${c.reset}      ${totalPlanned} tracks (in master plan, need prompts)`)
+
+  // Quality stats
+  const rejected = manifest.quality_rejected || []
+  if (rejected.length > 0) {
+    const rejectedIds = [...new Set(rejected.map(r => r.trackId))]
+    console.log(`  ${c.red}Quality Rejected:${c.reset} ${rejected.length} file(s) across ${rejectedIds.length} track(s)`)
+  }
   console.log('')
 
   // Existing files
@@ -600,8 +405,7 @@ function cmdCopy(trackId) {
 
   const trackIdUpper = trackId.toUpperCase()
 
-  // First check the full catalog
-  const catalogTrack = FULL_CATALOG.find(t => t.id === trackIdUpper)
+  const catalogTrack = getTrackById(trackIdUpper)
   if (!catalogTrack) {
     console.error(`${c.red}Error: Track "${trackIdUpper}" not found in catalog.${c.reset}`)
     console.error(`Valid IDs: ${FULL_CATALOG.map(t => t.id).join(', ')}`)
@@ -609,10 +413,9 @@ function cmdCopy(trackId) {
   }
 
   // Use the prompt from suno-prompts.json if available (it's more detailed), otherwise from catalog
-  const prompts = loadPrompts()
-  const promptTrack = prompts.find(p => p.id === trackIdUpper)
-  const prompt = promptTrack?.sunoPrompt || catalogTrack.sunoPrompt
-  const style = promptTrack?.style || catalogTrack.style
+  const promptData = getPromptForTrack(trackIdUpper)
+  const prompt = promptData?.sunoPrompt || catalogTrack.sunoPrompt
+  const style = promptData?.style || catalogTrack.style
 
   // Copy to clipboard - try multiple methods for cross-platform support
   let copied = false
@@ -678,8 +481,7 @@ function cmdImport(trackId, sourcePath) {
 
   const trackIdUpper = trackId.toUpperCase()
 
-  // Validate track exists
-  const catalogTrack = FULL_CATALOG.find(t => t.id === trackIdUpper)
+  const catalogTrack = getTrackById(trackIdUpper)
   if (!catalogTrack) {
     console.error(`${c.red}Error: Track "${trackIdUpper}" not found in catalog.${c.reset}`)
     process.exit(1)
@@ -689,13 +491,11 @@ function cmdImport(trackId, sourcePath) {
   let resolvedSource = sourcePath.replace(/^~/, process.env.HOME || process.env.USERPROFILE || '')
   resolvedSource = resolve(resolvedSource)
 
-  // Validate source file exists
   if (!existsSync(resolvedSource)) {
     console.error(`${c.red}Error: Source file not found: ${resolvedSource}${c.reset}`)
     process.exit(1)
   }
 
-  // Validate it's an audio file
   const ext = extname(resolvedSource).toLowerCase()
   if (!['.mp3', '.wav', '.ogg', '.m4a', '.webm'].includes(ext)) {
     console.error(`${c.red}Error: Expected audio file (.mp3, .wav, .ogg, .m4a), got: ${ext}${c.reset}`)
@@ -711,14 +511,11 @@ function cmdImport(trackId, sourcePath) {
 
   // Determine destination filename
   const destFileName = trackIdToFileName(trackIdUpper)
-  // If source is not mp3, keep original extension
   const finalFileName = ext === '.mp3' ? destFileName : destFileName.replace('.mp3', ext)
   const destPath = resolve(categoryDir, finalFileName)
 
-  // Copy file
   copyFileSync(resolvedSource, destPath)
 
-  // Get file size
   const stats = statSync(destPath)
   const sizeMB = (stats.size / (1024 * 1024)).toFixed(1)
 
@@ -737,19 +534,15 @@ function cmdImport(trackId, sourcePath) {
   // Update manifest
   const manifest = loadManifest()
 
-  // Remove from pending_tracks if present
   manifest.pending_tracks = (manifest.pending_tracks || []).filter(t => t.id !== trackIdUpper)
 
-  // Remove from not_generated if present
   const notGenName = destFileName.replace('.mp3', '')
   manifest.not_generated = (manifest.not_generated || []).filter(t => t.name !== notGenName)
 
-  // Add to generated_tracks
   const relativePath = `${catalogTrack.category}/${finalFileName}`
   const existingGen = (manifest.generated_tracks || []).find(g => g.trackId === trackIdUpper)
 
   if (existingGen) {
-    // Add as additional version
     existingGen.files = existingGen.files || []
     existingGen.files.push(relativePath)
     if (duration) {
@@ -757,7 +550,6 @@ function cmdImport(trackId, sourcePath) {
       existingGen.durations.push(duration)
     }
   } else {
-    // New track entry
     const newEntry = {
       trackId: trackIdUpper,
       name: destFileName.replace('.mp3', ''),
@@ -784,19 +576,36 @@ function cmdImport(trackId, sourcePath) {
   console.log(`${c.green}✓ Track imported successfully!${c.reset}`)
   console.log('')
   console.log(`${c.bold}Track:${c.reset}    ${catalogTrack.id} — ${catalogTrack.name} (${catalogTrack.nameHe})`)
-  console.log(`${c.bold}Source:${c.reset}   ${resolvedSource}`)
-  console.log(`${c.bold}Dest:${c.reset}     ${destPath}`)
+  console.log(`${c.bold}File:${c.reset}     ${relativePath}`)
   console.log(`${c.bold}Size:${c.reset}     ${sizeMB} MB`)
   if (duration) {
-    console.log(`${c.bold}Duration:${c.reset} ${Math.floor(duration / 60)}:${String(Math.floor(duration % 60)).padStart(2, '0')}`)
+    console.log(`${c.bold}Duration:${c.reset} ${formatDuration(duration)}`)
+  }
+  console.log(`${c.bold}Category:${c.reset} ${catalogTrack.category}`)
+  console.log('')
+
+  // Run quality check on the imported file
+  const qr = qualityCheck(destPath, catalogTrack.category)
+  if (qr.pass) {
+    console.log(`  ${c.green}✓ Quality check passed${c.reset}`)
+  } else {
+    console.log(`  ${c.yellow}⚠ Quality issues:${c.reset}`)
+    for (const issue of qr.issues) {
+      console.log(`    ${c.yellow}• ${issue}${c.reset}`)
+    }
+    // Record in manifest
+    manifest.quality_rejected = manifest.quality_rejected || []
+    manifest.quality_rejected.push({
+      trackId: trackIdUpper,
+      file: relativePath,
+      issues: qr.issues,
+      rejectedAt: new Date().toISOString(),
+    })
+    saveManifest(manifest)
   }
   console.log('')
 
-  // Show updated status
-  const statuses = getTrackStatuses()
-  const catTracks = statuses.filter(t => t.category === catalogTrack.category)
-  const catDone = catTracks.filter(t => t.status === 'done').length
-  console.log(`${c.bold}${catalogTrack.category}:${c.reset} ${catDone}/${catTracks.length} tracks done`)
+  console.log(`${c.dim}Run ${c.bold}node scripts/suno-music-pipeline.mjs validate${c.reset}${c.dim} to verify all tracks.${c.reset}`)
   console.log('')
 }
 
@@ -837,8 +646,8 @@ function cmdValidate() {
     }
   }
 
-  const categories = ['characters', 'gameplay', 'battle', 'story', 'menu', 'events', 'worlds']
-  for (const cat of categories) {
+  const categoryList = ['characters', 'gameplay', 'battle', 'story', 'menu', 'events', 'worlds']
+  for (const cat of categoryList) {
     const catDir = resolve(MUSIC_DIR, cat)
     if (existsSync(catDir)) {
       try {
@@ -861,7 +670,6 @@ function cmdValidate() {
     const allMusicFiles = readdirSync(MUSIC_DIR).filter(f => f.endsWith('.mp3'))
     for (const fileName of allMusicFiles) {
       if (!knownFiles.has(fileName)) {
-        // Check if it's a known generated track in old flat format
         const isKnownFlat = (manifest.generated_tracks || []).some(t => (t.files || []).includes(fileName))
         if (!isKnownFlat) {
           console.log(`  ${c.yellow}⚠ FLAT FILE${c.reset}: ${fileName} (should be in a category subfolder)`)
@@ -893,6 +701,217 @@ function cmdValidate() {
   console.log('')
 }
 
+// ─── New Commands: quality, regen, sync ──────────────────────────────────────
+
+function cmdQuality() {
+  const manifest = loadManifest()
+  const generated = manifest.generated_tracks || []
+
+  console.log('')
+  console.log(`${c.bold}${c.magenta}  QUALITY CHECK${c.reset}`)
+  console.log(`${c.dim}  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${c.reset}`)
+  console.log('')
+
+  if (generated.length === 0) {
+    console.log(`  ${c.dim}No generated tracks to check.${c.reset}`)
+    console.log('')
+    return
+  }
+
+  let passed = 0
+  let failed = 0
+  const newRejections = []
+
+  for (const entry of generated) {
+    const label = entry.trackId || entry.name || 'unknown'
+    // Look up category from catalog if not in manifest entry
+    const catalogEntry = entry.trackId ? getTrackById(entry.trackId) : null
+    const cat = entry.category || catalogEntry?.category || null
+    for (const relPath of entry.files || []) {
+      const absPath = resolve(MUSIC_DIR, relPath)
+      if (!existsSync(absPath)) {
+        console.log(`  ${c.red}✗ MISSING${c.reset} ${label}: ${relPath}`)
+        failed++
+        continue
+      }
+
+      const qr = qualityCheck(absPath, cat)
+      if (qr.pass) {
+        console.log(`  ${c.green}✓ PASS${c.reset}   ${label}: ${relPath}`)
+        passed++
+      } else {
+        console.log(`  ${c.red}✗ FAIL${c.reset}   ${label}: ${relPath}`)
+        for (const issue of qr.issues) {
+          console.log(`           ${c.dim}• ${issue}${c.reset}`)
+        }
+        failed++
+        newRejections.push({
+          trackId: label,
+          file: relPath,
+          issues: qr.issues,
+          rejectedAt: new Date().toISOString(),
+        })
+      }
+    }
+  }
+
+  if (newRejections.length > 0) {
+    manifest.quality_rejected = [...(manifest.quality_rejected || []), ...newRejections]
+    saveManifest(manifest)
+  }
+
+  console.log('')
+  console.log(`${c.dim}  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${c.reset}`)
+  console.log(`  ${c.green}${passed} passed${c.reset}  |  ${c.red}${failed} failed${c.reset}`)
+  if (newRejections.length > 0) {
+    console.log(`  ${c.yellow}${newRejections.length} new rejection(s) recorded in manifest.${c.reset}`)
+    console.log(`  ${c.dim}Run: node scripts/suno-generate-batch.mjs --regen-rejected${c.reset}`)
+  }
+  console.log('')
+}
+
+function cmdRegen() {
+  const manifest = loadManifest()
+  const rejected = manifest.quality_rejected || []
+
+  console.log('')
+  console.log(`${c.bold}${c.magenta}  QUALITY-REJECTED TRACKS${c.reset}`)
+  console.log(`${c.dim}  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${c.reset}`)
+  console.log('')
+
+  if (rejected.length === 0) {
+    console.log(`  ${c.green}✓ No quality-rejected tracks!${c.reset}`)
+    console.log('')
+    return
+  }
+
+  // Group by track ID
+  const byTrack = {}
+  for (const r of rejected) {
+    if (!byTrack[r.trackId]) byTrack[r.trackId] = []
+    byTrack[r.trackId].push(r)
+  }
+
+  for (const [trackId, rejections] of Object.entries(byTrack)) {
+    const track = getTrackById(trackId)
+    console.log(`  ${c.cyan}${trackId}${c.reset} — ${track?.name || 'Unknown'} ${c.dim}(${track?.nameHe || ''})${c.reset}`)
+    for (const r of rejections) {
+      console.log(`    ${c.red}✗${c.reset} ${r.file}`)
+      for (const issue of r.issues) {
+        console.log(`      ${c.dim}• ${issue}${c.reset}`)
+      }
+      console.log(`      ${c.dim}Rejected: ${r.rejectedAt}${c.reset}`)
+    }
+    console.log('')
+  }
+
+  console.log(`${c.dim}  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${c.reset}`)
+  console.log(`  ${c.bold}${Object.keys(byTrack).length} track(s)${c.reset} need re-generation.`)
+  console.log('')
+  console.log(`  ${c.yellow}To re-generate:${c.reset}`)
+  console.log(`    node scripts/suno-generate-batch.mjs --regen-rejected`)
+  console.log('')
+}
+
+function cmdSync() {
+  const manifest = loadManifest()
+
+  console.log('')
+  console.log(`${c.bold}${c.magenta}  SYNC MANIFEST → FRONTEND TYPESCRIPT${c.reset}`)
+  console.log(`${c.dim}  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${c.reset}`)
+  console.log('')
+
+  const generated = manifest.generated_tracks || []
+  if (generated.length === 0) {
+    console.log(`  ${c.yellow}No generated tracks to sync.${c.reset}`)
+    console.log('')
+    return
+  }
+
+  // Map categories to game zones
+  const categoryToZone = {
+    menu: 'menu',
+    gameplay: 'practice',
+    battle: 'battle',
+    events: 'events',
+    characters: 'home',
+    story: 'story',
+    worlds: 'home',
+  }
+
+  // Build typed track entries
+  const entries = generated.map(track => {
+    const trackId = track.trackId || track.name?.toUpperCase() || 'UNKNOWN'
+    const catalogEntry = getTrackById(trackId)
+    const cat = track.category || catalogEntry?.category || 'menu'
+    const zone = categoryToZone[cat] || 'menu'
+    const primaryFile = (track.files || [])[0] || ''
+
+    return {
+      id: trackId,
+      name: track.name || trackNameToSlug(track.title || ''),
+      title: track.title || track.name,
+      titleHe: track.titleHe || catalogEntry?.nameHe || '',
+      description: track.description || '',
+      style: track.style || catalogEntry?.style || '',
+      category: cat,
+      zone,
+      audioUrl: `/audio/music/${primaryFile}`,
+      files: (track.files || []).map(f => `/audio/music/${f}`),
+      duration: track.duration || (track.durations?.[0]) || null,
+      unlockCondition: catalogEntry?.priority === 1 ? 'default' : 'achievement',
+      priority: catalogEntry?.priority || 3,
+    }
+  })
+
+  const tsContent = `// AUTO-GENERATED by suno-music-pipeline.mjs sync command
+// Do not edit manually - run: node scripts/suno-music-pipeline.mjs sync
+// Generated: ${new Date().toISOString()}
+
+import type { GameZone } from '@/lib/audio/music-manager'
+
+export interface SyncedMusicTrack {
+  id: string
+  name: string
+  title: string
+  titleHe: string
+  description: string
+  style: string
+  category: string
+  zone: GameZone
+  audioUrl: string
+  files: string[]
+  duration: number | null
+  unlockCondition: 'default' | 'achievement'
+  priority: number
+}
+
+export const SYNCED_TRACK_MANIFEST: SyncedMusicTrack[] = ${JSON.stringify(entries, null, 2)} as const
+`
+
+  // Ensure directory exists
+  const dir = dirname(FRONTEND_MANIFEST_PATH)
+  if (!existsSync(dir)) {
+    mkdirSync(dir, { recursive: true })
+  }
+
+  writeFileSync(FRONTEND_MANIFEST_PATH, tsContent, 'utf-8')
+
+  console.log(`  ${c.green}✓${c.reset} Wrote ${c.bold}${entries.length}${c.reset} tracks to ${c.cyan}src/data/track-manifest.ts${c.reset}`)
+  console.log('')
+
+  for (const entry of entries) {
+    console.log(`  ${c.dim}${entry.id || entry.name}${c.reset} → ${entry.title} ${c.dim}[${entry.zone}]${c.reset}`)
+  }
+
+  console.log('')
+  console.log(`  ${c.yellow}Note:${c.reset} Import in your code with:`)
+  console.log(`    ${c.dim}import { SYNCED_TRACK_MANIFEST } from '@/data/track-manifest'${c.reset}`)
+  console.log('')
+}
+
+// ─── Help ────────────────────────────────────────────────────────────────────
+
 function cmdHelp() {
   console.log(`
 ${c.bold}${c.magenta}  SUNO MUSIC PIPELINE - Ninja Keyboard${c.reset}
@@ -900,50 +919,35 @@ ${c.dim}  ━━━━━━━━━━━━━━━━━━━━━━━�
 
   ${c.bold}Commands:${c.reset}
 
-  ${c.cyan}status${c.reset}              Dashboard of track completion by category
-  ${c.cyan}list${c.reset}                List all tracks with current state
-  ${c.cyan}next${c.reset}                Show priority tracks to generate next
-  ${c.cyan}copy${c.reset} ${c.dim}<ID>${c.reset}           Copy Suno prompt to clipboard
-  ${c.cyan}import${c.reset} ${c.dim}<ID> <PATH>${c.reset}  Import downloaded track into project
-  ${c.cyan}validate${c.reset}            Check manifest integrity and file existence
-  ${c.cyan}help${c.reset}                Show this help
+  ${c.cyan}status${c.reset}             Overview dashboard with quality stats
+  ${c.cyan}list${c.reset}               List all tracks with status
+  ${c.cyan}next${c.reset}               Show priority tracks to generate next
+  ${c.cyan}copy <ID>${c.reset}          Copy Suno prompt to clipboard
+  ${c.cyan}import <ID> <PATH>${c.reset} Import downloaded track into project
+  ${c.cyan}validate${c.reset}           Check all manifest files exist
+  ${c.cyan}quality${c.reset}            Run quality gates on all generated tracks
+  ${c.cyan}regen${c.reset}              Show quality-rejected tracks for re-generation
+  ${c.cyan}sync${c.reset}               Generate frontend TypeScript from manifest
+  ${c.cyan}help${c.reset}               Show this help
 
-  ${c.bold}Examples:${c.reset}
+  ${c.bold}Automation:${c.reset}
 
-  node scripts/suno-music-pipeline.mjs status
-  node scripts/suno-music-pipeline.mjs copy CHAR-001
-  node scripts/suno-music-pipeline.mjs import CHAR-001 ~/Downloads/suno-ki-theme.mp3
-  node scripts/suno-music-pipeline.mjs validate
+  ${c.dim}node scripts/suno-generate-batch.mjs${c.reset}                   Generate all pending tracks
+  ${c.dim}node scripts/suno-generate-batch.mjs --quality-check${c.reset}   Validate existing files
+  ${c.dim}node scripts/suno-generate-batch.mjs --regen-rejected${c.reset}  Re-generate failed tracks
 
-  ${c.bold}Track ID Format:${c.reset}
-
-  MENU-001..006    Menu themes
-  PLAY-001..005    Gameplay / practice
-  BATTLE-001..010  Battle music
-  EVENT-001..008   Event stingers / jingles
-  CHAR-001..008    Character themes
-  STORY-001..002   Story music
-  WORLD-001..005   Age world ambients
-
-  ${c.bold}File Structure:${c.reset}
-
-  public/audio/music/
-    characters/     Character theme tracks
-    gameplay/       Practice & challenge tracks
-    battle/         Rival & boss battle tracks
-    story/          Narrative cinematic tracks
-    menu/           Menu & navigation tracks
-    events/         Stingers & jingles
-    worlds/         Age world ambient tracks
-
-  ${c.bold}Workflow:${c.reset}
+  ${c.bold}Typical Workflow:${c.reset}
 
   1. ${c.cyan}status${c.reset}   → See what needs generating
   2. ${c.cyan}next${c.reset}     → Pick highest priority track
+  3. ${c.dim}node scripts/suno-generate-batch.mjs${c.reset} → Batch generate (automated)
+     ${c.dim}— OR —${c.reset}
   3. ${c.cyan}copy ID${c.reset}  → Copy prompt to clipboard
   4. Open ${c.bold}suno.com${c.reset}, paste prompt, generate, download
   5. ${c.cyan}import ID path${c.reset} → Import into project
-  6. ${c.cyan}validate${c.reset} → Verify everything is correct
+  6. ${c.cyan}quality${c.reset}  → Run quality checks
+  7. ${c.cyan}validate${c.reset} → Verify everything is correct
+  8. ${c.cyan}sync${c.reset}     → Update frontend TypeScript manifest
 `)
 }
 
@@ -970,6 +974,15 @@ switch (command) {
     break
   case 'validate':
     cmdValidate()
+    break
+  case 'quality':
+    cmdQuality()
+    break
+  case 'regen':
+    cmdRegen()
+    break
+  case 'sync':
+    cmdSync()
     break
   case 'help':
   case '--help':

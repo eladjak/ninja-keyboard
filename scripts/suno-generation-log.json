@@ -1,0 +1,344 @@
+{
+  "runs": [
+    {
+      "timestamp": "2026-03-10T15:13:34.882Z",
+      "durationSec": 2358,
+      "baseUrl": "https://api.sunoapi.org",
+      "batchSize": 2,
+      "tracksRequested": 35,
+      "succeeded": 29,
+      "failed": 6,
+      "creditsUsed": 290,
+      "results": [
+        {
+          "trackId": "EVENT-001",
+          "status": "success",
+          "files": [
+            "events/victory-fanfare.mp3",
+            "events/victory-fanfare-v2.mp3"
+          ],
+          "retryCount": 1
+        },
+        {
+          "trackId": "EVENT-003",
+          "status": "success",
+          "files": [
+            "events/character-unlock.mp3",
+            "events/character-unlock-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "PLAY-001",
+          "status": "success",
+          "files": [
+            "gameplay/practice-easy.mp3",
+            "gameplay/practice-easy-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "EVENT-004",
+          "status": "success",
+          "files": [
+            "events/achievement-unlock.mp3",
+            "events/achievement-unlock-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "STORY-002",
+          "status": "success",
+          "files": [
+            "story/victory-celebration.mp3",
+            "story/victory-celebration-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "STORY-001",
+          "status": "success",
+          "files": [
+            "story/emotional-moment.mp3",
+            "story/emotional-moment-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "WORLD-003",
+          "status": "success",
+          "files": [
+            "worlds/geza-ninja-arena.mp3",
+            "worlds/geza-ninja-arena-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "BATTLE-001",
+          "status": "success",
+          "files": [
+            "battle/pre-battle-anticipation.mp3",
+            "battle/pre-battle-anticipation-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "BATTLE-004",
+          "status": "success",
+          "files": [
+            "battle/blaze-dragon-battle.mp3",
+            "battle/blaze-dragon-battle-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "BATTLE-006",
+          "status": "success",
+          "files": [
+            "battle/bug-boss-act-2.mp3",
+            "battle/bug-boss-act-2-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "BATTLE-009",
+          "status": "success",
+          "files": [
+            "battle/boss-defeated-fanfare.mp3",
+            "battle/boss-defeated-fanfare-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "BATTLE-007",
+          "status": "success",
+          "files": [
+            "battle/bug-king-final.mp3",
+            "battle/bug-king-final-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "CHAR-004",
+          "status": "success",
+          "files": [
+            "characters/bugs-theme.mp3",
+            "characters/bugs-theme-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "CHAR-006",
+          "status": "success",
+          "files": [
+            "characters/lunas-theme.mp3",
+            "characters/lunas-theme-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "BATTLE-010",
+          "status": "success",
+          "files": [
+            "battle/tournament-arena.mp3",
+            "battle/tournament-arena-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "CHAR-007",
+          "status": "success",
+          "files": [
+            "characters/rexs-theme.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "CHAR-008",
+          "status": "success",
+          "files": [
+            "characters/glitchs-theme-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "EVENT-005",
+          "status": "success",
+          "files": [
+            "events/streak-milestone.mp3",
+            "events/streak-milestone-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "EVENT-007",
+          "status": "success",
+          "files": [
+            "events/personal-best.mp3",
+            "events/personal-best-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "PLAY-002",
+          "status": "success",
+          "files": [
+            "gameplay/practice-medium.mp3",
+            "gameplay/practice-medium-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "WORLD-001",
+          "status": "success",
+          "files": [
+            "worlds/shatil-magical-garden.mp3",
+            "worlds/shatil-magical-garden-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "WORLD-002",
+          "status": "success",
+          "files": [
+            "worlds/nevet-adventure-camp.mp3",
+            "worlds/nevet-adventure-camp-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "BATTLE-008",
+          "status": "success",
+          "files": [
+            "battle/glitch-secret-boss.mp3",
+            "battle/glitch-secret-boss-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "MENU-004",
+          "status": "success",
+          "files": [
+            "menu/games-hub.mp3",
+            "menu/games-hub-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "MENU-005",
+          "status": "success",
+          "files": [
+            "menu/profile-progress.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "PLAY-003",
+          "status": "success",
+          "files": [
+            "gameplay/practice-hard.mp3",
+            "gameplay/practice-hard-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "PLAY-005",
+          "status": "success",
+          "files": [
+            "gameplay/accuracy-challenge.mp3",
+            "gameplay/accuracy-challenge-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "WORLD-004",
+          "status": "success",
+          "files": [
+            "worlds/anaf-training-hub.mp3",
+            "worlds/anaf-training-hub-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "WORLD-005",
+          "status": "success",
+          "files": [
+            "worlds/tzameret-professional.mp3",
+            "worlds/tzameret-professional-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "EVENT-002",
+          "status": "failed",
+          "error": "Generation failed: GENERATE_AUDIO_FAILED - Task failed - credits refunded. Possible causes: the extending lyrics are empty, too short, or malformed. Please check the lyrics field and retry.",
+          "retryCount": 2
+        },
+        {
+          "trackId": "EVENT-008",
+          "status": "failed",
+          "retryCount": 0
+        },
+        {
+          "trackId": "MENU-003",
+          "status": "failed",
+          "retryCount": 0
+        },
+        {
+          "trackId": "MENU-002",
+          "status": "failed",
+          "retryCount": 0
+        },
+        {
+          "trackId": "EVENT-006",
+          "status": "failed",
+          "retryCount": 0
+        },
+        {
+          "trackId": "MENU-006",
+          "status": "failed",
+          "retryCount": 0
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-03-10T15:20:57.854Z",
+      "durationSec": 368,
+      "baseUrl": "https://api.sunoapi.org",
+      "batchSize": 2,
+      "tracksRequested": 1,
+      "succeeded": 0,
+      "failed": 1,
+      "creditsUsed": 0,
+      "results": [
+        {
+          "trackId": "EVENT-002",
+          "status": "failed",
+          "error": "Generation failed: GENERATE_AUDIO_FAILED - Task failed - credits refunded. Possible causes: the extending lyrics are empty, too short, or malformed. Please check the lyrics field and retry.",
+          "retryCount": 2
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-03-10T15:35:14.215Z",
+      "durationSec": 813,
+      "baseUrl": "https://api.sunoapi.org",
+      "batchSize": 2,
+      "tracksRequested": 1,
+      "succeeded": 1,
+      "failed": 0,
+      "creditsUsed": 10,
+      "results": [
+        {
+          "trackId": "EVENT-002",
+          "status": "success",
+          "files": [
+            "events/level-up-jingle.mp3",
+            "events/level-up-jingle-v2.mp3"
+          ],
+          "retryCount": 1
+        }
+      ]
+    }
+  ]
+}
