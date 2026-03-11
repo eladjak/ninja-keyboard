@@ -1,104 +1,82 @@
 # Ninja Keyboard - Progress
 
 ## Status: Active
-## Last Updated: 2026-03-10
-## Sprint: Music Production Complete + Full Verification
+## Last Updated: 2026-03-11
+## Sprint: Iteration 12 - Fixes + Downloads Catalog + Feature Agents
 
 ## Current State
-Full project verification completed by 5-agent team. All systems production-ready. Soundtrack generation COMPLETE: 44/44 tracks (90 MP3 files). Only remaining pre-3D work: minor code cleanup items.
+All fixes applied. 85 browser-extension MP3s cataloged (169→173 total). 3/4 agents completed successfully (AI Opponents, Music Manifest, Teacher Mobile). Gaming CSS agent failed due to internet disconnection — needs re-run.
 
-## What Was Done This Session (Iteration 11 - Verification + Music Production)
+## What Was Done This Session (Iteration 12)
 
-### Full Project Verification (5 parallel agents)
-- [x] **Story System**: 6 chapters, 53 beats, 4,133 lines Hebrew dialog, engine fully integrated
-- [x] **Character Art**: 30/30 model sheets, 24/24 expressions, 15 backgrounds, 15 badges
-- [x] **Code Components**: AI battle, sound system, music provider, 12 Zustand stores, gaming CSS
-- [x] **Voice & Audio**: 11 character voices, 16 MP3 SFX, all scripts functional
-- [x] **Build Health**: 0 TypeScript errors, 1,096 unit tests passing, 35 HTML docs
+### Fixes Completed
+- [x] HERO/VILLAIN arrays: added phantom, masterBeat, sakura (heroes) + virus, barak (villains)
+- [x] Duplicate practice-room.mp3/v2 removed (practice-easy variants kept)
+- [x] 85 MP3s from Downloads cataloged as v3/v4 to correct directories
+- [x] Sakura dialog: new beat ch3-6b (7 lines, crane mentor mentors Yuki)
+- [x] MasterBeat dialog: 4 direct speech lines in ch6-5 (cryptic cosmic speech)
+- [x] TypeScript: 0 errors
 
-### Music Production (COMPLETE - 44/44 tracks)
-- [x] Suno batch generator upgraded: sunoapi.org cloud API (no Docker needed)
-- [x] Track catalog: 44 tracks across 7 categories (menu, gameplay, battle, events, characters, story, worlds)
-- [x] All 44 tracks generated with Suno V5: 90 MP3 files (V1+V2 variants)
-- [x] EVENT-002 (Level Up Jingle) required prompt fix: 5s too short for Suno → changed to 10-15s
-- [x] Quality gates: file size, duration, silence detection via ffprobe
+### Agent: AI Opponents Integration (DONE)
+- [x] Battle timer fixed (was stuck at 0)
+- [x] Final AI stats captured from engine (not hardcoded)
+- [x] Rival Hebrew names in results (צל/סערה/להבה)
+- [x] Rival portrait + theme color in results table
+- [x] Framer Motion animations on trophy/XP badge
+- Files: battle-arena.tsx, battle-results.tsx
 
-### Music Files Generated (by category)
-- **Menu** (6): home-screen, lessons-menu, battle-menu, games-hub, profile-progress, settings
-- **Gameplay** (5): practice-easy, practice-medium, practice-hard, speed-test, accuracy-challenge
-- **Battle** (10): pre-battle, shadow-cat, storm-fox, blaze-dragon, bug-boss-act2, bug-king-final, glitch-secret-boss, boss-defeated-fanfare, tournament-arena + existing boss-battle
-- **Events** (8): victory-fanfare, level-up-jingle, character-unlock, achievement-unlock, streak-milestone, personal-best, defeat-try-again, season-event
-- **Characters** (8): ki, mika, sensei-zen, yuki, bug, luna, rex, glitch
-- **Story** (2): emotional-moment, victory-celebration
-- **Worlds** (5): shatil-magical-garden, nevet-adventure-camp, geza-ninja-arena, anaf-training-hub, tzameret-professional
+### Agent: Music Manifest (DONE)
+- [x] Full manifest: 44 tracks, 173 MP3 files
+- [x] All pending_tracks moved to generated_tracks
+- [x] New TypeScript types: src/types/music.ts (7 types + 6 helper functions)
+- [x] 42 tracks with v3/v4 variants, 1 with v5 (bugs-theme)
+- [x] Source tracking: api vs browser-extension
+
+### Agent: Teacher Mobile Interface (DONE)
+- [x] src/lib/teacher/character-skills.ts - 8 characters × skills × age mapping
+- [x] src/components/teacher/class-stats-bar.tsx - 4-stat bubbles
+- [x] src/components/teacher/student-list-mobile.tsx - expandable rows, status, trends
+- [x] src/components/teacher/character-skill-map.tsx - accordion skill map
+- [x] src/components/teacher/teacher-dashboard-client.tsx - 2-tab dashboard
+- [x] src/app/(app)/teacher/page.tsx - server component with mock data
+
+### Agent: Gaming CSS (FAILED - needs re-run)
+- [ ] Apply --game-* CSS variables to all app pages
+- Failed due to ENOTFOUND (internet disconnection during laptop move)
+
+### Downloads Music Cataloging
+- 42 unique Suno display names → project slugs
+- v3/v4 variants in all 7 category directories
+- Bug's Theme → v5 (only track with 5 variants)
+- Final: battle 36, characters 33, events 32, gameplay 20, menu 20, story 8, worlds 20
+
+## Next Steps
+1. **Gaming CSS** → Re-run agent to apply --game-* vars to app pages
+2. **3D POC** → Ki character model (waiting for user go-ahead)
+3. **Commit** all iteration 12 changes
+4. **Profile-card.tsx** → Pre-existing TS error to investigate
+5. **Iteration 12 review HTML** → Generate after Gaming CSS is done
 
 ---
 
 ## Previous Iterations Summary
 
+### Iteration 11 (March 10-11)
+- Full 5-agent verification: all systems production-ready
+- Soundtrack 44/44 tracks via Suno V5 API (90 MP3)
+- Commit: 1f498ca (164 files)
+
 ### Iteration 10 (March 8-9)
-- Suno batch generator with parallel execution + retry logic
-- Expression sheets + Suno automation
-- Music pipeline with 44-track catalog
-- Chapter 6 complete story finale
+- Suno batch generator, expression sheets, music pipeline, Chapter 6
 
 ### Iteration 9 (March 8)
-- Sensei Zen = TURTLE (88/100 PASS)
-- Sakura = crane mentor (model sheet v2)
-- Glitch = 6 versions (all model sheets)
-- Master Beat = transcendent entity
-- Raz (Ki's dad) model sheet
-- Virus = dual form model sheet
-- Visual consistency mechanism (review-character-art.mjs)
-- Visual Bible: 25 characters
+- Sensei Zen turtle, Sakura crane, Glitch 6 versions, Master Beat, Visual Bible
 
 ### Iteration 8
-- Story Ch4-6 complete (26 new beats)
-- MusicProvider + jukebox integrated
-- AI battle system implemented
-- 5 project-specific skills created
+- Story Ch4-6, MusicProvider, AI battle system, 5 skills
 
 ### Iteration 7
-- DialogBox + StoryPlayer + useSoundEffect (production code)
-- Yuki V8-D official voice
-- 7 new badges + Chapter 6 V2.2
-- 3 new character designs (Barak, Block, Lens)
+- DialogBox, StoryPlayer, Yuki V8-D voice, badges
 
-### Iteration 6
-- Copyright fixes (badges), Hero expressions V2
-- Narrative corrections V2.1
-- Yuki V8 voices (82 files)
-- 4 design docs (story delivery, pedagogy, AI opponents, UI sounds)
-
-### Iteration 5
-- Full music system, gaming UI, idle animations
-- Phantom character, 60 holiday skins (798 variations)
-- Story V2, community/tournament, villain expressions
-
-## Minor Issues Found (non-blocking)
-- virus/phantom/barak not in HERO_CHARACTERS/VILLAIN_CHARACTERS arrays
-- masterBeat/sakura have configs but no dialog lines yet
-- practice-room.mp3 (old) + practice-easy.mp3 (new) both exist - can remove old one
-
-## Next Steps
-1. ~~Generate music tracks~~ **DONE** (44/44)
-2. **3D POC**: Ki character (budget ready, all prep work verified complete)
-3. **Apply gaming CSS** to real app pages
-4. **Implement AI opponents** in gameplay
-5. **Build teacher mobile interface**
-6. **Update music-manifest.json** to reflect all 44 tracks properly
-
-## Key Stats
-- Total music tracks: 44 (90 MP3 files)
-- Total HTML docs: 35+
-- Total model sheets: 30
-- Total expression sheets: 24
-- Total backgrounds: 15
-- Total badges: 15
-- Total character voices: 11
-- Total SFX: 16
-- Total holiday skins designed: 798 variations
-- Total characters: 25 (with visual bible)
-- Unit tests: 1,096 (all pass)
-- TypeScript: 0 errors
-- Story: 6 chapters, 53 beats, 4,133 lines
+### Iteration 6-5
+- Copyright, voices, music system, gaming UI, holiday skins, story V2

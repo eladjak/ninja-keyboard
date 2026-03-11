@@ -349,6 +349,74 @@ export const CHAPTER_3_6_YUKI_VS_BARAK: DialogStoryBeat = {
 }
 
 /**
+ * 3.6b — Sakura appears, mentors Yuki
+ * A mysterious crane figure descends. Yuki's true mentor reveals herself.
+ */
+export const CHAPTER_3_6B_SAKURA_MENTORS_YUKI: DialogStoryBeat = {
+  id: 'ch3-6b-sakura-mentors-yuki',
+  trigger: { type: 'manual' },
+  lines: [
+    {
+      id: 'ch3-6b-01',
+      character: 'yuki',
+      text: 'אני כל כך עצבנית! ברק מקליד מהר יותר ממני! איך זה אפשרי?!',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'concerned',
+    },
+    {
+      id: 'ch3-6b-02',
+      character: 'sakura',
+      text: 'כי את רצה. ורץ — נופל. הקלדה היא לא מירוץ, ילדה. היא ריקוד.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'idle',
+    },
+    {
+      id: 'ch3-6b-03',
+      character: 'yuki',
+      text: 'מי... מי את?! עגורה?! עגורה שמדברת?!',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch3-6b-04',
+      character: 'sakura',
+      text: 'שמי סאקורה. הייתי חברה של סנסאי זן, לפני הרבה מאוד זמן. הוא ביקש שאשמור עליך.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'happy',
+    },
+    {
+      id: 'ch3-6b-05',
+      character: 'senseiZen',
+      text: 'סאקורה... כבר שנים. שמחתי שבאת. יוקי צריכה מישהי שתלמד אותה מה שאני לא יכול.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'happy',
+    },
+    {
+      id: 'ch3-6b-06',
+      character: 'sakura',
+      text: 'תקשיבי, יוקי. מהירות בלי שליטה היא רעש. שליטה בלי מהירות היא שקט. ריקוד — זה שניהם ביחד. בוא נתרגל.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'idle',
+      duration: 3000,
+    },
+    {
+      id: 'ch3-6b-07',
+      character: 'yuki',
+      text: 'ריקוד... של אצבעות? אוקיי, סאקורה. תראי לי.',
+      type: 'dialog',
+      mood: 'happy',
+      expression: 'excited',
+    },
+  ],
+}
+
+/**
  * 3.7 — Glitch's first appearance (mysterious, friendly)
  * Strange girl-like entity shows up. Mika recognizes something.
  */
@@ -544,6 +612,7 @@ export const CHAPTER_3_BEATS: DialogStoryBeat[] = [
   CHAPTER_3_4_SHADOW_DUEL,
   CHAPTER_3_5_STORM_ARRIVES,
   CHAPTER_3_6_YUKI_VS_BARAK,
+  CHAPTER_3_6B_SAKURA_MENTORS_YUKI,
   CHAPTER_3_7_GLITCH_APPEARS,
   CHAPTER_3_8_TEAM_FORMATION,
   CHAPTER_3_9_OMINOUS_END,

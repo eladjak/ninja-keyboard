@@ -4,31 +4,29 @@ import { useMemo } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Target, Zap, Shield, Flame, CheckCircle2, ChevronLeft } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { getDailyChallenge, getTodayDateStr } from '@/lib/challenges/daily-challenge'
 import { useDailyChallengeStore } from '@/stores/daily-challenge-store'
 import { cn } from '@/lib/utils'
 import type { ChallengeType } from '@/lib/challenges/daily-challenge'
 
-const TYPE_CONFIG: Record<ChallengeType, { icon: typeof Target; color: string; bg: string; label: string }> = {
+const TYPE_CONFIG: Record<ChallengeType, { icon: typeof Target; accent: string; glow: string; label: string }> = {
   speed: {
     icon: Zap,
-    color: 'text-amber-600 dark:text-amber-400',
-    bg: 'bg-amber-100 dark:bg-amber-900/30',
+    accent: '#f59e0b',
+    glow: 'oklch(0.75 0.18 80 / 35%)',
     label: 'מהירות',
   },
   accuracy: {
     icon: Target,
-    color: 'text-blue-600 dark:text-blue-400',
-    bg: 'bg-blue-100 dark:bg-blue-900/30',
+    accent: 'var(--game-accent-purple)',
+    glow: 'oklch(0.55 0.2 292 / 35%)',
     label: 'דיוק',
   },
   endurance: {
     icon: Shield,
-    color: 'text-green-600 dark:text-green-400',
-    bg: 'bg-green-100 dark:bg-green-900/30',
+    accent: 'var(--game-accent-green)',
+    glow: 'oklch(0.672 0.148 168 / 35%)',
     label: 'סיבולת',
   },
 }
@@ -47,42 +45,64 @@ export function DailyChallengeCard({ className }: DailyChallengeCardProps) {
   const Icon = config.icon
 
   return (
-    <Card className={cn('overflow-hidden', className)} data-testid="daily-challenge">
-      <CardHeader className="pb-2">
-        <CardTitle className="flex items-center justify-between">
-          <span className="flex items-center gap-2 text-base">
-            <Target className="size-5 text-primary" />
-            אתגר יומי
+    <div
+      className={cn('game-card-border overflow-hidden', className)}
+      style={{ borderColor: completed ? 'oklch(0.672 0.148 168 / 40%)' : 'oklch(0.75 0.18 80 / 35%)' }}
+      data-testid="daily-challenge"
+    >
+      {/* Header */}
+      <div
+        className="flex items-center justify-between p-4 pb-3"
+        style={{ borderBottom: '1px solid var(--game-border)' }}
+      >
+        <div className="flex items-center gap-2">
+          <Target className="size-5" style={{ color: '#f59e0b' }} />
+          <h3 className="game-section-title text-base">אתגר יומי</h3>
+        </div>
+        {streak > 1 && (
+          <span
+            className="game-stat-badge"
+            style={{ borderColor: 'oklch(0.65 0.22 40 / 40%)', color: '#f97316' }}
+          >
+            <Flame className="size-3 text-orange-500" />
+            {streak} ימים
           </span>
-          {streak > 1 && (
-            <Badge variant="secondary" className="gap-1">
-              <Flame className="size-3 text-orange-500" />
-              {streak} ימים
-            </Badge>
-          )}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-3">
+        )}
+      </div>
+
+      <div className="space-y-3 p-4">
         {/* Challenge info */}
         <div className="flex items-start gap-3">
-          <div className={cn('flex size-10 items-center justify-center rounded-lg', config.bg)}>
-            <Icon className={cn('size-5', config.color)} />
+          <div
+            className="flex size-10 shrink-0 items-center justify-center rounded-xl"
+            style={{ background: `${config.accent}20`, boxShadow: `0 0 10px ${config.glow}` }}
+          >
+            <Icon className="size-5" style={{ color: config.accent }} />
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2">
-              <h3 className="font-semibold">{challenge.titleHe}</h3>
-              <Badge variant="outline" className="text-xs">
+              <h3 className="font-semibold text-foreground">{challenge.titleHe}</h3>
+              <span
+                className="rounded-full px-2 py-0.5 text-[10px] font-semibold"
+                style={{ background: `${config.accent}20`, color: config.accent, border: `1px solid ${config.accent}40` }}
+              >
                 {config.label}
-              </Badge>
+              </span>
             </div>
             <p className="text-sm text-muted-foreground">{challenge.descriptionHe}</p>
           </div>
         </div>
 
         {/* Reward */}
-        <div className="flex items-center justify-between rounded-lg bg-muted/50 px-3 py-2">
+        <div
+          className="flex items-center justify-between rounded-xl px-3 py-2"
+          style={{ background: 'var(--game-hover-bg)', border: '1px solid var(--game-border)' }}
+        >
           <span className="text-sm text-muted-foreground">פרס השלמה</span>
-          <span className="flex items-center gap-1 font-medium text-primary">
+          <span
+            className="flex items-center gap-1 font-bold"
+            style={{ color: '#f59e0b', textShadow: '0 0 8px oklch(0.75 0.18 80 / 40%)' }}
+          >
             <Zap className="size-4" />
             +{challenge.xpReward} XP
           </span>
@@ -91,7 +111,12 @@ export function DailyChallengeCard({ className }: DailyChallengeCardProps) {
         {/* Action */}
         {completed ? (
           <motion.div
-            className="flex items-center justify-center gap-2 rounded-lg bg-green-50 py-3 text-green-700 dark:bg-green-900/20 dark:text-green-400"
+            className="flex items-center justify-center gap-2 rounded-xl py-3"
+            style={{
+              background: 'oklch(0.672 0.148 168 / 15%)',
+              border: '1px solid oklch(0.672 0.148 168 / 40%)',
+              color: 'var(--game-accent-green)',
+            }}
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.15 }}
@@ -101,13 +126,13 @@ export function DailyChallengeCard({ className }: DailyChallengeCardProps) {
           </motion.div>
         ) : (
           <Link href="/practice">
-            <Button className="w-full gap-2">
+            <Button className="game-button w-full gap-2">
               התחל אתגר
               <ChevronLeft className="size-4" />
             </Button>
           </Link>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }

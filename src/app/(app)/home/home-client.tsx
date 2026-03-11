@@ -268,7 +268,7 @@ export function HomeDashboard() {
                 >
                   {value}
                 </span>
-                <span className="text-xs text-gray-400">{stat.label}</span>
+                <span className="text-xs text-muted-foreground">{stat.label}</span>
               </div>
             </motion.div>
           )
@@ -325,7 +325,7 @@ export function HomeDashboard() {
                   >
                     <link.icon className={`size-7 ${link.color}`} />
                   </div>
-                  <span className="text-[11px] font-medium text-center leading-tight text-gray-300">{link.label}</span>
+                  <span className="text-[11px] font-medium text-center leading-tight text-muted-foreground">{link.label}</span>
                 </div>
               </motion.div>
             </Link>
@@ -344,10 +344,11 @@ export function HomeDashboard() {
             {recentLessons.map((lesson) => (
               <div
                 key={lesson.lessonId}
-                className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-3 transition-colors hover:bg-white/10"
+                className="flex items-center justify-between rounded-lg p-3 transition-colors"
+                style={{ background: 'var(--game-hover-bg)', border: '1px solid var(--game-border)' }}
               >
-                <span className="text-sm font-medium text-gray-200">{lesson.title}</span>
-                <div className="flex items-center gap-3 text-xs text-gray-400">
+                <span className="text-sm font-medium text-foreground">{lesson.title}</span>
+                <div className="flex items-center gap-3 text-xs text-muted-foreground">
                   <span className="flex items-center gap-1">
                     <Zap className="size-3 text-amber-400" />
                     {lesson.bestWpm} מ/ד

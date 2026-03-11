@@ -5,8 +5,6 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Swords, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Progress } from '@/components/ui/progress'
 import { BattleResults } from '@/components/battle/battle-results'
 import { AIOpponent } from '@/components/battle/ai-opponent'
 import { soundManager } from '@/lib/audio/sound-manager'
@@ -26,6 +24,13 @@ import { RIVAL_DISPLAY } from '@/lib/battle/ai-typing-engine'
 import { useXpStore } from '@/stores/xp-store'
 import { useAIOpponentStore } from '@/stores/ai-opponent-store'
 import type { RivalName, DifficultyLevel, AIMatchResult } from '@/types/ai-opponent'
+
+// ── Types (local) ──────────────────────────────────────────────────
+
+interface FinalAIStats {
+  wpm: number
+  accuracy: number
+}
 
 // ── Constants ──────────────────────────────────────────────────────
 
@@ -74,9 +79,14 @@ export function BattleArena() {
   const [winner, setWinner] = useState<BattleWinner>(null)
   const [xpEarned, setXpEarned] = useState(0)
   const [battleStarted, setBattleStarted] = useState(false)
+  // Final AI stats from the match result (set when AI finishes)
+  const [finalAIStats, setFinalAIStats] = useState<FinalAIStats>({ wpm: 0, accuracy: 100 })
 
   const inputRef = useRef<HTMLInputElement>(null)
   const battleEndedRef = useRef(false)
+  // Timer ref for tracking elapsed time during battle
+  const battleTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const battleStartTimeRef = useRef<number>(0)
 
   const addXp = useXpStore((s) => s.addXp)
   const aiOpponentState = useAIOpponentStore((s) => s.opponentState)
@@ -119,7 +129,25 @@ export function BattleArena() {
       soundManager.playBattleStart()
       setBattleStarted(true)
       battleEndedRef.current = false
+      battleStartTimeRef.current = Date.now()
       inputRef.current?.focus()
+
+      // Start elapsed time tracker (updates every 100ms for accurate final time)
+      battleTimerRef.current = setInterval(() => {
+        if (battleEndedRef.current) return
+        const elapsed = Date.now() - battleStartTimeRef.current
+        setBattleState((prev) => {
+          if (!prev || prev.status === 'finished') return prev
+          return { ...prev, timeElapsed: elapsed }
+        })
+      }, 100)
+    }
+
+    return () => {
+      if (battleTimerRef.current !== null) {
+        clearInterval(battleTimerRef.current)
+        battleTimerRef.current = null
+      }
     }
   }, [phase])
 
@@ -127,6 +155,9 @@ export function BattleArena() {
 
   const handleAIComplete = useCallback(
     (result: AIMatchResult) => {
+      // Always capture the final AI stats for results display
+      setFinalAIStats({ wpm: result.finalWPM, accuracy: result.accuracy })
+
       if (battleEndedRef.current) return
 
       setBattleState((prev) => {
@@ -135,7 +166,14 @@ export function BattleArena() {
         // Only mark AI as winner if player hasn't already won
         if (prev.playerProgress < prev.text.length) {
           battleEndedRef.current = true
-          return { ...prev, status: 'finished', winner: 'ai', aiProgress: prev.text.length }
+          const elapsed = Date.now() - battleStartTimeRef.current
+          return {
+            ...prev,
+            status: 'finished',
+            winner: 'ai',
+            aiProgress: prev.text.length,
+            timeElapsed: elapsed,
+          }
         }
         return prev
       })
@@ -208,6 +246,7 @@ export function BattleArena() {
       setWinner(null)
       setXpEarned(0)
       setBattleStarted(false)
+      setFinalAIStats({ wpm: 0, accuracy: 100 })
       battleEndedRef.current = false
     },
     [],
@@ -245,7 +284,8 @@ export function BattleArena() {
         const battleWinner = checkWinner(updated, updated.text.length)
         if (battleWinner === 'player') {
           battleEndedRef.current = true
-          return { ...updated, status: 'finished', winner: 'player' }
+          const elapsed = Date.now() - battleStartTimeRef.current
+          return { ...updated, status: 'finished', winner: 'player', timeElapsed: elapsed }
         }
 
         return updated
@@ -267,7 +307,12 @@ export function BattleArena() {
     setWinner(null)
     setXpEarned(0)
     setBattleStarted(false)
+    setFinalAIStats({ wpm: 0, accuracy: 100 })
     battleEndedRef.current = false
+    if (battleTimerRef.current !== null) {
+      clearInterval(battleTimerRef.current)
+      battleTimerRef.current = null
+    }
   }, [])
 
   // ── Derived Values ─────────────────────────────────────────────
@@ -286,86 +331,101 @@ export function BattleArena() {
 
   if (phase === 'select') {
     return (
-      <div className="relative mx-auto max-w-3xl space-y-6 overflow-hidden">
+      <div className="relative mx-auto max-w-3xl space-y-5 overflow-hidden p-4">
         <Image src="/images/backgrounds/battle-bg.jpg" alt="" fill className="object-cover opacity-20 pointer-events-none" />
-        <Card>
-          <CardHeader className="text-center">
-            <CardTitle className="flex items-center justify-center gap-2 text-2xl">
-              <Swords className="size-7" />
-              זירת קרב
-            </CardTitle>
-            <p className="text-muted-foreground mt-1">
-              בחר יריב להתמודדות
-            </p>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {RIVAL_OPTIONS.map((option) => {
-                const display = RIVAL_DISPLAY[option.rival]
-                return (
-                  <button
-                    key={option.rival}
-                    onClick={() => handleSelectRival(option.rival, option.difficulty)}
-                    className="group rounded-xl border-2 border-transparent bg-muted/50 p-5 text-center transition-all hover:border-primary hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    data-testid={`rival-${option.rival}`}
-                  >
-                    <div className="mx-auto mb-3 overflow-hidden rounded-full border-2 border-muted-foreground/20 group-hover:border-primary/50 transition-colors"
-                      style={{ width: 56, height: 56, boxShadow: `0 0 16px ${display.glowColor}` }}
-                    >
-                      <Image
-                        src={display.image}
-                        alt={display.nameHe}
-                        width={56}
-                        height={56}
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="flex items-center justify-center gap-1.5 text-lg font-bold">
-                      <span>{display.emoji}</span>
-                      <span>{option.label}</span>
-                    </div>
-                    <div className="text-muted-foreground mt-1 text-xs">
-                      {option.description}
-                    </div>
-                    <div className="mt-2 flex items-center justify-center gap-1">
-                      {Array.from({ length: 5 }, (_, i) => (
-                        <div
-                          key={i}
-                          className={`size-2 rounded-full ${
-                            i < option.difficulty
-                              ? 'bg-primary'
-                              : 'bg-muted-foreground/20'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  </button>
-                )
-              })}
-            </div>
 
-            {/* Legacy difficulty buttons (smaller, below) */}
-            <div className="mt-6 border-t border-border pt-4">
-              <p className="text-muted-foreground text-center text-xs mb-3">
-                או בחר לפי רמת קושי:
-              </p>
-              <div className="flex justify-center gap-3">
-                {(['easy', 'medium', 'hard'] as const).map((d) => (
-                  <Button
-                    key={d}
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleStartBattle(d)}
-                    data-testid={`difficulty-${d}`}
-                  >
-                    <Zap className="size-3.5 me-1" />
-                    {d === 'easy' ? 'קל' : d === 'medium' ? 'בינוני' : 'קשה'}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Page header */}
+        <div
+          className="game-card-border flex items-center justify-center gap-3 p-4 text-center"
+          style={{ borderColor: 'oklch(0.65 0.24 25 / 50%)' }}
+        >
+          <div
+            className="flex size-10 items-center justify-center rounded-xl"
+            style={{ background: 'oklch(0.65 0.24 25 / 20%)', boxShadow: '0 0 12px oklch(0.65 0.24 25 / 30%)' }}
+          >
+            <Swords className="size-5 text-red-400" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-black neon-text-purple">זירת קרב</h1>
+            <p className="text-sm text-muted-foreground">בחר יריב להתמודדות</p>
+          </div>
+        </div>
+
+        {/* Rival grid */}
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {RIVAL_OPTIONS.map((option) => {
+            const display = RIVAL_DISPLAY[option.rival]
+            return (
+              <motion.button
+                key={option.rival}
+                onClick={() => handleSelectRival(option.rival, option.difficulty)}
+                className="game-card-border p-5 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                style={{ borderColor: `${display.glowColor}40` }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                data-testid={`rival-${option.rival}`}
+              >
+                <div
+                  className="mx-auto mb-3 overflow-hidden rounded-full border-2 transition-colors"
+                  style={{ width: 56, height: 56, borderColor: `${display.glowColor}60`, boxShadow: `0 0 20px ${display.glowColor}` }}
+                >
+                  <Image
+                    src={display.image}
+                    alt={display.nameHe}
+                    width={56}
+                    height={56}
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex items-center justify-center gap-1.5 text-lg font-bold">
+                  <span>{display.emoji}</span>
+                  <span style={{ color: display.themeColor }}>{option.label}</span>
+                </div>
+                <div className="mt-1 text-xs text-muted-foreground">
+                  {option.description}
+                </div>
+                <div className="mt-2 flex items-center justify-center gap-1">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <div
+                      key={i}
+                      className="size-2 rounded-full transition-colors"
+                      style={{
+                        background: i < option.difficulty ? display.themeColor : 'oklch(0.3 0.02 290)',
+                        boxShadow: i < option.difficulty ? `0 0 6px ${display.glowColor}` : 'none',
+                      }}
+                    />
+                  ))}
+                </div>
+              </motion.button>
+            )
+          })}
+        </div>
+
+        {/* Legacy difficulty buttons (smaller, below) */}
+        <div
+          className="rounded-xl p-4"
+          style={{ background: 'var(--game-hover-bg)', border: '1px solid var(--game-border)' }}
+        >
+          <p className="mb-3 text-center text-xs text-muted-foreground">
+            או בחר לפי רמת קושי:
+          </p>
+          <div className="flex justify-center gap-3">
+            {(['easy', 'medium', 'hard'] as const).map((d) => (
+              <Button
+                key={d}
+                variant="outline"
+                size="sm"
+                onClick={() => handleStartBattle(d)}
+                className="border-primary/30 hover:border-primary/60 hover:bg-primary/10"
+                data-testid={`difficulty-${d}`}
+              >
+                <Zap className="size-3.5 me-1" />
+                {d === 'easy' ? 'קל' : d === 'medium' ? 'בינוני' : 'קשה'}
+              </Button>
+            ))}
+          </div>
+        </div>
       </div>
     )
   }
@@ -374,12 +434,17 @@ export function BattleArena() {
 
   if (phase === 'countdown') {
     return (
-      <div className="flex min-h-[400px] flex-col items-center justify-center gap-6">
+      <div className="flex min-h-[400px] flex-col items-center justify-center gap-8">
         {/* Show rival info during countdown */}
-        <div className="flex items-center gap-3 text-muted-foreground">
-          <span className="text-2xl">{rivalDisplay.emoji}</span>
-          <span className="text-lg font-bold">{rivalDisplay.nameHe}</span>
-          <span className="text-sm">({rivalDisplay.description})</span>
+        <div
+          className="game-card-border flex items-center gap-3 px-6 py-3"
+          style={{ borderColor: `${rivalDisplay.glowColor}50` }}
+        >
+          <span className="text-3xl">{rivalDisplay.emoji}</span>
+          <div className="text-center">
+            <span className="block text-lg font-bold" style={{ color: rivalDisplay.themeColor }}>{rivalDisplay.nameHe}</span>
+            <span className="text-xs text-muted-foreground">{rivalDisplay.description}</span>
+          </div>
         </div>
         <AnimatePresence mode="wait">
           <motion.div
@@ -391,7 +456,7 @@ export function BattleArena() {
             className="text-center"
           >
             <span
-              className="text-8xl font-black text-primary"
+              className="text-8xl font-black neon-text-purple"
               data-testid="countdown-display"
             >
               {COUNTDOWN_STEPS[countdownIndex]}
@@ -426,62 +491,79 @@ export function BattleArena() {
       {/* Player vs AI header */}
       <div className="grid grid-cols-2 gap-4">
         {/* Player card - right side (RTL) */}
-        <Card className="border-primary/50">
-          <CardContent className="p-4 text-center">
-            <div className="flex items-center justify-center gap-2">
-              <Image src="/images/characters/ki-mascot.jpg" alt="Ki" width={28} height={28} className="rounded-full border border-primary/50" />
-              <span className="font-bold">אתה</span>
-            </div>
-            <div className="mt-2 text-2xl font-black text-primary tabular-nums" data-testid="player-wpm">
-              {playerWpm} <span className="text-sm font-normal">מ/ד</span>
-            </div>
-            <div className="text-muted-foreground text-xs">
-              דיוק: {playerAccuracy}%
-            </div>
-          </CardContent>
-        </Card>
+        <div
+          className="game-card-border p-4 text-center"
+          style={{ borderColor: 'oklch(0.55 0.2 292 / 50%)' }}
+        >
+          <div className="flex items-center justify-center gap-2">
+            <Image src="/images/characters/ki-mascot.jpg" alt="Ki" width={28} height={28} className="rounded-full" style={{ border: '1px solid var(--game-accent-purple)' }} />
+            <span className="font-bold text-foreground">אתה</span>
+          </div>
+          <div
+            className="mt-2 text-2xl font-black tabular-nums"
+            style={{ color: 'var(--game-accent-purple)', textShadow: 'var(--game-text-glow)' }}
+            data-testid="player-wpm"
+          >
+            {playerWpm} <span className="text-sm font-normal text-muted-foreground">מ/ד</span>
+          </div>
+          <div className="text-muted-foreground text-xs">
+            דיוק: {playerAccuracy}%
+          </div>
+        </div>
 
         {/* AI card - left side (RTL) */}
-        <Card style={{ borderColor: `${rivalDisplay.glowColor}` }}>
-          <CardContent className="p-4">
-            {battleState && (
-              <AIOpponent
-                rivalId={selectedRival}
-                targetText={battleState.text}
-                difficulty={selectedLevel}
-                rubberBandEnabled={true}
-                isStarted={battleStarted}
-                playerPosition={battleState.playerProgress}
-                onComplete={handleAIComplete}
-              />
-            )}
-          </CardContent>
-        </Card>
+        <div
+          className="game-card-border p-4"
+          style={{ borderColor: `${rivalDisplay.glowColor}`, boxShadow: `0 0 16px ${rivalDisplay.glowColor}` }}
+        >
+          {battleState && (
+            <AIOpponent
+              rivalId={selectedRival}
+              targetText={battleState.text}
+              difficulty={selectedLevel}
+              rubberBandEnabled={true}
+              isStarted={battleStarted}
+              playerPosition={battleState.playerProgress}
+              onComplete={handleAIComplete}
+            />
+          )}
+        </div>
       </div>
 
       {/* Progress bars */}
-      <div className="space-y-2">
+      <div
+        className="game-card-border space-y-3 p-4"
+        style={{ borderColor: 'oklch(0.495 0.205 292 / 20%)' }}
+      >
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium w-12">אתה</span>
-          <div className="flex-1">
-            <Progress value={playerPercent} className="h-3" data-testid="player-progress" />
+          <span className="w-12 text-sm font-medium text-foreground">אתה</span>
+          <div className="relative flex-1 h-3 overflow-hidden rounded-full" style={{ background: 'var(--game-bg-input)', border: '1px solid var(--game-border)' }}>
+            <motion.div
+              className="h-full rounded-full"
+              style={{ background: 'linear-gradient(90deg, #6C5CE7, #00B894)', boxShadow: '0 0 8px oklch(0.55 0.2 292 / 50%)' }}
+              animate={{ width: `${playerPercent}%` }}
+              transition={{ duration: 0.15 }}
+              data-testid="player-progress"
+            />
           </div>
-          <span className="text-muted-foreground w-10 text-end text-sm tabular-nums">
+          <span className="w-10 text-end text-sm tabular-nums text-muted-foreground">
             {playerPercent}%
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium w-12" style={{ color: rivalDisplay.themeColor }}>
+          <span className="w-12 text-sm font-medium" style={{ color: rivalDisplay.themeColor }}>
             {rivalDisplay.nameHe}
           </span>
-          <div className="flex-1">
-            <Progress
-              value={aiPercent}
-              className="h-3 [&>[data-slot=progress-indicator]]:bg-red-500"
+          <div className="relative flex-1 h-3 overflow-hidden rounded-full" style={{ background: 'var(--game-bg-input)', border: '1px solid var(--game-border)' }}>
+            <motion.div
+              className="h-full rounded-full"
+              style={{ background: rivalDisplay.themeColor, boxShadow: `0 0 8px ${rivalDisplay.glowColor}` }}
+              animate={{ width: `${aiPercent}%` }}
+              transition={{ duration: 0.15 }}
               data-testid="ai-progress"
             />
           </div>
-          <span className="text-muted-foreground w-10 text-end text-sm tabular-nums">
+          <span className="w-10 text-end text-sm tabular-nums text-muted-foreground">
             {aiPercent}%
           </span>
         </div>
@@ -489,34 +571,39 @@ export function BattleArena() {
 
       {/* Text display */}
       {battleState && (
-        <Card
-          className="cursor-text"
+        <div
+          className="game-card-border cursor-text p-6"
+          style={{ borderColor: 'oklch(0.495 0.205 292 / 25%)' }}
           onClick={() => inputRef.current?.focus()}
           data-testid="battle-text-area"
         >
-          <CardContent className="p-6">
-            <p
-              className="text-xl leading-relaxed font-medium"
-              dir="rtl"
-              lang="he"
-            >
-              {battleState.text.split('').map((char, i) => {
-                let className = 'text-muted-foreground/40'
-                if (i < battleState.playerProgress) {
-                  className = 'text-green-600 dark:text-green-400'
-                } else if (i === battleState.playerProgress) {
-                  className =
-                    'bg-primary/20 text-foreground underline underline-offset-4'
+          <p
+            className="text-xl leading-relaxed font-medium"
+            dir="rtl"
+            lang="he"
+          >
+            {battleState.text.split('').map((char, i) => {
+              let style: React.CSSProperties = { color: 'oklch(0.65 0.02 290 / 50%)' }
+              if (i < battleState.playerProgress) {
+                style = { color: 'var(--game-accent-green)', textShadow: '0 0 6px oklch(0.672 0.148 168 / 40%)' }
+              } else if (i === battleState.playerProgress) {
+                style = {
+                  background: 'oklch(0.55 0.2 292 / 25%)',
+                  color: 'var(--foreground)',
+                  textDecoration: 'underline',
+                  textDecorationColor: 'var(--game-accent-purple)',
+                  textUnderlineOffset: '4px',
+                  borderRadius: '2px',
                 }
-                return (
-                  <span key={i} className={className}>
-                    {char}
-                  </span>
-                )
-              })}
-            </p>
-          </CardContent>
-        </Card>
+              }
+              return (
+                <span key={i} style={style}>
+                  {char}
+                </span>
+              )
+            })}
+          </p>
+        </div>
       )}
 
       {/* Click to focus hint */}
@@ -533,12 +620,14 @@ export function BattleArena() {
           winner={winner}
           stats={{
             playerWpm,
-            aiWpm: aiOpponentState.currentWPM,
+            aiWpm: finalAIStats.wpm > 0 ? finalAIStats.wpm : aiOpponentState.currentWPM,
             playerAccuracy,
+            aiAccuracy: finalAIStats.accuracy,
             timeSeconds: Math.round(battleState.timeElapsed / 1000),
           }}
           xpEarned={xpEarned}
           difficulty={difficulty}
+          rivalDisplay={rivalDisplay}
           onPlayAgain={handlePlayAgain}
           onBack={handleBack}
         />

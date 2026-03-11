@@ -1,13 +1,8 @@
 'use client'
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 import { useXpStore } from '@/stores/xp-store'
 import { cn } from '@/lib/utils'
+import { BarChart3 } from 'lucide-react'
 
 interface StatsChartProps {
   className?: string
@@ -33,12 +28,21 @@ export function StatsChart({ className }: StatsChartProps) {
       : 0
 
   return (
-    <Card className={cn('overflow-hidden', className)} dir="rtl">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-lg">היסטוריית מהירות</CardTitle>
-      </CardHeader>
+    <div
+      className={cn('game-card-border overflow-hidden', className)}
+      dir="rtl"
+      style={{ borderColor: 'oklch(0.55 0.2 292 / 30%)' }}
+    >
+      {/* Header */}
+      <div
+        className="flex items-center gap-2 p-4 pb-3"
+        style={{ borderBottom: '1px solid var(--game-border)' }}
+      >
+        <BarChart3 className="size-4" style={{ color: 'var(--game-accent-purple)' }} />
+        <h3 className="game-section-title text-base">היסטוריית מהירות</h3>
+      </div>
 
-      <CardContent className="space-y-4">
+      <div className="space-y-4 p-4">
         {wpmValues.length === 0 ? (
           <p className="py-8 text-center text-muted-foreground">
             אין נתונים עדיין. התחל לתרגל!
@@ -48,22 +52,32 @@ export function StatsChart({ className }: StatsChartProps) {
             {/* Stats labels */}
             <div className="flex justify-between text-sm" role="list" aria-label="סיכום מהירות">
               <div role="listitem" className="text-center">
-                <span className="text-muted-foreground">מינימום</span>
-                <p className="font-bold">{minWpm} מ/ד</p>
+                <span className="text-muted-foreground text-xs">מינימום</span>
+                <p className="font-bold text-foreground">{minWpm} מ/ד</p>
               </div>
               <div role="listitem" className="text-center">
-                <span className="text-muted-foreground">ממוצע</span>
-                <p className="font-bold text-primary">{avgWpm} מ/ד</p>
+                <span className="text-muted-foreground text-xs">ממוצע</span>
+                <p
+                  className="font-black"
+                  style={{ color: 'var(--game-accent-purple)', textShadow: 'var(--game-text-glow-sm)' }}
+                >
+                  {avgWpm} מ/ד
+                </p>
               </div>
               <div role="listitem" className="text-center">
-                <span className="text-muted-foreground">מקסימום</span>
-                <p className="font-bold">{maxWpm} מ/ד</p>
+                <span className="text-muted-foreground text-xs">מקסימום</span>
+                <p
+                  className="font-black"
+                  style={{ color: 'var(--game-accent-green)', textShadow: '0 0 8px oklch(0.672 0.148 168 / 40%)' }}
+                >
+                  {maxWpm} מ/ד
+                </p>
               </div>
             </div>
 
             {/* Bar chart */}
             <div
-              className="flex items-end gap-2"
+              className="flex items-end gap-1.5"
               style={{ height: '160px' }}
               role="img"
               aria-label={`גרף מהירות: ממוצע ${avgWpm} מילים לדקה`}
@@ -71,6 +85,7 @@ export function StatsChart({ className }: StatsChartProps) {
               {wpmValues.map((wpm, idx) => {
                 const heightPercent =
                   maxWpm > 0 ? Math.max(4, (wpm / maxWpm) * 100) : 4
+                const isMax = wpm === maxWpm
                 return (
                   <div
                     key={idx}
@@ -79,13 +94,16 @@ export function StatsChart({ className }: StatsChartProps) {
                   >
                     <div className="flex flex-1 w-full items-end">
                       <div
-                        className={cn(
-                          'w-full rounded-t-sm transition-all',
-                          wpm === maxWpm
-                            ? 'bg-primary'
-                            : 'bg-primary/40',
-                        )}
-                        style={{ height: `${heightPercent}%` }}
+                        className={cn('w-full rounded-t-sm transition-all')}
+                        style={{
+                          height: `${heightPercent}%`,
+                          background: isMax
+                            ? 'linear-gradient(180deg, #00B894, #00a381)'
+                            : 'linear-gradient(180deg, oklch(0.55 0.2 292 / 70%), oklch(0.55 0.2 292 / 30%))',
+                          boxShadow: isMax
+                            ? '0 0 8px oklch(0.672 0.148 168 / 50%)'
+                            : '0 0 4px oklch(0.55 0.2 292 / 30%)',
+                        }}
                         aria-hidden="true"
                         data-testid={`bar-${idx}`}
                       />
@@ -103,7 +121,7 @@ export function StatsChart({ className }: StatsChartProps) {
             </p>
           </>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }

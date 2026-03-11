@@ -1,9 +1,8 @@
-import { Button } from '@/components/ui/button'
-import { ClassOverview } from '@/components/teacher/class-overview'
-import type { ClassData } from '@/components/teacher/class-overview'
 import type { StudentProgress } from '@/lib/teacher/dashboard-utils'
+import { TeacherDashboardClient } from '@/components/teacher/teacher-dashboard-client'
+import type { ClassDataClient } from '@/components/teacher/teacher-dashboard-client'
 
-// ── Mock Data (replace with Supabase fetch in production) ────────
+// ── Mock Data (replace with Supabase fetch in production) ─────────
 
 const MOCK_STUDENTS: StudentProgress[] = [
   {
@@ -58,38 +57,52 @@ const MOCK_STUDENTS: StudentProgress[] = [
       { date: '2026-02-17', wpm: 42, accuracy: 95 },
     ],
   },
+  {
+    id: '4',
+    displayName: 'דניאל אלחרר',
+    age: 10,
+    avatarId: 'rabbit',
+    level: 'geza',
+    currentLesson: 5,
+    totalLessons: 20,
+    wpm: 18,
+    accuracy: 68,
+    lastActive: new Date(Date.now() - 86400000 * 5).toISOString(),
+    history: [
+      { date: '2026-02-05', wpm: 20, accuracy: 72 },
+      { date: '2026-02-10', wpm: 18, accuracy: 68 },
+    ],
+  },
+  {
+    id: '5',
+    displayName: 'תמר שפירא',
+    age: 11,
+    avatarId: 'butterfly',
+    level: 'geza',
+    currentLesson: 11,
+    totalLessons: 20,
+    wpm: 35,
+    accuracy: 88,
+    lastActive: new Date(Date.now() - 86400000).toISOString(),
+    history: [
+      { date: '2026-02-12', wpm: 28, accuracy: 82 },
+      { date: '2026-02-14', wpm: 30, accuracy: 85 },
+      { date: '2026-02-17', wpm: 35, accuracy: 88 },
+    ],
+  },
 ]
 
-const MOCK_CLASSES: ClassData[] = [
+const MOCK_CLASSES: ClassDataClient[] = [
   {
     id: 'class-1',
     name: 'כיתה ד׳1',
-    joinCode: 'ABCXYZ',
+    joinCode: 'NINJA42',
     students: MOCK_STUDENTS,
   },
 ]
 
-// ── Page ─────────────────────────────────────────────────────────
+// ── Page ──────────────────────────────────────────────────────────
 
 export default function TeacherDashboardPage() {
-  return (
-    <div className="mx-auto max-w-4xl space-y-6 p-4">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">לוח מורה</h1>
-          <p className="text-muted-foreground text-sm">ניהול כיתות ומעקב אחר התקדמות תלמידים</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline">הפק דו&quot;ח</Button>
-          <Button>הוסף כיתה</Button>
-        </div>
-      </div>
-
-      {/* Classes */}
-      {MOCK_CLASSES.map((classData) => (
-        <ClassOverview key={classData.id} classData={classData} />
-      ))}
-    </div>
-  )
+  return <TeacherDashboardClient classes={MOCK_CLASSES} />
 }

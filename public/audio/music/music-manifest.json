@@ -1,10 +1,13 @@
 {
   "generated_tracks": [
     {
+      "trackId": "MENU-001",
       "name": "main-theme",
-      "title": "Ninja Keyboard Main Theme",
+      "title": "Home Screen Theme",
+      "titleHe": "ערכת המסך הראשי",
       "description": "Happy energetic chiptune ninja game theme for kids",
-      "style": "chiptune, 8-bit, Japanese game music, upbeat, adventure, kids game",
+      "style": "Chiptune 8-bit",
+      "category": "menu",
       "files": [
         "main-theme.mp3",
         "main-theme-v2.mp3"
@@ -13,67 +16,157 @@
         213.92,
         217.88
       ],
-      "cover": "main-theme-cover.jpg"
-    },
-    {
-      "name": "boss-battle",
-      "title": "Boss Battle",
-      "description": "Epic intense boss battle music for the rival/challenge mode",
-      "style": "chiptune, orchestral, epic, intense, boss battle, 8-bit, dramatic",
-      "files": [
-        "boss-battle.mp3",
-        "boss-battle-v2.mp3"
-      ],
-      "durations": [
-        292.04,
-        229.32
-      ],
-      "cover": "boss-battle-cover.jpg"
-    },
-    {
-      "trackId": "EVENT-001",
-      "name": "victory-fanfare",
-      "title": "Victory Fanfare",
-      "titleHe": "ניצחון!",
-      "description": "Brass Fanfare - ניצחון!",
-      "style": "Brass Fanfare",
-      "category": "events",
-      "files": [
-        "events/victory-fanfare.mp3",
-        "events/victory-fanfare-v2.mp3"
-      ],
-      "durations": [
-        11.64,
-        21.04
-      ],
-      "sunoSongIds": [
-        "a70946e1-a1ee-4a5a-81b1-2ec1de9b9267",
-        "1229abdb-13ba-47f4-894d-4c418ab92c52"
-      ],
-      "generatedAt": "2026-03-10T14:42:38.875Z",
+      "cover": "main-theme-cover.jpg",
       "status": "ready"
     },
     {
-      "trackId": "EVENT-003",
-      "name": "character-unlock",
-      "title": "Character Unlock",
-      "titleHe": "דמות חדשה נפתחה!",
-      "description": "Magical Jingle - דמות חדשה נפתחה!",
-      "style": "Magical Jingle",
-      "category": "events",
+      "trackId": "MENU-002",
+      "name": "lessons-menu",
+      "title": "Lessons Menu",
+      "titleHe": "תפריט השיעורים",
+      "description": "Calm focused lo-fi study music",
+      "style": "Lo-fi / Ambient",
+      "category": "menu",
       "files": [
-        "events/character-unlock.mp3",
-        "events/character-unlock-v2.mp3"
+        "menu/lessons-menu.mp3",
+        "menu/lessons-menu-v2.mp3",
+        "menu/lessons-menu-v3.mp3",
+        "menu/lessons-menu-v4.mp3"
       ],
       "durations": [
-        21.96,
-        13.24
+        null,
+        null,
+        null,
+        null
+      ],
+      "source": [
+        "browser-extension",
+        "browser-extension",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "status": "ready"
+    },
+    {
+      "trackId": "MENU-003",
+      "name": "battle-menu",
+      "title": "Battle Menu",
+      "titleHe": "תפריט קרבות",
+      "description": "Intense synthwave battle lobby music",
+      "style": "Synthwave",
+      "category": "menu",
+      "files": [
+        "menu/battle-menu.mp3",
+        "menu/battle-menu-v2.mp3",
+        "menu/battle-menu-v3.mp3",
+        "menu/battle-menu-v4.mp3"
+      ],
+      "durations": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "source": [
+        "browser-extension",
+        "browser-extension",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "status": "ready"
+    },
+    {
+      "trackId": "MENU-004",
+      "name": "games-hub",
+      "title": "Games Hub",
+      "titleHe": "מרכז המשחקים",
+      "description": "Chiptune Pop - מרכז המשחקים",
+      "style": "Chiptune Pop",
+      "category": "menu",
+      "files": [
+        "menu/games-hub.mp3",
+        "menu/games-hub-v2.mp3",
+        "menu/games-hub-v3.mp3",
+        "menu/games-hub-v4.mp3"
+      ],
+      "durations": [
+        112.92,
+        117.88,
+        null,
+        null
       ],
       "sunoSongIds": [
-        "dfdd2604-9428-43df-83dc-edb09bcb18df",
-        "618e73fc-718f-4c20-8262-a8024992f40b"
+        "ad10adfc-f660-44f5-b841-c558a3c03038",
+        "6f02e2b9-5478-4882-a3f1-aba2ab283ff6"
       ],
-      "generatedAt": "2026-03-10T14:44:24.254Z",
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T15:06:03.434Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "MENU-005",
+      "name": "profile-progress",
+      "title": "Profile / Progress",
+      "titleHe": "פרופיל והתקדמות",
+      "description": "Ambient Orchestral - פרופיל והתקדמות",
+      "style": "Ambient Orchestral",
+      "category": "menu",
+      "files": [
+        "menu/profile-progress.mp3",
+        "menu/profile-progress-v2.mp3",
+        "menu/profile-progress-v3.mp3",
+        "menu/profile-progress-v4.mp3"
+      ],
+      "durations": [
+        128.84,
+        164.96,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "b2d16cb3-1681-4484-828f-6f9097850fc6",
+        "c54dcf9b-f31a-4955-8a64-741eed41b41b"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T15:06:50.700Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "MENU-006",
+      "name": "settings",
+      "title": "Settings",
+      "titleHe": "הגדרות",
+      "description": "Minimal neutral ambient background music",
+      "style": "Minimal Ambient",
+      "category": "menu",
+      "files": [
+        "menu/settings.mp3",
+        "menu/settings-v2.mp3",
+        "menu/settings-v3.mp3",
+        "menu/settings-v4.mp3"
+      ],
+      "durations": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "source": [
+        "browser-extension",
+        "browser-extension",
+        "browser-extension",
+        "browser-extension"
+      ],
       "status": "ready"
     },
     {
@@ -86,383 +179,27 @@
       "category": "gameplay",
       "files": [
         "gameplay/practice-easy.mp3",
-        "gameplay/practice-easy-v2.mp3"
+        "gameplay/practice-easy-v2.mp3",
+        "gameplay/practice-easy-v3.mp3",
+        "gameplay/practice-easy-v4.mp3"
       ],
       "durations": [
         99.28,
-        114.76
+        114.76,
+        null,
+        null
       ],
       "sunoSongIds": [
         "f685ed5e-6b08-4c64-9dbc-e5b1f6f5cb37",
         "5a329891-785a-4abc-b66b-ee896f791610"
       ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
       "generatedAt": "2026-03-10T14:45:40.401Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "EVENT-004",
-      "name": "achievement-unlock",
-      "title": "Achievement Unlock",
-      "titleHe": "אצ'יבמנט נפתח!",
-      "description": "Power Chord Jingle - אצ'יבמנט נפתח!",
-      "style": "Power Chord Jingle",
-      "category": "events",
-      "files": [
-        "events/achievement-unlock.mp3",
-        "events/achievement-unlock-v2.mp3"
-      ],
-      "durations": [
-        9.88,
-        9.2
-      ],
-      "sunoSongIds": [
-        "1a44dd8f-7ff8-4284-b1b4-8e6a9b178c7d",
-        "ded529ec-e0e1-4d5a-8f6e-882bd1f5147f"
-      ],
-      "generatedAt": "2026-03-10T14:45:42.676Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "STORY-002",
-      "name": "victory-celebration",
-      "title": "Victory/Celebration",
-      "titleHe": "סיפור — ניצחון וחגיגה",
-      "description": "Orchestral Triumphant - סיפור — ניצחון וחגיגה",
-      "style": "Orchestral Triumphant",
-      "category": "story",
-      "files": [
-        "story/victory-celebration.mp3",
-        "story/victory-celebration-v2.mp3"
-      ],
-      "durations": [
-        129.96,
-        158.04
-      ],
-      "sunoSongIds": [
-        "436f8cbb-f7a2-417e-a49d-d5ed8ee5c8e1",
-        "da60233a-0388-40c2-b49b-aab488c9dff4"
-      ],
-      "generatedAt": "2026-03-10T14:47:25.265Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "STORY-001",
-      "name": "emotional-moment",
-      "title": "Emotional Moment",
-      "titleHe": "סיפור — רגע רגשי",
-      "description": "Cinematic Piano / Strings - סיפור — רגע רגשי",
-      "style": "Cinematic Piano / Strings",
-      "category": "story",
-      "files": [
-        "story/emotional-moment.mp3",
-        "story/emotional-moment-v2.mp3"
-      ],
-      "durations": [
-        132.56,
-        184.32
-      ],
-      "sunoSongIds": [
-        "60f45d87-38e7-4284-9b2e-eb2783850ee3",
-        "dc2d8e78-a08f-465c-afd4-b92199299e4d"
-      ],
-      "generatedAt": "2026-03-10T14:47:27.624Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "WORLD-003",
-      "name": "geza-ninja-arena",
-      "title": "Geza - Ninja Arena",
-      "titleHe": "גזע — זירת נינג'ה (10-12)",
-      "description": "Dark Synthwave - גזע — זירת נינג'ה (10-12)",
-      "style": "Dark Synthwave",
-      "category": "worlds",
-      "files": [
-        "worlds/geza-ninja-arena.mp3",
-        "worlds/geza-ninja-arena-v2.mp3"
-      ],
-      "durations": [
-        196.52,
-        178.96
-      ],
-      "sunoSongIds": [
-        "4d25e40c-4058-40c0-b21c-e0389f6d46bd",
-        "ab9469ba-8ad6-4a26-be6a-5f79dce34672"
-      ],
-      "generatedAt": "2026-03-10T14:49:23.764Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "BATTLE-001",
-      "name": "pre-battle-anticipation",
-      "title": "Pre-Battle Anticipation",
-      "titleHe": "אנטיסיפציה לפני קרב",
-      "description": "Orchestral Tension - אנטיסיפציה לפני קרב",
-      "style": "Orchestral Tension",
-      "category": "battle",
-      "files": [
-        "battle/pre-battle-anticipation.mp3",
-        "battle/pre-battle-anticipation-v2.mp3"
-      ],
-      "durations": [
-        150.48,
-        193.68
-      ],
-      "sunoSongIds": [
-        "707cd3b4-5c8f-49d5-b9df-60dc3cea492a",
-        "b7a8d80d-bd7f-4502-aa19-7349bfeb03b0"
-      ],
-      "generatedAt": "2026-03-10T14:49:59.665Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "BATTLE-004",
-      "name": "blaze-dragon-battle",
-      "title": "Blaze Dragon Battle",
-      "titleHe": "Blaze Dragon — קרב קשה",
-      "description": "Metal / Epic - Blaze Dragon — קרב קשה",
-      "style": "Metal / Epic",
-      "category": "battle",
-      "files": [
-        "battle/blaze-dragon-battle.mp3",
-        "battle/blaze-dragon-battle-v2.mp3"
-      ],
-      "durations": [
-        223.28,
-        189.96
-      ],
-      "sunoSongIds": [
-        "21008e9f-c99f-4315-a2e8-82ab0ef02116",
-        "fb64290a-e1f7-4869-a9d5-6a44b3b6dc26"
-      ],
-      "generatedAt": "2026-03-10T14:51:40.055Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "BATTLE-006",
-      "name": "bug-boss-act-2",
-      "title": "Bug Boss Act 2",
-      "titleHe": "Bug — מעשה שני",
-      "description": "Dark Electronic - Bug — מעשה שני",
-      "style": "Dark Electronic",
-      "category": "battle",
-      "files": [
-        "battle/bug-boss-act-2.mp3",
-        "battle/bug-boss-act-2-v2.mp3"
-      ],
-      "durations": [
-        284.44,
-        169.24
-      ],
-      "sunoSongIds": [
-        "dfbf5bde-3f6f-4ea9-9be8-0b21b62ee5ae",
-        "428ac943-17a8-47a3-be32-8e7ac02c2c31"
-      ],
-      "generatedAt": "2026-03-10T14:52:33.276Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "BATTLE-009",
-      "name": "boss-defeated-fanfare",
-      "title": "Boss Defeated Fanfare",
-      "titleHe": "בוס הובס!",
-      "description": "Orchestral Stinger - בוס הובס!",
-      "style": "Orchestral Stinger",
-      "category": "battle",
-      "files": [
-        "battle/boss-defeated-fanfare.mp3",
-        "battle/boss-defeated-fanfare-v2.mp3"
-      ],
-      "durations": [
-        10,
-        9.88
-      ],
-      "sunoSongIds": [
-        "ce45b7c4-1411-472e-8966-4abfe19f58ba",
-        "08c72426-1575-4d85-b79b-bba4d44e3f8b"
-      ],
-      "generatedAt": "2026-03-10T14:53:02.025Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "BATTLE-007",
-      "name": "bug-king-final",
-      "title": "Bug King Final",
-      "titleHe": "Bug King — מעשה שלישי",
-      "description": "Epic Orchestral + Glitch - Bug King — מעשה שלישי",
-      "style": "Epic Orchestral + Glitch",
-      "category": "battle",
-      "files": [
-        "battle/bug-king-final.mp3",
-        "battle/bug-king-final-v2.mp3"
-      ],
-      "durations": [
-        170.96,
-        199.84
-      ],
-      "sunoSongIds": [
-        "9b87812a-fd6e-40dc-83d7-394efa4d0ce1",
-        "5fdcd728-3ab0-4a14-bc40-e4346a8778e5"
-      ],
-      "generatedAt": "2026-03-10T14:53:31.669Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "CHAR-004",
-      "name": "bugs-theme",
-      "title": "Bug’s Theme",
-      "titleHe": "ערכת Bug — קאוס",
-      "description": "Glitch Villain - ערכת Bug — קאוס",
-      "style": "Glitch Villain",
-      "category": "characters",
-      "files": [
-        "characters/bugs-theme.mp3",
-        "characters/bugs-theme-v2.mp3"
-      ],
-      "durations": [
-        36.4,
-        19.32
-      ],
-      "sunoSongIds": [
-        "f0af0c6e-5aa0-4852-9f73-eb43a0bf1540",
-        "e70ab439-ed47-44f3-9d4e-ccf4420b347b"
-      ],
-      "generatedAt": "2026-03-10T14:54:21.431Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "CHAR-006",
-      "name": "lunas-theme",
-      "title": "Luna’s Theme",
-      "titleHe": "ערכת לונה — שלווה",
-      "description": "Dream Pop - ערכת לונה — שלווה",
-      "style": "Dream Pop",
-      "category": "characters",
-      "files": [
-        "characters/lunas-theme.mp3",
-        "characters/lunas-theme-v2.mp3"
-      ],
-      "durations": [
-        34.8,
-        64.84
-      ],
-      "sunoSongIds": [
-        "766cfb16-5988-489f-8af2-923df0cb597c",
-        "a628f96d-7563-4c93-99e4-2f21d24c669f"
-      ],
-      "generatedAt": "2026-03-10T14:55:08.806Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "BATTLE-010",
-      "name": "tournament-arena",
-      "title": "Tournament Arena",
-      "titleHe": "זירת טורנירים",
-      "description": "Orchestral / Esports - זירת טורנירים",
-      "style": "Orchestral / Esports",
-      "category": "battle",
-      "files": [
-        "battle/tournament-arena.mp3",
-        "battle/tournament-arena-v2.mp3"
-      ],
-      "durations": [
-        134.96,
-        220.52
-      ],
-      "sunoSongIds": [
-        "a96b9195-fbf7-49da-af1a-c28950a0c2e4",
-        "2d8b839d-25cb-4e57-ba79-e2cbe252c9c7"
-      ],
-      "generatedAt": "2026-03-10T14:55:09.028Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "CHAR-007",
-      "name": "rexs-theme",
-      "title": "Rex’s Theme",
-      "titleHe": "ערכת Rex — משחקיות",
-      "description": "Dino Rock - ערכת Rex — משחקיות",
-      "style": "Dino Rock",
-      "category": "characters",
-      "files": [
-        "characters/rexs-theme.mp3"
-      ],
-      "durations": [
-        21.56,
-        12.84
-      ],
-      "sunoSongIds": [
-        "52b0d750-75e0-4a29-95b1-14a34ceea678",
-        "28bbe7ed-7dbb-4547-88f1-4ae503c03035"
-      ],
-      "generatedAt": "2026-03-10T14:56:01.281Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "CHAR-008",
-      "name": "glitchs-theme",
-      "title": "Glitch’s Theme",
-      "titleHe": "ערכת Glitch — כאוס טהור",
-      "description": "Glitch / Vaporwave - ערכת Glitch — כאוס טהור",
-      "style": "Glitch / Vaporwave",
-      "category": "characters",
-      "files": [
-        "characters/glitchs-theme-v2.mp3"
-      ],
-      "durations": [
-        162.44,
-        126.32
-      ],
-      "sunoSongIds": [
-        "fbfc657d-01bf-4c47-85f6-372a4b9d03d8",
-        "be132694-d9e6-4360-83e9-21ead46461da"
-      ],
-      "generatedAt": "2026-03-10T14:57:48.111Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "EVENT-005",
-      "name": "streak-milestone",
-      "title": "Streak Milestone",
-      "titleHe": "סטריק!",
-      "description": "Rising Buildup - סטריק!",
-      "style": "Rising Buildup",
-      "category": "events",
-      "files": [
-        "events/streak-milestone.mp3",
-        "events/streak-milestone-v2.mp3"
-      ],
-      "durations": [
-        22.48,
-        27.24
-      ],
-      "sunoSongIds": [
-        "f116a87b-2acb-4c93-a4ae-ea49a172fe58",
-        "abde001e-147c-4e48-8bb7-3fa067e778cc"
-      ],
-      "generatedAt": "2026-03-10T14:57:49.162Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "EVENT-007",
-      "name": "personal-best",
-      "title": "Personal Best",
-      "titleHe": "שיא אישי!",
-      "description": "Epic Stinger - שיא אישי!",
-      "style": "Epic Stinger",
-      "category": "events",
-      "files": [
-        "events/personal-best.mp3",
-        "events/personal-best-v2.mp3"
-      ],
-      "durations": [
-        8,
-        10.56
-      ],
-      "sunoSongIds": [
-        "cded2781-c4ef-49d5-a112-80f2f37deae4",
-        "6ace0f90-8ca0-44ae-b3f6-e374dfcdfc09"
-      ],
-      "generatedAt": "2026-03-10T14:58:27.750Z",
       "status": "ready"
     },
     {
@@ -475,17 +212,994 @@
       "category": "gameplay",
       "files": [
         "gameplay/practice-medium.mp3",
-        "gameplay/practice-medium-v2.mp3"
+        "gameplay/practice-medium-v2.mp3",
+        "gameplay/practice-medium-v3.mp3",
+        "gameplay/practice-medium-v4.mp3"
       ],
       "durations": [
         152,
-        142.64
+        142.64,
+        null,
+        null
       ],
       "sunoSongIds": [
         "d10c8cee-651e-4f96-9c08-4e3240790509",
         "f66e0573-be96-43c4-b347-47a2fe5d72c8"
       ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
       "generatedAt": "2026-03-10T15:02:45.636Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "PLAY-003",
+      "name": "practice-hard",
+      "title": "Practice Hard",
+      "titleHe": "תרגול — קשה",
+      "description": "Drum and Bass - תרגול — קשה",
+      "style": "Drum and Bass",
+      "category": "gameplay",
+      "files": [
+        "gameplay/practice-hard.mp3",
+        "gameplay/practice-hard-v2.mp3",
+        "gameplay/practice-hard-v3.mp3",
+        "gameplay/practice-hard-v4.mp3"
+      ],
+      "durations": [
+        185.6,
+        164.76,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "536563b8-4c70-4f22-ac33-a9ddf32bb6d7",
+        "2c922027-2269-4b13-af39-2313be7887a2"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T15:07:54.098Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "PLAY-004",
+      "name": "speed-test",
+      "title": "Speed Test",
+      "titleHe": "אדרנלין — מבחן מהירות",
+      "description": "EDM / Synthwave - אדרנלין — מבחן מהירות",
+      "style": "EDM / Synthwave",
+      "category": "gameplay",
+      "files": [
+        "gameplay/speed-test.mp3",
+        "gameplay/speed-test-v2.mp3",
+        "gameplay/speed-test-v3.mp3",
+        "gameplay/speed-test-v4.mp3"
+      ],
+      "durations": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "source": [
+        "browser-extension",
+        "browser-extension",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "status": "ready"
+    },
+    {
+      "trackId": "PLAY-005",
+      "name": "accuracy-challenge",
+      "title": "Accuracy Challenge",
+      "titleHe": "אתגר דיוק",
+      "description": "Minimal Techno - אתגר דיוק",
+      "style": "Minimal Techno",
+      "category": "gameplay",
+      "files": [
+        "gameplay/accuracy-challenge.mp3",
+        "gameplay/accuracy-challenge-v2.mp3",
+        "gameplay/accuracy-challenge-v3.mp3",
+        "gameplay/accuracy-challenge-v4.mp3"
+      ],
+      "durations": [
+        160.92,
+        179.72,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "62708e31-a9d0-4bbf-9383-cb266c2ac29b",
+        "a5f533c4-6585-4e56-b961-da5cb75aefc2"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T15:08:47.435Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "BATTLE-001",
+      "name": "pre-battle-anticipation",
+      "title": "Pre-Battle Anticipation",
+      "titleHe": "אנטיסיפציה לפני קרב",
+      "description": "Orchestral Tension - אנטיסיפציה לפני קרב",
+      "style": "Orchestral Tension",
+      "category": "battle",
+      "files": [
+        "battle/pre-battle-anticipation.mp3",
+        "battle/pre-battle-anticipation-v2.mp3",
+        "battle/pre-battle-anticipation-v3.mp3",
+        "battle/pre-battle-anticipation-v4.mp3"
+      ],
+      "durations": [
+        150.48,
+        193.68,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "707cd3b4-5c8f-49d5-b9df-60dc3cea492a",
+        "b7a8d80d-bd7f-4502-aa19-7349bfeb03b0"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T14:49:59.665Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "BATTLE-002",
+      "name": "shadow-cat-battle",
+      "title": "Shadow Cat Battle",
+      "titleHe": "Shadow Cat — קרב קל",
+      "description": "Chiptune Battle - Shadow Cat — קרב קל",
+      "style": "Chiptune Battle",
+      "category": "battle",
+      "files": [
+        "battle/shadow-cat-battle.mp3",
+        "battle/shadow-cat-battle-v2.mp3",
+        "battle/shadow-cat-battle-v3.mp3",
+        "battle/shadow-cat-battle-v4.mp3"
+      ],
+      "durations": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "source": [
+        "browser-extension",
+        "browser-extension",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "status": "ready"
+    },
+    {
+      "trackId": "BATTLE-003",
+      "name": "storm-fox-battle",
+      "title": "Storm Fox Battle",
+      "titleHe": "Storm Fox — קרב בינוני",
+      "description": "Electro Rock - Storm Fox — קרב בינוני",
+      "style": "Electro Rock",
+      "category": "battle",
+      "files": [
+        "battle/storm-fox-battle.mp3",
+        "battle/storm-fox-battle-v2.mp3",
+        "battle/storm-fox-battle-v3.mp3",
+        "battle/storm-fox-battle-v4.mp3"
+      ],
+      "durations": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "source": [
+        "browser-extension",
+        "browser-extension",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "status": "ready"
+    },
+    {
+      "trackId": "BATTLE-004",
+      "name": "blaze-dragon-battle",
+      "title": "Blaze Dragon Battle",
+      "titleHe": "Blaze Dragon — קרב קשה",
+      "description": "Metal / Epic - Blaze Dragon — קרב קשה",
+      "style": "Metal / Epic",
+      "category": "battle",
+      "files": [
+        "battle/blaze-dragon-battle.mp3",
+        "battle/blaze-dragon-battle-v2.mp3",
+        "battle/blaze-dragon-battle-v3.mp3",
+        "battle/blaze-dragon-battle-v4.mp3"
+      ],
+      "durations": [
+        223.28,
+        189.96,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "21008e9f-c99f-4315-a2e8-82ab0ef02116",
+        "fb64290a-e1f7-4869-a9d5-6a44b3b6dc26"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T14:51:40.055Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "BATTLE-005",
+      "name": "boss-battle",
+      "title": "Boss Battle (Bug Act 1)",
+      "titleHe": "Bug — מעשה ראשון",
+      "description": "Epic intense boss battle music",
+      "style": "Glitchy Electronic",
+      "category": "battle",
+      "files": [
+        "boss-battle.mp3",
+        "boss-battle-v2.mp3"
+      ],
+      "durations": [
+        292.04,
+        229.32
+      ],
+      "cover": "boss-battle-cover.jpg",
+      "status": "ready"
+    },
+    {
+      "trackId": "BATTLE-006",
+      "name": "bug-boss-act-2",
+      "title": "Bug Boss Act 2",
+      "titleHe": "Bug — מעשה שני",
+      "description": "Dark Electronic - Bug — מעשה שני",
+      "style": "Dark Electronic",
+      "category": "battle",
+      "files": [
+        "battle/bug-boss-act-2.mp3",
+        "battle/bug-boss-act-2-v2.mp3",
+        "battle/bug-boss-act-2-v3.mp3",
+        "battle/bug-boss-act-2-v4.mp3"
+      ],
+      "durations": [
+        284.44,
+        169.24,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "dfbf5bde-3f6f-4ea9-9be8-0b21b62ee5ae",
+        "428ac943-17a8-47a3-be32-8e7ac02c2c31"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T14:52:33.276Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "BATTLE-007",
+      "name": "bug-king-final",
+      "title": "Bug King Final",
+      "titleHe": "Bug King — מעשה שלישי",
+      "description": "Epic Orchestral + Glitch - Bug King — מעשה שלישי",
+      "style": "Epic Orchestral + Glitch",
+      "category": "battle",
+      "files": [
+        "battle/bug-king-final.mp3",
+        "battle/bug-king-final-v2.mp3",
+        "battle/bug-king-final-v3.mp3",
+        "battle/bug-king-final-v4.mp3"
+      ],
+      "durations": [
+        170.96,
+        199.84,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "9b87812a-fd6e-40dc-83d7-394efa4d0ce1",
+        "5fdcd728-3ab0-4a14-bc40-e4346a8778e5"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T14:53:31.669Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "BATTLE-008",
+      "name": "glitch-secret-boss",
+      "title": "Glitch Secret Boss",
+      "titleHe": "Glitch — בוס סודי",
+      "description": "Vaporwave Corrupted - Glitch — בוס סודי",
+      "style": "Vaporwave Corrupted",
+      "category": "battle",
+      "files": [
+        "battle/glitch-secret-boss.mp3",
+        "battle/glitch-secret-boss-v2.mp3",
+        "battle/glitch-secret-boss-v3.mp3",
+        "battle/glitch-secret-boss-v4.mp3"
+      ],
+      "durations": [
+        201.44,
+        184.8,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "d667eff5-7117-436f-a7dc-34ffdc75c95b",
+        "28087137-78cd-4dd3-96d0-f49dd56716aa"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T15:05:10.756Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "BATTLE-009",
+      "name": "boss-defeated-fanfare",
+      "title": "Boss Defeated Fanfare",
+      "titleHe": "בוס הובס!",
+      "description": "Orchestral Stinger - בוס הובס!",
+      "style": "Orchestral Stinger",
+      "category": "battle",
+      "files": [
+        "battle/boss-defeated-fanfare.mp3",
+        "battle/boss-defeated-fanfare-v2.mp3",
+        "battle/boss-defeated-fanfare-v3.mp3",
+        "battle/boss-defeated-fanfare-v4.mp3"
+      ],
+      "durations": [
+        10,
+        9.88,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "ce45b7c4-1411-472e-8966-4abfe19f58ba",
+        "08c72426-1575-4d85-b79b-bba4d44e3f8b"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T14:53:02.025Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "BATTLE-010",
+      "name": "tournament-arena",
+      "title": "Tournament Arena",
+      "titleHe": "זירת טורנירים",
+      "description": "Orchestral / Esports - זירת טורנירים",
+      "style": "Orchestral / Esports",
+      "category": "battle",
+      "files": [
+        "battle/tournament-arena.mp3",
+        "battle/tournament-arena-v2.mp3",
+        "battle/tournament-arena-v3.mp3",
+        "battle/tournament-arena-v4.mp3"
+      ],
+      "durations": [
+        134.96,
+        220.52,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "a96b9195-fbf7-49da-af1a-c28950a0c2e4",
+        "2d8b839d-25cb-4e57-ba79-e2cbe252c9c7"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T14:55:09.028Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "EVENT-001",
+      "name": "victory-fanfare",
+      "title": "Victory Fanfare",
+      "titleHe": "ניצחון!",
+      "description": "Brass Fanfare - ניצחון!",
+      "style": "Brass Fanfare",
+      "category": "events",
+      "files": [
+        "events/victory-fanfare.mp3",
+        "events/victory-fanfare-v2.mp3",
+        "events/victory-fanfare-v3.mp3",
+        "events/victory-fanfare-v4.mp3"
+      ],
+      "durations": [
+        11.64,
+        21.04,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "a70946e1-a1ee-4a5a-81b1-2ec1de9b9267",
+        "1229abdb-13ba-47f4-894d-4c418ab92c52"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T14:42:38.875Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "EVENT-002",
+      "name": "level-up-jingle",
+      "title": "Level Up Jingle",
+      "titleHe": "עלית רמה!",
+      "description": "Chiptune Jingle - עלית רמה!",
+      "style": "Chiptune Jingle",
+      "category": "events",
+      "files": [
+        "events/level-up-jingle.mp3",
+        "events/level-up-jingle-v2.mp3",
+        "events/level-up-jingle-v3.mp3",
+        "events/level-up-jingle-v4.mp3"
+      ],
+      "durations": [
+        10.4,
+        14.08,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "e43be15b-c0b1-4277-9e18-8d6c8ff228c5",
+        "1703bb82-7a6b-4575-8905-13def32fe8a0"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T15:35:13.791Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "EVENT-003",
+      "name": "character-unlock",
+      "title": "Character Unlock",
+      "titleHe": "דמות חדשה נפתחה!",
+      "description": "Magical Jingle - דמות חדשה נפתחה!",
+      "style": "Magical Jingle",
+      "category": "events",
+      "files": [
+        "events/character-unlock.mp3",
+        "events/character-unlock-v2.mp3",
+        "events/character-unlock-v3.mp3",
+        "events/character-unlock-v4.mp3"
+      ],
+      "durations": [
+        21.96,
+        13.24,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "dfdd2604-9428-43df-83dc-edb09bcb18df",
+        "618e73fc-718f-4c20-8262-a8024992f40b"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T14:44:24.254Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "EVENT-004",
+      "name": "achievement-unlock",
+      "title": "Achievement Unlock",
+      "titleHe": "אצ'יבמנט נפתח!",
+      "description": "Power Chord Jingle - אצ'יבמנט נפתח!",
+      "style": "Power Chord Jingle",
+      "category": "events",
+      "files": [
+        "events/achievement-unlock.mp3",
+        "events/achievement-unlock-v2.mp3",
+        "events/achievement-unlock-v3.mp3",
+        "events/achievement-unlock-v4.mp3"
+      ],
+      "durations": [
+        9.88,
+        9.2,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "1a44dd8f-7ff8-4284-b1b4-8e6a9b178c7d",
+        "ded529ec-e0e1-4d5a-8f6e-882bd1f5147f"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T14:45:42.676Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "EVENT-005",
+      "name": "streak-milestone",
+      "title": "Streak Milestone",
+      "titleHe": "סטריק!",
+      "description": "Rising Buildup - סטריק!",
+      "style": "Rising Buildup",
+      "category": "events",
+      "files": [
+        "events/streak-milestone.mp3",
+        "events/streak-milestone-v2.mp3",
+        "events/streak-milestone-v3.mp3",
+        "events/streak-milestone-v4.mp3"
+      ],
+      "durations": [
+        22.48,
+        27.24,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "f116a87b-2acb-4c93-a4ae-ea49a172fe58",
+        "abde001e-147c-4e48-8bb7-3fa067e778cc"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T14:57:49.162Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "EVENT-006",
+      "name": "season-event-theme",
+      "title": "Season Event Theme",
+      "titleHe": "אירוע עונה",
+      "description": "Festive Electronic - אירוע עונה",
+      "style": "Festive Electronic",
+      "category": "events",
+      "files": [
+        "events/season-event-theme.mp3",
+        "events/season-event-theme-v2.mp3",
+        "events/season-event-theme-v3.mp3",
+        "events/season-event-theme-v4.mp3"
+      ],
+      "durations": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "source": [
+        "browser-extension",
+        "browser-extension",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "status": "ready"
+    },
+    {
+      "trackId": "EVENT-007",
+      "name": "personal-best",
+      "title": "Personal Best",
+      "titleHe": "שיא אישי!",
+      "description": "Epic Stinger - שיא אישי!",
+      "style": "Epic Stinger",
+      "category": "events",
+      "files": [
+        "events/personal-best.mp3",
+        "events/personal-best-v2.mp3",
+        "events/personal-best-v3.mp3",
+        "events/personal-best-v4.mp3"
+      ],
+      "durations": [
+        8,
+        10.56,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "cded2781-c4ef-49d5-a112-80f2f37deae4",
+        "6ace0f90-8ca0-44ae-b3f6-e374dfcdfc09"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T14:58:27.750Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "EVENT-008",
+      "name": "defeat-try-again",
+      "title": "Defeat / Try Again",
+      "titleHe": "כישלון — נסה שוב",
+      "description": "Sad Trombone Reimagined - כישלון — נסה שוב",
+      "style": "Sad Trombone Reimagined",
+      "category": "events",
+      "files": [
+        "events/defeat-try-again.mp3",
+        "events/defeat-try-again-v2.mp3",
+        "events/defeat-try-again-v3.mp3",
+        "events/defeat-try-again-v4.mp3"
+      ],
+      "durations": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "source": [
+        "browser-extension",
+        "browser-extension",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "status": "ready"
+    },
+    {
+      "trackId": "CHAR-001",
+      "name": "kis-theme",
+      "title": "Ki's Theme",
+      "titleHe": "ערכת קי — גיבור",
+      "description": "Adventure Chiptune + Orchestral - ערכת קי — גיבור",
+      "style": "Adventure Chiptune + Orchestral",
+      "category": "characters",
+      "files": [
+        "characters/kis-theme.mp3",
+        "characters/kis-theme-v2.mp3",
+        "characters/kis-theme-v3.mp3",
+        "characters/kis-theme-v4.mp3"
+      ],
+      "durations": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "source": [
+        "browser-extension",
+        "browser-extension",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "status": "ready"
+    },
+    {
+      "trackId": "CHAR-002",
+      "name": "mikas-theme",
+      "title": "Mika's Theme",
+      "titleHe": "ערכת מיקה — טק הקרית",
+      "description": "Cyberpunk Pop - ערכת מיקה — טק הקרית",
+      "style": "Cyberpunk Pop",
+      "category": "characters",
+      "files": [
+        "characters/mikas-theme.mp3",
+        "characters/mikas-theme-v2.mp3",
+        "characters/mikas-theme-v3.mp3",
+        "characters/mikas-theme-v4.mp3"
+      ],
+      "durations": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "source": [
+        "browser-extension",
+        "browser-extension",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "status": "ready"
+    },
+    {
+      "trackId": "CHAR-003",
+      "name": "sensei-zens-theme",
+      "title": "Sensei Zen's Theme",
+      "titleHe": "ערכת סנסיי זן — חכם",
+      "description": "Traditional Japanese / Zen - ערכת סנסיי זן — חכם",
+      "style": "Traditional Japanese / Zen",
+      "category": "characters",
+      "files": [
+        "characters/sensei-zens-theme.mp3",
+        "characters/sensei-zens-theme-v2.mp3",
+        "characters/sensei-zens-theme-v3.mp3",
+        "characters/sensei-zens-theme-v4.mp3"
+      ],
+      "durations": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "source": [
+        "browser-extension",
+        "browser-extension",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "status": "ready"
+    },
+    {
+      "trackId": "CHAR-004",
+      "name": "bugs-theme",
+      "title": "Bug's Theme",
+      "titleHe": "ערכת Bug — קאוס",
+      "description": "Glitch Villain - ערכת Bug — קאוס",
+      "style": "Glitch Villain",
+      "category": "characters",
+      "files": [
+        "characters/bugs-theme.mp3",
+        "characters/bugs-theme-v2.mp3",
+        "characters/bugs-theme-v3.mp3",
+        "characters/bugs-theme-v4.mp3",
+        "characters/bugs-theme-v5.mp3"
+      ],
+      "durations": [
+        36.4,
+        19.32,
+        null,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "f0af0c6e-5aa0-4852-9f73-eb43a0bf1540",
+        "e70ab439-ed47-44f3-9d4e-ccf4420b347b"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T14:54:21.431Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "CHAR-005",
+      "name": "yukis-theme",
+      "title": "Yuki's Theme",
+      "titleHe": "ערכת יוקי — מהירות",
+      "description": "J-Pop / Fast Electronic - ערכת יוקי — מהירות",
+      "style": "J-Pop / Fast Electronic",
+      "category": "characters",
+      "files": [
+        "characters/yukis-theme.mp3",
+        "characters/yukis-theme-v2.mp3",
+        "characters/yukis-theme-v3.mp3",
+        "characters/yukis-theme-v4.mp3"
+      ],
+      "durations": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "source": [
+        "browser-extension",
+        "browser-extension",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "status": "ready"
+    },
+    {
+      "trackId": "CHAR-006",
+      "name": "lunas-theme",
+      "title": "Luna's Theme",
+      "titleHe": "ערכת לונה — שלווה",
+      "description": "Dream Pop - ערכת לונה — שלווה",
+      "style": "Dream Pop",
+      "category": "characters",
+      "files": [
+        "characters/lunas-theme.mp3",
+        "characters/lunas-theme-v2.mp3",
+        "characters/lunas-theme-v3.mp3",
+        "characters/lunas-theme-v4.mp3"
+      ],
+      "durations": [
+        34.8,
+        64.84,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "766cfb16-5988-489f-8af2-923df0cb597c",
+        "a628f96d-7563-4c93-99e4-2f21d24c669f"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T14:55:08.806Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "CHAR-007",
+      "name": "rexs-theme",
+      "title": "Rex's Theme",
+      "titleHe": "ערכת Rex — משחקיות",
+      "description": "Dino Rock - ערכת Rex — משחקיות",
+      "style": "Dino Rock",
+      "category": "characters",
+      "files": [
+        "characters/rexs-theme.mp3",
+        "characters/rexs-theme-v2.mp3",
+        "characters/rexs-theme-v3.mp3",
+        "characters/rexs-theme-v4.mp3"
+      ],
+      "durations": [
+        21.56,
+        12.84,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "52b0d750-75e0-4a29-95b1-14a34ceea678",
+        "28bbe7ed-7dbb-4547-88f1-4ae503c03035"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T14:56:01.281Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "CHAR-008",
+      "name": "glitchs-theme",
+      "title": "Glitch's Theme",
+      "titleHe": "ערכת Glitch — כאוס טהור",
+      "description": "Glitch / Vaporwave - ערכת Glitch — כאוס טהור",
+      "style": "Glitch / Vaporwave",
+      "category": "characters",
+      "files": [
+        "characters/glitchs-theme.mp3",
+        "characters/glitchs-theme-v2.mp3",
+        "characters/glitchs-theme-v3.mp3",
+        "characters/glitchs-theme-v4.mp3"
+      ],
+      "durations": [
+        null,
+        162.44,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "fbfc657d-01bf-4c47-85f6-372a4b9d03d8",
+        "be132694-d9e6-4360-83e9-21ead46461da"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T14:57:48.111Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "STORY-001",
+      "name": "emotional-moment",
+      "title": "Emotional Moment",
+      "titleHe": "סיפור — רגע רגשי",
+      "description": "Cinematic Piano / Strings - סיפור — רגע רגשי",
+      "style": "Cinematic Piano / Strings",
+      "category": "story",
+      "files": [
+        "story/emotional-moment.mp3",
+        "story/emotional-moment-v2.mp3",
+        "story/emotional-moment-v3.mp3",
+        "story/emotional-moment-v4.mp3"
+      ],
+      "durations": [
+        132.56,
+        184.32,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "60f45d87-38e7-4284-9b2e-eb2783850ee3",
+        "dc2d8e78-a08f-465c-afd4-b92199299e4d"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T14:47:27.624Z",
+      "status": "ready"
+    },
+    {
+      "trackId": "STORY-002",
+      "name": "victory-celebration",
+      "title": "Victory/Celebration",
+      "titleHe": "סיפור — ניצחון וחגיגה",
+      "description": "Orchestral Triumphant - סיפור — ניצחון וחגיגה",
+      "style": "Orchestral Triumphant",
+      "category": "story",
+      "files": [
+        "story/victory-celebration.mp3",
+        "story/victory-celebration-v2.mp3",
+        "story/victory-celebration-v3.mp3",
+        "story/victory-celebration-v4.mp3"
+      ],
+      "durations": [
+        129.96,
+        158.04,
+        null,
+        null
+      ],
+      "sunoSongIds": [
+        "436f8cbb-f7a2-417e-a49d-d5ed8ee5c8e1",
+        "da60233a-0388-40c2-b49b-aab488c9dff4"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
+      "generatedAt": "2026-03-10T15:47:25.265Z",
       "status": "ready"
     },
     {
@@ -498,15 +1212,25 @@
       "category": "worlds",
       "files": [
         "worlds/shatil-magical-garden.mp3",
-        "worlds/shatil-magical-garden-v2.mp3"
+        "worlds/shatil-magical-garden-v2.mp3",
+        "worlds/shatil-magical-garden-v3.mp3",
+        "worlds/shatil-magical-garden-v4.mp3"
       ],
       "durations": [
         126.24,
-        172.48
+        172.48,
+        null,
+        null
       ],
       "sunoSongIds": [
         "a91d6a29-ac54-485a-85b5-76910fc888eb",
         "53df1bf8-aebb-4b16-84cc-9ff9a926767d"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
       ],
       "generatedAt": "2026-03-10T15:03:05.328Z",
       "status": "ready"
@@ -521,131 +1245,60 @@
       "category": "worlds",
       "files": [
         "worlds/nevet-adventure-camp.mp3",
-        "worlds/nevet-adventure-camp-v2.mp3"
+        "worlds/nevet-adventure-camp-v2.mp3",
+        "worlds/nevet-adventure-camp-v3.mp3",
+        "worlds/nevet-adventure-camp-v4.mp3"
       ],
       "durations": [
         84.96,
-        127.68
+        127.68,
+        null,
+        null
       ],
       "sunoSongIds": [
         "223686f2-6602-464a-8aff-b2ec88441685",
         "35220eb9-2952-41b7-9ef0-a906d5b957e0"
       ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
       "generatedAt": "2026-03-10T15:04:40.259Z",
       "status": "ready"
     },
     {
-      "trackId": "BATTLE-008",
-      "name": "glitch-secret-boss",
-      "title": "Glitch Secret Boss",
-      "titleHe": "Glitch — בוס סודי",
-      "description": "Vaporwave Corrupted - Glitch — בוס סודי",
-      "style": "Vaporwave Corrupted",
-      "category": "battle",
+      "trackId": "WORLD-003",
+      "name": "geza-ninja-arena",
+      "title": "Geza - Ninja Arena",
+      "titleHe": "גזע — זירת נינג'ה (10-12)",
+      "description": "Dark Synthwave - גזע — זירת נינג'ה (10-12)",
+      "style": "Dark Synthwave",
+      "category": "worlds",
       "files": [
-        "battle/glitch-secret-boss.mp3",
-        "battle/glitch-secret-boss-v2.mp3"
+        "worlds/geza-ninja-arena.mp3",
+        "worlds/geza-ninja-arena-v2.mp3",
+        "worlds/geza-ninja-arena-v3.mp3",
+        "worlds/geza-ninja-arena-v4.mp3"
       ],
       "durations": [
-        201.44,
-        184.8
+        196.52,
+        178.96,
+        null,
+        null
       ],
       "sunoSongIds": [
-        "d667eff5-7117-436f-a7dc-34ffdc75c95b",
-        "28087137-78cd-4dd3-96d0-f49dd56716aa"
+        "4d25e40c-4058-40c0-b21c-e0389f6d46bd",
+        "ab9469ba-8ad6-4a26-be6a-5f79dce34672"
       ],
-      "generatedAt": "2026-03-10T15:05:10.756Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "MENU-004",
-      "name": "games-hub",
-      "title": "Games Hub",
-      "titleHe": "מרכז המשחקים",
-      "description": "Chiptune Pop - מרכז המשחקים",
-      "style": "Chiptune Pop",
-      "category": "menu",
-      "files": [
-        "menu/games-hub.mp3",
-        "menu/games-hub-v2.mp3"
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
       ],
-      "durations": [
-        112.92,
-        117.88
-      ],
-      "sunoSongIds": [
-        "ad10adfc-f660-44f5-b841-c558a3c03038",
-        "6f02e2b9-5478-4882-a3f1-aba2ab283ff6"
-      ],
-      "generatedAt": "2026-03-10T15:06:03.434Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "MENU-005",
-      "name": "profile-progress",
-      "title": "Profile / Progress",
-      "titleHe": "פרופיל והתקדמות",
-      "description": "Ambient Orchestral - פרופיל והתקדמות",
-      "style": "Ambient Orchestral",
-      "category": "menu",
-      "files": [
-        "menu/profile-progress.mp3"
-      ],
-      "durations": [
-        128.84,
-        164.96
-      ],
-      "sunoSongIds": [
-        "b2d16cb3-1681-4484-828f-6f9097850fc6",
-        "c54dcf9b-f31a-4955-8a64-741eed41b41b"
-      ],
-      "generatedAt": "2026-03-10T15:06:50.700Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "PLAY-003",
-      "name": "practice-hard",
-      "title": "Practice Hard",
-      "titleHe": "תרגול — קשה",
-      "description": "Drum and Bass - תרגול — קשה",
-      "style": "Drum and Bass",
-      "category": "gameplay",
-      "files": [
-        "gameplay/practice-hard.mp3",
-        "gameplay/practice-hard-v2.mp3"
-      ],
-      "durations": [
-        185.6,
-        164.76
-      ],
-      "sunoSongIds": [
-        "536563b8-4c70-4f22-ac33-a9ddf32bb6d7",
-        "2c922027-2269-4b13-af39-2313be7887a2"
-      ],
-      "generatedAt": "2026-03-10T15:07:54.098Z",
-      "status": "ready"
-    },
-    {
-      "trackId": "PLAY-005",
-      "name": "accuracy-challenge",
-      "title": "Accuracy Challenge",
-      "titleHe": "אתגר דיוק",
-      "description": "Minimal Techno - אתגר דיוק",
-      "style": "Minimal Techno",
-      "category": "gameplay",
-      "files": [
-        "gameplay/accuracy-challenge.mp3",
-        "gameplay/accuracy-challenge-v2.mp3"
-      ],
-      "durations": [
-        160.92,
-        179.72
-      ],
-      "sunoSongIds": [
-        "62708e31-a9d0-4bbf-9383-cb266c2ac29b",
-        "a5f533c4-6585-4e56-b961-da5cb75aefc2"
-      ],
-      "generatedAt": "2026-03-10T15:08:47.435Z",
+      "generatedAt": "2026-03-10T14:49:23.764Z",
       "status": "ready"
     },
     {
@@ -658,15 +1311,25 @@
       "category": "worlds",
       "files": [
         "worlds/anaf-training-hub.mp3",
-        "worlds/anaf-training-hub-v2.mp3"
+        "worlds/anaf-training-hub-v2.mp3",
+        "worlds/anaf-training-hub-v3.mp3",
+        "worlds/anaf-training-hub-v4.mp3"
       ],
       "durations": [
         144.92,
-        207.92
+        207.92,
+        null,
+        null
       ],
       "sunoSongIds": [
         "473c0963-7875-4183-a43c-208d0f42f13d",
         "1884521b-0d97-4399-8d64-abd3edd24c24"
+      ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
       ],
       "generatedAt": "2026-03-10T15:10:21.943Z",
       "status": "ready"
@@ -681,107 +1344,32 @@
       "category": "worlds",
       "files": [
         "worlds/tzameret-professional.mp3",
-        "worlds/tzameret-professional-v2.mp3"
+        "worlds/tzameret-professional-v2.mp3",
+        "worlds/tzameret-professional-v3.mp3",
+        "worlds/tzameret-professional-v4.mp3"
       ],
       "durations": [
         174.6,
-        256.64
+        256.64,
+        null,
+        null
       ],
       "sunoSongIds": [
         "9c5acc7a-9a3b-4bdb-8cd2-acf582012c7c",
         "c37b0733-5c28-43f5-a7a1-3205c9aacc9e"
       ],
+      "source": [
+        "api",
+        "api",
+        "browser-extension",
+        "browser-extension"
+      ],
       "generatedAt": "2026-03-10T15:11:08.973Z",
       "status": "ready"
-    },
-    {
-      "trackId": "EVENT-002",
-      "name": "level-up-jingle",
-      "title": "Level Up Jingle",
-      "titleHe": "עלית רמה!",
-      "description": "Chiptune Jingle - עלית רמה!",
-      "style": "Chiptune Jingle",
-      "category": "events",
-      "files": [
-        "events/level-up-jingle.mp3",
-        "events/level-up-jingle-v2.mp3"
-      ],
-      "durations": [
-        10.4,
-        14.08
-      ],
-      "sunoSongIds": [
-        "e43be15b-c0b1-4277-9e18-8d6c8ff228c5",
-        "1703bb82-7a6b-4575-8905-13def32fe8a0"
-      ],
-      "generatedAt": "2026-03-10T15:35:13.791Z",
-      "status": "ready"
     }
   ],
-  "pending_tracks": [
-    {
-      "id": "CHAR-001",
-      "name": "ki-theme",
-      "title": "Ki's Theme",
-      "titleHe": "ערכת קי — גיבור",
-      "description": "Adventurous chiptune hero theme with cinematic swell, young ninja main character anthem",
-      "style": "chiptune, orchestral, Japanese game music, adventure, heroic, 8-bit meets cinematic",
-      "category": "character",
-      "duration": "60-90s",
-      "status": "pending"
-    },
-    {
-      "id": "CHAR-002",
-      "name": "mika-theme",
-      "title": "Mika's Theme",
-      "titleHe": "ערכת מיקה — טק הקרית",
-      "description": "Cyberpunk electronic pop with chiptune glitch accents, edgy hacker girl theme",
-      "style": "cyberpunk, electronic pop, glitch, chiptune hybrid, neon, hacker aesthetic",
-      "category": "character",
-      "duration": "60-90s",
-      "status": "pending"
-    },
-    {
-      "id": "CHAR-005",
-      "name": "yuki-theme",
-      "title": "Yuki's Theme",
-      "titleHe": "ערכת יוקי — מהירות",
-      "description": "Ultra-fast J-pop electronic with chiptune racing pulse, speed demon melody",
-      "style": "J-pop, electronic, fast chiptune, racing, speed, competitive, anime energy",
-      "category": "character",
-      "duration": "60-90s",
-      "status": "pending"
-    },
-    {
-      "id": "CHAR-003",
-      "name": "sensei-zen-theme",
-      "title": "Sensei Zen's Theme",
-      "titleHe": "ערכת סנסיי זן — חכם",
-      "description": "Peaceful Japanese shakuhachi and koto with chiptune warmth, ancient turtle master wisdom",
-      "style": "traditional Japanese, ambient, zen, shakuhachi, koto, meditation, chiptune undertone",
-      "category": "character",
-      "duration": "60-90s",
-      "status": "pending"
-    },
-    {
-      "id": "PLAY-004",
-      "name": "speed-test",
-      "title": "Speed Test",
-      "titleHe": "אדרנלין — מבחן מהירות",
-      "description": "Adrenaline EDM with chiptune countdown, building tempo speed challenge anthem",
-      "style": "EDM, synthwave, chiptune, adrenaline, competitive, building tempo, countdown",
-      "category": "gameplay",
-      "duration": "120-180s",
-      "status": "pending"
-    }
-  ],
-  "not_generated": [
-    {
-      "name": "practice-mode",
-      "reason": "Insufficient credits (needed 25 more credits)",
-      "prompt": "Calm relaxing lo-fi typing music, soft piano and ambient pads"
-    }
-  ],
+  "pending_tracks": [],
+  "not_generated": [],
   "quality_rejected": [
     {
       "trackId": "CHAR-007",
@@ -887,5 +1475,28 @@
       ],
       "rejectedAt": "2026-03-10T15:13:34.441Z"
     }
-  ]
+  ],
+  "metadata": {
+    "updatedAt": "2026-03-11T00:00:00.000Z",
+    "totalTracks": 44,
+    "totalMp3Files": 168,
+    "categoryCounts": {
+      "menu": 6,
+      "gameplay": 5,
+      "battle": 10,
+      "events": 8,
+      "characters": 8,
+      "story": 2,
+      "worlds": 5
+    },
+    "variantCounts": {
+      "v1_v2_only": 2,
+      "v1_to_v4": 41,
+      "v1_to_v5": 1
+    },
+    "sourceBreakdown": {
+      "api_generated": 26,
+      "browser_extension": 18
+    }
+  }
 }

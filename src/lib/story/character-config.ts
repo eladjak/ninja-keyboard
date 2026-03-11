@@ -427,6 +427,9 @@ export const HERO_CHARACTERS: CharacterName[] = [
   'senseiZen',
   'pixel',
   'rex',
+  'phantom',
+  'masterBeat',
+  'sakura',
 ]
 
 /** Characters considered villains */
@@ -436,6 +439,8 @@ export const VILLAIN_CHARACTERS: CharacterName[] = [
   'shadow',
   'storm',
   'blaze',
+  'virus',
+  'barak',
 ]
 
 /**

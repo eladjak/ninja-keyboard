@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import type { BattleWinner, BattleDifficulty } from '@/lib/battle/battle-engine'
 import {
@@ -16,7 +18,16 @@ interface BattleStats {
   playerWpm: number
   aiWpm: number
   playerAccuracy: number
+  aiAccuracy: number
   timeSeconds: number
+}
+
+interface RivalDisplayInfo {
+  nameHe: string
+  emoji: string
+  image: string
+  themeColor: string
+  glowColor: string
 }
 
 interface BattleResultsProps {
@@ -25,6 +36,7 @@ interface BattleResultsProps {
   stats: BattleStats
   xpEarned: number
   difficulty: BattleDifficulty
+  rivalDisplay: RivalDisplayInfo
   onPlayAgain: () => void
   onBack: () => void
 }
@@ -41,6 +53,7 @@ export function BattleResults({
   stats,
   xpEarned,
   difficulty,
+  rivalDisplay,
   onPlayAgain,
   onBack,
 }: BattleResultsProps) {
@@ -54,32 +67,43 @@ export function BattleResults({
         aria-label={playerWon ? 'ניצחון' : 'הפסד'}
       >
         <DialogHeader className="items-center">
-          <div
-            className={`mx-auto flex size-16 items-center justify-center rounded-full ${
-              playerWon
-                ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400'
-                : 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400'
-            }`}
+          <motion.div
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.15, ease: 'easeOut' }}
+            className="mx-auto flex size-16 items-center justify-center rounded-full"
+            style={playerWon
+              ? { background: 'oklch(0.672 0.148 168 / 20%)', color: 'var(--game-accent-green)', boxShadow: '0 0 20px oklch(0.672 0.148 168 / 40%)' }
+              : { background: 'oklch(0.65 0.24 25 / 20%)', color: 'oklch(0.75 0.2 25)', boxShadow: '0 0 20px oklch(0.65 0.24 25 / 40%)' }
+            }
           >
             <Trophy className="size-8" />
-          </div>
-          <DialogTitle className="text-2xl">
+          </motion.div>
+          <DialogTitle
+            className="text-2xl font-black"
+            style={playerWon
+              ? { color: 'var(--game-accent-green)', textShadow: '0 0 12px oklch(0.672 0.148 168 / 50%)' }
+              : { color: 'oklch(0.75 0.2 25)', textShadow: '0 0 12px oklch(0.65 0.24 25 / 40%)' }
+            }
+          >
             {playerWon ? 'ניצחון!' : 'הפסד...'}
           </DialogTitle>
           <DialogDescription>
             {playerWon
-              ? 'כל הכבוד! ניצחת את הנינג\u05F3ה בוט!'
-              : 'הנינג\u05F3ה בוט ניצח הפעם. נסה שוב!'}
+              ? `כל הכבוד! ניצחת את ${rivalDisplay.nameHe}!`
+              : `${rivalDisplay.nameHe} ניצח הפעם. נסה שוב!`}
           </DialogDescription>
         </DialogHeader>
 
         <div className="my-4 space-y-3">
           {/* Stats comparison table */}
           <div
-            className="rounded-lg border p-4"
+            className="rounded-xl p-4"
+            style={{ background: 'var(--game-bg-elevated)', border: '1px solid var(--game-border)' }}
             role="table"
             aria-label="השוואת תוצאות"
           >
+            {/* Column headers */}
             <div className="grid grid-cols-3 gap-2 text-sm" role="rowgroup">
               <div
                 className="text-muted-foreground font-medium"
@@ -90,8 +114,28 @@ export function BattleResults({
               <div className="font-bold" role="columnheader">
                 אתה
               </div>
-              <div className="font-bold text-red-500" role="columnheader">
-                נינג&apos;ה בוט
+              {/* Rival column header with portrait */}
+              <div className="flex items-center justify-center gap-1.5 font-bold" role="columnheader">
+                <div
+                  className="overflow-hidden rounded-full border"
+                  style={{
+                    width: 24,
+                    height: 24,
+                    boxShadow: `0 0 8px ${rivalDisplay.glowColor}`,
+                    borderColor: rivalDisplay.themeColor,
+                  }}
+                >
+                  <Image
+                    src={rivalDisplay.image}
+                    alt={rivalDisplay.nameHe}
+                    width={24}
+                    height={24}
+                    className="object-cover"
+                  />
+                </div>
+                <span style={{ color: rivalDisplay.themeColor }}>
+                  {rivalDisplay.nameHe}
+                </span>
               </div>
             </div>
 
@@ -100,29 +144,23 @@ export function BattleResults({
                 <div className="text-muted-foreground" role="rowheader">
                   מהירות (מ/ד)
                 </div>
-                <div role="cell">{stats.playerWpm}</div>
-                <div role="cell">{stats.aiWpm}</div>
+                <div className="tabular-nums" role="cell">{stats.playerWpm}</div>
+                <div className="tabular-nums" role="cell">{stats.aiWpm}</div>
               </div>
 
               <div className="grid grid-cols-3 gap-2 text-sm" role="row">
                 <div className="text-muted-foreground" role="rowheader">
                   דיוק
                 </div>
-                <div role="cell">{stats.playerAccuracy}%</div>
-                <div role="cell">
-                  {difficulty === 'easy'
-                    ? '90%'
-                    : difficulty === 'medium'
-                      ? '95%'
-                      : '98%'}
-                </div>
+                <div className="tabular-nums" role="cell">{stats.playerAccuracy}%</div>
+                <div className="tabular-nums" role="cell">{stats.aiAccuracy}%</div>
               </div>
 
               <div className="grid grid-cols-3 gap-2 text-sm" role="row">
                 <div className="text-muted-foreground" role="rowheader">
                   זמן
                 </div>
-                <div className="col-span-2" role="cell">
+                <div className="col-span-2 tabular-nums" role="cell">
                   {stats.timeSeconds} שניות
                 </div>
               </div>
@@ -135,19 +173,33 @@ export function BattleResults({
           </div>
 
           {/* XP earned */}
-          <div className="rounded-lg bg-primary/10 p-3">
-            <span className="text-lg font-bold text-primary">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.1, duration: 0.15, ease: 'easeOut' }}
+            className="rounded-xl p-3 text-center"
+            style={{ background: 'oklch(0.55 0.2 292 / 15%)', border: '1px solid oklch(0.55 0.2 292 / 30%)' }}
+          >
+            <span
+              className="text-lg font-black"
+              style={{ color: 'var(--game-accent-purple)', textShadow: 'var(--game-text-glow)' }}
+            >
               +{xpEarned} XP
             </span>
-          </div>
+          </motion.div>
         </div>
 
         <DialogFooter className="flex-row justify-center gap-3 sm:justify-center">
-          <Button onClick={onPlayAgain} className="gap-2">
+          <Button onClick={onPlayAgain} className="game-button gap-2">
             <RotateCcw className="size-4" />
             שחק שוב
           </Button>
-          <Button variant="outline" onClick={onBack} className="gap-2">
+          <Button
+            variant="outline"
+            onClick={onBack}
+            className="gap-2"
+            style={{ borderColor: 'var(--game-border)' }}
+          >
             <ArrowRight className="size-4" />
             חזור
           </Button>

@@ -1,18 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 import { useBadgeStore } from '@/stores/badge-store'
 import {
   BADGE_DEFINITIONS,
   type BadgeDefinition,
 } from '@/lib/gamification/badge-definitions'
-import { Lock } from 'lucide-react'
+import { Lock, Trophy } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface BadgeShowcaseProps {
@@ -29,17 +23,29 @@ export function BadgeShowcase({ className }: BadgeShowcaseProps) {
   const totalCount = BADGE_DEFINITIONS.length
 
   return (
-    <Card className={cn('overflow-hidden', className)} dir="rtl">
-      <CardHeader className="pb-2">
-        <CardTitle className="flex items-center justify-between text-lg">
-          <span>תגים והישגים</span>
-          <span className="text-sm font-normal text-muted-foreground">
-            {earnedCount}/{totalCount} תגים
-          </span>
-        </CardTitle>
-      </CardHeader>
+    <div
+      className={cn('game-card-border overflow-hidden', className)}
+      dir="rtl"
+      style={{ borderColor: 'oklch(0.75 0.18 80 / 30%)' }}
+    >
+      {/* Header */}
+      <div
+        className="flex items-center justify-between p-4 pb-3"
+        style={{ borderBottom: '1px solid var(--game-border)' }}
+      >
+        <div className="flex items-center gap-2">
+          <Trophy className="size-4" style={{ color: '#f59e0b' }} />
+          <h3 className="game-section-title text-base">תגים והישגים</h3>
+        </div>
+        <span
+          className="game-stat-badge text-xs"
+          style={{ borderColor: 'oklch(0.75 0.18 80 / 30%)', color: '#f59e0b' }}
+        >
+          {earnedCount}/{totalCount} תגים
+        </span>
+      </div>
 
-      <CardContent className="space-y-4">
+      <div className="space-y-4 p-4">
         {/* Badge grid */}
         <div
           className="grid grid-cols-4 gap-3 sm:grid-cols-5"
@@ -54,27 +60,30 @@ export function BadgeShowcase({ className }: BadgeShowcaseProps) {
                 role="listitem"
                 onClick={() => setSelectedBadge(badge)}
                 className={cn(
-                  'flex flex-col items-center gap-1 rounded-lg p-2 transition-colors',
+                  'flex flex-col items-center gap-1 rounded-xl p-2 transition-all',
                   isEarned
-                    ? 'cursor-pointer hover:bg-primary/5'
-                    : 'cursor-pointer opacity-50 hover:bg-muted/50',
+                    ? 'cursor-pointer hover:scale-105'
+                    : 'cursor-pointer opacity-40',
                 )}
+                style={isEarned ? { background: 'var(--game-hover-bg)' } : undefined}
                 aria-label={`${badge.nameHe}${isEarned ? '' : ' - לא הושג'}`}
               >
                 <div
                   className={cn(
                     'relative flex size-12 items-center justify-center rounded-full border-2 text-2xl',
-                    isEarned
-                      ? 'border-primary bg-primary/10'
-                      : 'border-muted bg-muted/30 grayscale',
                   )}
+                  style={isEarned
+                    ? { borderColor: 'oklch(0.55 0.2 292 / 50%)', background: 'oklch(0.55 0.2 292 / 15%)', boxShadow: '0 0 10px oklch(0.55 0.2 292 / 25%)' }
+                    : { borderColor: 'var(--game-border)', background: 'oklch(0.15 0.02 290)', filter: 'grayscale(1)' }
+                  }
                 >
                   <span role="img" aria-hidden="true">
                     {badge.emoji}
                   </span>
                   {!isEarned && (
                     <div
-                      className="absolute inset-0 flex items-center justify-center rounded-full bg-background/60"
+                      className="absolute inset-0 flex items-center justify-center rounded-full"
+                      style={{ background: 'oklch(0.1 0.02 290 / 60%)' }}
                       aria-hidden="true"
                     >
                       <Lock className="size-4 text-muted-foreground" />
@@ -107,8 +116,8 @@ export function BadgeShowcase({ className }: BadgeShowcaseProps) {
             onClose={() => setSelectedBadge(null)}
           />
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }
 
@@ -133,7 +142,8 @@ function BadgeDetailPanel({
 
   return (
     <div
-      className="rounded-lg border bg-muted/30 p-4"
+      className="rounded-xl p-4"
+      style={{ background: 'var(--game-bg-elevated)', border: '1px solid var(--game-border)' }}
       role="dialog"
       aria-label={`פרטי תג: ${badge.nameHe}`}
     >

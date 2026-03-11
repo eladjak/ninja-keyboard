@@ -2,17 +2,15 @@
 
 import { useMemo } from 'react'
 import { Lightbulb } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { getRandomTip, CATEGORY_LABELS } from '@/lib/content/typing-tips'
 import { useXpStore } from '@/stores/xp-store'
 import { cn } from '@/lib/utils'
 
-const CATEGORY_COLORS: Record<string, string> = {
-  posture: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
-  technique: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
-  practice: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400',
-  mindset: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
+const CATEGORY_ACCENT: Record<string, string> = {
+  posture: 'var(--game-accent-green)',
+  technique: 'var(--game-accent-purple)',
+  practice: '#a855f7',
+  mindset: '#f59e0b',
 }
 
 interface DailyTipProps {
@@ -29,23 +27,32 @@ export function DailyTip({ className }: DailyTipProps) {
     return getRandomTip(level, seed)
   }, [level])
 
+  const accent = CATEGORY_ACCENT[tip.category] ?? 'var(--game-accent-purple)'
+
   return (
-    <Card className={cn('overflow-hidden', className)} data-testid="daily-tip">
-      <CardContent className="flex items-start gap-3 px-4 py-3">
-        <Lightbulb className="mt-0.5 size-5 shrink-0 text-amber-500" />
+    <div
+      className={cn('game-card-border', className)}
+      style={{ borderColor: 'oklch(0.75 0.18 80 / 25%)' }}
+      data-testid="daily-tip"
+    >
+      <div className="flex items-start gap-3 px-4 py-3">
+        <Lightbulb
+          className="mt-0.5 size-5 shrink-0"
+          style={{ color: '#f59e0b', filter: 'drop-shadow(0 0 6px oklch(0.75 0.18 80 / 50%))' }}
+        />
         <div className="flex-1">
           <div className="flex items-center gap-2">
-            <h3 className="text-sm font-semibold">{tip.titleHe}</h3>
-            <Badge
-              variant="secondary"
-              className={cn('text-xs', CATEGORY_COLORS[tip.category])}
+            <h3 className="text-sm font-semibold text-foreground">{tip.titleHe}</h3>
+            <span
+              className="rounded-full px-2 py-0.5 text-[10px] font-semibold"
+              style={{ background: `${accent}20`, color: accent, border: `1px solid ${accent}30` }}
             >
               {CATEGORY_LABELS[tip.category]}
-            </Badge>
+            </span>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">{tip.contentHe}</p>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }
