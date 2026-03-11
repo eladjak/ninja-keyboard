@@ -80,7 +80,7 @@ export default function StatisticsPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-4 p-4" dir="rtl">
       {/* ── Header ──────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between">
+      <div className="game-card-border flex items-center justify-between p-4" style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}>
         <div className="flex items-center gap-3">
           <Image
             src="/images/characters/model-sheets/pixel-robot.jpg"
@@ -90,7 +90,7 @@ export default function StatisticsPage() {
             className="rounded-full border-2 border-purple-500/30 shadow-lg shadow-purple-500/10"
           />
           <div>
-            <h1 className="text-xl font-bold sm:text-2xl">סטטיסטיקות</h1>
+            <h1 className="text-xl font-bold text-glow sm:text-2xl">סטטיסטיקות</h1>
             <p className="text-sm text-muted-foreground">
               {hasData
                 ? `${totalSessions} תרגולים עד כה`
@@ -98,41 +98,43 @@ export default function StatisticsPage() {
             </p>
           </div>
         </div>
-        <BarChart3 className="size-8 text-primary" />
+        <div className="flex size-10 items-center justify-center rounded-xl" style={{ background: 'oklch(0.495 0.205 292 / 20%)', boxShadow: '0 0 12px oklch(0.495 0.205 292 / 30%)' }}>
+          <BarChart3 className="size-5" style={{ color: 'var(--game-accent-purple)' }} />
+        </div>
       </div>
 
       {/* ── Overview cards ──────────────────────────────────────── */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <Card className="py-3 gap-0">
+        <Card className="game-card-border py-3 gap-0" style={{ borderColor: 'oklch(0.495 0.205 292 / 25%)' }}>
           <CardContent className="flex flex-col items-center gap-1 px-3 py-0">
-            <Zap className="size-5 text-primary" />
+            <Zap className="size-5" style={{ color: 'var(--game-accent-purple)' }} />
             <span className="text-xl font-bold tabular-nums">
               {hasData ? bestWpm : '-'}
             </span>
             <span className="text-xs text-muted-foreground">שיא מ/ד</span>
           </CardContent>
         </Card>
-        <Card className="py-3 gap-0">
+        <Card className="game-card-border py-3 gap-0" style={{ borderColor: 'oklch(0.495 0.205 292 / 25%)' }}>
           <CardContent className="flex flex-col items-center gap-1 px-3 py-0">
-            <Target className="size-5 text-primary" />
+            <Target className="size-5" style={{ color: 'var(--game-accent-purple)' }} />
             <span className={cn('text-xl font-bold tabular-nums', hasData && accuracyColor(bestAccuracy))}>
               {hasData ? `${bestAccuracy}%` : '-'}
             </span>
             <span className="text-xs text-muted-foreground">שיא דיוק</span>
           </CardContent>
         </Card>
-        <Card className="py-3 gap-0">
+        <Card className="game-card-border py-3 gap-0" style={{ borderColor: 'oklch(0.495 0.205 292 / 25%)' }}>
           <CardContent className="flex flex-col items-center gap-1 px-3 py-0">
-            <Clock className="size-5 text-primary" />
+            <Clock className="size-5" style={{ color: 'var(--game-accent-purple)' }} />
             <span className="text-xl font-bold tabular-nums">
               {hasData ? formatDuration(totalTime) : '-'}
             </span>
             <span className="text-xs text-muted-foreground">זמן תרגול</span>
           </CardContent>
         </Card>
-        <Card className="py-3 gap-0">
+        <Card className="game-card-border py-3 gap-0" style={{ borderColor: 'oklch(0.495 0.205 292 / 25%)' }}>
           <CardContent className="flex flex-col items-center gap-1 px-3 py-0">
-            <Trophy className="size-5 text-primary" />
+            <Trophy className="size-5" style={{ color: 'var(--game-accent-purple)' }} />
             <span className="text-xl font-bold tabular-nums">{level}</span>
             <span className="text-xs text-muted-foreground">
               רמה ({totalXp} XP)
@@ -143,7 +145,7 @@ export default function StatisticsPage() {
 
       {/* ── Averages + streak ───────────────────────────────────── */}
       {hasData && (
-        <Card>
+        <Card className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 25%)' }}>
           <CardContent className="grid grid-cols-3 gap-4 px-4 py-4 text-center">
             <div>
               <p className="text-lg font-bold tabular-nums">{averages.avgWpm}</p>
@@ -213,7 +215,7 @@ export default function StatisticsPage() {
       <KeyboardHeatmap />
 
       {/* ── Problematic keys ────────────────────────────────────── */}
-      <Card>
+      <Card className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 25%)' }}>
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-base">
             <AlertTriangle className="size-4 text-orange-500" />
@@ -232,7 +234,7 @@ export default function StatisticsPage() {
               {problematicKeys.slice(0, 10).map((key) => (
                 <div
                   key={key.char}
-                  className="flex items-center gap-3 rounded-md bg-muted/50 px-3 py-2"
+                  className="flex items-center gap-3 rounded-md px-3 py-2" style={{ border: '1.5px solid var(--game-border)', background: 'oklch(0.15 0.02 292 / 40%)' }}
                 >
                   <span className="flex size-8 items-center justify-center rounded-md border bg-background font-mono text-lg font-bold">
                     {key.char === ' ' ? '␣' : key.char}
@@ -270,7 +272,7 @@ export default function StatisticsPage() {
 
       {/* ── Recent sessions ─────────────────────────────────────── */}
       {hasData && (
-        <Card>
+        <Card className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 25%)' }}>
           <CardHeader className="pb-2">
             <CardTitle className="text-base">תרגולים אחרונים</CardTitle>
           </CardHeader>
@@ -278,7 +280,7 @@ export default function StatisticsPage() {
             {practiceHistory.results.slice(0, 10).map((r) => (
               <div
                 key={r.id}
-                className="flex items-center justify-between rounded-md bg-muted/50 px-3 py-2 text-sm"
+                className="flex items-center justify-between rounded-md px-3 py-2 text-sm" style={{ border: '1.5px solid var(--game-border)', background: 'oklch(0.15 0.02 292 / 40%)' }}
               >
                 <span className="text-muted-foreground">
                   {new Date(r.completedAt).toLocaleDateString('he-IL')}

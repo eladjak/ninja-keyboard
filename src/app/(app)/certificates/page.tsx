@@ -31,21 +31,23 @@ export default function CertificatesPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-6 p-4" dir="rtl">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="game-card-border flex items-center justify-between p-4" style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}>
         <div>
-          <h1 className="text-xl font-bold sm:text-2xl">תעודות</h1>
+          <h1 className="text-xl font-bold text-glow sm:text-2xl">תעודות</h1>
           <p className="text-sm text-muted-foreground">
             {earnedCerts.length > 0
               ? `השגת ${earnedCerts.length} מתוך ${CERTIFICATES.length} תעודות`
               : 'התחל לתרגל כדי להשיג תעודות'}
           </p>
         </div>
-        <Award className="size-8 text-primary" />
+        <div className="flex size-10 items-center justify-center rounded-xl" style={{ background: 'oklch(0.495 0.205 292 / 20%)', boxShadow: '0 0 12px oklch(0.495 0.205 292 / 30%)' }}>
+          <Award className="size-5" style={{ color: 'var(--game-accent-purple)' }} />
+        </div>
       </div>
 
       {/* Current highest certificate */}
       {highest && (
-        <Card className="border-primary/30 bg-primary/5">
+        <Card className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)', background: 'oklch(0.495 0.205 292 / 8%)' }}>
           <CardContent className="flex items-center gap-4 px-4 py-4">
             <span className="text-5xl">{highest.emoji}</span>
             <div>
@@ -70,7 +72,7 @@ export default function CertificatesPage() {
 
       {/* Fun stat */}
       {earnedCerts.length === CERTIFICATES.length && (
-        <Card className="border-purple-500/30 bg-purple-50 dark:bg-purple-900/20">
+        <Card className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)', background: 'oklch(0.495 0.205 292 / 12%)' }}>
           <CardContent className="flex flex-col items-center gap-2 py-6">
             <Trophy className="size-10 text-purple-600" />
             <p className="text-lg font-bold text-purple-600">כל התעודות הושגו!</p>

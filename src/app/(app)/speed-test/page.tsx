@@ -179,7 +179,7 @@ export default function SpeedTestPage() {
     <div className="relative mx-auto flex max-w-3xl flex-col gap-4 p-4" dir="rtl">
       <Image src="/images/backgrounds/speed-arena-bg.jpg" alt="" fill className="object-cover opacity-10 pointer-events-none fixed inset-0 -z-10" />
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="game-card-border flex items-center justify-between p-4" style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}>
         <div className="flex items-center gap-3">
           <Image
             src="/images/characters/model-sheets/yuki-girl.jpg"
@@ -189,16 +189,18 @@ export default function SpeedTestPage() {
             className="rounded-full border-2 border-purple-500/30 shadow-lg shadow-purple-500/10"
           />
           <div>
-            <h1 className="text-xl font-bold sm:text-2xl">מבחן מהירות</h1>
+            <h1 className="text-xl font-bold text-glow sm:text-2xl">מבחן מהירות</h1>
             <p className="text-sm text-muted-foreground">דקה אחת. כמה מהר אתה?</p>
           </div>
         </div>
-        <Timer className="size-8 text-primary" />
+        <div className="flex size-10 items-center justify-center rounded-xl" style={{ background: 'oklch(0.495 0.205 292 / 20%)', boxShadow: '0 0 12px oklch(0.495 0.205 292 / 30%)' }}>
+          <Timer className="size-5" style={{ color: 'var(--game-accent-purple)' }} />
+        </div>
       </div>
 
       {/* Timer display */}
       {phase === 'typing' && (
-        <Card>
+        <Card className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 25%)' }}>
           <CardContent className="flex items-center justify-center gap-4 px-4 py-3">
             <Timer className={cn('size-6', remaining <= 10 ? 'text-red-500' : 'text-primary')} />
             <span
@@ -215,7 +217,7 @@ export default function SpeedTestPage() {
 
       {/* Ready state */}
       {phase === 'ready' && (
-        <Card>
+        <Card className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 25%)' }}>
           <CardContent className="flex flex-col items-center gap-4 py-8">
             <div className="text-center space-y-2">
               <span className="text-5xl" role="img" aria-label="טיימר">
@@ -261,7 +263,7 @@ export default function SpeedTestPage() {
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.15 }}
           >
-            <Card>
+            <Card className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 25%)' }}>
               <CardHeader>
                 <CardTitle className="text-center text-lg">תוצאות מבחן מהירות</CardTitle>
               </CardHeader>
@@ -276,17 +278,17 @@ export default function SpeedTestPage() {
 
                 {/* Stats */}
                 <div className="grid grid-cols-3 gap-4 text-center">
-                  <div className="rounded-lg border p-3">
+                  <div className="rounded-lg p-3" style={{ border: '1.5px solid var(--game-border)', background: 'oklch(0.15 0.02 292 / 40%)' }}>
                     <Zap className="mx-auto size-4 text-muted-foreground" />
                     <p className="text-2xl font-bold tabular-nums">{result.wpm}</p>
                     <p className="text-xs text-muted-foreground">מילים/דקה</p>
                   </div>
-                  <div className="rounded-lg border p-3">
+                  <div className="rounded-lg p-3" style={{ border: '1.5px solid var(--game-border)', background: 'oklch(0.15 0.02 292 / 40%)' }}>
                     <Target className="mx-auto size-4 text-muted-foreground" />
                     <p className="text-2xl font-bold tabular-nums">{result.accuracy}%</p>
                     <p className="text-xs text-muted-foreground">דיוק</p>
                   </div>
-                  <div className="rounded-lg border p-3">
+                  <div className="rounded-lg p-3" style={{ border: '1.5px solid var(--game-border)', background: 'oklch(0.15 0.02 292 / 40%)' }}>
                     <motion.p
                       className="text-2xl font-bold tabular-nums text-primary"
                       initial={{ scale: 0.5, opacity: 0 }}

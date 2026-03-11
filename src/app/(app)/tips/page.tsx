@@ -37,14 +37,16 @@ export default function TipsPage() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-4 p-4" dir="rtl">
-      <div className="flex items-center justify-between">
+      <div className="game-card-border flex items-center justify-between p-4" style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}>
         <div>
-          <h1 className="text-xl font-bold sm:text-2xl">טיפים להקלדה</h1>
+          <h1 className="text-xl font-bold text-glow sm:text-2xl">טיפים להקלדה</h1>
           <p className="text-sm text-muted-foreground">
             {tips.length} טיפים זמינים לרמה שלך
           </p>
         </div>
-        <Lightbulb className="size-8 text-amber-500" />
+        <div className="flex size-10 items-center justify-center rounded-xl" style={{ background: 'oklch(0.75 0.18 85 / 20%)', boxShadow: '0 0 12px oklch(0.75 0.18 85 / 30%)' }}>
+          <Lightbulb className="size-5 text-amber-500" />
+        </div>
       </div>
 
       {/* Category filter */}
@@ -66,7 +68,7 @@ export default function TipsPage() {
       {/* Tips */}
       <div className="space-y-3">
         {tips.map((tip) => (
-          <Card key={tip.id}>
+          <Card key={tip.id} className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 20%)' }}>
             <CardContent className="flex items-start gap-3 px-4 py-3">
               <Lightbulb className="mt-0.5 size-5 shrink-0 text-amber-500" />
               <div className="flex-1">

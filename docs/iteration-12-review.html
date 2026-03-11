@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ninja Keyboard - סקירת איטרציה 12</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0d0b1a;
+    --bg-secondary: #1a1730;
+    --bg-card: #1e1b33;
+    --bg-elevated: #252240;
+    --accent-purple: #6C5CE7;
+    --accent-green: #00B894;
+    --accent-red: #e74c3c;
+    --accent-yellow: #f1c40f;
+    --accent-blue: #3498db;
+    --accent-orange: #e67e22;
+    --accent-pink: #e84393;
+    --accent-cyan: #00cec9;
+    --text-primary: #e8e6f0;
+    --text-secondary: #9590b0;
+    --text-muted: #6b6590;
+    --border: #2d2a45;
+    --border-glow: #3d3660;
+    --glow-purple: 0 0 20px rgba(108,92,231,0.3);
+    --glow-green: 0 0 20px rgba(0,184,148,0.3);
+    --glow-red: 0 0 20px rgba(231,76,60,0.3);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.8;
+    min-height: 100vh;
+    padding-bottom: 40px;
+  }
+
+  /* ─── Hero ─── */
+  .hero {
+    background: linear-gradient(135deg, #0d0b1a 0%, #1a1040 40%, #0d1a2a 70%, #0d0b1a 100%);
+    border-bottom: 3px solid var(--accent-purple);
+    padding: 70px 40px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 30% 50%, rgba(108,92,231,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 50%, rgba(0,184,148,0.08) 0%, transparent 60%);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%; right: -50%; bottom: -50%;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 100px,
+      rgba(108,92,231,0.03) 100px,
+      rgba(108,92,231,0.03) 101px
+    );
+    animation: scan 15s linear infinite;
+  }
+  @keyframes scan {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100px); }
+  }
+  .hero h1 {
+    font-size: 3.2em;
+    font-weight: 900;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(135deg, #6C5CE7, #00B894, #6C5CE7);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 5s ease infinite;
+  }
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  .hero .subtitle {
+    font-size: 1.4em;
+    color: var(--accent-green);
+    margin-top: 10px;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+  }
+  .hero .date {
+    color: var(--text-muted);
+    margin-top: 8px;
+    position: relative;
+    z-index: 1;
+    font-size: 0.95em;
+  }
+  .hero .version-badge {
+    display: inline-block;
+    background: rgba(108,92,231,0.2);
+    border: 1px solid rgba(108,92,231,0.4);
+    color: var(--accent-purple);
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+    margin-top: 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 40px 30px; }
+
+  /* ─── Score Banner ─── */
+  .score-banner {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    padding: 30px 20px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+  .score-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 28px;
+    text-align: center;
+    min-width: 140px;
+    transition: all 0.3s ease;
+  }
+  .score-item:hover {
+    border-color: var(--accent-purple);
+    transform: translateY(-2px);
+    box-shadow: var(--glow-purple);
+  }
+  .score-value {
+    font-size: 2.8em;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .score-value.perfect { color: var(--accent-green); text-shadow: var(--glow-green); }
+  .score-value.good { color: var(--accent-cyan); }
+  .score-value.warning { color: var(--accent-yellow); }
+  .score-value.highlight { color: var(--accent-purple); text-shadow: var(--glow-purple); }
+  .score-label {
+    color: var(--text-secondary);
+    font-size: 0.85em;
+    margin-top: 6px;
+  }
+
+  /* ─── Sticky Nav ─── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,11,26,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+  }
+  .nav-inner {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 0 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-purple) transparent;
+  }
+  .nav-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 18px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .nav-btn:hover {
+    background: var(--accent-purple);
+    color: #fff;
+    border-color: var(--accent-purple);
+  }
+  .nav-btn.active {
+    background: var(--accent-purple);
+    color: #fff;
+    border-color: var(--accent-purple);
+    box-shadow: var(--glow-purple);
+  }
+
+  /* ─── Sections ─── */
+  .section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 30px;
+    transition: border-color 0.3s ease;
+  }
+  .section:hover { border-color: var(--border-glow); }
+  .section-title {
+    font-size: 1.7em;
+    font-weight: 700;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .section-title .icon { font-size: 1.2em; }
+  .section-title .badge {
+    font-size: 0.45em;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+  .badge-complete { background: rgba(0,184,148,0.2); color: var(--accent-green); border: 1px solid rgba(0,184,148,0.3); }
+  .badge-progress { background: rgba(108,92,231,0.2); color: var(--accent-purple); border: 1px solid rgba(108,92,231,0.3); }
+  .badge-new { background: rgba(0,206,201,0.2); color: var(--accent-cyan); border: 1px solid rgba(0,206,201,0.3); }
+  .collapse-arrow {
+    margin-right: auto;
+    margin-left: 0;
+    font-size: 0.6em;
+    color: var(--text-muted);
+    transition: transform 0.3s ease;
+  }
+  .section-title.collapsed .collapse-arrow { transform: rotate(90deg); }
+  .section-body {
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+  }
+  .section-body.collapsed {
+    max-height: 0 !important;
+    opacity: 0;
+  }
+
+  /* ─── Grids ─── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+
+  @media (max-width: 900px) {
+    .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 2em; }
+    .hero .subtitle { font-size: 1.1em; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .score-banner { gap: 12px; }
+    .score-item { min-width: 110px; padding: 14px 16px; }
+    .score-value { font-size: 2em; }
+    .section { padding: 20px; }
+    .container { padding: 20px 16px; }
+    .file-table { font-size: 0.85em; }
+  }
+
+  /* ─── Cards ─── */
+  .card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s ease;
+  }
+  .card:hover {
+    border-color: var(--accent-purple);
+    box-shadow: 0 4px 20px rgba(108,92,231,0.1);
+  }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .card-title { font-size: 1.05em; font-weight: 700; }
+  .card-desc { color: var(--text-secondary); font-size: 0.9em; margin-top: 6px; }
+
+  /* ─── Status Tags ─── */
+  .tag {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 600;
+  }
+  .tag-green { background: rgba(0,184,148,0.15); color: var(--accent-green); }
+  .tag-purple { background: rgba(108,92,231,0.15); color: var(--accent-purple); }
+  .tag-yellow { background: rgba(241,196,15,0.15); color: var(--accent-yellow); }
+  .tag-red { background: rgba(231,76,60,0.15); color: var(--accent-red); }
+  .tag-blue { background: rgba(52,152,219,0.15); color: var(--accent-blue); }
+  .tag-cyan { background: rgba(0,206,201,0.15); color: var(--accent-cyan); }
+  .tag-orange { background: rgba(230,126,34,0.15); color: var(--accent-orange); }
+
+  /* ─── Progress Bar ─── */
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 14px;
+  }
+  .progress-label {
+    min-width: 200px;
+    font-weight: 500;
+    color: var(--text-primary);
+    font-size: 0.95em;
+  }
+  .progress-bar-bg {
+    flex: 1;
+    height: 30px;
+    background: var(--bg-primary);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    font-weight: 700;
+    color: #fff;
+    transition: width 1s ease;
+  }
+  .fill-green { background: linear-gradient(90deg, #00B894, #00cec9); }
+  .fill-purple { background: linear-gradient(90deg, #6C5CE7, #a29bfe); }
+  .fill-yellow { background: linear-gradient(90deg, #f39c12, #f1c40f); }
+  .fill-blue { background: linear-gradient(90deg, #3498db, #74b9ff); }
+  .fill-pink { background: linear-gradient(90deg, #e84393, #fd79a8); }
+  .progress-value {
+    min-width: 80px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.9em;
+    color: var(--text-secondary);
+  }
+
+  /* ─── Tables ─── */
+  .file-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+  }
+  .file-table th {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    padding: 12px 16px;
+    text-align: right;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border);
+    font-size: 0.9em;
+  }
+  .file-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 0.9em;
+  }
+  .file-table tr:hover td { background: rgba(108,92,231,0.05); }
+  .file-table code {
+    background: var(--bg-primary);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: var(--accent-cyan);
+    font-family: 'Courier New', monospace;
+  }
+
+  /* ─── Stat mini-cards ─── */
+  .stat-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.2s ease;
+  }
+  .stat-card:hover {
+    border-color: var(--accent-purple);
+    transform: translateY(-2px);
+  }
+  .stat-card .value {
+    font-size: 2.4em;
+    font-weight: 900;
+    color: var(--accent-purple);
+  }
+  .stat-card .label {
+    color: var(--text-secondary);
+    font-size: 0.85em;
+    margin-top: 4px;
+  }
+  .stat-card .value.green { color: var(--accent-green); }
+  .stat-card .value.cyan { color: var(--accent-cyan); }
+  .stat-card .value.yellow { color: var(--accent-yellow); }
+  .stat-card .value.pink { color: var(--accent-pink); }
+
+  /* ─── Music category cards ─── */
+  .music-cat {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .music-cat:hover { border-color: var(--accent-purple); }
+  .music-cat h4 {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .music-cat .count {
+    font-size: 0.7em;
+    background: rgba(108,92,231,0.2);
+    color: var(--accent-purple);
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+  .track-list { list-style: none; }
+  .track-list li {
+    padding: 3px 0;
+    color: var(--text-secondary);
+    font-size: 0.88em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .track-list li::before {
+    content: '';
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .track-list li.api::before { background: var(--accent-green); }
+  .track-list li.browser::before { background: var(--accent-yellow); }
+
+  /* ─── Character skill map ─── */
+  .char-skill {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    transition: border-color 0.2s;
+  }
+  .char-skill:hover { border-color: var(--accent-purple); }
+  .char-skill .name {
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .char-skill .skill-tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 8px;
+    font-size: 0.75em;
+    font-weight: 600;
+    margin: 2px;
+  }
+
+  /* ─── Alerts ─── */
+  .alert {
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 16px 0;
+    font-size: 0.95em;
+  }
+  .alert-success {
+    background: rgba(0,184,148,0.08);
+    border: 1px solid rgba(0,184,148,0.25);
+    color: var(--accent-green);
+  }
+  .alert-info {
+    background: rgba(52,152,219,0.08);
+    border: 1px solid rgba(52,152,219,0.25);
+    color: var(--accent-blue);
+  }
+  .alert-warning {
+    background: rgba(241,196,15,0.08);
+    border: 1px solid rgba(241,196,15,0.25);
+    color: var(--accent-yellow);
+  }
+
+  /* ─── Next Steps ─── */
+  .next-step {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    transition: border-color 0.2s;
+  }
+  .next-step:hover { border-color: var(--accent-purple); }
+  .step-number {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-purple), #a29bfe);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.2em;
+    flex-shrink: 0;
+  }
+  .step-content h4 { color: var(--text-primary); margin-bottom: 4px; font-size: 1.05em; }
+  .step-content p { color: var(--text-secondary); font-size: 0.9em; }
+  .step-done .step-number { background: linear-gradient(135deg, var(--accent-green), #00cec9); }
+  .step-pending .step-number { background: linear-gradient(135deg, var(--accent-yellow), var(--accent-orange)); }
+
+  /* ─── Code blocks ─── */
+  .code-block {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85em;
+    color: var(--accent-cyan);
+    overflow-x: auto;
+    margin: 10px 0;
+    direction: ltr;
+    text-align: left;
+  }
+
+  /* ─── Dividers ─── */
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 20px 0;
+  }
+
+  /* ─── Scroll to top ─── */
+  .scroll-top {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--accent-purple);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 1.4em;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--glow-purple);
+    transition: transform 0.2s;
+    z-index: 200;
+  }
+  .scroll-top:hover { transform: scale(1.1); }
+  .scroll-top.visible { display: flex; }
+
+  /* ─── Summary highlight ─── */
+  .summary-highlight {
+    background: linear-gradient(135deg, rgba(108,92,231,0.1), rgba(0,184,148,0.1));
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .summary-highlight h3 {
+    color: var(--accent-green);
+    font-size: 1.3em;
+    margin-bottom: 8px;
+  }
+  .summary-highlight p {
+    color: var(--text-secondary);
+    font-size: 0.95em;
+  }
+
+  /* ─── Feature list ─── */
+  .feature-list {
+    list-style: none;
+    padding: 0;
+  }
+  .feature-list li {
+    padding: 8px 0;
+    padding-right: 28px;
+    position: relative;
+    color: var(--text-secondary);
+    font-size: 0.95em;
+    border-bottom: 1px solid rgba(45,42,69,0.5);
+  }
+  .feature-list li:last-child { border-bottom: none; }
+  .feature-list li::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 14px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .feature-list li.done::before { background: var(--accent-green); }
+  .feature-list li.progress::before { background: var(--accent-yellow); }
+  .feature-list li.new::before { background: var(--accent-cyan); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- HERO                                                               -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<div class="hero">
+  <h1>&#x1F977; Ninja Keyboard - סקירת איטרציה 12</h1>
+  <p class="subtitle">Gaming CSS &#x2022; קרבות AI &#x2022; דשבורד מורים &#x2022; מוזיקה v3/v4</p>
+  <p class="date">מרץ 2026 | 123 קבצים שונו | +4,356 שורות קוד</p>
+  <span class="version-badge">&#x1F3AE; Gaming Edition</span>
+
+  <div class="score-banner">
+    <div class="score-item">
+      <div class="score-value perfect">12</div>
+      <div class="score-label">&#x1F4C4; דפים עם Gaming CSS</div>
+    </div>
+    <div class="score-item">
+      <div class="score-value highlight">44</div>
+      <div class="score-label">&#x1F3B5; טרקים במניפסט</div>
+    </div>
+    <div class="score-item">
+      <div class="score-value good">173</div>
+      <div class="score-label">&#x1F3A7; קבצי MP3</div>
+    </div>
+    <div class="score-item">
+      <div class="score-value perfect">0</div>
+      <div class="score-label">&#x2705; שגיאות TypeScript</div>
+    </div>
+    <div class="score-item">
+      <div class="score-value warning">954</div>
+      <div class="score-label">&#x1F4DA; שורות דשבורד מורים</div>
+    </div>
+    <div class="score-item">
+      <div class="score-value good">2,398</div>
+      <div class="score-label">&#x2694;&#xFE0F; שורות מערכת קרב</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- NAVIGATION                                                         -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<div class="nav">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="scrollToSection('summary')">&#x1F4CB; סיכום</button>
+    <button class="nav-btn" onclick="scrollToSection('gaming-css')">&#x1F3AE; Gaming CSS</button>
+    <button class="nav-btn" onclick="scrollToSection('battle')">&#x2694;&#xFE0F; קרב AI</button>
+    <button class="nav-btn" onclick="scrollToSection('music')">&#x1F3B5; מניפסט מוזיקה</button>
+    <button class="nav-btn" onclick="scrollToSection('teacher')">&#x1F468;&#x200D;&#x1F3EB; דשבורד מורים</button>
+    <button class="nav-btn" onclick="scrollToSection('status')">&#x1F4CA; סטטוס פרויקט</button>
+    <button class="nav-btn" onclick="scrollToSection('next')">&#x1F680; צעדים הבאים</button>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- 1. SUMMARY                                                         -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<div class="section" id="summary">
+  <h2 class="section-title" onclick="toggleSection(this)">
+    <span class="icon">&#x1F4CB;</span>
+    סיכום איטרציה 12
+    <span class="badge badge-complete">&#x2705; הושלמה</span>
+    <span class="collapse-arrow">&#x25BC;</span>
+  </h2>
+  <div class="section-body">
+
+    <div class="summary-highlight">
+      <h3>&#x1F3AE; האיטרציה של ה-Gaming</h3>
+      <p>איטרציה 12 התמקדה בהפיכת כל האפליקציה לחוויית משחק אמיתית &mdash; Gaming CSS על כל הדפים, מערכת קרב AI מלוטשת, דשבורד מורים חדש לניידים, ומניפסט מוזיקה מלא עם 85 קבצי MP3 חדשים (v3/v4).</p>
+    </div>
+
+    <div class="grid-4">
+      <div class="stat-card">
+        <div class="value green">12</div>
+        <div class="label">דפים עודכנו ב-Gaming CSS</div>
+      </div>
+      <div class="stat-card">
+        <div class="value cyan">7</div>
+        <div class="label">קבצי battle חדשים/מעודכנים</div>
+      </div>
+      <div class="stat-card">
+        <div class="value yellow">5</div>
+        <div class="label">קומפוננטות דשבורד מורים</div>
+      </div>
+      <div class="stat-card">
+        <div class="value pink">85</div>
+        <div class="label">הורדות MP3 (v3/v4)</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:24px; margin-bottom:12px; color:var(--accent-purple);">&#x1F4E6; מה נעשה באיטרציה הזו:</h3>
+    <ul class="feature-list">
+      <li class="done"><strong>Gaming CSS מלא</strong> &mdash; 12 דפים עודכנו עם game-card-border, text-glow, game-stat-badge, glow icons</li>
+      <li class="done"><strong>מערכת קרב AI</strong> &mdash; תיקון טיימר, סטטיסטיקות AI אמיתיות, שמות עבריים, פורטרטים וצבעי נושא ליריבים</li>
+      <li class="done"><strong>מניפסט מוזיקה מלא</strong> &mdash; 44 טרקים, 173 קבצי MP3, 7 קטגוריות, TypeScript types מלאים</li>
+      <li class="done"><strong>דשבורד מורים לניידים</strong> &mdash; 5 קומפוננטות חדשות: character-skills, class-stats, student-list, skill-map, dashboard</li>
+      <li class="done"><strong>דיאלוגים חדשים</strong> &mdash; סאקורה + Master Beat נוספו לסיפור (פרק 3 + פרק 6)</li>
+      <li class="done"><strong>TypeScript</strong> &mdash; 0 שגיאות, 301 שורות types חדשים למוזיקה</li>
+    </ul>
+
+    <div class="alert alert-success" style="margin-top:16px;">
+      &#x2705; <strong>סיכום ב-Commit:</strong> <code style="color:var(--accent-cyan)">feat: iteration 12 - gaming CSS, AI battles, teacher dashboard, music v3/v4</code> &mdash; 123 קבצים, +4,356 / -1,311 שורות
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- 2. GAMING CSS                                                      -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<div class="section" id="gaming-css">
+  <h2 class="section-title" onclick="toggleSection(this)">
+    <span class="icon">&#x1F3AE;</span>
+    Gaming CSS &mdash; מיגרציה מלאה
+    <span class="badge badge-complete">&#x2705; 12/12 דפים</span>
+    <span class="collapse-arrow">&#x25BC;</span>
+  </h2>
+  <div class="section-body">
+
+    <p style="color:var(--text-secondary); margin-bottom:20px;">
+      כל 12 הדפים שנותרו ללא Gaming CSS עודכנו עם המשתנים והמחלקות החדשים. הדפוס שהוחל כולל: <span class="tag tag-purple">game-card-border</span> <span class="tag tag-cyan">text-glow</span> <span class="tag tag-green">game-stat-badge</span> <span class="tag tag-yellow">glow icons</span> <span class="tag tag-blue">game-bg-input</span>
+    </p>
+
+    <h3 style="margin-bottom:12px; color:var(--accent-green);">&#x1F3AE; Gameplay (3 דפים)</h3>
+    <table class="file-table">
+      <thead>
+        <tr><th>דף</th><th>קובץ</th><th>שינויים</th><th>דפוס</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>&#x26A1; מבחן מהירות</td>
+          <td><code>speed-test/page.tsx</code></td>
+          <td>+20 שורות</td>
+          <td><span class="tag tag-purple">game-card-border</span> <span class="tag tag-cyan">text-glow</span></td>
+        </tr>
+        <tr>
+          <td>&#x1F3AF; אימון</td>
+          <td><code>practice/page.tsx</code></td>
+          <td>+26 שורות</td>
+          <td><span class="tag tag-purple">game-card-border</span> <span class="tag tag-green">game-stat-badge</span></td>
+        </tr>
+        <tr>
+          <td>&#x2328;&#xFE0F; קיצורי דרך</td>
+          <td><code>shortcuts/shortcuts-client.tsx</code></td>
+          <td>+10 שורות</td>
+          <td><span class="tag tag-purple">game-card-border</span> <span class="tag tag-cyan">text-glow</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:24px; margin-bottom:12px; color:var(--accent-green);">&#x1F4C4; Content (5 דפים)</h3>
+    <table class="file-table">
+      <thead>
+        <tr><th>דף</th><th>קובץ</th><th>שינויים</th><th>דפוס</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>&#x1F4CA; סטטיסטיקות</td>
+          <td><code>statistics/page.tsx</code></td>
+          <td>+34 שורות</td>
+          <td><span class="tag tag-purple">game-card-border</span> <span class="tag tag-green">game-stat-badge</span></td>
+        </tr>
+        <tr>
+          <td>&#x1F3C5; תגים</td>
+          <td><code>badges/page.tsx</code></td>
+          <td>+8 שורות</td>
+          <td><span class="tag tag-purple">game-card-border</span> <span class="tag tag-yellow">glow</span></td>
+        </tr>
+        <tr>
+          <td>&#x1F4DC; תעודות</td>
+          <td><code>certificates/page.tsx</code></td>
+          <td>+12 שורות</td>
+          <td><span class="tag tag-purple">game-card-border</span> <span class="tag tag-cyan">text-glow</span></td>
+        </tr>
+        <tr>
+          <td>&#x1F4A1; טיפים</td>
+          <td><code>tips/page.tsx</code></td>
+          <td>+10 שורות</td>
+          <td><span class="tag tag-purple">game-card-border</span></td>
+        </tr>
+        <tr>
+          <td>&#x1F4DD; דוח הורים</td>
+          <td><code>parent-report/page.tsx</code></td>
+          <td>+36 שורות</td>
+          <td><span class="tag tag-purple">game-card-border</span> <span class="tag tag-green">game-stat-badge</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:24px; margin-bottom:12px; color:var(--accent-green);">&#x1F579;&#xFE0F; Mini-Games (3 דפים)</h3>
+    <table class="file-table">
+      <thead>
+        <tr><th>דף</th><th>קובץ</th><th>שינויים</th><th>דפוס</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>&#x1F9E0; זיכרון אותיות</td>
+          <td><code>games/letter-memory/page.tsx</code></td>
+          <td>+25 שורות</td>
+          <td><span class="tag tag-purple">game-card-border</span> <span class="tag tag-cyan">text-glow</span> <span class="tag tag-yellow">glow icons</span></td>
+        </tr>
+        <tr>
+          <td>&#x1F5E1;&#xFE0F; חיתוך נינג'ה</td>
+          <td><code>games/ninja-slice/page.tsx</code></td>
+          <td>+25 שורות</td>
+          <td><span class="tag tag-purple">game-card-border</span> <span class="tag tag-green">game-stat-badge</span> <span class="tag tag-yellow">glow icons</span></td>
+        </tr>
+        <tr>
+          <td>&#x1F327;&#xFE0F; גשם מילים</td>
+          <td><code>games/word-rain/page.tsx</code></td>
+          <td>+26 שורות</td>
+          <td><span class="tag tag-purple">game-card-border</span> <span class="tag tag-cyan">text-glow</span> <span class="tag tag-yellow">glow icons</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:24px; margin-bottom:12px; color:var(--accent-green);">&#x1F3C6; Other (1 דף)</h3>
+    <table class="file-table">
+      <thead>
+        <tr><th>דף</th><th>קובץ</th><th>שינויים</th><th>דפוס</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>&#x1F3C6; לוח הישגים</td>
+          <td><code>leaderboard/leaderboard-client.tsx</code></td>
+          <td>+8 שורות</td>
+          <td><span class="tag tag-purple">game-card-border</span> <span class="tag tag-green">game-stat-badge</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="alert alert-info" style="margin-top:20px;">
+      &#x1F3A8; <strong>משתני CSS Gaming:</strong> 13 משתנים <code>--game-*</code> מוגדרים ב-<code>globals.css</code> ו-<code>theme-vars.css</code> &mdash; כולל <code>--game-bg-primary</code>, <code>--game-bg-input</code>, <code>--game-text-glow</code>, <code>--game-hover-bg</code>, <code>--game-tab-glow</code> ועוד. כל הצבעים הקשוחים הוחלפו במשתנים.
+    </div>
+
+    <div class="code-block">
+/* Gaming CSS utilities (globals.css) */
+.game-card-border { border: 1px solid var(--game-border); border-radius: 16px; }
+.game-card-border:hover { border-color: var(--accent-purple); box-shadow: var(--game-glow-purple); }
+.game-stat-badge { background: var(--game-bg-elevated); border-radius: 12px; }
+.text-glow { text-shadow: var(--game-text-glow); }
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- 3. BATTLE AI                                                       -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<div class="section" id="battle">
+  <h2 class="section-title" onclick="toggleSection(this)">
+    <span class="icon">&#x2694;&#xFE0F;</span>
+    מערכת קרב AI
+    <span class="badge badge-complete">&#x2705; מלוטש</span>
+    <span class="collapse-arrow">&#x25BC;</span>
+  </h2>
+  <div class="section-body">
+
+    <p style="color:var(--text-secondary); margin-bottom:20px;">
+      מערכת הקרב עודכנה עם תיקוני באגים, חיווי ויזואלי משופר, ושילוב מלא של 3 יריבי AI עם שמות עבריים, פורטרטים ואנימציות Framer Motion.
+    </p>
+
+    <div class="grid-3" style="margin-bottom:24px;">
+      <div class="card" style="border-color: rgba(108,92,231,0.3);">
+        <div class="card-header">
+          <span class="card-title">&#x1F408;&#x200D;&#x2B1B; צל (Shadow)</span>
+          <span class="tag tag-purple">קל</span>
+        </div>
+        <p class="card-desc">חתול צללים - יריב ברמה קלה. אקראיות נמוכה, מהירות מתונה. מתאים למתחילים.</p>
+        <div style="margin-top:8px;">
+          <span class="tag tag-blue">&#x1F3AF; רמה 3</span>
+          <span class="tag tag-green">bug -> shadow</span>
+        </div>
+      </div>
+      <div class="card" style="border-color: rgba(0,184,148,0.3);">
+        <div class="card-header">
+          <span class="card-title">&#x1F98A; סערה (Storm)</span>
+          <span class="tag tag-yellow">בינוני</span>
+        </div>
+        <p class="card-desc">שועלת ברקים - יריבה ברמה בינונית. תגובה מהירה, דיוק גבוה. אתגר ממשי.</p>
+        <div style="margin-top:8px;">
+          <span class="tag tag-blue">&#x1F3AF; רמה 4</span>
+          <span class="tag tag-green">storm fox</span>
+        </div>
+      </div>
+      <div class="card" style="border-color: rgba(231,76,60,0.3);">
+        <div class="card-header">
+          <span class="card-title">&#x1F525; להבה (Blaze)</span>
+          <span class="tag tag-red">קשה</span>
+        </div>
+        <p class="card-desc">דרקון אש - יריב ברמה קשה. מהירות מירבית, דיוק כמעט מושלם. לאלופים בלבד.</p>
+        <div style="margin-top:8px;">
+          <span class="tag tag-blue">&#x1F3AF; רמה 5</span>
+          <span class="tag tag-green">blaze dragon</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom:14px; color:var(--accent-purple);">&#x1F527; תיקונים ושיפורים</h3>
+    <ul class="feature-list">
+      <li class="done"><strong>טיימר קרב תוקן</strong> &mdash; היה תקוע על 0, עכשיו רץ ומעדכן בזמן אמת</li>
+      <li class="done"><strong>סטטיסטיקות AI אמיתיות</strong> &mdash; WPM ודיוק מחושבים מה-engine (לא hardcoded)</li>
+      <li class="done"><strong>שמות עבריים ליריבים</strong> &mdash; צל / סערה / להבה (לא Shadow/Storm/Blaze)</li>
+      <li class="done"><strong>פורטרטים ליריבים</strong> &mdash; תמונות מתוך <code>public/images/characters/</code></li>
+      <li class="done"><strong>צבעי נושא לכל יריב</strong> &mdash; סגול לצל, ירוק לסערה, אדום ללהבה</li>
+      <li class="done"><strong>אנימציות Framer Motion</strong> &mdash; כניסה, countdown, תוצאות עם AnimatePresence</li>
+      <li class="done"><strong>אפקטי קול</strong> &mdash; soundManager משולב לכל אירוע קרב</li>
+    </ul>
+
+    <h3 style="margin-top:24px; margin-bottom:14px; color:var(--accent-purple);">&#x1F4C1; קבצי מערכת הקרב</h3>
+    <table class="file-table">
+      <thead>
+        <tr><th>קובץ</th><th>תפקיד</th><th>שורות</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>battle-arena.tsx</code></td><td>&#x2694;&#xFE0F; זירת הקרב הראשית (UI + לוגיקה)</td><td>637</td></tr>
+        <tr><td><code>ai-typing-engine.ts</code></td><td>&#x1F916; מנוע הקלדת AI עם רמות קושי</td><td>698</td></tr>
+        <tr><td><code>battle-engine.ts</code></td><td>&#x2699;&#xFE0F; לוגיקת קרב (ניקוד, ניצחון, XP)</td><td>258</td></tr>
+        <tr><td><code>ai-opponent.tsx</code></td><td>&#x1F464; קומפוננטת יריב AI (פורטרט + אנימציה)</td><td>255</td></tr>
+        <tr><td><code>battle-results.tsx</code></td><td>&#x1F3C6; מסך תוצאות קרב</td><td>210</td></tr>
+        <tr><td><code>ai-opponent-store.ts</code></td><td>&#x1F4BE; Zustand store ליריב AI</td><td>190</td></tr>
+        <tr><td><code>ai-opponent.ts</code></td><td>&#x1F4DD; TypeScript types ליריב</td><td>150</td></tr>
+      </tbody>
+      <tfoot>
+        <tr style="font-weight:700; color:var(--accent-green);">
+          <td>&#x1F4CA; סה"כ</td><td></td><td>2,398 שורות</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div class="code-block">
+// DIFFICULTY_TO_RIVAL mapping (battle-arena.tsx)
+const DIFFICULTY_TO_RIVAL = {
+  easy:   { rival: 'bug',    level: 2 },  // Bug -> צל
+  medium: { rival: 'shadow', level: 3 },  // Shadow -> סערה
+  hard:   { rival: 'storm',  level: 4 },  // Storm -> להבה
+}
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- 4. MUSIC MANIFEST                                                  -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<div class="section" id="music">
+  <h2 class="section-title" onclick="toggleSection(this)">
+    <span class="icon">&#x1F3B5;</span>
+    מניפסט מוזיקה
+    <span class="badge badge-complete">&#x2705; 44 טרקים</span>
+    <span class="collapse-arrow">&#x25BC;</span>
+  </h2>
+  <div class="section-body">
+
+    <p style="color:var(--text-secondary); margin-bottom:20px;">
+      מניפסט המוזיקה המלא כולל 44 טרקים ב-7 קטגוריות, עם 173 קבצי MP3. באיטרציה הזו נוספו 85 קבצי v3/v4 חדשים שהורדו דרך Suno browser extension + API אוטומציה.
+    </p>
+
+    <div class="grid-4" style="margin-bottom:24px;">
+      <div class="stat-card">
+        <div class="value">44</div>
+        <div class="label">&#x1F3B5; טרקים לוגיים</div>
+      </div>
+      <div class="stat-card">
+        <div class="value green">173</div>
+        <div class="label">&#x1F3A7; קבצי MP3</div>
+      </div>
+      <div class="stat-card">
+        <div class="value cyan">90</div>
+        <div class="label">&#x1F916; API-generated</div>
+      </div>
+      <div class="stat-card">
+        <div class="value yellow">83</div>
+        <div class="label">&#x1F310; Browser-extension</div>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom:16px; color:var(--accent-purple);">&#x1F4C2; קטגוריות</h3>
+    <div class="grid-3" style="margin-bottom:20px;">
+      <div class="music-cat">
+        <h4>&#x2694;&#xFE0F; Battle <span class="count">10 טרקים &bull; 36 MP3</span></h4>
+        <ul class="track-list">
+          <li class="api">Pre-Battle Anticipation</li>
+          <li class="api">Shadow Cat Battle</li>
+          <li class="api">Storm Fox Battle</li>
+          <li class="api">Blaze Dragon Battle</li>
+          <li class="api">Bug Boss Act 2</li>
+          <li class="api">Bug King Final</li>
+          <li class="api">Glitch Secret Boss</li>
+          <li class="api">Boss Defeated Fanfare</li>
+          <li class="api">Tournament Arena</li>
+          <li class="api">Virus Mega Boss</li>
+        </ul>
+      </div>
+      <div class="music-cat">
+        <h4>&#x1F977; Characters <span class="count">8 טרקים &bull; 33 MP3</span></h4>
+        <ul class="track-list">
+          <li class="api">Ki's Theme</li>
+          <li class="api">Mika's Theme</li>
+          <li class="api">Sensei Zen's Theme</li>
+          <li class="browser">Bug's Theme</li>
+          <li class="api">Yuki's Theme</li>
+          <li class="browser">Luna's Theme</li>
+          <li class="browser">Rex's Theme</li>
+          <li class="api">Glitch's Theme</li>
+        </ul>
+      </div>
+      <div class="music-cat">
+        <h4>&#x1F389; Events <span class="count">8 טרקים &bull; 32 MP3</span></h4>
+        <ul class="track-list">
+          <li class="api">Achievement Unlock</li>
+          <li class="api">Character Unlock</li>
+          <li class="api">Level Up Fanfare</li>
+          <li class="api">New Belt Earned</li>
+          <li class="api">Daily Streak</li>
+          <li class="api">Game Over</li>
+          <li class="api">Speed Record</li>
+          <li class="api">Story Chapter Intro</li>
+        </ul>
+      </div>
+      <div class="music-cat">
+        <h4>&#x1F3AE; Gameplay <span class="count">5 טרקים &bull; 20 MP3</span></h4>
+        <ul class="track-list">
+          <li class="api">Practice Easy</li>
+          <li class="api">Practice Medium</li>
+          <li class="api">Practice Hard</li>
+          <li class="api">Speed Test</li>
+          <li class="api">Accuracy Challenge</li>
+        </ul>
+      </div>
+      <div class="music-cat">
+        <h4>&#x1F4CB; Menu <span class="count">6 טרקים &bull; 20 MP3</span></h4>
+        <ul class="track-list">
+          <li class="api">Home Screen (Main Theme)</li>
+          <li class="api">Lessons Menu</li>
+          <li class="api">Battle Menu</li>
+          <li class="api">Games Hub</li>
+          <li class="api">Profile / Progress</li>
+          <li class="api">Settings</li>
+        </ul>
+      </div>
+      <div class="music-cat">
+        <h4>&#x1F30D; Worlds <span class="count">5 טרקים &bull; 20 MP3</span></h4>
+        <ul class="track-list">
+          <li class="api">Shatil - Magical Garden</li>
+          <li class="api">Nevet - Adventure Camp</li>
+          <li class="api">Geza - Ninja Arena</li>
+          <li class="api">Anaf - Training Hub</li>
+          <li class="api">Tzameret - Professional</li>
+        </ul>
+      </div>
+      <div class="music-cat">
+        <h4>&#x1F4D6; Story <span class="count">2 טרקים &bull; 8 MP3</span></h4>
+        <ul class="track-list">
+          <li class="api">Emotional Moment</li>
+          <li class="api">Victory Celebration</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom:14px; color:var(--accent-purple);">&#x1F4DD; TypeScript Types חדשים</h3>
+    <p style="color:var(--text-secondary); margin-bottom:10px;">
+      קובץ <code style="color:var(--accent-cyan)">src/types/music.ts</code> (301 שורות) מגדיר את כל ה-types למערכת המוזיקה:
+    </p>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">&#x1F3F7;&#xFE0F; Track ID Types</div>
+        <p class="card-desc"><code>MusicTrackId</code> = union של <code>MenuTrackId</code> | <code>GameplayTrackId</code> | <code>BattleTrackId</code> | <code>EventTrackId</code> | <code>CharacterTrackId</code> | <code>StoryTrackId</code> | <code>WorldTrackId</code></p>
+      </div>
+      <div class="card">
+        <div class="card-title">&#x1F4C4; Manifest Types</div>
+        <p class="card-desc"><code>MusicManifest</code>, <code>MusicManifestTrack</code>, <code>MusicManifestMetadata</code>, <code>MusicQualityRejected</code></p>
+      </div>
+      <div class="card">
+        <div class="card-title">&#x1F3B6; Runtime Types</div>
+        <p class="card-desc"><code>MusicTrackVariant</code>, <code>MusicCategory</code>, <code>MusicFileSource</code> (api | browser-extension)</p>
+      </div>
+      <div class="card">
+        <div class="card-title">&#x1F6E0;&#xFE0F; Helper Functions</div>
+        <p class="card-desc"><code>getTrackVariants()</code>, <code>getPrimaryVariant()</code>, <code>getTracksByCategory()</code>, <code>getTrackById()</code>, <code>countExtraVariants()</code></p>
+      </div>
+    </div>
+
+    <div class="alert alert-info" style="margin-top:16px;">
+      &#x1F4CA; <strong>פירוט וריאנטים:</strong> 41 טרקים עם v1-v4, 2 טרקים עם v1-v2 בלבד, טרק 1 עם v1-v5. מקור: 26 טרקים מ-API (Suno V5 automation), 18 מ-browser extension.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- 5. TEACHER DASHBOARD                                               -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<div class="section" id="teacher">
+  <h2 class="section-title" onclick="toggleSection(this)">
+    <span class="icon">&#x1F468;&#x200D;&#x1F3EB;</span>
+    דשבורד מורים לניידים
+    <span class="badge badge-new">&#x2728; חדש!</span>
+    <span class="collapse-arrow">&#x25BC;</span>
+  </h2>
+  <div class="section-body">
+
+    <p style="color:var(--text-secondary); margin-bottom:20px;">
+      דשבורד מורים חדש לגמרי, מותאם לניידים, עם מיפוי מיומנויות לדמויות. מאפשר למורים לתכנן שיעורים בלי להבין את הנרטיב &mdash; כל דמות ממופה למיומנויות הקלדה ספציפיות עם טווח גיל מתאים.
+    </p>
+
+    <h3 style="margin-bottom:14px; color:var(--accent-purple);">&#x1F4C1; קומפוננטות חדשות</h3>
+    <table class="file-table">
+      <thead>
+        <tr><th>קובץ</th><th>תפקיד</th><th>שורות</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>character-skills.ts</code></td>
+          <td>&#x1F4DD; מיפוי 8 דמויות &times; מיומנויות &times; טווח גיל</td>
+          <td>181</td>
+        </tr>
+        <tr>
+          <td><code>student-list-mobile.tsx</code></td>
+          <td>&#x1F4F1; רשימת תלמידים מתרחבת (expandable rows)</td>
+          <td>298</td>
+        </tr>
+        <tr>
+          <td><code>teacher-dashboard-client.tsx</code></td>
+          <td>&#x1F4CA; דשבורד 2 טאבים (תלמידים / מיפוי מיומנויות)</td>
+          <td>269</td>
+        </tr>
+        <tr>
+          <td><code>character-skill-map.tsx</code></td>
+          <td>&#x1F5FA;&#xFE0F; אקורדיון מיפוי מיומנויות לכל דמות</td>
+          <td>131</td>
+        </tr>
+        <tr>
+          <td><code>class-stats-bar.tsx</code></td>
+          <td>&#x1F4CA; 4 בועות סטטיסטיקה מהירה</td>
+          <td>75</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr style="font-weight:700; color:var(--accent-green);">
+          <td>&#x1F4CA; סה"כ</td><td></td><td>954 שורות</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <h3 style="margin-top:24px; margin-bottom:14px; color:var(--accent-purple);">&#x1F977; מיפוי דמויות &#x2192; מיומנויות</h3>
+    <div class="grid-4">
+      <div class="char-skill" style="border-right: 3px solid #6C5CE7;">
+        <div class="name">&#x1F977; קי</div>
+        <div style="font-size:0.8em; color:var(--text-muted); margin-bottom:6px;">יסודות | גיל 6-10</div>
+        <span class="skill-tag" style="background:rgba(108,92,231,0.15); color:#6C5CE7;">שורת הבית</span>
+        <span class="skill-tag" style="background:rgba(108,92,231,0.15); color:#6C5CE7;">יציבה</span>
+        <span class="skill-tag" style="background:rgba(108,92,231,0.15); color:#6C5CE7;">הקלדה עיוורת</span>
+      </div>
+      <div class="char-skill" style="border-right: 3px solid #FDCB6E;">
+        <div class="name">&#x26A1; מיקה</div>
+        <div style="font-size:0.8em; color:var(--text-muted); margin-bottom:6px;">קיצורי דרך | גיל 10-16</div>
+        <span class="skill-tag" style="background:rgba(253,203,110,0.15); color:#FDCB6E;">Ctrl+C/V/Z</span>
+        <span class="skill-tag" style="background:rgba(253,203,110,0.15); color:#FDCB6E;">Alt+Tab</span>
+        <span class="skill-tag" style="background:rgba(253,203,110,0.15); color:#FDCB6E;">Windows+D</span>
+      </div>
+      <div class="char-skill" style="border-right: 3px solid #00B894;">
+        <div class="name">&#x1F98A; יוקי</div>
+        <div style="font-size:0.8em; color:var(--text-muted); margin-bottom:6px;">מהירות | גיל 10-16</div>
+        <span class="skill-tag" style="background:rgba(0,184,148,0.15); color:#00B894;">אימוני מהירות</span>
+        <span class="skill-tag" style="background:rgba(0,184,148,0.15); color:#00B894;">אתגרי מ/ד</span>
+        <span class="skill-tag" style="background:rgba(0,184,148,0.15); color:#00B894;">שיאים</span>
+      </div>
+      <div class="char-skill" style="border-right: 3px solid #A29BFE;">
+        <div class="name">&#x1F319; לונה</div>
+        <div style="font-size:0.8em; color:var(--text-muted); margin-bottom:6px;">יצירתיות | גיל 8-14</div>
+        <span class="skill-tag" style="background:rgba(162,155,254,0.15); color:#A29BFE;">כתיבה חופשית</span>
+        <span class="skill-tag" style="background:rgba(162,155,254,0.15); color:#A29BFE;">פיסוק</span>
+        <span class="skill-tag" style="background:rgba(162,155,254,0.15); color:#A29BFE;">עריכת טקסט</span>
+      </div>
+      <div class="char-skill" style="border-right: 3px solid #55EFC4;">
+        <div class="name">&#x1F3AF; נועה</div>
+        <div style="font-size:0.8em; color:var(--text-muted); margin-bottom:6px;">דיוק | גיל 8-14</div>
+        <span class="skill-tag" style="background:rgba(85,239,196,0.15); color:#55EFC4;">הקלדה מדויקת</span>
+        <span class="skill-tag" style="background:rgba(85,239,196,0.15); color:#55EFC4;">תיקון שגיאות</span>
+        <span class="skill-tag" style="background:rgba(85,239,196,0.15); color:#55EFC4;">Backspace</span>
+      </div>
+      <div class="char-skill" style="border-right: 3px solid #74B9FF;">
+        <div class="name">&#x1F4BB; קאי</div>
+        <div style="font-size:0.8em; color:var(--text-muted); margin-bottom:6px;">מתקדם | גיל 12-16</div>
+        <span class="skill-tag" style="background:rgba(116,185,255,0.15); color:#74B9FF;">תווים מיוחדים</span>
+        <span class="skill-tag" style="background:rgba(116,185,255,0.15); color:#74B9FF;">Function keys</span>
+        <span class="skill-tag" style="background:rgba(116,185,255,0.15); color:#74B9FF;">קוד</span>
+      </div>
+      <div class="char-skill" style="border-right: 3px solid #FF7675;">
+        <div class="name">&#x1F3AE; רקס</div>
+        <div style="font-size:0.8em; color:var(--text-muted); margin-bottom:6px;">משחקים | גיל 6-12</div>
+        <span class="skill-tag" style="background:rgba(255,118,117,0.15); color:#FF7675;">משחקי הקלדה</span>
+        <span class="skill-tag" style="background:rgba(255,118,117,0.15); color:#FF7675;">זמן ולחץ</span>
+        <span class="skill-tag" style="background:rgba(255,118,117,0.15); color:#FF7675;">מוטיבציה</span>
+      </div>
+      <div class="char-skill" style="border-right: 3px solid #FD79A8;">
+        <div class="name">&#x1F4CA; פיקסל</div>
+        <div style="font-size:0.8em; color:var(--text-muted); margin-bottom:6px;">אנליטיקה | גיל 10-16</div>
+        <span class="skill-tag" style="background:rgba(253,121,168,0.15); color:#FD79A8;">נתוני הקלדה</span>
+        <span class="skill-tag" style="background:rgba(253,121,168,0.15); color:#FD79A8;">ניתוח שגיאות</span>
+        <span class="skill-tag" style="background:rgba(253,121,168,0.15); color:#FD79A8;">גרפי התקדמות</span>
+      </div>
+    </div>
+
+    <div class="alert alert-success" style="margin-top:16px;">
+      &#x1F4A1; <strong>הרעיון:</strong> מורה יכול/ה להסתכל על המיפוי ולהבין מיד: "אם התלמיד מתקשה בדיוק &rarr; תרגלו עם נועה. אם צריך מוטיבציה &rarr; משחקים עם רקס." &mdash; בלי להכיר את הסיפור בכלל.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- 6. PROJECT STATUS                                                  -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<div class="section" id="status">
+  <h2 class="section-title" onclick="toggleSection(this)">
+    <span class="icon">&#x1F4CA;</span>
+    סטטוס פרויקט כולל
+    <span class="collapse-arrow">&#x25BC;</span>
+  </h2>
+  <div class="section-body">
+
+    <div class="summary-highlight" style="margin-bottom:30px;">
+      <h3>&#x1F3AF; מצב הפרויקט &mdash; מרץ 2026</h3>
+      <p>סיפור מלא, מוזיקה מלאה, Gaming CSS על כל הדפים, מערכת קרב AI פעילה, דשבורד מורים חדש, 0 שגיאות TypeScript.</p>
+    </div>
+
+    <h3 style="margin-bottom:16px; color:var(--accent-purple);">&#x1F4C8; התקדמות כללית</h3>
+
+    <!-- Story -->
+    <div class="progress-row">
+      <span class="progress-label">&#x1F4D6; סיפור (פרקים)</span>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill fill-green" style="width:100%;">6/6</div>
+      </div>
+      <span class="progress-value" style="color:var(--accent-green);">100%</span>
+    </div>
+
+    <!-- Story beats -->
+    <div class="progress-row">
+      <span class="progress-label">&#x1F4AC; ביטים (Beats)</span>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill fill-green" style="width:100%;">53/53</div>
+      </div>
+      <span class="progress-value" style="color:var(--accent-green);">100%</span>
+    </div>
+
+    <!-- Music -->
+    <div class="progress-row">
+      <span class="progress-label">&#x1F3B5; מוזיקה (טרקים)</span>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill fill-green" style="width:100%;">44/44</div>
+      </div>
+      <span class="progress-value" style="color:var(--accent-green);">100%</span>
+    </div>
+
+    <!-- MP3 files -->
+    <div class="progress-row">
+      <span class="progress-label">&#x1F3A7; קבצי MP3</span>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill fill-purple" style="width:100%;">173</div>
+      </div>
+      <span class="progress-value" style="color:var(--accent-purple);">173 קבצים</span>
+    </div>
+
+    <!-- Characters -->
+    <div class="progress-row">
+      <span class="progress-label">&#x1F977; דמויות (model sheets)</span>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill fill-purple" style="width:100%;">25/25</div>
+      </div>
+      <span class="progress-value" style="color:var(--accent-purple);">100%</span>
+    </div>
+
+    <!-- Character images -->
+    <div class="progress-row">
+      <span class="progress-label">&#x1F5BC;&#xFE0F; תמונות דמויות</span>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill fill-blue" style="width:100%;">117</div>
+      </div>
+      <span class="progress-value" style="color:var(--accent-blue);">117 קבצים</span>
+    </div>
+
+    <!-- Voices -->
+    <div class="progress-row">
+      <span class="progress-label">&#x1F3A4; קולות דמויות</span>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill fill-pink" style="width:83%;">10/12</div>
+      </div>
+      <span class="progress-value" style="color:var(--accent-pink);">190 MP3</span>
+    </div>
+
+    <!-- Gaming CSS -->
+    <div class="progress-row">
+      <span class="progress-label">&#x1F3AE; Gaming CSS (דפים)</span>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill fill-green" style="width:100%;">20/20</div>
+      </div>
+      <span class="progress-value" style="color:var(--accent-green);">100%</span>
+    </div>
+
+    <!-- TypeScript -->
+    <div class="progress-row">
+      <span class="progress-label">&#x1F4DD; TypeScript (שגיאות)</span>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill fill-green" style="width:100%;">0 שגיאות</div>
+      </div>
+      <span class="progress-value" style="color:var(--accent-green);">&#x2705; נקי</span>
+    </div>
+
+    <!-- Unit tests -->
+    <div class="progress-row">
+      <span class="progress-label">&#x1F9EA; בדיקות יחידה</span>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill fill-purple" style="width:100%;">1,093 טסטים</div>
+      </div>
+      <span class="progress-value" style="color:var(--accent-purple);">62 suites</span>
+    </div>
+
+    <!-- E2E -->
+    <div class="progress-row">
+      <span class="progress-label">&#x1F310; E2E (Playwright)</span>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill fill-yellow" style="width:85%;">12 specs</div>
+      </div>
+      <span class="progress-value" style="color:var(--accent-yellow);">~195 cases</span>
+    </div>
+
+    <hr style="margin:30px 0;">
+
+    <h3 style="margin-bottom:16px; color:var(--accent-purple);">&#x1F4C2; סטטיסטיקות קוד</h3>
+    <div class="grid-4">
+      <div class="stat-card">
+        <div class="value">252</div>
+        <div class="label">קבצי TypeScript/TSX</div>
+      </div>
+      <div class="stat-card">
+        <div class="value green">62</div>
+        <div class="label">קבצי בדיקות</div>
+      </div>
+      <div class="stat-card">
+        <div class="value cyan">7</div>
+        <div class="label">קטגוריות מוזיקה</div>
+      </div>
+      <div class="stat-card">
+        <div class="value yellow">8</div>
+        <div class="label">רקעי סביבה</div>
+      </div>
+    </div>
+
+    <div class="grid-3" style="margin-top:16px;">
+      <div class="stat-card">
+        <div class="value pink">25</div>
+        <div class="label">דמויות עם Model Sheet</div>
+      </div>
+      <div class="stat-card">
+        <div class="value">6</div>
+        <div class="label">פרקי סיפור</div>
+      </div>
+      <div class="stat-card">
+        <div class="value green">5</div>
+        <div class="label">עולמות גיל (Themes)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- 7. NEXT STEPS                                                      -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<div class="section" id="next">
+  <h2 class="section-title" onclick="toggleSection(this)">
+    <span class="icon">&#x1F680;</span>
+    צעדים הבאים
+    <span class="badge badge-progress">&#x23F3; ממתין</span>
+    <span class="collapse-arrow">&#x25BC;</span>
+  </h2>
+  <div class="section-body">
+
+    <div class="next-step step-pending">
+      <div class="step-number">1</div>
+      <div class="step-content">
+        <h4>&#x1F4AC; פידבק משתמש על המשחק המלא</h4>
+        <p>סקירה אינטראקטיבית של כל הדפים, האנימציות, הצלילים והעיצוב Gaming. זיהוי בעיות UX ותעדוף שיפורים.</p>
+      </div>
+    </div>
+
+    <div class="next-step">
+      <div class="step-number">2</div>
+      <div class="step-content">
+        <h4>&#x1F525; POC תלת-ממד לדמות קי</h4>
+        <p>ניסוי ראשון ב-3D &mdash; מודל של קי עם אנימציה בסיסית. בדיקת התאמה לביצועים ו-PWA. תקציב: $150-350.</p>
+      </div>
+    </div>
+
+    <div class="next-step">
+      <div class="step-number">3</div>
+      <div class="step-content">
+        <h4>&#x1F50A; שילוב מוזיקה בדפים</h4>
+        <p>חיבור מלא של 44 הטרקים ל-MusicManager &mdash; כל דף מנגן את הטרק המתאים. Jukebox עם בחירה חופשית. Crossfade בין דפים.</p>
+      </div>
+    </div>
+
+    <div class="next-step">
+      <div class="step-number">4</div>
+      <div class="step-content">
+        <h4>&#x1F399;&#xFE0F; שילוב קולות דמויות</h4>
+        <p>190 קבצי קול קיימים אבל לא מחוברים ל-UI. צריך VoiceManager שמשמיע קולות בזמן דיאלוג, ניצחון, הפסד ואירועים.</p>
+      </div>
+    </div>
+
+    <div class="next-step">
+      <div class="step-number">5</div>
+      <div class="step-content">
+        <h4>&#x1F977; הצגת דמויות בכל הדפים</h4>
+        <p>CharacterIdleWrapper קיים אבל לא בשימוש. דמויות צריכות להופיע בכל דף רלוונטי עם expression sheets, אנימציות והקשר לסיפור.</p>
+      </div>
+    </div>
+
+    <div class="next-step">
+      <div class="step-number">6</div>
+      <div class="step-content">
+        <h4>&#x1F9EA; בדיקות אינטגרציה</h4>
+        <p>בדיקות E2E למערכת הקרב, דשבורד מורים, מעברים בין דפים עם מוזיקה, וזרימת הסיפור המלאה.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-warning" style="margin-top:16px;">
+      &#x26A0;&#xFE0F; <strong>תזכורת:</strong> בעיות שנמצאו בסקירה הקודמת &mdash; נתיבי מוזיקה שבורים ב-music-manager.ts (28/30 נתיבים), דמויות שלא מופיעות בדפים, ומערכת קולות לא מחוברת &mdash; עדיין דורשות טיפול.
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- SCROLL TO TOP                                                      -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#x2191;</button>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT                                                         -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<script>
+// ── Smooth scroll to section ──
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const navHeight = document.querySelector('.nav').offsetHeight;
+  const top = el.getBoundingClientRect().top + window.scrollY - navHeight - 20;
+  window.scrollTo({ top, behavior: 'smooth' });
+
+  // Update active nav button
+  document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// ── Collapsible sections ──
+function toggleSection(titleEl) {
+  titleEl.classList.toggle('collapsed');
+  const body = titleEl.nextElementSibling;
+  if (body.classList.contains('collapsed')) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.classList.remove('collapsed');
+  } else {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => {
+      body.classList.add('collapsed');
+    });
+  }
+}
+
+// ── Scroll to top button ──
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scrollTopBtn');
+  if (window.scrollY > 600) {
+    btn.classList.add('visible');
+  } else {
+    btn.classList.remove('visible');
+  }
+});
+
+// ── Highlight active nav on scroll ──
+const sections = ['summary', 'gaming-css', 'battle', 'music', 'teacher', 'status', 'next'];
+const navBtns = document.querySelectorAll('.nav-btn');
+
+function updateActiveNav() {
+  const navHeight = document.querySelector('.nav').offsetHeight + 40;
+  let currentSection = sections[0];
+
+  for (const id of sections) {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= navHeight) {
+      currentSection = id;
+    }
+  }
+
+  navBtns.forEach((btn, i) => {
+    if (sections[i] === currentSection) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+}
+
+window.addEventListener('scroll', updateActiveNav);
+
+// ── Initialize section bodies (allow transition) ──
+document.querySelectorAll('.section-body').forEach(body => {
+  body.style.maxHeight = 'none';
+});
+
+// ── Animate progress bars on scroll ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const fills = entry.target.querySelectorAll('.progress-bar-fill');
+      fills.forEach(fill => {
+        const width = fill.style.width;
+        fill.style.width = '0%';
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            fill.style.width = width;
+          });
+        });
+      });
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+const statusSection = document.getElementById('status');
+if (statusSection) observer.observe(statusSection);
+</script>
+
+</body>
+</html>

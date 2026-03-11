@@ -128,17 +128,19 @@ export default function NinjaSlicePage() {
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-4 p-4" dir="rtl">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="game-card-border flex items-center justify-between p-4" style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}>
         <div>
-          <h1 className="text-xl font-bold sm:text-2xl">חיתוך נינג&apos;ה</h1>
+          <h1 className="text-xl font-bold text-glow sm:text-2xl">חיתוך נינג&apos;ה</h1>
           <p className="text-sm text-muted-foreground">חתכו אותיות ומילים לפני שהן בורחות!</p>
         </div>
-        <Sword className="size-8 text-purple-500" />
+        <div className="flex size-10 items-center justify-center rounded-xl" style={{ background: 'oklch(0.495 0.205 292 / 20%)', boxShadow: '0 0 12px oklch(0.495 0.205 292 / 30%)' }}>
+          <Sword className="size-5" style={{ color: 'var(--game-accent-purple)' }} />
+        </div>
       </div>
 
       {/* Ready screen */}
       {state.phase === 'ready' && (
-        <Card>
+        <Card className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 25%)' }}>
           <CardContent className="flex flex-col items-center gap-6 py-8">
             <span className="text-5xl" role="img" aria-label="חרב">⚔️</span>
             <h2 className="text-lg font-bold">בחר רמת קושי</h2>
@@ -184,6 +186,7 @@ export default function NinjaSlicePage() {
           <div
             className="flex items-center justify-between rounded-lg border px-4 py-2"
             aria-label="סטטוס משחק"
+            style={{ borderColor: 'var(--game-border)', background: 'oklch(0.13 0.02 290 / 60%)' }}
           >
             {/* Lives */}
             <div className="flex items-center gap-1" aria-label={`${state.lives} חיים נותרו`}>
@@ -224,6 +227,7 @@ export default function NinjaSlicePage() {
             className="relative h-80 overflow-hidden rounded-lg border bg-gradient-to-br from-purple-50 to-indigo-100 dark:from-purple-950/30 dark:to-indigo-900/30 sm:h-96"
             aria-label="שדה משחק"
             aria-live="polite"
+            style={{ borderColor: 'var(--game-border)' }}
           >
             <AnimatePresence>
               {state.targets.map((target) => (
@@ -277,7 +281,8 @@ export default function NinjaSlicePage() {
             value={state.input}
             onChange={handleInput}
             onKeyDown={handleKeyDown}
-            className="w-full rounded-lg border-2 border-purple-500/50 bg-background px-4 py-3 text-center text-lg font-bold outline-none focus:border-purple-500"
+            className="w-full rounded-lg border-2 bg-background px-4 py-3 text-center text-lg font-bold outline-none"
+            style={{ borderColor: 'oklch(0.495 0.205 292 / 50%)', background: 'var(--game-bg-input)' }}
             placeholder="הקלד כאן..."
             aria-label="הקלד את האות או המילה"
             autoComplete="off"
@@ -300,7 +305,7 @@ export default function NinjaSlicePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.18 }}
         >
-          <Card>
+          <Card className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 25%)' }}>
             <CardHeader>
               <CardTitle className="text-center text-lg">המשחק נגמר!</CardTitle>
             </CardHeader>
@@ -312,19 +317,19 @@ export default function NinjaSlicePage() {
               </div>
 
               <div className="grid grid-cols-2 gap-3 text-center">
-                <div className="rounded-lg border p-3">
+                <div className="rounded-lg border p-3" style={{ border: '1.5px solid var(--game-border)', background: 'oklch(0.15 0.02 292 / 40%)' }}>
                   <p className="text-xl font-bold tabular-nums">{state.targetsSliced}</p>
                   <p className="text-xs text-muted-foreground">חתכים</p>
                 </div>
-                <div className="rounded-lg border p-3">
+                <div className="rounded-lg border p-3" style={{ border: '1.5px solid var(--game-border)', background: 'oklch(0.15 0.02 292 / 40%)' }}>
                   <p className="text-xl font-bold tabular-nums">{state.bestCombo}</p>
                   <p className="text-xs text-muted-foreground">קומבו מקסימלי</p>
                 </div>
-                <div className="rounded-lg border p-3">
+                <div className="rounded-lg border p-3" style={{ border: '1.5px solid var(--game-border)', background: 'oklch(0.15 0.02 292 / 40%)' }}>
                   <p className="text-xl font-bold tabular-nums">{finalScore.baseScore}</p>
                   <p className="text-xs text-muted-foreground">ניקוד בסיס</p>
                 </div>
-                <div className="rounded-lg border p-3">
+                <div className="rounded-lg border p-3" style={{ border: '1.5px solid var(--game-border)', background: 'oklch(0.15 0.02 292 / 40%)' }}>
                   <motion.p
                     className="text-xl font-bold tabular-nums text-primary"
                     initial={{ scale: 0.5, opacity: 0 }}

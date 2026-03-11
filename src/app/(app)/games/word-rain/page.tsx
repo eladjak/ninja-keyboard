@@ -110,17 +110,19 @@ export default function WordRainPage() {
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-4 p-4" dir="rtl">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="game-card-border flex items-center justify-between p-4" style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}>
         <div>
-          <h1 className="text-xl font-bold sm:text-2xl">גשם מילים</h1>
+          <h1 className="text-xl font-bold text-glow sm:text-2xl">גשם מילים</h1>
           <p className="text-sm text-muted-foreground">הקלד את המילים לפני שהן מגיעות למטה!</p>
         </div>
-        <CloudRain className="size-8 text-blue-500" />
+        <div className="flex size-10 items-center justify-center rounded-xl" style={{ background: 'oklch(0.6 0.15 240 / 20%)', boxShadow: '0 0 12px oklch(0.6 0.15 240 / 30%)' }}>
+          <CloudRain className="size-5 text-blue-400" />
+        </div>
       </div>
 
       {/* Ready screen */}
       {state.phase === 'ready' && (
-        <Card>
+        <Card className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 25%)' }}>
           <CardContent className="flex flex-col items-center gap-6 py-8">
             <span className="text-5xl" role="img" aria-label="גשם">🌧️</span>
             <h2 className="text-lg font-bold">בחר רמת קושי</h2>
@@ -154,7 +156,7 @@ export default function WordRainPage() {
       {state.phase === 'playing' && (
         <>
           {/* HUD */}
-          <div className="flex items-center justify-between rounded-lg border px-4 py-2">
+          <div className="flex items-center justify-between rounded-lg border px-4 py-2" style={{ borderColor: 'var(--game-border)', background: 'oklch(0.13 0.02 290 / 60%)' }}>
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1">
                 {Array.from({ length: state.maxLives }).map((_, i) => (
@@ -180,6 +182,7 @@ export default function WordRainPage() {
           <div
             className="relative h-80 overflow-hidden rounded-lg border bg-gradient-to-b from-sky-50 to-sky-100 dark:from-sky-950/30 dark:to-sky-900/30 sm:h-96"
             aria-label="אזור משחק"
+            style={{ borderColor: 'var(--game-border)' }}
           >
             <AnimatePresence>
               {state.words.map((word) => (
@@ -217,7 +220,8 @@ export default function WordRainPage() {
             value={state.input}
             onChange={handleInput}
             onKeyDown={handleKeyDown}
-            className="w-full rounded-lg border-2 border-primary/50 bg-background px-4 py-3 text-center text-lg font-bold outline-none focus:border-primary"
+            className="w-full rounded-lg border-2 bg-background px-4 py-3 text-center text-lg font-bold outline-none"
+            style={{ borderColor: 'oklch(0.495 0.205 292 / 50%)', background: 'var(--game-bg-input)' }}
             placeholder="הקלד כאן..."
             aria-label="הקלד את המילה"
             autoComplete="off"
@@ -233,7 +237,7 @@ export default function WordRainPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.15 }}
         >
-          <Card>
+          <Card className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 25%)' }}>
             <CardHeader>
               <CardTitle className="text-center text-lg">המשחק נגמר!</CardTitle>
             </CardHeader>
@@ -245,19 +249,19 @@ export default function WordRainPage() {
               </div>
 
               <div className="grid grid-cols-2 gap-3 text-center">
-                <div className="rounded-lg border p-3">
+                <div className="rounded-lg border p-3" style={{ border: '1.5px solid var(--game-border)', background: 'oklch(0.15 0.02 292 / 40%)' }}>
                   <p className="text-xl font-bold tabular-nums">{state.wordsTyped}</p>
                   <p className="text-xs text-muted-foreground">מילים</p>
                 </div>
-                <div className="rounded-lg border p-3">
+                <div className="rounded-lg border p-3" style={{ border: '1.5px solid var(--game-border)', background: 'oklch(0.15 0.02 292 / 40%)' }}>
                   <p className="text-xl font-bold tabular-nums">{state.bestCombo}</p>
                   <p className="text-xs text-muted-foreground">קומבו מקסימלי</p>
                 </div>
-                <div className="rounded-lg border p-3">
+                <div className="rounded-lg border p-3" style={{ border: '1.5px solid var(--game-border)', background: 'oklch(0.15 0.02 292 / 40%)' }}>
                   <p className="text-xl font-bold tabular-nums">{finalScore.baseScore}</p>
                   <p className="text-xs text-muted-foreground">ניקוד בסיס</p>
                 </div>
-                <div className="rounded-lg border p-3">
+                <div className="rounded-lg border p-3" style={{ border: '1.5px solid var(--game-border)', background: 'oklch(0.15 0.02 292 / 40%)' }}>
                   <motion.p
                     className="text-xl font-bold tabular-nums text-primary"
                     initial={{ scale: 0.5, opacity: 0 }}

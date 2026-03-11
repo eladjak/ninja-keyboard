@@ -96,7 +96,8 @@ export function ShortcutsClient({ lessons }: ShortcutsClientProps) {
   return (
     <Tabs.Root defaultValue={lessons[0]?.category ?? 'basic'} dir="rtl">
       <Tabs.List
-        className="flex gap-1 overflow-x-auto rounded-lg bg-muted p-1"
+        className="flex gap-1 overflow-x-auto rounded-lg p-1"
+        style={{ background: 'var(--game-bg-input)', border: '1px solid var(--game-border)' }}
         aria-label="קטגוריות קיצורים"
       >
         {lessons.map((lesson) => (
@@ -127,9 +128,9 @@ export function ShortcutsClient({ lessons }: ShortcutsClientProps) {
             className="mt-4 space-y-4"
           >
             {/* Lesson header */}
-            <div className="flex items-center justify-between">
+            <div className="game-card-border flex items-center justify-between p-4" style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}>
               <div>
-                <h2 className="text-lg font-bold">{lesson.title}</h2>
+                <h2 className="text-lg font-bold text-glow">{lesson.title}</h2>
                 <p className="text-sm text-muted-foreground">
                   {lesson.description}
                 </p>
@@ -142,8 +143,7 @@ export function ShortcutsClient({ lessons }: ShortcutsClientProps) {
                   type="button"
                   onClick={() => handlePracticeAll(lesson)}
                   className={cn(
-                    'rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground',
-                    'transition-colors hover:bg-primary/90',
+                    'game-button rounded-md px-4 py-2 text-sm font-medium',
                     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
                   )}
                 >

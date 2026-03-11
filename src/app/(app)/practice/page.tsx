@@ -260,7 +260,7 @@ export default function PracticePage() {
     <div className="relative mx-auto flex max-w-3xl flex-col gap-4 p-4" dir="rtl">
       <Image src="/images/backgrounds/moonlit-garden-bg.jpg" alt="" fill className="object-cover opacity-10 pointer-events-none fixed inset-0 -z-10" />
       {/* ── Header ──────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between">
+      <div className="game-card-border flex items-center justify-between p-4" style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}>
         <div className="flex items-center gap-3">
           <Image
             src="/images/characters/model-sheets/luna-girl.jpg"
@@ -270,18 +270,20 @@ export default function PracticePage() {
             className="rounded-full border-2 border-purple-500/30 shadow-lg shadow-purple-500/10"
           />
           <div>
-            <h1 className="text-xl font-bold sm:text-2xl">תרגול חופשי</h1>
+            <h1 className="text-xl font-bold text-glow sm:text-2xl">תרגול חופשי</h1>
             <p className="text-sm text-muted-foreground">
               בחר טקסט וזמן, והתחל לתרגל
             </p>
           </div>
         </div>
-        <Keyboard className="size-8 text-primary" />
+        <div className="flex size-10 items-center justify-center rounded-xl" style={{ background: 'oklch(0.495 0.205 292 / 20%)', boxShadow: '0 0 12px oklch(0.495 0.205 292 / 30%)' }}>
+          <Keyboard className="size-5" style={{ color: 'var(--game-accent-purple)' }} />
+        </div>
       </div>
 
       {/* ── Text selector ───────────────────────────────────────── */}
       {!hasStarted && (
-        <Card>
+        <Card className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 25%)' }}>
           <CardHeader className="pb-2">
             <CardTitle className="text-base">בחר טקסט לתרגול</CardTitle>
           </CardHeader>
@@ -408,7 +410,7 @@ export default function PracticePage() {
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.15 }}
           >
-            <Card>
+            <Card className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 25%)' }}>
               <CardHeader>
                 <CardTitle className="text-center text-lg">
                   סיכום תרגול
@@ -417,21 +419,21 @@ export default function PracticePage() {
               <CardContent className="space-y-4">
                 {/* Main stats */}
                 <div className="grid grid-cols-3 gap-4 text-center">
-                  <div className="rounded-lg border p-3">
+                  <div className="rounded-lg p-3" style={{ border: '1.5px solid var(--game-border)', background: 'oklch(0.15 0.02 292 / 40%)' }}>
                     <div className="flex items-center justify-center gap-1 text-muted-foreground">
                       <Zap className="size-4" />
                     </div>
                     <p className="text-2xl font-bold tabular-nums">{result.wpm}</p>
                     <p className="text-xs text-muted-foreground">מילים/דקה</p>
                   </div>
-                  <div className="rounded-lg border p-3">
+                  <div className="rounded-lg p-3" style={{ border: '1.5px solid var(--game-border)', background: 'oklch(0.15 0.02 292 / 40%)' }}>
                     <div className="flex items-center justify-center gap-1 text-muted-foreground">
                       <Target className="size-4" />
                     </div>
                     <p className="text-2xl font-bold tabular-nums">{result.accuracy}%</p>
                     <p className="text-xs text-muted-foreground">דיוק</p>
                   </div>
-                  <div className="rounded-lg border p-3">
+                  <div className="rounded-lg p-3" style={{ border: '1.5px solid var(--game-border)', background: 'oklch(0.15 0.02 292 / 40%)' }}>
                     <motion.p
                       className="text-2xl font-bold tabular-nums text-primary"
                       initial={{ scale: 0.5, opacity: 0 }}
@@ -446,19 +448,19 @@ export default function PracticePage() {
 
                 {/* Detailed stats */}
                 <div className="grid grid-cols-2 gap-2 text-sm">
-                  <div className="flex justify-between rounded-md bg-muted/50 px-3 py-2">
+                  <div className="flex justify-between rounded-md px-3 py-2" style={{ background: 'oklch(0.15 0.02 292 / 40%)', borderInlineStart: '2px solid var(--game-border)' }}>
                     <span className="text-muted-foreground">הקשות</span>
                     <span className="font-medium">{result.totalKeystrokes}</span>
                   </div>
-                  <div className="flex justify-between rounded-md bg-muted/50 px-3 py-2">
+                  <div className="flex justify-between rounded-md px-3 py-2" style={{ background: 'oklch(0.15 0.02 292 / 40%)', borderInlineStart: '2px solid var(--game-border)' }}>
                     <span className="text-muted-foreground">נכונות</span>
                     <span className="font-medium text-green-600">{result.correctKeystrokes}</span>
                   </div>
-                  <div className="flex justify-between rounded-md bg-muted/50 px-3 py-2">
+                  <div className="flex justify-between rounded-md px-3 py-2" style={{ background: 'oklch(0.15 0.02 292 / 40%)', borderInlineStart: '2px solid var(--game-border)' }}>
                     <span className="text-muted-foreground">שגיאות</span>
                     <span className="font-medium text-red-600">{result.errorKeystrokes}</span>
                   </div>
-                  <div className="flex justify-between rounded-md bg-muted/50 px-3 py-2">
+                  <div className="flex justify-between rounded-md px-3 py-2" style={{ background: 'oklch(0.15 0.02 292 / 40%)', borderInlineStart: '2px solid var(--game-border)' }}>
                     <span className="text-muted-foreground">זמן</span>
                     <span className="font-medium">
                       {Math.floor(result.durationMs / 1000)}ש&apos;
