@@ -394,7 +394,7 @@ export function HomeDashboard() {
               >
                 <div className="relative flex size-16 items-center justify-center rounded-2xl border-2 border-amber-500/30 bg-amber-500/10">
                   <Image
-                    src="/images/badges/achievement-star.jpg"
+                    src="/images/badges/badge-achievement-gold.jpg"
                     alt=""
                     width={40}
                     height={40}

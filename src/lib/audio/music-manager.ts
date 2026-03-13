@@ -81,20 +81,20 @@ export type HebrewHoliday =
 
 export const DEFAULT_ZONE_TRACKS: Record<GameZone, string> = {
   'home': '/audio/music/main-theme.mp3',
-  'lessons-easy': '/audio/music/practice-easy.mp3',
-  'lessons-medium': '/audio/music/practice-medium.mp3',
-  'lessons-hard': '/audio/music/practice-hard.mp3',
-  'battle-arena': '/audio/music/battle-arena.mp3',
-  'speed-test': '/audio/music/speed-test.mp3',
-  'games-hub': '/audio/music/games-hub.mp3',
-  'profile': '/audio/music/profile.mp3',
-  'story-mode': '/audio/music/story-mode.mp3',
+  'lessons-easy': '/audio/music/gameplay/practice-easy.mp3',
+  'lessons-medium': '/audio/music/gameplay/practice-medium.mp3',
+  'lessons-hard': '/audio/music/gameplay/practice-hard.mp3',
+  'battle-arena': '/audio/music/battle/tournament-arena.mp3',
+  'speed-test': '/audio/music/gameplay/speed-test.mp3',
+  'games-hub': '/audio/music/menu/games-hub.mp3',
+  'profile': '/audio/music/menu/profile-progress.mp3',
+  'story-mode': '/audio/music/story/emotional-moment.mp3',
   'boss-battle': '/audio/music/boss-battle.mp3',
-  'boss-battle-final': '/audio/music/boss-battle-final.mp3',
+  'boss-battle-final': '/audio/music/battle/bug-king-final.mp3',
   'menu': '/audio/music/main-theme.mp3',
-  'victory': '/audio/music/victory-fanfare.mp3',
-  'defeat': '/audio/music/defeat.mp3',
-  'loading': '/audio/music/loading.mp3',
+  'victory': '/audio/music/events/victory-fanfare.mp3',
+  'defeat': '/audio/music/events/defeat-try-again.mp3',
+  'loading': '/audio/music/main-theme.mp3',
 }
 
 /** Holiday track paths. Override home/menu zones during holidays. */
@@ -115,14 +115,14 @@ export const HOLIDAY_TRACKS: Record<HebrewHoliday, string> = {
 
 /** Stinger (jingle) track paths. */
 export const STINGER_TRACKS: Record<string, string> = {
-  'victory-fanfare': '/audio/music/stingers/victory-fanfare.mp3',
-  'level-up': '/audio/music/stingers/level-up.mp3',
-  'character-unlock': '/audio/music/stingers/character-unlock.mp3',
-  'achievement': '/audio/music/stingers/achievement.mp3',
-  'streak-fire': '/audio/music/stingers/streak-fire.mp3',
-  'season-complete': '/audio/music/stingers/season-complete.mp3',
-  'personal-best': '/audio/music/stingers/personal-best.mp3',
-  'defeat-jingle': '/audio/music/stingers/defeat-jingle.mp3',
+  'victory-fanfare': '/audio/music/events/victory-fanfare.mp3',
+  'level-up': '/audio/music/events/level-up-jingle.mp3',
+  'character-unlock': '/audio/music/events/character-unlock.mp3',
+  'achievement': '/audio/music/events/achievement-unlock.mp3',
+  'streak-fire': '/audio/music/events/streak-milestone.mp3',
+  'season-complete': '/audio/music/events/season-event-theme.mp3',
+  'personal-best': '/audio/music/events/personal-best.mp3',
+  'defeat-jingle': '/audio/music/events/defeat-try-again.mp3',
 }
 
 // ---------------------------------------------------------------------------
@@ -134,7 +134,7 @@ export const TRACK_MANIFEST: MusicTrack[] = [
   {
     id: 'PLAY-001',
     name: 'תרגול רגוע',
-    src: '/audio/music/practice-easy.mp3',
+    src: '/audio/music/gameplay/practice-easy.mp3',
     loop: true,
     trackVolume: 0.7,
     durationHint: 180,
@@ -144,7 +144,7 @@ export const TRACK_MANIFEST: MusicTrack[] = [
   {
     id: 'EVENT-001',
     name: 'פנפרת ניצחון',
-    src: '/audio/music/stingers/victory-fanfare.mp3',
+    src: '/audio/music/events/victory-fanfare.mp3',
     loop: false,
     trackVolume: 1.0,
     durationHint: 8,
@@ -154,7 +154,7 @@ export const TRACK_MANIFEST: MusicTrack[] = [
   {
     id: 'EVENT-002',
     name: 'עליית רמה',
-    src: '/audio/music/stingers/level-up.mp3',
+    src: '/audio/music/events/level-up-jingle.mp3',
     loop: false,
     trackVolume: 1.0,
     durationHint: 5,
@@ -164,7 +164,7 @@ export const TRACK_MANIFEST: MusicTrack[] = [
   {
     id: 'EVENT-003',
     name: 'פתיחת דמות',
-    src: '/audio/music/stingers/character-unlock.mp3',
+    src: '/audio/music/events/character-unlock.mp3',
     loop: false,
     trackVolume: 1.0,
     durationHint: 6,
@@ -175,7 +175,7 @@ export const TRACK_MANIFEST: MusicTrack[] = [
   {
     id: 'BATTLE-002',
     name: 'קרב שאדו קאט',
-    src: '/audio/music/battle-shadow.mp3',
+    src: '/audio/music/battle/shadow-cat-battle.mp3',
     loop: true,
     trackVolume: 0.8,
     durationHint: 150,
@@ -185,7 +185,7 @@ export const TRACK_MANIFEST: MusicTrack[] = [
   {
     id: 'BATTLE-003',
     name: 'קרב סטורם פוקס',
-    src: '/audio/music/battle-storm.mp3',
+    src: '/audio/music/battle/storm-fox-battle.mp3',
     loop: true,
     trackVolume: 0.8,
     durationHint: 150,
@@ -195,7 +195,7 @@ export const TRACK_MANIFEST: MusicTrack[] = [
   {
     id: 'PLAY-004',
     name: 'מבחן מהירות',
-    src: '/audio/music/speed-test.mp3',
+    src: '/audio/music/gameplay/speed-test.mp3',
     loop: true,
     trackVolume: 0.8,
     durationHint: 180,
@@ -205,7 +205,7 @@ export const TRACK_MANIFEST: MusicTrack[] = [
   {
     id: 'EVENT-004',
     name: 'הישג חדש',
-    src: '/audio/music/stingers/achievement.mp3',
+    src: '/audio/music/events/achievement-unlock.mp3',
     loop: false,
     trackVolume: 1.0,
     durationHint: 5,
@@ -216,7 +216,7 @@ export const TRACK_MANIFEST: MusicTrack[] = [
   {
     id: 'PLAY-002',
     name: 'תרגול בינוני',
-    src: '/audio/music/practice-medium.mp3',
+    src: '/audio/music/gameplay/practice-medium.mp3',
     loop: true,
     trackVolume: 0.7,
     durationHint: 180,
@@ -226,7 +226,7 @@ export const TRACK_MANIFEST: MusicTrack[] = [
   {
     id: 'BATTLE-001',
     name: 'לפני הקרב',
-    src: '/audio/music/battle-pre.mp3',
+    src: '/audio/music/battle/pre-battle-anticipation.mp3',
     loop: true,
     trackVolume: 0.6,
     durationHint: 90,
@@ -236,7 +236,7 @@ export const TRACK_MANIFEST: MusicTrack[] = [
   {
     id: 'CHAR-001',
     name: 'תמת קי',
-    src: '/audio/music/characters/ki-theme.mp3',
+    src: '/audio/music/characters/kis-theme.mp3',
     loop: true,
     trackVolume: 0.7,
     durationHint: 20,
@@ -246,7 +246,7 @@ export const TRACK_MANIFEST: MusicTrack[] = [
   {
     id: 'CHAR-003',
     name: 'תמת סנסיי זן',
-    src: '/audio/music/characters/sensei-zen-theme.mp3',
+    src: '/audio/music/characters/sensei-zens-theme.mp3',
     loop: true,
     trackVolume: 0.7,
     durationHint: 20,
@@ -256,7 +256,7 @@ export const TRACK_MANIFEST: MusicTrack[] = [
   {
     id: 'CHAR-004',
     name: 'תמת באג',
-    src: '/audio/music/characters/bug-theme.mp3',
+    src: '/audio/music/characters/bugs-theme.mp3',
     loop: true,
     trackVolume: 0.7,
     durationHint: 20,
@@ -266,7 +266,7 @@ export const TRACK_MANIFEST: MusicTrack[] = [
   {
     id: 'WORLD-003',
     name: 'זירת גזע',
-    src: '/audio/music/worlds/geza-arena.mp3',
+    src: '/audio/music/worlds/geza-ninja-arena.mp3',
     loop: true,
     trackVolume: 0.7,
     durationHint: 180,
@@ -298,7 +298,7 @@ export const TRACK_MANIFEST: MusicTrack[] = [
   {
     id: 'BOSS-002',
     name: 'קרב בוס סופי',
-    src: '/audio/music/boss-battle-final.mp3',
+    src: '/audio/music/battle/bug-king-final.mp3',
     loop: true,
     trackVolume: 0.9,
     durationHint: 240,
