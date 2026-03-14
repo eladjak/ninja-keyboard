@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Zap, Target, Keyboard, Clock } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
 
 interface SessionStatsProps {
   /** Current words per minute */
@@ -41,6 +42,7 @@ interface StatCardProps {
 }
 
 function StatCard({ icon, label, value, valueClassName }: StatCardProps) {
+  const reduceMotion = useReducedMotion()
   return (
     <Card className="flex-1 min-w-0 py-3 gap-0">
       <CardContent className="flex flex-col items-center gap-1 px-3 py-0">
@@ -52,10 +54,10 @@ function StatCard({ icon, label, value, valueClassName }: StatCardProps) {
               'text-xl font-bold tabular-nums leading-none sm:text-2xl',
               valueClassName,
             )}
-            initial={{ scale: 0.85, opacity: 0.6 }}
+            initial={reduceMotion ? false : { scale: 0.85, opacity: 0.6 }}
             animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.85, opacity: 0.6 }}
-            transition={{ duration: 0.12 }}
+            exit={reduceMotion ? { opacity: 0 } : { scale: 0.85, opacity: 0.6 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.12 }}
           >
             {value}
           </motion.span>

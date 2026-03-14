@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { BattleResults } from '@/components/battle/battle-results'
 import { AIOpponent } from '@/components/battle/ai-opponent'
 import { soundManager } from '@/lib/audio/sound-manager'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
 import {
   type BattleConfig,
   type BattleDifficulty,
@@ -70,6 +71,7 @@ type Phase = 'select' | 'countdown' | 'battle' | 'results'
 // ── Component ──────────────────────────────────────────────────────
 
 export function BattleArena() {
+  const reduceMotion = useReducedMotion()
   const [phase, setPhase] = useState<Phase>('select')
   const [difficulty, setDifficulty] = useState<BattleDifficulty>('easy')
   const [selectedRival, setSelectedRival] = useState<RivalName>('bug')
@@ -361,9 +363,9 @@ export function BattleArena() {
                 onClick={() => handleSelectRival(option.rival, option.difficulty)}
                 className="game-card-border p-5 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 style={{ borderColor: `${display.glowColor}40` }}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                whileHover={reduceMotion ? {} : { scale: 1.03 }}
+                whileTap={reduceMotion ? {} : { scale: 0.97 }}
+                transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 300, damping: 20 }}
                 data-testid={`rival-${option.rival}`}
               >
                 <div
@@ -449,15 +451,18 @@ export function BattleArena() {
         <AnimatePresence mode="wait">
           <motion.div
             key={countdownIndex}
-            initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: [0.5, 1.1, 1], opacity: 1, rotate: [0, -3, 3, 0] }}
-            exit={{ scale: 2, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            initial={reduceMotion ? false : { scale: 0.5, opacity: 0 }}
+            animate={reduceMotion ? { opacity: 1 } : { scale: [0.5, 1.1, 1], opacity: 1, rotate: [0, -3, 3, 0] }}
+            exit={reduceMotion ? { opacity: 0 } : { scale: 2, opacity: 0 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.3 }}
             className="text-center"
           >
             <span
               className="text-8xl font-black neon-text-purple"
               data-testid="countdown-display"
+              aria-live="assertive"
+              aria-atomic="true"
+              role="timer"
             >
               {COUNTDOWN_STEPS[countdownIndex]}
             </span>
@@ -503,10 +508,12 @@ export function BattleArena() {
             className="mt-2 text-2xl font-black tabular-nums"
             style={{ color: 'var(--game-accent-purple)', textShadow: 'var(--game-text-glow)' }}
             data-testid="player-wpm"
+            aria-live="polite"
+            aria-atomic="true"
           >
             {playerWpm} <span className="text-sm font-normal text-muted-foreground">מ/ד</span>
           </div>
-          <div className="text-muted-foreground text-xs">
+          <div className="text-muted-foreground text-xs" aria-live="polite" aria-atomic="true">
             דיוק: {playerAccuracy}%
           </div>
         </div>
@@ -534,6 +541,9 @@ export function BattleArena() {
       <div
         className="game-card-border space-y-3 p-4"
         style={{ borderColor: 'oklch(0.495 0.205 292 / 20%)' }}
+        role="status"
+        aria-label="התקדמות במשחק"
+        aria-live="polite"
       >
         <div className="flex items-center gap-2">
           <span className="w-12 text-sm font-medium text-foreground">אתה</span>
@@ -542,7 +552,7 @@ export function BattleArena() {
               className="h-full rounded-full"
               style={{ background: 'linear-gradient(90deg, #6C5CE7, #00B894)', boxShadow: '0 0 8px oklch(0.55 0.2 292 / 50%)' }}
               animate={{ width: `${playerPercent}%` }}
-              transition={{ duration: 0.15 }}
+              transition={reduceMotion ? { duration: 0 } : { duration: 0.15 }}
               data-testid="player-progress"
             />
           </div>
@@ -559,7 +569,7 @@ export function BattleArena() {
               className="h-full rounded-full"
               style={{ background: rivalDisplay.themeColor, boxShadow: `0 0 8px ${rivalDisplay.glowColor}` }}
               animate={{ width: `${aiPercent}%` }}
-              transition={{ duration: 0.15 }}
+              transition={reduceMotion ? { duration: 0 } : { duration: 0.15 }}
               data-testid="ai-progress"
             />
           </div>

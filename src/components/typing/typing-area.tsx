@@ -4,6 +4,7 @@ import { useEffect, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
 
 interface Keystroke {
   expected: string
@@ -41,6 +42,8 @@ export function TypingArea({
   isActive,
   onKeyPress,
 }: TypingAreaProps) {
+  const reduceMotion = useReducedMotion()
+
   // Attach / detach keydown listener based on isActive
   useEffect(() => {
     if (!isActive) return
@@ -110,11 +113,11 @@ export function TypingArea({
                     // Future characters – dimmed
                     !isTyped && !isCurrent && 'text-muted-foreground/40',
                   )}
-                  animate={justTyped
+                  animate={justTyped && !reduceMotion
                     ? { scale: [1.3, 1], opacity: [0.6, 1] }
                     : {}
                   }
-                  transition={{ duration: 0.15, ease: 'easeOut' }}
+                  transition={reduceMotion ? { duration: 0 } : { duration: 0.15, ease: 'easeOut' }}
                 >
                   {/* Non-breaking space so empty chars keep their width */}
                   {char === ' ' ? '\u00A0' : char}
@@ -123,12 +126,11 @@ export function TypingArea({
                   {isCurrent && (
                     <motion.span
                       className="absolute bottom-0 start-0 h-0.5 w-full rounded-full bg-primary cursor-glow"
-                      animate={{ opacity: [1, 0, 1] }}
-                      transition={{
-                        duration: 0.8,
-                        repeat: Infinity,
-                        ease: 'linear',
-                      }}
+                      animate={reduceMotion ? { opacity: 1 } : { opacity: [1, 0, 1] }}
+                      transition={reduceMotion
+                        ? { duration: 0 }
+                        : { duration: 0.8, repeat: Infinity, ease: 'linear' }
+                      }
                     />
                   )}
                 </motion.span>
@@ -141,9 +143,9 @@ export function TypingArea({
         {!isActive && (
           <motion.p
             className="mt-4 text-center text-sm text-muted-foreground"
-            initial={{ opacity: 0 }}
+            initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.15 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.15 }}
             aria-live="polite"
           >
             לחץ על כל מקש כדי להתחיל

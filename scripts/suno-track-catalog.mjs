@@ -4,7 +4,7 @@
  * Suno Track Catalog - Single Source of Truth
  *
  * Shared catalog module for all Suno music automation scripts.
- * Contains the full 44-track catalog, helper functions, and quality gate constants.
+ * Contains the full 56-track catalog, helper functions, and quality gate constants.
  *
  * Used by:
  *   - suno-generate-batch.mjs (batch generation)
@@ -24,7 +24,7 @@ const MANIFEST_PATH = resolve(PROJECT_ROOT, "public/audio/music/music-manifest.j
 const MUSIC_DIR = resolve(PROJECT_ROOT, "public/audio/music")
 
 // ============================================================================
-// Full Track Catalog (44 tracks)
+// Full Track Catalog (56 tracks)
 // ============================================================================
 
 export const FULL_CATALOG = [
@@ -85,6 +85,20 @@ export const FULL_CATALOG = [
   { id: "WORLD-003", name: "Geza - Ninja Arena", nameHe: "גזע — זירת נינג'ה (10-12)", category: "worlds", priority: 1, sunoPrompt: "Ninja arena dark synthwave, neon gaming ambient, competitive 125 BPM, Brawl Stars energy, dark neon aesthetic, electronic pulses, cool and intense, gaming lobby music, loopable", style: "Dark Synthwave", duration: "120-180s" },
   { id: "WORLD-004", name: "Anaf - Training Hub", nameHe: "ענף — מרכז אימון (12-14)", category: "worlds", priority: 3, sunoPrompt: "Mature training hub lo-fi minimal, dark ambient with subtle beats, 90 BPM, professional productivity music, teen appropriate, Discord dark theme energy, clean and understated, loopable", style: "Lo-fi Minimal", duration: "120-180s" },
   { id: "WORLD-005", name: "Tzameret - Professional", nameHe: "צמרת — מקצועי (14-16+)", category: "worlds", priority: 3, sunoPrompt: "Professional minimal electronic ambient, near silence with subtle texture, developer/programmer atmosphere, 70 BPM, mature and respectful, Monkeytype dark mode energy, barely there music, loopable", style: "Minimal Electronic", duration: "120-180s" },
+
+  // === HOLIDAYS (12 tracks) ===
+  { id: "HOL-001", name: "Hanukkah Theme", nameHe: "חנוכה — ערכת חג", category: "holidays", priority: 3, sunoPrompt: "Festive Hanukkah dreidel melody with klezmer clarinet and chiptune warmth, candle-lighting glow, celebratory 120 BPM, Middle Eastern scale, joyful Jewish holiday kids game theme, loopable, no vocals", style: "Klezmer Chiptune", duration: "60-90s" },
+  { id: "HOL-002", name: "Purim Theme", nameHe: "פורים — ערכת חג", category: "holidays", priority: 3, sunoPrompt: "Wild Purim carnival party music, grogger rattle sounds, klezmer meets EDM, chaotic joyful celebration, 140 BPM, costume party energy, Middle Eastern percussion, kids game festive, loopable, no vocals", style: "Klezmer EDM", duration: "60-90s" },
+  { id: "HOL-003", name: "Pesach Theme", nameHe: "פסח — ערכת חג", category: "holidays", priority: 3, sunoPrompt: "Pesach liberation theme with Four Questions melody echo, dramatic hopeful orchestral, Middle Eastern strings and flute, 100 BPM, Exodus journey from slavery to freedom, cinematic chiptune hybrid, kids game Passover music, loopable, no vocals", style: "Cinematic Middle Eastern", duration: "60-90s" },
+  { id: "HOL-004", name: "Yom Ha'atzmaut Theme", nameHe: "יום העצמאות — ערכת חג", category: "holidays", priority: 3, sunoPrompt: "Triumphant Israeli independence anthem, Israeli pop-rock with chiptune accents, flag-waving patriotic energy, 130 BPM, modern Hebrew pop meets 8-bit, celebration of statehood, bright and proud, kids game national day theme, loopable, no vocals", style: "Israeli Pop-Rock Chiptune", duration: "60-90s" },
+  { id: "HOL-005", name: "Rosh Hashana Theme", nameHe: "ראש השנה — ערכת חג", category: "holidays", priority: 3, sunoPrompt: "Majestic Rosh Hashana new year theme, shofar horn call opening, orchestral with Middle Eastern oud and kanun, 90 BPM, solemn yet hopeful, honey sweetness warmth, Jewish new year reflection and renewal, cinematic grandeur, kids game holiday music, loopable, no vocals", style: "Orchestral Middle Eastern", duration: "60-90s" },
+  { id: "HOL-006", name: "Sukkot Theme", nameHe: "סוכות — ערכת חג", category: "holidays", priority: 3, sunoPrompt: "Joyful Sukkot harvest festival theme, folk acoustic guitar with chiptune warmth, nature sounds and rustling leaves, 110 BPM, outdoor celebration under the stars, lulav and etrog dance energy, Mediterranean folk meets pixel art, kids game autumn festival, loopable, no vocals", style: "Folk Acoustic Chiptune", duration: "60-90s" },
+  { id: "HOL-007", name: "Shavuot Theme", nameHe: "שבועות — ערכת חג", category: "holidays", priority: 3, sunoPrompt: "Pastoral Shavuot theme, gentle orchestral with ambient textures, Torah giving majesty building to soft climax, 85 BPM, dairy farm serenity meets Mount Sinai grandeur, soft strings and flute pastoral melody, dawn light warmth, kids game spring harvest, loopable, no vocals", style: "Pastoral Orchestral Ambient", duration: "60-90s" },
+  { id: "HOL-008", name: "Lag Ba'Omer Theme", nameHe: "ל\"ג בעומר — ערכת חג", category: "holidays", priority: 3, sunoPrompt: "Energetic Lag Ba'Omer bonfire theme, crackling fire SFX woven into electronic folk beat, outdoor adventure energy, 125 BPM, bow and arrow heroic motif, nighttime campfire celebration, Israeli folk dance meets chiptune, kids game bonfire night, loopable, no vocals", style: "Electronic Folk", duration: "60-90s" },
+  { id: "HOL-009", name: "Tu Bishvat Theme", nameHe: "ט\"ו בשבט — ערכת חג", category: "holidays", priority: 3, sunoPrompt: "Gentle Tu Bishvat nature theme, ambient organic sounds with soft chiptune textures, trees growing metaphor in ascending arpeggios, 75 BPM, bird song and wind, planting seeds of hope, earthy warm tones, peaceful environmental awareness, kids game tree holiday, loopable, no vocals", style: "Ambient Organic", duration: "60-90s" },
+  { id: "HOL-010", name: "Yom Hazikaron Theme", nameHe: "יום הזיכרון — ערכת חג", category: "holidays", priority: 3, sunoPrompt: "Solemn Yom Hazikaron memorial theme, reverent slow orchestral with solo trumpet carrying a mournful melody, 60 BPM, dignified remembrance for fallen soldiers, gentle strings underneath, somber but not frightening for children, respectful patriotic grief, soft piano chords, age-appropriate memorial music, loopable, no vocals", style: "Slow Orchestral Memorial", duration: "60-90s" },
+  { id: "HOL-011", name: "Yom Hashoah Theme", nameHe: "יום השואה — ערכת חג", category: "holidays", priority: 3, sunoPrompt: "Deeply solemn Yom Hashoah Holocaust memorial, minimal piano with soft strings, 50 BPM, sorrowful yet dignified, single candle flame warmth in darkness, gentle minor key melody carrying weight of memory, respectful and age-appropriate for children, quiet contemplation, hope persisting through sorrow, loopable, no vocals", style: "Minimal Piano Strings", duration: "60-90s" },
+  { id: "HOL-012", name: "Simchat Torah Theme", nameHe: "שמחת תורה — ערכת חג", category: "holidays", priority: 3, sunoPrompt: "Joyful Simchat Torah hakafot dancing theme, energetic klezmer celebration with chiptune accents, Torah scroll dancing energy, 135 BPM, circle dance rhythm, clapping hands and stomping feet, exuberant communal joy, Middle Eastern percussion with clarinet lead, kids game festive dance, loopable, no vocals", style: "Klezmer Celebration Chiptune", duration: "60-90s" },
 ]
 
 // ============================================================================
@@ -99,6 +113,7 @@ export const CATEGORY_DIRS = {
   characters: "characters",
   story: "story",
   worlds: "worlds",
+  holidays: "holidays",
 }
 
 // ============================================================================
@@ -113,6 +128,7 @@ export const DURATION_RANGES = {
   battle: { min: 5, max: 300, label: "Battle Music" },
   story: { min: 60, max: 300, label: "Story Cinematic" },
   worlds: { min: 60, max: 300, label: "World Ambient" },
+  holidays: { min: 30, max: 150, label: "Holiday Theme" },
 }
 
 // ============================================================================

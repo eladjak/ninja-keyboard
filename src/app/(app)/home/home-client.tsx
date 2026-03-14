@@ -26,6 +26,7 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { useMemo, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
 import { DailyChallengeCard } from '@/components/challenges/daily-challenge-card'
 import { DailyTip } from '@/components/tips/daily-tip'
 import { ProgressChart } from '@/components/statistics/progress-chart'
@@ -125,6 +126,7 @@ const STAT_CARDS = [
 ] as const
 
 export function HomeDashboard() {
+  const reduceMotion = useReducedMotion()
   const { totalXp, level, streak, completedLessons, levelProgress } =
     useXpStore()
   const { getRecentBadges, hasBadge } = useBadgeStore()
@@ -174,9 +176,9 @@ export function HomeDashboard() {
     <div className="mx-auto max-w-2xl space-y-6 p-4">
       {/* Hero Banner */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.98 }}
+        initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.3 }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.3 }}
         className="relative overflow-hidden rounded-2xl hero-glow-border p-6 text-white shadow-lg"
         style={{ background: 'var(--game-bg-primary)' }}
       >
@@ -230,9 +232,9 @@ export function HomeDashboard() {
             <motion.div
               className="h-full rounded-full"
               style={{ background: 'linear-gradient(90deg, #6C5CE7, #00B894)' }}
-              initial={{ width: 0 }}
+              initial={reduceMotion ? false : { width: 0 }}
               animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
+              transition={reduceMotion ? { duration: 0 } : { duration: 0.8, ease: 'easeOut' }}
             />
           </div>
         </div>
@@ -249,9 +251,9 @@ export function HomeDashboard() {
           return (
             <motion.div
               key={stat.key}
-              initial={{ opacity: 0, y: 12 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: i * 0.06 }}
+              transition={reduceMotion ? { duration: 0 } : { duration: 0.3, delay: i * 0.06 }}
               className="game-card-border p-3"
               style={{ borderColor: `${stat.accent}40` }}
             >
@@ -313,9 +315,9 @@ export function HomeDashboard() {
           {QUICK_LINKS.map((link, i) => (
             <Link key={link.href} href={link.href} onClick={playNavigate}>
               <motion.div
-                initial={{ opacity: 0, y: 8 }}
+                initial={reduceMotion ? false : { opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2, delay: i * 0.04 }}
+                transition={reduceMotion ? { duration: 0 } : { duration: 0.2, delay: i * 0.04 }}
                 className="game-card-border cursor-pointer"
                 style={{ borderColor: `${link.accent}30` }}
               >
@@ -389,8 +391,8 @@ export function HomeDashboard() {
               <motion.div
                 key={badge!.id}
                 className="flex flex-col items-center gap-1.5"
-                whileHover={{ scale: 1.08 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                whileHover={reduceMotion ? {} : { scale: 1.08 }}
+                transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 400, damping: 20 }}
               >
                 <div className="relative flex size-16 items-center justify-center rounded-2xl border-2 border-amber-500/30 bg-amber-500/10">
                   <Image

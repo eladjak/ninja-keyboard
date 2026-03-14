@@ -376,5 +376,113 @@
     "style": "minimal electronic, near-silence, 70 BPM, developer ambient, sophisticated, mature",
     "duration": "120-180s",
     "category": "worlds"
+  },
+  {
+    "id": "HOL-001",
+    "name": "Hanukkah Theme",
+    "nameHe": "חנוכה — ערכת חג",
+    "sunoPrompt": "Festive Hanukkah celebration theme for a kids typing ninja game, warm klezmer clarinet melody dancing over chiptune 8-bit bass and pixel art arpeggios, authentic dreidel spinning melody woven through the arrangement, candle-lighting ceremony warmth with golden bell chimes ascending one by one like the menorah, Middle Eastern Freygish scale giving authentic Jewish tonality, 120 BPM with a bouncy hora-inspired rhythm, joyful sufganiyot party energy, oil lamp glow ambient warmth, darbuka and frame drum providing festive percussion foundation, celebratory brass stabs on chorus sections, winter holiday magical atmosphere for children, seamless loop point, no vocals",
+    "style": "klezmer chiptune, festive, Freygish scale, clarinet, 120 BPM, Hanukkah, warm golden",
+    "duration": "60-90s",
+    "category": "holidays"
+  },
+  {
+    "id": "HOL-002",
+    "name": "Purim Theme",
+    "nameHe": "פורים — ערכת חג",
+    "sunoPrompt": "Wild chaotic Purim carnival party music for a kids typing ninja game, grogger rattle percussion shaking throughout, klezmer clarinet and violin going full speed meeting heavy EDM bass drops and chiptune glitch effects, costume parade energy with constantly shifting musical surprises, 140 BPM frantic celebration, Middle Eastern dabke rhythm fused with electronic four-on-the-floor kicks, carnival calliope organ meets pixel art synths, confetti explosion risers every 8 bars, mischievous playful melody that kids will love, Megillah scroll reading dramatic moments with orchestral stabs, masquerade ball whimsy, pure unrestrained Jewish festive joy, seamless loop point, no vocals",
+    "style": "klezmer EDM, carnival, grogger, chaotic festive, 140 BPM, Purim, wild celebration",
+    "duration": "60-90s",
+    "category": "holidays"
+  },
+  {
+    "id": "HOL-003",
+    "name": "Pesach Theme",
+    "nameHe": "פסח — ערכת חג",
+    "sunoPrompt": "Dramatic Passover liberation theme for a kids typing ninja game, subtle echo of the Four Questions (Ma Nishtana) melody reimagined through cinematic orchestral strings and Middle Eastern ney flute, journey from slavery to freedom told through ascending harmonic progression, 100 BPM with building intensity, Egyptian-inspired percussion (doumbek, riq) grounding the rhythm, chiptune undertones adding pixel art warmth to the epic orchestral sweep, Red Sea parting moment with massive reverb swell and cymbal crash, hopeful and triumphant resolution representing freedom, Hebrew/Mizrahi scale ornaments, spring renewal energy, matzah crunch texture in the hi-hats, dramatic yet age-appropriate for children, seamless loop point, no vocals",
+    "style": "cinematic Middle Eastern, orchestral, liberation, 100 BPM, Pesach, dramatic hopeful",
+    "duration": "60-90s",
+    "category": "holidays"
+  },
+  {
+    "id": "HOL-004",
+    "name": "Yom Ha'atzmaut Theme",
+    "nameHe": "יום העצמאות — ערכת חג",
+    "sunoPrompt": "Triumphant Israeli Independence Day anthem for a kids typing ninja game, modern Israeli pop-rock energy with driving electric guitar power chords meeting chiptune 8-bit patriotic melody, flag-waving pride and national celebration, 130 BPM with anthemic chorus feel, Middle Eastern percussion (darbuka, tof) blended with rock drum kit, Israeli folk dance hora rhythm in the verses transitioning to stadium rock in the chorus, blue and white sonic aesthetic with bright major key progression, fighter jet flyover whoosh SFX accents, fireworks explosion impacts on downbeats, proud and celebratory without being militaristic, kids game national holiday energy, confetti and streamers joy, seamless loop point, no vocals",
+    "style": "Israeli pop-rock, chiptune, anthemic, 130 BPM, independence, triumphant patriotic",
+    "duration": "60-90s",
+    "category": "holidays"
+  },
+  {
+    "id": "HOL-005",
+    "name": "Rosh Hashana Theme",
+    "nameHe": "ראש השנה — ערכת חג",
+    "sunoPrompt": "Majestic Rosh Hashana Jewish New Year theme for a kids typing ninja game, opening with authentic shofar horn blast (tekiah, shevarim, teruah patterns) transitioning into full orchestral arrangement, Middle Eastern oud and kanun providing melodic foundation with warm strings, 90 BPM dignified and reflective tempo, honey sweetness represented by warm golden pad tones and gentle bell chimes, pomegranate abundance energy with rich layered harmonics, Hebrew liturgical scale (Ahava Rabbah mode) giving authentic spiritual tonality, building from quiet reflection to hopeful new beginning crescendo, apple dipped in honey warmth, book of life solemnity balanced with renewal optimism, age-appropriate gravitas for children, seamless loop point, no vocals",
+    "style": "orchestral Middle Eastern, shofar, majestic, 90 BPM, Rosh Hashana, reflective hopeful",
+    "duration": "60-90s",
+    "category": "holidays"
+  },
+  {
+    "id": "HOL-006",
+    "name": "Sukkot Theme",
+    "nameHe": "סוכות — ערכת חג",
+    "sunoPrompt": "Joyful Sukkot harvest festival theme for a kids typing ninja game, warm acoustic guitar strumming with chiptune pixel art flourishes, nature sounds woven throughout (rustling palm fronds, gentle breeze through schach roof), 110 BPM with Mediterranean folk dance rhythm, lulav and etrog waving motion represented by swaying melodic phrases, outdoor dining under the stars atmosphere, harvest abundance joy with tambourine and frame drum, Middle Eastern folk melody on ney flute over acoustic warmth, autumn colors sonic palette with warm amber tones, community gathering energy, gentle rainfall ambient texture, ushpizin welcome warmth, kid-friendly outdoor celebration, seamless loop point, no vocals",
+    "style": "folk acoustic, chiptune, harvest, 110 BPM, Sukkot, nature, Mediterranean warmth",
+    "duration": "60-90s",
+    "category": "holidays"
+  },
+  {
+    "id": "HOL-007",
+    "name": "Shavuot Theme",
+    "nameHe": "שבועות — ערכת חג",
+    "sunoPrompt": "Pastoral Shavuot theme for a kids typing ninja game, gentle orchestral strings carrying a serene pastoral melody, ambient dawn-light textures with bird song and soft wind, 85 BPM contemplative and majestic, Torah giving at Mount Sinai represented by gradual orchestral build from quiet pastoral to awe-inspiring brass climax then back to peaceful resolution, dairy farm serenity with cowbell and gentle chimes, wheat field golden warmth, soft flute carrying the main melody over lush string pads, first fruits offering ceremony dignity, all-night learning (tikkun leil) midnight mystical atmosphere, spring morning freshness, age-appropriate spiritual wonder for children, seamless loop point, no vocals",
+    "style": "pastoral orchestral, ambient, gentle, 85 BPM, Shavuot, dawn light, spiritual wonder",
+    "duration": "60-90s",
+    "category": "holidays"
+  },
+  {
+    "id": "HOL-008",
+    "name": "Lag Ba'Omer Theme",
+    "nameHe": "ל\"ג בעומר — ערכת חג",
+    "sunoPrompt": "Energetic Lag Ba'Omer bonfire night theme for a kids typing ninja game, crackling campfire SFX woven into driving electronic folk beat, 125 BPM outdoor adventure energy, bow and arrow heroic motif with sharp staccato synth shots, Israeli folk dance melody on electronic violin meeting chiptune bass, nighttime celebration under the stars with warm fire-glow pad tones, bonfire sparks ascending represented by rising arpeggio flourishes, Rashbi mystical energy with minor-to-major resolution, Middle Eastern dabke dance rhythm with modern electronic production, campfire sing-along communal warmth, marshmallow-roasting cozy energy balanced with heroic warrior spirit, kids game outdoor bonfire party, seamless loop point, no vocals",
+    "style": "electronic folk, bonfire, energetic, 125 BPM, Lag BaOmer, outdoor adventure, fire",
+    "duration": "60-90s",
+    "category": "holidays"
+  },
+  {
+    "id": "HOL-009",
+    "name": "Tu Bishvat Theme",
+    "nameHe": "ט\"ו בשבט — ערכת חג",
+    "sunoPrompt": "Gentle Tu Bishvat nature theme for a kids typing ninja game, ambient organic soundscape with soft chiptune textures representing digital nature, trees growing metaphor expressed through slowly ascending arpeggios that bloom into fuller harmonics, 75 BPM peaceful and nurturing tempo, bird song and gentle wind ambient bed, planting seeds of hope with soft marimba drops like raindrops on leaves, earthy warm bass tones grounding the arrangement, seven species of Israel represented by seven distinct melodic phrases cycling through, environmental awareness message in the gentle optimistic mood, roots growing deeper represented by sub-bass swells, branches reaching skyward with high register crystalline synth, kid-friendly ecological wonder, seamless loop point, no vocals",
+    "style": "ambient organic, nature, gentle chiptune, 75 BPM, Tu Bishvat, trees, ecological",
+    "duration": "60-90s",
+    "category": "holidays"
+  },
+  {
+    "id": "HOL-010",
+    "name": "Yom Hazikaron Theme",
+    "nameHe": "יום הזיכרון — ערכת חג",
+    "sunoPrompt": "Solemn Yom Hazikaron Israeli memorial day theme for a kids typing ninja game, reverent and dignified slow orchestral arrangement at 60 BPM, solo trumpet carrying a mournful yet beautiful melody reminiscent of memorial siren stillness, gentle strings providing warm harmonic bed underneath, soft piano chords marking each phrase like footsteps through a memorial garden, somber but never frightening for children, respectful patriotic grief expressed through minor key with occasional major chord moments of hope and gratitude, soft timpani heartbeat pulse, dignified military bugle call influence, candle flame flickering represented by subtle tremolo strings, age-appropriate solemnity teaching children about remembrance with dignity, seamless loop point, no vocals",
+    "style": "slow orchestral, trumpet solo, memorial, 60 BPM, Yom Hazikaron, solemn dignified",
+    "duration": "60-90s",
+    "category": "holidays"
+  },
+  {
+    "id": "HOL-011",
+    "name": "Yom Hashoah Theme",
+    "nameHe": "יום השואה — ערכת חג",
+    "sunoPrompt": "Deeply solemn Yom Hashoah Holocaust memorial theme for a kids typing ninja game, minimal solo piano carrying a sorrowful yet dignified melody at 50 BPM, soft string section entering gradually like memories surfacing, single candle flame warmth in vast darkness represented by lone piano note sustaining against ambient silence, gentle minor key progression that carries the weight of remembrance without being overwhelming for children, hope persisting through sorrow expressed by occasional major chord resolution, soft cello solo carrying grief with beauty, quiet contemplation atmosphere, memorial candle lighting ceremony dignity, six gentle bell tones representing the six million, resilience and survival represented by melody that always returns after silence, age-appropriate and respectful, teaching remembrance through music, seamless loop point, no vocals",
+    "style": "minimal piano, strings, cello, sorrowful, 50 BPM, Yom Hashoah, memorial, dignified hope",
+    "duration": "60-90s",
+    "category": "holidays"
+  },
+  {
+    "id": "HOL-012",
+    "name": "Simchat Torah Theme",
+    "nameHe": "שמחת תורה — ערכת חג",
+    "sunoPrompt": "Exuberant Simchat Torah hakafot dancing celebration theme for a kids typing ninja game, energetic klezmer clarinet lead melody spinning in joyful circles meeting chiptune 8-bit accents, 135 BPM circle dance hora rhythm with clapping hands and stomping feet percussion, Torah scroll dancing energy with scrolling arpeggio motif, seven hakafot represented by seven building musical sections each more intense than the last, Middle Eastern darbuka and frame drum providing unstoppable dance rhythm, communal joy and unity expressed through call-and-response melodic phrases, confetti and flag-waving celebration energy, synagogue courtyard dancing atmosphere, children's parade joy, klezmer violin joining clarinet in harmonized celebration, pure unrestrained religious joy accessible to all ages, seamless loop point, no vocals",
+    "style": "klezmer celebration, chiptune, hakafot dance, 135 BPM, Simchat Torah, circle dance, joyful",
+    "duration": "60-90s",
+    "category": "holidays"
   }
 ]

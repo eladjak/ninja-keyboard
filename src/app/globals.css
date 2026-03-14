@@ -1610,4 +1610,51 @@
   .game-xp-counter--animate {
     animation: none !important;
   }
+
+  /* Global animation keyframes */
+  .ninja-shimmer,
+  .confetti-particle,
+  .xp-float-text,
+  .cursor-glow,
+  .xp-bar-shimmer,
+  .badge-pulse,
+  .speed-lines,
+  .hero-glow-border,
+  .game-button::after {
+    animation: none !important;
+  }
+
+  /* Confetti and floating text - also hide */
+  .confetti-particle {
+    display: none !important;
+  }
+
+  .xp-float-text {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Hero border glow - keep static border */
+  .hero-glow-border {
+    border-color: oklch(0.495 0.205 292 / 50%);
+    box-shadow: none;
+  }
+
+  /* Progress bar stripes */
+  .game-progress-bar__fill::after {
+    animation: none !important;
+  }
+
+  /* All transitions should be instant */
+  .card-glow,
+  .card-glow:hover {
+    transition: none !important;
+  }
+
+  /* Game stripe animation */
+  .game-progress-bar--green .game-progress-bar__fill::after,
+  .game-progress-bar--purple .game-progress-bar__fill::after,
+  .game-progress-bar--amber .game-progress-bar__fill::after {
+    animation: none !important;
+  }
 }

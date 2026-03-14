@@ -3,6 +3,7 @@
 import { type ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
 
 /**
  * All supported character names for idle animations.
@@ -97,6 +98,7 @@ export function CharacterIdleWrapper({
   entryAnimation = true,
   'data-testid': testId,
 }: CharacterIdleWrapperProps) {
+  const reduceMotion = useReducedMotion()
   const idleClass = IDLE_CLASS_MAP[character]
   const intensityClass = INTENSITY_CLASS_MAP[intensity]
   const pausedClass = paused ? 'idle-paused' : ''
@@ -109,14 +111,14 @@ export function CharacterIdleWrapper({
     className,
   )
 
-  if (!entryAnimation) {
+  if (!entryAnimation || reduceMotion) {
     return (
       <div
         className={combinedClassName}
         data-testid={testId ?? `idle-${character}`}
         data-character={character}
         data-intensity={intensity}
-        data-paused={paused}
+        data-paused={paused || reduceMotion}
       >
         {children}
       </div>

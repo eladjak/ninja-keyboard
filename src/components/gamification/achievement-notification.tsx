@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { BadgeDefinition } from '@/lib/gamification/badge-definitions'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
 
 interface AchievementNotificationProps {
   /** Badge that was just earned, or null to hide */
@@ -18,6 +19,7 @@ export function AchievementNotification({
   onDismiss,
   dismissDelay = 4000,
 }: AchievementNotificationProps) {
+  const reduceMotion = useReducedMotion()
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -39,10 +41,10 @@ export function AchievementNotification({
     <AnimatePresence>
       {visible && badge && (
         <motion.div
-          initial={{ opacity: 0, y: -40 }}
+          initial={reduceMotion ? false : { opacity: 0, y: -40 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -40 }}
-          transition={{ duration: 0.2 }}
+          exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -40 }}
+          transition={reduceMotion ? { duration: 0 } : { duration: 0.2 }}
           role="alert"
           aria-live="polite"
           className="fixed start-4 top-4 z-50 flex items-center gap-3 rounded-lg border border-primary/20 bg-primary/10 px-4 py-3 shadow-lg backdrop-blur-sm"

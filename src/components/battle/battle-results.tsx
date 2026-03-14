@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
 import type { BattleWinner, BattleDifficulty } from '@/lib/battle/battle-engine'
 import {
   Dialog,
@@ -57,6 +58,7 @@ export function BattleResults({
   onPlayAgain,
   onBack,
 }: BattleResultsProps) {
+  const reduceMotion = useReducedMotion()
   const playerWon = winner === 'player'
 
   return (
@@ -68,9 +70,9 @@ export function BattleResults({
       >
         <DialogHeader className="items-center">
           <motion.div
-            initial={{ scale: 0.5, opacity: 0 }}
+            initial={reduceMotion ? false : { scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.15, ease: 'easeOut' }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.15, ease: 'easeOut' }}
             className="mx-auto flex size-16 items-center justify-center rounded-full"
             style={playerWon
               ? { background: 'oklch(0.672 0.148 168 / 20%)', color: 'var(--game-accent-green)', boxShadow: '0 0 20px oklch(0.672 0.148 168 / 40%)' }
@@ -81,6 +83,7 @@ export function BattleResults({
           </motion.div>
           <DialogTitle
             className="text-2xl font-black"
+            aria-live="assertive"
             style={playerWon
               ? { color: 'var(--game-accent-green)', textShadow: '0 0 12px oklch(0.672 0.148 168 / 50%)' }
               : { color: 'oklch(0.75 0.2 25)', textShadow: '0 0 12px oklch(0.65 0.24 25 / 40%)' }
@@ -174,9 +177,9 @@ export function BattleResults({
 
           {/* XP earned */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
+            initial={reduceMotion ? false : { scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.1, duration: 0.15, ease: 'easeOut' }}
+            transition={reduceMotion ? { duration: 0 } : { delay: 0.1, duration: 0.15, ease: 'easeOut' }}
             className="rounded-xl p-3 text-center"
             style={{ background: 'oklch(0.55 0.2 292 / 15%)', border: '1px solid oklch(0.55 0.2 292 / 30%)' }}
           >

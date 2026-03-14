@@ -18,6 +18,7 @@ import { TypingArea } from './typing-area'
 import { FingerGuide } from './finger-guide'
 import { SessionStats } from './session-stats'
 import { ConfettiBurst } from '@/components/effects/confetti-burst'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
 import {
   computeSessionStats,
   isLessonComplete,
@@ -54,6 +55,7 @@ function calculateStars(
  * and FingerGuide with full lesson lifecycle management.
  */
 export function LessonView({ lessonId }: LessonViewProps) {
+  const reduceMotion = useReducedMotion()
   const session = useTypingSessionStore()
   const xpStore = useXpStore()
   const { soundEnabled, soundVolume } = useSettingsStore()
@@ -336,22 +338,22 @@ export function LessonView({ lessonId }: LessonViewProps) {
         {showResults && result !== null && (
           <motion.div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-            initial={{ opacity: 0 }}
+            initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.15 }}
           >
-            <ConfettiBurst active={result.passed} />
+            <ConfettiBurst active={result.passed && !reduceMotion} />
           <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={reduceMotion ? false : { scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.15 }}
+              exit={reduceMotion ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
+              transition={reduceMotion ? { duration: 0 } : { duration: 0.15 }}
               className="w-full max-w-sm"
             >
               <Card className="gap-4 py-6">
                 <CardHeader className="pb-0">
-                  <CardTitle className="text-center text-lg">
+                  <CardTitle className="text-center text-lg" aria-live="assertive">
                     {result.passed ? 'כל הכבוד! השיעור הושלם' : 'שיעור הסתיים'}
                   </CardTitle>
                   {/* Stars */}
@@ -362,9 +364,9 @@ export function LessonView({ lessonId }: LessonViewProps) {
                     {Array.from({ length: 3 }, (_, i) => (
                       <motion.span
                         key={i}
-                        initial={{ scale: 0, opacity: 0 }}
+                        initial={reduceMotion ? false : { scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        transition={{ delay: 0.3 + i * 0.2, duration: 0.3, type: 'spring', stiffness: 300 }}
+                        transition={reduceMotion ? { duration: 0 } : { delay: 0.3 + i * 0.2, duration: 0.3, type: 'spring', stiffness: 300 }}
                         className={
                           i < result.stars
                             ? 'text-yellow-400'
@@ -391,9 +393,9 @@ export function LessonView({ lessonId }: LessonViewProps) {
                     <div>
                       <motion.p
                         className="text-2xl font-bold tabular-nums text-primary"
-                        initial={{ scale: 0.3, opacity: 0 }}
+                        initial={reduceMotion ? false : { scale: 0.3, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        transition={{ delay: 0.8, duration: 0.25, type: 'spring', stiffness: 300 }}
+                        transition={reduceMotion ? { duration: 0 } : { delay: 0.8, duration: 0.25, type: 'spring', stiffness: 300 }}
                       >
                         +{result.xpEarned}
                       </motion.p>

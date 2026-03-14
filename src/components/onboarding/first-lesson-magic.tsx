@@ -11,6 +11,7 @@ import type { MascotMood } from '@/lib/mascot/mascot-reactions'
 import { useXpStore } from '@/stores/xp-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { soundManager } from '@/lib/audio/sound-manager'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
 
 /** Mascot configuration per onboarding step */
 const STEP_MASCOT: Record<Step, { mood: MascotMood; message: string }> = {
@@ -52,6 +53,7 @@ const HOME_ROW_CHARS = ['ש', 'ד', 'ג', 'כ', 'ע', 'י', 'ח', 'ל', 'ך', '�
 // ── Step Indicator ────────────────────────────────────────────────
 
 function StepIndicator({ current, total }: { current: Step; total: number }) {
+  const reduceMotion = useReducedMotion()
   return (
     <div
       className="flex items-center justify-center gap-2"
@@ -72,8 +74,8 @@ function StepIndicator({ current, total }: { current: Step; total: number }) {
                 ? 'w-2 bg-primary/50'
                 : 'w-2 bg-muted',
           )}
-          animate={{ scale: step === current ? 1.1 : 1 }}
-          transition={{ duration: 0.15 }}
+          animate={{ scale: step === current && !reduceMotion ? 1.1 : 1 }}
+          transition={reduceMotion ? { duration: 0 } : { duration: 0.15 }}
         />
       ))}
     </div>
@@ -83,6 +85,7 @@ function StepIndicator({ current, total }: { current: Step; total: number }) {
 // ── Step 1: Finger Placement ──────────────────────────────────────
 
 function Step1FingerPlacement({ onNext }: { onNext: () => void }) {
+  const reduceMotion = useReducedMotion()
   const [pulseIndex, setPulseIndex] = useState(0)
 
   // Cycle through home row keys to show finger placement
@@ -126,9 +129,9 @@ function Step1FingerPlacement({ onNext }: { onNext: () => void }) {
           'shadow-md transition-shadow hover:shadow-lg focus-visible:outline-none',
           'focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
         )}
-        whileHover={{ scale: 1.03 }}
-        whileTap={{ scale: 0.97 }}
-        transition={{ duration: 0.1 }}
+        whileHover={reduceMotion ? {} : { scale: 1.03 }}
+        whileTap={reduceMotion ? {} : { scale: 0.97 }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.1 }}
         onClick={onNext}
         aria-label="המשך לשלב הבא"
       >
@@ -146,6 +149,7 @@ interface Step2TypingProps {
 }
 
 function Step2Typing({ onWordComplete, soundEnabled }: Step2TypingProps) {
+  const reduceMotion = useReducedMotion()
   const [keystrokes, setKeystrokes] = useState<Keystroke[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [mascotMood, setMascotMood] = useState<MascotMood>('happy')
@@ -228,8 +232,8 @@ function Step2Typing({ onWordComplete, soundEnabled }: Step2TypingProps) {
                 isCurrent && 'text-primary underline decoration-wavy underline-offset-4',
                 !isTyped && !isCurrent && 'text-muted-foreground/40',
               )}
-              animate={isTyped && ks?.isCorrect ? { scale: [1, 1.3, 1] } : {}}
-              transition={{ duration: 0.15 }}
+              animate={isTyped && ks?.isCorrect && !reduceMotion ? { scale: [1, 1.3, 1] } : {}}
+              transition={reduceMotion ? { duration: 0 } : { duration: 0.15 }}
             >
               {char}
             </motion.span>
@@ -268,6 +272,7 @@ function Step3Celebration({
   onNext: () => void
   playerName?: string
 }) {
+  const reduceMotion = useReducedMotion()
   return (
     <div className="flex flex-col items-center gap-6 text-center">
       <KiMascot
@@ -276,9 +281,9 @@ function Step3Celebration({
         size="large"
       />
       <motion.div
-        initial={{ scale: 0.5, opacity: 0 }}
+        initial={reduceMotion ? false : { scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.2, type: 'spring', stiffness: 200 }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.2, type: 'spring', stiffness: 200 }}
         className="text-6xl"
         aria-hidden
       >
@@ -293,9 +298,9 @@ function Step3Celebration({
 
       {/* XP badge */}
       <motion.div
-        initial={{ y: 20, opacity: 0 }}
+        initial={reduceMotion ? false : { y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.15, delay: 0.1 }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.15, delay: 0.1 }}
         className={cn(
           'flex items-center gap-3 rounded-2xl px-6 py-3',
           'bg-gradient-to-r from-primary/20 to-secondary/20',
@@ -307,9 +312,9 @@ function Step3Celebration({
 
       {/* Achievement badge */}
       <motion.div
-        initial={{ scale: 0, opacity: 0 }}
+        initial={reduceMotion ? false : { scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.15, delay: 0.2 }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.15, delay: 0.2 }}
         className={cn(
           'flex flex-col items-center gap-1 rounded-2xl px-6 py-4',
           'border-2 border-yellow-400 bg-yellow-50 dark:bg-yellow-950/30',
@@ -328,9 +333,9 @@ function Step3Celebration({
           'shadow-md transition-shadow hover:shadow-lg focus-visible:outline-none',
           'focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
         )}
-        whileHover={{ scale: 1.03 }}
-        whileTap={{ scale: 0.97 }}
-        transition={{ duration: 0.1 }}
+        whileHover={reduceMotion ? {} : { scale: 1.03 }}
+        whileTap={reduceMotion ? {} : { scale: 0.97 }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.1 }}
         onClick={onNext}
         aria-label="המשך לשלב הבא"
       >
@@ -348,6 +353,7 @@ interface Step4TypingProps {
 }
 
 function Step4Typing({ onComplete, soundEnabled }: Step4TypingProps) {
+  const reduceMotion = useReducedMotion()
   const [keystrokes, setKeystrokes] = useState<Keystroke[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [mascotMood, setMascotMood] = useState<MascotMood>('excited')
@@ -410,9 +416,9 @@ function Step4Typing({ onComplete, soundEnabled }: Step4TypingProps) {
         {activeChar === ' ' && (
           <motion.p
             className="mt-1 font-semibold text-primary"
-            initial={{ opacity: 0 }}
+            initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.15 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.15 }}
           >
             לחץ על מקש הרווח
           </motion.p>
@@ -444,8 +450,8 @@ function Step4Typing({ onComplete, soundEnabled }: Step4TypingProps) {
                     isCurrent && 'text-primary underline decoration-wavy underline-offset-4',
                     !isTyped && !isCurrent && 'text-muted-foreground/40',
                   )}
-                  animate={isTyped && ks?.isCorrect ? { scale: [1, 1.25, 1] } : {}}
-                  transition={{ duration: 0.12 }}
+                  animate={isTyped && ks?.isCorrect && !reduceMotion ? { scale: [1, 1.25, 1] } : {}}
+                  transition={reduceMotion ? { duration: 0 } : { duration: 0.12 }}
                 >
                   {char}
                 </motion.span>
@@ -486,6 +492,7 @@ function Step5Finish({
   onComplete: () => void
   playerName?: string
 }) {
+  const reduceMotion = useReducedMotion()
   return (
     <div className="flex flex-col items-center gap-6 text-center">
       <KiMascot
@@ -494,9 +501,9 @@ function Step5Finish({
         size="large"
       />
       <motion.div
-        initial={{ scale: 0.5, opacity: 0 }}
+        initial={reduceMotion ? false : { scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.2, type: 'spring', stiffness: 180 }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.2, type: 'spring', stiffness: 180 }}
         className="text-5xl"
         aria-hidden
       >
@@ -513,9 +520,9 @@ function Step5Finish({
 
       {/* Summary card */}
       <motion.div
-        initial={{ y: 16, opacity: 0 }}
+        initial={reduceMotion ? false : { y: 16, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.15, delay: 0.1 }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.15, delay: 0.1 }}
         className="flex w-full max-w-xs flex-col gap-3 rounded-2xl border border-border bg-card p-5 shadow-md"
       >
         <h3 className="text-center text-sm font-semibold text-muted-foreground">
@@ -551,9 +558,9 @@ function Step5Finish({
           'shadow-md transition-shadow hover:shadow-lg focus-visible:outline-none',
           'focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
         )}
-        whileHover={{ scale: 1.03 }}
-        whileTap={{ scale: 0.97 }}
-        transition={{ duration: 0.1 }}
+        whileHover={reduceMotion ? {} : { scale: 1.03 }}
+        whileTap={reduceMotion ? {} : { scale: 0.97 }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.1 }}
         onClick={onComplete}
         aria-label="עבור לשיעורים"
       >
@@ -580,6 +587,7 @@ export function FirstLessonMagic({
   onComplete,
   playerName,
 }: FirstLessonMagicProps) {
+  const reduceMotion = useReducedMotion()
   const [step, setStep] = useState<Step>(1)
   const addXp = useXpStore((s) => s.addXp)
   const { soundEnabled, soundVolume } = useSettingsStore()
@@ -632,10 +640,10 @@ export function FirstLessonMagic({
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
-            initial={{ opacity: 0, x: 20 }}
+            initial={reduceMotion ? false : { opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.15 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: -20 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.15 }}
           >
             {step === 1 && (
               <Step1FingerPlacement onNext={() => goToStep(2)} />

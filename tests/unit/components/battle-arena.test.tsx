@@ -1,6 +1,26 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, act } from '../../utils'
 
+// Helper to strip framer-motion-specific props before rendering a plain element
+function stripMotionProps(props: Record<string, unknown>) {
+  const {
+    initial: _initial,
+    animate: _animate,
+    exit: _exit,
+    transition: _transition,
+    whileHover: _whileHover,
+    whileTap: _whileTap,
+    whileFocus: _whileFocus,
+    whileDrag: _whileDrag,
+    whileInView: _whileInView,
+    variants: _variants,
+    layout: _layout,
+    layoutId: _layoutId,
+    ...domProps
+  } = props
+  return domProps
+}
+
 // Mock framer-motion to avoid animation issues in tests
 vi.mock('framer-motion', () => ({
   motion: {
@@ -11,14 +31,7 @@ vi.mock('framer-motion', () => ({
       children?: React.ReactNode
       [key: string]: unknown
     }) => {
-      const {
-        initial: _initial,
-        animate: _animate,
-        exit: _exit,
-        transition: _transition,
-        ...domProps
-      } = props
-      return <div {...domProps}>{children}</div>
+      return <div {...stripMotionProps(props)}>{children}</div>
     },
     span: ({
       children,
@@ -27,19 +40,83 @@ vi.mock('framer-motion', () => ({
       children?: React.ReactNode
       [key: string]: unknown
     }) => {
-      const {
-        initial: _initial,
-        animate: _animate,
-        exit: _exit,
-        transition: _transition,
-        ...domProps
-      } = props
-      return <span {...domProps}>{children}</span>
+      return <span {...stripMotionProps(props)}>{children}</span>
+    },
+    button: ({
+      children,
+      ...props
+    }: {
+      children?: React.ReactNode
+      [key: string]: unknown
+    }) => {
+      return <button {...stripMotionProps(props)}>{children}</button>
     },
   },
   AnimatePresence: ({ children }: { children?: React.ReactNode }) => (
     <>{children}</>
   ),
+}))
+
+// Mock next/image
+vi.mock('next/image', () => ({
+  default: (props: Record<string, unknown>) => {
+    const { fill: _fill, priority: _priority, ...rest } = props
+    // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
+    return <img {...rest} />
+  },
+}))
+
+// Mock radix-ui Dialog (uses Portal/Overlay which don't work in jsdom)
+vi.mock('radix-ui', () => {
+  const passthrough = ({ children, ...props }: { children?: React.ReactNode; [key: string]: unknown }) => {
+    const domSafe: Record<string, unknown> = {}
+    for (const [k, v] of Object.entries(props)) {
+      if (typeof v !== 'function' && typeof v !== 'object') domSafe[k] = v
+    }
+    return <div {...domSafe}>{children}</div>
+  }
+  return {
+    Dialog: {
+      Root: passthrough,
+      Trigger: passthrough,
+      Portal: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
+      Overlay: passthrough,
+      Content: passthrough,
+      Title: passthrough,
+      Description: passthrough,
+      Close: passthrough,
+    },
+    Slot: {
+      Root: ({ children, ...props }: { children?: React.ReactNode; [key: string]: unknown }) => (
+        <span {...props}>{children}</span>
+      ),
+    },
+    Progress: {
+      Root: ({ children, className, ...props }: { children?: React.ReactNode; className?: string; [key: string]: unknown }) => (
+        <div role="progressbar" className={className} {...props}>{children}</div>
+      ),
+      Indicator: ({ className, style }: { className?: string; style?: React.CSSProperties }) => (
+        <div className={className} style={style} />
+      ),
+    },
+  }
+})
+
+// Mock sound manager
+vi.mock('@/lib/audio/sound-manager', () => ({
+  soundManager: {
+    playCountdownBeep: vi.fn(),
+    playCountdownGo: vi.fn(),
+    playBattleStart: vi.fn(),
+    playVictoryCheers: vi.fn(),
+    playCorrect: vi.fn(),
+    playError: vi.fn(),
+    playKeyClick: vi.fn(),
+    playLevelComplete: vi.fn(),
+    playXpGain: vi.fn(),
+    setEnabled: vi.fn(),
+    setVolume: vi.fn(),
+  },
 }))
 
 // Mock the XP store
