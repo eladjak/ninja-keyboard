@@ -1,13 +1,49 @@
 # Ninja Keyboard - Progress
 
 ## Status: Active
-## Last Updated: 2026-03-12
-## Sprint: Post-Iteration 12 - Audit & Fixes
+## Last Updated: 2026-03-14
+## Sprint: Iteration 13 — Quality & Polish
 
 ## Current State
-Iteration 12 committed (2b1cd27). Full 5-agent audit completed. Music path fixes applied. TypeScript: 0 errors.
+Iteration 13 complete (3 commits: 161ba9d, c8b2e4e, f34c621). Full audit fixes, a11y overhaul, dead code cleanup, holiday music catalog, battle test fix. TypeScript: 0 errors, Tests: 1096/1096.
 
-## What Was Done This Session (Post-Iteration 12 Audit)
+## What Was Done This Session (Iteration 13)
+
+### Commit 1: Post-Iteration 12 Audit Fixes (161ba9d)
+- 39 broken music paths fixed in music-manager.ts
+- 4 broken image paths fixed (ai-typing-engine + home-client)
+- Dialog "Close" → "סגור" (Hebrew i18n)
+- Unused TIMER_DURATIONS import removed
+
+### Commit 2: A11y + Battle Tests + Holiday Music (c8b2e4e)
+- **Accessibility**: prefers-reduced-motion across 9 components + new use-reduced-motion hook
+- **Accessibility**: CSS @media reduced-motion rules for all keyframe animations
+- **Accessibility**: aria-live regions for battle arena, results, lesson completion
+- **A11y score**: 6.5/10 → ~8.5/10
+- **Battle tests**: Fixed 16 failing tests (mocks for motion.button, next/image, radix-ui, sound-manager)
+- **Holiday music**: 12 Israeli holiday tracks added to Suno catalog (56 total)
+- **Holiday prompts**: Culturally authentic Suno prompts per holiday with traditional instruments
+
+### Commit 3: Dead Code Cleanup + Report (f34c621)
+- 5 dead files deleted (420+ lines): use-is-mobile, use-media-query, types/music, types/typing, tutorial-intro
+- 4 dead exports removed: useSuccessSound, findBeatById, VILLAIN_CHARACTERS, getBossConfig
+- 9 exports de-exported (narrowed to file-private)
+- Iteration 13 HTML report generated (docs/iteration-13-report.html)
+
+### Code Quality Scan (No fixes needed!)
+- English strings in UI: 0
+- console.log: 0
+- `any` types: 3 justified only
+- h-screen: 0
+- Physical direction props: 0
+
+## Next Steps
+1. **Holiday music generation** → Run 12 Suno prompts and import to public/audio/music/holidays/
+2. **3D POC** → Ki character model (user wants to start together, budget consideration)
+3. **User interactive review** → Full game walkthrough (tomorrow morning)
+4. **Teacher mobile interface** → Expand teacher dashboard for mobile
+
+## Previous Session
 
 ### 5-Agent Verification Audit
 Ran 5 parallel agents to verify the full project:
