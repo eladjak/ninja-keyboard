@@ -3,7 +3,7 @@
  * Each entry describes how to synthesize a sound using the browser's AudioContext.
  */
 
-export interface ToneStep {
+interface ToneStep {
   /** Frequency in Hz */
   frequency: number
   /** Duration of this tone step in milliseconds */

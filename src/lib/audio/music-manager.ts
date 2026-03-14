@@ -41,7 +41,7 @@ export type GameZone =
   | 'loading'
 
 /** Metadata for a single music track. */
-export interface MusicTrack {
+interface MusicTrack {
   /** Unique identifier, e.g. "PLAY-001" */
   id: string
   /** Display name in Hebrew */
@@ -79,7 +79,7 @@ export type HebrewHoliday =
 // Default zone-to-track mapping
 // ---------------------------------------------------------------------------
 
-export const DEFAULT_ZONE_TRACKS: Record<GameZone, string> = {
+const DEFAULT_ZONE_TRACKS: Record<GameZone, string> = {
   'home': '/audio/music/main-theme.mp3',
   'lessons-easy': '/audio/music/gameplay/practice-easy.mp3',
   'lessons-medium': '/audio/music/gameplay/practice-medium.mp3',
@@ -98,7 +98,7 @@ export const DEFAULT_ZONE_TRACKS: Record<GameZone, string> = {
 }
 
 /** Holiday track paths. Override home/menu zones during holidays. */
-export const HOLIDAY_TRACKS: Record<HebrewHoliday, string> = {
+const HOLIDAY_TRACKS: Record<HebrewHoliday, string> = {
   'hanukkah': '/audio/music/holidays/hanukkah-theme.mp3',
   'purim': '/audio/music/holidays/purim-theme.mp3',
   'pesach': '/audio/music/holidays/pesach-theme.mp3',
@@ -114,7 +114,7 @@ export const HOLIDAY_TRACKS: Record<HebrewHoliday, string> = {
 }
 
 /** Stinger (jingle) track paths. */
-export const STINGER_TRACKS: Record<string, string> = {
+const STINGER_TRACKS: Record<string, string> = {
   'victory-fanfare': '/audio/music/events/victory-fanfare.mp3',
   'level-up': '/audio/music/events/level-up-jingle.mp3',
   'character-unlock': '/audio/music/events/character-unlock.mp3',

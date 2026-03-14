@@ -54,22 +54,6 @@ export interface StoryBeat {
   condition?: string
 }
 
-/** Configuration for a boss encounter */
-export interface BossConfig {
-  /** Lesson number where the boss appears */
-  lessonNumber: number
-  /** Character that serves as the boss */
-  bossName: CharacterName
-  /** Boss display name in Hebrew */
-  nameHe: string
-  /** Boss health points */
-  health: number
-  /** Time limit for the encounter in seconds */
-  timeLimit: number
-  /** Hebrew description of the encounter */
-  description: string
-}
-
 /** Flags tracking major story milestones */
 export interface StoryFlags {
   bugFirstAppearance: boolean

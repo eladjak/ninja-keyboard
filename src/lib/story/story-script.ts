@@ -1,4 +1,4 @@
-import type { BossConfig, StoryBeat, StoryPhase } from '@/types/story'
+import type { StoryBeat, StoryPhase } from '@/types/story'
 
 /**
  * Act 1: "ההתעוררות" (The Awakening)
@@ -146,19 +146,6 @@ const ACT_1_BEATS: StoryBeat[] = [
 /** All story beats across all acts (currently Act 1) */
 const ALL_STORY_BEATS: StoryBeat[] = [...ACT_1_BEATS]
 
-/**
- * Boss encounter configurations
- */
-export const BOSS_CONFIGS: BossConfig[] = [
-  {
-    lessonNumber: 7,
-    bossName: 'bug',
-    nameHe: 'הבאג',
-    health: 100,
-    timeLimit: 60,
-    description: 'הבאג מבלבל עשר מילים! הקלד אותן נכון לפני שהזמן נגמר!',
-  },
-]
 
 /**
  * Retrieve the story beat for a specific lesson and phase.
@@ -192,10 +179,3 @@ export function getStoryBeat(
   return beat ?? null
 }
 
-/**
- * Get the boss config for a specific lesson number.
- * Returns null if the lesson is not a boss encounter.
- */
-export function getBossConfig(lessonNumber: number): BossConfig | null {
-  return BOSS_CONFIGS.find((b) => b.lessonNumber === lessonNumber) ?? null
-}

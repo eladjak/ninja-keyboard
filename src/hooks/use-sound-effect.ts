@@ -71,7 +71,3 @@ export function useNavigateSound(options?: UseSoundEffectOptions): () => void {
   return useSoundEffect('navigate', options)
 }
 
-/** Play a success sound when an action completes. */
-export function useSuccessSound(options?: UseSoundEffectOptions): () => void {
-  return useSoundEffect('success', options)
-}

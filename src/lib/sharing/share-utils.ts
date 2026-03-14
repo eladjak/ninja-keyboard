@@ -66,7 +66,7 @@ export function canCopyToClipboard(): boolean {
   return typeof navigator !== 'undefined' && typeof navigator.clipboard !== 'undefined'
 }
 
-export interface ShareResult {
+interface ShareResult {
   success: boolean
   method: 'share' | 'clipboard' | 'none'
 }

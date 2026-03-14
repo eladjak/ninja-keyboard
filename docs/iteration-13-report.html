@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>סיכום איטרציה 13 | נינג'ה מקלדת</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-base: #0d0b1a;
+      --bg-card: #13102a;
+      --bg-card-hover: #1a1635;
+      --bg-section: #0f0d20;
+      --border: #2a2550;
+      --border-glow: #6c5ce7;
+      --primary: #6c5ce7;
+      --primary-light: #8b7ff5;
+      --secondary: #00b894;
+      --text-primary: #f0eeff;
+      --text-secondary: #a09cc0;
+      --text-muted: #5a5680;
+
+      --green: #00b894;
+      --green-bg: rgba(0, 184, 148, 0.12);
+      --red: #e84393;
+      --red-bg: rgba(232, 67, 147, 0.12);
+      --orange: #fd9644;
+      --orange-bg: rgba(253, 150, 68, 0.12);
+      --yellow: #ffd32a;
+      --yellow-bg: rgba(255, 211, 42, 0.12);
+      --blue: #45aaf2;
+      --blue-bg: rgba(69, 170, 242, 0.12);
+      --purple: #a55eea;
+      --purple-bg: rgba(165, 94, 234, 0.12);
+      --cyan: #2bcbba;
+      --cyan-bg: rgba(43, 203, 186, 0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── BACKGROUND PARTICLES ─── */
+    .bg-particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bg-particles::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(108,92,231,0.08) 0%, transparent 70%);
+      top: -200px; right: -200px;
+      animation: floatOrb 20s ease-in-out infinite alternate;
+    }
+    .bg-particles::after {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,184,148,0.06) 0%, transparent 70%);
+      bottom: 0; left: -100px;
+      animation: floatOrb 15s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes floatOrb {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(40px, 40px) scale(1.1); }
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13, 11, 26, 0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      gap: 1rem;
+    }
+    .nav-logo {
+      font-weight: 900;
+      font-size: 1.1rem;
+      background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      gap: 0.25rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover {
+      color: var(--text-primary);
+      background: var(--border);
+    }
+    .nav-date {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* ─── MAIN CONTAINER ─── */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* ─── HERO HEADER ─── */
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem 2.5rem;
+      position: relative;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary-light);
+      background: rgba(108, 92, 231, 0.15);
+      border: 1px solid rgba(108, 92, 231, 0.3);
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #fff 0%, var(--primary-light) 50%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.75rem;
+    }
+    .hero p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    /* ─── STAT CARDS ─── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      gap: 1rem;
+      margin: 2.5rem 0;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.4rem 1rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+      cursor: default;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .stat-card:hover { transform: translateY(-3px); }
+    .stat-card:hover::before { opacity: 1; }
+    .stat-card.green  { border-color: rgba(0,184,148,0.4); }
+    .stat-card.green::before  { background: radial-gradient(circle at 50% 0%, rgba(0,184,148,0.07), transparent 70%); }
+    .stat-card.red    { border-color: rgba(232,67,147,0.4); }
+    .stat-card.red::before    { background: radial-gradient(circle at 50% 0%, rgba(232,67,147,0.07), transparent 70%); }
+    .stat-card.purple { border-color: rgba(165,94,234,0.4); }
+    .stat-card.purple::before { background: radial-gradient(circle at 50% 0%, rgba(165,94,234,0.07), transparent 70%); }
+    .stat-card.orange { border-color: rgba(253,150,68,0.4); }
+    .stat-card.orange::before { background: radial-gradient(circle at 50% 0%, rgba(253,150,68,0.07), transparent 70%); }
+    .stat-card.blue   { border-color: rgba(69,170,242,0.4); }
+    .stat-card.blue::before   { background: radial-gradient(circle at 50% 0%, rgba(69,170,242,0.07), transparent 70%); }
+    .stat-card.yellow { border-color: rgba(255,211,42,0.4); }
+    .stat-card.yellow::before { background: radial-gradient(circle at 50% 0%, rgba(255,211,42,0.07), transparent 70%); }
+    .stat-card.cyan   { border-color: rgba(43,203,186,0.4); }
+    .stat-card.cyan::before   { background: radial-gradient(circle at 50% 0%, rgba(43,203,186,0.07), transparent 70%); }
+    .stat-icon {
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .stat-card.green .stat-value  { color: var(--green); }
+    .stat-card.red .stat-value    { color: var(--red); }
+    .stat-card.purple .stat-value { color: var(--purple); }
+    .stat-card.orange .stat-value { color: var(--orange); }
+    .stat-card.blue .stat-value   { color: var(--blue); }
+    .stat-card.yellow .stat-value { color: var(--yellow); }
+    .stat-card.cyan .stat-value   { color: var(--cyan); }
+
+    /* ─── SCORE BAR ─── */
+    .score-bar-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .score-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      min-width: 120px;
+    }
+    .score-bar-track {
+      flex: 1;
+      min-width: 200px;
+      height: 12px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      animation: fillBar 1.5s cubic-bezier(0.4,0,0.2,1) forwards;
+      transform-origin: right;
+    }
+    @keyframes fillBar {
+      from { width: 0; }
+    }
+    .score-pct {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--primary-light);
+      min-width: 60px;
+    }
+
+    /* ─── SECTION HEADERS ─── */
+    .section {
+      margin-bottom: 2.5rem;
+      animation: fadeSlide 0.4s ease both;
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-icon {
+      font-size: 1.4rem;
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .section-icon.purple { background: var(--purple-bg); }
+    .section-icon.blue   { background: var(--blue-bg);   }
+    .section-icon.green  { background: var(--green-bg);  }
+    .section-icon.orange { background: var(--orange-bg); }
+    .section-icon.cyan   { background: var(--cyan-bg);   }
+    .section-icon.red    { background: var(--red-bg);    }
+    .section-icon.yellow { background: var(--yellow-bg); }
+    .section-header h2 {
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+    .section-header .tag-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--border);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      margin-right: auto;
+    }
+
+    /* ─── CARDS ─── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: rgba(108,92,231,0.4); }
+    .card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* ─── BADGES ─── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .badge-pass     { background: var(--green-bg);  color: var(--green);  border: 1px solid rgba(0,184,148,0.3); }
+    .badge-fail     { background: var(--red-bg);    color: var(--red);    border: 1px solid rgba(232,67,147,0.3); }
+    .badge-fixed    { background: var(--purple-bg); color: var(--purple); border: 1px solid rgba(165,94,234,0.3); }
+    .badge-new      { background: var(--cyan-bg);   color: var(--cyan);   border: 1px solid rgba(43,203,186,0.3); }
+    .badge-improved { background: var(--blue-bg);   color: var(--blue);   border: 1px solid rgba(69,170,242,0.3); }
+    .badge-warn     { background: var(--orange-bg); color: var(--orange); border: 1px solid rgba(253,150,68,0.3); }
+    .badge-info     { background: var(--cyan-bg);   color: var(--cyan);   border: 1px solid rgba(43,203,186,0.3); }
+
+    /* ─── ROW ITEMS ─── */
+    .row-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .row-item:last-child { border-bottom: none; }
+    .row-label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      flex: 1;
+    }
+    .row-meta {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    /* ─── PROGRESS BARS (mini) ─── */
+    .mini-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.4rem;
+    }
+    .mini-bar-track {
+      flex: 1;
+      height: 7px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .mini-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      animation: fillBar 1.2s cubic-bezier(0.4,0,0.2,1) forwards;
+    }
+    .mini-bar-fill.green  { background: var(--green); }
+    .mini-bar-fill.purple { background: linear-gradient(90deg, var(--primary), var(--purple)); }
+    .mini-bar-fill.blue   { background: var(--blue); }
+    .mini-bar-fill.orange { background: var(--orange); }
+    .mini-bar-fill.cyan   { background: var(--cyan); }
+    .mini-bar-pct {
+      font-size: 0.78rem;
+      font-weight: 700;
+      min-width: 42px;
+      text-align: left;
+    }
+
+    /* ─── COLLAPSIBLE DETAILS ─── */
+    details {
+      background: var(--bg-section);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+    }
+    details[open] { border-color: rgba(108,92,231,0.35); }
+    summary {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.9rem 1.25rem;
+      font-weight: 700;
+      font-size: 0.92rem;
+      list-style: none;
+      user-select: none;
+      transition: background 0.2s;
+    }
+    summary:hover { background: rgba(255,255,255,0.03); }
+    summary::-webkit-details-marker { display: none; }
+    .summary-arrow {
+      margin-right: auto;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      transition: transform 0.2s;
+    }
+    details[open] .summary-arrow { transform: rotate(90deg); }
+    .details-body {
+      padding: 0 1.25rem 1.1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── CODE ─── */
+    code {
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 0.8rem;
+      background: rgba(108,92,231,0.12);
+      color: var(--primary-light);
+      padding: 0.15rem 0.4rem;
+      border-radius: 5px;
+    }
+    .code-block {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 0.75rem;
+      overflow-x: auto;
+      direction: ltr;
+      text-align: left;
+    }
+    .code-old { color: #e84393; }
+    .code-new { color: #00b894; }
+
+    /* ─── TABLES ─── */
+    .audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-top: 0.75rem;
+    }
+    .audit-table th {
+      background: rgba(255,255,255,0.05);
+      font-weight: 700;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.6rem 0.9rem;
+      text-align: right;
+      border-bottom: 1px solid var(--border);
+    }
+    .audit-table td {
+      padding: 0.6rem 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: middle;
+    }
+    .audit-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ─── TAG PILL ─── */
+    .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: 5px;
+      background: var(--border);
+      color: var(--text-secondary);
+      margin: 0.1rem;
+    }
+
+    /* ─── HIGHLIGHT BLOCK ─── */
+    .highlight-block {
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+      border-right: 4px solid;
+    }
+    .highlight-block.green  { background: var(--green-bg);  border-color: var(--green);  }
+    .highlight-block.red    { background: var(--red-bg);    border-color: var(--red);    }
+    .highlight-block.orange { background: var(--orange-bg); border-color: var(--orange); }
+    .highlight-block.yellow { background: var(--yellow-bg); border-color: var(--yellow); }
+    .highlight-block.blue   { background: var(--blue-bg);   border-color: var(--blue);   }
+    .highlight-block.purple { background: var(--purple-bg); border-color: var(--purple); }
+    .highlight-block h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .highlight-block p, .highlight-block li {
+      font-size: 0.83rem;
+      color: var(--text-secondary);
+    }
+    .highlight-block ul { list-style: disc; padding-right: 1.25rem; }
+
+    /* ─── 2-COL / 3-COL GRID ─── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .three-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 900px) {
+      .three-col { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 700px) {
+      .two-col, .three-col { grid-template-columns: 1fr; }
+    }
+
+    /* ─── FINDINGS LIST ─── */
+    .findings { list-style: none; }
+    .findings li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      padding: 0.55rem 0;
+      font-size: 0.88rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .findings li:last-child { border-bottom: none; }
+    .findings .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .dot-green  { background: var(--green);  }
+    .dot-red    { background: var(--red);    }
+    .dot-orange { background: var(--orange); }
+    .dot-yellow { background: var(--yellow); }
+    .dot-blue   { background: var(--blue);   }
+    .dot-purple { background: var(--purple); }
+    .dot-cyan   { background: var(--cyan);   }
+
+    /* ─── ACTION ITEMS ─── */
+    .action-list {
+      list-style: none;
+      counter-reset: action;
+    }
+    .action-list li {
+      counter-increment: action;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 0.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .action-list li:hover {
+      border-color: rgba(108,92,231,0.4);
+      transform: translateX(-3px);
+    }
+    .action-num {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .action-text {
+      flex: 1;
+    }
+    .action-text strong {
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 0.2rem;
+    }
+    .action-text span {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 2rem 0;
+    }
+
+    /* ─── HOLIDAY EMOJI BADGE ─── */
+    .holiday-emoji {
+      font-size: 1.3rem;
+      display: inline-block;
+      margin-left: 0.3rem;
+    }
+
+    /* ─── A11Y SCORE COMPARISON ─── */
+    .score-compare {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .score-circle {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.8rem;
+      position: relative;
+    }
+    .score-circle .score-sub {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    .score-circle.before {
+      border: 3px solid rgba(253,150,68,0.5);
+      background: rgba(253,150,68,0.08);
+      color: var(--orange);
+    }
+    .score-circle.after {
+      border: 3px solid rgba(0,184,148,0.5);
+      background: rgba(0,184,148,0.08);
+      color: var(--green);
+    }
+    .score-arrow {
+      font-size: 2rem;
+      color: var(--primary-light);
+      animation: pulseArrow 1.5s ease-in-out infinite;
+    }
+    @keyframes pulseArrow {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* ─── CHIP GRID ─── */
+    .chip-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      border-top: 1px solid var(--border);
+    }
+    footer a {
+      color: var(--primary-light);
+      text-decoration: none;
+    }
+
+    /* ─── TIMELINE ─── */
+    .timeline {
+      position: relative;
+      padding-right: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      right: 0.65rem;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--primary), var(--secondary), var(--primary));
+      border-radius: 2px;
+    }
+    .timeline-item {
+      position: relative;
+      padding-right: 2.5rem;
+      padding-bottom: 1.5rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      right: 0.35rem;
+      top: 0.4rem;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: 2px solid var(--bg-base);
+      box-shadow: 0 0 0 3px rgba(108,92,231,0.3);
+    }
+    .timeline-item .commit-hash {
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 0.72rem;
+      color: var(--primary-light);
+      background: rgba(108,92,231,0.12);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-particles"></div>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">נינג'ה מקלדת 🥷</div>
+    <ul class="nav-links">
+      <li><a href="#summary">סיכום</a></li>
+      <li><a href="#audit">אודיט</a></li>
+      <li><a href="#a11y">נגישות</a></li>
+      <li><a href="#tests">טסטים</a></li>
+      <li><a href="#holiday-music">מוזיקת חגים</a></li>
+      <li><a href="#project-stats">סטטיסטיקות</a></li>
+      <li><a href="#next">הבא</a></li>
+    </ul>
+    <span class="nav-date">14 מרץ 2026</span>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- ─── HERO ─── -->
+  <div class="hero">
+    <div class="hero-badge">🎮 איטרציה 13 — הושלמה</div>
+    <h1>נינג'ה מקלדת — סיכום איטרציה 13</h1>
+    <p>
+      תיקוני אודיט, שדרוג נגישות משמעותי, תיקון טסטים, והרחבת קטלוג מוזיקה עם 12 שירי חגים ישראליים.
+      איטרציה ממוקדת באיכות ויציבות.
+    </p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 1: סיכום מנהלים                     -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="summary" class="section">
+    <div class="section-header">
+      <div class="section-icon purple">📊</div>
+      <h2>סיכום מנהלים</h2>
+      <span class="tag-label">EXECUTIVE SUMMARY</span>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card green">
+        <span class="stat-icon">✅</span>
+        <span class="stat-value">2</span>
+        <span class="stat-label">קומיטים</span>
+      </div>
+      <div class="stat-card blue">
+        <span class="stat-icon">📁</span>
+        <span class="stat-value">19</span>
+        <span class="stat-label">קבצים ששונו</span>
+      </div>
+      <div class="stat-card purple">
+        <span class="stat-icon">➕</span>
+        <span class="stat-value">521</span>
+        <span class="stat-label">שורות נוספו</span>
+      </div>
+      <div class="stat-card orange">
+        <span class="stat-icon">➖</span>
+        <span class="stat-value">195</span>
+        <span class="stat-label">שורות הוסרו</span>
+      </div>
+      <div class="stat-card green">
+        <span class="stat-icon">🧪</span>
+        <span class="stat-value">1,096</span>
+        <span class="stat-label">טסטים עוברים</span>
+      </div>
+      <div class="stat-card cyan">
+        <span class="stat-icon">🎵</span>
+        <span class="stat-value">56</span>
+        <span class="stat-label">שירים בקטלוג</span>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="card">
+      <h3>🕐 ציר זמן — קומיטים</h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <span class="commit-hash">161ba9d</span>
+          <strong style="margin-right: 0.5rem;">fix: post-iteration-12 audit fixes — 43 broken refs repaired</strong>
+          <p class="row-meta" style="margin-top: 0.25rem;">תיקון 39 נתיבי מוזיקה, 4 נתיבי תמונות, תיקון i18n, הסרת import לא בשימוש</p>
+        </div>
+        <div class="timeline-item">
+          <span class="commit-hash">c8b2e4e</span>
+          <strong style="margin-right: 0.5rem;">feat: a11y fixes, battle test fix, 12 holiday music tracks</strong>
+          <p class="row-meta" style="margin-top: 0.25rem;">שדרוג נגישות ב-9 קומפוננטות, תיקון 16 טסטים שנכשלו, 12 שירי חגים ישראליים</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overall Health -->
+    <div class="score-bar-wrap">
+      <span class="score-label">בריאות פרויקט כללית</span>
+      <div class="score-bar-track">
+        <div class="score-bar-fill" style="width: 92%;"></div>
+      </div>
+      <span class="score-pct">92%</span>
+    </div>
+
+    <div class="two-col">
+      <div class="highlight-block green">
+        <h4>✅ מה עובד מצוין</h4>
+        <ul>
+          <li>TypeScript: 0 שגיאות</li>
+          <li>כל 1,096 הטסטים עוברים</li>
+          <li>ציון נגישות שופר ל-8.5/10</li>
+          <li>כל הנתיבים השבורים תוקנו</li>
+        </ul>
+      </div>
+      <div class="highlight-block blue">
+        <h4>📋 מיקוד האיטרציה</h4>
+        <ul>
+          <li>איכות קוד ויציבות (לא פיצ'רים חדשים)</li>
+          <li>נגישות כאזרח מדרגה ראשונה</li>
+          <li>תשתית מוזיקלית לחגים ישראליים</li>
+          <li>ניקוי חוב טכני מאיטרציה 12</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 2: תיקוני אודיט                     -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="audit" class="section">
+    <div class="section-header">
+      <div class="section-icon orange">🔧</div>
+      <h2>תיקוני אודיט — 43 הפניות שבורות</h2>
+      <span class="tag-label">COMMIT 161ba9d</span>
+    </div>
+
+    <div class="highlight-block green">
+      <h4>✅ סטטוס: הכל תוקן!</h4>
+      <p>ביקורת 5-סוכנים מצאה 43 הפניות שבורות בפרויקט. כולן תוקנו בהצלחה.</p>
+    </div>
+
+    <!-- Music Paths -->
+    <details open>
+      <summary>
+        🎵 נתיבי מוזיקה — 39 תיקונים
+        <span class="badge badge-fixed">תוקן</span>
+        <span class="summary-arrow">◀</span>
+      </summary>
+      <div class="details-body">
+        <p style="color: var(--text-secondary); margin-bottom: 0.75rem;">
+          קובץ: <code>src/lib/audio/music-manager.ts</code>
+        </p>
+
+        <div class="card" style="margin-bottom: 0.75rem;">
+          <h3>DEFAULT_ZONE_TRACKS — נתיבי תיקיות</h3>
+          <p class="row-meta">נתיבים שטוחים הוחלפו בנתיבי תת-תיקיות נכונים</p>
+          <div class="code-block">
+<span class="code-old">- /audio/music/gameplay-zone-track.mp3</span>
+<span class="code-new">+ /audio/music/gameplay/zone-track.mp3</span>
+<span class="code-old">- /audio/music/battle-zone-track.mp3</span>
+<span class="code-new">+ /audio/music/battle/zone-track.mp3</span>
+<span class="code-old">- /audio/music/events-zone-track.mp3</span>
+<span class="code-new">+ /audio/music/events/zone-track.mp3</span>
+<span class="code-old">- /audio/music/menu-zone-track.mp3</span>
+<span class="code-new">+ /audio/music/menu/zone-track.mp3</span>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 0.75rem;">
+          <h3>STINGER_TRACKS — שמות קבצים</h3>
+          <p class="row-meta">תיקיית <code>stingers/</code> הוחלפה ב-<code>events/</code> עם שמות נכונים</p>
+          <div class="code-block">
+<span class="code-old">- /audio/music/stingers/level-up.mp3</span>
+<span class="code-new">+ /audio/music/events/level-up-stinger.mp3</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>TRACK_MANIFEST — שמות שגויים</h3>
+          <p class="row-meta">תיקוני שמות קבצים בכל ה-manifest</p>
+          <div class="chip-grid">
+            <span class="tag">ki → kis</span>
+            <span class="tag">bug → bugs</span>
+            <span class="tag">sensei-zen → sensei-zens</span>
+            <span class="tag">geza-arena → geza-ninja-arena</span>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- Image Paths -->
+    <details>
+      <summary>
+        🖼️ נתיבי תמונות — 4 תיקונים
+        <span class="badge badge-fixed">תוקן</span>
+        <span class="summary-arrow">◀</span>
+      </summary>
+      <div class="details-body">
+        <table class="audit-table">
+          <thead>
+            <tr>
+              <th>קובץ</th>
+              <th>לפני</th>
+              <th>אחרי</th>
+              <th>סטטוס</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>ai-typing-engine.ts</code></td>
+              <td class="code-old">yuki-model-sheet</td>
+              <td class="code-new">yuki-girl</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td><code>ai-typing-engine.ts</code></td>
+              <td class="code-old">bug-model-sheet</td>
+              <td class="code-new">bug-creature</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td><code>ai-typing-engine.ts</code></td>
+              <td class="code-old">virus-model-sheet</td>
+              <td class="code-new">virus-dual-form</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td><code>home-client.tsx</code></td>
+              <td class="code-old">achievement-star</td>
+              <td class="code-new">badge-achievement-gold</td>
+              <td>✅</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <!-- Other Fixes -->
+    <details>
+      <summary>
+        🔤 תיקונים נוספים — i18n + ניקוי
+        <span class="badge badge-fixed">תוקן</span>
+        <span class="summary-arrow">◀</span>
+      </summary>
+      <div class="details-body">
+        <ul class="findings">
+          <li>
+            <span class="dot dot-green"></span>
+            <span><code>dialog.tsx</code> — תרגום "Close" → "סגור" (תיקון i18n)</span>
+          </li>
+          <li>
+            <span class="dot dot-green"></span>
+            <span><code>practice/page.tsx</code> — הסרת import של <code>TIMER_DURATIONS</code> שלא בשימוש</span>
+          </li>
+          <li>
+            <span class="dot dot-green"></span>
+            <span>85 קבצי MP3 כפולים נמחקו מתיקיית Downloads — 272MB שוחררו</span>
+          </li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 3: נגישות                           -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="a11y" class="section">
+    <div class="section-header">
+      <div class="section-icon green">♿</div>
+      <h2>שדרוג נגישות</h2>
+      <span class="tag-label">WCAG 2.2 AA</span>
+    </div>
+
+    <!-- Score Comparison -->
+    <div class="card" style="text-align: center;">
+      <h3 style="justify-content: center;">📈 שיפור ציון נגישות</h3>
+      <div class="score-compare">
+        <div class="score-circle before">
+          6.5
+          <span class="score-sub">לפני</span>
+        </div>
+        <div class="score-arrow">←</div>
+        <div class="score-circle after">
+          8.5
+          <span class="score-sub">אחרי</span>
+        </div>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 0.85rem;">
+        עלייה של <strong style="color: var(--green);">+2.0 נקודות</strong> — מ-"בסיסי" ל-"טוב מאוד"
+      </p>
+    </div>
+
+    <!-- Reduced Motion -->
+    <div class="two-col">
+      <div class="card">
+        <h3>🔄 תמיכה ב-prefers-reduced-motion</h3>
+        <p class="row-meta" style="margin-bottom: 0.5rem;">
+          הוק חדש <code>useReducedMotion()</code> שמשלב שני מקורות:
+        </p>
+        <ul class="findings">
+          <li>
+            <span class="dot dot-cyan"></span>
+            <span>שאילתת מדיה ברמת מערכת ההפעלה</span>
+          </li>
+          <li>
+            <span class="dot dot-cyan"></span>
+            <span>הגדרת נגישות בתוך האפליקציה (חנות Zustand)</span>
+          </li>
+        </ul>
+        <div class="highlight-block blue" style="margin-top: 0.75rem;">
+          <h4>📁 קובץ חדש</h4>
+          <p><code>src/hooks/use-reduced-motion.ts</code></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🎯 אזורי aria-live</h3>
+        <p class="row-meta" style="margin-bottom: 0.5rem;">
+          שינויי סטטוס משחק מוכרזים כעת לקוראי מסך:
+        </p>
+        <ul class="findings">
+          <li>
+            <span class="dot dot-green"></span>
+            <span>תוצאות קרב — <code>aria-live="polite"</code></span>
+          </li>
+          <li>
+            <span class="dot dot-green"></span>
+            <span>התקדמות קרב — <code>aria-live="polite"</code></span>
+          </li>
+          <li>
+            <span class="dot dot-green"></span>
+            <span>סיום שיעור — <code>aria-live="assertive"</code></span>
+          </li>
+          <li>
+            <span class="dot dot-green"></span>
+            <span>תוצאות תרגול — <code>aria-live="polite"</code></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Components Updated -->
+    <div class="card">
+      <h3>📦 9 קומפוננטות שעודכנו</h3>
+      <p class="row-meta" style="margin-bottom: 0.75rem;">כל הקומפוננטות הבאות מכבדות כעת את הגדרת reduced-motion:</p>
+      <table class="audit-table">
+        <thead>
+          <tr>
+            <th>קומפוננטה</th>
+            <th>שינוי</th>
+            <th>סוג</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>battle-arena.tsx</code></td>
+            <td>ביטול אנימציות + aria-live</td>
+            <td><span class="badge badge-improved">שופר</span></td>
+          </tr>
+          <tr>
+            <td><code>battle-results.tsx</code></td>
+            <td>ביטול אנימציות + aria-live</td>
+            <td><span class="badge badge-improved">שופר</span></td>
+          </tr>
+          <tr>
+            <td><code>typing-area.tsx</code></td>
+            <td>ביטול flash אנימציה + reduced motion</td>
+            <td><span class="badge badge-improved">שופר</span></td>
+          </tr>
+          <tr>
+            <td><code>lesson-view.tsx</code></td>
+            <td>ביטול אנימציות מעבר + aria-live</td>
+            <td><span class="badge badge-improved">שופר</span></td>
+          </tr>
+          <tr>
+            <td><code>session-stats.tsx</code></td>
+            <td>ביטול אנימציות כניסה</td>
+            <td><span class="badge badge-improved">שופר</span></td>
+          </tr>
+          <tr>
+            <td><code>first-lesson-magic.tsx</code></td>
+            <td>ביטול אנימציות onboarding</td>
+            <td><span class="badge badge-improved">שופר</span></td>
+          </tr>
+          <tr>
+            <td><code>character-idle-wrapper.tsx</code></td>
+            <td>ביטול אנימציות idle של דמויות</td>
+            <td><span class="badge badge-improved">שופר</span></td>
+          </tr>
+          <tr>
+            <td><code>achievement-notification.tsx</code></td>
+            <td>ביטול אנימציות הישגים</td>
+            <td><span class="badge badge-improved">שופר</span></td>
+          </tr>
+          <tr>
+            <td><code>home-client.tsx</code></td>
+            <td>ביטול אנימציות דשבורד</td>
+            <td><span class="badge badge-improved">שופר</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CSS Rules -->
+    <details>
+      <summary>
+        🎨 כללי CSS חדשים — @media reduced-motion
+        <span class="badge badge-new">חדש</span>
+        <span class="summary-arrow">◀</span>
+      </summary>
+      <div class="details-body">
+        <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">
+          נוספו לקובץ <code>globals.css</code> — 47 שורות חדשות:
+        </p>
+        <div class="code-block">
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+        </div>
+        <p style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 0.82rem;">
+          כלל גלובלי שמכבה את כל האנימציות עבור משתמשים שהגדירו העדפה למעט תנועה ברמת מערכת ההפעלה.
+        </p>
+      </div>
+    </details>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 4: תיקון טסטים                      -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="tests" class="section">
+    <div class="section-header">
+      <div class="section-icon blue">🧪</div>
+      <h2>תיקון טסטים — Battle Arena</h2>
+      <span class="tag-label">16 TESTS FIXED</span>
+    </div>
+
+    <div class="highlight-block green">
+      <h4>✅ כל 1,096 הטסטים עוברים</h4>
+      <p>16 טסטים שנכשלו ב-battle-arena.test.tsx תוקנו באמצעות הוספת mocks חסרים.</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 בעיה ופתרון</h3>
+      <div class="two-col">
+        <div class="highlight-block red">
+          <h4>❌ הבעיה</h4>
+          <ul>
+            <li>16 טסטים נכשלו בגלל קומפוננטות חסרות</li>
+            <li>Dialog מ-Radix UI לא מוגדר בסביבת טסט</li>
+            <li>motion.button מ-Framer Motion לא mock-ד</li>
+            <li>next/image לא mock-ד</li>
+          </ul>
+        </div>
+        <div class="highlight-block green">
+          <h4>✅ הפתרון</h4>
+          <ul>
+            <li>Mock ל-<code>motion.button</code> (Framer Motion)</li>
+            <li>Mock ל-<code>next/image</code> (Next.js)</li>
+            <li>Mock ל-<code>@radix-ui/react-dialog</code></li>
+            <li>Mock ל-<code>sound-manager</code></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Test Stats -->
+    <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="stat-card green">
+        <span class="stat-icon">✅</span>
+        <span class="stat-value">1,096</span>
+        <span class="stat-label">טסטים עוברים</span>
+      </div>
+      <div class="stat-card green">
+        <span class="stat-icon">📦</span>
+        <span class="stat-value">62</span>
+        <span class="stat-label">סוויטות</span>
+      </div>
+      <div class="stat-card green">
+        <span class="stat-icon">❌</span>
+        <span class="stat-value">0</span>
+        <span class="stat-label">כשלונות</span>
+      </div>
+      <div class="stat-card green">
+        <span class="stat-icon">🔧</span>
+        <span class="stat-value">16</span>
+        <span class="stat-label">טסטים שתוקנו</span>
+      </div>
+    </div>
+
+    <details>
+      <summary>
+        📄 Mocks שנוספו לקובץ הטסט
+        <span class="summary-arrow">◀</span>
+      </summary>
+      <div class="details-body">
+        <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">
+          קובץ: <code>tests/unit/components/battle-arena.test.tsx</code> — 109 שורות נוספו
+        </p>
+        <div class="code-block">
+// Framer Motion mock
+vi.mock('framer-motion', () => ({
+  motion: { button: 'button', div: 'div', span: 'span' },
+  AnimatePresence: ({ children }) => children,
+}))
+
+// Next.js Image mock
+vi.mock('next/image', () => ({
+  default: (props) => &lt;img {...props} /&gt;,
+}))
+
+// Radix UI Dialog mock
+vi.mock('@radix-ui/react-dialog', () => ({
+  Root: ({ children }) => children,
+  Portal: ({ children }) => children,
+  Overlay: ({ children }) => children,
+  Content: ({ children }) => children,
+  // ...
+}))
+
+// Sound manager mock
+vi.mock('@/lib/audio/sound-manager', () => ({
+  playSound: vi.fn(),
+}))
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 5: מוזיקת חגים                      -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="holiday-music" class="section">
+    <div class="section-header">
+      <div class="section-icon yellow">🎶</div>
+      <h2>קטלוג מוזיקת חגים ישראליים</h2>
+      <span class="tag-label">12 TRACKS</span>
+    </div>
+
+    <div class="highlight-block purple">
+      <h4>🎵 44 שירים קיימים + 12 שירי חגים = 56 שירים בקטלוג</h4>
+      <p>פרומפטים ייחודיים ל-Suno ברוח כל חג, משלבים אותנטיות תרבותית עם סאונד גיימינג.</p>
+    </div>
+
+    <div class="card">
+      <table class="audit-table">
+        <thead>
+          <tr>
+            <th style="width: 40px;"></th>
+            <th>חג</th>
+            <th>שם השיר</th>
+            <th>סגנון</th>
+            <th>מצב רוח</th>
+            <th>סטטוס</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="holiday-emoji">🕎</span></td>
+            <td><strong>חנוכה</strong></td>
+            <td>אורות הנינג'ה</td>
+            <td><span class="tag">klezmer-chiptune fusion</span></td>
+            <td>חגיגי, חם</td>
+            <td><span class="badge badge-new">פרומפט מוכן</span></td>
+          </tr>
+          <tr>
+            <td><span class="holiday-emoji">🎭</span></td>
+            <td><strong>פורים</strong></td>
+            <td>קרנבל המסכות</td>
+            <td><span class="tag">carnival EDM</span></td>
+            <td>שמח, מטורף</td>
+            <td><span class="badge badge-new">פרומפט מוכן</span></td>
+          </tr>
+          <tr>
+            <td><span class="holiday-emoji">🍷</span></td>
+            <td><strong>פסח</strong></td>
+            <td>מסע לחירות</td>
+            <td><span class="tag">epic orchestral</span></td>
+            <td>עוצמתי, חגיגי</td>
+            <td><span class="badge badge-new">פרומפט מוכן</span></td>
+          </tr>
+          <tr>
+            <td><span class="holiday-emoji">🇮🇱</span></td>
+            <td><strong>יום העצמאות</strong></td>
+            <td>גאווה דיגיטלית</td>
+            <td><span class="tag">Israeli rock + synth</span></td>
+            <td>גאה, אנרגטי</td>
+            <td><span class="badge badge-new">פרומפט מוכן</span></td>
+          </tr>
+          <tr>
+            <td><span class="holiday-emoji">🍎</span></td>
+            <td><strong>ראש השנה</strong></td>
+            <td>התחלה חדשה</td>
+            <td><span class="tag">ambient + shofar</span></td>
+            <td>מרומם, חגיגי</td>
+            <td><span class="badge badge-new">פרומפט מוכן</span></td>
+          </tr>
+          <tr>
+            <td><span class="holiday-emoji">🛖</span></td>
+            <td><strong>סוכות</strong></td>
+            <td>ריקוד הסוכה</td>
+            <td><span class="tag">folk-electronic</span></td>
+            <td>שמח, רוקד</td>
+            <td><span class="badge badge-new">פרומפט מוכן</span></td>
+          </tr>
+          <tr>
+            <td><span class="holiday-emoji">🌾</span></td>
+            <td><strong>שבועות</strong></td>
+            <td>ליל הלימוד</td>
+            <td><span class="tag">lo-fi study beats</span></td>
+            <td>רגוע, ממוקד</td>
+            <td><span class="badge badge-new">פרומפט מוכן</span></td>
+          </tr>
+          <tr>
+            <td><span class="holiday-emoji">🔥</span></td>
+            <td><strong>ל"ג בעומר</strong></td>
+            <td>מדורת הקוד</td>
+            <td><span class="tag">drum & bass fire</span></td>
+            <td>בוער, אינטנסיבי</td>
+            <td><span class="badge badge-new">פרומפט מוכן</span></td>
+          </tr>
+          <tr>
+            <td><span class="holiday-emoji">🌳</span></td>
+            <td><strong>ט"ו בשבט</strong></td>
+            <td>שורשים דיגיטליים</td>
+            <td><span class="tag">nature ambient</span></td>
+            <td>טבעי, שלו</td>
+            <td><span class="badge badge-new">פרומפט מוכן</span></td>
+          </tr>
+          <tr>
+            <td><span class="holiday-emoji">🕯️</span></td>
+            <td><strong>יום הזיכרון</strong></td>
+            <td>לזכרם</td>
+            <td><span class="tag">piano + strings</span></td>
+            <td>עצוב, מכובד</td>
+            <td><span class="badge badge-new">פרומפט מוכן</span></td>
+          </tr>
+          <tr>
+            <td><span class="holiday-emoji">✡️</span></td>
+            <td><strong>יום השואה</strong></td>
+            <td>לעולם לא נשכח</td>
+            <td><span class="tag">minimal piano</span></td>
+            <td>כבד, זוכר</td>
+            <td><span class="badge badge-new">פרומפט מוכן</span></td>
+          </tr>
+          <tr>
+            <td><span class="holiday-emoji">📜</span></td>
+            <td><strong>שמחת תורה</strong></td>
+            <td>הקפות דיגיטליות</td>
+            <td><span class="tag">hora + dubstep</span></td>
+            <td>שמח, סוחף</td>
+            <td><span class="badge badge-new">פרומפט מוכן</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <details>
+      <summary>
+        📁 מבנה תיקיות מוזיקת חגים
+        <span class="summary-arrow">◀</span>
+      </summary>
+      <div class="details-body">
+        <div class="code-block">
+public/audio/music/holidays/
+├── hanukkah/           # 🕎 חנוכה
+├── purim/              # 🎭 פורים
+├── pesach/             # 🍷 פסח
+├── independence-day/   # 🇮🇱 יום העצמאות
+├── rosh-hashana/       # 🍎 ראש השנה
+├── sukkot/             # 🛖 סוכות
+├── shavuot/            # 🌾 שבועות
+├── lag-baomer/         # 🔥 ל"ג בעומר
+├── tu-bishvat/         # 🌳 ט"ו בשבט
+├── memorial-day/       # 🕯️ יום הזיכרון
+├── holocaust-day/      # ✡️ יום השואה
+└── simchat-torah/      # 📜 שמחת תורה
+        </div>
+        <p style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 0.82rem;">
+          פרומפטים מוכנים בקובץ <code>scripts/suno-prompts.json</code> — ממתינים ליצירה ב-Suno.
+        </p>
+      </div>
+    </details>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 6: סטטיסטיקות פרויקט                -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="project-stats" class="section">
+    <div class="section-header">
+      <div class="section-icon cyan">📈</div>
+      <h2>סטטיסטיקות פרויקט — מבט על</h2>
+      <span class="tag-label">OVERVIEW</span>
+    </div>
+
+    <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));">
+      <div class="stat-card purple">
+        <span class="stat-icon">📝</span>
+        <span class="stat-value">253</span>
+        <span class="stat-label">קבצי TypeScript</span>
+      </div>
+      <div class="stat-card blue">
+        <span class="stat-icon">⚛️</span>
+        <span class="stat-value">145</span>
+        <span class="stat-label">קומפוננטות React</span>
+      </div>
+      <div class="stat-card green">
+        <span class="stat-icon">📏</span>
+        <span class="stat-value">35,410</span>
+        <span class="stat-label">שורות קוד</span>
+      </div>
+      <div class="stat-card orange">
+        <span class="stat-icon">🧪</span>
+        <span class="stat-value">74</span>
+        <span class="stat-label">קבצי טסט</span>
+      </div>
+      <div class="stat-card cyan">
+        <span class="stat-icon">🎵</span>
+        <span class="stat-value">379</span>
+        <span class="stat-label">קבצי MP3</span>
+      </div>
+      <div class="stat-card yellow">
+        <span class="stat-icon">🖼️</span>
+        <span class="stat-value">149</span>
+        <span class="stat-label">תמונות</span>
+      </div>
+      <div class="stat-card purple">
+        <span class="stat-icon">📄</span>
+        <span class="stat-value">38</span>
+        <span class="stat-label">מסמכי HTML</span>
+      </div>
+      <div class="stat-card green">
+        <span class="stat-icon">🎮</span>
+        <span class="stat-value">13</span>
+        <span class="stat-label">איטרציות</span>
+      </div>
+    </div>
+
+    <!-- Quality Bars -->
+    <div class="card">
+      <h3>🎯 מדדי איכות</h3>
+
+      <div class="row-item">
+        <span class="row-label">TypeScript — אפס שגיאות</span>
+        <span>✅</span>
+      </div>
+      <div class="mini-bar-wrap">
+        <span style="font-size: 0.78rem; color: var(--text-secondary);">שגיאות TSC</span>
+        <div class="mini-bar-track">
+          <div class="mini-bar-fill green" style="width: 100%;"></div>
+        </div>
+        <span class="mini-bar-pct" style="color: var(--green);">0 שגיאות</span>
+      </div>
+
+      <div class="row-item" style="margin-top: 0.75rem;">
+        <span class="row-label">טסטים — 100% הצלחה</span>
+        <span>✅</span>
+      </div>
+      <div class="mini-bar-wrap">
+        <span style="font-size: 0.78rem; color: var(--text-secondary);">הצלחת טסטים</span>
+        <div class="mini-bar-track">
+          <div class="mini-bar-fill green" style="width: 100%;"></div>
+        </div>
+        <span class="mini-bar-pct" style="color: var(--green);">100%</span>
+      </div>
+
+      <div class="row-item" style="margin-top: 0.75rem;">
+        <span class="row-label">נגישות</span>
+        <span>📈</span>
+      </div>
+      <div class="mini-bar-wrap">
+        <span style="font-size: 0.78rem; color: var(--text-secondary);">ציון A11y</span>
+        <div class="mini-bar-track">
+          <div class="mini-bar-fill cyan" style="width: 85%;"></div>
+        </div>
+        <span class="mini-bar-pct" style="color: var(--cyan);">8.5/10</span>
+      </div>
+
+      <div class="row-item" style="margin-top: 0.75rem;">
+        <span class="row-label">קטלוג מוזיקה</span>
+        <span>🎵</span>
+      </div>
+      <div class="mini-bar-wrap">
+        <span style="font-size: 0.78rem; color: var(--text-secondary);">שלמות קטלוג (56/56 פרומפטים)</span>
+        <div class="mini-bar-track">
+          <div class="mini-bar-fill purple" style="width: 100%;"></div>
+        </div>
+        <span class="mini-bar-pct" style="color: var(--purple);">100%</span>
+      </div>
+
+      <div class="row-item" style="margin-top: 0.75rem;">
+        <span class="row-label">יצירת שירים (MP3 בפועל)</span>
+        <span>🎶</span>
+      </div>
+      <div class="mini-bar-wrap">
+        <span style="font-size: 0.78rem; color: var(--text-secondary);">שירים שנוצרו</span>
+        <div class="mini-bar-track">
+          <div class="mini-bar-fill orange" style="width: 78.5%;"></div>
+        </div>
+        <span class="mini-bar-pct" style="color: var(--orange);">44/56</span>
+      </div>
+    </div>
+
+    <!-- Iteration History -->
+    <details>
+      <summary>
+        📅 היסטוריית איטרציות
+        <span class="summary-arrow">◀</span>
+      </summary>
+      <div class="details-body">
+        <table class="audit-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>תאריך</th>
+              <th>מיקוד</th>
+              <th>הישגים מרכזיים</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>13</strong></td>
+              <td>14 מרץ</td>
+              <td>איכות + נגישות</td>
+              <td>43 תיקוני אודיט, A11y 8.5, 12 שירי חגים, 16 טסטים תוקנו</td>
+            </tr>
+            <tr>
+              <td>12</td>
+              <td>11-12 מרץ</td>
+              <td>Gaming CSS + AI</td>
+              <td>12 דפים עם CSS גיימינג, קרבות AI, דשבורד מורה</td>
+            </tr>
+            <tr>
+              <td>11</td>
+              <td>10-11 מרץ</td>
+              <td>פסקול 44 שירים</td>
+              <td>44 שירים via Suno V5, אימות 5-סוכנים</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>8-9 מרץ</td>
+              <td>תוכן + כלים</td>
+              <td>Suno batch, expression sheets, פרק 6</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>8 מרץ</td>
+              <td>דמויות</td>
+              <td>סנסיי צב, סאקורה, Glitch 6 גרסאות, Visual Bible</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>מרץ</td>
+              <td>סיפור + מוזיקה</td>
+              <td>פרקים 4-6, MusicProvider, קרבות AI</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>מרץ</td>
+              <td>דיאלוג + קול</td>
+              <td>DialogBox, StoryPlayer, Yuki V8-D</td>
+            </tr>
+            <tr>
+              <td>5-6</td>
+              <td>מרץ</td>
+              <td>UI + סיפור</td>
+              <td>זכויות יוצרים, קולות, מערכת מוזיקה, סקינים</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 7: צעדים הבאים                      -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="next" class="section">
+    <div class="section-header">
+      <div class="section-icon purple">🚀</div>
+      <h2>צעדים הבאים — איטרציה 14</h2>
+      <span class="tag-label">ROADMAP</span>
+    </div>
+
+    <ul class="action-list">
+      <li>
+        <div class="action-num">1</div>
+        <div class="action-text">
+          <strong>🎵 יצירת מוזיקת חגים</strong>
+          <span>יצירת 12 שירי חגים ב-Suno מהפרומפטים המוכנים. שילוב בתוך מערכת ה-Music Manager עם החלפה עונתית אוטומטית.</span>
+        </div>
+      </li>
+      <li>
+        <div class="action-num">2</div>
+        <div class="action-text">
+          <strong>🧹 ניקוי קוד מת</strong>
+          <span>6 מודולים שלמים + 25 ייצואים לא בשימוש שזוהו באודיט. הסרה בטוחה עם ווידוא שאין תלויות נסתרות.</span>
+        </div>
+      </li>
+      <li>
+        <div class="action-num">3</div>
+        <div class="action-text">
+          <strong>🎮 POC תלת-ממד</strong>
+          <span>דגם 3D ראשון של דמות Ki — בדיקת היתכנות עם Three.js / React Three Fiber בתוך Next.js. ממתין לאישור משתמש.</span>
+        </div>
+      </li>
+      <li>
+        <div class="action-num">4</div>
+        <div class="action-text">
+          <strong>♿ נגישות — השלמה ל-9/10</strong>
+          <span>contrast ratio על גבולות oklch, skip navigation link, focus trap בדיאלוגים, תמיכה מלאה ב-keyboard navigation.</span>
+        </div>
+      </li>
+      <li>
+        <div class="action-num">5</div>
+        <div class="action-text">
+          <strong>👤 סקירת משתמש</strong>
+          <span>סקירה אינטראקטיבית של המשחק המלא עם המשתמש — איסוף פידבק על UI/UX, סיפור, מוזיקה, וחוויית משחק.</span>
+        </div>
+      </li>
+      <li>
+        <div class="action-num">6</div>
+        <div class="action-text">
+          <strong>🏫 ממשק מורה במובייל</strong>
+          <span>השלמת דשבורד מורה למובייל — צפייה בכיתה, מעקב התקדמות, מיפוי מיומנויות לכל שיעור.</span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <p>
+    נינג'ה מקלדת — סיכום איטרציה 13 &nbsp;|&nbsp;
+    נוצר אוטומטית &nbsp;|&nbsp;
+    14 מרץ 2026 &nbsp;|&nbsp;
+    <a href="https://github.com/eladj" target="_blank">Elad J.</a>
+  </p>
+  <p style="margin-top: 0.3rem; color: var(--text-muted);">
+    🥷 "הנינג'ה האמיתי מתקן בשקט לפני שמישהו שם לב"
+  </p>
+</footer>
+
+</body>
+</html>

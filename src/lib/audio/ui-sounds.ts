@@ -7,7 +7,7 @@
  */
 
 /** All supported UI sound keys. */
-export const UI_SOUND_KEYS = [
+const UI_SOUND_KEYS = [
   'click',
   'hover',
   'navigate',

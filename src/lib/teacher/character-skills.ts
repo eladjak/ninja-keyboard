@@ -4,7 +4,7 @@
  * so teachers can plan lessons without needing to understand the narrative.
  */
 
-export interface CharacterSkillMap {
+interface CharacterSkillMap {
   id: string
   nameHe: string
   emoji: string
@@ -159,7 +159,7 @@ export const CHARACTER_SKILL_MAPS: CharacterSkillMap[] = [
   },
 ]
 
-export type SkillCategory =
+type SkillCategory =
   | 'fundamentals'
   | 'shortcuts'
   | 'speed'
@@ -169,7 +169,7 @@ export type SkillCategory =
   | 'games'
   | 'analytics'
 
-export const SKILL_CATEGORY_LABELS: Record<SkillCategory, string> = {
+const SKILL_CATEGORY_LABELS: Record<SkillCategory, string> = {
   fundamentals: 'יסודות',
   shortcuts: 'קיצורי דרך',
   speed: 'מהירות',

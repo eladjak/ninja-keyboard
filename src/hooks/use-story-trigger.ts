@@ -68,7 +68,7 @@ export type StoryTriggerEvent =
   | { type: 'battle-result'; result: 'win' | 'lose' }
   | { type: 'streak'; days: number }
 
-export interface UseStoryTriggerResult {
+interface UseStoryTriggerResult {
   /** The beat that should be played now, or null if nothing to show */
   pendingBeat: DialogStoryBeat | null
   /** Call this after the StoryPlayer finishes to mark the beat as seen */
@@ -125,14 +125,6 @@ export function useStoryTrigger(
   }
 
   return { pendingBeat, completeBeat, recordChoice }
-}
-
-// ---------------------------------------------------------------------------
-// Utility: find a beat by its id (used in story replay page)
-// ---------------------------------------------------------------------------
-
-export function findBeatById(beatId: string): DialogStoryBeat | undefined {
-  return ALL_BEATS.find((b) => b.id === beatId)
 }
 
 /** Get all beats grouped by chapter */

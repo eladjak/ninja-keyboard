@@ -417,7 +417,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
 }
 
 /** Characters considered heroes (player allies) */
-export const HERO_CHARACTERS: CharacterName[] = [
+const HERO_CHARACTERS: CharacterName[] = [
   'ki',
   'mika',
   'yuki',
@@ -430,17 +430,6 @@ export const HERO_CHARACTERS: CharacterName[] = [
   'phantom',
   'masterBeat',
   'sakura',
-]
-
-/** Characters considered villains */
-export const VILLAIN_CHARACTERS: CharacterName[] = [
-  'bug',
-  'glitch',
-  'shadow',
-  'storm',
-  'blaze',
-  'virus',
-  'barak',
 ]
 
 /**
