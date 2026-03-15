@@ -1377,18 +1377,24 @@
       "category": "holidays",
       "files": [
         "holidays/hanukkah-theme.mp3",
-        "holidays/hanukkah-theme-v2.mp3"
+        "holidays/hanukkah-theme-v2.mp3",
+        "holidays/hanukkah-theme-ref.mp3",
+        "holidays/hanukkah-theme-ref-v2.mp3"
       ],
       "durations": [
         114.96,
-        93.04
+        93.04,
+        109.96,
+        101.64
       ],
       "sunoSongIds": [
         "0a46a433-3fed-497d-b3aa-49eb007bf29e",
         "a8ac7658-5517-4239-a59b-de4c8bc7889f"
       ],
       "generatedAt": "2026-03-15T06:46:07.239Z",
-      "status": "ready"
+      "status": "ready",
+      "referenceGenerated": true,
+      "referenceGeneratedAt": "2026-03-15T09:02:26.756Z"
     },
     {
       "trackId": "HOL-002",
@@ -1400,18 +1406,24 @@
       "category": "holidays",
       "files": [
         "holidays/purim-theme.mp3",
-        "holidays/purim-theme-v2.mp3"
+        "holidays/purim-theme-v2.mp3",
+        "holidays/purim-theme-ref.mp3",
+        "holidays/purim-theme-ref-v2.mp3"
       ],
       "durations": [
         147.36,
-        159.96
+        159.96,
+        141.96,
+        156.84
       ],
       "sunoSongIds": [
         "c7518c65-c5fc-4e8e-9a4c-9bb60a2b7e06",
         "93fb5c28-1d05-44ed-8d47-8d67aa87a0ec"
       ],
       "generatedAt": "2026-03-15T06:46:23.179Z",
-      "status": "ready"
+      "status": "ready",
+      "referenceGenerated": true,
+      "referenceGeneratedAt": "2026-03-15T09:04:35.811Z"
     },
     {
       "trackId": "HOL-005",
@@ -1423,18 +1435,24 @@
       "category": "holidays",
       "files": [
         "holidays/rosh-hashana-theme.mp3",
-        "holidays/rosh-hashana-theme-v2.mp3"
+        "holidays/rosh-hashana-theme-v2.mp3",
+        "holidays/rosh-hashana-theme-ref.mp3",
+        "holidays/rosh-hashana-theme-ref-v2.mp3"
       ],
       "durations": [
         142.28,
-        148.24
+        148.24,
+        162.76,
+        117.32
       ],
       "sunoSongIds": [
         "371297f2-e705-42b1-9510-6de09c8fae6a",
         "da871a90-4e3f-4671-b9b2-4b2095170f2e"
       ],
       "generatedAt": "2026-03-15T06:49:28.652Z",
-      "status": "ready"
+      "status": "ready",
+      "referenceGenerated": true,
+      "referenceGeneratedAt": "2026-03-15T09:13:11.113Z"
     },
     {
       "trackId": "HOL-008",
@@ -1446,18 +1464,24 @@
       "category": "holidays",
       "files": [
         "holidays/lag-baomer-theme.mp3",
-        "holidays/lag-baomer-theme-v2.mp3"
+        "holidays/lag-baomer-theme-v2.mp3",
+        "holidays/lag-baomer-theme-ref.mp3",
+        "holidays/lag-baomer-theme-ref-v2.mp3"
       ],
       "durations": [
         109.28,
-        140
+        140,
+        46.24,
+        82.36
       ],
       "sunoSongIds": [
         "54725d59-6fdb-4ead-bb5e-54f23e44e451",
         "450a0c77-23f2-4099-86e0-139d5b73c14c"
       ],
       "generatedAt": "2026-03-15T06:51:42.501Z",
-      "status": "ready"
+      "status": "ready",
+      "referenceGenerated": true,
+      "referenceGeneratedAt": "2026-03-15T09:19:42.850Z"
     },
     {
       "trackId": "HOL-012",
@@ -1469,18 +1493,24 @@
       "category": "holidays",
       "files": [
         "holidays/simchat-torah-theme.mp3",
-        "holidays/simchat-torah-theme-v2.mp3"
+        "holidays/simchat-torah-theme-v2.mp3",
+        "holidays/simchat-torah-theme-ref.mp3",
+        "holidays/simchat-torah-theme-ref-v2.mp3"
       ],
       "durations": [
         132.04,
-        147.72
+        147.72,
+        79.36,
+        98
       ],
       "sunoSongIds": [
         "e6db6bff-b65e-49d9-8252-98f7f9bbaf40",
         "75719d0d-d8f1-42b5-9186-4a4a92a9b58f"
       ],
       "generatedAt": "2026-03-15T06:56:48.413Z",
-      "status": "ready"
+      "status": "ready",
+      "referenceGenerated": true,
+      "referenceGeneratedAt": "2026-03-15T09:31:28.247Z"
     },
     {
       "trackId": "HOL-003",
@@ -1490,9 +1520,17 @@
       "category": "holidays",
       "files": [
         "holidays/pesach-theme.mp3",
-        "holidays/pesach-theme-v2.mp3"
+        "holidays/pesach-theme-v2.mp3",
+        "holidays/pesach-theme-ref.mp3",
+        "holidays/pesach-theme-ref-v2.mp3"
       ],
-      "generatedAt": "2026-03-15T06:59:15.030Z"
+      "generatedAt": "2026-03-15T06:59:15.030Z",
+      "durations": [
+        169.96,
+        108.36
+      ],
+      "referenceGenerated": true,
+      "referenceGeneratedAt": "2026-03-15T09:07:22.855Z"
     },
     {
       "trackId": "HOL-004",
@@ -1502,9 +1540,17 @@
       "category": "holidays",
       "files": [
         "holidays/yom-haatzmaut-theme.mp3",
-        "holidays/yom-haatzmaut-theme-v2.mp3"
+        "holidays/yom-haatzmaut-theme-v2.mp3",
+        "holidays/yom-haatzmaut-theme-ref.mp3",
+        "holidays/yom-haatzmaut-theme-ref-v2.mp3"
       ],
-      "generatedAt": "2026-03-15T06:59:15.031Z"
+      "generatedAt": "2026-03-15T06:59:15.031Z",
+      "durations": [
+        193.04,
+        193.36
+      ],
+      "referenceGenerated": true,
+      "referenceGeneratedAt": "2026-03-15T09:10:41.684Z"
     },
     {
       "trackId": "HOL-006",
@@ -1514,9 +1560,17 @@
       "category": "holidays",
       "files": [
         "holidays/sukkot-theme.mp3",
-        "holidays/sukkot-theme-v2.mp3"
+        "holidays/sukkot-theme-v2.mp3",
+        "holidays/sukkot-theme-ref.mp3",
+        "holidays/sukkot-theme-ref-v2.mp3"
       ],
-      "generatedAt": "2026-03-15T06:59:15.031Z"
+      "generatedAt": "2026-03-15T06:59:15.031Z",
+      "durations": [
+        148,
+        172.72
+      ],
+      "referenceGenerated": true,
+      "referenceGeneratedAt": "2026-03-15T09:34:31.205Z"
     },
     {
       "trackId": "HOL-007",
@@ -1526,9 +1580,17 @@
       "category": "holidays",
       "files": [
         "holidays/shavuot-theme.mp3",
-        "holidays/shavuot-theme-v2.mp3"
+        "holidays/shavuot-theme-v2.mp3",
+        "holidays/shavuot-theme-ref.mp3",
+        "holidays/shavuot-theme-ref-v2.mp3"
       ],
-      "generatedAt": "2026-03-15T06:59:15.031Z"
+      "generatedAt": "2026-03-15T06:59:15.031Z",
+      "durations": [
+        237.96,
+        189.92
+      ],
+      "referenceGenerated": true,
+      "referenceGeneratedAt": "2026-03-15T09:17:20.404Z"
     },
     {
       "trackId": "HOL-009",
@@ -1538,9 +1600,17 @@
       "category": "holidays",
       "files": [
         "holidays/tu-bishvat-theme.mp3",
-        "holidays/tu-bishvat-theme-v2.mp3"
+        "holidays/tu-bishvat-theme-v2.mp3",
+        "holidays/tu-bishvat-theme-ref.mp3",
+        "holidays/tu-bishvat-theme-ref-v2.mp3"
       ],
-      "generatedAt": "2026-03-15T06:59:15.031Z"
+      "generatedAt": "2026-03-15T06:59:15.031Z",
+      "durations": [
+        178.16,
+        64.48
+      ],
+      "referenceGenerated": true,
+      "referenceGeneratedAt": "2026-03-15T09:23:15.540Z"
     },
     {
       "trackId": "HOL-010",
@@ -1550,9 +1620,17 @@
       "category": "holidays",
       "files": [
         "holidays/yom-hazikaron-theme.mp3",
-        "holidays/yom-hazikaron-theme-v2.mp3"
+        "holidays/yom-hazikaron-theme-v2.mp3",
+        "holidays/yom-hazikaron-theme-ref.mp3",
+        "holidays/yom-hazikaron-theme-ref-v2.mp3"
       ],
-      "generatedAt": "2026-03-15T06:59:15.032Z"
+      "generatedAt": "2026-03-15T06:59:15.032Z",
+      "durations": [
+        137.28,
+        202.44
+      ],
+      "referenceGenerated": true,
+      "referenceGeneratedAt": "2026-03-15T09:26:26.590Z"
     },
     {
       "trackId": "HOL-011",
@@ -1562,9 +1640,17 @@
       "category": "holidays",
       "files": [
         "holidays/yom-hashoah-theme.mp3",
-        "holidays/yom-hashoah-theme-v2.mp3"
+        "holidays/yom-hashoah-theme-v2.mp3",
+        "holidays/yom-hashoah-theme-ref.mp3",
+        "holidays/yom-hashoah-theme-ref-v2.mp3"
       ],
-      "generatedAt": "2026-03-15T06:59:15.032Z"
+      "generatedAt": "2026-03-15T06:59:15.032Z",
+      "durations": [
+        166.8,
+        127.76
+      ],
+      "referenceGenerated": true,
+      "referenceGeneratedAt": "2026-03-15T09:29:14.355Z"
     }
   ],
   "pending_tracks": [],

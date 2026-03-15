@@ -5,15 +5,44 @@
 ## Sprint: Iteration 13 — Quality & Polish
 
 ## Current State
-Iteration 13 complete (3 commits: 161ba9d, c8b2e4e, f34c621). Full audit fixes, a11y overhaul, dead code cleanup, holiday music catalog, battle test fix. TypeScript: 0 errors, Tests: 1096/1096.
+Iteration 13 complete (6 commits). Full audit fixes, a11y overhaul, dead code cleanup, holiday music (generic + reference-based), battle test fix. TypeScript: 0 errors, Tests: 1096/1096.
 
 ## What Was Done This Session (Iteration 13)
 
-### Commit 1: Post-Iteration 12 Audit Fixes (161ba9d)
-- 39 broken music paths fixed in music-manager.ts
-- 4 broken image paths fixed (ai-typing-engine + home-client)
-- Dialog "Close" → "סגור" (Hebrew i18n)
-- Unused TIMER_DURATIONS import removed
+### Commit 6: Reference-Based Holiday Music (current)
+- **New script**: `suno-holiday-references.mjs` — fully automated pipeline:
+  1. Downloads 15s instrumental reference clips via yt-dlp
+  2. Uploads to tmpfiles.org for Suno access
+  3. Uses Suno V5 upload-cover API with audioWeight control
+  4. Downloads, quality-checks, updates manifest
+- **12/12 holiday tracks regenerated** with authentic melodic references:
+  - HOL-001 חנוכה: Mi Yemalel melody (public domain, audioWeight=0.35)
+  - HOL-002 פורים: Chag Purim melody (public domain)
+  - HOL-003 פסח: Ma Nishtana melody (public domain)
+  - HOL-004 יום העצמאות: Yerushalayim Shel Zahav STYLE ONLY (copyrighted, audioWeight=0.15)
+  - HOL-005 ראש השנה: Shana Tova melody (public domain)
+  - HOL-006 סוכות: Sukkot harvest melody (public domain)
+  - HOL-007 שבועות: Shavuot Bikkurim melody (public domain)
+  - HOL-008 ל"ג בעומר: Bar Yochai piyyut melody (public domain)
+  - HOL-009 ט"ו בשבט: HaShkediya Porachat melody (public domain)
+  - HOL-010 יום הזיכרון: Eli Eli STYLE ONLY (copyrighted, audioWeight=0.15)
+  - HOL-011 יום השואה: Ani Ma'amin melody (public domain)
+  - HOL-012 שמחת תורה: Sisu VeSimchu melody (public domain)
+- 24 new reference-based MP3s (2 takes each), all quality-checked
+- music-manager.ts updated to use -ref versions as primary
+- Original generic tracks kept as backup
+
+### Commit 5: Generic Holiday Music via Suno V5 (9085c24)
+- 12 holiday tracks generated (24 MP3s, 94MB) using standard Suno V5 generate
+- Duration quality gate fixed: holidays max 150→300s
+
+### Commit 4: PROGRESS.md update (29b9ba8)
+
+### Commit 3: Dead Code Cleanup + Report (f34c621)
+- 5 dead files deleted (420+ lines): use-is-mobile, use-media-query, types/music, types/typing, tutorial-intro
+- 4 dead exports removed: useSuccessSound, findBeatById, VILLAIN_CHARACTERS, getBossConfig
+- 9 exports de-exported (narrowed to file-private)
+- Iteration 13 HTML report generated (docs/iteration-13-report.html)
 
 ### Commit 2: A11y + Battle Tests + Holiday Music (c8b2e4e)
 - **Accessibility**: prefers-reduced-motion across 9 components + new use-reduced-motion hook
@@ -22,26 +51,22 @@ Iteration 13 complete (3 commits: 161ba9d, c8b2e4e, f34c621). Full audit fixes, 
 - **A11y score**: 6.5/10 → ~8.5/10
 - **Battle tests**: Fixed 16 failing tests (mocks for motion.button, next/image, radix-ui, sound-manager)
 - **Holiday music**: 12 Israeli holiday tracks added to Suno catalog (56 total)
-- **Holiday prompts**: Culturally authentic Suno prompts per holiday with traditional instruments
 
-### Commit 3: Dead Code Cleanup + Report (f34c621)
-- 5 dead files deleted (420+ lines): use-is-mobile, use-media-query, types/music, types/typing, tutorial-intro
-- 4 dead exports removed: useSuccessSound, findBeatById, VILLAIN_CHARACTERS, getBossConfig
-- 9 exports de-exported (narrowed to file-private)
-- Iteration 13 HTML report generated (docs/iteration-13-report.html)
+### Commit 1: Post-Iteration 12 Audit Fixes (161ba9d)
+- 39 broken music paths fixed in music-manager.ts
+- 4 broken image paths fixed (ai-typing-engine + home-client)
+- Dialog "Close" → "סגור" (Hebrew i18n)
+- Unused TIMER_DURATIONS import removed
 
 ### Code Quality Scan (No fixes needed!)
 - English strings in UI: 0
 - console.log: 0
 - `any` types: 3 justified only
-- h-screen: 0
-- Physical direction props: 0
 
 ## Next Steps
-1. **Holiday music generation** → Run 12 Suno prompts and import to public/audio/music/holidays/
-2. **3D POC** → Ki character model (user wants to start together, budget consideration)
-3. **User interactive review** → Full game walkthrough (tomorrow morning)
-4. **Teacher mobile interface** → Expand teacher dashboard for mobile
+1. **3D POC** → Ki character model (user wants to start together, budget consideration)
+2. **User interactive review** → Full game walkthrough
+3. **Teacher mobile interface** → Expand teacher dashboard for mobile
 
 ## Previous Session
 

@@ -99,18 +99,18 @@ const DEFAULT_ZONE_TRACKS: Record<GameZone, string> = {
 
 /** Holiday track paths. Override home/menu zones during holidays. */
 const HOLIDAY_TRACKS: Record<HebrewHoliday, string> = {
-  'hanukkah': '/audio/music/holidays/hanukkah-theme.mp3',
-  'purim': '/audio/music/holidays/purim-theme.mp3',
-  'pesach': '/audio/music/holidays/pesach-theme.mp3',
-  'yom-haatzmaut': '/audio/music/holidays/yom-haatzmaut-theme.mp3',
-  'rosh-hashana': '/audio/music/holidays/rosh-hashana-theme.mp3',
-  'sukkot': '/audio/music/holidays/sukkot-theme.mp3',
-  'shavuot': '/audio/music/holidays/shavuot-theme.mp3',
-  'lag-baomer': '/audio/music/holidays/lag-baomer-theme.mp3',
-  'tu-bishvat': '/audio/music/holidays/tu-bishvat-theme.mp3',
-  'yom-hazikaron': '/audio/music/holidays/yom-hazikaron-theme.mp3',
-  'yom-hashoah': '/audio/music/holidays/yom-hashoah-theme.mp3',
-  'simchat-torah': '/audio/music/holidays/simchat-torah-theme.mp3',
+  'hanukkah': '/audio/music/holidays/hanukkah-theme-ref.mp3',
+  'purim': '/audio/music/holidays/purim-theme-ref.mp3',
+  'pesach': '/audio/music/holidays/pesach-theme-ref.mp3',
+  'yom-haatzmaut': '/audio/music/holidays/yom-haatzmaut-theme-ref.mp3',
+  'rosh-hashana': '/audio/music/holidays/rosh-hashana-theme-ref.mp3',
+  'sukkot': '/audio/music/holidays/sukkot-theme-ref.mp3',
+  'shavuot': '/audio/music/holidays/shavuot-theme-ref.mp3',
+  'lag-baomer': '/audio/music/holidays/lag-baomer-theme-ref.mp3',
+  'tu-bishvat': '/audio/music/holidays/tu-bishvat-theme-ref.mp3',
+  'yom-hazikaron': '/audio/music/holidays/yom-hazikaron-theme-ref.mp3',
+  'yom-hashoah': '/audio/music/holidays/yom-hashoah-theme-ref.mp3',
+  'simchat-torah': '/audio/music/holidays/simchat-torah-theme-ref.mp3',
 }
 
 /** Stinger (jingle) track paths. */
