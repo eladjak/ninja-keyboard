@@ -128,7 +128,7 @@ export const DURATION_RANGES = {
   battle: { min: 5, max: 300, label: "Battle Music" },
   story: { min: 60, max: 300, label: "Story Cinematic" },
   worlds: { min: 60, max: 300, label: "World Ambient" },
-  holidays: { min: 30, max: 150, label: "Holiday Theme" },
+  holidays: { min: 30, max: 300, label: "Holiday Theme" },
 }
 
 // ============================================================================

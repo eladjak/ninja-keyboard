@@ -339,6 +339,97 @@
           "retryCount": 1
         }
       ]
+    },
+    {
+      "timestamp": "2026-03-15T06:56:48.857Z",
+      "durationSec": 733,
+      "baseUrl": "https://api.sunoapi.org",
+      "batchSize": 2,
+      "tracksRequested": 12,
+      "succeeded": 5,
+      "failed": 7,
+      "creditsUsed": 50,
+      "results": [
+        {
+          "trackId": "HOL-001",
+          "status": "success",
+          "files": [
+            "holidays/hanukkah-theme.mp3",
+            "holidays/hanukkah-theme-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "HOL-002",
+          "status": "success",
+          "files": [
+            "holidays/purim-theme.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "HOL-005",
+          "status": "success",
+          "files": [
+            "holidays/rosh-hashana-theme.mp3",
+            "holidays/rosh-hashana-theme-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "HOL-008",
+          "status": "success",
+          "files": [
+            "holidays/lag-baomer-theme.mp3",
+            "holidays/lag-baomer-theme-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "HOL-012",
+          "status": "success",
+          "files": [
+            "holidays/simchat-torah-theme.mp3",
+            "holidays/simchat-torah-theme-v2.mp3"
+          ],
+          "retryCount": 0
+        },
+        {
+          "trackId": "HOL-003",
+          "status": "failed",
+          "retryCount": 0
+        },
+        {
+          "trackId": "HOL-004",
+          "status": "failed",
+          "retryCount": 0
+        },
+        {
+          "trackId": "HOL-006",
+          "status": "failed",
+          "retryCount": 0
+        },
+        {
+          "trackId": "HOL-007",
+          "status": "failed",
+          "retryCount": 0
+        },
+        {
+          "trackId": "HOL-009",
+          "status": "failed",
+          "retryCount": 0
+        },
+        {
+          "trackId": "HOL-010",
+          "status": "failed",
+          "retryCount": 0
+        },
+        {
+          "trackId": "HOL-011",
+          "status": "failed",
+          "retryCount": 0
+        }
+      ]
     }
   ]
 }
