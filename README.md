@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ninja Keyboard
+
+![Next.js](https://img.shields.io/badge/Next.js_16-black?logo=next.js) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white) ![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?logo=supabase&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white) ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?logo=framer&logoColor=white)
+
+A gamified Hebrew typing tutor that makes learning the keyboard fun. Practice typing with adaptive difficulty, track your progress, and compete with others — all wrapped in a ninja-themed experience with original characters, voice acting, and sound effects.
+
+**[Live Demo](https://ninja-keyboard-nine.vercel.app)**
+
+## Features
+
+- **Adaptive Difficulty** — Lessons adjust in real time based on your accuracy and speed
+- **Real-Time WPM Tracking** — Live words-per-minute and accuracy metrics as you type
+- **Character System** — Unlock ninja characters with unique personalities and voice lines
+- **Boss Battles** — Test your skills against timed typing challenges
+- **Story Mode** — Progress through a narrative while mastering the Hebrew layout
+- **Sound & Music** — Original soundtrack, SFX, and character voice acting
+- **Internationalization** — Full Hebrew and English UI via next-intl
+- **Dark/Light Theme** — System-aware theming with next-themes
+- **PWA Support** — Installable as a progressive web app
+- **Accessibility** — Keyboard navigation, screen reader support, axe-core audits
+
+## Tech Stack
+
+| Layer | Technologies |
+|-------|-------------|
+| Framework | Next.js 16, React 19, TypeScript |
+| Styling | Tailwind CSS 4, Framer Motion, Radix UI, shadcn/ui |
+| State | Zustand |
+| Backend | Supabase (Auth, Database, Realtime) |
+| Audio | Howler.js, Lottie animations |
+| Testing | Vitest, React Testing Library, Playwright (E2E), axe-core (a11y) |
+| Validation | Zod |
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+git clone https://github.com/eladjak/ninja-keyboard.git
+cd ninja-keyboard
+npm install
+cp .env.example .env.local   # Add your Supabase credentials
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to start typing.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server |
+| `npm run build` | Production build |
+| `npm run test` | Run unit tests (Vitest) |
+| `npm run test:e2e` | Run E2E tests (Playwright) |
+| `npm run typecheck` | TypeScript type check |
 
-## Learn More
+## License
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
