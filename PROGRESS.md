@@ -1,15 +1,46 @@
 # Ninja Keyboard - Progress
 
 ## Status: Active
-## Last Updated: 2026-03-14
-## Sprint: Iteration 13 — Quality & Polish
+## Last Updated: 2026-03-22
+## Sprint: Iteration 14 — Organization & Feedback Infrastructure
 
 ## Current State
-Iteration 13 complete (6 commits). Full audit fixes, a11y overhaul, dead code cleanup, holiday music (generic + reference-based), battle test fix. TypeScript: 0 errors, Tests: 1096/1096.
+Iteration 14 complete (5 commits). Security headers, holiday music folder reorganization, audit docs committed, interactive feedback review with 96 known gaps, utility scripts. TypeScript: 0 errors, Tests: 1096/1096, Build: passing.
 
-## What Was Done This Session (Iteration 13)
+## What Was Done This Session (Iteration 14)
 
-### Commit 6: Reference-Based Holiday Music (current)
+### Commit 5: Utility Scripts & Suno Guide
+- suno-generation-guide.md: Suno V5 prompts for 42 tracks
+- audio_audit_gen.py: audio file audit script
+- launch-claude.sh: project launch helper
+
+### Commit 4: Interactive Feedback Review (96 Known Gaps)
+- **game-feedback-review.html** — 1,346 lines, 15 sections
+- 96 pre-populated gaps from art-audit, audio-audit, audit-data, iteration reviews
+- Per-gap: severity badge, status radio, notes textarea
+- Severity breakdown: 9 critical, 33 high, 48 medium, 6 low
+- LocalStorage persistence, JSON export/import, gap filtering
+- Floating sidebar with gap counts per section
+
+### Commit 3: Audit Data & Post-Iteration-12 Report
+- art-audit.json, audio-audit.json, audit-data.json
+- post-iteration-12-audit.html (comprehensive audit report)
+
+### Commit 2: Holiday Music Folder Reorganization
+- Moved 24 generic MP3s to holidays/generic/ (backup)
+- Moved 48 cover art JPGs to holidays/covers/
+- Reference-based tracks remain as primary in main directory
+
+### Commit 1: Security Headers
+- X-Frame-Options: DENY, X-Content-Type-Options: nosniff
+- Referrer-Policy, HSTS, Permissions-Policy
+- Removed X-Powered-By header
+
+---
+
+## Previous: Iteration 13 — Quality & Polish
+
+### Commit 6: Reference-Based Holiday Music
 - **New script**: `suno-holiday-references.mjs` — fully automated pipeline:
   1. Downloads 15s instrumental reference clips via yt-dlp
   2. Uploads to tmpfiles.org for Suno access

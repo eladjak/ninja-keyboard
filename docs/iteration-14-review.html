@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>נינג'ה מקלדת — סקירת איטרציה 14</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0b1a; --bg2: #13102a; --bg3: #1a1635; --border: #2a2550;
+  --primary: #6c5ce7; --primary-l: #8b7ff5; --secondary: #00b894;
+  --text: #f0eeff; --text2: #a09cc0; --text3: #5a5680;
+  --green: #00b894; --red: #e84393; --orange: #fd9644; --yellow: #ffd32a; --blue: #45aaf2;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Heebo', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; min-height: 100vh; }
+.bg-fx { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.bg-fx::before { content:''; position:absolute; width:600px; height:600px; border-radius:50%; background:radial-gradient(circle,rgba(108,92,231,0.08) 0%,transparent 70%); top:-200px; right:-200px; animation:flt 20s ease-in-out infinite alternate; }
+.bg-fx::after { content:''; position:absolute; width:400px; height:400px; border-radius:50%; background:radial-gradient(circle,rgba(0,184,148,0.06) 0%,transparent 70%); bottom:0; left:-100px; animation:flt 15s ease-in-out infinite alternate-reverse; }
+@keyframes flt { from{transform:translate(0,0) scale(1)} to{transform:translate(40px,30px) scale(1.1)} }
+
+.container { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; position: relative; z-index: 1; }
+
+.hero { text-align: center; padding: 48px 24px 40px; margin-bottom: 40px; background: linear-gradient(135deg, rgba(108,92,231,0.1) 0%, rgba(0,184,148,0.05) 100%); border-radius: 16px; border: 1px solid var(--border); }
+.hero h1 { font-size: 2.4em; font-weight: 900; margin-bottom: 8px; background: linear-gradient(135deg, var(--primary-l), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { color: var(--text2); font-size: 1.05em; }
+.hero .badges { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+.hero .badge { padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid var(--border); }
+.badge-ok { background: rgba(0,184,148,0.12); color: var(--green); border-color: var(--green) !important; }
+.badge-warn { background: rgba(253,150,68,0.12); color: var(--orange); border-color: var(--orange) !important; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 40px; }
+.stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-align: center; transition: 0.2s; }
+.stat-card:hover { border-color: rgba(108,92,231,0.3); box-shadow: 0 0 20px rgba(108,92,231,0.1); }
+.stat-val { font-size: 2em; font-weight: 900; background: linear-gradient(135deg, var(--primary-l), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.stat-label { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+.section { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 28px; overflow: hidden; }
+.section:hover { border-color: rgba(108,92,231,0.3); }
+.section-h { padding: 20px 24px; background: rgba(15,13,32,0.5); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+.section-h .num { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; background: rgba(108,92,231,0.15); color: var(--primary-l); flex-shrink: 0; }
+.section-h h2 { font-size: 1.15em; font-weight: 700; }
+.section-body { padding: 24px; }
+
+.commit { padding: 14px 18px; margin-bottom: 10px; background: rgba(15,13,32,0.4); border-radius: 10px; border-right: 3px solid var(--primary); }
+.commit .hash { font-family: monospace; font-size: 12px; color: var(--primary-l); margin-bottom: 4px; }
+.commit .msg { font-weight: 600; margin-bottom: 6px; }
+.commit .details { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+.gap-summary { display: flex; gap: 16px; flex-wrap: wrap; padding: 16px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 28px; }
+.gap-item { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; }
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot-c { background: var(--red); }
+.dot-h { background: var(--orange); }
+.dot-m { background: var(--yellow); }
+.dot-l { background: var(--blue); }
+
+ul { list-style: none; padding: 0; }
+ul li { padding: 6px 0; padding-right: 20px; position: relative; font-size: 14px; color: var(--text2); }
+ul li::before { content: '▸'; position: absolute; right: 0; color: var(--primary-l); }
+
+.cta { text-align: center; margin-top: 40px; }
+.cta a { display: inline-block; padding: 14px 32px; background: var(--primary); color: #fff; text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 16px; transition: 0.2s; }
+.cta a:hover { background: var(--primary-l); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(108,92,231,0.3); }
+
+@media print {
+  body { background: #fff; color: #111; }
+  .bg-fx { display: none; }
+  .section { border: 1px solid #ccc; }
+  .hero { background: #f0f0ff; border-color: #ccc; }
+  .hero h1 { -webkit-text-fill-color: #6c5ce7; }
+  .stat-val { -webkit-text-fill-color: #6c5ce7; }
+}
+</style>
+</head>
+<body>
+<div class="bg-fx"></div>
+<div class="container">
+
+<div class="hero">
+  <h1>&#x1F5E1; נינג'ה מקלדת — סקירת איטרציה 14</h1>
+  <p>ארגון, אבטחה, ותשתית משוב | מרץ 2026</p>
+  <div class="badges">
+    <span class="badge badge-ok">&#x2705; TypeScript: 0 שגיאות</span>
+    <span class="badge badge-ok">&#x2705; Tests: 1096/1096</span>
+    <span class="badge badge-ok">&#x2705; Build: עובר</span>
+    <span class="badge badge-ok">&#x2705; Push: הצלחה</span>
+    <span class="badge badge-warn">&#x26A0;&#xFE0F; 96 פערים ידועים</span>
+  </div>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card"><div class="stat-val">5</div><div class="stat-label">commits</div></div>
+  <div class="stat-card"><div class="stat-val">1096</div><div class="stat-label">טסטים עוברים</div></div>
+  <div class="stat-card"><div class="stat-val">0</div><div class="stat-label">שגיאות TypeScript</div></div>
+  <div class="stat-card"><div class="stat-val">96</div><div class="stat-label">פערים מתועדים</div></div>
+  <div class="stat-card"><div class="stat-val">72</div><div class="stat-label">קבצים אורגנו</div></div>
+  <div class="stat-card"><div class="stat-val">6</div><div class="stat-label">headers אבטחה</div></div>
+</div>
+
+<!-- COMMITS -->
+<div class="section">
+  <div class="section-h"><div class="num">1</div><h2>Commits של איטרציה 14</h2></div>
+  <div class="section-body">
+    <div class="commit">
+      <div class="hash">9de6814</div>
+      <div class="msg">security: add security headers to Next.js config</div>
+      <div class="details">X-Frame-Options: DENY, X-Content-Type-Options: nosniff, Referrer-Policy, HSTS (2 שנים), Permissions-Policy. הסרת X-Powered-By.</div>
+    </div>
+    <div class="commit">
+      <div class="hash">2e49c8a</div>
+      <div class="msg">chore: reorganize holiday music folder structure</div>
+      <div class="details">72 קבצים &#x2192; 24 MP3 גנריים ל-generic/, 48 covers ל-covers/. טראקים מבוססי reference נשארים כראשיים.</div>
+    </div>
+    <div class="commit">
+      <div class="hash">b8ac089</div>
+      <div class="msg">docs: add audit data and post-iteration-12 report</div>
+      <div class="details">art-audit.json, audio-audit.json, audit-data.json, post-iteration-12-audit.html — תשתית אודיט מלאה.</div>
+    </div>
+    <div class="commit">
+      <div class="hash">ee60a1e</div>
+      <div class="msg">docs: add interactive feedback review with 96 known gaps</div>
+      <div class="details">מסמך אינטראקטיבי בן 1,346 שורות. 15 סעיפים, 96 פערים ידועים עם תגי חומרה, שמירה ב-localStorage, ייצוא JSON.</div>
+    </div>
+    <div class="commit">
+      <div class="hash">acbbf6f</div>
+      <div class="msg">chore: add utility scripts and Suno generation guide</div>
+      <div class="details">suno-generation-guide.md (42 תיאורי טראק), audio_audit_gen.py, launch-claude.sh.</div>
+    </div>
+  </div>
+</div>
+
+<!-- GAP SUMMARY -->
+<div class="section">
+  <div class="section-h"><div class="num">2</div><h2>סיכום פערים (96 פערים ידועים)</h2></div>
+  <div class="section-body">
+    <div class="gap-summary">
+      <div class="gap-item"><span class="dot dot-c"></span> 9 קריטי</div>
+      <div class="gap-item"><span class="dot dot-h"></span> 33 גבוה</div>
+      <div class="gap-item"><span class="dot dot-m"></span> 48 בינוני</div>
+      <div class="gap-item"><span class="dot dot-l"></span> 6 נמוך</div>
+    </div>
+    <h3 style="margin:16px 0 12px; font-size:15px; color:var(--red);">&#x1F534; 9 פערים קריטיים:</h3>
+    <ul>
+      <li><strong>CHAR-001:</strong> מיקה לא מופיעה באף עמוד + דרושה עיצוב מחדש נשי</li>
+      <li><strong>CHAR-008:</strong> וירוס לא בתסריט הסיפור למרות שהוא הנבל המרכזי</li>
+      <li><strong>STORY-001:</strong> ארק וירוס (ידידותי→בוגד→מגה-בוס) לא נכתב</li>
+      <li><strong>STORY-002:</strong> פאנטום, באראק, סאקורה, מאסטר ביט ועוד — ללא נוכחות סיפורית</li>
+      <li><strong>MUSIC-001:</strong> 34/42 טראקים מתוכננים טרם הופקו</li>
+      <li><strong>UI-017:</strong> לוח מובילים על נתוני mock בלבד (לא מחובר ל-Supabase)</li>
+      <li><strong>UI-023:</strong> דשבורד מורה על נתוני mock בלבד</li>
+      <li><strong>GAMIF-001:</strong> מערכת שותפים לא מומשה (companion-store.ts)</li>
+      <li><strong>GAMIF-002:</strong> battle-record-store.ts לא קיים — אין מעקב ניצחונות</li>
+    </ul>
+
+    <h3 style="margin:20px 0 12px; font-size:15px; color:var(--orange);">חלוקה לפי קטגוריה:</h3>
+    <ul>
+      <li><strong>UI/UX:</strong> 24 פערים (1 קריטי, 5 גבוה, 17 בינוני, 1 נמוך)</li>
+      <li><strong>דמויות:</strong> 19 פערים (2 קריטי, 9 גבוה, 7 בינוני, 1 נמוך)</li>
+      <li><strong>מוזיקה:</strong> 7 פערים (1 קריטי, 2 גבוה, 3 בינוני, 1 נמוך)</li>
+      <li><strong>גיימיפיקציה:</strong> 7 פערים (3 קריטי, 1 גבוה, 3 בינוני)</li>
+      <li><strong>משחקיות:</strong> 6 פערים (4 גבוה, 2 בינוני)</li>
+      <li><strong>מורה/הורה:</strong> 5 פערים (1 קריטי, 2 גבוה, 2 בינוני)</li>
+      <li><strong>עתיד:</strong> 5 פערים (1 גבוה, 2 בינוני, 2 נמוך)</li>
+      <li><strong>סיפור:</strong> 4 פערים (2 קריטי, 1 גבוה, 1 בינוני)</li>
+      <li><strong>חגים:</strong> 4 פערים (2 גבוה, 2 בינוני)</li>
+      <li><strong>אמנות:</strong> 3 פערים (1 גבוה, 2 בינוני)</li>
+      <li><strong>נגישות:</strong> 3 פערים (3 בינוני)</li>
+      <li><strong>טכני:</strong> 3 פערים (3 בינוני)</li>
+      <li><strong>קרב AI:</strong> 3 פערים (1 גבוה, 2 בינוני)</li>
+      <li><strong>קולות:</strong> 2 פערים (1 גבוה, 1 בינוני)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECURITY -->
+<div class="section">
+  <div class="section-h"><div class="num">3</div><h2>אבטחה</h2></div>
+  <div class="section-body">
+    <p style="color:var(--text2); margin-bottom:16px;">6 headers אבטחה נוספו ל-next.config.ts:</p>
+    <ul>
+      <li><strong>X-Frame-Options: DENY</strong> — מניעת clickjacking</li>
+      <li><strong>X-Content-Type-Options: nosniff</strong> — מניעת MIME sniffing</li>
+      <li><strong>Referrer-Policy: strict-origin-when-cross-origin</strong> — שליטה ב-referrer</li>
+      <li><strong>HSTS: max-age=63072000</strong> — כפיית HTTPS ל-2 שנים</li>
+      <li><strong>Permissions-Policy</strong> — חסימת camera, microphone, geolocation</li>
+      <li><strong>poweredByHeader: false</strong> — הסרת X-Powered-By</li>
+    </ul>
+  </div>
+</div>
+
+<!-- FOLDER ORG -->
+<div class="section">
+  <div class="section-h"><div class="num">4</div><h2>ארגון תיקיית מוזיקת חגים</h2></div>
+  <div class="section-body">
+    <p style="color:var(--text2); margin-bottom:16px;">96 קבצים &#x2192; מבנה מאורגן:</p>
+    <ul>
+      <li><strong>holidays/</strong> — 24 טראקים מבוססי reference (ראשיים, בשימוש האפליקציה)</li>
+      <li><strong>holidays/generic/</strong> — 24 טראקים גנריים מקוריים (גיבוי)</li>
+      <li><strong>holidays/covers/</strong> — 48 תמונות עטיפה (JPG)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- FEEDBACK DOC -->
+<div class="section">
+  <div class="section-h"><div class="num">5</div><h2>מסמך משוב אינטראקטיבי</h2></div>
+  <div class="section-body">
+    <p style="color:var(--text2); margin-bottom:16px;"><strong>game-feedback-review.html</strong> — 1,346 שורות, 15 סעיפים:</p>
+    <ul>
+      <li>דמויות (18 פריטים + 19 פערים)</li>
+      <li>סיפור (7 פריטים + 4 פערים)</li>
+      <li>מוזיקה (5 פריטים + 7 פערים)</li>
+      <li>קולות (4 פריטים + 2 פערים)</li>
+      <li>אמנות ועיצוב (7 פריטים + 3 פערים)</li>
+      <li>UI/UX (4 פריטים + 24 פערים)</li>
+      <li>משחקיות (8 פריטים + 6 פערים)</li>
+      <li>גיימיפיקציה (5 פריטים + 7 פערים)</li>
+      <li>נגישות (4 פריטים + 3 פערים)</li>
+      <li>חגים ישראליים (15 פריטים + 4 פערים)</li>
+      <li>מורה/הורה (4 פריטים + 5 פערים)</li>
+      <li>קרב AI (4 פריטים + 3 פערים)</li>
+      <li>טכני (6 פריטים + 3 פערים)</li>
+      <li>תוכניות עתידיות (6 פריטים + 5 פערים)</li>
+      <li>סיכום ודירוג — סליידר 1-10, עדיפויות, הערות</li>
+    </ul>
+    <p style="color:var(--text2); margin-top:12px;">תכונות: שמירה אוטומטית ב-localStorage, ייצוא/ייבוא JSON, סינון פערים לפי חומרה, סרגל ניווט צף, מעקב אחוזי התקדמות.</p>
+  </div>
+</div>
+
+<!-- NEXT STEPS -->
+<div class="section">
+  <div class="section-h"><div class="num">6</div><h2>צעדים הבאים</h2></div>
+  <div class="section-body">
+    <h3 style="margin-bottom:12px; color:var(--red);">עדיפות קריטית:</h3>
+    <ul>
+      <li>&#x1F534; קבלת משוב מאלעד על מסמך הפערים (game-feedback-review.html)</li>
+      <li>&#x1F534; טיפול ב-9 פערים קריטיים (mock data, דמויות חסרות, מערכות לא בנויות)</li>
+      <li>&#x1F534; חיבור לוח מובילים + דשבורד מורה ל-Supabase (במקום mock)</li>
+    </ul>
+    <h3 style="margin:16px 0 12px; color:var(--orange);">עדיפות גבוהה:</h3>
+    <ul>
+      <li>&#x1F7E0; כתיבת ארק וירוס + פאנטום + באראק לתסריט</li>
+      <li>&#x1F7E0; הפקת 34 טראקים חסרים (תיאורי Suno מוכנים)</li>
+      <li>&#x1F7E0; שילוב אמנות דמויות בדפים (כולם 48x48 — צריכים להיות גדולים ודרמטיים)</li>
+      <li>&#x1F7E0; בניית מערכת progression (companion-store, battle-record, unlock-checker)</li>
+    </ul>
+    <h3 style="margin:16px 0 12px; color:var(--yellow);">עדיפות רגילה:</h3>
+    <ul>
+      <li>&#x1F7E1; POC 3D (קי) — ממתין לאישור משתמש</li>
+      <li>&#x1F7E1; ממשק מורה מובייל</li>
+      <li>&#x1F7E1; מכניקות אנטי-תסכול</li>
+      <li>&#x1F7E1; סקיני חגים — יצירת אמנות</li>
+    </ul>
+  </div>
+</div>
+
+<!-- QUESTIONS -->
+<div class="section">
+  <div class="section-h"><div class="num">7</div><h2>שאלות לאלעד</h2></div>
+  <div class="section-body">
+    <ul>
+      <li>&#x2753; מה 3 הפערים הקריטיים שהכי חשוב לטפל בהם ראשון?</li>
+      <li>&#x2753; האם להתחיל בשילוב אמנות דמויות גדולה בדפים (במקום 48x48)?</li>
+      <li>&#x2753; האם לחבר Supabase ללוח מובילים ודשבורד מורה עכשיו?</li>
+      <li>&#x2753; האם מוכן ל-POC 3D של קי?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="cta">
+  <a href="game-feedback-review.html">&#x1F4DD; פתח מסמך משוב אינטראקטיבי</a>
+</div>
+
+</div>
+</body>
+</html>
