@@ -1,0 +1,1418 @@
+{
+  "auditDate": "2026-03-11",
+  "pages": [
+    {
+      "path": "src/app/(app)/home/home-client.tsx",
+      "name": "Home Dashboard",
+      "gamingCSS": true,
+      "hasCharacters": true,
+      "hasAnimations": true,
+      "hasSounds": true,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 8,
+      "issues": [
+        "Ki hero image shown as small circular avatar (100x100) — not dramatic enough for main character",
+        "Badge display uses generic emoji + placeholder achievement-star.jpg overlay at opacity 0.3 — looks like placeholder",
+        "QUICK_LINKS use hardcoded Tailwind color classes (text-blue-400, bg-blue-500/20) instead of game CSS variables",
+        "No idle animation on Ki character — just a static image",
+        "Daily Tip section has no character (text only)"
+      ],
+      "suggestions": [
+        "Use full-body Ki character art with idle animation wrapper instead of circular avatar",
+        "Replace achievement-star.jpg badge overlay with proper badge art for each badge type",
+        "Add Sensei Zen speech bubble as greeting with dynamic daily message",
+        "Animate quick-link icons with hover glow effects using game CSS variables"
+      ]
+    },
+    {
+      "path": "src/app/(app)/lessons/page.tsx + lesson-list-client.tsx",
+      "name": "Lessons List",
+      "gamingCSS": true,
+      "hasCharacters": true,
+      "hasAnimations": false,
+      "hasSounds": false,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 6,
+      "issues": [
+        "Sensei Zen shown as small 52x52 circular image — no idle animation",
+        "No per-lesson character art — each lesson has the same look",
+        "Locked lessons just show a lock icon — no character-specific flavor",
+        "No sounds on lesson click or unlock",
+        "Lesson list has NO animation on entry — items just appear statically",
+        "No visual distinction between lesson difficulties beyond color badges"
+      ],
+      "suggestions": [
+        "Add Sensei Zen with CharacterIdleWrapper component (it exists but is unused here)",
+        "Add scroll-triggered stagger animation for lesson items entering viewport",
+        "Add lesson-specific character thumbnail for at least the first lesson in each chapter",
+        "Play navigate sound on lesson click"
+      ]
+    },
+    {
+      "path": "src/app/(app)/lessons/[id]/lesson-page-client.tsx",
+      "name": "Lesson Typing",
+      "gamingCSS": false,
+      "hasCharacters": false,
+      "hasAnimations": true,
+      "hasSounds": true,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 5,
+      "issues": [
+        "Uses generic Card component — no game-card-border or game theming",
+        "NO character art anywhere on the lesson page — entirely text-focused",
+        "Lesson results screen is a plain card with icons — very generic",
+        "Background is plain dark — no background image or environment art",
+        "No character mascot reaction to typing speed/accuracy",
+        "StoryTriggerWrapper added but only fires after completion — lesson itself is character-free",
+        "No character-to-lesson mapping visual (Sensei Zen should appear on lessons)"
+      ],
+      "suggestions": [
+        "Add Sensei Zen idle character in corner during lesson with mood-reactive expressions",
+        "Use lesson background art (dojo-bg.jpg exists but unused here)",
+        "Replace generic Card with game-card-border style for results",
+        "Add Ki mascot in results screen with expression based on accuracy"
+      ]
+    },
+    {
+      "path": "src/app/(app)/battle/battle-client.tsx",
+      "name": "Battle Arena",
+      "gamingCSS": true,
+      "hasCharacters": true,
+      "hasAnimations": true,
+      "hasSounds": true,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 7,
+      "issues": [
+        "BattleArena uses rival character images but shown as tiny thumbnails",
+        "Background battle-arena zone music is MISSING (battle-arena.mp3 path not found)",
+        "No character idle animations during pre-battle screen",
+        "Blaze, Storm rivals have battle music files but they map to wrong paths (battle-shadow.mp3 not found)",
+        "Missing characters from rival picker: barak, blaze, glitch (only bug, shadow, storm used)"
+      ],
+      "suggestions": [
+        "Fix music path mapping — actual files are in /audio/music/battle/ subdirectory not root",
+        "Add full-size rival character art with idle animation during battle",
+        "Expand rival roster to include all 7 rival characters",
+        "Add environment-specific battle backgrounds per rival"
+      ]
+    },
+    {
+      "path": "src/app/(app)/practice/page.tsx",
+      "name": "Free Practice",
+      "gamingCSS": false,
+      "hasCharacters": true,
+      "hasAnimations": true,
+      "hasSounds": true,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 6,
+      "issues": [
+        "Luna appears as 48x48 circular avatar only — no idle animation",
+        "Uses generic Card component for text selector and results — no game theming",
+        "Results screen is generic — no character celebration",
+        "Difficulty color classes use hardcoded dark: variants instead of game CSS variables",
+        "moonlit-garden-bg.jpg background at 10% opacity — barely visible"
+      ],
+      "suggestions": [
+        "Replace generic Card with game-card-border style",
+        "Add Luna idle animation in corner during practice",
+        "Add character-specific celebration on results screen",
+        "Increase background image opacity to 20-25% for better immersion"
+      ]
+    },
+    {
+      "path": "src/app/(app)/speed-test/page.tsx",
+      "name": "Speed Test",
+      "gamingCSS": false,
+      "hasCharacters": true,
+      "hasAnimations": true,
+      "hasSounds": true,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 6,
+      "issues": [
+        "Yuki shown as 48x48 circular avatar only — no personality",
+        "All cards are generic Card components — not gaming themed",
+        "Timer display is just a plain card — should feel urgent and exciting",
+        "Rank badge is emoji-only — no art per rank",
+        "speed-test music path is MISSING (/audio/music/speed-test.mp3 not found at root)",
+        "Speed rank labels lack gaming flair (text only)"
+      ],
+      "suggestions": [
+        "Replace Card components with game-card-border",
+        "Add pulsing animation on timer when <= 10 seconds (red pulse effect)",
+        "Use rank badge images from /images/badges/ (rank-bronze/silver/gold exist)",
+        "Fix music path — actual file is /audio/music/gameplay/speed-test.mp3"
+      ]
+    },
+    {
+      "path": "src/app/(app)/games/page.tsx",
+      "name": "Games Hub",
+      "gamingCSS": false,
+      "hasCharacters": true,
+      "hasAnimations": true,
+      "hasSounds": false,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 6,
+      "issues": [
+        "Rex shown as 48x48 circular avatar — no idle animation",
+        "Game cards use GameCard component but icons are generic Lucide icons, not character art",
+        "No sounds on game card hover or click",
+        "games-hub music path MISSING (/audio/music/games-hub.mp3 not found at root)",
+        "Only 4 games listed — letter-memory and word-rain feel sparse visually",
+        "No per-game preview image or screenshot"
+      ],
+      "suggestions": [
+        "Add game preview thumbnail images for each mini-game",
+        "Fix music path — actual file is /audio/music/menu/games-hub.mp3",
+        "Add Rex idle animation with speech bubble promoting games",
+        "Add hover sounds on game cards"
+      ]
+    },
+    {
+      "path": "src/app/(app)/games/word-rain/page.tsx",
+      "name": "Word Rain Game",
+      "gamingCSS": false,
+      "hasCharacters": false,
+      "hasAnimations": true,
+      "hasSounds": true,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 5,
+      "issues": [
+        "Zero character art in the mini-game",
+        "No gaming CSS variables used",
+        "Generic Card-based layout",
+        "No character mascot reacting to gameplay"
+      ],
+      "suggestions": [
+        "Add Ki or Rex mascot reacting to correct/wrong answers",
+        "Apply game-card-border theming",
+        "Add storm/rain themed background during gameplay"
+      ]
+    },
+    {
+      "path": "src/app/(app)/games/letter-memory/page.tsx",
+      "name": "Letter Memory Game",
+      "gamingCSS": false,
+      "hasCharacters": false,
+      "hasAnimations": true,
+      "hasSounds": true,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 4,
+      "issues": [
+        "Zero character art",
+        "Entirely generic Cards",
+        "No gaming CSS theming",
+        "Most visually bare game in the app"
+      ],
+      "suggestions": [
+        "Add Pixel (robot character) as companion — fits memory/puzzle theme",
+        "Apply game-card-border to game board cards",
+        "Add flipping card animations with character face reveals on match"
+      ]
+    },
+    {
+      "path": "src/app/(app)/games/ninja-slice/page.tsx",
+      "name": "Ninja Slice Game",
+      "gamingCSS": false,
+      "hasCharacters": false,
+      "hasAnimations": true,
+      "hasSounds": true,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 5,
+      "issues": [
+        "Zero character art despite being a ninja-themed game",
+        "No Ki or shadow ninja character art during gameplay",
+        "Generic UI styling"
+      ],
+      "suggestions": [
+        "Add Ki ninja character in background/corner",
+        "Add Bug character as the 'enemy' being sliced",
+        "Apply ninja dojo background image"
+      ]
+    },
+    {
+      "path": "src/app/(app)/statistics/page.tsx",
+      "name": "Statistics",
+      "gamingCSS": false,
+      "hasCharacters": true,
+      "hasAnimations": true,
+      "hasSounds": false,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 5,
+      "issues": [
+        "Pixel shown as 48x48 circular image — no idle animation",
+        "All stats use generic Card component — no game theming",
+        "No sounds on page",
+        "Improvement indicator uses light green bg which conflicts with dark gaming theme",
+        "No gaming CSS variables in any card",
+        "Empty state (no data) has no character art — just text"
+      ],
+      "suggestions": [
+        "Replace all generic Cards with game-card-border",
+        "Add Pixel idle animation analyzing data (thematic)",
+        "Add empty state illustration (empty-state.jpg exists in public/images/ui/)",
+        "Fix improvement card color to use game CSS variables"
+      ]
+    },
+    {
+      "path": "src/app/(app)/progress/page.tsx",
+      "name": "Progress",
+      "gamingCSS": true,
+      "hasCharacters": false,
+      "hasAnimations": true,
+      "hasSounds": false,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 6,
+      "issues": [
+        "No character art anywhere — all icons are generic Lucide icons",
+        "Completed lessons list shows raw lesson ID ('lesson-01') instead of Hebrew title",
+        "No sounds",
+        "Empty state has only text — no character or illustration",
+        "Character page mapping (Sensei Zen→lessons) not reflected here"
+      ],
+      "suggestions": [
+        "Add Ki character mascot with XP bar visualization",
+        "Fix completed lessons to show titleHe not lessonId",
+        "Add empty state with Ki mascot encouraging first lesson",
+        "Add sound when page loads if there's streak data"
+      ]
+    },
+    {
+      "path": "src/app/(app)/profile/profile-client.tsx",
+      "name": "Profile",
+      "gamingCSS": true,
+      "hasCharacters": false,
+      "hasAnimations": false,
+      "hasSounds": false,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 5,
+      "issues": [
+        "Uses profile-background.jpg at 10% opacity fixed — very subtle",
+        "No character art on profile page itself (ProfileCard/BadgeShowcase not yet checked)",
+        "User icon is generic Lucide User icon — not a character",
+        "No animations on profile components",
+        "No sounds",
+        "Generic game-card-border header with icon only"
+      ],
+      "suggestions": [
+        "Add Ki mascot or user-selected companion character to profile",
+        "Animate profile card entry with motion",
+        "Add sound when badges are hovered/viewed",
+        "Increase background opacity or add parallax effect"
+      ]
+    },
+    {
+      "path": "src/app/(app)/badges/page.tsx",
+      "name": "Badges",
+      "gamingCSS": false,
+      "hasCharacters": false,
+      "hasAnimations": false,
+      "hasSounds": false,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 3,
+      "issues": [
+        "Single generic Card wrapping the BadgeGrid — no gaming theming whatsoever",
+        "Trophy icon header — no character art",
+        "No animations — badges just appear statically",
+        "No sounds when viewing/hovering badges",
+        "Most visually underwhelming page in the app given it's supposed to be rewarding",
+        "No character art to celebrate achievements"
+      ],
+      "suggestions": [
+        "Replace generic Card with game-card-border with gold/amber glow",
+        "Add Ki or random hero character celebrating earned badges",
+        "Add shimmer/glow animations on earned badges",
+        "Add sound on badge hover",
+        "Add confetti burst on first visit to page after earning a new badge"
+      ]
+    },
+    {
+      "path": "src/app/(app)/certificates/page.tsx",
+      "name": "Certificates",
+      "gamingCSS": false,
+      "hasCharacters": false,
+      "hasAnimations": false,
+      "hasSounds": false,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 4,
+      "issues": [
+        "No character art anywhere",
+        "Uses generic Card for everything",
+        "No animations on certificate cards",
+        "No sounds",
+        "Empty certificate cards (not earned) have no visual character presence"
+      ],
+      "suggestions": [
+        "Add Sensei Zen presenting certificates",
+        "Add certificate-specific unlock animation when earned",
+        "Apply game theming to all cards"
+      ]
+    },
+    {
+      "path": "src/app/(app)/leaderboard/leaderboard-client.tsx",
+      "name": "Leaderboard",
+      "gamingCSS": false,
+      "hasCharacters": false,
+      "hasAnimations": false,
+      "hasSounds": false,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 3,
+      "issues": [
+        "Only uses generic Card components — no game theming",
+        "No character art — podium has no visual flair",
+        "No animations on podium entries",
+        "No sounds",
+        "CRITICAL: Uses mock leaderboard data only — not connected to real Supabase",
+        "Hardcoded CURRENT_PLAYER_ID = 'player-3' — non-functional",
+        "Unicode-escaped Hebrew strings in JSX (should be readable Hebrew text)"
+      ],
+      "suggestions": [
+        "Apply game-card-border theming to both cards",
+        "Add character avatar art on podium positions",
+        "Add entrance animations for top 3 podium positions",
+        "Connect to real Supabase leaderboard data",
+        "Fix unicode escapes to readable Hebrew strings"
+      ]
+    },
+    {
+      "path": "src/app/(app)/story/page.tsx",
+      "name": "Story / Book",
+      "gamingCSS": true,
+      "hasCharacters": true,
+      "hasAnimations": true,
+      "hasSounds": false,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 7,
+      "issues": [
+        "Character avatars in beat list are tiny 32px circles — hard to see",
+        "Story page has no sounds (even for replay button)",
+        "story-mode music zone MISSING (/audio/music/story-mode.mp3)",
+        "Unseen beats just show '???' — no teaser art to entice replay",
+        "dojo-bg.jpg at 10% opacity — barely visible"
+      ],
+      "suggestions": [
+        "Increase character avatar size in beat list to 48px",
+        "Add click sound on play/replay button",
+        "Fix story-mode music path",
+        "Add silhouette preview art for unseen beats instead of just ???"
+      ]
+    },
+    {
+      "path": "src/app/(app)/jukebox/page.tsx",
+      "name": "Jukebox",
+      "gamingCSS": false,
+      "hasCharacters": false,
+      "hasAnimations": false,
+      "hasSounds": true,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 5,
+      "issues": [
+        "Jukebox page is just a wrapper — all logic in Jukebox component",
+        "No character art promoting the jukebox (Master Beat should be here)",
+        "Page has no game-card-border wrapper",
+        "Many music tracks have cover art JPGs but they may not be displayed"
+      ],
+      "suggestions": [
+        "Add Master Beat character to jukebox page as DJ theme character",
+        "Show track cover art images in jukebox track list",
+        "Apply game theming to page wrapper"
+      ]
+    },
+    {
+      "path": "src/app/(app)/settings/page.tsx",
+      "name": "Settings",
+      "gamingCSS": true,
+      "hasCharacters": false,
+      "hasAnimations": false,
+      "hasSounds": true,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 6,
+      "issues": [
+        "No character art — generic settings icons only",
+        "Volume slider uses native HTML range input — not styled game-style",
+        "5 age theme buttons exist but no preview of what each theme looks like",
+        "No animations on settings changes"
+      ],
+      "suggestions": [
+        "Add Ki mascot reacting to theme changes",
+        "Replace native range slider with styled component",
+        "Add theme preview swatch when selecting age theme",
+        "Add transition animation when switching themes"
+      ]
+    },
+    {
+      "path": "src/app/(app)/shortcuts/shortcuts-client.tsx",
+      "name": "Keyboard Shortcuts",
+      "gamingCSS": false,
+      "hasCharacters": false,
+      "hasAnimations": false,
+      "hasSounds": false,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 4,
+      "issues": [
+        "No character art — Mika should appear here (shortcuts/hacking theme)",
+        "Tab colors use light mode Tailwind classes (data-[state=active]:bg-blue-100) — conflicts with dark gaming theme",
+        "No animations on tab switches",
+        "No sounds on shortcut practice or completion",
+        "No game-card-border on shortcut cards",
+        "ShortcutCard component not reviewed but likely generic"
+      ],
+      "suggestions": [
+        "Add Mika character as shortcuts guide",
+        "Fix tab active states to use game CSS variables instead of light Tailwind colors",
+        "Add keyboard sound SFX when practicing shortcuts",
+        "Apply game-card-border to shortcut cards"
+      ]
+    },
+    {
+      "path": "src/app/(app)/tips/page.tsx",
+      "name": "Typing Tips",
+      "gamingCSS": false,
+      "hasCharacters": false,
+      "hasAnimations": false,
+      "hasSounds": false,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 3,
+      "issues": [
+        "No character art — all generic Lightbulb icons",
+        "Uses generic Card for all tips — no game theming",
+        "Category filter buttons use generic primary/outline variants",
+        "No animations",
+        "No sounds",
+        "Visually the most boring page in the app after badges"
+      ],
+      "suggestions": [
+        "Add Sensei Zen presenting tips with speech bubbles",
+        "Apply game theming to tip cards",
+        "Add category-specific character association (posture→Sensei Zen, speed→Yuki, technique→Ki)",
+        "Animate tip cards on filter change"
+      ]
+    },
+    {
+      "path": "src/app/(app)/teacher/page.tsx",
+      "name": "Teacher Dashboard",
+      "gamingCSS": false,
+      "hasCharacters": false,
+      "hasAnimations": false,
+      "hasSounds": false,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 4,
+      "issues": [
+        "No character art — teacher view is entirely data-driven without personality",
+        "Uses mock data only — not connected to Supabase",
+        "No game theming",
+        "No animations",
+        "CharacterSkillMap component exists but integration unclear"
+      ],
+      "suggestions": [
+        "Add Sensei Zen to teacher dashboard as 'class guide'",
+        "Connect to real Supabase class data",
+        "Apply game theming to data cards",
+        "Integrate CharacterSkillMap for teacher skill mapping view"
+      ]
+    },
+    {
+      "path": "src/app/(app)/parent-report/page.tsx",
+      "name": "Parent Report",
+      "gamingCSS": false,
+      "hasCharacters": false,
+      "hasAnimations": true,
+      "hasSounds": false,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 4,
+      "issues": [
+        "No character art — purely informational",
+        "All generic Cards — no game theming",
+        "Trend colors use light mode classes (dark: variants)",
+        "No print-friendly version",
+        "No sharing/export button"
+      ],
+      "suggestions": [
+        "Add Ki mascot with summary message at top of report",
+        "Add print/PDF export functionality",
+        "Apply consistent game theming"
+      ]
+    },
+    {
+      "path": "src/app/(app)/placement/page.tsx",
+      "name": "Placement Test",
+      "gamingCSS": false,
+      "hasCharacters": false,
+      "hasAnimations": false,
+      "hasSounds": false,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 4,
+      "issues": [
+        "Just renders PlacementTest component — no wrapper styling",
+        "No character art on placement test page",
+        "Background is plain bg-background — no gaming atmosphere"
+      ],
+      "suggestions": [
+        "Add Ki mascot introducing the placement test",
+        "Add dojo background",
+        "Apply game theming to placement test component"
+      ]
+    },
+    {
+      "path": "src/app/(app)/accessibility/page.tsx",
+      "name": "Accessibility Settings",
+      "gamingCSS": false,
+      "hasCharacters": false,
+      "hasAnimations": false,
+      "hasSounds": false,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 3,
+      "issues": [
+        "Plain main wrapper — no game theming",
+        "No character art",
+        "Accessibility page itself has no gaming personality"
+      ],
+      "suggestions": [
+        "Wrap in game-card-border",
+        "Add Ki mascot in accessible mode"
+      ]
+    },
+    {
+      "path": "src/app/(app)/onboarding/onboarding-client.tsx",
+      "name": "Onboarding",
+      "gamingCSS": false,
+      "hasCharacters": true,
+      "hasAnimations": true,
+      "hasSounds": true,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 7,
+      "issues": [
+        "Delegates entirely to FirstLessonMagic component — quality depends on that component",
+        "Character presence unverified without deeper component inspection"
+      ],
+      "suggestions": [
+        "Ensure Ki mascot guides the full 5-step onboarding flow"
+      ]
+    },
+    {
+      "path": "src/app/(auth)/login/page.tsx",
+      "name": "Login",
+      "gamingCSS": false,
+      "hasCharacters": false,
+      "hasAnimations": false,
+      "hasSounds": false,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 3,
+      "issues": [
+        "Just a Card with login form — no gaming theming",
+        "Auth layout uses generic gradient (from-background to-muted/30) — not gaming themed",
+        "No character art on login page",
+        "Title uses Unicode escapes instead of readable Hebrew",
+        "No Ki mascot welcoming new players",
+        "No background image or dojo art"
+      ],
+      "suggestions": [
+        "Add Ki mascot and 'Welcome back, Ninja!' message",
+        "Apply gaming dark theme to auth pages",
+        "Add dojo or cyberpunk background to auth layout",
+        "Use readable Hebrew strings instead of Unicode escapes"
+      ]
+    },
+    {
+      "path": "src/app/(auth)/register/page.tsx + join/page.tsx + student-setup/page.tsx",
+      "name": "Auth Flow Pages",
+      "gamingCSS": false,
+      "hasCharacters": false,
+      "hasAnimations": false,
+      "hasSounds": false,
+      "rtlCorrect": true,
+      "mobileReady": true,
+      "visualScore": 3,
+      "issues": [
+        "All auth pages are plain Card wrappers with no gaming personality",
+        "No character art on any auth page",
+        "Missing hero moment for new players first joining the game",
+        "Auth layout's gradient is generic — not gaming themed"
+      ],
+      "suggestions": [
+        "Add full-width hero with Ki character and dojo background for auth pages",
+        "Show different characters on different auth pages (Ki on register, Sensei Zen on join)",
+        "Add animated typing demo to entice new registrations"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "name": "ki",
+      "nameHe": "קי",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": ["home", "lesson-results", "ki-mascot-component"],
+      "hasVoice": true,
+      "hasThemeSong": true,
+      "inStory": true,
+      "issues": [
+        "ki-hero.jpg used as tiny 100x100 circular image in home — not impactful",
+        "CharacterIdleWrapper component exists but rarely used in actual pages",
+        "Expression sheet not actively used in UI — character-config.ts used for static model sheet only",
+        "ki-mascot.jpg and ki-mascot-old.jpg both exist — unclear which is canonical"
+      ]
+    },
+    {
+      "name": "mika",
+      "nameHe": "מיקה",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": [],
+      "hasVoice": true,
+      "hasThemeSong": true,
+      "inStory": true,
+      "issues": [
+        "NOT used on any page as a character guide (should be shortcuts page)",
+        "Model sheet exists but not referenced in any page component",
+        "Expression sheet unused",
+        "User flagged design is too tomboyish — needs redesign"
+      ]
+    },
+    {
+      "name": "yuki",
+      "nameHe": "יוקי",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": ["speed-test"],
+      "hasVoice": true,
+      "hasThemeSong": true,
+      "inStory": true,
+      "issues": [
+        "Only appears as 48x48 circular avatar on speed-test page",
+        "No idle animation on speed-test page",
+        "Expression sheet unused in UI"
+      ]
+    },
+    {
+      "name": "luna",
+      "nameHe": "לונה",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": ["practice"],
+      "hasVoice": true,
+      "hasThemeSong": true,
+      "inStory": true,
+      "issues": [
+        "Only appears as 48x48 circular avatar on practice page",
+        "No idle animation",
+        "Expression sheet unused in UI"
+      ]
+    },
+    {
+      "name": "noa",
+      "nameHe": "נועה",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": [],
+      "hasVoice": true,
+      "hasThemeSong": false,
+      "inStory": true,
+      "issues": [
+        "Not assigned to any page as character guide",
+        "No theme song in the music library",
+        "Expression sheet exists but unused"
+      ]
+    },
+    {
+      "name": "kai",
+      "nameHe": "קאי",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": [],
+      "hasVoice": true,
+      "hasThemeSong": false,
+      "inStory": true,
+      "issues": [
+        "Not assigned to any page",
+        "No theme song",
+        "User noted needs more introverted/insecure character depth",
+        "Expression sheet exists but unused"
+      ]
+    },
+    {
+      "name": "senseiZen",
+      "nameHe": "סנסיי זן",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": ["lessons"],
+      "hasVoice": true,
+      "hasThemeSong": true,
+      "inStory": true,
+      "issues": [
+        "Only appears as 52x52 circular image on lessons page",
+        "Should appear on teacher dashboard and tips page too",
+        "Expression sheet unused",
+        "User confirmed: MUST be a TURTLE — verify current model sheet is turtle v3"
+      ]
+    },
+    {
+      "name": "pixel",
+      "nameHe": "פיקסל",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": ["statistics"],
+      "hasVoice": false,
+      "hasThemeSong": false,
+      "inStory": true,
+      "issues": [
+        "Only appears as 48x48 circular avatar on statistics page",
+        "No voice files found",
+        "No theme song",
+        "Expression sheet unused",
+        "Should also appear on letter-memory game (robot/memory theme)"
+      ]
+    },
+    {
+      "name": "rex",
+      "nameHe": "רקס",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": ["games-hub"],
+      "hasVoice": true,
+      "hasThemeSong": true,
+      "inStory": true,
+      "issues": [
+        "Only appears as 48x48 circular avatar on games page",
+        "No idle animation",
+        "Theme song exists but not played on games page",
+        "Expression sheet unused"
+      ]
+    },
+    {
+      "name": "bug",
+      "nameHe": "באג",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": ["battle"],
+      "hasVoice": true,
+      "hasThemeSong": true,
+      "inStory": true,
+      "issues": [
+        "Used as battle rival but shown as tiny thumbnail",
+        "Expression sheet unused during battle",
+        "bug.jpg standalone image exists (older) and model-sheets/bug-creature.jpg — inconsistency"
+      ]
+    },
+    {
+      "name": "glitch",
+      "nameHe": "גליץ'",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": ["story"],
+      "hasVoice": true,
+      "hasThemeSong": true,
+      "inStory": true,
+      "issues": [
+        "6 version model sheets exist (v1-v6) but glitch-entity.jpg in model-sheets is the active one",
+        "Expression sheet exists but unused",
+        "Character appears in story beats only — not in gameplay",
+        "glitch.jpg standalone (older) conflicts with model-sheets/glitch-entity.jpg"
+      ]
+    },
+    {
+      "name": "shadow",
+      "nameHe": "שאדו",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": ["battle"],
+      "hasVoice": false,
+      "hasThemeSong": true,
+      "inStory": true,
+      "issues": [
+        "No voice files for Shadow",
+        "Only tiny thumbnail in battle screen",
+        "shadow.jpg standalone (older) conflicts with model-sheets/shadow-cat.jpg",
+        "User wants Shadow to become beloved/fun early in story"
+      ]
+    },
+    {
+      "name": "storm",
+      "nameHe": "סטורם",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": ["battle"],
+      "hasVoice": false,
+      "hasThemeSong": true,
+      "inStory": true,
+      "issues": [
+        "No voice files for Storm (female fox)",
+        "Only appears as battle rival thumbnail",
+        "storm.jpg standalone (older) exists alongside model-sheets/storm-fox.jpg",
+        "Storm female fox confirmed — needs to look distinct from Barak (her brother)"
+      ]
+    },
+    {
+      "name": "blaze",
+      "nameHe": "בלייז",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": [],
+      "hasVoice": false,
+      "hasThemeSong": true,
+      "inStory": true,
+      "issues": [
+        "Not used on ANY page despite being a main rival",
+        "No voice files",
+        "Battle music exists (blaze-dragon-battle.mp3) but character not in rival picker",
+        "blaze.jpg standalone (older) alongside model-sheets/blaze-dragon.jpg"
+      ]
+    },
+    {
+      "name": "virus",
+      "nameHe": "וירוס",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": [],
+      "hasVoice": false,
+      "hasThemeSong": false,
+      "inStory": false,
+      "issues": [
+        "Not used on any page",
+        "No voice",
+        "No theme song",
+        "Dual form model sheet exists (virus-dual-form.jpg) — good",
+        "Not in story script yet despite being major late-game villain"
+      ]
+    },
+    {
+      "name": "phantom",
+      "nameHe": "פאנטום",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": [],
+      "hasVoice": false,
+      "hasThemeSong": false,
+      "inStory": false,
+      "issues": [
+        "Uses raz-phantom.jpg for model sheet — naming confusion with Raz (Ki's dad)",
+        "Not used on any page",
+        "No voice",
+        "No theme song",
+        "Not in story script"
+      ]
+    },
+    {
+      "name": "barak",
+      "nameHe": "ברק",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": [],
+      "hasVoice": false,
+      "hasThemeSong": false,
+      "inStory": false,
+      "issues": [
+        "Not used on any page",
+        "No voice",
+        "No theme song",
+        "Not in story script",
+        "Needs to look different from Storm (sister) despite shared lightning motifs"
+      ]
+    },
+    {
+      "name": "masterBeat",
+      "nameHe": "מאסטר ביט",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": [],
+      "hasVoice": false,
+      "hasThemeSong": false,
+      "inStory": false,
+      "issues": [
+        "Not used on any page — should be the jukebox character",
+        "No voice",
+        "No theme song",
+        "Not in story script"
+      ]
+    },
+    {
+      "name": "sakura",
+      "nameHe": "סאקורה",
+      "modelSheet": true,
+      "expressionSheet": true,
+      "usedOnPages": [],
+      "hasVoice": false,
+      "hasThemeSong": false,
+      "inStory": false,
+      "issues": [
+        "Not used on any page",
+        "No voice",
+        "No theme song",
+        "Not in story script",
+        "Crane mentor character — should appear in advanced/mentor lesson zones"
+      ]
+    }
+  ],
+  "music": [
+    {
+      "category": "root",
+      "name": "main-theme.mp3",
+      "variants": 2,
+      "totalSizeKB": 9480,
+      "usedInCode": true,
+      "issues": ["main-theme.mp3 is the home zone and menu zone track — correctly referenced"]
+    },
+    {
+      "category": "root",
+      "name": "boss-battle.mp3",
+      "variants": 2,
+      "totalSizeKB": 11160,
+      "usedInCode": true,
+      "issues": ["Referenced as /audio/music/boss-battle.mp3 — CORRECT path exists"]
+    },
+    {
+      "category": "gameplay",
+      "name": "practice-easy.mp3",
+      "variants": 4,
+      "totalSizeKB": 7824,
+      "usedInCode": false,
+      "issues": ["CRITICAL: music-manager.ts references /audio/music/practice-easy.mp3 but file is at /audio/music/gameplay/practice-easy.mp3 — WRONG PATH"]
+    },
+    {
+      "category": "gameplay",
+      "name": "practice-medium.mp3",
+      "variants": 4,
+      "totalSizeKB": 14936,
+      "usedInCode": false,
+      "issues": ["CRITICAL: Wrong path in music-manager.ts — should be /audio/music/gameplay/practice-medium.mp3"]
+    },
+    {
+      "category": "gameplay",
+      "name": "practice-hard.mp3",
+      "variants": 4,
+      "totalSizeKB": 21524,
+      "usedInCode": false,
+      "issues": ["CRITICAL: Wrong path in music-manager.ts — should be /audio/music/gameplay/practice-hard.mp3"]
+    },
+    {
+      "category": "gameplay",
+      "name": "speed-test.mp3",
+      "variants": 4,
+      "totalSizeKB": 16444,
+      "usedInCode": false,
+      "issues": ["CRITICAL: Wrong path — should be /audio/music/gameplay/speed-test.mp3"]
+    },
+    {
+      "category": "gameplay",
+      "name": "accuracy-challenge.mp3",
+      "variants": 4,
+      "totalSizeKB": 25344,
+      "usedInCode": false,
+      "issues": ["Not referenced in music-manager.ts at all — no zone assigned"]
+    },
+    {
+      "category": "battle",
+      "name": "shadow-cat-battle.mp3",
+      "variants": 4,
+      "totalSizeKB": 18528,
+      "usedInCode": false,
+      "issues": ["CRITICAL: music-manager references /audio/music/battle-shadow.mp3 — WRONG PATH. Actual: /audio/music/battle/shadow-cat-battle.mp3"]
+    },
+    {
+      "category": "battle",
+      "name": "storm-fox-battle.mp3",
+      "variants": 4,
+      "totalSizeKB": 24800,
+      "usedInCode": false,
+      "issues": ["CRITICAL: Wrong path in music-manager.ts"]
+    },
+    {
+      "category": "battle",
+      "name": "blaze-dragon-battle.mp3",
+      "variants": 4,
+      "totalSizeKB": 22600,
+      "usedInCode": false,
+      "issues": ["Not referenced in music-manager.ts — no zone or track manifest entry"]
+    },
+    {
+      "category": "battle",
+      "name": "bug-boss-act-2.mp3",
+      "variants": 4,
+      "totalSizeKB": 22144,
+      "usedInCode": false,
+      "issues": ["Not referenced in music-manager.ts"]
+    },
+    {
+      "category": "battle",
+      "name": "bug-king-final.mp3",
+      "variants": 4,
+      "totalSizeKB": 19956,
+      "usedInCode": false,
+      "issues": ["Not referenced in music-manager.ts"]
+    },
+    {
+      "category": "battle",
+      "name": "glitch-secret-boss.mp3",
+      "variants": 4,
+      "totalSizeKB": 20312,
+      "usedInCode": false,
+      "issues": ["Not referenced in music-manager.ts"]
+    },
+    {
+      "category": "battle",
+      "name": "tournament-arena.mp3",
+      "variants": 4,
+      "totalSizeKB": 19976,
+      "usedInCode": false,
+      "issues": ["Not referenced in music-manager.ts"]
+    },
+    {
+      "category": "battle",
+      "name": "pre-battle-anticipation.mp3",
+      "variants": 4,
+      "totalSizeKB": 17992,
+      "usedInCode": false,
+      "issues": ["CRITICAL: music-manager references /audio/music/battle-pre.mp3 — WRONG PATH"]
+    },
+    {
+      "category": "battle",
+      "name": "boss-defeated-fanfare.mp3",
+      "variants": 4,
+      "totalSizeKB": 4524,
+      "usedInCode": false,
+      "issues": ["Not referenced in music-manager.ts"]
+    },
+    {
+      "category": "characters",
+      "name": "kis-theme.mp3",
+      "variants": 4,
+      "totalSizeKB": 17040,
+      "usedInCode": false,
+      "issues": ["CRITICAL: music-manager references /audio/music/characters/ki-theme.mp3 — WRONG (missing apostrophe/s). Actual: kis-theme.mp3"]
+    },
+    {
+      "category": "characters",
+      "name": "yukis-theme.mp3",
+      "variants": 4,
+      "totalSizeKB": 18760,
+      "usedInCode": false,
+      "issues": ["Not referenced in music-manager.ts — no jukebox or zone entry for Yuki's theme"]
+    },
+    {
+      "category": "characters",
+      "name": "lunas-theme.mp3",
+      "variants": 4,
+      "totalSizeKB": 8948,
+      "usedInCode": false,
+      "issues": ["Not referenced in music-manager.ts"]
+    },
+    {
+      "category": "characters",
+      "name": "mikas-theme.mp3",
+      "variants": 4,
+      "totalSizeKB": 16348,
+      "usedInCode": false,
+      "issues": ["Not referenced in music-manager.ts"]
+    },
+    {
+      "category": "characters",
+      "name": "rexs-theme.mp3",
+      "variants": 4,
+      "totalSizeKB": 1596,
+      "usedInCode": false,
+      "issues": ["Not referenced in music-manager.ts", "VERY SMALL total size (1596KB for 4 variants) — may be low quality or too short"]
+    },
+    {
+      "category": "characters",
+      "name": "bugs-theme.mp3",
+      "variants": 5,
+      "totalSizeKB": 3812,
+      "usedInCode": false,
+      "issues": ["CRITICAL: music-manager references /audio/music/characters/bug-theme.mp3 — WRONG (missing s). Actual: bugs-theme.mp3"]
+    },
+    {
+      "category": "characters",
+      "name": "glitchs-theme.mp3",
+      "variants": 4,
+      "totalSizeKB": 14008,
+      "usedInCode": false,
+      "issues": ["Not referenced in music-manager.ts"]
+    },
+    {
+      "category": "characters",
+      "name": "sensei-zens-theme.mp3",
+      "variants": 4,
+      "totalSizeKB": 24476,
+      "usedInCode": false,
+      "issues": ["CRITICAL: music-manager references /audio/music/characters/sensei-zen-theme.mp3 — WRONG (missing s). Actual: sensei-zens-theme.mp3"]
+    },
+    {
+      "category": "events",
+      "name": "achievement-unlock.mp3",
+      "variants": 4,
+      "totalSizeKB": 1148,
+      "usedInCode": false,
+      "issues": ["music-manager stinger references /audio/music/stingers/achievement.mp3 which DOES NOT EXIST. Actual event track at /audio/music/events/achievement-unlock.mp3"]
+    },
+    {
+      "category": "events",
+      "name": "level-up-jingle.mp3",
+      "variants": 4,
+      "totalSizeKB": 864,
+      "usedInCode": false,
+      "issues": ["music-manager stinger references /audio/music/stingers/level-up.mp3 which DOES NOT EXIST"]
+    },
+    {
+      "category": "events",
+      "name": "character-unlock.mp3",
+      "variants": 4,
+      "totalSizeKB": 1104,
+      "usedInCode": false,
+      "issues": ["Stinger path DOES NOT EXIST at referenced path"]
+    },
+    {
+      "category": "events",
+      "name": "victory-fanfare.mp3",
+      "variants": 4,
+      "totalSizeKB": 2076,
+      "usedInCode": false,
+      "issues": ["music-manager references /audio/music/victory-fanfare.mp3 (root) and stinger at /audio/music/stingers/victory-fanfare.mp3 — BOTH MISSING at those paths"]
+    },
+    {
+      "category": "events",
+      "name": "personal-best.mp3",
+      "variants": 4,
+      "totalSizeKB": 1680,
+      "usedInCode": false,
+      "issues": ["Stinger path missing"]
+    },
+    {
+      "category": "events",
+      "name": "streak-milestone.mp3",
+      "variants": 4,
+      "totalSizeKB": 4276,
+      "usedInCode": false,
+      "issues": ["Stinger path missing — also streak-fire stinger referenced but doesn't exist"]
+    },
+    {
+      "category": "events",
+      "name": "season-event-theme.mp3",
+      "variants": 4,
+      "totalSizeKB": 12836,
+      "usedInCode": false,
+      "issues": ["Not referenced in music-manager.ts"]
+    },
+    {
+      "category": "events",
+      "name": "defeat-try-again.mp3",
+      "variants": 4,
+      "totalSizeKB": 3300,
+      "usedInCode": false,
+      "issues": ["Defeat stinger path (/audio/music/stingers/defeat-jingle.mp3) DOES NOT EXIST. Actual file: /audio/music/events/defeat-try-again.mp3"]
+    },
+    {
+      "category": "menu",
+      "name": "games-hub.mp3",
+      "variants": 4,
+      "totalSizeKB": 12032,
+      "usedInCode": false,
+      "issues": ["CRITICAL: music-manager references /audio/music/games-hub.mp3 — WRONG PATH. Actual: /audio/music/menu/games-hub.mp3"]
+    },
+    {
+      "category": "menu",
+      "name": "lessons-menu.mp3",
+      "variants": 4,
+      "totalSizeKB": 14568,
+      "usedInCode": false,
+      "issues": ["No zone assignment in music-manager.ts for this track"]
+    },
+    {
+      "category": "menu",
+      "name": "battle-menu.mp3",
+      "variants": 4,
+      "totalSizeKB": 18716,
+      "usedInCode": false,
+      "issues": ["No zone assignment"]
+    },
+    {
+      "category": "menu",
+      "name": "profile-progress.mp3",
+      "variants": 4,
+      "totalSizeKB": 16892,
+      "usedInCode": false,
+      "issues": ["CRITICAL: music-manager references /audio/music/profile.mp3 — WRONG PATH. Actual: /audio/music/menu/profile-progress.mp3"]
+    },
+    {
+      "category": "menu",
+      "name": "settings.mp3",
+      "variants": 4,
+      "totalSizeKB": 22396,
+      "usedInCode": false,
+      "issues": ["music-manager references /audio/music/main-theme.mp3 for settings zone — settings.mp3 file is UNUSED"]
+    },
+    {
+      "category": "story",
+      "name": "emotional-moment.mp3",
+      "variants": 4,
+      "totalSizeKB": 27532,
+      "usedInCode": false,
+      "issues": ["CRITICAL: music-manager references /audio/music/story-mode.mp3 — DOES NOT EXIST. Actual story tracks are in /audio/music/story/ — no story-mode.mp3"]
+    },
+    {
+      "category": "story",
+      "name": "victory-celebration.mp3",
+      "variants": 4,
+      "totalSizeKB": 14448,
+      "usedInCode": false,
+      "issues": ["Not referenced in music-manager.ts"]
+    },
+    {
+      "category": "worlds",
+      "name": "shatil-magical-garden.mp3",
+      "variants": 4,
+      "totalSizeKB": 11656,
+      "usedInCode": false,
+      "issues": ["No zone mapping for age-specific worlds in music-manager.ts"]
+    },
+    {
+      "category": "worlds",
+      "name": "nevet-adventure-camp.mp3",
+      "variants": 4,
+      "totalSizeKB": 12492,
+      "usedInCode": false,
+      "issues": ["No zone mapping"]
+    },
+    {
+      "category": "worlds",
+      "name": "geza-ninja-arena.mp3",
+      "variants": 4,
+      "totalSizeKB": 17300,
+      "usedInCode": false,
+      "issues": ["music-manager references /audio/music/worlds/geza-arena.mp3 — WRONG NAME. Actual: geza-ninja-arena.mp3"]
+    },
+    {
+      "category": "worlds",
+      "name": "anaf-training-hub.mp3",
+      "variants": 4,
+      "totalSizeKB": 14772,
+      "usedInCode": false,
+      "issues": ["No zone mapping"]
+    },
+    {
+      "category": "worlds",
+      "name": "tzameret-professional.mp3",
+      "variants": 4,
+      "totalSizeKB": 22544,
+      "usedInCode": false,
+      "issues": ["No zone mapping"]
+    }
+  ],
+  "sfx": [
+    { "name": "achievement-unlock.mp3", "sizeKB": 48, "usedInCode": true },
+    { "name": "bug-appear.mp3", "sizeKB": 28, "usedInCode": true },
+    { "name": "character-unlock.mp3", "sizeKB": 48, "usedInCode": true },
+    { "name": "correct-answer.mp3", "sizeKB": 12, "usedInCode": true },
+    { "name": "countdown-beep.mp3", "sizeKB": 12, "usedInCode": true },
+    { "name": "countdown-go.mp3", "sizeKB": 20, "usedInCode": true },
+    { "name": "glitch-warp.mp3", "sizeKB": 20, "usedInCode": true },
+    { "name": "keyboard-click.mp3", "sizeKB": 12, "usedInCode": true },
+    { "name": "keyboard-combo.mp3", "sizeKB": 28, "usedInCode": true },
+    { "name": "level-up.mp3", "sizeKB": 36, "usedInCode": true },
+    { "name": "ninja-slash.mp3", "sizeKB": 12, "usedInCode": true },
+    { "name": "star-earn.mp3", "sizeKB": 20, "usedInCode": true },
+    { "name": "streak-fire.mp3", "sizeKB": 28, "usedInCode": true },
+    { "name": "victory-cheers.mp3", "sizeKB": 48, "usedInCode": true },
+    { "name": "wrong-answer.mp3", "sizeKB": 12, "usedInCode": true },
+    { "name": "xp-gain.mp3", "sizeKB": 20, "usedInCode": true }
+  ],
+  "designGaps": [
+    "CRITICAL: Music system is completely broken — virtually every track path in music-manager.ts is WRONG. 28 out of ~30 referenced paths do not match actual file locations. The game is currently running in SILENCE for all zones except home (main-theme.mp3 is at root and works).",
+    "CRITICAL: Stinger/jingle system is broken — /audio/music/stingers/ directory does not exist. All 8 stinger paths reference non-existent files.",
+    "CRITICAL: Holiday music system references /audio/music/holidays/ directory which does not exist — 12 holiday tracks all broken.",
+    "15 out of 20 pages have no character art at all — characters are confined to 48x72px circular avatars on 5 pages maximum.",
+    "CharacterIdleWrapper component exists but is almost NEVER used in actual pages — all characters are static images.",
+    "Expression sheets exist for all 20 characters but are NEVER used in the game UI — the entire expression system is dead code.",
+    "8 characters (virus, phantom, barak, masterBeat, sakura, noa not on page, kai not on page, blaze) appear on ZERO pages.",
+    "Auth pages (login, register, join, student-setup) have zero gaming personality — look like generic SaaS forms.",
+    "Badges page is the most important reward screen but is the most visually boring — no animations, no character, generic Card.",
+    "Tips and Accessibility pages are text-only with zero gaming identity.",
+    "Shortcuts page (Mika's domain) has no Mika character and uses light-mode Tailwind active states that conflict with dark theme.",
+    "Leaderboard uses hardcoded mock data — not connected to Supabase backend.",
+    "Statistics page uses light-mode color classes (dark: variants) that partially fight with the dark gaming theme.",
+    "World music tracks (shatil, nevet, geza, anaf, tzameret) have NO zone mapping — age-specific themes are entirely unused.",
+    "Story mode music zone is broken — /audio/music/story-mode.mp3 does not exist.",
+    "Defeat music zone is broken — /audio/music/defeat.mp3 does not exist.",
+    "Loading music zone is broken — /audio/music/loading.mp3 does not exist.",
+    "Boss-battle-final zone is broken — /audio/music/boss-battle-final.mp3 does not exist.",
+    "Rival characters in battle (shadow, storm, bug) appear as 40-48px images only — no dramatic full-body rival reveal.",
+    "story/victory-celebration.mp3 and story/emotional-moment.mp3 tracks exist with 4 variants each but are NEVER triggered in code.",
+    "Several background images exist but are used at only 10% opacity — too subtle for gaming immersion (should be 20-30%).",
+    "lesson-view.tsx component exists but is not imported or used anywhere — dead code.",
+    "CharacterIdleWrapper and RivalNinja components are never used in any page component.",
+    "AchievementNotification and XPFloat effect components appear to be dead code.",
+    "StoryBeatWrapper component is unused.",
+    "SkipLink and OfflineIndicator components are not included in any page layout.",
+    "Missing empty states with character art — progress page, badges page, and statistics page show only text when no data exists.",
+    "No page transition animations between routes despite PageTransition component existing.",
+    "Jukebox page has no character (Master Beat should be the DJ) — just renders the Jukebox component with no game wrapper.",
+    "Battle rivals (Blaze, Barak, Virus, Glitch) have battle music files but cannot be selected in the battle UI."
+  ],
+  "criticalIssues": [
+    "MUSIC SYSTEM BROKEN: 28/30 music paths in music-manager.ts point to non-existent files. The entire zone-based music system plays silence. Fix requires updating DEFAULT_ZONE_TRACKS to use correct subdirectory paths.",
+    "STINGER SYSTEM BROKEN: All 8 stinger paths (/audio/music/stingers/*.mp3) reference a non-existent directory. Level-up, victory, achievement, character-unlock sounds all play nothing.",
+    "HOLIDAY MUSIC BROKEN: All 12 holiday music paths (/audio/music/holidays/*.mp3) reference a non-existent directory.",
+    "CHARACTER EXPRESSION SYSTEM DEAD: 20 characters have expression sheets but the CHARACTER_CONFIGS only uses model-sheets (static images). The expression/mood system referenced in memory is not implemented in any page component.",
+    "CharacterIdleWrapper component exists but is used on 0 pages — the idle animation system is completely unused.",
+    "15 of 28 pages have NO character art whatsoever — the game's personality exists only in a few pages.",
+    "8 of 20 characters appear on zero pages (blaze, virus, phantom, barak, masterBeat, sakura, noa unassigned, kai unassigned).",
+    "Leaderboard is connected to mock data only — player rankings are fictional.",
+    "Story script exists for only chapters 1-3 with 26 beats; getAllChapterBeats() claims 6 chapters (53 beats) but chapters 4-6 story beats may be missing from actual script file (story-script.ts line count was 0 for character grep).",
+    "Progress page shows raw lesson IDs ('lesson-01') instead of Hebrew lesson titles in the completed lessons list."
+  ],
+  "summary": {
+    "totalPages": 28,
+    "pagesWithCharacters": 9,
+    "pagesWithGamingCSS": 7,
+    "pagesWithAnimations": 16,
+    "pagesWithSounds": 12,
+    "totalCharacters": 20,
+    "charactersOnZeroPages": 8,
+    "charactersWithVoice": 10,
+    "totalMusicTracks": 44,
+    "tracksUsedInCode": 2,
+    "tracksNotUsed": 42,
+    "trackPathsWrong": 28,
+    "sfxTotal": 16,
+    "sfxUsed": 16,
+    "sfxNotUsed": 0,
+    "deadComponents": 8,
+    "overallScore": 4,
+    "scoreBreakdown": {
+      "visualDesign": 5,
+      "characterIntegration": 2,
+      "musicSystem": 1,
+      "sfxSystem": 9,
+      "rtlCompliance": 8,
+      "mobileResponsiveness": 8,
+      "gameThemingConsistency": 4,
+      "animationQuality": 6,
+      "codeQuality": 7
+    }
+  }
+}

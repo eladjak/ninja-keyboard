@@ -1,0 +1,2577 @@
+{
+  "generatedAt": "2026-03-11",
+  "music": {
+    "tracks": [
+      {
+        "file": "music/boss-battle-v2.mp3",
+        "category": "root",
+        "sizeKB": 4357.4,
+        "durationSec": 229.34,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/boss-battle.mp3",
+        "category": "root",
+        "sizeKB": 6798.3,
+        "durationSec": 292.08,
+        "variant": "v1",
+        "usedInCode": true,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/main-theme-v2.mp3",
+        "category": "root",
+        "sizeKB": 4880.5,
+        "durationSec": 217.92,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/main-theme.mp3",
+        "category": "root",
+        "sizeKB": 4593.0,
+        "durationSec": 213.96,
+        "variant": "v1",
+        "usedInCode": true,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/blaze-dragon-battle-v2.mp3",
+        "category": "battle",
+        "sizeKB": 4306.5,
+        "durationSec": 189.98,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/blaze-dragon-battle-v3.mp3",
+        "category": "battle",
+        "sizeKB": 7738.1,
+        "durationSec": 336.07,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/blaze-dragon-battle-v4.mp3",
+        "category": "battle",
+        "sizeKB": 5541.0,
+        "durationSec": 247.75,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/blaze-dragon-battle.mp3",
+        "category": "battle",
+        "sizeKB": 5205.8,
+        "durationSec": 223.32,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/boss-defeated-fanfare-v2.mp3",
+        "category": "battle",
+        "sizeKB": 224.6,
+        "durationSec": 9.91,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/boss-defeated-fanfare-v3.mp3",
+        "category": "battle",
+        "sizeKB": 168.3,
+        "durationSec": 6.14,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/boss-defeated-fanfare-v4.mp3",
+        "category": "battle",
+        "sizeKB": 133.3,
+        "durationSec": 4.94,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/boss-defeated-fanfare.mp3",
+        "category": "battle",
+        "sizeKB": 218.3,
+        "durationSec": 10.03,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/bug-boss-act-2-v2.mp3",
+        "category": "battle",
+        "sizeKB": 4674.1,
+        "durationSec": 169.27,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/bug-boss-act-2-v3.mp3",
+        "category": "battle",
+        "sizeKB": 4893.5,
+        "durationSec": 194.76,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/bug-boss-act-2-v4.mp3",
+        "category": "battle",
+        "sizeKB": 4637.1,
+        "durationSec": 192.0,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/bug-boss-act-2.mp3",
+        "category": "battle",
+        "sizeKB": 7528.5,
+        "durationSec": 284.47,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/bug-king-final-v2.mp3",
+        "category": "battle",
+        "sizeKB": 4720.8,
+        "durationSec": 199.87,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/bug-king-final-v3.mp3",
+        "category": "battle",
+        "sizeKB": 3650.3,
+        "durationSec": 154.51,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/bug-king-final-v4.mp3",
+        "category": "battle",
+        "sizeKB": 5685.0,
+        "durationSec": 239.28,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/bug-king-final.mp3",
+        "category": "battle",
+        "sizeKB": 3791.0,
+        "durationSec": 171.0,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/glitch-secret-boss-v2.mp3",
+        "category": "battle",
+        "sizeKB": 4110.0,
+        "durationSec": 184.82,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/glitch-secret-boss-v3.mp3",
+        "category": "battle",
+        "sizeKB": 5679.4,
+        "durationSec": 234.6,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/glitch-secret-boss-v4.mp3",
+        "category": "battle",
+        "sizeKB": 3964.7,
+        "durationSec": 175.22,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/glitch-secret-boss.mp3",
+        "category": "battle",
+        "sizeKB": 4449.7,
+        "durationSec": 201.48,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/pre-battle-anticipation-v2.mp3",
+        "category": "battle",
+        "sizeKB": 4473.3,
+        "durationSec": 193.7,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/pre-battle-anticipation-v3.mp3",
+        "category": "battle",
+        "sizeKB": 4360.8,
+        "durationSec": 188.47,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/pre-battle-anticipation-v4.mp3",
+        "category": "battle",
+        "sizeKB": 3536.7,
+        "durationSec": 161.04,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/pre-battle-anticipation.mp3",
+        "category": "battle",
+        "sizeKB": 3486.5,
+        "durationSec": 150.5,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/shadow-cat-battle-v2.mp3",
+        "category": "battle",
+        "sizeKB": 2036.3,
+        "durationSec": 85.27,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/shadow-cat-battle-v3.mp3",
+        "category": "battle",
+        "sizeKB": 2972.1,
+        "durationSec": 139.82,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/shadow-cat-battle-v4.mp3",
+        "category": "battle",
+        "sizeKB": 2036.3,
+        "durationSec": 85.27,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/shadow-cat-battle.mp3",
+        "category": "battle",
+        "sizeKB": 2972.1,
+        "durationSec": 139.82,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/storm-fox-battle-v2.mp3",
+        "category": "battle",
+        "sizeKB": 5466.3,
+        "durationSec": 239.88,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/storm-fox-battle-v3.mp3",
+        "category": "battle",
+        "sizeKB": 6460.6,
+        "durationSec": 296.9,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/storm-fox-battle-v4.mp3",
+        "category": "battle",
+        "sizeKB": 5466.3,
+        "durationSec": 239.88,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/storm-fox-battle.mp3",
+        "category": "battle",
+        "sizeKB": 6460.6,
+        "durationSec": 296.9,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/tournament-arena-v2.mp3",
+        "category": "battle",
+        "sizeKB": 5316.2,
+        "durationSec": 220.56,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/tournament-arena-v3.mp3",
+        "category": "battle",
+        "sizeKB": 4027.2,
+        "durationSec": 178.32,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/tournament-arena-v4.mp3",
+        "category": "battle",
+        "sizeKB": 4310.7,
+        "durationSec": 183.12,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/battle/tournament-arena.mp3",
+        "category": "battle",
+        "sizeKB": 3182.0,
+        "durationSec": 135.0,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/bugs-theme-v2.mp3",
+        "category": "characters",
+        "sizeKB": 449.6,
+        "durationSec": 19.34,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/bugs-theme-v3.mp3",
+        "category": "characters",
+        "sizeKB": 300.9,
+        "durationSec": 12.86,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/bugs-theme-v4.mp3",
+        "category": "characters",
+        "sizeKB": 786.4,
+        "durationSec": 33.79,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/bugs-theme-v5.mp3",
+        "category": "characters",
+        "sizeKB": 786.4,
+        "durationSec": 33.79,
+        "variant": "v5",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/bugs-theme.mp3",
+        "category": "characters",
+        "sizeKB": 840.2,
+        "durationSec": 36.43,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/glitchs-theme-v2.mp3",
+        "category": "characters",
+        "sizeKB": 2730.0,
+        "durationSec": 126.36,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/glitchs-theme-v3.mp3",
+        "category": "characters",
+        "sizeKB": 2566.5,
+        "durationSec": 105.02,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/glitchs-theme-v4.mp3",
+        "category": "characters",
+        "sizeKB": 2880.3,
+        "durationSec": 110.4,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/glitchs-theme.mp3",
+        "category": "characters",
+        "sizeKB": 3723.0,
+        "durationSec": 162.48,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/kis-theme-v2.mp3",
+        "category": "characters",
+        "sizeKB": 3971.7,
+        "durationSec": 180.0,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/kis-theme-v3.mp3",
+        "category": "characters",
+        "sizeKB": 3971.7,
+        "durationSec": 180.0,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/kis-theme-v4.mp3",
+        "category": "characters",
+        "sizeKB": 6347.1,
+        "durationSec": 278.78,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/kis-theme.mp3",
+        "category": "characters",
+        "sizeKB": 6347.1,
+        "durationSec": 278.78,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/lunas-theme-v2.mp3",
+        "category": "characters",
+        "sizeKB": 1482.0,
+        "durationSec": 64.87,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/lunas-theme-v3.mp3",
+        "category": "characters",
+        "sizeKB": 315.0,
+        "durationSec": 14.95,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/lunas-theme-v4.mp3",
+        "category": "characters",
+        "sizeKB": 315.0,
+        "durationSec": 14.95,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/lunas-theme.mp3",
+        "category": "characters",
+        "sizeKB": 770.7,
+        "durationSec": 34.82,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/mikas-theme-v2.mp3",
+        "category": "characters",
+        "sizeKB": 3557.2,
+        "durationSec": 154.99,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/mikas-theme-v3.mp3",
+        "category": "characters",
+        "sizeKB": 3557.2,
+        "durationSec": 154.99,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/mikas-theme-v4.mp3",
+        "category": "characters",
+        "sizeKB": 4261.7,
+        "durationSec": 201.62,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/mikas-theme.mp3",
+        "category": "characters",
+        "sizeKB": 4261.7,
+        "durationSec": 201.62,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/rexs-theme-v2.mp3",
+        "category": "characters",
+        "sizeKB": 282.5,
+        "durationSec": 12.86,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/rexs-theme-v3.mp3",
+        "category": "characters",
+        "sizeKB": 436.6,
+        "durationSec": 18.84,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/rexs-theme-v4.mp3",
+        "category": "characters",
+        "sizeKB": 265.5,
+        "durationSec": 11.23,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/rexs-theme.mp3",
+        "category": "characters",
+        "sizeKB": 502.7,
+        "durationSec": 21.6,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/sensei-zens-theme-v2.mp3",
+        "category": "characters",
+        "sizeKB": 5719.2,
+        "durationSec": 270.0,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/sensei-zens-theme-v3.mp3",
+        "category": "characters",
+        "sizeKB": 5719.2,
+        "durationSec": 270.0,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/sensei-zens-theme-v4.mp3",
+        "category": "characters",
+        "sizeKB": 6567.7,
+        "durationSec": 291.98,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/sensei-zens-theme.mp3",
+        "category": "characters",
+        "sizeKB": 6567.7,
+        "durationSec": 291.98,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/yukis-theme-v2.mp3",
+        "category": "characters",
+        "sizeKB": 3305.4,
+        "durationSec": 145.58,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/yukis-theme-v3.mp3",
+        "category": "characters",
+        "sizeKB": 4568.4,
+        "durationSec": 184.22,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/yukis-theme-v4.mp3",
+        "category": "characters",
+        "sizeKB": 3305.4,
+        "durationSec": 145.58,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/characters/yukis-theme.mp3",
+        "category": "characters",
+        "sizeKB": 4568.4,
+        "durationSec": 184.22,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/achievement-unlock-v2.mp3",
+        "category": "events",
+        "sizeKB": 207.5,
+        "durationSec": 9.24,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/achievement-unlock-v3.mp3",
+        "category": "events",
+        "sizeKB": 135.9,
+        "durationSec": 5.64,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/achievement-unlock-v4.mp3",
+        "category": "events",
+        "sizeKB": 175.2,
+        "durationSec": 7.51,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/achievement-unlock.mp3",
+        "category": "events",
+        "sizeKB": 226.6,
+        "durationSec": 9.91,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/character-unlock-v2.mp3",
+        "category": "events",
+        "sizeKB": 316.8,
+        "durationSec": 13.27,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/character-unlock-v3.mp3",
+        "category": "events",
+        "sizeKB": 146.6,
+        "durationSec": 5.76,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/character-unlock-v4.mp3",
+        "category": "events",
+        "sizeKB": 119.7,
+        "durationSec": 4.94,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/character-unlock.mp3",
+        "category": "events",
+        "sizeKB": 515.8,
+        "durationSec": 21.98,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/defeat-try-again-v2.mp3",
+        "category": "events",
+        "sizeKB": 999.8,
+        "durationSec": 44.06,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/defeat-try-again-v3.mp3",
+        "category": "events",
+        "sizeKB": 147.7,
+        "durationSec": 6.91,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/defeat-try-again-v4.mp3",
+        "category": "events",
+        "sizeKB": 177.6,
+        "durationSec": 7.75,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/defeat-try-again.mp3",
+        "category": "events",
+        "sizeKB": 1968.3,
+        "durationSec": 82.63,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/level-up-jingle-v2.mp3",
+        "category": "events",
+        "sizeKB": 275.6,
+        "durationSec": 14.11,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/level-up-jingle-v3.mp3",
+        "category": "events",
+        "sizeKB": 80.1,
+        "durationSec": 3.38,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/level-up-jingle-v4.mp3",
+        "category": "events",
+        "sizeKB": 168.5,
+        "durationSec": 5.95,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/level-up-jingle.mp3",
+        "category": "events",
+        "sizeKB": 233.8,
+        "durationSec": 10.44,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/personal-best-v2.mp3",
+        "category": "events",
+        "sizeKB": 240.1,
+        "durationSec": 10.58,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/personal-best-v3.mp3",
+        "category": "events",
+        "sizeKB": 118.1,
+        "durationSec": 4.8,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/personal-best-v4.mp3",
+        "category": "events",
+        "sizeKB": 246.3,
+        "durationSec": 9.84,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/personal-best.mp3",
+        "category": "events",
+        "sizeKB": 176.1,
+        "durationSec": 8.04,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/season-event-theme-v2.mp3",
+        "category": "events",
+        "sizeKB": 3202.6,
+        "durationSec": 134.76,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/season-event-theme-v3.mp3",
+        "category": "events",
+        "sizeKB": 2646.8,
+        "durationSec": 115.99,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/season-event-theme-v4.mp3",
+        "category": "events",
+        "sizeKB": 4930.5,
+        "durationSec": 184.56,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/season-event-theme.mp3",
+        "category": "events",
+        "sizeKB": 4045.3,
+        "durationSec": 174.72,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/streak-milestone-v2.mp3",
+        "category": "events",
+        "sizeKB": 626.4,
+        "durationSec": 27.26,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/streak-milestone-v3.mp3",
+        "category": "events",
+        "sizeKB": 232.4,
+        "durationSec": 10.03,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/streak-milestone-v4.mp3",
+        "category": "events",
+        "sizeKB": 264.7,
+        "durationSec": 10.8,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/streak-milestone.mp3",
+        "category": "events",
+        "sizeKB": 521.2,
+        "durationSec": 22.51,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/victory-fanfare-v2.mp3",
+        "category": "events",
+        "sizeKB": 493.1,
+        "durationSec": 21.07,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/victory-fanfare-v3.mp3",
+        "category": "events",
+        "sizeKB": 124.2,
+        "durationSec": 3.91,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/victory-fanfare-v4.mp3",
+        "category": "events",
+        "sizeKB": 294.4,
+        "durationSec": 11.54,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/events/victory-fanfare.mp3",
+        "category": "events",
+        "sizeKB": 275.5,
+        "durationSec": 11.66,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/accuracy-challenge-v2.mp3",
+        "category": "gameplay",
+        "sizeKB": 4162.8,
+        "durationSec": 179.76,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/accuracy-challenge-v3.mp3",
+        "category": "gameplay",
+        "sizeKB": 6776.1,
+        "durationSec": 323.83,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/accuracy-challenge-v4.mp3",
+        "category": "gameplay",
+        "sizeKB": 10485.0,
+        "durationSec": 419.9,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/accuracy-challenge.mp3",
+        "category": "gameplay",
+        "sizeKB": 3886.5,
+        "durationSec": 160.94,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/practice-easy-v2.mp3",
+        "category": "gameplay",
+        "sizeKB": 2599.8,
+        "durationSec": 114.79,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/practice-easy-v3.mp3",
+        "category": "gameplay",
+        "sizeKB": 1559.1,
+        "durationSec": 72.02,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/practice-easy-v4.mp3",
+        "category": "gameplay",
+        "sizeKB": 1604.2,
+        "durationSec": 72.0,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/practice-easy.mp3",
+        "category": "gameplay",
+        "sizeKB": 2055.8,
+        "durationSec": 99.31,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/practice-hard-v2.mp3",
+        "category": "gameplay",
+        "sizeKB": 3722.1,
+        "durationSec": 164.78,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/practice-hard-v3.mp3",
+        "category": "gameplay",
+        "sizeKB": 5958.7,
+        "durationSec": 244.99,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/practice-hard-v4.mp3",
+        "category": "gameplay",
+        "sizeKB": 6371.8,
+        "durationSec": 289.32,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/practice-hard.mp3",
+        "category": "gameplay",
+        "sizeKB": 4348.6,
+        "durationSec": 185.64,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/practice-medium-v2.mp3",
+        "category": "gameplay",
+        "sizeKB": 3555.2,
+        "durationSec": 142.68,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/practice-medium-v3.mp3",
+        "category": "gameplay",
+        "sizeKB": 3522.0,
+        "durationSec": 163.03,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/practice-medium-v4.mp3",
+        "category": "gameplay",
+        "sizeKB": 3815.2,
+        "durationSec": 153.14,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/practice-medium.mp3",
+        "category": "gameplay",
+        "sizeKB": 3838.8,
+        "durationSec": 152.04,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/speed-test-v2.mp3",
+        "category": "gameplay",
+        "sizeKB": 2781.9,
+        "durationSec": 121.99,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/speed-test-v3.mp3",
+        "category": "gameplay",
+        "sizeKB": 2781.9,
+        "durationSec": 121.99,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/speed-test-v4.mp3",
+        "category": "gameplay",
+        "sizeKB": 5429.9,
+        "durationSec": 236.47,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/gameplay/speed-test.mp3",
+        "category": "gameplay",
+        "sizeKB": 5429.9,
+        "durationSec": 236.47,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/battle-menu-v2.mp3",
+        "category": "menu",
+        "sizeKB": 4722.6,
+        "durationSec": 213.74,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/battle-menu-v3.mp3",
+        "category": "menu",
+        "sizeKB": 1778.1,
+        "durationSec": 75.91,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/battle-menu-v4.mp3",
+        "category": "menu",
+        "sizeKB": 6250.9,
+        "durationSec": 261.98,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/battle-menu.mp3",
+        "category": "menu",
+        "sizeKB": 3935.3,
+        "durationSec": 169.8,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/games-hub-v2.mp3",
+        "category": "menu",
+        "sizeKB": 2605.1,
+        "durationSec": 117.91,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/games-hub-v3.mp3",
+        "category": "menu",
+        "sizeKB": 1694.1,
+        "durationSec": 67.82,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/games-hub-v4.mp3",
+        "category": "menu",
+        "sizeKB": 2545.5,
+        "durationSec": 107.52,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/games-hub.mp3",
+        "category": "menu",
+        "sizeKB": 2176.9,
+        "durationSec": 112.94,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/lessons-menu-v2.mp3",
+        "category": "menu",
+        "sizeKB": 3372.2,
+        "durationSec": 157.56,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/lessons-menu-v3.mp3",
+        "category": "menu",
+        "sizeKB": 2248.0,
+        "durationSec": 110.54,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/lessons-menu-v4.mp3",
+        "category": "menu",
+        "sizeKB": 5331.5,
+        "durationSec": 231.5,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/lessons-menu.mp3",
+        "category": "menu",
+        "sizeKB": 3812.7,
+        "durationSec": 169.2,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/profile-progress-v2.mp3",
+        "category": "menu",
+        "sizeKB": 3734.6,
+        "durationSec": 165.0,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/profile-progress-v3.mp3",
+        "category": "menu",
+        "sizeKB": 6391.9,
+        "durationSec": 278.78,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/profile-progress-v4.mp3",
+        "category": "menu",
+        "sizeKB": 3758.1,
+        "durationSec": 180.02,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/profile-progress.mp3",
+        "category": "menu",
+        "sizeKB": 2867.1,
+        "durationSec": 128.88,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/settings-v2.mp3",
+        "category": "menu",
+        "sizeKB": 4519.1,
+        "durationSec": 206.42,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/settings-v3.mp3",
+        "category": "menu",
+        "sizeKB": 6237.9,
+        "durationSec": 309.98,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/settings-v4.mp3",
+        "category": "menu",
+        "sizeKB": 5831.9,
+        "durationSec": 255.98,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/menu/settings.mp3",
+        "category": "menu",
+        "sizeKB": 5222.4,
+        "durationSec": 248.04,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/story/emotional-moment-v2.mp3",
+        "category": "story",
+        "sizeKB": 4265.0,
+        "durationSec": 184.34,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/story/emotional-moment-v3.mp3",
+        "category": "story",
+        "sizeKB": 7022.6,
+        "durationSec": 319.99,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/story/emotional-moment-v4.mp3",
+        "category": "story",
+        "sizeKB": 6206.2,
+        "durationSec": 270.5,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/story/emotional-moment.mp3",
+        "category": "story",
+        "sizeKB": 2947.8,
+        "durationSec": 132.6,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/story/victory-celebration-v2.mp3",
+        "category": "story",
+        "sizeKB": 3666.7,
+        "durationSec": 158.06,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/story/victory-celebration-v3.mp3",
+        "category": "story",
+        "sizeKB": 4050.3,
+        "durationSec": 193.75,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/story/victory-celebration-v4.mp3",
+        "category": "story",
+        "sizeKB": 3621.0,
+        "durationSec": 153.55,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/story/victory-celebration.mp3",
+        "category": "story",
+        "sizeKB": 3117.8,
+        "durationSec": 129.98,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/anaf-training-hub-v2.mp3",
+        "category": "worlds",
+        "sizeKB": 4643.8,
+        "durationSec": 207.96,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/anaf-training-hub-v3.mp3",
+        "category": "worlds",
+        "sizeKB": 3006.2,
+        "durationSec": 140.78,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/anaf-training-hub-v4.mp3",
+        "category": "worlds",
+        "sizeKB": 3003.0,
+        "durationSec": 134.88,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/anaf-training-hub.mp3",
+        "category": "worlds",
+        "sizeKB": 3120.5,
+        "durationSec": 144.96,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/geza-ninja-arena-v2.mp3",
+        "category": "worlds",
+        "sizeKB": 3945.5,
+        "durationSec": 178.99,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/geza-ninja-arena-v3.mp3",
+        "category": "worlds",
+        "sizeKB": 4566.5,
+        "durationSec": 203.66,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/geza-ninja-arena-v4.mp3",
+        "category": "worlds",
+        "sizeKB": 4507.2,
+        "durationSec": 189.5,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/geza-ninja-arena.mp3",
+        "category": "worlds",
+        "sizeKB": 4746.7,
+        "durationSec": 196.56,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/nevet-adventure-camp-v2.mp3",
+        "category": "worlds",
+        "sizeKB": 3104.5,
+        "durationSec": 127.7,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/nevet-adventure-camp-v3.mp3",
+        "category": "worlds",
+        "sizeKB": 3312.3,
+        "durationSec": 146.18,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/nevet-adventure-camp-v4.mp3",
+        "category": "worlds",
+        "sizeKB": 2932.2,
+        "durationSec": 122.76,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/nevet-adventure-camp.mp3",
+        "category": "worlds",
+        "sizeKB": 2006.6,
+        "durationSec": 84.98,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/shatil-magical-garden-v2.mp3",
+        "category": "worlds",
+        "sizeKB": 4126.3,
+        "durationSec": 172.51,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/shatil-magical-garden-v3.mp3",
+        "category": "worlds",
+        "sizeKB": 336.5,
+        "durationSec": 14.04,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/shatil-magical-garden-v4.mp3",
+        "category": "worlds",
+        "sizeKB": 573.8,
+        "durationSec": 24.07,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/shatil-magical-garden.mp3",
+        "category": "worlds",
+        "sizeKB": 2728.5,
+        "durationSec": 126.26,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/tzameret-professional-v2.mp3",
+        "category": "worlds",
+        "sizeKB": 6302.4,
+        "durationSec": 256.68,
+        "variant": "v2",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/tzameret-professional-v3.mp3",
+        "category": "worlds",
+        "sizeKB": 4613.1,
+        "durationSec": 212.71,
+        "variant": "v3",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/tzameret-professional-v4.mp3",
+        "category": "worlds",
+        "sizeKB": 7841.4,
+        "durationSec": 328.82,
+        "variant": "v4",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      },
+      {
+        "file": "music/worlds/tzameret-professional.mp3",
+        "category": "worlds",
+        "sizeKB": 3999.0,
+        "durationSec": 174.62,
+        "variant": "v1",
+        "usedInCode": false,
+        "qualityFlag": "ok"
+      }
+    ],
+    "byCategory": {
+      "battle": {
+        "count": 36,
+        "totalSizeMB": 144.42
+      },
+      "characters": {
+        "count": 33,
+        "totalSizeMB": 93.78
+      },
+      "events": {
+        "count": 32,
+        "totalSizeMB": 23.76
+      },
+      "gameplay": {
+        "count": 20,
+        "totalSizeMB": 82.7
+      },
+      "menu": {
+        "count": 20,
+        "totalSizeMB": 77.18
+      },
+      "root": {
+        "count": 4,
+        "totalSizeMB": 20.14
+      },
+      "story": {
+        "count": 8,
+        "totalSizeMB": 34.08
+      },
+      "worlds": {
+        "count": 20,
+        "totalSizeMB": 71.7
+      }
+    },
+    "totalTracks": 173,
+    "totalSizeMB": 547.76,
+    "usedInCode": 2,
+    "notUsedInCode": 171,
+    "notes": [
+      "Only main-theme.mp3 and boss-battle.mp3 (at music root) are at paths the runtime code actually resolves.",
+      "All subdirectory tracks (gameplay/, battle/, characters/, etc.) are NOT referenced by DEFAULT_ZONE_TRACKS.",
+      "The TRACK_MANIFEST (44 tracks) exists in music-manifest.json but the jukebox reads it from music-manager.ts TRACK_MANIFEST constant which has different/wrong paths."
+    ]
+  },
+  "sfx": {
+    "files": [
+      {
+        "file": "sfx/achievement-unlock.mp3",
+        "sizeKB": 47.8,
+        "durationSec": 3.03,
+        "usedInCode": true
+      },
+      {
+        "file": "sfx/bug-appear.mp3",
+        "sizeKB": 24.1,
+        "durationSec": 1.515,
+        "usedInCode": true
+      },
+      {
+        "file": "sfx/character-unlock.mp3",
+        "sizeKB": 47.8,
+        "durationSec": 3.03,
+        "usedInCode": true
+      },
+      {
+        "file": "sfx/correct-answer.mp3",
+        "sizeKB": 8.6,
+        "durationSec": 0.522,
+        "usedInCode": true
+      },
+      {
+        "file": "sfx/countdown-beep.mp3",
+        "sizeKB": 8.6,
+        "durationSec": 0.522,
+        "usedInCode": true
+      },
+      {
+        "file": "sfx/countdown-go.mp3",
+        "sizeKB": 16.8,
+        "durationSec": 1.045,
+        "usedInCode": true
+      },
+      {
+        "file": "sfx/glitch-warp.mp3",
+        "sizeKB": 16.8,
+        "durationSec": 1.045,
+        "usedInCode": true
+      },
+      {
+        "file": "sfx/keyboard-click.mp3",
+        "sizeKB": 8.6,
+        "durationSec": 0.522,
+        "usedInCode": true
+      },
+      {
+        "file": "sfx/keyboard-combo.mp3",
+        "sizeKB": 24.1,
+        "durationSec": 1.515,
+        "usedInCode": true
+      },
+      {
+        "file": "sfx/level-up.mp3",
+        "sizeKB": 32.3,
+        "durationSec": 2.038,
+        "usedInCode": true
+      },
+      {
+        "file": "sfx/ninja-slash.mp3",
+        "sizeKB": 8.6,
+        "durationSec": 0.522,
+        "usedInCode": true
+      },
+      {
+        "file": "sfx/star-earn.mp3",
+        "sizeKB": 16.8,
+        "durationSec": 1.045,
+        "usedInCode": true
+      },
+      {
+        "file": "sfx/streak-fire.mp3",
+        "sizeKB": 24.1,
+        "durationSec": 1.515,
+        "usedInCode": true
+      },
+      {
+        "file": "sfx/victory-cheers.mp3",
+        "sizeKB": 47.8,
+        "durationSec": 3.03,
+        "usedInCode": true
+      },
+      {
+        "file": "sfx/wrong-answer.mp3",
+        "sizeKB": 8.6,
+        "durationSec": 0.522,
+        "usedInCode": true
+      },
+      {
+        "file": "sfx/xp-gain.mp3",
+        "sizeKB": 16.8,
+        "durationSec": 1.045,
+        "usedInCode": true
+      }
+    ],
+    "totalFiles": 16,
+    "totalSizeKB": 358.2,
+    "usedInCode": 16,
+    "notUsedInCode": 0,
+    "notes": [
+      "All 16 SFX files are referenced in sound-manager.ts SFX_FILES map.",
+      "SFX files are tiny (8-49 KB each) because they are short Web Audio-generated MP3s.",
+      "sound-manager.ts has dual system: tries MP3 first, falls back to Web Audio synthesis.",
+      "ui-sounds.ts (used by use-sound-effect hook) uses ONLY Web Audio synthesis - no SFX files."
+    ]
+  },
+  "voices": {
+    "characters": [
+      {
+        "character": "bug",
+        "files": [
+          {
+            "file": "voices/bug/bug-boss-raw.mp3",
+            "sizeKB": 88.6,
+            "durationSec": 5.642,
+            "isRaw": true
+          },
+          {
+            "file": "voices/bug/bug-boss.mp3",
+            "sizeKB": 44.9,
+            "durationSec": 5.712,
+            "isRaw": false
+          },
+          {
+            "file": "voices/bug/bug-buzz-raw.mp3",
+            "sizeKB": 68.6,
+            "durationSec": 4.362,
+            "isRaw": true
+          },
+          {
+            "file": "voices/bug/bug-buzz.mp3",
+            "sizeKB": 27.4,
+            "durationSec": 3.48,
+            "isRaw": false
+          },
+          {
+            "file": "voices/bug/bug-defeat-raw.mp3",
+            "sizeKB": 76.0,
+            "durationSec": 4.833,
+            "isRaw": true
+          },
+          {
+            "file": "voices/bug/bug-defeat.mp3",
+            "sizeKB": 38.7,
+            "durationSec": 4.92,
+            "isRaw": false
+          },
+          {
+            "file": "voices/bug/bug-king-raw.mp3",
+            "sizeKB": 69.8,
+            "durationSec": 4.441,
+            "isRaw": true
+          },
+          {
+            "file": "voices/bug/bug-king.mp3",
+            "sizeKB": 35.5,
+            "durationSec": 4.512,
+            "isRaw": false
+          },
+          {
+            "file": "voices/bug/bug-pest-raw.mp3",
+            "sizeKB": 59.6,
+            "durationSec": 3.788,
+            "isRaw": true
+          },
+          {
+            "file": "voices/bug/bug-pest.mp3",
+            "sizeKB": 24.0,
+            "durationSec": 3.048,
+            "isRaw": false
+          },
+          {
+            "file": "voices/bug/bug-scared-raw.mp3",
+            "sizeKB": 56.0,
+            "durationSec": 3.553,
+            "isRaw": true
+          },
+          {
+            "file": "voices/bug/bug-scared.mp3",
+            "sizeKB": 22.5,
+            "durationSec": 2.856,
+            "isRaw": false
+          },
+          {
+            "file": "voices/bug/bug-scatter-raw.mp3",
+            "sizeKB": 66.2,
+            "durationSec": 4.206,
+            "isRaw": true
+          },
+          {
+            "file": "voices/bug/bug-scatter.mp3",
+            "sizeKB": 26.5,
+            "durationSec": 3.36,
+            "isRaw": false
+          },
+          {
+            "file": "voices/bug/bug-scramble-raw.mp3",
+            "sizeKB": 119.6,
+            "durationSec": 7.628,
+            "isRaw": true
+          },
+          {
+            "file": "voices/bug/bug-scramble.mp3",
+            "sizeKB": 60.4,
+            "durationSec": 7.704,
+            "isRaw": false
+          },
+          {
+            "file": "voices/bug/bug-taunt-raw.mp3",
+            "sizeKB": 71.1,
+            "durationSec": 4.519,
+            "isRaw": true
+          },
+          {
+            "file": "voices/bug/bug-taunt.mp3",
+            "sizeKB": 36.0,
+            "durationSec": 4.584,
+            "isRaw": false
+          }
+        ],
+        "archivedFiles": [
+          "voices/bug/v1/bug-boss.mp3",
+          "voices/bug/v1/bug-defeat.mp3",
+          "voices/bug/v1/bug-king.mp3",
+          "voices/bug/v1/bug-scramble.mp3",
+          "voices/bug/v2/bug-boss.mp3",
+          "voices/bug/v2/bug-defeat.mp3",
+          "voices/bug/v2/bug-king.mp3",
+          "voices/bug/v2/bug-scramble.mp3",
+          "voices/bug/v3/bug-boss-raw.mp3",
+          "voices/bug/v3/bug-boss.mp3",
+          "voices/bug/v3/bug-defeat-raw.mp3",
+          "voices/bug/v3/bug-defeat.mp3",
+          "voices/bug/v3/bug-king-raw.mp3",
+          "voices/bug/v3/bug-king.mp3",
+          "voices/bug/v3/bug-scramble-raw.mp3",
+          "voices/bug/v3/bug-scramble.mp3",
+          "voices/bug/v3/bug-taunt-raw.mp3",
+          "voices/bug/v3/bug-taunt.mp3"
+        ],
+        "totalSizeKB": 991.4,
+        "usedInCode": false
+      },
+      {
+        "character": "bugKing",
+        "files": [
+          {
+            "file": "voices/bugKing/bugking-boss-raw.mp3",
+            "sizeKB": 67.4,
+            "durationSec": 4.284,
+            "isRaw": true
+          },
+          {
+            "file": "voices/bugKing/bugking-boss.mp3",
+            "sizeKB": 37.2,
+            "durationSec": 4.728,
+            "isRaw": false
+          },
+          {
+            "file": "voices/bugKing/bugking-crown-raw.mp3",
+            "sizeKB": 68.6,
+            "durationSec": 4.362,
+            "isRaw": true
+          },
+          {
+            "file": "voices/bugKing/bugking-crown.mp3",
+            "sizeKB": 37.7,
+            "durationSec": 4.8,
+            "isRaw": false
+          },
+          {
+            "file": "voices/bugKing/bugking-defeat-raw.mp3",
+            "sizeKB": 84.9,
+            "durationSec": 5.407,
+            "isRaw": true
+          },
+          {
+            "file": "voices/bugKing/bugking-defeat.mp3",
+            "sizeKB": 46.5,
+            "durationSec": 5.928,
+            "isRaw": false
+          },
+          {
+            "file": "voices/bugKing/bugking-scramble-raw.mp3",
+            "sizeKB": 107.4,
+            "durationSec": 6.844,
+            "isRaw": true
+          },
+          {
+            "file": "voices/bugKing/bugking-scramble.mp3",
+            "sizeKB": 58.7,
+            "durationSec": 7.488,
+            "isRaw": false
+          },
+          {
+            "file": "voices/bugKing/bugking-taunt-raw.mp3",
+            "sizeKB": 60.9,
+            "durationSec": 3.866,
+            "isRaw": true
+          },
+          {
+            "file": "voices/bugKing/bugking-taunt.mp3",
+            "sizeKB": 33.8,
+            "durationSec": 4.296,
+            "isRaw": false
+          }
+        ],
+        "archivedFiles": [],
+        "totalSizeKB": 603.1,
+        "usedInCode": false
+      },
+      {
+        "character": "glitch",
+        "files": [
+          {
+            "file": "voices/glitch/glitch-chaos-raw.mp3",
+            "sizeKB": 117.2,
+            "durationSec": 7.471,
+            "isRaw": true
+          },
+          {
+            "file": "voices/glitch/glitch-chaos.mp3",
+            "sizeKB": 58.8,
+            "durationSec": 7.497,
+            "isRaw": false
+          },
+          {
+            "file": "voices/glitch/glitch-intro-raw.mp3",
+            "sizeKB": 174.7,
+            "durationSec": 11.154,
+            "isRaw": true
+          },
+          {
+            "file": "voices/glitch/glitch-intro.mp3",
+            "sizeKB": 87.6,
+            "durationSec": 11.18,
+            "isRaw": false
+          },
+          {
+            "file": "voices/glitch/glitch-redemption-raw.mp3",
+            "sizeKB": 113.5,
+            "durationSec": 7.236,
+            "isRaw": true
+          },
+          {
+            "file": "voices/glitch/glitch-redemption.mp3",
+            "sizeKB": 57.0,
+            "durationSec": 7.262,
+            "isRaw": false
+          },
+          {
+            "file": "voices/glitch/glitch-thanks-raw.mp3",
+            "sizeKB": 106.2,
+            "durationSec": 6.766,
+            "isRaw": true
+          },
+          {
+            "file": "voices/glitch/glitch-thanks.mp3",
+            "sizeKB": 53.1,
+            "durationSec": 6.766,
+            "isRaw": false
+          }
+        ],
+        "archivedFiles": [
+          "voices/glitch/v1/glitch-intro.mp3",
+          "voices/glitch/v1/glitch-redemption.mp3",
+          "voices/glitch/v1/glitch-thanks.mp3",
+          "voices/glitch/v2/glitch-intro.mp3",
+          "voices/glitch/v2/glitch-redemption.mp3",
+          "voices/glitch/v2/glitch-thanks.mp3",
+          "voices/glitch/v3/glitch-chaos-raw.mp3",
+          "voices/glitch/v3/glitch-chaos.mp3",
+          "voices/glitch/v3/glitch-intro-raw.mp3",
+          "voices/glitch/v3/glitch-intro.mp3",
+          "voices/glitch/v3/glitch-redemption-raw.mp3",
+          "voices/glitch/v3/glitch-redemption.mp3",
+          "voices/glitch/v3/glitch-thanks-raw.mp3",
+          "voices/glitch/v3/glitch-thanks.mp3"
+        ],
+        "totalSizeKB": 768.1,
+        "usedInCode": false
+      },
+      {
+        "character": "kai",
+        "files": [
+          {
+            "file": "voices/kai/kai-challenge.mp3",
+            "sizeKB": 72.3,
+            "durationSec": 4.598,
+            "isRaw": false
+          },
+          {
+            "file": "voices/kai/kai-fight.mp3",
+            "sizeKB": 57.2,
+            "durationSec": 3.631,
+            "isRaw": false
+          },
+          {
+            "file": "voices/kai/kai-victory.mp3",
+            "sizeKB": 56.0,
+            "durationSec": 3.553,
+            "isRaw": false
+          }
+        ],
+        "archivedFiles": [
+          "voices/kai/v1/kai-fight.mp3",
+          "voices/kai/v2/kai-fight.mp3",
+          "voices/kai/v3/kai-challenge.mp3",
+          "voices/kai/v3/kai-fight.mp3",
+          "voices/kai/v3/kai-victory.mp3"
+        ],
+        "totalSizeKB": 185.5,
+        "usedInCode": false
+      },
+      {
+        "character": "ki",
+        "files": [
+          {
+            "file": "voices/ki/ki-battle-start.mp3",
+            "sizeKB": 46.2,
+            "durationSec": 2.926,
+            "isRaw": false
+          },
+          {
+            "file": "voices/ki/ki-discovery.mp3",
+            "sizeKB": 57.2,
+            "durationSec": 3.631,
+            "isRaw": false
+          },
+          {
+            "file": "voices/ki/ki-encourage.mp3",
+            "sizeKB": 49.8,
+            "durationSec": 3.161,
+            "isRaw": false
+          },
+          {
+            "file": "voices/ki/ki-final.mp3",
+            "sizeKB": 77.2,
+            "durationSec": 4.911,
+            "isRaw": false
+          },
+          {
+            "file": "voices/ki/ki-greeting.mp3",
+            "sizeKB": 43.7,
+            "durationSec": 2.769,
+            "isRaw": false
+          },
+          {
+            "file": "voices/ki/ki-level-up.mp3",
+            "sizeKB": 44.9,
+            "durationSec": 2.847,
+            "isRaw": false
+          },
+          {
+            "file": "voices/ki/ki-team.mp3",
+            "sizeKB": 53.5,
+            "durationSec": 3.396,
+            "isRaw": false
+          },
+          {
+            "file": "voices/ki/ki-victory.mp3",
+            "sizeKB": 66.2,
+            "durationSec": 4.206,
+            "isRaw": false
+          }
+        ],
+        "archivedFiles": [
+          "voices/ki/v1/ki-discovery.mp3",
+          "voices/ki/v1/ki-final.mp3",
+          "voices/ki/v1/ki-team.mp3",
+          "voices/ki/v1/ki-victory.mp3",
+          "voices/ki/v2/ki-discovery.mp3",
+          "voices/ki/v2/ki-final.mp3",
+          "voices/ki/v2/ki-team.mp3",
+          "voices/ki/v2/ki-victory.mp3",
+          "voices/ki/v3/ki-battle-start.mp3",
+          "voices/ki/v3/ki-discovery.mp3",
+          "voices/ki/v3/ki-encourage.mp3",
+          "voices/ki/v3/ki-final.mp3",
+          "voices/ki/v3/ki-greeting.mp3",
+          "voices/ki/v3/ki-level-up.mp3",
+          "voices/ki/v3/ki-team.mp3",
+          "voices/ki/v3/ki-victory.mp3"
+        ],
+        "totalSizeKB": 438.7,
+        "usedInCode": false
+      },
+      {
+        "character": "luna",
+        "files": [
+          {
+            "file": "voices/luna/luna-breathe.mp3",
+            "sizeKB": 82.5,
+            "durationSec": 5.251,
+            "isRaw": false
+          },
+          {
+            "file": "voices/luna/luna-create.mp3",
+            "sizeKB": 77.2,
+            "durationSec": 4.911,
+            "isRaw": false
+          },
+          {
+            "file": "voices/luna/luna-encourage.mp3",
+            "sizeKB": 93.5,
+            "durationSec": 5.956,
+            "isRaw": false
+          }
+        ],
+        "archivedFiles": [
+          "voices/luna/v1/luna-breathe.mp3",
+          "voices/luna/v2/luna-breathe.mp3",
+          "voices/luna/v3/luna-breathe.mp3",
+          "voices/luna/v3/luna-create.mp3",
+          "voices/luna/v3/luna-encourage.mp3"
+        ],
+        "totalSizeKB": 253.2,
+        "usedInCode": false
+      },
+      {
+        "character": "mika",
+        "files": [
+          {
+            "file": "voices/mika/mika-encourage.mp3",
+            "sizeKB": 53.5,
+            "durationSec": 3.396,
+            "isRaw": false
+          },
+          {
+            "file": "voices/mika/mika-fight.mp3",
+            "sizeKB": 71.1,
+            "durationSec": 4.519,
+            "isRaw": false
+          },
+          {
+            "file": "voices/mika/mika-hack.mp3",
+            "sizeKB": 36.0,
+            "durationSec": 2.273,
+            "isRaw": false
+          },
+          {
+            "file": "voices/mika/mika-intro.mp3",
+            "sizeKB": 67.4,
+            "durationSec": 4.284,
+            "isRaw": false
+          },
+          {
+            "file": "voices/mika/mika-shortcut.mp3",
+            "sizeKB": 59.6,
+            "durationSec": 3.788,
+            "isRaw": false
+          }
+        ],
+        "archivedFiles": [
+          "voices/mika/v1/mika-fight.mp3",
+          "voices/mika/v1/mika-hack.mp3",
+          "voices/mika/v1/mika-intro.mp3",
+          "voices/mika/v2/mika-fight.mp3",
+          "voices/mika/v2/mika-hack.mp3",
+          "voices/mika/v2/mika-intro.mp3",
+          "voices/mika/v3/mika-encourage.mp3",
+          "voices/mika/v3/mika-fight.mp3",
+          "voices/mika/v3/mika-hack.mp3",
+          "voices/mika/v3/mika-intro.mp3",
+          "voices/mika/v3/mika-shortcut.mp3"
+        ],
+        "totalSizeKB": 287.6,
+        "usedInCode": false
+      },
+      {
+        "character": "noa",
+        "files": [
+          {
+            "file": "voices/noa/noa-celebrate.mp3",
+            "sizeKB": 49.8,
+            "durationSec": 3.161,
+            "isRaw": false
+          },
+          {
+            "file": "voices/noa/noa-heal.mp3",
+            "sizeKB": 77.2,
+            "durationSec": 4.911,
+            "isRaw": false
+          },
+          {
+            "file": "voices/noa/noa-support.mp3",
+            "sizeKB": 67.4,
+            "durationSec": 4.284,
+            "isRaw": false
+          }
+        ],
+        "archivedFiles": [
+          "voices/noa/v1/noa-heal.mp3",
+          "voices/noa/v2/noa-heal.mp3",
+          "voices/noa/v3/noa-celebrate.mp3",
+          "voices/noa/v3/noa-heal.mp3",
+          "voices/noa/v3/noa-support.mp3"
+        ],
+        "totalSizeKB": 194.4,
+        "usedInCode": false
+      },
+      {
+        "character": "rex",
+        "files": [
+          {
+            "file": "voices/rex/rex-fun-raw.mp3",
+            "sizeKB": 47.4,
+            "durationSec": 3.004,
+            "isRaw": true
+          },
+          {
+            "file": "voices/rex/rex-fun.mp3",
+            "sizeKB": 22.9,
+            "durationSec": 2.904,
+            "isRaw": false
+          },
+          {
+            "file": "voices/rex/rex-play-raw.mp3",
+            "sizeKB": 39.6,
+            "durationSec": 2.508,
+            "isRaw": true
+          },
+          {
+            "file": "voices/rex/rex-play.mp3",
+            "sizeKB": 19.2,
+            "durationSec": 2.424,
+            "isRaw": false
+          }
+        ],
+        "archivedFiles": [
+          "voices/rex/v1/rex-play.mp3",
+          "voices/rex/v2/rex-play.mp3",
+          "voices/rex/v3/rex-fun-raw.mp3",
+          "voices/rex/v3/rex-fun.mp3",
+          "voices/rex/v3/rex-play-raw.mp3",
+          "voices/rex/v3/rex-play.mp3"
+        ],
+        "totalSizeKB": 129.1,
+        "usedInCode": false
+      },
+      {
+        "character": "sensei-zen",
+        "files": [
+          {
+            "file": "voices/sensei-zen/sensei-final.mp3",
+            "sizeKB": 26.2,
+            "durationSec": 1.646,
+            "isRaw": false
+          },
+          {
+            "file": "voices/sensei-zen/sensei-journey.mp3",
+            "sizeKB": 38.4,
+            "durationSec": 2.429,
+            "isRaw": false
+          },
+          {
+            "file": "voices/sensei-zen/sensei-patience.mp3",
+            "sizeKB": 54.7,
+            "durationSec": 3.474,
+            "isRaw": false
+          }
+        ],
+        "archivedFiles": [],
+        "totalSizeKB": 119.3,
+        "usedInCode": false
+      },
+      {
+        "character": "yuki",
+        "files": [
+          {
+            "file": "voices/yuki/yuki-challenge.mp3",
+            "sizeKB": 15.1,
+            "durationSec": 1.907,
+            "isRaw": false
+          },
+          {
+            "file": "voices/yuki/yuki-encourage.mp3",
+            "sizeKB": 22.9,
+            "durationSec": 2.9,
+            "isRaw": false
+          },
+          {
+            "file": "voices/yuki/yuki-speed.mp3",
+            "sizeKB": 15.1,
+            "durationSec": 1.907,
+            "isRaw": false
+          },
+          {
+            "file": "voices/yuki/yuki-taunt.mp3",
+            "sizeKB": 18.0,
+            "durationSec": 2.273,
+            "isRaw": false
+          },
+          {
+            "file": "voices/yuki/yuki-win.mp3",
+            "sizeKB": 20.6,
+            "durationSec": 2.612,
+            "isRaw": false
+          }
+        ],
+        "archivedFiles": [],
+        "totalSizeKB": 91.7,
+        "usedInCode": false
+      }
+    ],
+    "previewFiles": [
+      {
+        "file": "voices/voice-design-previews/bug-hebrew-test.mp3",
+        "sizeKB": 93.5
+      },
+      {
+        "file": "voices/voice-design-previews/bug-preview-0.mp3",
+        "sizeKB": 447.0
+      },
+      {
+        "file": "voices/voice-design-previews/bug-preview-1.mp3",
+        "sizeKB": 358.2
+      },
+      {
+        "file": "voices/voice-design-previews/bug-preview-2.mp3",
+        "sizeKB": 271.9
+      },
+      {
+        "file": "voices/voice-design-previews/bug-v4-preview.mp3",
+        "sizeKB": 289.6
+      },
+      {
+        "file": "voices/voice-design-previews/bugKing-v4-preview.mp3",
+        "sizeKB": 409.0
+      },
+      {
+        "file": "voices/voice-design-previews/glitch-preview-0.mp3",
+        "sizeKB": 554.7
+      },
+      {
+        "file": "voices/voice-design-previews/glitch-preview-1.mp3",
+        "sizeKB": 368.0
+      },
+      {
+        "file": "voices/voice-design-previews/glitch-preview-2.mp3",
+        "sizeKB": 483.1
+      },
+      {
+        "file": "voices/voice-design-previews/glitch-v4-preview.mp3",
+        "sizeKB": 490.5
+      },
+      {
+        "file": "voices/voice-design-previews/kai-preview-0.mp3",
+        "sizeKB": 353.3
+      },
+      {
+        "file": "voices/voice-design-previews/kai-preview-1.mp3",
+        "sizeKB": 343.5
+      },
+      {
+        "file": "voices/voice-design-previews/kai-preview-2.mp3",
+        "sizeKB": 260.2
+      },
+      {
+        "file": "voices/voice-design-previews/kai-v4-preview.mp3",
+        "sizeKB": 355.8
+      },
+      {
+        "file": "voices/voice-design-previews/ki-hebrew-test-2.mp3",
+        "sizeKB": 114.7
+      },
+      {
+        "file": "voices/voice-design-previews/ki-hebrew-test.mp3",
+        "sizeKB": 67.4
+      },
+      {
+        "file": "voices/voice-design-previews/ki-preview-0.mp3",
+        "sizeKB": 434.1
+      },
+      {
+        "file": "voices/voice-design-previews/ki-preview-1.mp3",
+        "sizeKB": 378.4
+      },
+      {
+        "file": "voices/voice-design-previews/ki-preview-2.mp3",
+        "sizeKB": 360.0
+      },
+      {
+        "file": "voices/voice-design-previews/ki-v4-preview.mp3",
+        "sizeKB": 270.7
+      },
+      {
+        "file": "voices/voice-design-previews/luna-preview-0.mp3",
+        "sizeKB": 507.0
+      },
+      {
+        "file": "voices/voice-design-previews/luna-preview-1.mp3",
+        "sizeKB": 374.1
+      },
+      {
+        "file": "voices/voice-design-previews/luna-preview-2.mp3",
+        "sizeKB": 556.0
+      },
+      {
+        "file": "voices/voice-design-previews/luna-v4-preview.mp3",
+        "sizeKB": 495.3
+      },
+      {
+        "file": "voices/voice-design-previews/mika-preview-0.mp3",
+        "sizeKB": 313.5
+      },
+      {
+        "file": "voices/voice-design-previews/mika-preview-1.mp3",
+        "sizeKB": 303.7
+      },
+      {
+        "file": "voices/voice-design-previews/mika-preview-2.mp3",
+        "sizeKB": 282.9
+      },
+      {
+        "file": "voices/voice-design-previews/mika-v4-preview.mp3",
+        "sizeKB": 221.7
+      },
+      {
+        "file": "voices/voice-design-previews/noa-preview-0.mp3",
+        "sizeKB": 337.4
+      },
+      {
+        "file": "voices/voice-design-previews/noa-preview-1.mp3",
+        "sizeKB": 421.9
+      },
+      {
+        "file": "voices/voice-design-previews/noa-preview-2.mp3",
+        "sizeKB": 244.9
+      },
+      {
+        "file": "voices/voice-design-previews/noa-v4-preview.mp3",
+        "sizeKB": 340.5
+      },
+      {
+        "file": "voices/voice-design-previews/rex-preview-0.mp3",
+        "sizeKB": 354.5
+      },
+      {
+        "file": "voices/voice-design-previews/rex-preview-1.mp3",
+        "sizeKB": 304.3
+      },
+      {
+        "file": "voices/voice-design-previews/rex-preview-2.mp3",
+        "sizeKB": 228.4
+      },
+      {
+        "file": "voices/voice-design-previews/rex-v4-preview.mp3",
+        "sizeKB": 263.3
+      },
+      {
+        "file": "voices/voice-design-previews/yuki-preview-0.mp3",
+        "sizeKB": 248.0
+      },
+      {
+        "file": "voices/voice-design-previews/yuki-preview-1.mp3",
+        "sizeKB": 251.1
+      },
+      {
+        "file": "voices/voice-design-previews/yuki-preview-2.mp3",
+        "sizeKB": 351.5
+      },
+      {
+        "file": "voices/voice-design-previews/yuki-v4-preview.mp3",
+        "sizeKB": 231.5
+      }
+    ],
+    "totalFiles": 190,
+    "totalMainFiles": 70,
+    "totalArchivedFiles": 80,
+    "totalPreviewFiles": 40,
+    "totalSizeMB": 3.97,
+    "charactersWithVoices": 11,
+    "charactersWithoutVoices": 10,
+    "charactersWithoutVoicesList": [
+      "shadow",
+      "storm",
+      "blaze",
+      "barak",
+      "phantom",
+      "virus",
+      "pixel",
+      "masterBeat",
+      "sakura",
+      "raz"
+    ],
+    "notes": [
+      "Voices are ElevenLabs Voice Design v3 generated MP3s with ffmpeg post-processing.",
+      "Each character has processed (main) and raw files in main folder.",
+      "Old version archives in v1/, v2/, v3/ subdirs still exist.",
+      "No voice playback system exists in the React app - voices are assets only.",
+      "story.ts type has voiceClip field but no audio player for it."
+    ]
+  },
+  "codeIntegration": {
+    "musicProvider": {
+      "exists": true,
+      "file": "src/components/audio/music-provider.tsx",
+      "pagesUsing": [
+        "src/components/providers/app-providers.tsx (wraps entire app)",
+        "src/app/(app)/jukebox/page.tsx",
+        "src/app/(app)/settings/page.tsx",
+        "src/components/layout/sidebar.tsx",
+        "src/components/audio/jukebox.tsx"
+      ],
+      "systemDescription": "MusicManager (Web Audio API) with zone-based playback, crossfading, stingers, holiday overrides. Route-to-zone mapping auto-plays music per page.",
+      "criticalIssue": "DEFAULT_ZONE_TRACKS paths do not match actual file locations. Most zones will silently 404."
+    },
+    "sfxSystem": {
+      "exists": true,
+      "files": [
+        "src/lib/audio/sound-manager.ts",
+        "src/lib/audio/ui-sounds.ts",
+        "src/hooks/use-sound-effect.ts"
+      ],
+      "componentsUsing": [
+        "src/components/layout/header.tsx (click, navigate)",
+        "src/components/layout/sidebar.tsx (navigate)",
+        "src/components/layout/bottom-tabs.tsx (navigate)",
+        "src/app/(app)/home/home-client.tsx (achievement, navigate)",
+        "src/app/(app)/settings/page.tsx (sound controls)"
+      ],
+      "systemDescription": "Two parallel sound systems: (1) sound-manager.ts plays MP3 SFX with Web Audio fallback; (2) ui-sounds.ts pure Web Audio synthesis used by use-sound-effect hook. Settings page controls SFX volume/enable.",
+      "note": "use-sound-effect uses ui-sounds (synthesis only). soundManager is also a singleton but not via React context."
+    },
+    "voiceSystem": {
+      "exists": false,
+      "filesExist": [
+        "src/lib/audio/voice-generate-all-hebrew.mjs (generation script, not runtime)",
+        "src/data/story/*.ts (voiceClip field in story beats)"
+      ],
+      "componentsUsing": [],
+      "systemDescription": "No runtime voice playback system. Voice files exist as static assets but nothing in the app loads or plays them. Story beats have a voiceClip optional field but no audio player component."
+    }
+  },
+  "issues": [
+    "CRITICAL: music-manager.ts DEFAULT_ZONE_TRACKS references flat paths like '/audio/music/practice-easy.mp3' but files only exist in subdirectories like '/audio/music/gameplay/practice-easy.mp3'. 12 of 14 zone tracks will 404 at runtime.",
+    "CRITICAL: '/audio/music/stingers/' directory does not exist. All 8 stinger tracks in STINGER_TRACKS will fail to load (victory-fanfare, level-up, character-unlock, achievement, streak-fire, season-complete, personal-best, defeat-jingle).",
+    "CRITICAL: '/audio/music/holidays/' directory does not exist. All 12 holiday music tracks will fail to load.",
+    "MISSING ZONE TRACKS (no file anywhere): battle-arena.mp3, profile.mp3, story-mode.mp3, boss-battle-final.mp3, victory-fanfare.mp3, defeat.mp3, loading.mp3 - these zones will play silence.",
+    "MISSING BATTLE TRACKS in TRACK_MANIFEST: battle-shadow.mp3, battle-storm.mp3, battle-pre.mp3 - referenced by manifest but no file at those paths; actual files use different naming (shadow-cat-battle.mp3 etc) in battle/ subdir.",
+    "TRACK_MANIFEST character theme paths mismatch: code uses 'ki-theme.mp3', 'sensei-zen-theme.mp3', 'bug-theme.mp3' but actual files are 'kis-theme.mp3', 'sensei-zens-theme.mp3', 'bugs-theme.mp3'.",
+    "TRACK_MANIFEST world path mismatch: code uses 'worlds/geza-arena.mp3' but file is 'worlds/geza-ninja-arena.mp3'.",
+    "DUPLICATE TRACKS: shadow-cat-battle.mp3 == shadow-cat-battle-v3.mp3 (identical), shadow-cat-battle-v2.mp3 == shadow-cat-battle-v4.mp3 (identical). Same for storm-fox-battle.mp3/v3 and v2/v4. Likely Suno delivered duplicate outputs.",
+    "DUPLICATE TRACKS: kis-theme.mp3 == kis-theme-v4.mp3 (identical 278.784s), kis-theme-v2.mp3 == kis-theme-v3.mp3 (both 180.0s). Same duplication pattern in mikas-theme, sensei-zens-theme, yukis-theme.",
+    "SHORT/SUSPECT TRACKS: bugs-theme-v3.mp3 (12.8s, 300KB), rexs-theme-v4.mp3 (11.2s, 265KB), rexs-theme-v2.mp3 (12.8s, 282KB), lunas-theme-v3.mp3 (15.0s, 315KB), lunas-theme-v4.mp3 (15.0s, 315KB), shatil-magical-garden-v3.mp3 (14.0s, 337KB), shatil-magical-garden-v4.mp3 (24.1s, 574KB) - very short for looping background tracks.",
+    "VOICE SYSTEM NOT WIRED TO APP: Voices exist for 11 characters (ki, mika, luna, noa, rex, sensei-zen, yuki, bug, bugKing, glitch, kai) but no component in the app actually plays them. The story type has a voiceClip field but no voice playback system exists.",
+    "CHARACTERS WITHOUT VOICES: shadow, storm, blaze, barak, phantom, virus, pixel, masterBeat, sakura, raz have no voice files at all.",
+    "RAW FILES IN PRODUCTION: Many voice files have '-raw' variants alongside processed ones (e.g. bug-boss-raw.mp3). These are pre-processing source files and should be archived.",
+    "VOICE ARCHIVE NOT CLEANED: Old versions v1, v2, v3 subdirs still present in bug, glitch, kai, ki, luna, mika, noa, rex voice folders - consuming disk space.",
+    "PREVIEW FILES IN PRODUCTION BUILD: 42 files in voices/voice-design-previews/ (6.2 MB) are ElevenLabs design previews that should not be served in production.",
+    "music/boss-battle-v2.mp3 exists at root but DEFAULT_ZONE_TRACKS only references boss-battle.mp3 - the v2 version is unreachable.",
+    "music/main-theme-v2.mp3 exists at root but DEFAULT_ZONE_TRACKS only uses main-theme.mp3 - the v2 version is unreachable.",
+    "ui-sounds.ts uses pure Web Audio synthesis (no MP3 files) for all UI sounds. This is intentional (zero file deps) but the SFX system in sound-manager.ts is a separate parallel system - no integration between them."
+  ],
+  "summary": {
+    "totalAudioFiles": 379,
+    "totalMusicTracks": 173,
+    "totalSFXFiles": 16,
+    "totalVoiceFiles": 190,
+    "estimatedTotalSizeMB": 565.1,
+    "criticalIssues": 3,
+    "qualityIssues": 3,
+    "missingFiles": 21,
+    "duplicateFilePairs": 6
+  }
+}
