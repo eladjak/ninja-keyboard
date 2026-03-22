@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>נינג'ה מקלדת — מסמך משוב אינטראקטיבי</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-base: #0d0b1a;
+      --bg-card: #13102a;
+      --bg-card-hover: #1a1635;
+      --bg-section: #0f0d20;
+      --border: #2a2550;
+      --border-glow: #6c5ce7;
+      --primary: #6c5ce7;
+      --primary-light: #8b7ff5;
+      --primary-dim: rgba(108,92,231,0.15);
+      --secondary: #00b894;
+      --secondary-dim: rgba(0,184,148,0.15);
+      --text-primary: #f0eeff;
+      --text-secondary: #a09cc0;
+      --text-muted: #5a5680;
+      --green: #00b894;
+      --green-bg: rgba(0,184,148,0.12);
+      --red: #e84393;
+      --red-bg: rgba(232,67,147,0.12);
+      --orange: #fd9644;
+      --orange-bg: rgba(253,150,68,0.12);
+      --yellow: #ffd32a;
+      --yellow-bg: rgba(255,211,42,0.12);
+      --blue: #45aaf2;
+      --blue-bg: rgba(69,170,242,0.12);
+      --purple: #a55eea;
+      --purple-bg: rgba(165,94,234,0.12);
+      --cyan: #2bcbba;
+      --radius: 12px;
+      --radius-lg: 16px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.4);
+      --shadow-glow: 0 0 30px rgba(108,92,231,0.15);
+      --transition: 0.2s ease;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* BG PARTICLES */
+    .bg-particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .bg-particles::before {
+      content: ''; position: absolute; width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(108,92,231,0.08) 0%, transparent 70%);
+      top: -200px; right: -200px; animation: floatOrb 20s ease-in-out infinite alternate;
+    }
+    .bg-particles::after {
+      content: ''; position: absolute; width: 400px; height: 400px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,184,148,0.06) 0%, transparent 70%);
+      bottom: 0; left: -100px; animation: floatOrb 15s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes floatOrb { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(40px,30px) scale(1.1); } }
+
+    /* SIDEBAR NAV */
+    .sidebar {
+      position: fixed; top: 0; right: 0; width: 260px; height: 100vh;
+      background: var(--bg-card); border-left: 1px solid var(--border);
+      z-index: 100; overflow-y: auto; padding: 20px 16px;
+      box-shadow: -4px 0 30px rgba(0,0,0,0.5);
+      transition: transform var(--transition);
+    }
+    .sidebar.collapsed { transform: translateX(260px); }
+    .sidebar-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 101;
+      background: var(--primary); color: #fff; border: none; border-radius: 8px;
+      width: 40px; height: 40px; cursor: pointer; font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 12px rgba(108,92,231,0.4); transition: var(--transition);
+    }
+    .sidebar-toggle:hover { background: var(--primary-light); transform: scale(1.05); }
+    .sidebar h3 {
+      font-size: 14px; color: var(--primary-light); margin-bottom: 12px;
+      padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    }
+    .sidebar a {
+      display: block; padding: 6px 10px; margin: 2px 0; border-radius: 6px;
+      color: var(--text-secondary); text-decoration: none; font-size: 13px;
+      transition: var(--transition); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .sidebar a:hover { background: var(--primary-dim); color: var(--text-primary); }
+    .sidebar a.active { background: var(--primary-dim); color: var(--primary-light); font-weight: 600; }
+
+    /* MAIN CONTENT */
+    .main { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; position: relative; z-index: 1; margin-right: 280px; }
+    @media (max-width: 1100px) { .main { margin-right: auto; } .sidebar { display: none; } .sidebar-toggle { display: none; } }
+
+    /* HEADER */
+    .header {
+      text-align: center; padding: 48px 24px 40px; margin-bottom: 40px;
+      background: linear-gradient(135deg, rgba(108,92,231,0.1) 0%, rgba(0,184,148,0.05) 100%);
+      border-radius: var(--radius-lg); border: 1px solid var(--border);
+    }
+    .header h1 { font-size: 2.4em; font-weight: 900; margin-bottom: 8px; background: linear-gradient(135deg, var(--primary-light), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .header p { color: var(--text-secondary); font-size: 1.05em; }
+    .header .meta { margin-top: 16px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .header .meta span { background: var(--bg-card); padding: 4px 14px; border-radius: 20px; font-size: 13px; color: var(--text-secondary); border: 1px solid var(--border); }
+
+    /* TOOLBAR */
+    .toolbar {
+      position: sticky; top: 0; z-index: 50; background: rgba(13,11,26,0.92);
+      backdrop-filter: blur(12px); padding: 12px 0; margin-bottom: 32px;
+      border-bottom: 1px solid var(--border); display: flex; gap: 10px;
+      flex-wrap: wrap; align-items: center; justify-content: center;
+    }
+    .toolbar button {
+      padding: 8px 18px; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--bg-card); color: var(--text-primary); cursor: pointer;
+      font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 500;
+      transition: var(--transition); display: inline-flex; align-items: center; gap: 6px;
+    }
+    .toolbar button:hover { border-color: var(--primary); background: var(--primary-dim); }
+    .toolbar button.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .toolbar button.primary:hover { background: var(--primary-light); }
+    .toolbar button.danger { border-color: var(--red); color: var(--red); }
+    .toolbar button.danger:hover { background: var(--red-bg); }
+    .toolbar .save-indicator { font-size: 12px; color: var(--text-muted); }
+
+    /* SECTION */
+    .section {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      margin-bottom: 28px; overflow: hidden; transition: var(--transition);
+    }
+    .section:hover { border-color: rgba(108,92,231,0.3); box-shadow: var(--shadow-glow); }
+    .section-header {
+      padding: 20px 24px; cursor: pointer; display: flex; align-items: center; gap: 14px;
+      background: var(--bg-section); border-bottom: 1px solid var(--border);
+      user-select: none; transition: var(--transition);
+    }
+    .section-header:hover { background: var(--bg-card-hover); }
+    .section-header .num {
+      width: 36px; height: 36px; border-radius: 10px; display: flex;
+      align-items: center; justify-content: center; font-weight: 800; font-size: 15px;
+      background: var(--primary-dim); color: var(--primary-light); flex-shrink: 0;
+    }
+    .section-header h2 { font-size: 1.2em; font-weight: 700; flex: 1; }
+    .section-header .badge {
+      padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; flex-shrink: 0;
+    }
+    .badge-complete { background: var(--green-bg); color: var(--green); }
+    .badge-progress { background: var(--yellow-bg); color: var(--yellow); }
+    .badge-needs-work { background: var(--red-bg); color: var(--red); }
+    .section-header .chevron { font-size: 18px; color: var(--text-muted); transition: transform var(--transition); flex-shrink: 0; }
+    .section.open .section-header .chevron { transform: rotate(180deg); }
+    .section-body { padding: 0; max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .section.open .section-body { max-height: 20000px; }
+    .section-content { padding: 24px; }
+
+    /* ITEMS */
+    .item {
+      background: var(--bg-section); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 16px 20px; margin-bottom: 12px; transition: var(--transition);
+    }
+    .item:last-child { margin-bottom: 0; }
+    .item:hover { border-color: rgba(108,92,231,0.25); }
+    .item-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+    .item-name { font-weight: 700; font-size: 1em; }
+    .item-role { font-size: 12px; color: var(--text-muted); background: var(--bg-card); padding: 2px 8px; border-radius: 4px; }
+    .item-status { font-size: 12px; margin-inline-start: auto; }
+    .item-desc { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 10px; }
+    .item-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+    .tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; background: var(--primary-dim); color: var(--primary-light); }
+    .tag.ok { background: var(--green-bg); color: var(--green); }
+    .tag.warn { background: var(--orange-bg); color: var(--orange); }
+    .tag.err { background: var(--red-bg); color: var(--red); }
+
+    /* APPROVE / NEEDS-WORK TOGGLE */
+    .item-actions { display: flex; align-items: center; gap: 16px; margin-top: 10px; }
+    .radio-group { display: flex; gap: 8px; }
+    .radio-group label {
+      display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px;
+      border-radius: 6px; font-size: 12px; cursor: pointer; border: 1px solid var(--border);
+      transition: var(--transition); user-select: none;
+    }
+    .radio-group label:hover { border-color: var(--primary); }
+    .radio-group input[type="radio"] { display: none; }
+    .radio-group input[type="radio"]:checked + .radio-label-approve { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+    .radio-group input[type="radio"]:checked + .radio-label-needswork { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+    label:has(input[type="radio"]:checked) { font-weight: 600; }
+    label:has(input[type="radio"][value="approve"]:checked) { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+    label:has(input[type="radio"][value="needswork"]:checked) { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+
+    /* TEXTAREA */
+    .feedback-area {
+      width: 100%; min-height: 60px; padding: 10px 14px; border-radius: 8px;
+      background: var(--bg-base); border: 1px solid var(--border); color: var(--text-primary);
+      font-family: 'Heebo', sans-serif; font-size: 13px; resize: vertical;
+      transition: var(--transition); line-height: 1.6;
+    }
+    .feedback-area:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-dim); }
+    .feedback-area::placeholder { color: var(--text-muted); }
+
+    /* SECTION FEEDBACK */
+    .section-feedback { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
+    .section-feedback h4 { font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; }
+    .section-status-select { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+    .status-btn {
+      padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border);
+      background: transparent; color: var(--text-secondary); cursor: pointer;
+      font-family: 'Heebo', sans-serif; font-size: 12px; transition: var(--transition);
+    }
+    .status-btn:hover { border-color: var(--primary); }
+    .status-btn.active-complete { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 600; }
+    .status-btn.active-progress { background: var(--yellow-bg); border-color: var(--yellow); color: var(--yellow); font-weight: 600; }
+    .status-btn.active-needswork { background: var(--red-bg); border-color: var(--red); color: var(--red); font-weight: 600; }
+
+    /* OVERALL RATING */
+    .rating-slider { display: flex; align-items: center; gap: 14px; margin: 16px 0; }
+    .rating-slider input[type="range"] {
+      flex: 1; height: 6px; -webkit-appearance: none; appearance: none;
+      background: var(--border); border-radius: 3px; outline: none;
+    }
+    .rating-slider input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
+      background: var(--primary); cursor: pointer; border: 3px solid var(--bg-base);
+      box-shadow: 0 0 10px rgba(108,92,231,0.4);
+    }
+    .rating-value {
+      font-size: 2em; font-weight: 900; min-width: 50px; text-align: center;
+      background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    /* PROGRESS BAR */
+    .progress-bar-container { margin: 20px 0; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; }
+    .progress-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.5s ease; }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200;
+      display: none; align-items: center; justify-content: center; backdrop-filter: blur(4px);
+    }
+    .modal-overlay.show { display: flex; }
+    .modal {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      padding: 32px; max-width: 420px; width: 90%; text-align: center;
+    }
+    .modal h3 { margin-bottom: 12px; }
+    .modal p { color: var(--text-secondary); font-size: 14px; margin-bottom: 20px; }
+    .modal-buttons { display: flex; gap: 10px; justify-content: center; }
+    .modal-buttons button {
+      padding: 8px 24px; border-radius: 8px; border: none; cursor: pointer;
+      font-family: 'Heebo', sans-serif; font-size: 14px; font-weight: 600; transition: var(--transition);
+    }
+    .modal-buttons .confirm { background: var(--red); color: #fff; }
+    .modal-buttons .confirm:hover { opacity: 0.85; }
+    .modal-buttons .cancel { background: var(--bg-section); color: var(--text-primary); border: 1px solid var(--border); }
+    .modal-buttons .cancel:hover { border-color: var(--primary); }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--bg-card); border: 1px solid var(--green); color: var(--green);
+      padding: 10px 24px; border-radius: 10px; font-size: 14px; z-index: 300;
+      opacity: 0; transition: all 0.3s ease; pointer-events: none;
+      box-shadow: 0 4px 20px rgba(0,184,148,0.2);
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast.error { border-color: var(--red); color: var(--red); }
+
+    /* PRINT */
+    @media print {
+      .sidebar, .sidebar-toggle, .toolbar, .bg-particles, .modal-overlay { display: none !important; }
+      .main { margin-right: auto; max-width: 100%; padding: 20px; }
+      body { background: #fff; color: #111; }
+      .section { break-inside: avoid; border: 1px solid #ccc; }
+      .section-body { max-height: none !important; overflow: visible !important; }
+      .section-header { background: #f5f5f5; }
+      .header { background: #f0f0ff; border-color: #ccc; }
+      .header h1 { -webkit-text-fill-color: #6c5ce7; }
+      .item { background: #fafafa; border-color: #ddd; }
+      .feedback-area { border-color: #ccc; background: #fff; color: #111; }
+      .rating-value { -webkit-text-fill-color: #6c5ce7; }
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+    /* GAP CARDS */
+    .gap-card {
+      background: var(--bg-section); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 14px 18px; margin-bottom: 10px; transition: var(--transition);
+      border-right: 4px solid var(--text-muted); position: relative;
+    }
+    .gap-card:hover { border-color: rgba(108,92,231,0.3); }
+    .gap-card.sev-critical { border-right-color: #e84393; background: rgba(232,67,147,0.05); }
+    .gap-card.sev-high { border-right-color: #fd9644; background: rgba(253,150,68,0.05); }
+    .gap-card.sev-medium { border-right-color: #ffd32a; background: rgba(255,211,42,0.04); }
+    .gap-card.sev-low { border-right-color: #45aaf2; background: rgba(69,170,242,0.04); }
+    .gap-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+    .gap-id { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; font-family: monospace; }
+    .sev-critical .gap-id { background: var(--red-bg); color: var(--red); }
+    .sev-high .gap-id { background: var(--orange-bg); color: var(--orange); }
+    .sev-medium .gap-id { background: var(--yellow-bg); color: var(--yellow); }
+    .sev-low .gap-id { background: var(--blue-bg); color: var(--blue); }
+    .gap-sev-badge { font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 10px; }
+    .gap-sev-badge.critical { background: var(--red-bg); color: var(--red); }
+    .gap-sev-badge.high { background: var(--orange-bg); color: var(--orange); }
+    .gap-sev-badge.medium { background: var(--yellow-bg); color: var(--yellow); }
+    .gap-sev-badge.low { background: var(--blue-bg); color: var(--blue); }
+    .gap-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 8px; }
+    .gap-source { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+    .gap-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+    .gap-radio-group { display: flex; gap: 6px; flex-wrap: wrap; }
+    .gap-radio-group label {
+      display: inline-flex; align-items: center; gap: 3px; padding: 3px 10px;
+      border-radius: 6px; font-size: 11px; cursor: pointer; border: 1px solid var(--border);
+      transition: var(--transition); user-select: none;
+    }
+    .gap-radio-group label:hover { border-color: var(--primary); }
+    .gap-radio-group input[type="radio"] { display: none; }
+    label:has(input[type="radio"][value="unfixed"]:checked) { background: var(--red-bg); border-color: var(--red); color: var(--red); font-weight: 600; }
+    label:has(input[type="radio"][value="inprogress"]:checked) { background: var(--yellow-bg); border-color: var(--yellow); color: var(--yellow); font-weight: 600; }
+    label:has(input[type="radio"][value="fixed"]:checked) { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 600; }
+    label:has(input[type="radio"][value="irrelevant"]:checked) { background: var(--blue-bg); border-color: var(--blue); color: var(--blue); font-weight: 600; }
+
+    .gaps-divider { margin: 20px 0 16px; padding: 10px 16px; background: rgba(232,67,147,0.06); border-radius: 8px; border: 1px dashed rgba(232,67,147,0.2); display: flex; align-items: center; gap: 10px; }
+    .gaps-divider h4 { font-size: 14px; color: var(--red); font-weight: 700; }
+    .gaps-divider .gap-count { font-size: 12px; color: var(--text-muted); }
+
+    .gap-summary-bar { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0; padding: 12px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; }
+    .gap-stat { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+    .gap-stat .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .gap-stat .dot.critical { background: var(--red); }
+    .gap-stat .dot.high { background: var(--orange); }
+    .gap-stat .dot.medium { background: var(--yellow); }
+    .gap-stat .dot.low { background: var(--blue); }
+
+    .gap-filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+    .gap-filter-btn { padding: 4px 14px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); cursor: pointer; font-family: 'Heebo', sans-serif; font-size: 12px; transition: var(--transition); }
+    .gap-filter-btn:hover { border-color: var(--primary); }
+    .gap-filter-btn.active { background: var(--primary-dim); border-color: var(--primary); color: var(--primary-light); font-weight: 600; }
+
+    /* FILE INPUT */
+    .file-input-wrapper { position: relative; display: inline-block; }
+    .file-input-wrapper input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+
+    /* EXPAND ALL */
+    .expand-controls { display: flex; gap: 8px; }
+  </style>
+</head>
+<body>
+
+<div class="bg-particles"></div>
+
+<!-- SIDEBAR -->
+<button class="sidebar-toggle" onclick="toggleSidebar()" title="תפריט">&#9776;</button>
+<nav class="sidebar" id="sidebar">
+  <h3>&#x2699; ניווט מהיר</h3>
+  <a href="#sec-1">1. דמויות <small style="color:var(--red)">(19)</small></a>
+  <a href="#sec-2">2. סיפור <small style="color:var(--red)">(4)</small></a>
+  <a href="#sec-3">3. מוזיקה <small style="color:var(--red)">(7)</small></a>
+  <a href="#sec-4">4. קולות <small style="color:var(--red)">(2)</small></a>
+  <a href="#sec-5">5. אמנות ועיצוב <small style="color:var(--red)">(3)</small></a>
+  <a href="#sec-6">6. UI/UX ועיצוב <small style="color:var(--red)">(24)</small></a>
+  <a href="#sec-7">7. משחקיות <small style="color:var(--red)">(6)</small></a>
+  <a href="#sec-8">8. גיימיפיקציה <small style="color:var(--red)">(7)</small></a>
+  <a href="#sec-9">9. נגישות <small style="color:var(--red)">(3)</small></a>
+  <a href="#sec-10">10. חגים ישראליים <small style="color:var(--red)">(4)</small></a>
+  <a href="#sec-11">11. מורה/הורה <small style="color:var(--red)">(5)</small></a>
+  <a href="#sec-12">12. קרב AI <small style="color:var(--red)">(3)</small></a>
+  <a href="#sec-13">13. טכני <small style="color:var(--red)">(3)</small></a>
+  <a href="#sec-14">14. תוכניות עתידיות <small style="color:var(--red)">(5)</small></a>
+  <a href="#sec-15">15. סיכום ודירוג</a>
+  <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border);">
+    <div class="progress-bar-container">
+      <div class="progress-label"><span>התקדמות משוב</span><span id="sidebar-progress">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="sidebar-progress-bar" style="width:0%"></div></div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>&#x1F5E1; נינג'ה מקלדת — מסמך משוב אינטראקטיבי</h1>
+    <p>סקירה מקיפה של כל מרכיבי המשחק &bull; גרסה אינטראקטיבית עם שמירה אוטומטית</p>
+    <div class="meta">
+      <span>&#x1F4C5; מרץ 2026</span>
+      <span>&#x1F3AE; PWA לילדים 6-16</span>
+      <span>&#x1F1EE;&#x1F1F1; עברית ראשונה</span>
+      <span id="total-items-count">0 פריטים</span>
+      <span id="gaps-resolved-count" style="color:var(--red)">0/96 פערים טופלו</span>
+    </div>
+    <div class="gap-summary-bar" style="max-width:600px;margin:16px auto 0;">
+      <div class="gap-stat"><span class="dot critical"></span><span>9 קריטי</span></div>
+      <div class="gap-stat"><span class="dot high"></span><span>33 גבוה</span></div>
+      <div class="gap-stat"><span class="dot medium"></span><span>48 בינוני</span></div>
+      <div class="gap-stat"><span class="dot low"></span><span>6 נמוך</span></div>
+      <div class="gap-stat" style="margin-inline-start:auto;font-weight:700;color:var(--text-primary)"><span>= 96 פערים ידועים</span></div>
+    </div>
+    <div class="progress-bar-container" style="margin-top:20px; max-width:500px; margin-inline:auto;">
+      <div class="progress-label"><span>סה"כ פריטים שנסקרו</span><span id="header-progress">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="header-progress-bar" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="expand-controls">
+      <button onclick="expandAll()">&#x25BC; פתח הכל</button>
+      <button onclick="collapseAll()">&#x25B2; סגור הכל</button>
+    </div>
+    <button class="primary" onclick="exportJSON()">&#x1F4E5; ייצוא JSON</button>
+    <button onclick="importJSON()">&#x1F4E4; ייבוא JSON</button>
+    <button class="danger" onclick="showClearModal()">&#x1F5D1; נקה הכל</button>
+    <button onclick="window.print()">&#x1F5A8; הדפסה</button>
+    <span style="color:var(--text-muted);font-size:12px">|</span>
+    <button class="gap-filter-btn active" onclick="filterGaps('all',this)">כל הפערים</button>
+    <button class="gap-filter-btn" onclick="filterGaps('critical',this)" style="color:var(--red)">&#x1F534; קריטי</button>
+    <button class="gap-filter-btn" onclick="filterGaps('high',this)" style="color:var(--orange)">&#x1F7E0; גבוה</button>
+    <button class="gap-filter-btn" onclick="filterGaps('medium',this)" style="color:var(--yellow)">&#x1F7E1; בינוני</button>
+    <button class="gap-filter-btn" onclick="filterGaps('low',this)" style="color:var(--blue)">&#x1F535; נמוך</button>
+    <button class="gap-filter-btn" onclick="filterGaps('hide',this)">הסתר פערים</button>
+    <span class="save-indicator" id="save-indicator">&#x1F4BE; שמירה אוטומטית פעילה</span>
+    <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)">
+  </div>
+
+  <!-- SECTIONS CONTAINER -->
+  <div id="sections-container"></div>
+
+</div>
+
+<!-- CLEAR MODAL -->
+<div class="modal-overlay" id="clear-modal">
+  <div class="modal">
+    <h3>&#x26A0; ניקוי כל המשוב</h3>
+    <p>פעולה זו תמחק את כל המשוב שהזנת. האם להמשיך?</p>
+    <div class="modal-buttons">
+      <button class="confirm" onclick="clearAll()">כן, נקה הכל</button>
+      <button class="cancel" onclick="hideClearModal()">ביטול</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// DATA DEFINITION
+// ============================================================
+const SECTIONS = [
+  {
+    id: 'sec-1', num: '1', title: 'דמויות (Characters)', defaultStatus: 'progress',
+    badge: '18 דמויות',
+    items: [
+      { id: 'char-ki', name: 'קי (Ki)', role: 'גיבור ראשי', tags: [{t:'8 מצבי רוח',c:'ok'},{t:'Gemini art',c:'ok'},{t:'ילד זכר',c:'ok'}], desc: 'הגיבור הראשי של המשחק. 8 מצבי רוח דרך framer-motion wrapper. אמנות Gemini מאושרת. בנוי כילד בצורה ברורה.' },
+      { id: 'char-yuki', name: 'יוקי (Yuki)', role: 'מנטור מהירות', tags: [{t:'V8-D קול',c:'ok'},{t:'היפר סברא גיימר',c:'ok'}], desc: 'מנטורית מהירות הקלדה. קול V8-D מאושר (ElevenLabs). אישיות: היפר סברה גיימרית, אנרגטית. צריכה יריבה/וילנית + מנטורית נינג\'ה נקבית.' },
+      { id: 'char-mika', name: 'מיקה (Mika)', role: 'מורה קיצורים', tags: [{t:'דרוש עיצוב מחדש',c:'err'},{t:'יותר נשית',c:'warn'}], desc: 'מלמדת קיצורי מקלדת. בעיה: עיצוב נוכחי מדי טומבויי! צריכה להיות יותר נשית/קלאסית כדי שבנות יתחברו. העיצוב הנוכחי יעבור לדמות אחרת.' },
+      { id: 'char-luna', name: 'לונה (Luna)', role: 'חברה לתרגול', tags: [{t:'ביישנית',c:''},{t:'אמנית',c:''}], desc: 'חברה לתרגול. ביישנית → לומדת להיות מוחצנת ולהציג את האמנות שלה לעולם. מסע התפתחות אישי.' },
+      { id: 'char-noa', name: 'נואה (Noa)', role: 'ריפוי/שלווה', tags: [{t:'מרפאה',c:''},{t:'מלכת הבאגים',c:''}], desc: 'דמות ריפוי ושלווה. מרפאה/ממירה את מלכת הבאגים (נואה). קשורה לארק של הווילנים הנשיים.' },
+      { id: 'char-rex', name: 'רקס (Rex)', role: 'משחקים/כיף', tags: [{t:'קול pitch-shifted',c:'ok'},{t:'יריב: Block',c:''}], desc: 'דמות משחקים וכיף. קול עם pitch shifting ב-ffmpeg (95%). יריבו הוא Block (חסימה יצירתית) — האינטראקציה ביניהם צריכה להיות מצחיקה.' },
+      { id: 'char-pixel', name: 'פיקסל (Pixel)', role: 'סטטיסטיקות', tags: [{t:'AI/רובוט',c:''},{t:'יריב: Lens',c:''}], desc: 'דמות סטטיסטיקות ונתונים. AI/רובוט. יריבו הוא Lens (עין-מצלמה) בתחרות צילום. אחראי על דף הסטטיסטיקות.' },
+      { id: 'char-sensei', name: 'סנסאי זן (Sensei Zen)', role: 'מנטור צב', tags: [{t:'צב',c:'ok'},{t:'קול מאושר',c:'ok'},{t:'v3 expressions',c:'ok'}], desc: 'מנטור ראשי. צב! (לא אדם). קול מאושר — אסור לייצר מחדש. ביטויי v3 כצב עברו בדיקת עקביות (88/100). אולי ידידות "או יותר" עם סנסאי הנקבית.' },
+      { id: 'char-sakura', name: 'סאקורה (Sakura)', role: 'מנטורית עגור', tags: [{t:'model sheet v2',c:'ok'}], desc: 'מנטורית עגור. גיליון מודל v2 מוכן. מנטורית לצד סנסאי זן.' },
+      { id: 'char-glitch', name: 'גליץ\' (Glitch)', role: 'וילנית → חברה', tags: [{t:'6 גרסאות',c:'ok'},{t:'שיער מג\'נטה',c:'warn'},{t:'לא מתה!',c:'ok'}], desc: 'וילנית שהופכת לחברה. 6 גרסאות model sheet. בעיה: צריך לתקן שיער מג\'נטה ב-v3 expressions (64/100). לא מתה! מתפרקת → מתאחדת → חוזרת ברגע קריטי. ארק רגשי עם מיקה (חברות האקריות לשעבר). הולכת עם וירוס מרצון כדי להגן על חברים.' },
+      { id: 'char-masterbeat', name: 'מאסטר ביט (Master Beat)', role: 'ישות טרנסצנדנטית', tags: [{t:'מאושר',c:'ok'},{t:'צב קוסמי',c:'ok'}], desc: 'ישות טרנסצנדנטית. לא רק צב זקן! חצי-אתרי, שריון קוסמי, מקל קריסטל מרחף, אורה של חלקיקי קוד. Model sheet v1 אושר.' },
+      { id: 'char-raz', name: 'רז (Raz)', role: 'אבא של קי', tags: [{t:'עור כהה',c:'ok'},{t:'להבים כפולים',c:'ok'}], desc: 'אבא של קי. עור כהה, להבים כפולים, גלימה סגולה. חי! נלחם באויב גדול יותר → הכנה לפרק 6. נפרד מפנטום.' },
+      { id: 'char-virus', name: 'וירוס (Virus)', role: 'צורה כפולה', tags: [{t:'ידידותי → רשע',c:'ok'},{t:'2 מודלים',c:'ok'}], desc: 'דמות בעלת צורה כפולה: רובוט חמוד/ידידותי (לפני החשיפה) → ישות אפלה מפחידה עם זרועות (אחרי החשיפה). מוצג כידידותי בטורניר → בגידה → מתמזג עם גליץ\' = בוס מגה.' },
+      { id: 'char-phantom', name: 'פנטום (Phantom)', role: 'תימני', tags: [{t:'רגישות היסטורית!',c:'warn'}], desc: 'דמות תימנית. חשוב! יש לטפל ברגישות היסטורית (חטיפת ילדי תימן). לשמור חיובי/מגניב, להתייחס לדמויות ישראליות-תימניות מוצלחות מודרניות. מנטור של מיקה.' },
+      { id: 'char-shadow', name: 'שאדו (Shadow)', role: 'חתול יריב', tags: [{t:'צריך יותר נוכחות',c:'warn'}], desc: 'חתול יריב. דרוש יותר נוכחות בפרקים מוקדמים, לא רק בסוף. צריך להפוך לדמות אהובה/כיפית מהר.' },
+      { id: 'char-storm', name: 'סטורם (Storm)', role: 'שועלה נקבית', tags: [{t:'אחות של בארק',c:'ok'},{t:'שועלה',c:'ok'}], desc: 'שועלה נקבית! אחותו של בארק. שניהם מהדוג\'ו של הברקים. צריכה יותר נוכחות ואינטגרציה עמוקה במערכת היחסים.' },
+      { id: 'char-blaze', name: 'בלייז (Blaze)', role: 'דרקון שומר', tags: [{t:'קטן יותר',c:'ok'},{t:'שומר דוג\'ו האש',c:''}], desc: 'דרקון שומר. לא תמיד ענק! קטן יותר, ניתן להזדהות איתו. שומר דוג\'ו האש ואומנויות ההקלדה. צריך יותר נוכחות.' },
+      { id: 'char-barak', name: 'בארק (Barak)', role: 'שועל יהיר', tags: [{t:'אח של סטורם',c:'ok'},{t:'שועל',c:'ok'}], desc: 'שועל! אח מעצבן ויהיר של סטורם. שניהם מדוג\'ו הברקים. חייב להיראות שונה ויזואלית מסטורם למרות מוטיבים משותפים של ברקים.' },
+    ]
+  },
+  {
+    id: 'sec-2', num: '2', title: 'סיפור (Story)', defaultStatus: 'progress',
+    badge: '6 פרקים, 53 פעימות',
+    items: [
+      { id: 'story-ch1', name: 'פרק 1: היכרות עם עולם ההקלדה', role: 'הקדמה', tags: [{t:'כתוב בעברית',c:'ok'}], desc: 'פרק פתיחה — הכרת העולם, הדמויות הראשונות, והמוטיבציה ללמוד הקלדה. מכיל את הפעימות הראשונות של הסיפור.' },
+      { id: 'story-ch2', name: 'פרק 2: הדוג\'ו הגדול', role: 'הרפתקה', tags: [{t:'כתוב בעברית',c:'ok'}], desc: 'הגיבור מגיע לדוג\'ו הראשי. לומד מהסנסאי. מכיר דמויות חדשות. האימון מתחיל.' },
+      { id: 'story-ch3', name: 'פרק 3: האתגר של הווילן', role: 'עימות', tags: [{t:'כתוב בעברית',c:'ok'}], desc: 'הווילן מופיע. אתגרים מתגברים. מתח עולה. החשיפה לווירוס (כידידותי בהתחלה).' },
+      { id: 'story-ch4', name: 'פרק 4: הבגידה הגדולה', role: 'טוויסט', tags: [{t:'כתוב בעברית',c:'ok'},{t:'גליץ\' הולכת מרצון',c:'ok'}], desc: 'הבגידה הגדולה! גליץ\' הולכת עם וירוס מרצון כדי להגן על חבריה. לא בגידה אמיתית — הקרבה. רגע רגשי חזק.' },
+      { id: 'story-ch5', name: 'פרק 5: המלחמה', role: 'שיא', tags: [{t:'כתוב בעברית',c:'ok'},{t:'הקרבת גליץ\'',c:'ok'}], desc: 'חברים נלחמים נגד גליץ\'. מגה וירוס+גליץ\' מופיע. גליץ\' מקריבה את עצמה — רגע שמביא לדמעות! כל היריבים הופכים לחברים.' },
+      { id: 'story-ch6', name: 'פרק 6: המלחמה הגדולה', role: 'גרנד פינאלה', tags: [{t:'כתוב בעברית',c:'ok'},{t:'6 קבוצות',c:'ok'}], desc: 'כל הדמויות ב-6 קבוצות. משימות צד. איסוף פרגמנטים של גליץ\' (בלי לדעת). וירוס + מלך הבאגים? עולם קוד? שליטה ברמה גבוהה במחשב.' },
+      { id: 'story-engine', name: 'מנוע סיפור', role: 'תשתית', tags: [{t:'use-story-trigger',c:'ok'},{t:'story-trigger-wrapper',c:'ok'},{t:'/story replay',c:'ok'}], desc: 'מנוע הסיפור מוטמע: use-story-trigger hook + story-trigger-wrapper + דף replay ב-/story עם אקורדיון פרקים ומעקב נצפה/לא נצפה. פעימות סיפור מופעלות אוטומטית אחרי השלמת שיעור.' },
+    ]
+  },
+  {
+    id: 'sec-3', num: '3', title: 'מוזיקה (Music)', defaultStatus: 'complete',
+    badge: '56 טראקים',
+    items: [
+      { id: 'music-gameplay', name: '44 טראקים למשחק', role: 'Suno V5', tags: [{t:'מוכן',c:'ok'}], desc: '44 טראקים למשחק נוצרו דרך Suno V5 בצינור אוטומטי. כל הטראקים מוכנים ובמניפסט.' },
+      { id: 'music-holidays', name: '12 טראקי חגים', role: 'מלודיות ישראליות', tags: [{t:'הושלם',c:'ok'},{t:'מלודיות אותנטיות',c:'ok'}], desc: '12 טראקי חגים עם הפניות למלודיות ישראליות אותנטיות. הושלם! כולל מלודיות מסורתיות לכל חג.' },
+      { id: 'music-jukebox', name: 'מערכת ג\'וקבוקס', role: 'UI', tags: [{t:'מוכן',c:'ok'},{t:'מאושר',c:'ok'}], desc: 'מערכת ג\'וקבוקס מלאה. דף ג\'וקבוקס, ניווט בסיידבר, שליטה בהגדרות. מאושר על ידי המשתמש.' },
+      { id: 'music-gamification', name: 'גיימיפיקציית מוזיקה', role: 'פיצ\'ר עתידי', tags: [{t:'ממתין',c:'warn'}], desc: 'שחקנים פותחים טראקים כהישגים, בוחרים מתי ואיפה לשמוע אותם. עדיין לא מומש.' },
+      { id: 'music-theme', name: 'תמה ראשית', role: 'זהות', tags: [{t:'V2 = רשמי',c:'ok'}], desc: 'Main Theme V2 = התמה הרשמית של המשחק! V1 = הומוריסטי, לשימוש במקום אחר. Boss V1=בוס גדול, V2=מיני בוס.' },
+    ]
+  },
+  {
+    id: 'sec-4', num: '4', title: 'קולות (Voices)', defaultStatus: 'progress',
+    badge: 'ElevenLabs',
+    items: [
+      { id: 'voice-system', name: 'מערכת קולות', role: '10 דמויות', tags: [{t:'ElevenLabs V3',c:'ok'},{t:'40 שורות עברית',c:'ok'}], desc: '10 דמויות עם קולות מותאמים אישית. 40 שורות קול בעברית (V5). API של ElevenLabs Voice Design v3.' },
+      { id: 'voice-yuki', name: 'קול יוקי', role: 'V8-D', tags: [{t:'רשמי',c:'ok'},{t:'V8-B = גיבוי',c:'ok'}], desc: 'יוקי V8-D = הקול הרשמי (היפר סברה גיימרית, אנרגטית). V8-B = גיבוי. מזהה ElevenLabs: svFzGI0ewo7PyrO1RHP1.' },
+      { id: 'voice-sensei', name: 'קול סנסאי זן', role: 'מאושר', tags: [{t:'אסור לייצר מחדש!',c:'ok'}], desc: 'קול סנסאי זן מאושר! אסור לייצר מחדש בשום מצב.' },
+      { id: 'voice-postprocess', name: 'עיבוד ffmpeg', role: 'אפקטים', tags: [{t:'Rex 95%',c:'ok'},{t:'Bug 115%+vibrato',c:'ok'},{t:'Glitch tremolo',c:'ok'}], desc: 'עיבוד לאחר הפקה עם ffmpeg: Rex (pitch 95%), Bug (pitch 115%+vibrato), BugKing (pitch 85%+echo), Glitch (tremolo+echo+bandpass).' },
+    ]
+  },
+  {
+    id: 'sec-5', num: '5', title: 'אמנות ועיצוב (Art & Design)', defaultStatus: 'progress',
+    badge: '30 model sheets',
+    items: [
+      { id: 'art-models', name: 'גיליונות מודל', role: '30+18', tags: [{t:'30 model sheets',c:'ok'},{t:'18 expression sheets',c:'ok'}], desc: '30 גיליונות מודל + 18 גיליונות הבעות מוכנים. אמנות דמויות תוקננה, גרסאות ישנות הועברו לארכיון.' },
+      { id: 'art-bible', name: 'ספר חזותי (Visual Bible)', role: '25 דמויות', tags: [{t:'Visual DNA',c:'ok'},{t:'צבעי hex',c:'ok'}], desc: 'ספר חזותי עם 25 דמויות. Visual DNA, צבעי hex, כללי mustKeep/canChange לכל דמות.' },
+      { id: 'art-backgrounds', name: 'רקעים', role: '8 סביבות', tags: [{t:'מוכן',c:'ok'}], desc: '8 רקעי סביבה ב-public/images/backgrounds/. רקעים שלמים לכל הדוג\'ויות.' },
+      { id: 'art-rivals', name: 'יריבי RivalNinja', role: '3 יריבים', tags: [{t:'Gemini art',c:'ok'}], desc: 'Shadow (חתול), Storm (שועלה), Blaze (דרקון) — אמנות Gemini מוכנה.' },
+      { id: 'art-issue-ki', name: 'בעיה: הבעות קי', role: 'באג', tags: [{t:'עיצוב ישן נארוטו!',c:'err'}], desc: 'בעיה קריטית: הבעות קי עדיין מציגות עיצוב ישן בסגנון נארוטו (מכוסה/מוסתר) — חייב להשתמש בעיצוב V5 חדש עם פנים מלאות!' },
+      { id: 'art-issue-mika', name: 'בעיה: עיצוב מיקה', role: 'עיצוב מחדש', tags: [{t:'יותר נשית',c:'err'}], desc: 'מיקה צריכה עיצוב מחדש! יותר נשית/קלאסית כדי שבנות יתחברו. העיצוב הנוכחי טומבויי מדי.' },
+      { id: 'art-issue-diversity', name: 'בעיה: גיוון', role: 'כור היתוך', tags: [{t:'דרוש גיוון',c:'warn'}], desc: 'דמויות נראות "לבנות" מדי — צריך כור היתוך ישראלי: אשכנזי, אפריקאי, צפון אפריקאי, תימני, אסייתי, דרום אמריקאי. להוסיף דמויות מגוונות או לעדכן קיימות.' },
+    ]
+  },
+  {
+    id: 'sec-6', num: '6', title: 'UI/UX ועיצוב', defaultStatus: 'complete',
+    badge: '12 דפים',
+    items: [
+      { id: 'ui-theme', name: 'ערכת נושא גיימינג', role: 'עיצוב בסיס', tags: [{t:'#0d0b1a',c:'ok'},{t:'gaming CSS',c:'ok'}], desc: 'ערכת נושא גיימינג כהה כברירת מחדל. בסיס #0d0b1a. 13 משתני --game-*, כל הצבעים המקודדים הוחלפו.' },
+      { id: 'ui-ages', name: '5 ערכות גיל', role: 'תמות', tags: [{t:'shatil/nevet/geza/anaf/tzameret',c:'ok'}], desc: '5 ערכות נושא לפי גיל: שתיל (6-8), נבט (8-10), גזע (10-12), ענף (12-14), צמרת (14-16+). CSS custom properties.' },
+      { id: 'ui-pages', name: 'CSS גיימינג ב-12 דפים', role: 'הושלם', tags: [{t:'כל 12 הדפים',c:'ok'}], desc: 'מיגרציית CSS גיימינג הושלמה בכל 12 הדפים הנותרים. עיצוב אחיד בכל המשחק.' },
+      { id: 'ui-sfx', name: 'אפקטי סאונד UI', role: 'אינטראקציות', tags: [{t:'sidebar',c:'ok'},{t:'tabs',c:'ok'},{t:'header',c:'ok'}], desc: 'אפקטי סאונד לאינטראקציות UI: סיידבר, טאבים, הדר, הגדרות, דשבורד בית.' },
+      { id: 'ui-approved', name: 'אישורים', role: 'החלטות', tags: [{t:'לייאאוטים א-סימטריים',c:'ok'},{t:'השחקן בוחר רמת ממשק',c:'ok'}], desc: 'מאושר: לייאאוטים א-סימטריים, יותר סוגי פונטים. מאושר: השחקן בוחר רמת ממשק (ילדים לא יבחרו ריק, מבוגרים עשויים ליהנות מצבעים).' },
+    ]
+  },
+  {
+    id: 'sec-7', num: '7', title: 'משחקיות (Gameplay)', defaultStatus: 'progress',
+    badge: 'מנועים + מצבים',
+    items: [
+      { id: 'game-engine', name: 'מנוע הקלדה', role: 'תשתית', tags: [{t:'pure function',c:'ok'},{t:'ללא classes',c:'ok'}], desc: 'מנוע הקלדה: פונקציה טהורה, ללא classes. ארכיטקטורה נקייה ובדיקה קלה.' },
+      { id: 'game-placement', name: 'מנוע מיקום', role: '5 רמות', tags: [{t:'SkillLevel 5 tiers',c:'ok'},{t:'SimplifiedLevel 3',c:'ok'}], desc: 'מנוע מיקום: 5 רמות מיומנות (SkillLevel) + 3 רמות מפושטות (SimplifiedLevel). מבחן מיקום ראשוני.' },
+      { id: 'game-practice', name: 'מצב תרגול', role: 'מוכן', tags: [{t:'מוכן',c:'ok'}], desc: 'מצב תרגול פעיל ועובד.' },
+      { id: 'game-speed', name: 'מבחן מהירות', role: 'מוכן', tags: [{t:'מוכן',c:'ok'}], desc: 'מבחן מהירות פעיל ועובד.' },
+      { id: 'game-shortcuts', name: 'שיעורי קיצורים', role: 'מוכן', tags: [{t:'מוכן',c:'ok'}], desc: 'שיעורי קיצורי מקלדת פעילים ועובדים.' },
+      { id: 'game-ai', name: 'מערכת קרב AI', role: 'מוכן', tags: [{t:'מוכן',c:'ok'}], desc: 'מערכת קרב AI מלאה: מנוע, זירה, 3 יריבים.' },
+      { id: 'game-antifrustration', name: 'מכניקות אנטי-תסכול', role: 'ממתין', tags: [{t:'דרוש מחקר',c:'warn'},{t:'ממתין למימוש',c:'warn'}], desc: 'ממתין! מכניקות למניעת rage-quitting: עידוד, מערכות עזרה, התאמת קושי. מאושר כ"גאוני" אך עדיין לא מומש.' },
+      { id: 'game-boss', name: 'UX קרב בוס', role: 'ממתין', tags: [{t:'רמזים ברורים',c:'warn'},{t:'ממתין',c:'warn'}], desc: 'ממתין! UX קרב בוס: רמזים/הסברים ברורים לפי דרישה. המשחקיות צריכה להיות מובנת למניעת יציאה מתסכלת.' },
+    ]
+  },
+  {
+    id: 'sec-8', num: '8', title: 'גיימיפיקציה (Gamification)', defaultStatus: 'progress',
+    badge: 'XP + תגים',
+    items: [
+      { id: 'gamif-xp', name: 'חנות XP', role: 'מוכן', tags: [{t:'Zustand store',c:'ok'}], desc: 'חנות XP פעילה עם Zustand store.' },
+      { id: 'gamif-badges', name: 'מערכת תגים', role: 'דרוש עיצוב מחדש', tags: [{t:'בעיה: דומים למשחקים ידועים',c:'err'}], desc: 'מערכת תגים קיימת אך דרושה עיצוב מחדש! תג הכוכב והגביע דומים מדי למשחקים ידועים. צריך עיצוב ייחודי.' },
+      { id: 'gamif-skins', name: 'סקינים ברונזה/כסף/זהב', role: 'ממתין', tags: [{t:'ממתין',c:'warn'}], desc: 'ממתין! סקינים ברונזה/כסף/זהב לכל הדמויות ואתגרים. זכויות שוויץ.' },
+      { id: 'gamif-tournaments', name: 'טורנירים', role: 'ממתין', tags: [{t:'אוטומטיים',c:'warn'},{t:'סנכרון יומן בית ספר',c:'warn'}], desc: 'ממתין! טורנירים אוטומטיים, מסונכרנים עם יומן בית ספר. הפרדת live מול מוגבל בזמן. הפרדת גילאים קריטית!' },
+      { id: 'gamif-merch', name: 'מרצ\'נדייז', role: 'רעיון', tags: [{t:'פדים',c:''},{t:'חולצות',c:''},{t:'מקלדות',c:''}], desc: 'רעיון: פדים למקלדת, חולצות, מקלדת ממותגת (פרס טורניר), תחפושות דמויות!' },
+    ]
+  },
+  {
+    id: 'sec-9', num: '9', title: 'נגישות (Accessibility)', defaultStatus: 'complete',
+    badge: '~8.5/10',
+    items: [
+      { id: 'a11y-motion', name: 'prefers-reduced-motion', role: '9 רכיבים', tags: [{t:'CSS @media',c:'ok'},{t:'9 components',c:'ok'}], desc: 'prefers-reduced-motion מוטמע ב-9 רכיבים + CSS @media. אנימציות מבוטלות למשתמשים שמעדיפים פחות תנועה.' },
+      { id: 'a11y-aria', name: 'aria-live regions', role: 'מוכן', tags: [{t:'מוכן',c:'ok'}], desc: 'אזורי aria-live מוטמעים לקוראי מסך.' },
+      { id: 'a11y-rtl', name: 'טיפול RTL', role: 'מוכן', tags: [{t:'CSS logical properties',c:'ok'}], desc: 'טיפול RTL מלא עם CSS logical properties בלבד (ms-4 לא ml-4, ps-4 לא pl-4).' },
+      { id: 'a11y-wcag', name: 'יעד WCAG 2.2 AA', role: 'יעד', tags: [{t:'בתהליך',c:'ok'}], desc: 'יעד WCAG 2.2 AA. רוב הדרישות מתקיימות. ציון כולל ~8.5/10.' },
+    ]
+  },
+  {
+    id: 'sec-10', num: '10', title: 'חגים ישראליים (Israeli Holidays)', defaultStatus: 'progress',
+    badge: '12 חגים',
+    items: [
+      { id: 'holiday-tracks', name: 'טראקי חגים', role: '12 טראקים', tags: [{t:'מלודיות אותנטיות',c:'ok'},{t:'הושלם',c:'ok'}], desc: '12 טראקי חגים עם מלודיות ישראליות אותנטיות הושלמו.' },
+      { id: 'holiday-hanukkah', name: 'חנוכה', role: 'מוזיקה', tags: [{t:'טראק מוכן',c:'ok'}], desc: 'טראק חנוכה מוכן עם מלודיות מסורתיות.' },
+      { id: 'holiday-purim', name: 'פורים', role: 'מוזיקה', tags: [{t:'טראק מוכן',c:'ok'}], desc: 'טראק פורים מוכן.' },
+      { id: 'holiday-pesach', name: 'פסח', role: 'מוזיקה', tags: [{t:'טראק מוכן',c:'ok'}], desc: 'טראק פסח מוכן.' },
+      { id: 'holiday-independence', name: 'יום העצמאות', role: 'מוזיקה', tags: [{t:'טראק מוכן',c:'ok'}], desc: 'טראק יום העצמאות מוכן.' },
+      { id: 'holiday-roshHashana', name: 'ראש השנה', role: 'מוזיקה', tags: [{t:'טראק מוכן',c:'ok'}], desc: 'טראק ראש השנה מוכן.' },
+      { id: 'holiday-sukkot', name: 'סוכות', role: 'מוזיקה', tags: [{t:'טראק מוכן',c:'ok'}], desc: 'טראק סוכות מוכן.' },
+      { id: 'holiday-shavuot', name: 'שבועות', role: 'מוזיקה', tags: [{t:'טראק מוכן',c:'ok'}], desc: 'טראק שבועות מוכן.' },
+      { id: 'holiday-lagbaomer', name: 'ל"ג בעומר', role: 'מוזיקה', tags: [{t:'טראק מוכן',c:'ok'}], desc: 'טראק ל"ג בעומר מוכן.' },
+      { id: 'holiday-tubshvat', name: 'ט"ו בשבט', role: 'מוזיקה', tags: [{t:'טראק מוכן',c:'ok'}], desc: 'טראק ט"ו בשבט מוכן.' },
+      { id: 'holiday-memorial', name: 'יום הזיכרון', role: 'מוזיקה', tags: [{t:'טראק מוכן',c:'ok'}], desc: 'טראק יום הזיכרון מוכן.' },
+      { id: 'holiday-shoah', name: 'יום השואה', role: 'מוזיקה', tags: [{t:'טראק מוכן',c:'ok'}], desc: 'טראק יום השואה מוכן.' },
+      { id: 'holiday-simchat', name: 'שמחת תורה', role: 'מוזיקה', tags: [{t:'טראק מוכן',c:'ok'}], desc: 'טראק שמחת תורה מוכן.' },
+      { id: 'holiday-skins', name: 'מערכת סקינים לחגים', role: 'עיצוב', tags: [{t:'מעוצבת',c:'ok'},{t:'ממתינה למימוש',c:'warn'}], desc: 'מערכת סקינים לחגים מעוצבת אך ממתינה למימוש. צריך סקינים לכל הדמויות לכל חג. חסר: Blaze, Shadow, Phantom + כל דמות עתידית.' },
+      { id: 'holiday-events', name: 'אירועים עונתיים', role: 'ממתין', tags: [{t:'שילוב עם סיפור',c:'warn'}], desc: 'ממתין! אירועי עונה חייבים להשתלב עם מערכת הסקינים של החגים הישראליים ועם הסיפור.' },
+    ]
+  },
+  {
+    id: 'sec-11', num: '11', title: 'מורה/הורה (Teacher/Parent)', defaultStatus: 'progress',
+    badge: 'דשבורד + מיפוי',
+    items: [
+      { id: 'teacher-dashboard', name: 'דשבורד מורה', role: 'מוכן', tags: [{t:'מוכן',c:'ok'}], desc: 'דשבורד מורה פעיל ועובד.' },
+      { id: 'teacher-mapping', name: 'מיפוי מיומנויות תלמידים', role: 'מוכן', tags: [{t:'מוכן',c:'ok'}], desc: 'מיפוי מיומנויות תלמידים — מבוגרים רואים איזה מיומנויות כל דמות מלמדת, לתכנון שיעורים ללא נרטיב.' },
+      { id: 'teacher-mobile', name: 'ממשק מובייל', role: 'ממתין', tags: [{t:'דרוש',c:'warn'}], desc: 'ממתין! ממשק מובייל למורה/הורה דרוש.' },
+      { id: 'teacher-research', name: 'מחקר פדגוגי', role: 'ממתין', tags: [{t:'דרוש',c:'warn'}], desc: 'ממתין! מחקר פדגוגי דרוש לאיכות ההנחיה למורים/הורים.' },
+    ]
+  },
+  {
+    id: 'sec-12', num: '12', title: 'קרב AI (AI Battle)', defaultStatus: 'complete',
+    badge: '1096 טסטים',
+    items: [
+      { id: 'ai-engine', name: 'מנוע AI', role: 'תשתית', tags: [{t:'ai-typing-engine',c:'ok'}], desc: 'מנוע הקלדת AI פעיל — מדמה רמות מיומנות אנושיות שונות.' },
+      { id: 'ai-arena', name: 'זירת קרב', role: 'UI', tags: [{t:'battle-arena',c:'ok'}], desc: 'רכיב זירת קרב פעיל ועובד.' },
+      { id: 'ai-opponents', name: '3 יריבי AI', role: 'דמויות', tags: [{t:'Shadow חתול',c:'ok'},{t:'Storm שועלה',c:'ok'},{t:'Blaze דרקון',c:'ok'}], desc: '3 יריבי AI: Shadow (חתול), Storm (שועלה), Blaze (דרקון). טיימר, סטטיסטיקות, שמות עבריים, פורטרטים.' },
+      { id: 'ai-tests', name: 'טסטים', role: '1096/1096', tags: [{t:'100% עוברים',c:'ok'}], desc: '1096 טסטים מתוך 1096 עוברים. כיסוי מלא.' },
+    ]
+  },
+  {
+    id: 'sec-13', num: '13', title: 'טכני (Technical Quality)', defaultStatus: 'complete',
+    badge: '0 שגיאות',
+    items: [
+      { id: 'tech-ts', name: 'TypeScript', role: '0 שגיאות', tags: [{t:'0 errors',c:'ok'}], desc: 'TypeScript: 0 שגיאות. הקוד עובר tsc --noEmit ללא בעיות.' },
+      { id: 'tech-tests', name: 'טסטים', role: '1096/1096', tags: [{t:'כל הטסטים עוברים',c:'ok'}], desc: '1096 טסטים מתוך 1096 עוברים. 62 חבילות טסטים.' },
+      { id: 'tech-build', name: 'בילד', role: '54 דפים סטטיים', tags: [{t:'מוכן',c:'ok'}], desc: 'בילד: 54 דפים סטטיים. בילד עובר בהצלחה.' },
+      { id: 'tech-console', name: 'console.log', role: 'ניקוי', tags: [{t:'0 console.log',c:'ok'}], desc: '0 console.log בקוד. נוקה לחלוטין.' },
+      { id: 'tech-deadcode', name: 'קוד מת', role: 'ניקוי', tags: [{t:'נוקה',c:'ok'}], desc: 'קוד מת נוקה לחלוטין.' },
+      { id: 'tech-hebrew', name: 'מחרוזות אנגלית', role: 'ניקוי', tags: [{t:'0 מחרוזות אנגלית ב-UI',c:'ok'}], desc: '0 מחרוזות אנגלית ב-UI. הכל בעברית.' },
+    ]
+  },
+  {
+    id: 'sec-14', num: '14', title: 'תוכניות עתידיות (Future Plans)', defaultStatus: 'progress',
+    badge: 'חזון',
+    items: [
+      { id: 'future-3d', name: 'POC תלת-ממד', role: 'קי', tags: [{t:'תקציב $150-350',c:''},{t:'ממתין לקונספטים',c:'warn'}], desc: 'POC תלת-ממד: מודל דמות קי. תקציב A-B ($150-350). ממתין עד שהקונספטים מוכנים.' },
+      { id: 'future-dialog', name: 'דיאלוג אווטאר', role: 'Hades-style', tags: [{t:'סגנון Hades',c:''},{t:'וידאו לרגעים דרמטיים',c:''}], desc: 'מסירת סיפור: דיאלוג אווטאר (סגנון Hades) לרוב + וידאו לרגעים דרמטיים. שיקולי תקציב.' },
+      { id: 'future-community', name: 'פיצ\'רים קהילתיים', role: 'טורנירים', tags: [{t:'בתי ספר',c:''},{t:'דוג\'ויות',c:''}], desc: 'טורנירים בין תלמידים/בתי ספר/דוג\'ויות בפרק 5. אוטומטיים, מסונכרנים עם יומן בתי ספר.' },
+      { id: 'future-dojo', name: 'מחולל שמות דוג\'ו', role: 'ממתין', tags: [{t:'20 סוגים לא מספיק',c:'warn'}], desc: '20 סוגי דוג\'ו לא מספיק. דרוש מחולל שמות דוג\'ו.' },
+      { id: 'future-emoji', name: 'הגבלת אימוג\'ים', role: 'חברתי', tags: [{t:'מניעת ספאם',c:''}], desc: 'הגבלת קצב אימוג\'ים למניעת ספאם בפיצ\'רים חברתיים.' },
+      { id: 'future-mobile', name: 'ממשק מובייל למורה/הורה', role: 'ממתין', tags: [{t:'דרוש',c:'warn'}], desc: 'ממשק מובייל למורה/הורה דרוש.' },
+    ]
+  },
+  {
+    id: 'sec-15', num: '15', title: 'סיכום ודירוג כללי', defaultStatus: 'progress',
+    badge: 'דירוג',
+    items: []
+  }
+];
+
+// ============================================================
+// KNOWN GAPS (from previous audits)
+// ============================================================
+const GAPS = {
+  'sec-1': [
+    {id:'CHAR-001',sev:'critical',desc:'מיקה לא מופיעה באף עמוד כדמות מלווה (צריכה להיות בקיצורי מקלדת). עיצוב "טומבויי מדי" — צריך עיצוב מחדש נשי/קלאסי יותר.',src:'audit-data.json + MEMORY.md'},
+    {id:'CHAR-002',sev:'high',desc:'נועה לא משויכת לאף עמוד. אין שיר נושא. גיליון הבעות קיים אך לא בשימוש.',src:'audit-data.json'},
+    {id:'CHAR-003',sev:'medium',desc:'קאי לא משויך לאף עמוד. אין שיר נושא. צריך עומק — יותר מופנם/חסר ביטחון, אולי עור כהה יותר.',src:'audit-data.json + MEMORY.md'},
+    {id:'CHAR-004',sev:'medium',desc:'פיקסל — אין קבצי קול ואין שיר נושא. רק אוואטר 48x48 בסטטיסטיקות. צריך להופיע גם במשחק זיכרון. גיליון הבעות לא בשימוש.',src:'audit-data.json'},
+    {id:'CHAR-005',sev:'high',desc:'בלייז לא מופיע באף עמוד למרות שהוא יריב ראשי. אין קבצי קול. מוזיקת קרב קיימת אך הדמות לא בבורר היריבים.',src:'audit-data.json'},
+    {id:'CHAR-006',sev:'high',desc:'שאדו — אין קבצי קול. רק תמונת מיניאטורה בקרב. צריך להפוך לאהוב/כיפי מוקדם בסיפור.',src:'audit-data.json + MEMORY.md'},
+    {id:'CHAR-007',sev:'high',desc:'סטורם — אין קבצי קול. רק מיניאטורה בקרב. שועלה (נקבה) — צריכה הבחנה ויזואלית מבאראק. צריכה נוכחות בפרקים מוקדמים.',src:'audit-data.json'},
+    {id:'CHAR-008',sev:'critical',desc:'וירוס לא בתסריט הסיפור למרות שהוא הנבל המרכזי! אין קול, אין שיר נושא, לא בשום עמוד. Model sheet כפול קיים אך אין CharacterConfig.',src:'audit-data.json + art-audit.json'},
+    {id:'CHAR-009',sev:'high',desc:'פאנטום לא בתסריט. אין קול, אין שיר נושא. בלבול שמות: raz-phantom.jpg סותר עם רז (אבא קי). צריך פיתוח מלא.',src:'audit-data.json'},
+    {id:'CHAR-010',sev:'high',desc:'באראק — לא בשום עמוד, אין קול, אין שיר נושא, לא בתסריט. צריך להיראות שונה מסטורם (אחותו).',src:'audit-data.json'},
+    {id:'CHAR-011',sev:'high',desc:'מאסטר ביט — לא בשום עמוד (צריך להיות ה-DJ של הג\'וקבוקס). אין קול, אין שיר נושא, לא בתסריט.',src:'audit-data.json'},
+    {id:'CHAR-012',sev:'high',desc:'סאקורה — לא בשום עמוד, אין קול, אין שיר נושא, לא בתסריט. דמות מנטורית עגור.',src:'audit-data.json'},
+    {id:'CHAR-013',sev:'medium',desc:'כל 24 גיליונות ההבעות קיימים בדיסק אך לאף אחד אין הפניה בקוד — לגמרי לא משולבים ב-UI.',src:'art-audit.json'},
+    {id:'CHAR-014',sev:'medium',desc:'דמויות Block, Bug King/Keres, Lens, Zara — יש model sheets אך אין CharacterConfig.',src:'art-audit.json'},
+    {id:'CHAR-016',sev:'medium',desc:'חסרים גיליונות הבעות ליוקי ולוירוס.',src:'art-audit.json'},
+    {id:'CHAR-017',sev:'medium',desc:'6 model sheets של שלבי טרנספורמציה של גליץ\' (v1-v6) קיימים אך לא מקושרים.',src:'art-audit.json'},
+    {id:'CHAR-019',sev:'medium',desc:'וירוס/פאנטום/באראק לא מסווגים ב-HERO_CHARACTERS או VILLAIN_CHARACTERS.',src:'iteration-11-review.html'},
+    {id:'CHAR-020',sev:'medium',desc:'מאסטר ביט וסאקורה — יש config אך אין דיאלוג כתוב.',src:'iteration-11-review.html'},
+    {id:'CHAR-021',sev:'high',desc:'הדמויות לא מגוונות מספיק — יותר מדי "לבנים/אירופאים". צריך ייצוג כור ההיתוך הישראלי.',src:'MEMORY.md'},
+  ],
+  'sec-2': [
+    {id:'STORY-001',sev:'critical',desc:'וירוס בכלל לא בתסריט הסיפור, למרות שהוא הנבל המרכזי (ידידותי בטורניר → בוגד → מתמזג עם גליץ\' = מגה-בוס).',src:'audit-data.json + MEMORY.md'},
+    {id:'STORY-002',sev:'critical',desc:'פאנטום, באראק, סאקורה, מאסטר ביט, זרה, קרס, בלוק, לנס — אין נוכחות בתסריט. קאסט גדול ללא נוכחות סיפורית.',src:'audit-data.json'},
+    {id:'STORY-003',sev:'high',desc:'פרק 6 דורש הרחבה משמעותית. הקרבת גליץ\' (סוף פרק 5), מיזוג וירוס, וקשתות סיום לכל הדמויות לא נכתבו.',src:'MEMORY.md'},
+    {id:'STORY-004',sev:'medium',desc:'ביטים לא-נצפים מציגים \'???\' ללא אמנות צללית/טיזר.',src:'audit-data.json'},
+  ],
+  'sec-3': [
+    {id:'MUSIC-001',sev:'critical',desc:'34 מתוך 42 טראקים מתוכננים טרם הופקו דרך Suno. רק 8/42 הושלמו. לכל 34 יש תיאורי Suno מוכנים.',src:'suno-generation-guide.md'},
+    {id:'MUSIC-002',sev:'high',desc:'accuracy-challenge.mp3 קיים (4 גרסאות) אך לא מקושר ב-music-manager.ts.',src:'audio-audit.json'},
+    {id:'MUSIC-003',sev:'high',desc:'blaze-dragon-battle, bug-boss-act-2, bug-king-final, glitch-secret-boss, tournament-arena — כולם קיימים אך לא מקושרים.',src:'audio-audit.json'},
+    {id:'MUSIC-004',sev:'medium',desc:'practice-room.mp3 (ישן) ו-practice-easy.mp3 (חדש) שניהם קיימים — הישן צריך מחיקה.',src:'iteration-11-review.html'},
+    {id:'MUSIC-005',sev:'medium',desc:'כל 72 תמונות עטיפות המוזיקה (JPG) קיימות אך לא מוצגות בג\'וקבוקס.',src:'art-audit.json'},
+    {id:'MUSIC-006',sev:'medium',desc:'החלפת מוזיקת חגים אוטומטית לפי תאריך — נתיבים מוגדרים אך הלוגיקה ב-MusicProvider דורשת אימות.',src:'PROGRESS.md'},
+    {id:'MUSIC-007',sev:'low',desc:'גיימיפיקציית מוזיקה לא מומשה: שחקנים צריכים לפתוח טראקים כהישגים.',src:'MEMORY.md'},
+  ],
+  'sec-4': [
+    {id:'VOICE-001',sev:'high',desc:'שאדו, סטורם, בלייז, וירוס, פאנטום, באראק, מאסטר ביט, סאקורה, פיקסל — לכולם אין קבצי קול בכלל.',src:'audit-data.json'},
+    {id:'VOICE-002',sev:'medium',desc:'שירי נושא חסרים לנועה ולקאי — שתי דמויות הגיבור היחידות ללא מוזיקה.',src:'audit-data.json'},
+  ],
+  'sec-5': [
+    {id:'ART-001',sev:'high',desc:'4 קבצי רקע כפולים מבזבזים 3.1 MB: battle-background, games-hub-background, home-background, speed-test-background.',src:'art-audit.json'},
+    {id:'ART-002',sev:'medium',desc:'dashboard-bg.jpg ו-lessons-background.jpg קיימים אך לא מקושרים בקוד.',src:'art-audit.json'},
+    {id:'ART-003',sev:'medium',desc:'empty-state.jpg ו-loading-bg.jpg קיימים ב-public/images/ui/ אך לא בשימוש. מומלצים לעמודים ריקים.',src:'art-audit.json'},
+  ],
+  'sec-6': [
+    {id:'UI-001',sev:'high',desc:'תמונת קי בעמוד הבית — אוואטר עגול 100x100 זעיר. לא דרמטי מספיק לדמות הראשית.',src:'audit-data.json'},
+    {id:'UI-002',sev:'high',desc:'תגים בדאשבורד — אימוג\'י גנרי + achievement-star ב-30% שקיפות. כל 15 תמונות התגים קיימות אך לא מקושרות.',src:'audit-data.json + art-audit.json'},
+    {id:'UI-003',sev:'medium',desc:'QUICK_LINKS בבית — צבעי Tailwind קשיחים (text-blue-400) במקום משתני --game-*.',src:'audit-data.json'},
+    {id:'UI-004',sev:'medium',desc:'טיפ יומי בבית — רק טקסט, ללא דמות. בועת דיבור של סנסאי זן לא מומשה.',src:'audit-data.json'},
+    {id:'UI-005',sev:'high',desc:'עמוד שיעור — אין אמנות דמויות בכלל! רקע כהה פשוט. dojo-bg.jpg קיים אך לא בשימוש. אין תגובת דמות להקלדה.',src:'audit-data.json'},
+    {id:'UI-006',sev:'medium',desc:'עמוד שיעור — Card גנרי, ללא game-card-border. מסך תוצאות פשוט.',src:'audit-data.json'},
+    {id:'UI-007',sev:'medium',desc:'רשימת שיעורים — סנסאי זן 52x52 ללא אנימציה. אין אמנות לכל שיעור. אין צלילים.',src:'audit-data.json'},
+    {id:'UI-008',sev:'medium',desc:'תרגול חופשי — לונה 48x48 ללא אנימציה. תוצאות גנריות. רקע moonlit-garden ב-10% — בקושי נראה.',src:'audit-data.json'},
+    {id:'UI-009',sev:'medium',desc:'מבחן מהירות — יוקי 48x48 ללא אנימציה. כרטיסים גנריים. טיימר לא מלהיב. תג דירוג אימוג\'י בלבד.',src:'audit-data.json'},
+    {id:'UI-010',sev:'medium',desc:'מרכז משחקים — רקס 48x48 ללא אנימציה. אייקוני Lucide גנריים. אין צלילים. אין תמונות מקדימות.',src:'audit-data.json'},
+    {id:'UI-011',sev:'medium',desc:'מיני-משחקים (Word Rain, Letter Memory, Ninja Slice) — אפס אמנות דמויות ואין CSS משחקי. Letter Memory הכי חשוף (4/10).',src:'audit-data.json'},
+    {id:'UI-012',sev:'medium',desc:'סטטיסטיקות — פיקסל 48x48 ללא אנימציה. Card גנרי. מצב ריק ללא אמנות.',src:'audit-data.json'},
+    {id:'UI-013',sev:'medium',desc:'עמוד התקדמות — אין אמנות דמות. שיעורים שהושלמו מציגים lessonId גולמי במקום שם עברי.',src:'audit-data.json'},
+    {id:'UI-014',sev:'medium',desc:'עמוד פרופיל — רקע ב-10% שקיפות, אין אמנות דמות, אייקון User גנרי.',src:'audit-data.json'},
+    {id:'UI-015',sev:'high',desc:'עמוד תגים — הכי מאכזב! (ציון 3/10). Card גנרי יחיד, אין אמנות, אין אנימציות, אין צלילים. צריך להיות הכי מרגש.',src:'audit-data.json'},
+    {id:'UI-016',sev:'medium',desc:'עמוד תעודות — אין אמנות, Card גנרי, אין אנימציות. כרטיסים ריקים.',src:'audit-data.json'},
+    {id:'UI-017',sev:'critical',desc:'לוח מובילים — נתוני mock בלבד! לא מחובר ל-Supabase. CURRENT_PLAYER_ID קשיח. Unicode escaped בעברית. אין אמנות בפודיום.',src:'audit-data.json'},
+    {id:'UI-018',sev:'medium',desc:'עמוד סיפור — אוואטרים 32px זעירים. אין צלילים. ביטים לא-נצפים מציגים \'???\' ללא טיזר.',src:'audit-data.json'},
+    {id:'UI-019',sev:'medium',desc:'ג\'וקבוקס — אין אמנות (מאסטר ביט צריך להיות DJ כאן). אין game-card-border. עטיפות לא מוצגות.',src:'audit-data.json'},
+    {id:'UI-020',sev:'medium',desc:'הגדרות — אין אמנות דמות. סליידר ווליום native לא מעוצב. כפתורי ערכת גיל ללא תצוגה מקדימה.',src:'audit-data.json'},
+    {id:'UI-021',sev:'medium',desc:'קיצורי מקלדת — אין אמנות (מיקה שייכת לכאן). tab פעיל בצבעי light-mode.',src:'audit-data.json'},
+    {id:'UI-022',sev:'high',desc:'טיפים להקלדה — הכי משעמם אחרי תגים (3/10). אין אמנות, אין עיצוב משחקי, רק Lightbulb גנריים.',src:'audit-data.json'},
+    {id:'UI-025',sev:'medium',desc:'מבחן מיון — אין אמנות דמות, רקע פשוט, אין אווירה משחקית. הצגת קי לא מומשה.',src:'audit-data.json'},
+    {id:'UI-027',sev:'high',desc:'עמודי התחברות/הרשמה — Card פשוט ללא אישיות משחקית, אין אמנות דמות. חסר רגע hero לשחקנים חדשים.',src:'audit-data.json'},
+  ],
+  'sec-7': [
+    {id:'GAMEPLAY-001',sev:'medium',desc:'רק 3 מיני-משחקים. מרכז המשחקים דליל. משחקים לא מחוברים למערכת XP.',src:'audit-data.json'},
+    {id:'GAMEPLAY-002',sev:'medium',desc:'אירועי בוס חודשיים (רמאצ\'ים, אתגר Glitch, אירוע כיתתי, חגים) — מתוכננים אך לא בנויים.',src:'character-progression-system.html'},
+    {id:'GAMIF-005',sev:'high',desc:'אפקטי Bug Tease (שיעורים 3-6: הבהוב, צל, ערבוב, צחקוק) לא מומשו. bug-tease.tsx לא קיים.',src:'character-progression-system.html'},
+    {id:'GAMIF-006',sev:'high',desc:'מערכת קרב בוסים לא מומשה. boss-battle.tsx לא קיים. מכניקות מותאמות גיל (שיעור 7/15/20) מתוכננות.',src:'character-progression-system.html'},
+    {id:'GAMIF-007',sev:'high',desc:'אפקט היפוך מקלדת של גליץ\' (glitch-effect.tsx) לא מומש — מתוכנן לשיעור 15.',src:'character-progression-system.html'},
+    {id:'GAMIF-008',sev:'high',desc:'UI חגיגת פתיחת דמות (character-unlock.tsx) לא קיים. אין חשיפה קולנועית.',src:'character-progression-system.html'},
+  ],
+  'sec-8': [
+    {id:'GAMIF-001',sev:'critical',desc:'מערכת שותפים לא מומשה. companion-store.ts לא קיים. אין UI לבחירת שותף. בונוסים (יוקי +15% XP) מתוכננים.',src:'character-progression-system.html'},
+    {id:'GAMIF-002',sev:'critical',desc:'battle-record-store.ts לא קיים — אין מעקב ניצחונות. פתיחת יריבים (שאדו ×3 → סטורם) לא בנויה.',src:'character-progression-system.html'},
+    {id:'GAMIF-003',sev:'critical',desc:'unlock-conditions.ts ו-unlock-checker.ts לא קיימים. מערכת פתיחת דמויות לא מומשה.',src:'character-progression-system.html'},
+    {id:'GAMIF-004',sev:'high',desc:'use-progression-check.ts hook לא קיים — אין בדיקות התקדמות בין stores.',src:'character-progression-system.html'},
+    {id:'GAMIF-009',sev:'medium',desc:'UI פרסי אוספים (collection-rewards.tsx) לא קיים — אין תצוגת בונוסי השלמה.',src:'character-progression-system.html'},
+    {id:'GAMIF-010',sev:'medium',desc:'דגלי סיפור (yukiJoined, kaiJoined, rexJoined, bugTease) לא נוספו ל-story-store.ts.',src:'character-progression-system.html'},
+    {id:'GAMIF-011',sev:'medium',desc:'ב-xp-store.ts חסרים: speedTestAttempts, gamesPlayed, ופעולות recordSpeedTest/recordGamePlayed.',src:'character-progression-system.html'},
+  ],
+  'sec-9': [
+    {id:'A11Y-001',sev:'medium',desc:'ערכי oklch() בגבולות עלולים לכשול בבדיקות ניגודיות אוטומטיות.',src:'post-iteration-12-audit.html'},
+    {id:'A11Y-002',sev:'medium',desc:'חסר טקסט alt תיאורי בעברית לתמונות דמויות ו-UI.',src:'post-iteration-12-audit.html'},
+    {id:'A11Y-003',sev:'medium',desc:'חסר קישור "דלג לתוכן". Focus trap בדיאלוגים לא אומת. יעד: 9/10.',src:'iteration-13-report.html'},
+  ],
+  'sec-10': [
+    {id:'HOL-001',sev:'high',desc:'אמנות סקינים לחגים לא נוצרה לאף חג. רק תיאורי טקסט קיימים — ללא תמונות.',src:'holiday-skins-expansion.html'},
+    {id:'HOL-002',sev:'high',desc:'מערכת רמות ברונזה/כסף/זהב לסקיני חגים — מתוכננת אך לא מומשה.',src:'holiday-skins-expansion.html'},
+    {id:'HOL-003',sev:'medium',desc:'החלפת מוזיקת חגים אוטומטית לפי תאריך — לוגיקה ב-MusicProvider דורשת אימות.',src:'PROGRESS.md'},
+    {id:'HOL-004',sev:'medium',desc:'סקיני חג לדמויות גיבור (קי, מיקה, יוקי, לונה, נועה, רקס) לא תועדו — רק יריבים.',src:'holiday-skins-expansion.html'},
+  ],
+  'sec-11': [
+    {id:'UI-023',sev:'critical',desc:'דשבורד מורה — נתוני mock בלבד! לא מחובר ל-Supabase. אין עיצוב משחקי.',src:'audit-data.json'},
+    {id:'UI-024',sev:'medium',desc:'דוח הורה — צבעי מגמה בסגנון light-mode. אין ייצוא PDF. אין שיתוף. אין אמנות.',src:'audit-data.json'},
+    {id:'TEACHER-001',sev:'high',desc:'ממשק מורה מובייל לא שלם. TODO בשורה 104: hook up to notification/messaging.',src:'student-list-mobile.tsx'},
+    {id:'TEACHER-002',sev:'high',desc:'CharacterSkillMap קיים אך לא משולב — מורים לא רואים איזו דמות מלמדת מה.',src:'audit-data.json'},
+    {id:'TEACHER-003',sev:'medium',desc:'ממשק מובייל בסיסי בלבד. חסר: ניהול כיתות, מעקב פרטני, שיעורי בית, תקשורת.',src:'PROGRESS.md'},
+  ],
+  'sec-12': [
+    {id:'BATTLE-001',sev:'high',desc:'בורר יריבים מוגבל ל-Bug, Shadow, Storm — חסרים באראק, בלייז, גליץ\'. מוזיקת בלייז קיימת אך הוא לא בבורר.',src:'audit-data.json'},
+    {id:'BATTLE-002',sev:'medium',desc:'אין אנימציות מנוחה במסך טרום-קרב. תמונות יריבים — מיניאטורות קטנות.',src:'audit-data.json'},
+    {id:'BATTLE-003',sev:'medium',desc:'אין רקעי קרב ייחודיים לכל יריב (זירה ספציפית לסביבה).',src:'audit-data.json'},
+  ],
+  'sec-13': [
+    {id:'TECH-001',sev:'medium',desc:'מודולים מתים: typing-warmup.ts ו-feedback-engine.ts — שלמים ולא מיובאים.',src:'post-iteration-12-audit.html'},
+    {id:'TECH-002',sev:'medium',desc:'25+ ייצואים מתים: getMascotTip, findPlayerRank, getNextCertificate, HERO_CHARACTERS ועוד.',src:'post-iteration-12-audit.html'},
+    {id:'TECH-003',sev:'medium',desc:'מחרוזות עברית ב-Unicode escaped ב-JSX (leaderboard, login). צריך טקסט קריא.',src:'audit-data.json'},
+  ],
+  'sec-14': [
+    {id:'FUTURE-001',sev:'high',desc:'POC 3D לא התחיל. קי כמודל ראשון ב-Three.js/R3F. תקציב $150-350. ממתין לאישור.',src:'PROGRESS.md'},
+    {id:'FUTURE-002',sev:'medium',desc:'מערכת קהילה/טורנירים לא נבנתה. טורנירים אוטומטיים, ליגות, הפרדת גילאים.',src:'iteration-10-review.html'},
+    {id:'FUTURE-003',sev:'medium',desc:'מכניקות אנטי-תסכול לא מומשו: קושי מותאם, עזרה, עידוד, מניעת rage-quit.',src:'anti-frustration-research.html'},
+    {id:'FUTURE-004',sev:'low',desc:'מחולל שמות דוג\'ו לא נבנה. 20 סוגים לא מספיקים.',src:'MEMORY.md'},
+    {id:'FUTURE-005',sev:'low',desc:'מרצ\'נדייז (פדים, חולצות, מקלדת ממותגת, תחפושות) — לא התחיל.',src:'MEMORY.md'},
+  ],
+};
+
+const GAP_STORAGE_KEY = 'ninja-keyboard-gaps-v1';
+let activeGapFilter = 'all';
+
+function loadGapFeedback() {
+  try { const r = localStorage.getItem(GAP_STORAGE_KEY); return r ? JSON.parse(r) : {}; } catch { return {}; }
+}
+function saveGapFeedback(data) {
+  data._lastSaved = new Date().toISOString();
+  localStorage.setItem(GAP_STORAGE_KEY, JSON.stringify(data));
+  updateGapProgress();
+}
+
+// ============================================================
+// STORAGE
+// ============================================================
+const STORAGE_KEY = 'ninja-keyboard-feedback-v1';
+
+function loadFeedback() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch { return {}; }
+}
+
+function saveFeedback(data) {
+  data._lastSaved = new Date().toISOString();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  updateSaveIndicator(data._lastSaved);
+  updateProgress();
+}
+
+function getFeedback() {
+  return loadFeedback();
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function renderSections() {
+  const container = document.getElementById('sections-container');
+  const fb = getFeedback();
+  let html = '';
+
+  SECTIONS.forEach((sec, si) => {
+    const secFb = fb[sec.id] || {};
+    const secStatus = secFb.status || sec.defaultStatus;
+    const badgeClass = secStatus === 'complete' ? 'badge-complete' : secStatus === 'needswork' ? 'badge-needs-work' : 'badge-progress';
+    const badgeText = secStatus === 'complete' ? 'mושלם' : secStatus === 'needswork' ? 'דרוש עבודה' : 'בתהליך';
+    const badgeIcon = secStatus === 'complete' ? '\u2705' : secStatus === 'needswork' ? '\u26A0\uFE0F' : '\uD83D\uDD04';
+
+    html += `<div class="section" id="${sec.id}" data-section="${sec.id}">`;
+    html += `<div class="section-header" onclick="toggleSection('${sec.id}')">`;
+    html += `<div class="num">${sec.num}</div>`;
+    html += `<h2>${sec.title}</h2>`;
+    html += `<span class="badge ${badgeClass}" id="badge-${sec.id}">${badgeIcon} ${badgeText}</span>`;
+    html += `<span style="font-size:12px;color:var(--text-muted)">${sec.badge}</span>`;
+    html += `<span class="chevron">\u25BC</span>`;
+    html += `</div>`;
+    html += `<div class="section-body"><div class="section-content">`;
+
+    // Items
+    sec.items.forEach(item => {
+      const itemFb = (secFb.items || {})[item.id] || {};
+      html += renderItem(item, itemFb, sec.id);
+    });
+
+    // Gaps for this section
+    const secGaps = GAPS[sec.id] || [];
+    if (secGaps.length > 0) {
+      const gfb = loadGapFeedback();
+      html += `<div class="gaps-divider"><h4>\u26A0\uFE0F \u05E4\u05E2\u05E8\u05D9\u05DD \u05D9\u05D3\u05D5\u05E2\u05D9\u05DD</h4><span class="gap-count">(${secGaps.length} \u05E4\u05E2\u05E8\u05D9\u05DD)</span></div>`;
+      secGaps.forEach(gap => {
+        const gapFb = gfb[gap.id] || {};
+        html += renderGap(gap, gapFb);
+      });
+    }
+
+    // Special: Section 15 (summary)
+    if (sec.id === 'sec-15') {
+      const rating = secFb.rating || 5;
+      const priorities = secFb.priorities || '';
+      const notes = secFb.notes || '';
+      html += `
+        <div style="margin-bottom:20px">
+          <h4 style="margin-bottom:12px;color:var(--primary-light)">דירוג כללי (1-10)</h4>
+          <div class="rating-slider">
+            <input type="range" min="1" max="10" value="${rating}" id="overall-rating"
+              oninput="document.getElementById('rating-val').textContent=this.value; autoSave()">
+            <div class="rating-value" id="rating-val">${rating}</div>
+          </div>
+        </div>
+        <div style="margin-bottom:16px">
+          <h4 style="margin-bottom:8px;color:var(--primary-light)">3 עדיפויות עליונות</h4>
+          <textarea class="feedback-area" id="priorities-area" rows="4"
+            placeholder="מהן 3 העדיפויות הגבוהות ביותר?"
+            oninput="autoSave()">${priorities}</textarea>
+        </div>
+        <div>
+          <h4 style="margin-bottom:8px;color:var(--primary-light)">הערות כלליות</h4>
+          <textarea class="feedback-area" id="general-notes" rows="4"
+            placeholder="הערות נוספות..."
+            oninput="autoSave()">${notes}</textarea>
+        </div>
+      `;
+    }
+
+    // Section feedback
+    const secNotes = secFb.feedback || '';
+    html += `
+      <div class="section-feedback">
+        <h4>משוב לסעיף זה:</h4>
+        <div class="section-status-select">
+          <button class="status-btn ${secStatus==='complete'?'active-complete':''}" onclick="setSectionStatus('${sec.id}','complete',this)">\u2705 מושלם</button>
+          <button class="status-btn ${secStatus==='progress'?'active-progress':''}" onclick="setSectionStatus('${sec.id}','progress',this)">\uD83D\uDD04 בתהליך</button>
+          <button class="status-btn ${secStatus==='needswork'?'active-needswork':''}" onclick="setSectionStatus('${sec.id}','needswork',this)">\u26A0\uFE0F דרוש עבודה</button>
+        </div>
+        <textarea class="feedback-area" data-section-feedback="${sec.id}" rows="3"
+          placeholder="הוסף משוב לסעיף..."
+          oninput="autoSave()">${secNotes}</textarea>
+      </div>
+    `;
+
+    html += `</div></div></div>`;
+  });
+
+  container.innerHTML = html;
+  updateProgress();
+  if (fb._lastSaved) updateSaveIndicator(fb._lastSaved);
+}
+
+function renderItem(item, fb, secId) {
+  const approved = fb.approved;
+  const notes = fb.notes || '';
+  let tagsHtml = '';
+  if (item.tags) {
+    tagsHtml = '<div class="item-tags">' + item.tags.map(t =>
+      `<span class="tag ${t.c}">${t.t}</span>`
+    ).join('') + '</div>';
+  }
+  const statusIcon = approved === 'approve' ? '\u2705' : approved === 'needswork' ? '\u26A0\uFE0F' : '\u2B1C';
+
+  return `
+    <div class="item" data-item="${item.id}" data-section="${secId}">
+      <div class="item-header">
+        <span class="item-name">${item.name}</span>
+        <span class="item-role">${item.role}</span>
+        <span class="item-status">${statusIcon}</span>
+      </div>
+      ${tagsHtml}
+      <div class="item-desc">${item.desc}</div>
+      <div class="item-actions">
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="item-${item.id}" value="approve" ${approved==='approve'?'checked':''} onchange="setItemApproval('${secId}','${item.id}','approve')">
+            <span>\u2705 מאשר</span>
+          </label>
+          <label>
+            <input type="radio" name="item-${item.id}" value="needswork" ${approved==='needswork'?'checked':''} onchange="setItemApproval('${secId}','${item.id}','needswork')">
+            <span>\u26A0\uFE0F דרוש עבודה</span>
+          </label>
+        </div>
+      </div>
+      <textarea class="feedback-area" data-item-notes="${item.id}" data-section="${secId}" rows="2"
+        placeholder="הערות על ${item.name}..."
+        oninput="autoSave()" style="margin-top:8px">${notes}</textarea>
+    </div>
+  `;
+}
+
+function renderGap(gap, fb) {
+  const status = fb.status || 'unfixed';
+  const notes = fb.notes || '';
+  const sevLabel = {critical:'\uD83D\uDD34 \u05E7\u05E8\u05D9\u05D8\u05D9',high:'\uD83D\uDFE0 \u05D2\u05D1\u05D5\u05D4',medium:'\uD83D\uDFE1 \u05D1\u05D9\u05E0\u05D5\u05E0\u05D9',low:'\uD83D\uDD35 \u05E0\u05DE\u05D5\u05DA'}[gap.sev]||'';
+  const hideClass = activeGapFilter !== 'all' && activeGapFilter !== 'hide' && activeGapFilter !== gap.sev ? 'style="display:none"' : activeGapFilter === 'hide' ? 'style="display:none"' : '';
+  return `
+    <div class="gap-card sev-${gap.sev}" data-gap="${gap.id}" data-sev="${gap.sev}" ${hideClass}>
+      <div class="gap-header">
+        <span class="gap-id">${gap.id}</span>
+        <span class="gap-sev-badge ${gap.sev}">${sevLabel}</span>
+      </div>
+      <div class="gap-desc">${gap.desc}</div>
+      <div class="gap-source">\uD83D\uDCC4 \u05DE\u05E7\u05D5\u05E8: ${gap.src}</div>
+      <div class="gap-actions">
+        <div class="gap-radio-group">
+          <label><input type="radio" name="gap-${gap.id}" value="unfixed" ${status==='unfixed'?'checked':''} onchange="setGapStatus('${gap.id}','unfixed')"><span>\u274C \u05DC\u05D0 \u05D8\u05D5\u05E4\u05DC</span></label>
+          <label><input type="radio" name="gap-${gap.id}" value="inprogress" ${status==='inprogress'?'checked':''} onchange="setGapStatus('${gap.id}','inprogress')"><span>\uD83D\uDD04 \u05D1\u05D8\u05D9\u05E4\u05D5\u05DC</span></label>
+          <label><input type="radio" name="gap-${gap.id}" value="fixed" ${status==='fixed'?'checked':''} onchange="setGapStatus('${gap.id}','fixed')"><span>\u2705 \u05D8\u05D5\u05E4\u05DC</span></label>
+          <label><input type="radio" name="gap-${gap.id}" value="irrelevant" ${status==='irrelevant'?'checked':''} onchange="setGapStatus('${gap.id}','irrelevant')"><span>\u2796 \u05DC\u05D0 \u05E8\u05DC\u05D5\u05D5\u05E0\u05D8\u05D9</span></label>
+        </div>
+      </div>
+      <textarea class="feedback-area" data-gap-notes="${gap.id}" rows="2"
+        placeholder="\u05D4\u05E2\u05E8\u05D5\u05EA \u05E2\u05DC \u05E4\u05E2\u05E8 ${gap.id}..."
+        oninput="autoSaveGaps()" style="margin-top:6px;min-height:40px">${notes}</textarea>
+    </div>`;
+}
+
+function setGapStatus(gapId, status) {
+  const gfb = loadGapFeedback();
+  if (!gfb[gapId]) gfb[gapId] = {};
+  gfb[gapId].status = status;
+  const notes = document.querySelector(`textarea[data-gap-notes="${gapId}"]`);
+  if (notes) gfb[gapId].notes = notes.value;
+  saveGapFeedback(gfb);
+}
+
+let gapSaveTimeout;
+function autoSaveGaps() {
+  clearTimeout(gapSaveTimeout);
+  gapSaveTimeout = setTimeout(() => {
+    const gfb = loadGapFeedback();
+    document.querySelectorAll('textarea[data-gap-notes]').forEach(ta => {
+      const id = ta.dataset.gapNotes;
+      if (!gfb[id]) gfb[id] = {};
+      gfb[id].notes = ta.value;
+    });
+    document.querySelectorAll('.gap-radio-group input:checked').forEach(r => {
+      const id = r.name.replace('gap-','');
+      if (!gfb[id]) gfb[id] = {};
+      gfb[id].status = r.value;
+    });
+    saveGapFeedback(gfb);
+  }, 400);
+}
+
+function filterGaps(filter, btn) {
+  activeGapFilter = filter;
+  document.querySelectorAll('.gap-filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.querySelectorAll('.gap-card').forEach(el => {
+    if (filter === 'all') { el.style.display = ''; }
+    else if (filter === 'hide') { el.style.display = 'none'; }
+    else { el.style.display = el.dataset.sev === filter ? '' : 'none'; }
+  });
+  document.querySelectorAll('.gaps-divider').forEach(d => {
+    d.style.display = filter === 'hide' ? 'none' : '';
+  });
+}
+
+function updateGapProgress() {
+  const gfb = loadGapFeedback();
+  let total = 0; let resolved = 0;
+  Object.values(GAPS).forEach(arr => arr.forEach(g => {
+    total++;
+    const s = gfb[g.id]?.status;
+    if (s === 'fixed' || s === 'irrelevant') resolved++;
+  }));
+  const el = document.getElementById('gaps-resolved-count');
+  if (el) {
+    el.textContent = resolved + '/' + total + ' \u05E4\u05E2\u05E8\u05D9\u05DD \u05D8\u05D5\u05E4\u05DC\u05D5';
+    el.style.color = resolved === total ? 'var(--green)' : 'var(--red)';
+  }
+}
+
+// ============================================================
+// ACTIONS
+// ============================================================
+let saveTimeout;
+function autoSave() {
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(() => {
+    const fb = collectCurrentState();
+    saveFeedback(fb);
+  }, 400);
+}
+
+function collectCurrentState() {
+  const fb = loadFeedback();
+
+  SECTIONS.forEach(sec => {
+    if (!fb[sec.id]) fb[sec.id] = {};
+
+    // Section feedback textarea
+    const secTextarea = document.querySelector(`textarea[data-section-feedback="${sec.id}"]`);
+    if (secTextarea) fb[sec.id].feedback = secTextarea.value;
+
+    // Section status (preserved from button clicks)
+    if (!fb[sec.id].status) fb[sec.id].status = sec.defaultStatus;
+
+    // Items
+    if (!fb[sec.id].items) fb[sec.id].items = {};
+    sec.items.forEach(item => {
+      if (!fb[sec.id].items[item.id]) fb[sec.id].items[item.id] = {};
+      const radio = document.querySelector(`input[name="item-${item.id}"]:checked`);
+      if (radio) fb[sec.id].items[item.id].approved = radio.value;
+      const notes = document.querySelector(`textarea[data-item-notes="${item.id}"]`);
+      if (notes) fb[sec.id].items[item.id].notes = notes.value;
+    });
+  });
+
+  // Section 15 specials
+  const ratingEl = document.getElementById('overall-rating');
+  if (ratingEl) {
+    if (!fb['sec-15']) fb['sec-15'] = {};
+    fb['sec-15'].rating = parseInt(ratingEl.value);
+  }
+  const prioEl = document.getElementById('priorities-area');
+  if (prioEl) {
+    if (!fb['sec-15']) fb['sec-15'] = {};
+    fb['sec-15'].priorities = prioEl.value;
+  }
+  const notesEl = document.getElementById('general-notes');
+  if (notesEl) {
+    if (!fb['sec-15']) fb['sec-15'] = {};
+    fb['sec-15'].notes = notesEl.value;
+  }
+
+  return fb;
+}
+
+function setItemApproval(secId, itemId, value) {
+  const fb = collectCurrentState();
+  if (!fb[secId]) fb[secId] = {};
+  if (!fb[secId].items) fb[secId].items = {};
+  if (!fb[secId].items[itemId]) fb[secId].items[itemId] = {};
+  fb[secId].items[itemId].approved = value;
+  saveFeedback(fb);
+
+  // Update status icon
+  const itemEl = document.querySelector(`.item[data-item="${itemId}"]`);
+  if (itemEl) {
+    const statusEl = itemEl.querySelector('.item-status');
+    statusEl.textContent = value === 'approve' ? '\u2705' : '\u26A0\uFE0F';
+  }
+}
+
+function setSectionStatus(secId, status, btn) {
+  const fb = collectCurrentState();
+  if (!fb[secId]) fb[secId] = {};
+  fb[secId].status = status;
+  saveFeedback(fb);
+
+  // Update buttons
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.status-btn').forEach(b => b.className = 'status-btn');
+  btn.classList.add(status === 'complete' ? 'active-complete' : status === 'needswork' ? 'active-needswork' : 'active-progress');
+
+  // Update badge
+  const badge = document.getElementById('badge-' + secId);
+  if (badge) {
+    badge.className = 'badge ' + (status === 'complete' ? 'badge-complete' : status === 'needswork' ? 'badge-needs-work' : 'badge-progress');
+    const icon = status === 'complete' ? '\u2705' : status === 'needswork' ? '\u26A0\uFE0F' : '\uD83D\uDD04';
+    const text = status === 'complete' ? 'מושלם' : status === 'needswork' ? 'דרוש עבודה' : 'בתהליך';
+    badge.textContent = icon + ' ' + text;
+  }
+}
+
+function toggleSection(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+
+function expandAll() {
+  document.querySelectorAll('.section').forEach(s => s.classList.add('open'));
+}
+function collapseAll() {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('open'));
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('collapsed');
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function updateProgress() {
+  const fb = getFeedback();
+  let total = 0;
+  let reviewed = 0;
+
+  SECTIONS.forEach(sec => {
+    sec.items.forEach(item => {
+      total++;
+      const itemFb = fb[sec.id]?.items?.[item.id];
+      if (itemFb && itemFb.approved) reviewed++;
+    });
+  });
+
+  const pct = total > 0 ? Math.round((reviewed / total) * 100) : 0;
+
+  document.getElementById('header-progress').textContent = pct + '%';
+  document.getElementById('header-progress-bar').style.width = pct + '%';
+  document.getElementById('sidebar-progress').textContent = pct + '%';
+  document.getElementById('sidebar-progress-bar').style.width = pct + '%';
+  document.getElementById('total-items-count').textContent = total + ' \u05E4\u05E8\u05D9\u05D8\u05D9\u05DD';
+}
+
+function updateSaveIndicator(ts) {
+  const el = document.getElementById('save-indicator');
+  if (ts) {
+    const d = new Date(ts);
+    const timeStr = d.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    el.textContent = '\uD83D\uDCBE \u05E0\u05E9\u05DE\u05E8 \u05DC\u05D0\u05D7\u05E8\u05D5\u05E0\u05D4: ' + timeStr;
+  }
+}
+
+// ============================================================
+// EXPORT / IMPORT
+// ============================================================
+function exportJSON() {
+  const fb = collectCurrentState();
+  const exportData = { _exportDate: new Date().toISOString(), _project: 'ninja-keyboard', sections: {} };
+
+  SECTIONS.forEach(sec => {
+    const secFb = fb[sec.id] || {};
+    exportData.sections[sec.id] = {
+      title: sec.title,
+      status: secFb.status || sec.defaultStatus,
+      feedback: secFb.feedback || '',
+      items: {}
+    };
+    sec.items.forEach(item => {
+      const itemFb = secFb.items?.[item.id] || {};
+      exportData.sections[sec.id].items[item.id] = {
+        name: item.name,
+        approved: itemFb.approved || null,
+        notes: itemFb.notes || ''
+      };
+    });
+    // Section 15 specials
+    if (sec.id === 'sec-15') {
+      exportData.sections[sec.id].rating = secFb.rating || 5;
+      exportData.sections[sec.id].priorities = secFb.priorities || '';
+      exportData.sections[sec.id].notes = secFb.notes || '';
+    }
+  });
+
+  // Include gaps
+  const gfb = loadGapFeedback();
+  exportData.gaps = {};
+  Object.entries(GAPS).forEach(([secId, gaps]) => {
+    gaps.forEach(gap => {
+      exportData.gaps[gap.id] = {
+        section: secId, severity: gap.sev, desc: gap.desc,
+        status: gfb[gap.id]?.status || 'unfixed',
+        notes: gfb[gap.id]?.notes || ''
+      };
+    });
+  });
+
+  const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'ninja-keyboard-feedback-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('\u2705 \u05E7\u05D5\u05D1\u05E5 JSON \u05D9\u05D5\u05E6\u05D0 \u05D1\u05D4\u05E6\u05DC\u05D7\u05D4');
+}
+
+function importJSON() {
+  document.getElementById('import-file').click();
+}
+
+function handleImport(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.sections) {
+        const fb = {};
+        Object.keys(data.sections).forEach(secId => {
+          const sec = data.sections[secId];
+          fb[secId] = {
+            status: sec.status,
+            feedback: sec.feedback || '',
+            items: {}
+          };
+          if (sec.items) {
+            Object.keys(sec.items).forEach(itemId => {
+              fb[secId].items[itemId] = {
+                approved: sec.items[itemId].approved,
+                notes: sec.items[itemId].notes || ''
+              };
+            });
+          }
+          if (sec.rating !== undefined) fb[secId].rating = sec.rating;
+          if (sec.priorities !== undefined) fb[secId].priorities = sec.priorities;
+          if (sec.notes !== undefined) fb[secId].notes = sec.notes;
+        });
+        saveFeedback(fb);
+        // Import gaps if present
+        if (data.gaps) {
+          const gfb = {};
+          Object.entries(data.gaps).forEach(([gapId, gapData]) => {
+            gfb[gapId] = { status: gapData.status || 'unfixed', notes: gapData.notes || '' };
+          });
+          saveGapFeedback(gfb);
+        }
+        renderSections();
+        showToast('\u2705 \u05DE\u05E9\u05D5\u05D1 \u05D9\u05D5\u05D1\u05D0 \u05D1\u05D4\u05E6\u05DC\u05D7\u05D4');
+      } else {
+        showToast('\u274C \u05E7\u05D5\u05D1\u05E5 \u05DC\u05D0 \u05EA\u05E7\u05D9\u05DF', true);
+      }
+    } catch {
+      showToast('\u274C \u05E9\u05D2\u05D9\u05D0\u05D4 \u05D1\u05E7\u05E8\u05D9\u05D0\u05EA \u05D4\u05E7\u05D5\u05D1\u05E5', true);
+    }
+    event.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+// ============================================================
+// CLEAR
+// ============================================================
+function showClearModal() {
+  document.getElementById('clear-modal').classList.add('show');
+}
+function hideClearModal() {
+  document.getElementById('clear-modal').classList.remove('show');
+}
+function clearAll() {
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(GAP_STORAGE_KEY);
+  hideClearModal();
+  renderSections();
+  showToast('\uD83D\uDDD1 \u05DB\u05DC \u05D4\u05DE\u05E9\u05D5\u05D1 \u05E0\u05D5\u05E7\u05D4');
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg, isError) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast' + (isError ? ' error' : '');
+  setTimeout(() => el.classList.add('show'), 10);
+  setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// ============================================================
+// SIDEBAR SCROLL SPY
+// ============================================================
+function setupScrollSpy() {
+  const links = document.querySelectorAll('.sidebar a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`.sidebar a[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-100px 0px -60% 0px' });
+
+  document.querySelectorAll('.section').forEach(sec => observer.observe(sec));
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  renderSections();
+  setupScrollSpy();
+  updateGapProgress();
+  // Open first section by default
+  const first = document.querySelector('.section');
+  if (first) first.classList.add('open');
+});
+</script>
+</body>
+</html>
