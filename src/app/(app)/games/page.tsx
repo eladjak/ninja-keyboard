@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Gamepad2, CloudRain, Swords, Sword, Brain } from 'lucide-react'
 import { GameCard } from '@/components/ui/game-card'
+import { CharacterIdleWrapper } from '@/components/characters/character-idle-wrapper'
 
 const GAMES = [
   {
@@ -56,13 +57,6 @@ export default function GamesPage() {
         className="flex items-center justify-between"
       >
         <div className="flex items-center gap-3">
-          <Image
-            src="/images/characters/model-sheets/rex-dino.jpg"
-            alt="Rex"
-            width={48}
-            height={48}
-            className="rounded-full border-2 border-purple-500/30 shadow-lg shadow-purple-500/10"
-          />
           <div>
             <h1 className="text-xl font-bold sm:text-2xl">משחקי הקלדה</h1>
             <p className="text-sm text-muted-foreground">תרגלו הקלדה בכיף!</p>
@@ -70,6 +64,19 @@ export default function GamesPage() {
         </div>
         <Gamepad2 className="size-8 text-primary" />
       </motion.div>
+
+      {/* Rex companion character */}
+      <div className="flex justify-center">
+        <CharacterIdleWrapper character="rex" intensity="energetic" entryAnimation>
+          <Image
+            src="/images/characters/heroes/rex-hero.jpg"
+            alt="רקס - מדריך המשחקים"
+            width={220}
+            height={220}
+            className="rounded-2xl object-cover drop-shadow-[0_0_28px_rgba(225,112,85,0.5)]"
+          />
+        </CharacterIdleWrapper>
+      </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
         {GAMES.map((game, i) => {

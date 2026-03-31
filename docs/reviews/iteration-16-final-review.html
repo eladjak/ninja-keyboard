@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>סקירה מסכמת — איטרציה 16 — נינג׳ה מקלדת</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Heebo',sans-serif;background:#0d0b1a;color:#e0e0e0;line-height:1.7;padding:0}
+.hero{background:linear-gradient(135deg,#1a1530 0%,#0d0b1a 50%,#0a1628 100%);padding:3rem 2rem;text-align:center;border-bottom:2px solid #6C5CE730}
+.hero h1{font-size:3rem;color:#6C5CE7;margin-bottom:.5rem;text-shadow:0 0 30px #6C5CE740}
+.hero .sub{color:#888;font-size:1.2rem}
+.hero .date{color:#00B894;font-size:.9rem;margin-top:.5rem}
+.container{max-width:1100px;margin:0 auto;padding:0 2rem 3rem}
+h2{font-size:1.6rem;color:#6C5CE7;margin:2.5rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+h2::after{content:'';flex:1;height:1px;background:linear-gradient(to left,transparent,#6C5CE740)}
+h3{color:#00B894;margin:1.5rem 0 .8rem;font-size:1.1rem}
+
+/* Stats */
+.mega-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin:2rem 0}
+.mega-stat{background:linear-gradient(135deg,#1a1530,#0d0b1a);border:1px solid #6C5CE720;border-radius:16px;padding:1.5rem;text-align:center;transition:transform .2s}
+.mega-stat:hover{transform:scale(1.05)}
+.mega-stat .num{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#6C5CE7,#00B894);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.mega-stat .label{color:#888;font-size:.8rem;margin-top:.3rem}
+
+/* Cards */
+.section-card{background:#1a1530;border-radius:16px;padding:1.5rem 2rem;margin:1rem 0;border:1px solid #ffffff08}
+.task-row{display:flex;align-items:center;gap:.8rem;padding:.5rem 0;border-bottom:1px solid #ffffff06}
+.task-row:last-child{border:none}
+.task-icon{font-size:1.2rem;min-width:28px;text-align:center}
+.task-text{flex:1}
+.task-badge{font-size:.7rem;padding:2px 8px;border-radius:4px;font-weight:700}
+.badge-done{background:#00B89420;color:#00B894}
+.badge-running{background:#F9CA2420;color:#F9CA24}
+.badge-todo{background:#ff6b6b20;color:#ff6b6b}
+.badge-bug{background:#ff6b6b20;color:#ff6b6b}
+.badge-feature{background:#6C5CE720;color:#6C5CE7}
+.badge-art{background:#FDA7DF20;color:#FDA7DF}
+
+/* Art gallery inline */
+.art-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin:1rem 0}
+.art-thumb{text-align:center}
+.art-thumb img{width:140px;height:140px;object-fit:contain;border-radius:12px;background:#0a0818;border:2px solid #6C5CE720}
+.art-thumb .name{font-size:.8rem;color:#aaa;margin-top:.3rem}
+
+/* Game feel */
+.gamefeel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1rem 0}
+.gamefeel-card{background:#0d0b1a;border-radius:12px;padding:1.2rem;border:1px solid #ffffff10;text-align:center}
+.gamefeel-card .icon{font-size:2rem;margin-bottom:.5rem}
+.gamefeel-card .title{font-weight:700;color:#6C5CE7;margin-bottom:.3rem}
+.gamefeel-card .desc{font-size:.85rem;color:#888}
+
+/* Remaining */
+.gap-list{columns:2;column-gap:2rem}
+.gap-list li{padding:.3rem 0;break-inside:avoid;font-size:.9rem}
+.gap-list li::marker{color:#ff6b6b}
+
+/* Footer */
+.footer{text-align:center;padding:2rem;color:#555;border-top:1px solid #ffffff10;margin-top:2rem}
+.footer .brand{color:#6C5CE7;font-size:1.2rem;font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>🥷 סקירת איטרציה 16</h1>
+  <div class="sub">נינג׳ה מקלדת — סקירה מסכמת ומשודרגת</div>
+  <div class="date">30-31 במרץ 2026 | שילוב משוב מקיף + שדרוג game-feel</div>
+</div>
+
+<div class="container">
+
+<div class="mega-stats">
+  <div class="mega-stat"><div class="num">20+</div><div class="label">משימות הושלמו</div></div>
+  <div class="mega-stat"><div class="num">3</div><div class="label">באגים תוקנו</div></div>
+  <div class="mega-stat"><div class="num">0</div><div class="label">שגיאות TypeScript</div></div>
+  <div class="mega-stat"><div class="num">1096</div><div class="label">טסטים עוברים</div></div>
+  <div class="mega-stat"><div class="num">23</div><div class="label">דמויות ב-Config</div></div>
+  <div class="mega-stat"><div class="num">553</div><div class="label">ביטי סיפור</div></div>
+  <div class="mega-stat"><div class="num">7</div><div class="label">hero צ׳יבי חדשים</div></div>
+  <div class="mega-stat"><div class="num">4</div><div class="label">אפקטי game-feel</div></div>
+</div>
+
+<h2>🐛 תיקוני באגים</h2>
+<div class="section-card">
+  <div class="task-row"><span class="task-icon">🔴</span><span class="task-text">5/6 אווטארי יריבים לא נטענו ב-/battle — Shadow/Storm/Blaze על רקע כהה</span><span class="task-badge badge-done">תוקן</span></div>
+  <div class="task-row"><span class="task-icon">🟡</span><span class="task-text">XP bar hydration mismatch — SSR=0% vs client=48%</span><span class="task-badge badge-done">תוקן</span></div>
+  <div class="task-row"><span class="task-icon">🔵</span><span class="task-text">תמונת Ki שבורה בדף הבית — היה model-sheet composite</span><span class="task-badge badge-done">תוקן</span></div>
+</div>
+
+<h2>👾 מערכת דמויות</h2>
+<div class="section-card">
+  <div class="task-row"><span class="task-icon">➕</span><span class="task-text">4 דמויות חדשות ב-type system: זארה, קרס, בלוק, לאנס</span><span class="task-badge badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">🖼️</span><span class="task-text">23 expression sheets מחוברים ל-CHARACTER_CONFIGS</span><span class="task-badge badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">🏅</span><span class="task-text">9/11 באדג׳ים מקושרים לתמונות JPG אמיתיות</span><span class="task-badge badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">🎭</span><span class="task-text">heroImage field נוסף ל-7 דמויות ב-config</span><span class="task-badge badge-done">הושלם</span></div>
+</div>
+
+<h2>🎨 אומנות — Hero Illustrations V2 (צ׳יבי)</h2>
+<p style="color:#888;margin-bottom:.5rem">כל 7 הדמויות נוצרו מחדש בסגנון צ׳יבי — ראשים גדולים, גופים קטנים, ידידותי לילדים</p>
+<div class="art-row">
+  <div class="art-thumb"><img src="../../public/images/characters/heroes/ki-hero.jpg" alt="קי"><div class="name">קי 🟣</div></div>
+  <div class="art-thumb"><img src="../../public/images/characters/heroes/sensei-zen-hero.jpg" alt="סנסיי זן"><div class="name">סנסיי זן 🐢</div></div>
+  <div class="art-thumb"><img src="../../public/images/characters/heroes/yuki-hero.jpg" alt="יוקי"><div class="name">יוקי ⚡</div></div>
+  <div class="art-thumb"><img src="../../public/images/characters/heroes/mika-hero.jpg" alt="מיקה"><div class="name">מיקה ⌨️</div></div>
+  <div class="art-thumb"><img src="../../public/images/characters/heroes/rex-hero.jpg" alt="רקס"><div class="name">רקס 🎮</div></div>
+  <div class="art-thumb"><img src="../../public/images/characters/heroes/pixel-hero.jpg" alt="פיקסל"><div class="name">פיקסל 🤖</div></div>
+  <div class="art-thumb"><img src="../../public/images/characters/heroes/luna-hero.jpg" alt="לונה"><div class="name">לונה 🎨</div></div>
+</div>
+
+<h2>🕹️ שדרוגי UI/UX</h2>
+<div class="section-card">
+  <div class="task-row"><span class="task-icon">🧑‍🎨</span><span class="task-text">דמויות גדולות (220px) + idle animations על 7 עמודים</span><span class="task-badge badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">🎮</span><span class="task-text">עמוד שיעור: game-card-border + צלילי הקלדה</span><span class="task-badge badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">⭐</span><span class="task-text">מסך תוצאות: כוכבים מונפשים + XP pop-in</span><span class="task-badge badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">🐢</span><span class="task-text">סנסיי זן כמלווה בטיפ יומי עם בועת דיבור</span><span class="task-badge badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">🎨</span><span class="task-text">5 ערכות גיל מובחנות: צבעים + אנימציות ייחודיות</span><span class="task-badge badge-done">הושלם</span></div>
+</div>
+
+<h2>✨ Game-Feel חדש</h2>
+<div class="gamefeel-grid">
+  <div class="gamefeel-card">
+    <div class="icon">✨</div>
+    <div class="title">Floating Particles</div>
+    <div class="desc">20 חלקיקים סגולים/טורקיז רוחפים ברקע כל האפליקציה. CSS-only, ידידותי לביצועים</div>
+  </div>
+  <div class="gamefeel-card">
+    <div class="icon">🔥</div>
+    <div class="title">Combo Counter</div>
+    <div class="desc">x5, x10, x15... מונה רצף הקלדות נכונות עם pop animation ו-4 רמות צבע (טורקיז → סגול → כתום → זהב)</div>
+  </div>
+  <div class="gamefeel-card">
+    <div class="icon">💥</div>
+    <div class="title">Screen Shake</div>
+    <div class="desc">רעידה עדינה (2px, 120ms) על שגיאת הקלדה. מכבד prefers-reduced-motion</div>
+  </div>
+  <div class="gamefeel-card">
+    <div class="icon">🎊</div>
+    <div class="title">Confetti Burst</div>
+    <div class="desc">פיצוץ קונפטי צבעוני בסיום שיעור מוצלח. CSS-only, 2 שניות</div>
+  </div>
+</div>
+
+<h2>📖 סיפור</h2>
+<div class="section-card">
+  <div class="task-row"><span class="task-icon">🦹</span><span class="task-text">17 ביטים חדשים: וירוס, סאקורה, ברק, פאנטום, זארה, קרס, מאסטר ביט</span><span class="task-badge badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">✍️</span><span class="task-text">שכתוב דיאלוגים בעברית טבעית (Opus) — קולות ייחודיים לכל דמות</span><span class="task-badge badge-running">רץ...</span></div>
+  <div class="task-row"><span class="task-icon">📄</span><span class="task-text">סקירת סיפור מלאה: 553 ביטים ב-6 פרקים</span><span class="task-badge badge-done">HTML</span></div>
+</div>
+
+<h2>🧹 ניקיון ותחזוקה</h2>
+<div class="section-card">
+  <div class="task-row"><span class="task-icon">🗑️</span><span class="task-text">5 רקעים כפולים נמחקו (3.9MB שוחרר)</span><span class="task-badge badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">🔧</span><span class="task-text">Gemini model עודכן ל-3.1 Flash (היה deprecated)</span><span class="task-badge badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">📝</span><span class="task-text">PROGRESS.md + MEMORY.md מעודכנים</span><span class="task-badge badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">🧠</span><span class="task-text">2 memory files חדשים עם לקחים ומשוב</span><span class="task-badge badge-done">הושלם</span></div>
+</div>
+
+<h2>⚠️ פערים שנותרו</h2>
+<div class="section-card">
+<h3>אומנות (15 דמויות צריכות hero)</h3>
+<ul class="gap-list">
+  <li>Shadow — hero + קול + שיר נושא</li>
+  <li>Storm — hero + קול + שיר נושא</li>
+  <li>Blaze — hero + קול + שיר נושא</li>
+  <li>Glitch — hero + קול</li>
+  <li>Virus — hero + קול + שיר נושא</li>
+  <li>Barak — hero + קול + שיר + עמוד</li>
+  <li>Sakura — hero + קול + שיר + עמוד</li>
+  <li>Master Beat — hero + קול + שיר + עמוד</li>
+  <li>Noa — hero + שיר נושא</li>
+  <li>Kai — hero + שיר נושא</li>
+  <li>Phantom — hero + קול + שיר + עמוד</li>
+  <li>Zara — hero + קול + שיר</li>
+  <li>Keres — hero + שיר</li>
+  <li>Block — hero + קול + שיר</li>
+  <li>Lens — hero + קול + שיר</li>
+</ul>
+
+<h3>קוד + UI</h3>
+<ul class="gap-list">
+  <li>Jukebox gamification — פתיחת טרקים</li>
+  <li>דשבורד מורים/הורים — השלמה</li>
+  <li>Skin art — עיצוב ראשוני</li>
+  <li>מערכת רמות — מימוש</li>
+  <li>Chrome review — 15 עמודים נותרו</li>
+  <li>עטיפות ג׳וקבוקס חסרות</li>
+</ul>
+
+<h3>דמויות (עיצוב מחדש)</h3>
+<ul class="gap-list">
+  <li>Ki — עקביות עיצוב + קול חדש</li>
+  <li>Mika — redesign נשי יותר</li>
+  <li>סנסיי זן — קול ישראלי (לא אנגלי)</li>
+  <li>9 דמויות ללא קול בכלל</li>
+  <li>גיוון כור היתוך ישראלי</li>
+</ul>
+</div>
+
+<h2>📊 שיפורים מסשן לסשן (פרוטוקול)</h2>
+<div class="section-card">
+<table style="width:100%;border-collapse:collapse">
+<tr style="border-bottom:1px solid #ffffff10">
+  <th style="text-align:right;padding:.5rem;color:#6C5CE7">ממד</th>
+  <th style="text-align:right;padding:.5rem;color:#6C5CE7">מה השתפר</th>
+</tr>
+<tr style="border-bottom:1px solid #ffffff06">
+  <td style="padding:.4rem">איכות</td>
+  <td style="padding:.4rem;color:#888">איורי צ׳יבי V2 (תיקון V1 שהיה מבוגר מדי), Gemini 3.1 Flash</td>
+</tr>
+<tr style="border-bottom:1px solid #ffffff06">
+  <td style="padding:.4rem">מהירות</td>
+  <td style="padding:.4rem;color:#888">3 אגנטים במקביל (art + story + game-feel), 20+ משימות בסשן אחד</td>
+</tr>
+<tr style="border-bottom:1px solid #ffffff06">
+  <td style="padding:.4rem">דיוק</td>
+  <td style="padding:.4rem;color:#888">TypeScript 0 errors, 1096/1096 tests, build passing</td>
+</tr>
+<tr style="border-bottom:1px solid #ffffff06">
+  <td style="padding:.4rem">אוטונומיה</td>
+  <td style="padding:.4rem;color:#888">זיהוי עצמי של בעיית Gemini deprecated, תיקון ללא שאלות</td>
+</tr>
+<tr style="border-bottom:1px solid #ffffff06">
+  <td style="padding:.4rem">למידה</td>
+  <td style="padding:.4rem;color:#888">2 memory files חדשים: art direction + feedback lessons</td>
+</tr>
+<tr>
+  <td style="padding:.4rem">יוזמה</td>
+  <td style="padding:.4rem;color:#888">game-feel effects מיוזמה עצמית (particles, combo, shake, confetti)</td>
+</tr>
+</table>
+</div>
+
+<div class="footer">
+  <div class="brand">נינג׳ה מקלדת 🥷⌨️</div>
+  <div style="margin-top:.5rem">נוצר ע״י Claude Code — איטרציה 16 — 31 במרץ 2026</div>
+  <div style="color:#6C5CE7;margin-top:.3rem">הסשן הבא: המשך יצירת heroes + קולות + jukebox + דשבורד מורים</div>
+</div>
+
+</div>
+</body>
+</html>

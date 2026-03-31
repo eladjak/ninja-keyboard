@@ -49,7 +49,7 @@ export const CHAPTER_5_1_TOURNAMENT_BEGINS: DialogStoryBeat = {
     {
       id: 'ch5-1-05',
       character: 'rex',
-      text: 'יש פה כל כך הרבה אנשים! חברה, לא לשכוח — גם אם נפסיד, לפחות נפסיד בסטייל!',
+      text: 'אחי, כמה אנשים יש פה?! חברה, לא לשכוח — גם אם נפסיד, לפחות נפסיד בסטייל! כמו נובים מכובדים!',
       type: 'dialog',
       mood: 'funny',
       expression: 'happy',
@@ -141,6 +141,142 @@ export const CHAPTER_5_2_TOURNAMENT_ROUNDS: DialogStoryBeat = {
 }
 
 /**
+ * 5.2b — Keres reveals himself at the tournament
+ * For the first time, the true villain shows his face. He's not Virus.
+ * He's the one who built the system. Cold. Calculating. Ancient.
+ */
+export const CHAPTER_5_2B_KERES_REVEALS: DialogStoryBeat = {
+  id: 'ch5-2b-keres-reveals',
+  trigger: { type: 'manual' },
+  lines: [
+    {
+      id: 'ch5-2b-01',
+      character: 'ki',
+      text: 'רגע — על הבמה! הוא לא משופט. לא מאמן. לא מישהו שהכרנו. מי זה?',
+      type: 'narration',
+      mood: 'tense',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch5-2b-02',
+      character: 'keres',
+      text: 'מרשים, הטורניר הזה. כל כך הרבה כישרון. ואף אחד לא מבין שהכל שייך לי כבר.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'idle',
+    },
+    {
+      id: 'ch5-2b-03',
+      character: 'senseiZen',
+      text: 'כרס. אחרי כל השנים האלה... זה אתה שעמד מאחורי הכל.',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'concerned',
+    },
+    {
+      id: 'ch5-2b-04',
+      character: 'keres',
+      text: 'זן. הצב הזקן. עוד פה? חשבתי שעד עכשיו הפחד היה אמור להרחיק אותך.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'mischievous',
+    },
+    {
+      id: 'ch5-2b-05',
+      character: 'ki',
+      text: 'סנסאי מכיר אותו! הוא אויב ישן! מי הוא?!',
+      type: 'thought',
+      mood: 'tense',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch5-2b-06',
+      character: 'keres',
+      text: 'הנינג\'ות הצעירים... מקסים. היום — אני אראה להם מה מחכה לתלמידים שלא לומדים את השיעור האמיתי.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'idle',
+      duration: 3000,
+    },
+    {
+      id: 'ch5-2b-07',
+      character: 'zara',
+      text: 'כרס הגיע בעצמו. זה לא קרה מעולם. זה... מסוכן יותר ממה שחשבתי.',
+      type: 'thought',
+      mood: 'tense',
+      expression: 'concerned',
+    },
+  ],
+}
+
+/**
+ * 5.2c — Sakura gives Yuki her final lesson before the big battle
+ * Grace under pressure. A crane's last gift before battle.
+ */
+export const CHAPTER_5_2C_SAKURA_FINAL_LESSON: DialogStoryBeat = {
+  id: 'ch5-2c-sakura-final-lesson',
+  trigger: { type: 'manual' },
+  lines: [
+    {
+      id: 'ch5-2c-01',
+      character: 'yuki',
+      text: 'סאקורה! לא ידעתי שאת בטורניר!',
+      type: 'dialog',
+      mood: 'happy',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch5-2c-02',
+      character: 'sakura',
+      text: 'לא נלחמת. מביטה. לפעמים ביטה — היא הכוח הגדול ביותר.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'idle',
+    },
+    {
+      id: 'ch5-2c-03',
+      character: 'yuki',
+      text: 'ניצחתי את ברק! 78 מילים לדקה! ראית?!',
+      type: 'dialog',
+      mood: 'happy',
+      expression: 'cheering',
+    },
+    {
+      id: 'ch5-2c-04',
+      character: 'sakura',
+      text: 'ראיתי. ועוד ראיתי שברק שינה פנים כשהפסיד. לא כעס — הפתעה. וקצת הערכה. זה ריקוד, יוקי. הוא מתחיל להבין.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'happy',
+    },
+    {
+      id: 'ch5-2c-05',
+      character: 'yuki',
+      text: 'ברק... מעריך אותי? הוא לא הראה את זה.',
+      type: 'thought',
+      mood: 'happy',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch5-2c-06',
+      character: 'sakura',
+      text: 'יוקי. הקרב הגדול — הוא לא עם ברק. הוא עם מה שמגיע עכשיו. תזכרי: ריקוד. גם כשהכל נופל.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'idle',
+    },
+    {
+      id: 'ch5-2c-07',
+      character: 'yuki',
+      text: 'גם כשהכל נופל. אני אזכור.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'idle',
+    },
+  ],
+}
+
+/**
  * 5.3 — Glitch attacks the tournament as Virus's warrior
  * She fights against her former friends. Tears on her face.
  */
@@ -223,6 +359,134 @@ export const CHAPTER_5_3_GLITCH_ATTACKS: DialogStoryBeat = {
           relationshipEffect: { character: 'kai', delta: 3 },
         },
       ],
+    },
+  ],
+}
+
+/**
+ * 5.3b — Zara hesitates, helps the team secretly
+ * Zara is ordered to block the team's healing station during the battle.
+ * She does — but then quietly undoes it. Nobody sees. This is her turning point.
+ */
+export const CHAPTER_5_3B_ZARA_HESITATES: DialogStoryBeat = {
+  id: 'ch5-3b-zara-hesitates',
+  trigger: { type: 'manual' },
+  lines: [
+    {
+      id: 'ch5-3b-01',
+      character: 'keres',
+      text: 'זרה. חסמי את תחנת הריפוי של צוות זן. עכשיו.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'idle',
+    },
+    {
+      id: 'ch5-3b-02',
+      character: 'zara',
+      text: 'מבינה.',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'idle',
+    },
+    {
+      id: 'ch5-3b-03',
+      character: 'zara',
+      text: 'זרה חוסמת. אבל מבט קצר לעבר גליץ\'. גליץ\' שנלחמת בדמעות. ואז — זרה מסירה את חסימה. בשקט. ללא עד.',
+      type: 'narration',
+      mood: 'mysterious',
+      expression: 'sad',
+    },
+    {
+      id: 'ch5-3b-04',
+      character: 'noa',
+      text: 'תחנת הריפוי חזרה! לא מבינה — חסמו אותה ואז... שחררו? מי עשה את זה?',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch5-3b-05',
+      character: 'zara',
+      text: 'גליץ\' צדקה. גם אני — לא שלמה. גם אני — משתמשים בי. אבל... אולי יש ברירה.',
+      type: 'thought',
+      mood: 'sad',
+      expression: 'thinking',
+    },
+  ],
+}
+
+/**
+ * 5.3c — Phantom moves to help Mika decode the Mega-Virus's weakness
+ * Mika is stuck. Phantom slides a piece of code across the floor.
+ * He doesn't reveal himself fully — but he helps. Mika feels it.
+ */
+export const CHAPTER_5_3C_PHANTOM_HELPS_MIKA: DialogStoryBeat = {
+  id: 'ch5-3c-phantom-helps-mika',
+  trigger: { type: 'manual' },
+  lines: [
+    {
+      id: 'ch5-3c-01',
+      character: 'mika',
+      text: 'אני לא יכולה לפרוץ את הקוד שלו! הצפנה שבעה שכבות! מי כתב דבר כזה?!',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'concerned',
+    },
+    {
+      id: 'ch5-3c-02',
+      character: 'ki',
+      text: 'מיקה, יש פתק על המקלדת שלך! מישהו השאיר—',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch5-3c-03',
+      character: 'mika',
+      text: 'קוד. מפתח פרטי. למי יש את זה? מי—',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch5-3c-04',
+      character: 'phantom',
+      text: '...השתמשי בו.',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'idle',
+    },
+    {
+      id: 'ch5-3c-05',
+      character: 'mika',
+      text: 'הצלית נעלמת! מי — סנסאי, מי שם?! קול שמכיר את הקוד הזה!',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch5-3c-06',
+      character: 'senseiZen',
+      text: 'מיקה... השתמשי במפתח. ותאמיני בו.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'concerned',
+    },
+    {
+      id: 'ch5-3c-07',
+      character: 'mika',
+      text: 'בו? בצל? בנינג\'ה השחור? מי אתה?!',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch5-3c-08',
+      character: 'ki',
+      text: 'אני מרגיש שהצל הזה... הוא לא זר. הוא מכיר אותנו. הוא עקב אחרינו כל הזמן — כדי להגן. לא לפגוע.',
+      type: 'thought',
+      mood: 'mysterious',
+      expression: 'thinking',
     },
   ],
 }
@@ -422,7 +686,7 @@ export const CHAPTER_5_6_MIKA_REACHES_GLITCH: DialogStoryBeat = {
     {
       id: 'ch5-6-03',
       character: 'mika',
-      text: 'גליץ\'... את לא צריכה כוח כדי לדעת מי את. את גליץ\'. החברה שלי. זוכרת? הקוד הראשון שכתבנו ביחד?',
+      text: 'גליץ\'... את לא צריכה כוח כדי לדעת מי את. את גליץ\'. את ה-ח-ב-ר-ה שלי. זוכרת את הקוד הראשון שכתבנו ביחד? באותו לילה? עם הפיצה הקרה?',
       type: 'dialog',
       mood: 'heartwarming',
       expression: 'sad',
@@ -542,7 +806,7 @@ export const CHAPTER_5_7_GLITCH_SACRIFICE: DialogStoryBeat = {
     {
       id: 'ch5-7-07',
       character: 'glitch',
-      text: 'אני גליץ\'. לא תקלה. לא כלי. חברה.',
+      text: 'אני גליץ\'. לא תקלה. לא נשק. לא כלי של אף אחד. אני חברה. והחברים שלי — צריכים אותי.',
       type: 'dialog',
       mood: 'epic',
       expression: 'happy',
@@ -606,7 +870,7 @@ export const CHAPTER_5_8_MOURNING: DialogStoryBeat = {
     {
       id: 'ch5-8-04',
       character: 'pixel',
-      text: 'שגיאה בניתוח... לא מצליח לעבד. תחושה לא מוכרת. חושב ש... זה מה שנקרא... אובדן.',
+      text: 'שגיאה בניתוח... שגיאה... שגיאה. חישוב נכשל. תחושה לא מוכרת במאגר. חושב ש... חושב ש... זה מה שבני אדם קוראים "אובדן". עכשיו... עכשיו אני מבין למה אין לזה יחידת מידה.',
       type: 'dialog',
       mood: 'sad',
       expression: 'sad',
@@ -622,7 +886,7 @@ export const CHAPTER_5_8_MOURNING: DialogStoryBeat = {
     {
       id: 'ch5-8-06',
       character: 'rex',
-      text: 'אין לי בדיחה לרגע הזה. בפעם הראשונה — אין לי כלום.',
+      text: 'אין לי בדיחה. בפעם הראשונה בחיים... אין לי שום דבר מצחיק להגיד. ואני שונא את זה.',
       type: 'dialog',
       mood: 'sad',
       expression: 'sad',
@@ -643,6 +907,67 @@ export const CHAPTER_5_8_MOURNING: DialogStoryBeat = {
       type: 'dialog',
       mood: 'sad',
       expression: 'concerned',
+    },
+  ],
+}
+
+/**
+ * 5.8b — Keres escapes and vows revenge
+ * The Mega-Virus exploded but Keres was not Virus. He was never at risk.
+ * He watches from a distant server. Cold and patient. It's not over.
+ */
+export const CHAPTER_5_8B_KERES_ESCAPES: DialogStoryBeat = {
+  id: 'ch5-8b-keres-escapes',
+  trigger: { type: 'manual' },
+  lines: [
+    {
+      id: 'ch5-8b-01',
+      character: 'keres',
+      text: 'מגה-וירוס נפל. כרגיל, כשאתה מסתמך על כלים — הם שוברים.',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'idle',
+    },
+    {
+      id: 'ch5-8b-02',
+      character: 'keres',
+      text: 'אבל... הנינג\'ות האלה. הם לא פשוטים כמו שחשבתי. הצוות של זן... מעניין.',
+      type: 'thought',
+      mood: 'mysterious',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch5-8b-03',
+      character: 'zara',
+      text: 'כרס... גליץ\' הייתה... אמיצה. היא עשתה מה שרציתי לעשות ולא יכולתי.',
+      type: 'thought',
+      mood: 'sad',
+      expression: 'sad',
+    },
+    {
+      id: 'ch5-8b-04',
+      character: 'keres',
+      text: 'זרה. התחלת לפתח... רגשות. זה יהיה בעיה שלך.',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'idle',
+    },
+    {
+      id: 'ch5-8b-05',
+      character: 'zara',
+      text: 'אולי.',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'idle',
+    },
+    {
+      id: 'ch5-8b-06',
+      character: 'keres',
+      text: 'המלחמה הבאה לא תהיה ב-וירוס. לא בבאגים. בשחיתות עצמה. ולעולם לא ינצחו שחיתות עם ידידות בלבד.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'idle',
+      duration: 3000,
     },
   ],
 }
@@ -746,11 +1071,16 @@ export const CHAPTER_5_9_LEADER_RISING: DialogStoryBeat = {
 export const CHAPTER_5_BEATS: DialogStoryBeat[] = [
   CHAPTER_5_1_TOURNAMENT_BEGINS,
   CHAPTER_5_2_TOURNAMENT_ROUNDS,
+  CHAPTER_5_2B_KERES_REVEALS,
+  CHAPTER_5_2C_SAKURA_FINAL_LESSON,
   CHAPTER_5_3_GLITCH_ATTACKS,
+  CHAPTER_5_3B_ZARA_HESITATES,
+  CHAPTER_5_3C_PHANTOM_HELPS_MIKA,
   CHAPTER_5_4_MEGA_VIRUS,
   CHAPTER_5_5_TEAM_BATTLE,
   CHAPTER_5_6_MIKA_REACHES_GLITCH,
   CHAPTER_5_7_GLITCH_SACRIFICE,
   CHAPTER_5_8_MOURNING,
+  CHAPTER_5_8B_KERES_ESCAPES,
   CHAPTER_5_9_LEADER_RISING,
 ]

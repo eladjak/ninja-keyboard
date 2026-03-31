@@ -40,7 +40,7 @@ export const CHAPTER_2_1_MEET_REX: DialogStoryBeat = {
     {
       id: 'ch2-1-04',
       character: 'rex',
-      text: 'כלום! ממש כלום! זה סתם... שטויות. פרוטוטייפ של משחק הקלדה. לא שווה כלום.',
+      text: 'כלום! ממש כלום! זה סתם... פרוטוטייפ של משחק. ורסיית אלפא. לא רלוונטי. נובים לא מבינים את זה בכל מקרה.',
       type: 'dialog',
       mood: 'sad',
       expression: 'concerned',
@@ -56,7 +56,7 @@ export const CHAPTER_2_1_MEET_REX: DialogStoryBeat = {
     {
       id: 'ch2-1-06',
       character: 'rex',
-      text: 'כי... אני... שתוק! בוא פשוט נשחק! מי שמפסיד קונה שוקולד.',
+      text: 'כי... אני... שתוק כבר! יאללה, בוא נשחק! מי שמפסיד קונה ביסלי. אה, ושוקולד. ממתק נחמה.',
       type: 'dialog',
       mood: 'funny',
       expression: 'excited',
@@ -91,7 +91,7 @@ export const CHAPTER_2_2_MIKA_SHORTCUTS: DialogStoryBeat = {
     {
       id: 'ch2-2-03',
       character: 'mika',
-      text: 'Ctrl+C זה לתינוקות. אני מדברת על Alt+Tab, Ctrl+Shift+T, Win+L. עם הקיצורים האלה, אתה שולט במחשב בלי לגעת בעכבר. בכלל.',
+      text: 'Ctrl+C? ברצינות? זה לתינוקות של גן חובה. אני מדברת על Alt+Tab, Ctrl+Shift+T, Win+L. עם הקיצורים האלה, אתה שולט במחשב בלי לגעת בעכבר. בכ-ל-ל.',
       type: 'dialog',
       mood: 'epic',
       expression: 'excited',
@@ -107,7 +107,7 @@ export const CHAPTER_2_2_MIKA_SHORTCUTS: DialogStoryBeat = {
     {
       id: 'ch2-2-05',
       character: 'mika',
-      text: 'זה לא קסם. זה ידע. ורק מי שמתאמן קשה — שולט בו.',
+      text: 'זה לא קסם, נוב. זה ידע. קוד ירוק. ורק מי שמתאמן קשה — שולט בו באמת.',
       type: 'dialog',
       mood: 'tense',
       expression: 'idle',
@@ -217,7 +217,7 @@ export const CHAPTER_2_4_YUKI_CHALLENGE: DialogStoryBeat = {
     {
       id: 'ch2-4-05',
       character: 'yuki',
-      text: 'גרררר! דיוק שמיוק! מהירות זה הדבר היחיד שחשוב!',
+      text: 'גרררר! דיוק שמיוק! מהירות זה הכל! מי שמהיר — שולט! מי שאיטי — אוכל אבק!',
       type: 'dialog',
       mood: 'tense',
       expression: 'concerned',
@@ -225,7 +225,7 @@ export const CHAPTER_2_4_YUKI_CHALLENGE: DialogStoryBeat = {
     {
       id: 'ch2-4-06',
       character: 'senseiZen',
-      text: 'חרב מהירה שלא פוגעת במטרה — היא רק רוח. יוקי, את צריכה ללמוד לנשום בין המקשים.',
+      text: 'חרב מהירה שלא פוגעת במטרה — היא סתם רוח. יוקי, ילדה, את צריכה ללמוד לנשום בין המקשים. גם נינג\'ה צריך אוויר.',
       type: 'dialog',
       mood: 'heartwarming',
       expression: 'idle',
@@ -244,7 +244,7 @@ export const CHAPTER_2_5_PATIENCE_LESSON: DialogStoryBeat = {
     {
       id: 'ch2-5-01',
       character: 'ki',
-      text: 'אני לא משתפר! אתמול הייתי ב-35 מילים לדקה ועכשיו ירדתי ל-30! מה לא בסדר איתי?!',
+      text: 'אני לא מבין! אתמול הייתי 35 מילים לדקה ועכשיו ירדתי ל-30?! מה קורה?! אני הולך אחורה! כאילו, למה?!',
       type: 'dialog',
       mood: 'sad',
       expression: 'sad',
@@ -425,7 +425,7 @@ export const CHAPTER_2_8_BUG_APPEARS: DialogStoryBeat = {
     {
       id: 'ch2-8-01',
       character: 'bug',
-      text: 'היי היי היי! בלגאאאאן! מי פה? מי פה? הכל הפוך! הכל שבור! כיף כיף כיף!',
+      text: 'היייי! בלגאאאאן! הפוך! שבור! כיף! כיף! מי פה? מי פה? אני כאן! כולם כאן! הכל שבור וזה מ-צ-ח-י-ק!',
       type: 'dialog',
       mood: 'funny',
       expression: 'mischievous',
@@ -466,6 +466,101 @@ export const CHAPTER_2_8_BUG_APPEARS: DialogStoryBeat = {
 }
 
 /**
+ * 2.8b — Virus (friendly form) first seen in the distance
+ * A small, glowing digital entity waves hello. Nobody knows who it is yet.
+ * Foreshadowing: Virus has been watching the dojo for a while.
+ */
+export const CHAPTER_2_8B_VIRUS_FIRST_GLIMPSE: DialogStoryBeat = {
+  id: 'ch2-8b-virus-first-glimpse',
+  trigger: { type: 'manual' },
+  lines: [
+    {
+      id: 'ch2-8b-01',
+      character: 'ki',
+      text: 'רגע — מה זה? ישות קטנה, זוהרת. עגולה. עם עיניים גדולות. היא... מנופפת לי?',
+      type: 'thought',
+      mood: 'mysterious',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch2-8b-02',
+      character: 'virus',
+      text: 'היי היי! לא לדאוג! אני רק עובר! בשכונה! שלום!',
+      type: 'dialog',
+      mood: 'happy',
+      expression: 'happy',
+    },
+    {
+      id: 'ch2-8b-03',
+      character: 'ki',
+      text: 'מה זאת הייתה?! יצור דיגיטלי עם קסדה ורוזטה? מוזר, אבל... נראה ממש ידידותי.',
+      type: 'thought',
+      mood: 'funny',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch2-8b-04',
+      character: 'pixel',
+      text: 'סורק... ישות לא מזוהה. קטנה. חתימת קוד לא ברורה. אין סכנה לכאורה. רמת מסתוריות: 87%.',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch2-8b-05',
+      character: 'ki',
+      text: 'אני מרגיש שאנחנו נפגש שוב עם היצור הזה.',
+      type: 'thought',
+      mood: 'mysterious',
+      expression: 'thinking',
+    },
+  ],
+}
+
+/**
+ * 2.8c — Sakura seen through the window — silent foreshadowing
+ * A white crane lands on the dojo roof. Sensei Zen looks up with a knowing smile.
+ */
+export const CHAPTER_2_8C_SAKURA_GLIMPSE: DialogStoryBeat = {
+  id: 'ch2-8c-sakura-glimpse',
+  trigger: { type: 'manual' },
+  lines: [
+    {
+      id: 'ch2-8c-01',
+      character: 'yuki',
+      text: 'סנסאי, ראיתי עגורה לבנה על הגג! עגורה ענקית! הייתי שם!',
+      type: 'dialog',
+      mood: 'happy',
+      expression: 'excited',
+    },
+    {
+      id: 'ch2-8c-02',
+      character: 'senseiZen',
+      text: 'עגורה... כן. לפעמים ישנות חוזרות בדיוק כשצריך אותן.',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch2-8c-03',
+      character: 'yuki',
+      text: 'מה זה אומר? מישהו שאתה מכיר?',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch2-8c-04',
+      character: 'senseiZen',
+      text: 'חברה ישנה. חכמה מאוד. אם היא חזרה — יש סיבה. אולי... בשבילך, יוקי.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'happy',
+    },
+  ],
+}
+
+/**
  * 2.9 — Ki defeats the bug with typing skills
  * First mini-boss victory. Bug retreats, promising to return.
  */
@@ -484,7 +579,7 @@ export const CHAPTER_2_9_BUG_DEFEATED: DialogStoryBeat = {
     {
       id: 'ch2-9-02',
       character: 'bug',
-      text: 'לאאא! לא לא לא! אני מתכווץ! אני נהיה קטן! אחזוווווור! אני תמיד חוזר!',
+      text: 'לא לא לא לא! אני מתכוווץ! קטן! יותר קטן! עוד יותר! אבל אני חוזר! תמיד חוזר! כמו פרסומת שלא נגמרת!',
       type: 'dialog',
       mood: 'funny',
       expression: 'surprised',
@@ -500,7 +595,7 @@ export const CHAPTER_2_9_BUG_DEFEATED: DialogStoryBeat = {
     {
       id: 'ch2-9-04',
       character: 'mika',
-      text: 'לא רע, חדשן. לא רע בכלל. אולי יש בך משהו.',
+      text: 'לא רע, חדשוק. לא רע בכלל. אולי... טוב, אני לא חוזרת על זה, אבל אולי יש בך משהו.',
       type: 'dialog',
       mood: 'heartwarming',
       expression: 'happy',
@@ -536,5 +631,7 @@ export const CHAPTER_2_BEATS: DialogStoryBeat[] = [
   CHAPTER_2_6_MEET_NOA,
   CHAPTER_2_7_KAI_BOND,
   CHAPTER_2_8_BUG_APPEARS,
+  CHAPTER_2_8B_VIRUS_FIRST_GLIMPSE,
+  CHAPTER_2_8C_SAKURA_GLIMPSE,
   CHAPTER_2_9_BUG_DEFEATED,
 ]

@@ -24,7 +24,7 @@ import { GameCard } from '@/components/ui/game-card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
-import { useMemo, useEffect } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useReducedMotion } from '@/hooks/use-reduced-motion'
 import { DailyChallengeCard } from '@/components/challenges/daily-challenge-card'
@@ -36,6 +36,7 @@ import { usePracticeHistoryStore } from '@/stores/practice-history-store'
 import { LESSONS } from '@/lib/content/lessons'
 import { BADGE_DEFINITIONS } from '@/lib/gamification/badge-definitions'
 import { useSoundEffect, useNavigateSound } from '@/hooks/use-sound-effect'
+import { CharacterIdleWrapper } from '@/components/characters/character-idle-wrapper'
 
 function getNextLesson(
   completedLessons: Record<string, unknown>,
@@ -154,6 +155,13 @@ export function HomeDashboard() {
     .filter(Boolean)
   const progress = levelProgress()
 
+  // Hydration-safe XP progress: start at 0 on server & initial client render,
+  // then animate to real value after mount to avoid hydration mismatch.
+  const [hydratedProgress, setHydratedProgress] = useState(0)
+  useEffect(() => {
+    setHydratedProgress(progress)
+  }, [progress])
+
   // Play achievement sound once on mount when there are recent badges
   const hasRecentBadges = recentBadges.length > 0
   useEffect(() => {
@@ -194,14 +202,16 @@ export function HomeDashboard() {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--game-bg-primary)] via-[var(--game-bg-primary)]/60 to-transparent" />
 
         {/* Ki character image */}
-        <div className="pointer-events-none absolute bottom-0 end-4 z-10">
-          <Image
-            src="/images/characters/ki-hero.jpg"
-            alt="Ki - מדריך הנינג'ה"
-            width={100}
-            height={100}
-            className="rounded-full border-2 border-purple-500/50 shadow-lg shadow-purple-500/20"
-          />
+        <div className="pointer-events-none absolute bottom-0 end-0 z-10">
+          <CharacterIdleWrapper character="ki" intensity="normal" entryAnimation>
+            <Image
+              src="/images/characters/ki-hero.jpg"
+              alt="קי - מדריך הנינג'ה"
+              width={220}
+              height={220}
+              className="rounded-2xl object-cover drop-shadow-[0_0_24px_rgba(108,92,231,0.5)]"
+            />
+          </CharacterIdleWrapper>
         </div>
 
         <div className="relative z-10 space-y-2">
@@ -219,13 +229,13 @@ export function HomeDashboard() {
         <div className="relative z-10 mt-4 space-y-1.5">
           <div className="flex items-center justify-between text-xs text-white/70">
             <span>רמה {level}</span>
-            <span>{progress}%</span>
+            <span>{hydratedProgress}%</span>
           </div>
           <div
             className="h-2.5 rounded-full bg-white/10 overflow-hidden border border-white/10"
             role="progressbar"
             aria-label="התקדמות לרמה הבאה"
-            aria-valuenow={progress}
+            aria-valuenow={hydratedProgress}
             aria-valuemin={0}
             aria-valuemax={100}
           >
@@ -233,7 +243,7 @@ export function HomeDashboard() {
               className="h-full rounded-full"
               style={{ background: 'linear-gradient(90deg, #6C5CE7, #00B894)' }}
               initial={reduceMotion ? false : { width: 0 }}
-              animate={{ width: `${progress}%` }}
+              animate={{ width: `${hydratedProgress}%` }}
               transition={reduceMotion ? { duration: 0 } : { duration: 0.8, ease: 'easeOut' }}
             />
           </div>
@@ -395,16 +405,28 @@ export function HomeDashboard() {
                 transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 400, damping: 20 }}
               >
                 <div className="relative flex size-16 items-center justify-center rounded-2xl border-2 border-amber-500/30 bg-amber-500/10">
-                  <Image
-                    src="/images/badges/badge-achievement-gold.jpg"
-                    alt=""
-                    width={40}
-                    height={40}
-                    className="absolute opacity-30 rounded-lg"
-                  />
-                  <span className="relative text-3xl" role="img" aria-label={badge!.nameHe}>
-                    {badge!.emoji}
-                  </span>
+                  {badge!.image ? (
+                    <Image
+                      src={badge!.image}
+                      alt={badge!.nameHe}
+                      width={56}
+                      height={56}
+                      className="rounded-xl object-cover"
+                    />
+                  ) : (
+                    <>
+                      <Image
+                        src="/images/badges/badge-achievement-gold.jpg"
+                        alt=""
+                        width={40}
+                        height={40}
+                        className="absolute opacity-30 rounded-lg"
+                      />
+                      <span className="relative text-3xl" role="img" aria-label={badge!.nameHe}>
+                        {badge!.emoji}
+                      </span>
+                    </>
+                  )}
                 </div>
                 <Badge variant="secondary" className="text-[10px] border-amber-500/30 bg-amber-500/10 text-amber-300">{badge!.nameHe}</Badge>
               </motion.div>

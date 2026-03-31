@@ -1,15 +1,18 @@
 'use client'
 
-import { useEffect, useState, useCallback, useMemo } from 'react'
+import { useEffect, useState, useCallback, useMemo, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowRight, RotateCcw, Trophy, Star } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { StoryTriggerWrapper } from '@/components/story/story-trigger-wrapper'
+import { ConfettiBurst } from '@/components/effects/confetti-burst'
 import { useTypingSessionStore } from '@/stores/typing-session-store'
 import { useXpStore } from '@/stores/xp-store'
+import { useSettingsStore } from '@/stores/settings-store'
+import { soundManager } from '@/lib/audio/sound-manager'
 import {
   computeSessionStats,
   isLessonComplete,
@@ -28,6 +31,13 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
   const router = useRouter()
   const store = useTypingSessionStore()
   const xpStore = useXpStore()
+  const { soundEnabled, soundVolume } = useSettingsStore()
+
+  // Keep sound in sync with settings
+  useEffect(() => {
+    soundManager.setEnabled(soundEnabled)
+    soundManager.setVolume(soundVolume)
+  }, [soundEnabled, soundVolume])
 
   const [currentLineIndex, setCurrentLineIndex] = useState(0)
   const [pressedKey, setPressedKey] = useState<string | undefined>()
@@ -38,6 +48,11 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
   const [finalStats, setFinalStats] = useState<ReturnType<
     typeof computeSessionStats
   > | null>(null)
+  // Screen shake: set to true on error, cleared after animation via onAnimationEnd
+  const [isShaking, setIsShaking] = useState(false)
+  const shakeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  // Confetti trigger: becomes true when lesson is completed successfully
+  const [showConfetti, setShowConfetti] = useState(false)
 
   // Build the story trigger event: fires only after lesson is completed
   const storyEvent = useMemo<StoryTriggerEvent | null>(() => {
@@ -62,14 +77,32 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
     (key: string, code: string) => {
       if (!store.isActive || store.isPaused) return
 
+      const expected = store.text[store.currentIndex]
+      const correct = key === expected
+
       store.typeKey(key, code)
+
+      // Sound feedback
+      soundManager.playKeyClick()
+      if (correct) {
+        soundManager.playCorrect()
+      } else {
+        soundManager.playError()
+        // Trigger screen shake (clear any in-flight shake first)
+        setIsShaking(false)
+        if (shakeTimerRef.current) clearTimeout(shakeTimerRef.current)
+        // Tiny delay so React re-renders false→true even on rapid errors
+        shakeTimerRef.current = setTimeout(() => {
+          setIsShaking(true)
+          // Remove class after animation finishes (120ms)
+          shakeTimerRef.current = setTimeout(() => setIsShaking(false), 150)
+        }, 0)
+      }
 
       // Visual feedback
       setPressedKey(key)
       setTimeout(() => setPressedKey(undefined), 100)
 
-      const expected = store.text[store.currentIndex]
-      const correct = key === expected
       setLastCorrect(correct)
       setTimeout(() => setLastCorrect(null), 200)
     },
@@ -109,10 +142,16 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
           xpStore.completeLesson(lesson.id, stats.wpm, stats.accuracy)
         }
       }
+      // Play completion sound
+      soundManager.playLevelComplete()
       // Trigger the story system before showing results
       setLessonCompleted(true)
       setStoryFinished(false)
       setShowResults(true)
+      // Fire confetti when lesson was completed successfully
+      if (stats && isLessonComplete(stats, lesson.targetWpm, lesson.targetAccuracy)) {
+        setShowConfetti(true)
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [store.currentIndex, store.text.length])
@@ -148,6 +187,8 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
     setLessonCompleted(false)
     setStoryFinished(false)
     setFinalStats(null)
+    setIsShaking(false)
+    setShowConfetti(false)
     store.startSession(content.lines[0], lesson.id)
   }
 
@@ -202,24 +243,24 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
 
       {/* Real-time Stats */}
       <div className="grid grid-cols-4 gap-2">
-        <Card className="p-3 text-center">
-          <div className="text-2xl font-bold">{realtimeWpm || stats?.wpm || 0}</div>
+        <div className="game-card-border p-3 text-center">
+          <div className="text-2xl font-bold tabular-nums">{realtimeWpm || stats?.wpm || 0}</div>
           <div className="text-xs text-muted-foreground">מ/ד</div>
-        </Card>
-        <Card className="p-3 text-center">
-          <div className="text-2xl font-bold">{stats?.accuracy ?? 100}%</div>
+        </div>
+        <div className="game-card-border p-3 text-center">
+          <div className="text-2xl font-bold tabular-nums">{stats?.accuracy ?? 100}%</div>
           <div className="text-xs text-muted-foreground">דיוק</div>
-        </Card>
-        <Card className="p-3 text-center">
-          <div className="text-2xl font-bold">{stats?.totalKeystrokes ?? 0}</div>
+        </div>
+        <div className="game-card-border p-3 text-center">
+          <div className="text-2xl font-bold tabular-nums">{stats?.totalKeystrokes ?? 0}</div>
           <div className="text-xs text-muted-foreground">הקשות</div>
-        </Card>
-        <Card className="p-3 text-center">
-          <div className="text-2xl font-bold">
+        </div>
+        <div className="game-card-border p-3 text-center">
+          <div className="text-2xl font-bold tabular-nums">
             {Math.floor(elapsed / 60000)}:{String(Math.floor((elapsed % 60000) / 1000)).padStart(2, '0')}
           </div>
           <div className="text-xs text-muted-foreground">זמן</div>
-        </Card>
+        </div>
       </div>
 
       {/* Progress bar for lines */}
@@ -235,8 +276,14 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
         </div>
       </div>
 
+      {/* Confetti on successful lesson completion */}
+      <ConfettiBurst active={showConfetti} count={28} />
+
       {/* Typing Area */}
-      <Card className="min-h-[120px] p-6">
+      <div
+        className={`game-card-border min-h-[120px] p-6${isShaking ? ' typing-shake' : ''}`}
+        onAnimationEnd={() => setIsShaking(false)}
+      >
         <div className="text-2xl leading-relaxed" dir="rtl">
           {store.text.split('').map((char, i) => {
             let className = 'text-muted-foreground/40'
@@ -261,7 +308,7 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
             לחצו על מקש כלשהו כדי להתחיל...
           </p>
         )}
-      </Card>
+      </div>
 
       {/* Finger hint */}
       {activeKeyDef && (
@@ -281,27 +328,43 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
       <AnimatePresence>
         {showResults && finalStats && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
           >
-            <Card className="w-full max-w-md">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 16 }}
+              transition={{ duration: 0.18, ease: 'easeOut' }}
+              className="game-card-border w-full max-w-md"
+            >
               <CardHeader className="text-center">
+                {/* Stars row */}
                 <div className="mb-2 flex justify-center gap-1">
-                  {Array.from({ length: 3 }, (_, i) => (
-                    <Star
-                      key={i}
-                      className={`size-8 ${
-                        i < getStars(finalStats)
-                          ? 'fill-yellow-400 text-yellow-400'
-                          : 'text-muted-foreground/30'
-                      }`}
-                    />
-                  ))}
+                  {Array.from({ length: 3 }, (_, i) => {
+                    const earned = i < getStars(finalStats)
+                    return (
+                      <motion.div
+                        key={i}
+                        initial={{ scale: 0, rotate: -15 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ delay: 0.08 * i, duration: 0.15, ease: 'easeOut' }}
+                      >
+                        <Star
+                          className={`size-9 ${
+                            earned
+                              ? 'fill-yellow-400 text-yellow-400 drop-shadow-[0_0_6px_rgba(250,204,21,0.6)]'
+                              : 'text-muted-foreground/30'
+                          }`}
+                        />
+                      </motion.div>
+                    )
+                  })}
                 </div>
-                <CardTitle>
+                <CardTitle className="text-xl">
                   {isLessonComplete(
                     finalStats,
                     lesson.targetWpm,
@@ -312,29 +375,39 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4 text-center">
-                  <div>
-                    <div className="text-3xl font-bold">{finalStats.wpm}</div>
-                    <div className="text-sm text-muted-foreground">
-                      מילים לדקה
-                    </div>
+                {/* Main stats */}
+                <div className="grid grid-cols-2 gap-3 text-center">
+                  <div
+                    className="rounded-xl p-3"
+                    style={{ background: 'oklch(0.15 0.02 292 / 40%)', border: '1.5px solid var(--game-border)' }}
+                  >
+                    <div className="text-3xl font-bold tabular-nums">{finalStats.wpm}</div>
+                    <div className="text-sm text-muted-foreground">מילים לדקה</div>
                   </div>
-                  <div>
-                    <div className="text-3xl font-bold">
-                      {finalStats.accuracy}%
-                    </div>
+                  <div
+                    className="rounded-xl p-3"
+                    style={{ background: 'oklch(0.15 0.02 292 / 40%)', border: '1.5px solid var(--game-border)' }}
+                  >
+                    <div className="text-3xl font-bold tabular-nums">{finalStats.accuracy}%</div>
                     <div className="text-sm text-muted-foreground">דיוק</div>
                   </div>
                 </div>
 
+                {/* XP reward */}
                 {isLessonComplete(
                   finalStats,
                   lesson.targetWpm,
                   lesson.targetAccuracy,
                 ) && (
-                  <div className="flex items-center justify-center gap-2 text-primary">
-                    <Trophy className="size-5" />
-                    <span className="font-bold">
+                  <motion.div
+                    initial={{ scale: 0.6, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.25, duration: 0.18, ease: 'easeOut' }}
+                    className="flex items-center justify-center gap-2 rounded-xl py-2"
+                    style={{ background: 'oklch(0.495 0.205 292 / 15%)', border: '1.5px solid oklch(0.495 0.205 292 / 35%)' }}
+                  >
+                    <Trophy className="size-5 text-primary" />
+                    <span className="text-lg font-bold text-primary">
                       +
                       {
                         calculateXpReward(
@@ -346,9 +419,10 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
                       }{' '}
                       XP
                     </span>
-                  </div>
+                  </motion.div>
                 )}
 
+                {/* Action buttons */}
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
@@ -364,7 +438,7 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
                   </Button>
                 </div>
               </CardContent>
-            </Card>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -27,6 +27,23 @@
   --theme-font-scale: 1.1;
   --theme-button-height: 48px;
   --theme-spacing: 1.25;
+
+  /* Nature-inspired, colorful — green primary */
+  --game-bg-primary: #1a1528;
+  --game-bg-secondary: #141020;
+  --game-bg-card: #1f1a30;
+  --game-bg-elevated: #221d35;
+  --game-bg-input: #221d35;
+  --game-border: oklch(0.28 0.05 170);
+  --game-accent-purple: #6C5CE7;
+  --game-accent-green: #00B894;
+  --game-glow-purple: oklch(0.72 0.15 170 / 35%);
+  --game-glow-green: oklch(0.72 0.15 170 / 50%);
+  --game-text-glow: 0 0 10px oklch(0.72 0.15 170 / 45%);
+  --game-text-glow-sm: 0 0 8px oklch(0.72 0.15 170 / 30%);
+  --game-hover-bg: oklch(0.72 0.15 170 / 0.06);
+  --game-active-inset: inset 0 0 12px oklch(0.72 0.15 170 / 10%);
+  --game-tab-glow: 0 0 8px oklch(0.55 0.2 170 / 50%);
 }
 
 [data-theme='geza'] {
@@ -34,6 +51,7 @@
   --theme-font-scale: 1;
   --theme-button-height: 44px;
   --theme-spacing: 1;
+  /* geza is the default dark gaming theme — no overrides needed */
 }
 
 [data-theme='anaf'] {
@@ -41,6 +59,23 @@
   --theme-font-scale: 0.95;
   --theme-button-height: 40px;
   --theme-spacing: 1;
+
+  /* Competitive, blue-tinted — serious gamer aesthetic */
+  --game-bg-primary: #0d1117;
+  --game-bg-secondary: #080d12;
+  --game-bg-card: #0f1923;
+  --game-bg-elevated: #161b22;
+  --game-bg-input: #161b22;
+  --game-border: oklch(0.25 0.05 230);
+  --game-accent-purple: #6C5CE7;
+  --game-accent-green: #58A6FF;
+  --game-glow-purple: oklch(0.65 0.18 230 / 35%);
+  --game-glow-green: oklch(0.65 0.18 230 / 50%);
+  --game-text-glow: 0 0 10px oklch(0.65 0.18 230 / 45%);
+  --game-text-glow-sm: 0 0 8px oklch(0.65 0.18 230 / 30%);
+  --game-hover-bg: oklch(0.65 0.18 230 / 0.06);
+  --game-active-inset: inset 0 0 12px oklch(0.65 0.18 230 / 10%);
+  --game-tab-glow: 0 0 8px oklch(0.5 0.22 230 / 50%);
 }
 
 [data-theme='tzameret'] {
@@ -48,6 +83,23 @@
   --theme-font-scale: 0.9;
   --theme-button-height: 36px;
   --theme-spacing: 0.85;
+
+  /* Near-adult, refined violet — minimal glow, professional */
+  --game-bg-primary: #111111;
+  --game-bg-secondary: #0a0a0a;
+  --game-bg-card: #161616;
+  --game-bg-elevated: #1a1a1a;
+  --game-bg-input: #1a1a1a;
+  --game-border: oklch(0.22 0.04 292);
+  --game-accent-purple: #8B5CF6;
+  --game-accent-green: #A78BFA;
+  --game-glow-purple: oklch(0.6 0.16 292 / 25%);
+  --game-glow-green: oklch(0.6 0.16 292 / 20%);
+  --game-text-glow: 0 0 8px oklch(0.6 0.16 292 / 30%);
+  --game-text-glow-sm: 0 0 6px oklch(0.6 0.16 292 / 20%);
+  --game-hover-bg: oklch(0.6 0.16 292 / 0.04);
+  --game-active-inset: inset 0 0 8px oklch(0.6 0.16 292 / 8%);
+  --game-tab-glow: 0 0 6px oklch(0.5 0.18 292 / 35%);
 }
 
 /* Color Scheme: Default (Light) */
@@ -160,4 +212,24 @@
   --ninja-success-fg: #000000;
   --ninja-info: #90caf9;
   --ninja-info-fg: #000000;
+}
+
+/* Animation Speed Modifiers — keyed off data-animation set by ThemeProvider */
+
+[data-animation='playful'] {
+  --anim-duration: 300ms;
+  --anim-scale: 1.1;
+  --anim-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-animation='standard'] {
+  --anim-duration: 200ms;
+  --anim-scale: 1.05;
+  --anim-ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-animation='subtle'] {
+  --anim-duration: 150ms;
+  --anim-scale: 1.02;
+  --anim-ease: cubic-bezier(0.4, 0, 0.2, 1);
 }

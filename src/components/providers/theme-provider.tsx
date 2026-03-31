@@ -13,6 +13,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
     root.setAttribute('data-theme', ageName)
     root.setAttribute('data-scheme', colorScheme)
+    root.setAttribute('data-animation', theme.animations)
 
     root.style.setProperty('--theme-radius', theme.borderRadius)
     root.style.setProperty('--theme-font-scale', String(theme.fontScale))

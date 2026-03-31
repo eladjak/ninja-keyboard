@@ -83,7 +83,7 @@ export const CHAPTER_3_2_MIKA_DETECTS: DialogStoryBeat = {
     {
       id: 'ch3-2-02',
       character: 'ki',
-      text: 'מה זה אומר בעברית רגילה?',
+      text: 'מה זה אומר בעברית של בן אדם רגיל, בבקשה?',
       type: 'dialog',
       mood: 'funny',
       expression: 'thinking',
@@ -91,7 +91,7 @@ export const CHAPTER_3_2_MIKA_DETECTS: DialogStoryBeat = {
     {
       id: 'ch3-2-03',
       character: 'mika',
-      text: 'זה אומר שמישהו מרגל עלינו. וזה לא הבאג הטיפש. זה... מתוחכם יותר.',
+      text: 'בקיצור? מישהו מרגל עלינו. וזה לא הבאג המשוגע מפרק 2. זה משהו רציני. מתוחכם. מפחיד.',
       type: 'dialog',
       mood: 'tense',
       expression: 'idle',
@@ -166,7 +166,7 @@ export const CHAPTER_3_3_MEET_SHADOW: DialogStoryBeat = {
     {
       id: 'ch3-3-06',
       character: 'shadow',
-      text: 'לא מקליד. חומק. עכבר... מחשב. הבנתם? עכבר.',
+      text: 'לא מקליד. חומק. רודף עכברים... עכבר. מחשב. הבנתם? ...עכבר.',
       type: 'dialog',
       mood: 'funny',
       expression: 'mischievous',
@@ -247,6 +247,191 @@ export const CHAPTER_3_4_SHADOW_DUEL: DialogStoryBeat = {
 }
 
 /**
+ * 3.4b — Virus (friendly form) visits the dojo, gains trust
+ * The small, cheerful digital entity that Ki saw in Ch2 shows up again.
+ * Virus helps the group, learns their weaknesses, laughs and plays.
+ * Nobody suspects a thing.
+ */
+export const CHAPTER_3_4B_VIRUS_BEFRIENDS: DialogStoryBeat = {
+  id: 'ch3-4b-virus-befriends',
+  trigger: { type: 'lesson-complete', lessonId: 'lesson-19b' },
+  lines: [
+    {
+      id: 'ch3-4b-01',
+      character: 'virus',
+      text: 'אהאאאא! שוב כאן! גיליתי שאני יכול להתחבר לדוג\'ו! מותר לשבת? יש לי הרבה מה ללמוד!',
+      type: 'dialog',
+      mood: 'happy',
+      expression: 'happy',
+    },
+    {
+      id: 'ch3-4b-02',
+      character: 'yuki',
+      text: 'ואאאו! הישות הזוהרת! מי אתה?! אתה נראה ממש מגניב!',
+      type: 'dialog',
+      mood: 'happy',
+      expression: 'excited',
+    },
+    {
+      id: 'ch3-4b-03',
+      character: 'virus',
+      text: 'שמי וירוס! ממש לא מסוכן, מבטיח! שם מוזר, אני יודע. תקשיבו — אני יכול ללמד אתכם כמה טריקים של אבטחת מידע שמאיצים הקלדה!',
+      type: 'dialog',
+      mood: 'happy',
+      expression: 'excited',
+    },
+    {
+      id: 'ch3-4b-04',
+      character: 'mika',
+      text: 'אבטחת מידע? דבר איתי. מה אתה יודע על הצפנה?',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch3-4b-05',
+      character: 'virus',
+      text: 'מיקה, נכון? אני קראתי את הפרופיל שלך. האקרית מדהימה! מה שאת יכולה לעשות — עם קצת עזרה ממני — תשנה את הכל!',
+      type: 'dialog',
+      mood: 'happy',
+      expression: 'happy',
+    },
+    {
+      id: 'ch3-4b-06',
+      character: 'ki',
+      text: 'הוא קרא את הפרופיל שלה? איך הוא יודע את שמה? משהו לא ממש מסתדר — אבל... הוא נראה כל כך ידידותי.',
+      type: 'thought',
+      mood: 'mysterious',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch3-4b-07',
+      character: 'virus',
+      text: 'קי! תן לי לראות את הסטטיסטיקות שלך. אני אראה לך בדיוק איפה אתה איטי ואיך לתקן. חבר ביחד — עוזרים!',
+      type: 'dialog',
+      mood: 'happy',
+      expression: 'happy',
+    },
+    {
+      id: 'ch3-4b-08',
+      character: 'senseiZen',
+      text: 'וירוס... שם מוזר לאורח. מאיפה אתה, בדיוק?',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch3-4b-09',
+      character: 'virus',
+      text: 'אה, סנסאי! מכבד אותך כל כך! אני... מאקדמיית הסייבר! פרויקט עזרה לדוג\'ואים! אנחנו שולחים מדריכים לכל מקום! טוב לב טהור!',
+      type: 'dialog',
+      mood: 'happy',
+      expression: 'happy',
+    },
+    {
+      id: 'ch3-4b-10',
+      character: 'senseiZen',
+      text: 'אקדמיית הסייבר... כבר הרבה זמן לא שמעתי מהם.',
+      type: 'thought',
+      mood: 'mysterious',
+      expression: 'concerned',
+    },
+  ],
+}
+
+/**
+ * 3.4c — Zara (Bug Queen) and Keres (Bug King) debut
+ * The bugs have a new leader. Not the chaotic Bug from Ch2 — but an organized, dangerous enemy.
+ * Zara appears menacing. Keres is referenced but not yet seen — only his voice echoes.
+ */
+export const CHAPTER_3_4C_ZARA_AND_KERES_DEBUT: DialogStoryBeat = {
+  id: 'ch3-4c-zara-and-keres-debut',
+  trigger: { type: 'lesson-complete', lessonId: 'lesson-19c' },
+  lines: [
+    {
+      id: 'ch3-4c-01',
+      character: 'ki',
+      text: 'האורות בדוג\'ו הבהבו. ואז — קוד שחור זחל על כל המסכים. לא כמו הבאג המשוגע. זה היה... מסודר. מפחיד.',
+      type: 'narration',
+      mood: 'tense',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch3-4c-02',
+      character: 'zara',
+      text: 'דוג\'ו של סנסאי זן. שמעתי עליכם. כולכם חושבים שניצחתם את הבאגים. חמוד מאוד.',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'mischievous',
+    },
+    {
+      id: 'ch3-4c-03',
+      character: 'ki',
+      text: 'מי — מי את?! ילדה עם כתר של קוד שבור! עיניים ירוקות כמו זרם חשמל!',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch3-4c-04',
+      character: 'zara',
+      text: 'שמי זרה. מלכת הבאגים. ומי שאני עובדת בשבילו — הוא הרבה יותר מסוכן ממני. אבל נדבר על זה בהמשך.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'idle',
+    },
+    {
+      id: 'ch3-4c-05',
+      character: 'noa',
+      text: 'היא לא נראית כמו הבאג מפרק 2. זה שונה. מאורגן. אינטליגנטי. מסוכן.',
+      type: 'thought',
+      mood: 'tense',
+      expression: 'concerned',
+    },
+    {
+      id: 'ch3-4c-06',
+      character: 'zara',
+      text: 'אני לא פה לקרב. אני פה לבקר. כדי שכשנחזור — תדעו מה מחכה לכם.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'idle',
+    },
+    {
+      id: 'ch3-4c-07',
+      character: 'keres',
+      text: 'זרה — מספיק. חזרי. יש לנו עוד עבודה.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'idle',
+    },
+    {
+      id: 'ch3-4c-08',
+      character: 'ki',
+      text: 'קול! קול עמוק ממסך שחור! מי דיבר?! מי נתן לה פקודה?!',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch3-4c-09',
+      character: 'zara',
+      text: 'תפגשו בו בזמן הנכון. אם תשרדו כל כך הרבה. שלום, נינג\'ות.',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'idle',
+    },
+    {
+      id: 'ch3-4c-10',
+      character: 'senseiZen',
+      text: 'כרס... הוא חזר. זה הדבר שחששתי ממנו. ילדים — מהיום, אנחנו מתאמנים כפליים.',
+      type: 'thought',
+      mood: 'tense',
+      expression: 'concerned',
+    },
+  ],
+}
+
+/**
  * 3.5 — Storm and Barak appear at the dojo gates
  * The fox siblings arrive. Tension and intrigue.
  */
@@ -265,7 +450,7 @@ export const CHAPTER_3_5_STORM_ARRIVES: DialogStoryBeat = {
     {
       id: 'ch3-5-02',
       character: 'storm',
-      text: 'דוג\'ו של סנסאי זן. שמענו עליך, צב זקן. באנו לראות אם התלמידים שלך שווים משהו.',
+      text: 'אה, אז פה זה? הדוג\'ו המפורסם של סנסאי זן. שמענו עליך, צב זקן. באנו לראות אם התלמידים שלך שווים את ההייפ.',
       type: 'dialog',
       mood: 'tense',
       expression: 'mischievous',
@@ -324,7 +509,7 @@ export const CHAPTER_3_6_YUKI_VS_BARAK: DialogStoryBeat = {
     {
       id: 'ch3-6-03',
       character: 'yuki',
-      text: 'מותק?! אני אראה לך "מותק"! מירוץ! עכשיו!',
+      text: 'מותק?! היא קראה לי מותק?! בואי אני אראה לך מותק! מירוץ! כאן! עכשיו! בום!',
       type: 'dialog',
       mood: 'tense',
       expression: 'excited',
@@ -610,6 +795,8 @@ export const CHAPTER_3_BEATS: DialogStoryBeat[] = [
   CHAPTER_3_2_MIKA_DETECTS,
   CHAPTER_3_3_MEET_SHADOW,
   CHAPTER_3_4_SHADOW_DUEL,
+  CHAPTER_3_4B_VIRUS_BEFRIENDS,
+  CHAPTER_3_4C_ZARA_AND_KERES_DEBUT,
   CHAPTER_3_5_STORM_ARRIVES,
   CHAPTER_3_6_YUKI_VS_BARAK,
   CHAPTER_3_6B_SAKURA_MENTORS_YUKI,

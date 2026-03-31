@@ -17,7 +17,7 @@ export const CHAPTER_1_1_DISCOVER_DOJO: DialogStoryBeat = {
     {
       id: 'ch1-1-01',
       character: 'ki',
-      text: 'המקום הזה... הדלת פשוט נפתחה לבד. יש פה ריח של עץ ישן ואור כחול מוזר.',
+      text: 'רגע... מה? הדלת נפתחה לבד?! יש פה ריח של עץ ישן ו... אור כחול? מה הסיפור של המקום הזה?',
       type: 'thought',
       mood: 'mysterious',
       expression: 'surprised',
@@ -33,7 +33,7 @@ export const CHAPTER_1_1_DISCOVER_DOJO: DialogStoryBeat = {
     {
       id: 'ch1-1-03',
       character: 'senseiZen',
-      text: 'ברוך הבא, נינג\'ה צעיר. חיכיתי הרבה זמן למישהו שימצא את הדרך לכאן.',
+      text: 'נו, סוף סוף. חיכיתי המון זמן שמישהו ימצא את הדרך לכאן. ברוך הבא, נינג\'ה צעיר.',
       type: 'dialog',
       mood: 'heartwarming',
       expression: 'happy',
@@ -49,7 +49,7 @@ export const CHAPTER_1_1_DISCOVER_DOJO: DialogStoryBeat = {
     {
       id: 'ch1-1-05',
       character: 'senseiZen',
-      text: 'אני סנסיי זן. המקלדת בחרה בך — היא זוהרת רק למי שמוכן ללמוד. גע בה.',
+      text: 'קוראים לי סנסיי זן. והמקלדת הזו? היא לא זוהרת סתם — רק למי שמוכן באמת ללמוד. נו, גע בה. אל תפחד.',
       type: 'dialog',
       mood: 'epic',
       expression: 'idle',
@@ -65,7 +65,7 @@ export const CHAPTER_1_1_DISCOVER_DOJO: DialogStoryBeat = {
     {
       id: 'ch1-1-07',
       character: 'senseiZen',
-      text: '...מישהו שהיה כאן פעם. יום אחד תשמע את הסיפור. עכשיו — בוא נתחיל.',
+      text: '...מישהו שהיה כאן פעם. אבל זה סיפור לזמן אחר. עכשיו — יאללה, בוא נתחיל.',
       type: 'dialog',
       mood: 'sad',
       expression: 'concerned',
@@ -92,7 +92,7 @@ export const CHAPTER_1_2_MEET_PIXEL: DialogStoryBeat = {
     {
       id: 'ch1-2-02',
       character: 'pixel',
-      text: 'סורק... 30 מילים לדקה. דיוק: 62 אחוז. מעניין. השאלה שלי: מה זה "שמחה"? כמה יחידות זה?',
+      text: 'סורק... מילים-לדקה: 30. דיוק: 62 אחוז. מעניייין. שאלה: מה זה "שמחה"? יש לזה יחידת מידה? ג\'יגה-שמחה?',
       type: 'dialog',
       mood: 'funny',
       expression: 'thinking',
@@ -108,7 +108,7 @@ export const CHAPTER_1_2_MEET_PIXEL: DialogStoryBeat = {
     {
       id: 'ch1-2-04',
       character: 'pixel',
-      text: 'אני פיקסל. מנתח נתונים, עוקב אחרי ביצועים, ומתעד הכל. "שמחה" לא מופיעה במאגר הנתונים שלי.',
+      text: 'אני פיקסל. אני מנתח נתונים, עוקב אחרי ביצועים, ומתעד הכ-ל. חיפשתי "שמחה" במאגר — אפס תוצאות. באג?',
       type: 'dialog',
       mood: 'funny',
       expression: 'idle',
@@ -116,7 +116,7 @@ export const CHAPTER_1_2_MEET_PIXEL: DialogStoryBeat = {
     {
       id: 'ch1-2-05',
       character: 'ki',
-      text: 'שמחה זה כשאתה מרגיש טוב! כמו... כשאוכלים שוקולד, או מנצחים במשחק.',
+      text: 'שמחה זה כשאתה מרגיש... כזה בועות בבטן? כמו כשאוכלים שוקולד, או מנצחים משחק, או שאמא מכינה שניצלים!',
       type: 'dialog',
       mood: 'heartwarming',
       expression: 'happy',
@@ -143,7 +143,7 @@ export const CHAPTER_1_3_SENSEI_LESSON: DialogStoryBeat = {
     {
       id: 'ch1-3-01',
       character: 'senseiZen',
-      text: 'המקלדת היא כמו חרב — אם תרוץ מהר מדי, תיפול. נשימה עמוקה, ואז — מקש אחרי מקש.',
+      text: 'אממ, קי? המקלדת היא כמו חרב. אם תנופף בה כמו משוגע — תחתוך את עצמך. נשימה עמוקה... ואז מקש, אחרי מקש.',
       type: 'dialog',
       mood: 'heartwarming',
       expression: 'idle',
@@ -151,7 +151,7 @@ export const CHAPTER_1_3_SENSEI_LESSON: DialogStoryBeat = {
     {
       id: 'ch1-3-02',
       character: 'ki',
-      text: 'אבל אני רוצה להיות מהיר! כל הנינג\'ות מהירים!',
+      text: 'אבל סנסאי! אני רוצה להיות מהיייר! כל הנינג\'ות מהירים! אף אחד לא אומר "וואו, הנינג\'ה הזה ממש מדויק!"',
       type: 'dialog',
       mood: 'funny',
       expression: 'excited',
@@ -159,7 +159,7 @@ export const CHAPTER_1_3_SENSEI_LESSON: DialogStoryBeat = {
     {
       id: 'ch1-3-03',
       character: 'senseiZen',
-      text: 'נינג\'ה אמיתי לא רץ — הוא זורם. המהירות תבוא, אבל רק אחרי שהדיוק ישתרש בגוף שלך.',
+      text: 'נינג\'ה אמיתי לא רץ — הוא זורם. הא, ואגב? דווקא כן אומרים. "הנינג\'ה הזה מדויק ומפחיד." המהירות תבוא, סבלנות.',
       type: 'dialog',
       mood: 'heartwarming',
       expression: 'happy',
@@ -167,7 +167,7 @@ export const CHAPTER_1_3_SENSEI_LESSON: DialogStoryBeat = {
     {
       id: 'ch1-3-04',
       character: 'mika',
-      text: 'הא! אתה עדיין על שורת הבית? אני כבר על סימנים מיוחדים.',
+      text: 'הא! עדיין על שורת הבית? קצת מביך, לא? אני כבר על סימנים מיוחדים. סתם אומרת.',
       type: 'dialog',
       mood: 'funny',
       expression: 'mischievous',
@@ -183,7 +183,7 @@ export const CHAPTER_1_3_SENSEI_LESSON: DialogStoryBeat = {
     {
       id: 'ch1-3-06',
       character: 'mika',
-      text: 'אני מיקה. ואני לא "מעצבנת" — אני פשוט יותר טובה ממך. בוא נתחרה ונראה.',
+      text: 'קוראים לי מיקה. ואני לא "מעצבנת" — אני פשוט טובה. מאוד. רוצה להוכיח שאני טועה? קדימה, נתחרה.',
       type: 'dialog',
       mood: 'tense',
       expression: 'excited',
@@ -222,7 +222,7 @@ export const CHAPTER_1_4_BLAZE_EASTER_EGG: DialogStoryBeat = {
     {
       id: 'ch1-4-02',
       character: 'rex',
-      text: 'יוו, מה קורה! אני רקס. רוצה לראות משהו מגניב? בניתי משחק הקלדה עם — רגע, לא, שכח. סתם. זה טמבל.',
+      text: 'יואו! מה קורה אחי! אני רקס. רוצה לראות משהו חולה? בניתי משחק הקלדה עם — אה, לא, שכח. זבל. טראש. מחק מהראש.',
       type: 'dialog',
       mood: 'funny',
       expression: 'excited',
@@ -238,7 +238,7 @@ export const CHAPTER_1_4_BLAZE_EASTER_EGG: DialogStoryBeat = {
     {
       id: 'ch1-4-04',
       character: 'rex',
-      text: 'נה, זה לא מוכן. אולי פעם. אם אני אהיה מספיק טוב. כנראה שלא.',
+      text: 'נה, זה בטא. אלפא. פרה-אלפא בעצם. אולי פעם יהיה משהו. כנראה שלא. GG.',
       type: 'dialog',
       mood: 'sad',
       expression: 'sad',
@@ -420,7 +420,7 @@ export const CHAPTER_1_7_SENSEI_WISDOM: DialogStoryBeat = {
     {
       id: 'ch1-7-03',
       character: 'senseiZen',
-      text: 'הדרך של אלף מילים מתחילה במקש אחד. סבלנות, קי. גם הנהר לא חצב את הסלע ביום אחד.',
+      text: 'הדרך של אלף מילים מתחילה במקש אחד. סבלנות, ילד. גם הנהר לא חצב את הסלע ביום אחד — אבל הוא גם לא ויתר, נכון?',
       type: 'dialog',
       mood: 'heartwarming',
       expression: 'idle',
@@ -436,7 +436,7 @@ export const CHAPTER_1_7_SENSEI_WISDOM: DialogStoryBeat = {
     {
       id: 'ch1-7-05',
       character: 'senseiZen',
-      text: '...תלמיד. הכי מוכשר שהיה כאן אי פעם. אבל מוכשרות בלי ענווה — היא רוח בלי שורשים.',
+      text: '...תלמיד. הכי מוכשר שנכנס אי פעם מהדלת הזו. אבל כישרון בלי ענווה, קי — זה כמו עץ בלי שורשים. הרוח הראשונה מפילה אותו.',
       type: 'dialog',
       mood: 'sad',
       expression: 'concerned',
@@ -479,7 +479,7 @@ export const CHAPTER_1_8_MOM_CALLS: DialogStoryBeat = {
     {
       id: 'ch1-8-03',
       character: 'senseiZen',
-      text: 'לך, נינג\'ה צעיר. גם נינג\'ה צריך לאכול. ואמא — היא הבוס הכי חזק שיש.',
+      text: 'לך, לך. גם נינג\'ה צריך לאכול. ואני אגלה לך סוד — אמא היא הבוס הכי חזק שקיים. אין קיצור מקלדת שעובד נגדה.',
       type: 'dialog',
       mood: 'funny',
       expression: 'happy',
@@ -495,7 +495,7 @@ export const CHAPTER_1_8_MOM_CALLS: DialogStoryBeat = {
     {
       id: 'ch1-8-05',
       character: 'ki',
-      text: 'ביום הראשון גיליתי דוג\'ו קסום, מקלדת זוהרת, צב חכם, רובוט מבולבל, האקרית עצבנית, אמנית ביישנית, מרפאה מסתורית, ליצן עצוב, חתול שחור, ולטאת אש. יום רגיל.',
+      text: 'אז היום גיליתי דוג\'ו סודי, מקלדת שזוהרת, צב שמדבר בפתגמים, רובוט שלא מבין מה זה שמחה, האקרית שחושבת שהיא הכי, אמנית שמתביישת בציורים שלה, בחורה מסתורית שנעלמה באוויר, גיימר עצוב, חתול שכותב פתקים, ולטאת אש ביישנית. יום רגיל לגמרי.',
       type: 'thought',
       mood: 'funny',
       expression: 'happy',

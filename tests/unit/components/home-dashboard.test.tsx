@@ -111,7 +111,7 @@ describe('HomeDashboard', () => {
   it('renders the welcome message with Ki character image', () => {
     render(<HomeDashboard />)
     expect(screen.getByText(/שלום, נינג'ה!/)).toBeInTheDocument()
-    expect(screen.getByAltText('Ki - מדריך הנינג\'ה')).toBeInTheDocument()
+    expect(screen.getByAltText('קי - מדריך הנינג\'ה')).toBeInTheDocument()
   })
 
   it('shows XP value', () => {

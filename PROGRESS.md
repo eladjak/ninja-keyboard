@@ -1,11 +1,98 @@
 # Ninja Keyboard - Progress
 
 ## Status: Active
-## Last Updated: 2026-03-22
-## Sprint: Iteration 14 — Organization & Feedback Infrastructure
+## Last Updated: 2026-03-31
+## Sprint: Iteration 16 — Massive Feedback Integration + Game-Feel + Art
 
 ## Current State
-Iteration 14 complete (5 commits). Security headers, holiday music folder reorganization, audit docs committed, interactive feedback review with 96 known gaps, utility scripts. TypeScript: 0 errors, Tests: 1096/1096, Build: passing.
+Jukebox track unlocking as achievements DONE. New hook `use-track-unlocks.ts` evaluates unlock conditions against live store state, auto-unlocks eligible tracks, shows progress bars and celebration animation. TypeScript: 0 errors, Build: passing, Tests: 1115/1115.
+
+## What Was Done (Iteration 16 — Mar 30, 2026)
+
+### Bug Fixes (Chrome Review)
+- ✅ **HIGH** Battle avatars: Shadow/Storm/Blaze → model-sheets with light backgrounds (visible on dark UI)
+- ✅ **MEDIUM** XP bar hydration mismatch → useState+useEffect pattern (SSR-safe)
+- ✅ **LOW** Ki hero image fixed → ki-hero.jpg (was model-sheet composite)
+
+### Character System Upgrades
+- ✅ 4 missing characters added to type system: Zara (Bug Queen), Keres (Bug King), Block, Lens
+- ✅ Expression sheets wired: 23 characters now have expressionSheet path in CHARACTER_CONFIGS
+- ✅ Badge images linked: 9/11 badges now show real JPG art instead of emoji
+
+### UI/UX Overhaul (from user feedback)
+- ✅ Large character companions (220px + idle animations) on 7 pages: Ki→home, Zen→lessons, Yuki→speed-test, Luna→practice, Mika→shortcuts, Rex→games, Pixel→statistics
+- ✅ Lesson page game-styled: game-card-border on stats + typing area, keystroke sounds added
+- ✅ Results modal upgraded: animated stars, XP pop-in, game-card-border styling
+- ✅ Sensei Zen as daily tip companion with speech bubble
+- ✅ 5 age themes visually differentiated (unique color schemes + animation modifiers wired)
+
+### Story Content
+- ✅ Virus + 7 missing characters added to story chapters (Barak, Sakura, Phantom, Master Beat, Zara, Keres)
+- ✅ ~30+ new story beats across chapters 2-6 in Hebrew
+- ✅ ~60 dialog lines rewritten by Opus for natural Israeli Hebrew (slang, unique voices per character)
+
+### Game-Feel Effects (Mar 31)
+- ✅ Floating particles background (20 CSS-only particles, purple/teal)
+- ✅ Combo counter in typing area (x5, x10... with pop animation, 4 intensity levels)
+- ✅ Screen shake on typing errors (2px, 120ms, respects reduced-motion)
+- ✅ Confetti burst on lesson completion
+
+### Art — Chibi V2 (Mar 31)
+- ✅ 7 hero illustrations regenerated as CHIBI style (big head, small body, kid-friendly)
+- ✅ User feedback: Pixel needs more personality, Mika needs tech elements → V3 generating
+- ✅ 8 NEW heroes generating: Shadow, Storm, Blaze, Glitch, Virus, Noa, Barak, Sakura
+- ✅ heroImage field added to 15 characters in CHARACTER_CONFIGS
+- ✅ Noa added as companion on /progress page
+- ✅ Battle rivals updated to hero images
+
+### Cleanup
+- ✅ 5 orphan background images deleted (3.9MB freed)
+- ✅ Test fixed: Ki alt text Hebrew alignment
+- ✅ Gemini model updated to 3.1 Flash (was deprecated 3-pro-image-preview)
+- ✅ 3 memory files created with feedback/lessons
+
+## Next Steps
+1. Generate remaining 7 heroes: Phantom, Master Beat, Kai, Zara, Keres, Block, Lens
+2. Jukebox gamification — track unlock system (in progress)
+3. Continue Chrome review (15 pages remaining)
+4. Voice generation for 9 characters
+5. Theme songs for 8+ characters
+6. Ki voice + consistency redesign
+7. Sensei Zen Israeli accent voice
+8. Teacher/parent dashboard expansion
+9. Badge art generation (Gemini)
+10. Jukebox cover art for missing tracks
+
+## Chrome Review Results (Mar 24, 2026 — 10 pages)
+
+| Page | Status | Issues |
+|------|--------|--------|
+| /home | ✅ | Hydration mismatch (XP bar SSR), 1 broken image (Clerk) |
+| /lessons | ✅ | 20 lessons, badges, locks — all working |
+| /battle | ⚠️ HIGH | 5/6 opponent avatars not loading |
+| /progress | ✅ | Empty state in Hebrew OK |
+| /profile | ✅ | Avatar, stats, 0/11 badges |
+| /leaderboard | ✅ | Podium, table, filters, "you" highlighted |
+| /games | ✅ | 4 games with Hebrew descriptions |
+| /badges | ⚠️ KNOWN | All 11 badges generic locks (96 art gaps) |
+| /jukebox | ⚠️ KNOWN | 7/17 tracks, missing covers |
+| /settings | ✅ | Theme/sound/music controls perfect |
+
+### Bugs Found
+1. **HIGH** /battle — 5/6 opponent avatars not loading (only "באג" shows image)
+2. **MEDIUM** /home — Hydration mismatch: XP bar server=0% vs client=48%
+3. **LOW** /home — Clerk avatar broken (alt="Ki")
+
+### Positive Findings
+- RTL: dir="rtl" + lang="he" on all pages ✅
+- Hebrew: All text, labels, buttons fully localized ✅
+- UI: Professional dark theme, primary purple #6C5CE7 ✅
+- Sidebar: Full Hebrew navigation, clear active states ✅
+- Console: Only 1 hydration error (non-critical) ✅
+
+---
+
+## Previous State (Iteration 14)
 
 ## What Was Done This Session (Iteration 14)
 

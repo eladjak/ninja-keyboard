@@ -73,6 +73,9 @@ export function LessonView({ lessonId }: LessonViewProps) {
   const [currentLineIndex, setCurrentLineIndex] = useState(0)
   const [result, setResult] = useState<ResultState | null>(null)
   const [elapsed, setElapsed] = useState(0)
+  // Screen shake state for error feedback
+  const [isShaking, setIsShaking] = useState(false)
+  const shakeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // Refs to avoid stale closures in effects
   const pressedKeyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -230,6 +233,13 @@ export function LessonView({ lessonId }: LessonViewProps) {
         soundManager.playCorrect()
       } else {
         soundManager.playError()
+        // Trigger screen shake
+        setIsShaking(false)
+        if (shakeTimerRef.current) clearTimeout(shakeTimerRef.current)
+        shakeTimerRef.current = setTimeout(() => {
+          setIsShaking(true)
+          shakeTimerRef.current = setTimeout(() => setIsShaking(false), 150)
+        }, 0)
       }
 
       // Pressed key flash (100 ms)
@@ -252,8 +262,15 @@ export function LessonView({ lessonId }: LessonViewProps) {
     setShowResults(false)
     setResult(null)
     setElapsed(0)
+    setIsShaking(false)
     session.startSession(lines[0], lessonId)
   }, [lesson, lines, lessonId, session])
+
+  const handleComboMilestone = useCallback((combo: number) => {
+    soundManager.playComboHit()
+    // Future: could show a milestone toast here too
+    void combo
+  }, [])
 
   // ── Star sounds on results ────────────────────────────────────────────
   useEffect(() => {
@@ -315,13 +332,19 @@ export function LessonView({ lessonId }: LessonViewProps) {
       />
 
       {/* ── Typing area ───────────────────────────────────────────── */}
-      <TypingArea
-        text={session.text}
-        currentIndex={session.currentIndex}
-        keystrokes={session.keystrokes}
-        isActive={session.isActive && !showResults}
-        onKeyPress={handleKeyPress}
-      />
+      <div
+        className={isShaking ? 'typing-shake' : undefined}
+        onAnimationEnd={() => setIsShaking(false)}
+      >
+        <TypingArea
+          text={session.text}
+          currentIndex={session.currentIndex}
+          keystrokes={session.keystrokes}
+          isActive={session.isActive && !showResults}
+          onKeyPress={handleKeyPress}
+          onComboMilestone={handleComboMilestone}
+        />
+      </div>
 
       {/* ── Keyboard ──────────────────────────────────────────────── */}
       <HebrewKeyboard

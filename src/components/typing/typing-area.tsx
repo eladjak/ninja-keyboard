@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useMemo } from 'react'
-import { motion } from 'framer-motion'
+import { useEffect, useMemo, useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import { useReducedMotion } from '@/hooks/use-reduced-motion'
@@ -23,6 +23,32 @@ interface TypingAreaProps {
   isActive: boolean
   /** Called when the user presses a key */
   onKeyPress: (key: string, code: string) => void
+  /** Optional callback fired on combo milestones (10, 20, 50) */
+  onComboMilestone?: (combo: number) => void
+}
+
+/** Minimum streak length before the combo counter appears */
+const COMBO_THRESHOLD = 5
+
+/** Returns the count of consecutive correct keystrokes at the end of the array */
+function getCurrentCombo(keystrokes: Keystroke[]): number {
+  let count = 0
+  for (let i = keystrokes.length - 1; i >= 0; i--) {
+    if (keystrokes[i].isCorrect) {
+      count++
+    } else {
+      break
+    }
+  }
+  return count
+}
+
+/** Visual intensity class based on combo size */
+function comboIntensityClass(combo: number): string {
+  if (combo >= 50) return 'text-yellow-300 drop-shadow-[0_0_8px_rgba(253,224,71,0.8)]'
+  if (combo >= 20) return 'text-orange-400 drop-shadow-[0_0_6px_rgba(251,146,60,0.7)]'
+  if (combo >= 10) return 'text-primary drop-shadow-[0_0_5px_oklch(0.72_0.15_292_/_60%)]'
+  return 'text-secondary drop-shadow-[0_0_4px_oklch(0.72_0.15_168_/_50%)]'
 }
 
 /** Keys that should have their default browser behavior prevented */
@@ -41,8 +67,29 @@ export function TypingArea({
   keystrokes,
   isActive,
   onKeyPress,
+  onComboMilestone,
 }: TypingAreaProps) {
   const reduceMotion = useReducedMotion()
+
+  // Derived combo value — count of trailing correct keystrokes
+  const combo = useMemo(() => getCurrentCombo(keystrokes), [keystrokes])
+  const showCombo = combo >= COMBO_THRESHOLD && isActive
+
+  // Track combo key so framer-motion re-mounts the counter on each increment
+  const comboAnimKey = useRef(0)
+  const prevCombo = useRef(0)
+  if (combo !== prevCombo.current) {
+    comboAnimKey.current++
+    prevCombo.current = combo
+  }
+
+  // Fire milestone callback for sound effects
+  useEffect(() => {
+    if (!onComboMilestone) return
+    if (combo === 10 || combo === 20 || combo === 50) {
+      onComboMilestone(combo)
+    }
+  }, [combo, onComboMilestone])
 
   // Attach / detach keydown listener based on isActive
   useEffect(() => {
@@ -85,6 +132,38 @@ export function TypingArea({
   return (
     <Card className="w-full">
       <CardContent className="pt-6">
+        {/* Combo counter — floats above the text area when active */}
+        <AnimatePresence>
+          {showCombo && (
+            <motion.div
+              initial={reduceMotion ? false : { opacity: 0, y: -8, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={reduceMotion ? {} : { opacity: 0, scale: 0.7, y: -6 }}
+              transition={reduceMotion ? { duration: 0 } : { duration: 0.12, ease: 'easeOut' }}
+              className="mb-2 flex items-center justify-end gap-1.5"
+              aria-live="polite"
+              aria-label={`קומבו: ${combo} הקשות רצופות`}
+            >
+              <span className="text-xs font-semibold tracking-wide text-muted-foreground/70 uppercase">
+                קומבו
+              </span>
+              <motion.span
+                key={comboAnimKey.current}
+                initial={reduceMotion ? false : { scale: 1.25 }}
+                animate={{ scale: 1 }}
+                transition={reduceMotion ? { duration: 0 } : { duration: 0.15, ease: 'easeOut' }}
+                className={cn(
+                  'min-w-[2.5rem] rounded-md px-2 py-0.5 text-center font-mono text-lg font-extrabold tabular-nums',
+                  'border border-current/20 bg-current/5',
+                  comboIntensityClass(combo),
+                )}
+              >
+                x{combo}
+              </motion.span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Practice text display */}
         <div
           className="min-h-32 rounded-lg bg-muted/30 px-4 py-4 sm:px-6 sm:py-5"

@@ -222,6 +222,157 @@ export const CHAPTER_4_3_GLITCH_WARNING: DialogStoryBeat = {
 }
 
 /**
+ * 4.3b — Sakura checks on Yuki before the cyber academy
+ * Yuki is nervous. Sakura finds her. A crane's wisdom for the road ahead.
+ */
+export const CHAPTER_4_3B_SAKURA_BEFORE_BATTLE: DialogStoryBeat = {
+  id: 'ch4-3b-sakura-before-battle',
+  trigger: { type: 'manual' },
+  lines: [
+    {
+      id: 'ch4-3b-01',
+      character: 'yuki',
+      text: 'אני לא רגועה. יש לי תחושה שמשהו רע הולך לקרות שם. אבל לא אגיד לאף אחד.',
+      type: 'thought',
+      mood: 'tense',
+      expression: 'concerned',
+    },
+    {
+      id: 'ch4-3b-02',
+      character: 'sakura',
+      text: 'יוקי. לפני שאתם יוצאים — יש לי משהו לומר לך.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'idle',
+    },
+    {
+      id: 'ch4-3b-03',
+      character: 'yuki',
+      text: 'סאקורה! מאיפה — היית מסתתרת שוב?',
+      type: 'dialog',
+      mood: 'happy',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch4-3b-04',
+      character: 'sakura',
+      text: 'עגורה לא מסתתרת. היא ממתינה. יש הבדל. יוקי — כשתרגישי שאיבדת את עצמך שם בפנים, זכרי: הריקוד.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'idle',
+    },
+    {
+      id: 'ch4-3b-05',
+      character: 'yuki',
+      text: 'הריקוד. מהירות ושליטה ביחד. לא אשכח.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'happy',
+    },
+    {
+      id: 'ch4-3b-06',
+      character: 'sakura',
+      text: 'ועוד דבר — אל תסמכי על כל מי שנראה ידידותי. ידידות אמיתית לא ממהרת. היא ממתינה.',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'idle',
+    },
+    {
+      id: 'ch4-3b-07',
+      character: 'yuki',
+      text: 'היא מדברת על וירוס? למה היא מרמזת ולא אומרת ישירות? עגורות...',
+      type: 'thought',
+      mood: 'mysterious',
+      expression: 'thinking',
+    },
+  ],
+}
+
+/**
+ * 4.3c — Zara tries to abduct Glitch before Virus can use her
+ * Zara follows Keres's orders. She and Glitch have a strange interaction —
+ * both entities who feel used and lost. A brief moment of connection.
+ */
+export const CHAPTER_4_3C_ZARA_TARGETS_GLITCH: DialogStoryBeat = {
+  id: 'ch4-3c-zara-targets-glitch',
+  trigger: { type: 'manual' },
+  lines: [
+    {
+      id: 'ch4-3c-01',
+      character: 'zara',
+      text: 'גליץ\'. הצלחתי למצוא אותך. כרס שלח אותי. הוא רוצה... נכס כמוך.',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'idle',
+    },
+    {
+      id: 'ch4-3c-02',
+      character: 'glitch',
+      text: 'נ-נכס? ג-גם אצלך? ג-גם הוא משתמש בך?',
+      type: 'dialog',
+      mood: 'sad',
+      expression: 'sad',
+    },
+    {
+      id: 'ch4-3c-03',
+      character: 'zara',
+      text: 'אני... אני לא... שתקי. בוא אתי.',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'concerned',
+    },
+    {
+      id: 'ch4-3c-04',
+      character: 'glitch',
+      text: 'ז-זרה... אתה לא שלמה גם את, נכון? אני... אני מרגישה את זה.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'sad',
+    },
+    {
+      id: 'ch4-3c-05',
+      character: 'zara',
+      text: 'שתקי! אני לא... אני עושה מה שצריך לעשות. אין לי ברירה.',
+      type: 'dialog',
+      mood: 'sad',
+      expression: 'concerned',
+    },
+    {
+      id: 'ch4-3c-06',
+      character: 'keres',
+      text: 'זרה. הדח\'תה? נשלח אחרת. לא צריך אותה.',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'idle',
+    },
+    {
+      id: 'ch4-3c-07',
+      character: 'zara',
+      text: 'כרס — לא... לא עדיין. עוד רגע.',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'concerned',
+    },
+    {
+      id: 'ch4-3c-08',
+      character: 'glitch',
+      text: 'ז-זרה... אם יום אחד תרצי לצאת... אני... אני אבין.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'sad',
+    },
+    {
+      id: 'ch4-3c-09',
+      character: 'zara',
+      text: 'זרה פונה. צועדת. לרגע — כתפיה שוקטות. כאילו מישהו אמר לה משהו שלא שמעה זמן רב.',
+      type: 'narration',
+      mood: 'mysterious',
+      expression: 'sad',
+    },
+  ],
+}
+
+/**
  * 4.4 — Virus reveals his true nature!
  * The mask falls. Virus transforms from friendly to terrifying.
  * He tempts Glitch with identity and power.
@@ -233,7 +384,7 @@ export const CHAPTER_4_4_VIRUS_REVEALS: DialogStoryBeat = {
     {
       id: 'ch4-4-01',
       character: 'virus',
-      text: 'אתם יודעים מה? נמאס לי לשחק. המסכה? נגמרה.',
+      text: 'אתם יודעים מה, חברה? נמאס. לי. לשחק. נייס. המסכה הזו? תיק. נגמרה. בום.',
       type: 'dialog',
       mood: 'tense',
       expression: 'mischievous',
@@ -249,7 +400,7 @@ export const CHAPTER_4_4_VIRUS_REVEALS: DialogStoryBeat = {
     {
       id: 'ch4-4-03',
       character: 'virus',
-      text: 'הנה אני. הוירוס האמיתי. חשבתם שאני ידידותי? כל הזמן הזה — למדתי את החולשות שלכם. כל מקש, כל שגיאה, כל פחד.',
+      text: 'הנה אני. האמיתי. חשבתם שאני חמוד? ידידותי? שנעתם. כל הזמן הזה — למדתי אתכם. כל מקש שטעיתם בו, כל שנייה שפחדתם, כל חולשה קטנטנה. הכל אצלי.',
       type: 'dialog',
       mood: 'epic',
       expression: 'mischievous',
@@ -257,7 +408,7 @@ export const CHAPTER_4_4_VIRUS_REVEALS: DialogStoryBeat = {
     {
       id: 'ch4-4-04',
       character: 'mika',
-      text: 'לא... סמכנו עליו. אני סמכתי עליו! איך... איך לא ראיתי את זה?!',
+      text: 'לא... אני סמכתי עליו. אני. מיקה. ההאקרית. איך לא ראיתי את זה?! הקוד היה מול העיניים שלי ואני—',
       type: 'dialog',
       mood: 'sad',
       expression: 'surprised',
@@ -345,7 +496,7 @@ export const CHAPTER_4_5_GLITCH_LEAVES: DialogStoryBeat = {
     {
       id: 'ch4-5-03',
       character: 'glitch',
-      text: 'כ-כל החיים שלי אני ת-תקלה. לא שלמה. אף אחד לא מבין מה זה. ה-הוא מבטיח שאהיה... שלמה.',
+      text: 'כ-כל החיים שלי אני ת-תקלה. שבורה. כולם מסתכלים עליי כאילו אני ב-ב-באג. הוא... הוא מבטיח שאהיה שלמה. בפעם הראשונה.',
       type: 'dialog',
       mood: 'sad',
       expression: 'concerned',
@@ -385,7 +536,7 @@ export const CHAPTER_4_5_GLITCH_LEAVES: DialogStoryBeat = {
     {
       id: 'ch4-5-08',
       character: 'senseiZen',
-      text: 'לפעמים... הכאב הכי גדול הוא לא כשלוקחים ממך מישהו. אלא כשמישהו בוחר לעזוב.',
+      text: 'ילדים... הכאב הכי גדול בחיים הוא לא כשלוקחים ממך מישהו. הוא כשמישהו שאהבת... בוחר ללכת.',
       type: 'dialog',
       mood: 'sad',
       expression: 'sad',
@@ -393,7 +544,7 @@ export const CHAPTER_4_5_GLITCH_LEAVES: DialogStoryBeat = {
     {
       id: 'ch4-5-09',
       character: 'mika',
-      text: 'היא הייתה החברה הכי טובה שלי. והיא... בחרה אותו. לא אותנו.',
+      text: 'היא הייתה החברה הכי טובה שלי. הכי. ואני לא הספקתי להגיד לה. ועכשיו היא... בחרה אותו. לא אותנו. לא אותי.',
       type: 'thought',
       mood: 'sad',
       expression: 'sad',
@@ -481,6 +632,127 @@ export const CHAPTER_4_6_AFTERMATH: DialogStoryBeat = {
       type: 'dialog',
       mood: 'epic',
       expression: 'excited',
+    },
+  ],
+}
+
+/**
+ * 4.6b — Keres observes from the shadows — the true puppet master
+ * Keres watches the wreckage after Virus's reveal. He is not pleased with Virus
+ * moving ahead without permission. A glimpse of the deeper threat.
+ */
+export const CHAPTER_4_6B_KERES_WATCHES: DialogStoryBeat = {
+  id: 'ch4-6b-keres-watches',
+  trigger: { type: 'manual' },
+  lines: [
+    {
+      id: 'ch4-6b-01',
+      character: 'keres',
+      text: 'וירוס... פחות מהמשימה המדויקת שביקשתי. אבל התוצאה — מעניינת.',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'idle',
+    },
+    {
+      id: 'ch4-6b-02',
+      character: 'zara',
+      text: 'כרס, וירוס פעל לבד. הוא לא קיבל אישור לחשוף את עצמו.',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'concerned',
+    },
+    {
+      id: 'ch4-6b-03',
+      character: 'keres',
+      text: 'זרה. וירוס הוא כלי. כלי שנכשל — מחליפים. הנינג\'ות האלה... מעניינים אותי יותר ממה שציפיתי. הטורניר — תהיה ההזדמנות שלנו.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'idle',
+    },
+    {
+      id: 'ch4-6b-04',
+      character: 'zara',
+      text: 'ומה עם גליץ\'? היא הלכה עם וירוס.',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch4-6b-05',
+      character: 'keres',
+      text: 'גליץ\' היא בונוס. מה שאני רוצה... הוא דוג\'ו של זן. שלם. תחת שליטתי. מאחורי כל הבאגים, כל השחיתות — תמיד היה רק מה שאנחנו. היה. אחד.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'idle',
+      duration: 3000,
+    },
+    {
+      id: 'ch4-6b-06',
+      character: 'ki',
+      text: 'הייתה לי תחושה שוירוס לא פועל לבד. מישהו מאחוריו. מישהו גדול יותר. חייב לברר.',
+      type: 'thought',
+      mood: 'mysterious',
+      expression: 'thinking',
+    },
+  ],
+}
+
+/**
+ * 4.6c — Phantom shadow in the cyber academy
+ * Ki glimpses a dark, fast shape running through a corridor.
+ * Not an enemy — more like a ghost. Foreshadowing Phantom/Raz.
+ */
+export const CHAPTER_4_6C_PHANTOM_FORESHADOW: DialogStoryBeat = {
+  id: 'ch4-6c-phantom-foreshadow',
+  trigger: { type: 'manual' },
+  lines: [
+    {
+      id: 'ch4-6c-01',
+      character: 'ki',
+      text: 'במסדרון האקדמייה — צל. מהיר. מסתובב. לבוש שחור. נינג\'ה. אבל לא אחד מהאויבים. משהו... אחר.',
+      type: 'narration',
+      mood: 'mysterious',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch4-6c-02',
+      character: 'ki',
+      text: 'היי! עצור! מי אתה?!',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch4-6c-03',
+      character: 'phantom',
+      text: '...חיכיתי להזדמנות. עוד לא. עדיין לא.',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'idle',
+    },
+    {
+      id: 'ch4-6c-04',
+      character: 'ki',
+      text: 'הוא נעלם! פשוט נעלם! כאילו לא היה שם! מה — מי היה זה?!',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch4-6c-05',
+      character: 'mika',
+      text: 'קי, אתה בסדר? ראיתי אותך צועק למסדרון ריק.',
+      type: 'dialog',
+      mood: 'funny',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch4-6c-06',
+      character: 'ki',
+      text: 'לא היה ריק. אני... חייב לשאול את סנסאי. יש פה משהו שהוא לא מספר לי.',
+      type: 'thought',
+      mood: 'mysterious',
+      expression: 'concerned',
     },
   ],
 }
@@ -635,9 +907,13 @@ export const CHAPTER_4_BEATS: DialogStoryBeat[] = [
   CHAPTER_4_1_CYBER_INVITATION,
   CHAPTER_4_2_MEET_VIRUS,
   CHAPTER_4_3_GLITCH_WARNING,
+  CHAPTER_4_3B_SAKURA_BEFORE_BATTLE,
+  CHAPTER_4_3C_ZARA_TARGETS_GLITCH,
   CHAPTER_4_4_VIRUS_REVEALS,
   CHAPTER_4_5_GLITCH_LEAVES,
   CHAPTER_4_6_AFTERMATH,
+  CHAPTER_4_6B_KERES_WATCHES,
+  CHAPTER_4_6C_PHANTOM_FORESHADOW,
   CHAPTER_4_7_TOURNAMENT_ANNOUNCED,
   CHAPTER_4_8_MIKA_RESOLVE,
 ]

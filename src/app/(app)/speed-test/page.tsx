@@ -22,6 +22,7 @@ import {
   SPEED_RANK_LABELS,
 } from '@/lib/challenges/speed-test'
 import { cn } from '@/lib/utils'
+import { CharacterIdleWrapper } from '@/components/characters/character-idle-wrapper'
 
 const TEST_DURATION = 60 // 1 minute
 
@@ -181,13 +182,6 @@ export default function SpeedTestPage() {
       {/* Header */}
       <div className="game-card-border flex items-center justify-between p-4" style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}>
         <div className="flex items-center gap-3">
-          <Image
-            src="/images/characters/model-sheets/yuki-girl.jpg"
-            alt="Yuki"
-            width={48}
-            height={48}
-            className="rounded-full border-2 border-purple-500/30 shadow-lg shadow-purple-500/10"
-          />
           <div>
             <h1 className="text-xl font-bold text-glow sm:text-2xl">מבחן מהירות</h1>
             <p className="text-sm text-muted-foreground">דקה אחת. כמה מהר אתה?</p>
@@ -196,6 +190,19 @@ export default function SpeedTestPage() {
         <div className="flex size-10 items-center justify-center rounded-xl" style={{ background: 'oklch(0.495 0.205 292 / 20%)', boxShadow: '0 0 12px oklch(0.495 0.205 292 / 30%)' }}>
           <Timer className="size-5" style={{ color: 'var(--game-accent-purple)' }} />
         </div>
+      </div>
+
+      {/* Yuki companion character */}
+      <div className="flex justify-center">
+        <CharacterIdleWrapper character="yuki" intensity="energetic" entryAnimation>
+          <Image
+            src="/images/characters/heroes/yuki-hero.jpg"
+            alt="יוקי - אלופת המהירות"
+            width={220}
+            height={220}
+            className="rounded-2xl object-cover drop-shadow-[0_0_28px_rgba(116,185,255,0.5)]"
+          />
+        </CharacterIdleWrapper>
       </div>
 
       {/* Timer display */}

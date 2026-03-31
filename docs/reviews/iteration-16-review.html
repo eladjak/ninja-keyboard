@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>סקירת איטרציה 16 — נינג'ה מקלדת</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Heebo', sans-serif; background: #0d0b1a; color: #e0e0e0; line-height: 1.7; padding: 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: 2.5rem; color: #6C5CE7; text-align: center; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.5rem; color: #00B894; margin: 2rem 0 1rem; border-bottom: 2px solid #00B894; padding-bottom: 0.5rem; }
+  h3 { color: #a29bfe; margin: 1rem 0 0.5rem; }
+  .subtitle { text-align: center; color: #888; margin-bottom: 2rem; font-size: 1.1rem; }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+  .stat-card { background: linear-gradient(135deg, #1a1530 0%, #0d0b1a 100%); border: 1px solid #6C5CE730; border-radius: 12px; padding: 1.5rem; text-align: center; }
+  .stat-card .number { font-size: 2.5rem; font-weight: 900; color: #6C5CE7; }
+  .stat-card .label { color: #888; font-size: 0.9rem; }
+  .stat-card.green .number { color: #00B894; }
+  .stat-card.orange .number { color: #fdcb6e; }
+  .stat-card.red .number { color: #ff6b6b; }
+  .task-list { list-style: none; }
+  .task-list li { padding: 0.6rem 1rem; margin: 0.4rem 0; background: #1a1530; border-radius: 8px; border-right: 4px solid #00B894; }
+  .task-list li.bug { border-right-color: #ff6b6b; }
+  .task-list li.feature { border-right-color: #6C5CE7; }
+  .task-list li.story { border-right-color: #fdcb6e; }
+  .task-list li.cleanup { border-right-color: #74b9ff; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-left: 0.5rem; }
+  .badge-high { background: #ff6b6b30; color: #ff6b6b; }
+  .badge-medium { background: #fdcb6e30; color: #fdcb6e; }
+  .badge-low { background: #74b9ff30; color: #74b9ff; }
+  .badge-done { background: #00B89430; color: #00B894; }
+  .gap-section { background: #1a1530; border-radius: 12px; padding: 1.5rem; margin: 1rem 0; }
+  .gap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.8rem; margin-top: 1rem; }
+  .gap-card { background: #0d0b1a; border-radius: 8px; padding: 1rem; border: 1px solid #ffffff10; }
+  .gap-card h4 { color: #6C5CE7; margin-bottom: 0.3rem; }
+  .gap-card .needs { color: #ff6b6b; font-size: 0.85rem; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+  th { background: #1a1530; color: #6C5CE7; padding: 0.8rem; text-align: right; }
+  td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #ffffff10; }
+  tr:hover { background: #1a153030; }
+  .check { color: #00B894; }
+  .cross { color: #ff6b6b; }
+  .warn { color: #fdcb6e; }
+  .footer { text-align: center; margin-top: 3rem; padding: 1.5rem; color: #666; border-top: 1px solid #ffffff10; }
+  .screenshot-note { background: #6C5CE710; border: 1px dashed #6C5CE740; border-radius: 8px; padding: 1rem; margin: 1rem 0; color: #a29bfe; text-align: center; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>🥷 סקירת איטרציה 16</h1>
+<p class="subtitle">נינג'ה מקלדת — 30 במרץ 2026 — שילוב משוב מקיף</p>
+
+<div class="stats-grid">
+  <div class="stat-card green"><div class="number">13</div><div class="label">משימות הושלמו</div></div>
+  <div class="stat-card"><div class="number">3</div><div class="label">באגים תוקנו</div></div>
+  <div class="stat-card"><div class="number">0</div><div class="label">שגיאות TypeScript</div></div>
+  <div class="stat-card green"><div class="number">1096</div><div class="label">טסטים עוברים</div></div>
+  <div class="stat-card orange"><div class="number">23</div><div class="label">דמויות ב-CONFIG</div></div>
+  <div class="stat-card"><div class="number">7</div><div class="label">עמודים עם דמות גדולה</div></div>
+</div>
+
+<h2>✅ מה נעשה באיטרציה הזו</h2>
+
+<h3>תיקוני באגים (Chrome Review)</h3>
+<ul class="task-list">
+  <li class="bug">5/6 אווטארי יריבים לא נטענו ב-/battle — שונה ל-model-sheets עם רקע בהיר <span class="badge badge-high">HIGH</span> <span class="badge badge-done">תוקן</span></li>
+  <li class="bug">XP bar hydration mismatch ב-/home — useState+useEffect pattern <span class="badge badge-medium">MEDIUM</span> <span class="badge badge-done">תוקן</span></li>
+  <li class="bug">תמונת Ki שבורה ב-/home — שונה ל-ki-hero.jpg <span class="badge badge-low">LOW</span> <span class="badge badge-done">תוקן</span></li>
+</ul>
+
+<h3>שדרוגי מערכת דמויות</h3>
+<ul class="task-list">
+  <li class="feature">4 דמויות חדשות ב-type system: זארה (מלכת הבאגים), קרס (מלך הבאגים), בלוק, לאנס</li>
+  <li class="feature">23 גיליונות הבעות (expression sheets) מחוברים ל-CHARACTER_CONFIGS</li>
+  <li class="feature">9/11 באדג'ים מקושרים לתמונות JPG אמיתיות (במקום emoji)</li>
+</ul>
+
+<h3>שדרוגי UI/UX (ממשוב המשתמש)</h3>
+<ul class="task-list">
+  <li class="feature">דמויות גדולות (220px) עם אנימציות idle על 7 עמודים: Ki→בית, זן→שיעורים, יוקי→מהירות, לונה→תרגול, מיקה→קיצורים, רקס→משחקים, פיקסל→סטטיסטיקות</li>
+  <li class="feature">עמוד שיעור: game-card-border, צלילי הקלדה, מסך תוצאות משודרג (כוכבים מונפשים, XP pop-in)</li>
+  <li class="feature">סנסיי זן כמלווה בטיפ יומי עם בועת דיבור</li>
+  <li class="feature">5 ערכות גיל מובחנות ויזואלית (צבעים ייחודיים + מהירויות אנימציה)</li>
+</ul>
+
+<h3>תוכן סיפור</h3>
+<ul class="task-list">
+  <li class="story">וירוס + 7 דמויות חסרות נוספו לפרקי הסיפור (ברק, סאקורה, פאנטום, מאסטר ביט, זארה, קרס)</li>
+  <li class="story">~30+ ביטים חדשים בעברית לאורך פרקים 2-6</li>
+</ul>
+
+<h3>ניקיון</h3>
+<ul class="task-list">
+  <li class="cleanup">5 רקעים כפולים נמחקו (3.9MB שוחרר)</li>
+  <li class="cleanup">טסט תוקן: alt text של Ki בעברית</li>
+</ul>
+
+<h2>📊 מצב דמויות — מטריצה מלאה</h2>
+
+<table>
+<tr>
+  <th>דמות</th>
+  <th>Config</th>
+  <th>עמוד</th>
+  <th>הבעות</th>
+  <th>בסיפור</th>
+  <th>קול</th>
+  <th>שיר נושא</th>
+</tr>
+<tr><td><strong>קי</strong></td><td class="check">✓</td><td>בית</td><td class="check">✓</td><td class="check">✓ (127)</td><td class="check">✓</td><td class="check">✓</td></tr>
+<tr><td><strong>מיקה</strong></td><td class="check">✓</td><td>קיצורים</td><td class="check">✓</td><td class="check">✓ (55)</td><td class="check">✓</td><td class="check">✓</td></tr>
+<tr><td><strong>יוקי</strong></td><td class="check">✓</td><td>מהירות</td><td class="check">✓</td><td class="check">✓ (29)</td><td class="check">✓</td><td class="check">✓</td></tr>
+<tr><td><strong>לונה</strong></td><td class="check">✓</td><td>תרגול</td><td class="check">✓</td><td class="check">✓ (10)</td><td class="check">✓</td><td class="check">✓</td></tr>
+<tr><td><strong>נועה</strong></td><td class="check">✓</td><td class="warn">—</td><td class="check">✓</td><td class="check">✓ (14)</td><td class="check">✓</td><td class="cross">✗</td></tr>
+<tr><td><strong>רקס</strong></td><td class="check">✓</td><td>משחקים</td><td class="check">✓</td><td class="check">✓ (16)</td><td class="check">✓</td><td class="check">✓</td></tr>
+<tr><td><strong>פיקסל</strong></td><td class="check">✓</td><td>סטטיסטיקות</td><td class="check">✓</td><td class="check">✓ (18)</td><td class="cross">✗</td><td class="cross">✗</td></tr>
+<tr><td><strong>סנסיי זן</strong></td><td class="check">✓</td><td>שיעורים + טיפ</td><td class="check">✓</td><td class="check">✓ (51)</td><td class="warn">⚠️</td><td class="check">✓</td></tr>
+<tr><td><strong>קאי</strong></td><td class="check">✓</td><td class="warn">—</td><td class="check">✓</td><td class="check">✓ (14)</td><td class="check">✓</td><td class="cross">✗</td></tr>
+<tr><td><strong>סאקורה</strong></td><td class="check">✓</td><td class="warn">—</td><td class="check">✓</td><td class="check">✓ חדש!</td><td class="cross">✗</td><td class="cross">✗</td></tr>
+<tr><td><strong>גליץ'</strong></td><td class="check">✓</td><td class="warn">—</td><td class="check">✓</td><td class="check">✓ (27)</td><td class="check">✓</td><td class="check">✓</td></tr>
+<tr><td><strong>שאדו</strong></td><td class="check">✓</td><td>קרב</td><td class="check">✓</td><td class="check">✓ (14)</td><td class="cross">✗</td><td class="cross">✗</td></tr>
+<tr><td><strong>סטורם</strong></td><td class="check">✓</td><td>קרב</td><td class="check">✓</td><td class="check">✓ (11)</td><td class="cross">✗</td><td class="cross">✗</td></tr>
+<tr><td><strong>בלייז</strong></td><td class="check">✓</td><td>קרב</td><td class="check">✓</td><td class="check">✓ (4)</td><td class="cross">✗</td><td class="cross">✗</td></tr>
+<tr><td><strong>וירוס</strong></td><td class="check">✓</td><td>קרב</td><td class="check">✓</td><td class="check">✓ חדש!</td><td class="cross">✗</td><td class="cross">✗</td></tr>
+<tr><td><strong>פאנטום</strong></td><td class="check">✓</td><td class="warn">—</td><td class="check">✓</td><td class="check">✓ חדש!</td><td class="cross">✗</td><td class="cross">✗</td></tr>
+<tr><td><strong>ברק</strong></td><td class="check">✓</td><td class="warn">—</td><td class="check">✓</td><td class="check">✓ חדש!</td><td class="cross">✗</td><td class="cross">✗</td></tr>
+<tr><td><strong>מאסטר ביט</strong></td><td class="check">✓</td><td class="warn">—</td><td class="check">✓</td><td class="check">✓ חדש!</td><td class="cross">✗</td><td class="cross">✗</td></tr>
+<tr><td><strong>באג</strong></td><td class="check">✓</td><td>קרב</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+<tr><td><strong>זארה</strong></td><td class="check">✓ חדש!</td><td class="warn">—</td><td class="check">✓</td><td class="check">✓ חדש!</td><td class="cross">✗</td><td class="cross">✗</td></tr>
+<tr><td><strong>קרס</strong></td><td class="check">✓ חדש!</td><td class="warn">—</td><td class="check">✓</td><td class="check">✓ חדש!</td><td class="check">✓</td><td class="cross">✗</td></tr>
+<tr><td><strong>בלוק</strong></td><td class="check">✓ חדש!</td><td class="warn">—</td><td class="check">✓</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td></tr>
+<tr><td><strong>לאנס</strong></td><td class="check">✓ חדש!</td><td class="warn">—</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td></tr>
+</table>
+
+<h2>⚠️ פערים שנותרו (מהמשוב המקיף)</h2>
+
+<div class="gap-section">
+<h3>דמויות — פערי הפקה</h3>
+<div class="gap-grid">
+  <div class="gap-card"><h4>קי — עיצוב + קול</h4><div class="needs">חוסר אחידות בעיצוב. הקול גרוע — צריך קול נער כריזמטי</div></div>
+  <div class="gap-card"><h4>מיקה — עיצוב מחדש</h4><div class="needs">צריכה להיות יותר נשית, פחות "טומבוי". עיצוב עקבי</div></div>
+  <div class="gap-card"><h4>סנסיי זן — קול</h4><div class="needs">הקול לא מאושר! צריך מבטא ישראלי, לא אנגלי</div></div>
+  <div class="gap-card"><h4>9 דמויות ללא קול</h4><div class="needs">Shadow, Storm, Blaze, Virus, Phantom, Barak, Master Beat, Sakura, Pixel</div></div>
+  <div class="gap-card"><h4>8+ דמויות ללא שיר נושא</h4><div class="needs">Noa, Pixel, Kai, Sakura, Shadow, Storm, Blaze, Virus, Phantom, Barak, Master Beat</div></div>
+  <div class="gap-card"><h4>גיוון דמויות</h4><div class="needs">רוב הדמויות נראות "לבנות" — צריך כור היתוך ישראלי</div></div>
+</div>
+</div>
+
+<div class="gap-section">
+<h3>UI/UX — פערים</h3>
+<div class="gap-grid">
+  <div class="gap-card"><h4>Jukebox Gamification</h4><div class="needs">שחקנים צריכים לפתוח טרקים כהישגים — לא מומש</div></div>
+  <div class="gap-card"><h4>דשבורד מורים/הורים</h4><div class="needs">חלקי, לא מחובר לנתונים, חסר ממשק מובייל</div></div>
+  <div class="gap-card"><h4>Skin Art</h4><div class="needs">אומנות סקינים לא נוצרה כלל</div></div>
+  <div class="gap-card"><h4>מערכת רמות</h4><div class="needs">מתוכננת אך טרם נוצרה</div></div>
+  <div class="gap-card"><h4>עטיפות ג'וקבוקס</h4><div class="needs">7/17 טרקים מוצגים, עטיפות חסרות</div></div>
+  <div class="gap-card"><h4>11 באדג'ים — אומנות</h4><div class="needs">כולם מנעולים גנריים, צריכים עיצוב ייחודי</div></div>
+</div>
+</div>
+
+<div class="gap-section">
+<h3>נרטיב — פערים</h3>
+<div class="gap-grid">
+  <div class="gap-card"><h4>פרק 6 — הרחבה</h4><div class="needs">הקרבת גליץ', קשתות סיום, ביטים חסרים</div></div>
+  <div class="gap-card"><h4>Block + Lens בתסריט</h4><div class="needs">יש להם config אבל עדיין לא בסיפור</div></div>
+  <div class="gap-card"><h4>דיאלוג סנסיי זן-סאקורה</h4><div class="needs">חסר דיאלוג מוגדר ביניהם</div></div>
+</div>
+</div>
+
+<h2>📋 צעדים הבאים (לפי עדיפות)</h2>
+<ol style="padding-right: 1.5rem;">
+  <li>המשך Chrome review (15 עמודים שנותרו)</li>
+  <li>הפקת קולות ל-9 דמויות (ElevenLabs Voice Design)</li>
+  <li>שירי נושא ל-8+ דמויות (Suno V5)</li>
+  <li>עיצוב מחדש: Ki (אחידות), Mika (נשיות)</li>
+  <li>קול סנסיי זן — מבטא ישראלי</li>
+  <li>הפקת אומנות באדג'ים (Gemini)</li>
+  <li>Jukebox gamification — פתיחת טרקים</li>
+  <li>דשבורד מורים/הורים — השלמה</li>
+  <li>Skin art — עיצוב ראשוני</li>
+  <li>מערכת רמות — מימוש</li>
+</ol>
+
+<div class="footer">
+  <p>נוצר ע"י Claude Code — איטרציה 16 — 30 במרץ 2026</p>
+  <p style="color: #6C5CE7;">נינג'ה מקלדת 🥷⌨️</p>
+</div>
+
+</div>
+</body>
+</html>

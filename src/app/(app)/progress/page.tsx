@@ -1,8 +1,10 @@
 'use client'
 
+import Image from 'next/image'
 import { BarChart3, Zap, Flame, Trophy, Target } from 'lucide-react'
 import { useXpStore } from '@/stores/xp-store'
 import { motion } from 'framer-motion'
+import { CharacterIdleWrapper } from '@/components/characters/character-idle-wrapper'
 
 export default function ProgressPage() {
   const { totalXp, level, streak, completedLessons, levelProgress } =
@@ -25,6 +27,19 @@ export default function ProgressPage() {
           <BarChart3 className="size-5" style={{ color: 'var(--game-accent-purple)' }} />
         </div>
         <h1 className="text-2xl font-bold text-glow">ההתקדמות שלי</h1>
+      </div>
+
+      {/* Noa companion character */}
+      <div className="flex justify-center">
+        <CharacterIdleWrapper character="noa" intensity="subtle" entryAnimation>
+          <Image
+            src="/images/characters/heroes/noa-hero.jpg"
+            alt="נועה - מרפאת הקוד"
+            width={220}
+            height={220}
+            className="rounded-2xl object-cover drop-shadow-[0_0_28px_rgba(0,184,148,0.5)]"
+          />
+        </CharacterIdleWrapper>
       </div>
 
       {/* Level & XP card */}

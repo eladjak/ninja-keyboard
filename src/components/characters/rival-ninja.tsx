@@ -19,19 +19,19 @@ const RIVAL_CONFIG: Record<BattleDifficulty, {
   easy: {
     name: 'Shadow',
     nameHe: 'צל',
-    image: '/images/characters/shadow.jpg',
+    image: '/images/characters/heroes/shadow-hero.jpg',
     glowColor: 'rgba(99, 110, 114, 0.4)',
   },
   medium: {
     name: 'Storm',
     nameHe: 'סערה',
-    image: '/images/characters/storm.jpg',
+    image: '/images/characters/heroes/storm-hero.jpg',
     glowColor: 'rgba(9, 132, 227, 0.4)',
   },
   hard: {
     name: 'Blaze',
     nameHe: 'להבה',
-    image: '/images/characters/blaze.jpg',
+    image: '/images/characters/heroes/blaze-hero.jpg',
     glowColor: 'rgba(214, 48, 49, 0.4)',
   },
 }

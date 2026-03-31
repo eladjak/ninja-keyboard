@@ -21,6 +21,7 @@ import { computeSessionStats } from '@/lib/typing-engine/engine'
 import { PRACTICE_TEXTS } from '@/lib/content/practice-texts'
 import type { PracticeText } from '@/lib/content/practice-texts'
 import { cn } from '@/lib/utils'
+import { CharacterIdleWrapper } from '@/components/characters/character-idle-wrapper'
 
 /** Difficulty badge colors */
 const DIFFICULTY_COLORS: Record<PracticeText['difficulty'], string> = {
@@ -262,13 +263,6 @@ export default function PracticePage() {
       {/* ── Header ──────────────────────────────────────────────── */}
       <div className="game-card-border flex items-center justify-between p-4" style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}>
         <div className="flex items-center gap-3">
-          <Image
-            src="/images/characters/model-sheets/luna-girl.jpg"
-            alt="Luna"
-            width={48}
-            height={48}
-            className="rounded-full border-2 border-purple-500/30 shadow-lg shadow-purple-500/10"
-          />
           <div>
             <h1 className="text-xl font-bold text-glow sm:text-2xl">תרגול חופשי</h1>
             <p className="text-sm text-muted-foreground">
@@ -279,6 +273,19 @@ export default function PracticePage() {
         <div className="flex size-10 items-center justify-center rounded-xl" style={{ background: 'oklch(0.495 0.205 292 / 20%)', boxShadow: '0 0 12px oklch(0.495 0.205 292 / 30%)' }}>
           <Keyboard className="size-5" style={{ color: 'var(--game-accent-purple)' }} />
         </div>
+      </div>
+
+      {/* Luna companion character */}
+      <div className="flex justify-center">
+        <CharacterIdleWrapper character="luna" intensity="subtle" entryAnimation>
+          <Image
+            src="/images/characters/heroes/luna-hero.jpg"
+            alt="לונה - מלווה התרגול"
+            width={220}
+            height={220}
+            className="rounded-2xl object-cover drop-shadow-[0_0_28px_rgba(162,155,254,0.5)]"
+          />
+        </CharacterIdleWrapper>
       </div>
 
       {/* ── Text selector ───────────────────────────────────────── */}

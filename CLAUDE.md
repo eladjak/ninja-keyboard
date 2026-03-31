@@ -117,3 +117,14 @@ Before designing ANY UI component, page, or layout:
 3. הרץ tests: `npm run test`
 4. ודא build עובד לפני commit: `npm run build`
 5. commit עם הודעה: `feat/fix/refactor: תיאור באנגלית`
+
+
+---
+
+## Iteration Protocol (MANDATORY)
+
+This project follows the global iteration protocol:
+- Reference: `~/.claude/rules/iteration-protocol.md`
+- Update `PROGRESS.md` every 10-15 exchanges
+- End every session with verification + HTML review
+- Non-negotiable: PROGRESS.md must be updated before session ends

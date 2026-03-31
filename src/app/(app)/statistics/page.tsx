@@ -18,6 +18,7 @@ import { KeyboardHeatmap } from '@/components/statistics/keyboard-heatmap'
 import { usePracticeHistoryStore } from '@/stores/practice-history-store'
 import { useXpStore } from '@/stores/xp-store'
 import { cn } from '@/lib/utils'
+import { CharacterIdleWrapper } from '@/components/characters/character-idle-wrapper'
 
 /** Format milliseconds to a human-readable Hebrew string */
 function formatDuration(ms: number): string {
@@ -82,13 +83,6 @@ export default function StatisticsPage() {
       {/* ── Header ──────────────────────────────────────────────── */}
       <div className="game-card-border flex items-center justify-between p-4" style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}>
         <div className="flex items-center gap-3">
-          <Image
-            src="/images/characters/model-sheets/pixel-robot.jpg"
-            alt="Pixel"
-            width={48}
-            height={48}
-            className="rounded-full border-2 border-purple-500/30 shadow-lg shadow-purple-500/10"
-          />
           <div>
             <h1 className="text-xl font-bold text-glow sm:text-2xl">סטטיסטיקות</h1>
             <p className="text-sm text-muted-foreground">
@@ -101,6 +95,19 @@ export default function StatisticsPage() {
         <div className="flex size-10 items-center justify-center rounded-xl" style={{ background: 'oklch(0.495 0.205 292 / 20%)', boxShadow: '0 0 12px oklch(0.495 0.205 292 / 30%)' }}>
           <BarChart3 className="size-5" style={{ color: 'var(--game-accent-purple)' }} />
         </div>
+      </div>
+
+      {/* Pixel companion character */}
+      <div className="flex justify-center">
+        <CharacterIdleWrapper character="pixel" intensity="normal" entryAnimation>
+          <Image
+            src="/images/characters/heroes/pixel-hero.jpg"
+            alt="פיקסל - רובוט הסטטיסטיקות"
+            width={220}
+            height={220}
+            className="rounded-2xl object-cover drop-shadow-[0_0_28px_rgba(0,206,201,0.5)]"
+          />
+        </CharacterIdleWrapper>
       </div>
 
       {/* ── Overview cards ──────────────────────────────────────── */}

@@ -466,6 +466,85 @@
   animation: speed-lines 1.5s linear infinite;
 }
 
+/* ── Floating background particles ─────────────────────────────── */
+@keyframes float-up {
+  0% {
+    transform: translateY(100vh) translateX(0) scale(0.6);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(50vh) translateX(var(--drift-x, 12px)) scale(1);
+    opacity: 0.4;
+  }
+  95% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-8vh) translateX(calc(var(--drift-x, 12px) * 1.4)) scale(0.7);
+    opacity: 0;
+  }
+}
+
+.floating-particle {
+  position: absolute;
+  bottom: -8px;
+  border-radius: 50%;
+  animation: float-up linear infinite;
+  will-change: transform, opacity;
+}
+
+.floating-particle--purple {
+  background: oklch(0.72 0.15 292 / 45%);
+  box-shadow: 0 0 4px oklch(0.72 0.15 292 / 30%);
+}
+
+.floating-particle--teal {
+  background: oklch(0.72 0.15 168 / 40%);
+  box-shadow: 0 0 4px oklch(0.72 0.15 168 / 25%);
+}
+
+/* Disable particles when user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .floating-particle {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* ── Combo counter ──────────────────────────────────────────────── */
+@keyframes combo-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.22); }
+  100% { transform: scale(1); }
+}
+
+.combo-pop {
+  animation: combo-pop 0.15s ease-out;
+}
+
+/* ── Typing area shake on error ─────────────────────────────────── */
+@keyframes typing-shake {
+  0%   { transform: translateX(0); }
+  20%  { transform: translateX(-2px); }
+  40%  { transform: translateX(2px); }
+  60%  { transform: translateX(-2px); }
+  80%  { transform: translateX(1px); }
+  100% { transform: translateX(0); }
+}
+
+.typing-shake {
+  animation: typing-shake 0.12s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing-shake {
+    animation: none;
+  }
+}
+
 /* ── Gaming Theme Utilities ────────────────────────────────────── */
 
 /* Dark gaming background with ambient glow */

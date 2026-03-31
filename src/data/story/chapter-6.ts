@@ -369,7 +369,7 @@ export const CHAPTER_6_4_DEEP_CODE: DialogStoryBeat = {
     {
       id: 'ch6-4-03',
       character: 'ki',
-      text: 'אבא... למה עזבת? למה השארת את אמא ואותי? למה רק כיסא ריק עם שם חרוט?',
+      text: 'אבא... למה? למה עזבת אותנו? את אמא? אותי? כל מה שנשאר ממך זה כיסא ריק עם שם חרוט. אתה יודע כמה פעמים ישבתי ליד הכיסא הזה?',
       type: 'dialog',
       mood: 'sad',
       expression: 'sad',
@@ -377,7 +377,7 @@ export const CHAPTER_6_4_DEEP_CODE: DialogStoryBeat = {
     {
       id: 'ch6-4-04',
       character: 'phantom',
-      text: 'כי ראיתי מה מתקרב. השחיתות. ראיתי אותה עוד לפני שנולדת. ירדתי לכאן לחפש תשובות... ונתקעתי. שנים. לבד.',
+      text: 'כי ראיתי מה מתקרב. את השחיתות. ראיתי אותה עוד לפני שנולדת, קי. ירדתי לכאן לחפש תשובות ו... נתקעתי. שנים. לבד. בלי אור, בלי קול, בלי אתכם.',
       type: 'dialog',
       mood: 'sad',
       expression: 'concerned',
@@ -417,7 +417,7 @@ export const CHAPTER_6_4_DEEP_CODE: DialogStoryBeat = {
     {
       id: 'ch6-4-09',
       character: 'ki',
-      text: 'לא לבד. היה לי סנסאי. חברים. אמא. אבל... חסרת לי, אבא.',
+      text: 'לא לבד. היה לי סנסאי שלימד אותי. חברים שלחמו איתי. ואמא שלא הפסיקה להאמין. אבל אבא... חסרת. כל יום חסרת.',
       type: 'dialog',
       mood: 'heartwarming',
       expression: 'sad',
@@ -647,7 +647,7 @@ export const CHAPTER_6_6_GLITCH_REASSEMBLY: DialogStoryBeat = {
     {
       id: 'ch6-6-09',
       character: 'rex',
-      text: 'חברה... אני בוכה? למה אני בוכה? דינוזאורים לא בוכים!',
+      text: 'רגע... חברה... אני בוכה?! מה?! דינוזאורים לא בוכים! זה באג בעיניים! GG, מי שם בצל כאן?!',
       type: 'dialog',
       mood: 'heartwarming',
       expression: 'sad',
@@ -681,7 +681,7 @@ export const CHAPTER_6_6_GLITCH_REASSEMBLY: DialogStoryBeat = {
     {
       id: 'ch6-6-13',
       character: 'glitch',
-      text: 'אני שלמה. לראשונה בחיים — כל החלקים שלי במקום. המבולבלת, המתגבשת, הניטרלית, המושחתת, השבורה... וגם — השלמה. כולן אני. כולן תמיד היו אני.',
+      text: 'אני... שלמה. בפעם הראשונה בחיים — כל החלקים שלי במקום. המבולבלת. המתגבשת. הניטרלית. המושחתת. השבורה. וגם — השלמה. כולן אני. כולן תמיד היו אני. ולא חסר אף אחת.',
       type: 'dialog',
       mood: 'epic',
       expression: 'happy',
@@ -707,11 +707,91 @@ export const CHAPTER_6_6_GLITCH_REASSEMBLY: DialogStoryBeat = {
     {
       id: 'ch6-6-16',
       character: 'pixel',
-      text: 'מעדכן מאגר נתונים... "שמחה" = הרגע הזה. סוף סוף... מבין מה זה.',
+      text: 'מעדכן מאגר... "שמחה" = לא שוקולד ולא ניצחון. שמחה = הרגע הזה. כשכולם ביחד. סוף סוף... מבין מה זה. תודה, קי.',
       type: 'dialog',
       mood: 'heartwarming',
       expression: 'happy',
       duration: 3000,
+    },
+  ],
+}
+
+/**
+ * 6.6b — Zara's redemption: she brings the last fragment
+ * Zara has been following the teams silently. She found a 7th fragment —
+ * one that was lost — and brings it to the group. She asks for nothing.
+ */
+export const CHAPTER_6_6B_ZARA_REDEMPTION: DialogStoryBeat = {
+  id: 'ch6-6b-zara-redemption',
+  trigger: { type: 'manual' },
+  lines: [
+    {
+      id: 'ch6-6b-01',
+      character: 'ki',
+      text: 'רגע — מישהי עומדת בפינה. זרה? היא... היא מחזיקה משהו. שבר קוד. בצבעי גליץ\'.',
+      type: 'narration',
+      mood: 'mysterious',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch6-6b-02',
+      character: 'zara',
+      text: 'מצאתי את זה. שבר שנפל בשרת השחור. אתם... לא ידעתם עליו. אני לא... לא יודעת אם את מקבלת ממני. אחרי מה שעשיתי.',
+      type: 'dialog',
+      mood: 'sad',
+      expression: 'sad',
+    },
+    {
+      id: 'ch6-6b-03',
+      character: 'noa',
+      text: 'זרה... את הבאת אותו? בעצמך?',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch6-6b-04',
+      character: 'zara',
+      text: 'גליץ\' אמרה לי פעם — "גם אני לא שלמה." אם יש מישהי שיכולה להבין... זאת היא.',
+      type: 'dialog',
+      mood: 'sad',
+      expression: 'sad',
+    },
+    {
+      id: 'ch6-6b-05',
+      character: 'mika',
+      text: 'את... סיכנת את עצמך. כרס ישלח אחרייך על זה.',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch6-6b-06',
+      character: 'zara',
+      text: 'אני יודעת. כבר לא אכפת לי. אם גליץ\' שמרה על חברים — אני יכולה לשמור על... שריד של מצפון.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'sad',
+    },
+    {
+      id: 'ch6-6b-07',
+      character: 'ki',
+      text: 'אנחנו מקבלים. ותודה, זרה.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'happy',
+      choices: [
+        {
+          id: 'ch6-6b-choice-welcome',
+          text: 'זרה, אם תרצי — אפשר להישאר',
+          relationshipEffect: { character: 'zara', delta: 10 },
+        },
+        {
+          id: 'ch6-6b-choice-careful',
+          text: 'תודה. אבל תיזהרי מכרס',
+          relationshipEffect: { character: 'zara', delta: 5 },
+        },
+      ],
     },
   ],
 }
@@ -809,6 +889,197 @@ export const CHAPTER_6_7_FINAL_ASSAULT: DialogStoryBeat = {
 }
 
 /**
+ * 6.7b — Keres confrontation: the final boss reveals his motive
+ * Keres steps out of the shadows for a final face-off before the battle.
+ * He is not pure evil — he has a twisted ideology about order and purity.
+ * This gives Ki a choice: understand him, or simply defeat him.
+ */
+export const CHAPTER_6_7B_KERES_CONFRONTATION: DialogStoryBeat = {
+  id: 'ch6-7b-keres-confrontation',
+  trigger: { type: 'manual' },
+  lines: [
+    {
+      id: 'ch6-7b-01',
+      character: 'keres',
+      text: 'כל כך הרחקתם. מרשים, באמת. אבל עכשיו — הגעתם לסוף הדרך שלכם.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'idle',
+    },
+    {
+      id: 'ch6-7b-02',
+      character: 'ki',
+      text: 'כרס. תסביר לי למה. למה כל הבאגים, השחיתות, גליץ\', וירוס — למה?',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch6-7b-03',
+      character: 'keres',
+      text: 'כי העולם הדיגיטלי צריך סדר. אחד. כולכם — כל הדוג\'ואים, כל הסגנונות, כל ה"ייחוד" — זה כאוס. כאוס מוביל לשגיאות. ושגיאות — הורגות.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'idle',
+    },
+    {
+      id: 'ch6-7b-04',
+      character: 'senseiZen',
+      text: 'כרס... היית תלמיד כל כך מוכשר. כשאיבדת את הדרך... חשבתי שאני אשם.',
+      type: 'dialog',
+      mood: 'sad',
+      expression: 'concerned',
+    },
+    {
+      id: 'ch6-7b-05',
+      character: 'keres',
+      text: 'זן. לא אתה אשם. עולם שבו כל אחד עושה מה שהוא רוצה — הוא שבור. אני רציתי לתקן אותו.',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'idle',
+    },
+    {
+      id: 'ch6-7b-06',
+      character: 'ki',
+      text: 'על ידי השמדת כולנו?! זה לא תיקון — זה מחיקה.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'concerned',
+    },
+    {
+      id: 'ch6-7b-07',
+      character: 'keres',
+      text: 'יש הבדל?',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'idle',
+    },
+    {
+      id: 'ch6-7b-08',
+      character: 'glitch',
+      text: 'כן. יש. גיביו. אני הייתי "לא שלמה" כל חיי. ולא היית מציל אותי עם "סדר". מה שהצילה אותי — היו חברים שאהבו אותי גם שבורה.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'idle',
+    },
+    {
+      id: 'ch6-7b-09',
+      character: 'zara',
+      text: 'כרס. אני לא חוזרת. יש לי שם אחר עכשיו. לא "מלכת הבאגים." פשוט — זרה.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'idle',
+    },
+    {
+      id: 'ch6-7b-10',
+      character: 'keres',
+      text: '...לא ציפיתי לזה. מעניין.',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'thinking',
+      duration: 2000,
+    },
+    {
+      id: 'ch6-7b-11',
+      character: 'ki',
+      text: 'כרס — זה הסוף. לא אנצח אותך בשנאה. אנצח אותך בדיוק — מקש אחרי מקש.',
+      type: 'dialog',
+      mood: 'epic',
+      expression: 'idle',
+      choices: [
+        {
+          id: 'ch6-7b-choice-fight',
+          text: '!כולם — קדימה',
+          relationshipEffect: { character: 'senseiZen', delta: 5 },
+        },
+        {
+          id: 'ch6-7b-choice-offer',
+          text: 'כרס, יש דרך אחרת. בא הביתה',
+          relationshipEffect: { character: 'keres', delta: 3 },
+        },
+      ],
+    },
+  ],
+}
+
+/**
+ * 6.7c — Sakura's farewell: she watches the final battle and then leaves
+ * A crane doesn't stay after the lesson is over.
+ * Yuki says goodbye knowing she carried the lesson forward.
+ */
+export const CHAPTER_6_7C_SAKURA_FAREWELL: DialogStoryBeat = {
+  id: 'ch6-7c-sakura-farewell',
+  trigger: { type: 'manual' },
+  lines: [
+    {
+      id: 'ch6-7c-01',
+      character: 'yuki',
+      text: 'סאקורה! אחרי הקרב — היא עמדה על הגג. נפרשת. עומדת ללכת.',
+      type: 'narration',
+      mood: 'mysterious',
+      expression: 'sad',
+    },
+    {
+      id: 'ch6-7c-02',
+      character: 'yuki',
+      text: 'סאקורה! אל תלכי! עוד לא לימדת אותי הכל!',
+      type: 'dialog',
+      mood: 'sad',
+      expression: 'sad',
+    },
+    {
+      id: 'ch6-7c-03',
+      character: 'sakura',
+      text: 'לימדתי אותך את מה שהיית צריכה. השאר — תגלי בעצמך. כך תמיד היה.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'idle',
+    },
+    {
+      id: 'ch6-7c-04',
+      character: 'yuki',
+      text: 'אבל — מתי אראה אותך שוב?',
+      type: 'dialog',
+      mood: 'sad',
+      expression: 'sad',
+    },
+    {
+      id: 'ch6-7c-05',
+      character: 'sakura',
+      text: 'כשתצטרכי. עגורה תמיד מוצאת את דרכה. ותלמידה טובה — תמיד מוצאת את מורתה.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'happy',
+    },
+    {
+      id: 'ch6-7c-06',
+      character: 'yuki',
+      text: 'סאקורה פורשת כנפיים. לבנות. ענקיות. ועולה. מתרחקת. נקודה על הרקיע. ואז — נעלמת.',
+      type: 'narration',
+      mood: 'heartwarming',
+      expression: 'sad',
+      duration: 4000,
+    },
+    {
+      id: 'ch6-7c-07',
+      character: 'senseiZen',
+      text: 'היא תחזור. כשיגיע הזמן. עגורות — תמיד חוזרות.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'happy',
+    },
+    {
+      id: 'ch6-7c-08',
+      character: 'yuki',
+      text: 'ריקוד, לא מירוץ. אני לא שוכחת.',
+      type: 'thought',
+      mood: 'heartwarming',
+      expression: 'happy',
+    },
+  ],
+}
+
+/**
  * 6.8 — The Final Battle: Every character, every skill
  * Ki leads the charge. Each character uses their UNIQUE typing skill.
  * The Bridge between human and digital is built — keystroke by keystroke.
@@ -884,7 +1155,7 @@ export const CHAPTER_6_8_FINAL_BATTLE: DialogStoryBeat = {
     {
       id: 'ch6-8-09',
       character: 'rex',
-      text: '"מה ההבדל בין וירוס לבדיחה? מהבדיחה צוחקים! Delete!" — קבל, שחיתות!',
+      text: 'מה ההבדל בין וירוס לבדיחה? מהבדיחה צוחקים! Ctrl+Z את עצמך! Delete! אנאנסטול! קבל, שחיתות!',
       type: 'dialog',
       mood: 'funny',
       expression: 'happy',
@@ -1129,6 +1400,99 @@ export const CHAPTER_6_10_FINAL_WHISPER: DialogStoryBeat = {
   ],
 }
 
+/**
+ * 6.9b — Zara finds a home + Keres leaves a mystery
+ * In the aftermath, Zara stays but doesn't know where she belongs.
+ * Keres was defeated but not destroyed — and a cryptic signal appears.
+ */
+export const CHAPTER_6_9B_ZARA_PEACE_KERES_MYSTERY: DialogStoryBeat = {
+  id: 'ch6-9b-zara-peace-keres-mystery',
+  trigger: { type: 'manual' },
+  lines: [
+    {
+      id: 'ch6-9b-01',
+      character: 'zara',
+      text: 'אחרי הקרב — לא יודעת לאן ללכת. הייתי מלכת הבאגים. עכשיו אני... רק זרה.',
+      type: 'thought',
+      mood: 'sad',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch6-9b-02',
+      character: 'noa',
+      text: 'זרה. ראיתי אותך בקרב. את הגנת על אחד מהפצועים. שם כשלא הייתה עליך עין. עשית את זה מרצון.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'happy',
+    },
+    {
+      id: 'ch6-9b-03',
+      character: 'zara',
+      text: 'לא חשבתי שמישהי ראתה.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch6-9b-04',
+      character: 'noa',
+      text: 'אני תמיד רואה. ואנחנו — יש לנו מקום אחד פנוי בצוות הריפוי, אם תרצי.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'happy',
+    },
+    {
+      id: 'ch6-9b-05',
+      character: 'zara',
+      text: 'מלכת הבאגים — לוחמת ריפוי? זה... מוזר.',
+      type: 'dialog',
+      mood: 'funny',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch6-9b-06',
+      character: 'noa',
+      text: 'גליץ\' הייתה תקלה ונהיה גיבורה. דוג\'ו שלנו מעדיף מוזר.',
+      type: 'dialog',
+      mood: 'heartwarming',
+      expression: 'happy',
+    },
+    {
+      id: 'ch6-9b-07',
+      character: 'pixel',
+      text: 'סורק... אנומליה. שרת מרוחק. חתימת קוד לא מזוהה. 0.01 אחוז פעיל. דומה ל... כרס. אבל לא בדיוק.',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch6-9b-08',
+      character: 'mika',
+      text: 'מה?! הוא לא נמחק לגמרי?',
+      type: 'dialog',
+      mood: 'tense',
+      expression: 'surprised',
+    },
+    {
+      id: 'ch6-9b-09',
+      character: 'ki',
+      text: 'אולי כרס הבין משהו. אנחנו לא מחקנו אותו — הוא... השתנה. 0.01 אחוז. לא מסוכן. לא בינתיים.',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'thinking',
+    },
+    {
+      id: 'ch6-9b-10',
+      character: 'senseiZen',
+      text: 'אויב שלמד לפחד מהניצחון שלך — הוא כבר לא אותו אויב. ואולי... יום אחד... הוא יחפש אחרת.',
+      type: 'dialog',
+      mood: 'mysterious',
+      expression: 'idle',
+      duration: 3000,
+    },
+  ],
+}
+
 // ---------------------------------------------------------------------------
 // Chapter 6 — All beats in order
 // ---------------------------------------------------------------------------
@@ -1139,8 +1503,12 @@ export const CHAPTER_6_BEATS: DialogStoryBeat[] = [
   CHAPTER_6_4_DEEP_CODE,
   CHAPTER_6_5_MASTER_BEAT,
   CHAPTER_6_6_GLITCH_REASSEMBLY,
+  CHAPTER_6_6B_ZARA_REDEMPTION,
   CHAPTER_6_7_FINAL_ASSAULT,
+  CHAPTER_6_7B_KERES_CONFRONTATION,
+  CHAPTER_6_7C_SAKURA_FAREWELL,
   CHAPTER_6_8_FINAL_BATTLE,
   CHAPTER_6_9_PEACE,
+  CHAPTER_6_9B_ZARA_PEACE_KERES_MYSTERY,
   CHAPTER_6_10_FINAL_WHISPER,
 ]

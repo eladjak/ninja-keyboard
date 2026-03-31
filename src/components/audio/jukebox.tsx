@@ -1,12 +1,11 @@
 'use client'
 
-import { useState, useCallback, useMemo } from 'react'
-import { Play, Pause, Lock, Unlock, Music, Volume2 } from 'lucide-react'
+import { useState, useCallback, useMemo, useEffect, useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Play, Pause, Lock, Unlock, Music, Volume2, Star } from 'lucide-react'
 import { TRACK_MANIFEST, type GameZone } from '@/lib/audio/music-manager'
-import {
-  useMusicStore,
-  TRACK_UNLOCK_CONDITIONS,
-} from '@/stores/music-store'
+import { useMusicStore, TRACK_UNLOCK_CONDITIONS } from '@/stores/music-store'
+import { useTrackUnlocks } from '@/hooks/use-track-unlocks'
 import { useMusic } from './music-provider'
 
 // ---------------------------------------------------------------------------
@@ -67,26 +66,69 @@ function CollectionProgress({
         </span>
       </div>
       <div className="h-2 rounded-full bg-[var(--game-bg-elevated)] overflow-hidden">
-        <div
-          className="h-full rounded-full bg-gradient-to-l from-[var(--game-accent-purple)] to-[var(--game-accent-green)] transition-all duration-500"
-          style={{ width: `${percent}%` }}
+        <motion.div
+          className="h-full rounded-full bg-gradient-to-l from-[var(--game-accent-purple)] to-[var(--game-accent-green)]"
+          initial={{ width: 0 }}
+          animate={{ width: `${percent}%` }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
         />
       </div>
     </div>
   )
 }
 
+/** Celebration overlay shown briefly when a track is newly unlocked. */
+function UnlockCelebration({ trackName }: { trackName: string }) {
+  return (
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      <motion.div
+        className="game-card p-6 flex flex-col items-center gap-3 text-center max-w-xs mx-4
+          border-[var(--game-accent-green)] shadow-[0_0_32px_var(--game-glow-green)]"
+        initial={{ scale: 0.7, y: 20 }}
+        animate={{ scale: 1, y: 0 }}
+        exit={{ scale: 0.8, y: -10, opacity: 0 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+      >
+        <motion.div
+          animate={{ rotate: [0, -15, 15, -8, 8, 0] }}
+          transition={{ delay: 0.1, duration: 0.4 }}
+        >
+          <Star className="h-10 w-10 text-[var(--game-accent-green)] fill-[var(--game-accent-green)]" />
+        </motion.div>
+        <p className="text-xs font-bold text-[var(--game-accent-green)] uppercase tracking-widest">
+          רצועה חדשה נפתחה!
+        </p>
+        <p className="text-lg font-black">{trackName}</p>
+      </motion.div>
+    </motion.div>
+  )
+}
+
 function TrackCard({
   track,
   isUnlocked,
+  isNewlyUnlocked,
   isCurrentlyPlaying,
+  progress,
+  progressLabel,
   onPlay,
   onStop,
   onSetOverride,
 }: {
   track: (typeof TRACK_MANIFEST)[number]
   isUnlocked: boolean
+  isNewlyUnlocked: boolean
   isCurrentlyPlaying: boolean
+  progress: number
+  progressLabel?: string
   onPlay: () => void
   onStop: () => void
   onSetOverride: () => void
@@ -94,12 +136,17 @@ function TrackCard({
   const condition = TRACK_UNLOCK_CONDITIONS[track.id]
 
   return (
-    <div
+    <motion.div
+      layout
+      initial={isNewlyUnlocked ? { scale: 0.95, opacity: 0 } : false}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       className={`game-card p-4 transition-all duration-200 ${
         isUnlocked
           ? 'hover:border-[var(--game-accent-purple)] cursor-pointer'
           : 'opacity-60'
-      } ${isCurrentlyPlaying ? 'border-[var(--game-accent-green)] shadow-[0_0_12px_var(--game-glow-green)]' : ''}`}
+      } ${isCurrentlyPlaying ? 'border-[var(--game-accent-green)] shadow-[0_0_12px_var(--game-glow-green)]' : ''}
+      ${isNewlyUnlocked ? 'border-[var(--game-accent-green)]' : ''}`}
     >
       {/* Header row */}
       <div className="flex items-start justify-between gap-2 mb-2">
@@ -148,7 +195,7 @@ function TrackCard({
         </span>
       </div>
 
-      {/* Unlock hint or set-as-zone button */}
+      {/* Unlock hint / progress bar / set-as-zone button */}
       {isUnlocked ? (
         <button
           type="button"
@@ -158,12 +205,32 @@ function TrackCard({
           הגדר כמוזיקת זירה
         </button>
       ) : (
-        <div className="mt-2 text-xs text-muted-foreground flex items-center gap-1.5">
-          <Lock className="h-3 w-3" />
-          <span>{condition?.label ?? 'לא זמין'}</span>
+        <div className="mt-2 space-y-1.5">
+          {/* Requirement label */}
+          <div className="text-xs text-muted-foreground flex items-center gap-1.5">
+            <Lock className="h-3 w-3 flex-shrink-0" />
+            <span>{condition?.label ?? 'לא זמין'}</span>
+          </div>
+
+          {/* Progress bar — only shown for numeric conditions */}
+          {progressLabel !== undefined && progress > 0 && (
+            <div className="space-y-0.5">
+              <div className="h-1.5 rounded-full bg-[var(--game-bg-elevated)] overflow-hidden">
+                <motion.div
+                  className="h-full rounded-full bg-[var(--game-accent-purple)]"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress * 100}%` }}
+                  transition={{ duration: 0.4, ease: 'easeOut' }}
+                />
+              </div>
+              <p className="text-[10px] text-muted-foreground text-end">
+                {progressLabel}
+              </p>
+            </div>
+          )}
         </div>
       )}
-    </div>
+    </motion.div>
   )
 }
 
@@ -175,15 +242,49 @@ export function Jukebox() {
   const [activeCategory, setActiveCategory] = useState<JukeboxCategory>('all')
   const [playingTrackId, setPlayingTrackId] = useState<string | null>(null)
   const [selectedZone, setSelectedZone] = useState<GameZone | null>(null)
+  const [celebrationTrack, setCelebrationTrack] = useState<string | null>(null)
 
   const unlockedTracks = useMusicStore((s) => s.unlockedTracks)
   const setZoneOverride = useMusicStore((s) => s.setZoneOverride)
   const clearZoneOverrides = useMusicStore((s) => s.clearZoneOverrides)
 
   const { playTrack, stopAll } = useMusic()
+  const { trackStatus } = useTrackUnlocks()
 
   const totalTracks = Object.keys(TRACK_UNLOCK_CONDITIONS).length
   const unlockedCount = unlockedTracks.length
+
+  // Track which IDs were unlocked on the previous render to detect newly unlocked.
+  const prevUnlockedRef = useRef<Set<string>>(new Set(unlockedTracks))
+  const [newlyUnlockedIds, setNewlyUnlockedIds] = useState<Set<string>>(new Set())
+
+  useEffect(() => {
+    const prev = prevUnlockedRef.current
+    const added: string[] = []
+
+    for (const id of unlockedTracks) {
+      if (!prev.has(id)) added.push(id)
+    }
+
+    if (added.length > 0) {
+      prevUnlockedRef.current = new Set(unlockedTracks)
+      setNewlyUnlockedIds(new Set(added))
+
+      // Show celebration for the first newly unlocked track.
+      setCelebrationTrack(added[0])
+
+      // Clear newly-unlocked highlight after 3 s.
+      const timer = setTimeout(() => setNewlyUnlockedIds(new Set()), 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [unlockedTracks])
+
+  // Dismiss celebration after 2.5 s.
+  useEffect(() => {
+    if (!celebrationTrack) return
+    const timer = setTimeout(() => setCelebrationTrack(null), 2500)
+    return () => clearTimeout(timer)
+  }, [celebrationTrack])
 
   // Filter tracks by category
   const filteredTracks = useMemo(() => {
@@ -212,8 +313,20 @@ export function Jukebox() {
     [selectedZone, setZoneOverride],
   )
 
+  // Name lookup for celebration toast.
+  const celebrationTrackName = celebrationTrack
+    ? (TRACK_MANIFEST.find((t) => t.id === celebrationTrack)?.name ?? celebrationTrack)
+    : null
+
   return (
     <div className="max-w-4xl mx-auto" dir="rtl">
+      {/* Celebration overlay */}
+      <AnimatePresence>
+        {celebrationTrackName && (
+          <UnlockCelebration key={celebrationTrack} trackName={celebrationTrackName} />
+        )}
+      </AnimatePresence>
+
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-black flex items-center gap-3">
@@ -298,13 +411,19 @@ export function Jukebox() {
       {/* Track grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {filteredTracks.map((track) => {
-          const isUnlocked = unlockedTracks.includes(track.id)
+          const status = trackStatus[track.id] ?? {
+            isUnlocked: unlockedTracks.includes(track.id),
+            progress: 0,
+          }
           return (
             <TrackCard
               key={track.id}
               track={track}
-              isUnlocked={isUnlocked}
+              isUnlocked={status.isUnlocked}
+              isNewlyUnlocked={newlyUnlockedIds.has(track.id)}
               isCurrentlyPlaying={playingTrackId === track.id}
+              progress={status.progress}
+              progressLabel={status.progressLabel}
               onPlay={() => handlePlay(track)}
               onStop={handleStop}
               onSetOverride={() => handleSetOverride(track)}
