@@ -14,8 +14,10 @@ Iteration 17 COMMITTED (00326d8 + d039edb). 26 hero images (23 chars + 3 alterna
 3. **Pixel V3** — Too human in V2! Make more ROBOTIC while staying feminine. Balance: feminine robot, not human girl.
 4. **Rex V2** — Slightly more mature
 5. **Block V3** — More mature, MORE GRAY (concrete block gray), more threatening
-6. **Glitch VARIATIONS** — Current design approved! Generate 2-3 more forms/variations
-7. **Blaze V2 — APPROVED** keep as is!
+6. **Glitch VARIATIONS** — Current design approved! Generate 2-3 more forms/variations (fragmented, corrupted, redeemed)
+7. **Keres+Virus FUSION** — Variation of Keres merged/empowered by Virus
+8. **Virus ANCIENT form** — The primordial virus, sworn ancient enemy of Master Beat (prehistoric/cosmic evil)
+9. **Blaze V2 — APPROVED** keep as is!
 
 ### NEXT PRIORITY
 8. Chrome review remaining 15 pages
