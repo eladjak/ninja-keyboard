@@ -5,7 +5,7 @@
 ## Sprint: Iteration 17 — Art Completion + Game-Feel Effects
 
 ## Current State
-Building on Iteration 16 (c93459e). ALL 23 chibi heroes done. ALL 11 badges have images. 3 new game-feel components. TypeScript: 0 errors, Tests: 1144/1144 (up from 1115).
+Iteration 17 COMMITTED (00326d8 + d039edb). 26 hero images (23 chars + 3 alternate forms). ALL 11 badges have images. 3 new game-feel components. V2/V3 art per user feedback. TypeScript: 0 errors, Tests: 1144/1144.
 
 ## EXACT CONTINUATION PLAN (for next session)
 1. **Chrome review remaining 15 pages**: shortcuts, speed-test, story, onboarding, placement, certificates, statistics, tips, teacher, parent-report, accessibility, login, register, join, student-setup

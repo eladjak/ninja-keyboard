@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>סקירה סופית — איטרציה 17 — נינג׳ה מקלדת</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Heebo',sans-serif;background:#0d0b1a;color:#e0e0e0;line-height:1.7}
+.hero{background:linear-gradient(135deg,#1a1530,#0d0b1a,#0a1628);padding:3rem 2rem;text-align:center;border-bottom:2px solid #6C5CE730}
+.hero h1{font-size:2.8rem;color:#6C5CE7;text-shadow:0 0 30px #6C5CE740}
+.hero .sub{color:#888;font-size:1.1rem;margin-top:.3rem}
+.hero .date{color:#00B894;font-size:.9rem;margin-top:.5rem}
+.container{max-width:1300px;margin:0 auto;padding:0 2rem 3rem}
+h2{font-size:1.5rem;color:#6C5CE7;margin:2.5rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+h2::after{content:'';flex:1;height:1px;background:linear-gradient(to left,transparent,#6C5CE740)}
+h3{color:#00B894;margin:1.2rem 0 .6rem;font-size:1.05rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.8rem;margin:2rem 0}
+.stat{background:linear-gradient(135deg,#1a1530,#0d0b1a);border:1px solid #6C5CE720;border-radius:14px;padding:1.2rem;text-align:center;transition:transform .2s}
+.stat:hover{transform:scale(1.05)}
+.stat .n{font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#6C5CE7,#00B894);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat .l{color:#888;font-size:.75rem;margin-top:.2rem}
+.card{background:#1a1530;border-radius:14px;padding:1.5rem;margin:1rem 0;border:1px solid #ffffff08}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem;margin:1rem 0}
+.img-card{text-align:center}
+.img-card img{width:150px;height:150px;object-fit:contain;border-radius:14px;background:#0a0818;border:2px solid #6C5CE720;transition:transform .2s}
+.img-card img:hover{transform:scale(1.1)}
+.img-card .name{font-size:.75rem;color:#aaa;margin-top:.3rem}
+.img-card .tag{font-size:.6rem;padding:1px 6px;border-radius:4px;font-weight:700;display:inline-block;margin-top:.2rem}
+.tag-hero{background:#00B89420;color:#00B894}
+.tag-alt{background:#6C5CE720;color:#6C5CE7}
+.tag-villain{background:#ff6b6b20;color:#ff6b6b}
+.tag-new{background:#F9CA2420;color:#F9CA24}
+.row{display:flex;gap:.8rem;padding:.4rem 0;border-bottom:1px solid #ffffff06;align-items:center}
+.row:last-child{border:none}
+.row .icon{font-size:1.1rem;min-width:24px;text-align:center}
+.row .text{flex:1;font-size:.9rem}
+.badge{font-size:.65rem;padding:2px 7px;border-radius:4px;font-weight:700}
+.b-done{background:#00B89420;color:#00B894}
+.b-new{background:#6C5CE720;color:#6C5CE7}
+.gamefeel{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1rem 0}
+.gf{background:#0d0b1a;border-radius:12px;padding:1rem;border:1px solid #ffffff10;text-align:center}
+.gf .i{font-size:1.8rem;margin-bottom:.4rem}
+.gf .t{font-weight:700;color:#6C5CE7;font-size:.9rem}
+.gf .d{font-size:.8rem;color:#888;margin-top:.3rem}
+.next{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:1rem 0}
+.nx{background:#1a1530;border-radius:12px;padding:1rem;border:1px solid #ffffff08}
+.nx .p{font-size:.65rem;padding:2px 7px;border-radius:4px;font-weight:700;display:inline-block;margin-bottom:.5rem}
+.p-h{background:#ff6b6b20;color:#ff6b6b}
+.p-m{background:#F9CA2420;color:#F9CA24}
+.footer{text-align:center;padding:2rem;color:#555;border-top:1px solid #ffffff10;margin-top:2rem}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>&#x1F525; סקירה סופית — איטרציה 17</h1>
+  <div class="sub">נינג׳ה מקלדת — אמנות V2/V3 + אפקטי משחק + צורות חלופיות</div>
+  <div class="date">1 באפריל 2026 | 2 commits: 00326d8, d039edb</div>
+</div>
+
+<div class="container">
+
+<div class="stats">
+  <div class="stat"><div class="n">26</div><div class="l">תמונות heroes</div></div>
+  <div class="stat"><div class="n">11/11</div><div class="l">תמונות תגים</div></div>
+  <div class="stat"><div class="n">3</div><div class="l">צורות חלופיות</div></div>
+  <div class="stat"><div class="n">0</div><div class="l">שגיאות TS</div></div>
+  <div class="stat"><div class="n">1144</div><div class="l">טסטים</div></div>
+  <div class="stat"><div class="n">3</div><div class="l">קומפוננטות חדשות</div></div>
+  <div class="stat"><div class="n">29</div><div class="l">טסטים חדשים</div></div>
+</div>
+
+<!-- HEROES GALLERY -->
+<h2>&#x1F3A8; גלריית כל הגיבורים (26 תמונות)</h2>
+
+<h3>&#x2B50; גיבורים ראשיים</h3>
+<div class="grid">
+  <div class="img-card"><img src="../../public/images/characters/heroes/ki-hero.jpg" alt="קיי"><div class="name">קיי</div><span class="tag tag-hero">גיבור</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/mika-hero.jpg" alt="מיקה"><div class="name">מיקה</div><span class="tag tag-hero">גיבורה</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/yuki-hero.jpg" alt="יוקי"><div class="name">יוקי</div><span class="tag tag-hero">גיבורה</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/luna-hero.jpg" alt="לונה"><div class="name">לונה</div><span class="tag tag-hero">גיבורה</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/noa-hero.jpg" alt="נועה"><div class="name">נועה</div><span class="tag tag-hero">גיבורה</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/kai-hero.jpg" alt="קאי"><div class="name">קאי (ביישן)</div><span class="tag tag-new">V1 חדש!</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/rex-hero.jpg" alt="רקס"><div class="name">רקס</div><span class="tag tag-hero">גיבור</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/pixel-hero.jpg" alt="פיקסל"><div class="name">פיקסל</div><span class="tag tag-new">V2 נשית!</span></div>
+</div>
+
+<h3>&#x1F9D9; מנטורים וסנסיים</h3>
+<div class="grid">
+  <div class="img-card"><img src="../../public/images/characters/heroes/sensei-zen-hero.jpg" alt="סנסיי זן"><div class="name">סנסיי זן</div><span class="tag tag-hero">מנטור</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/masterbeat-hero.jpg" alt="מאסטר ביט"><div class="name">מאסטר ביט</div><span class="tag tag-new">V2!</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/sakura-hero.jpg" alt="סאקורה"><div class="name">סאקורה</div><span class="tag tag-hero">מנטורית</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/phantom-hero.jpg" alt="פאנטום"><div class="name">פאנטום (ראז)</div><span class="tag tag-new">V2 מסתורי!</span></div>
+</div>
+
+<h3>&#x2694;&#xFE0F; יריבים</h3>
+<div class="grid">
+  <div class="img-card"><img src="../../public/images/characters/heroes/shadow-hero.jpg" alt="צל"><div class="name">שאדו (צל)</div><span class="tag tag-hero">יריב</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/storm-hero.jpg" alt="סערה"><div class="name">סטורם (סערה)</div><span class="tag tag-hero">יריבה</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/blaze-hero.jpg" alt="להבה"><div class="name">בלייז (להבה)</div><span class="tag tag-new">V2 בוגר+קשוח!</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/barak-hero.jpg" alt="ברק"><div class="name">ברק</div><span class="tag tag-hero">יריב</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/block-hero.jpg" alt="בלוק"><div class="name">בלוק</div><span class="tag tag-new">V2!</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/lens-hero.jpg" alt="לאנס"><div class="name">לאנס</div><span class="tag tag-new">V2 גברי!</span></div>
+</div>
+
+<h3>&#x1F47E; נבלים</h3>
+<div class="grid">
+  <div class="img-card"><img src="../../public/images/characters/heroes/virus-hero.jpg" alt="וירוס"><div class="name">וירוס (חבר)</div><span class="tag tag-hero">מסכה</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/virus-reveal-hero.jpg" alt="וירוס חשיפה"><div class="name">וירוס (חשיפה!)</div><span class="tag tag-new">חדש!</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/virus-evil-hero.jpg" alt="וירוס רשע"><div class="name">וירוס (רשע)</div><span class="tag tag-villain">צורה אמיתית</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/glitch-hero.jpg" alt="גליץ'"><div class="name">גליץ׳</div><span class="tag tag-hero">אנטי-גיבורה</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/zara-hero.jpg" alt="זארה"><div class="name">זארה (מלכת באגים)</div><span class="tag tag-villain">V2 ספייקי!</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/keres-hero.jpg" alt="קרס"><div class="name">קרס (מלך באגים)</div><span class="tag tag-villain">V2 מפחיד!</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/bug-hero.jpg" alt="באג"><div class="name">באג (מיניון)</div><span class="tag tag-new">חדש!</span></div>
+</div>
+
+<h3>&#x1F525; צורות חלופיות (Alternate Forms)</h3>
+<div class="grid">
+  <div class="img-card"><img src="../../public/images/characters/heroes/kai-hero.jpg" alt="קאי רגיל"><div class="name">קאי — ביישן</div><span class="tag tag-hero">ברירת מחדל</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/kai-fire-hero.jpg" alt="קאי אש"><div class="name">קאי — לוחם אש!</div><span class="tag tag-alt">fireHeroImage</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/virus-hero.jpg" alt="וירוס חבר"><div class="name">וירוס — מסכה</div><span class="tag tag-hero">heroImage</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/virus-reveal-hero.jpg" alt="וירוס חשיפה"><div class="name">וירוס — חשיפה</div><span class="tag tag-alt">revealHeroImage</span></div>
+  <div class="img-card"><img src="../../public/images/characters/heroes/virus-evil-hero.jpg" alt="וירוס רשע"><div class="name">וירוס — רשע</div><span class="tag tag-villain">evilHeroImage</span></div>
+</div>
+
+<!-- GAME FEEL -->
+<h2>&#x1F3AE; אפקטי Game-Feel חדשים</h2>
+<div class="gamefeel">
+  <div class="gf"><div class="i">&#x1F389;</div><div class="t">חגיגת Level-Up</div><div class="d">אוברליי מסך מלא, 16 קרני כוכב CSS, מספר רמה מונפש, דמות חוגגת, auto-dismiss 3s</div></div>
+  <div class="gf"><div class="i">&#x1F977;</div><div class="t">טעינה עם דמויות</div><div class="d">דמות נינג׳ה אקראית, 4 הודעות עבריות מתחלפות, אנימציית bounce, dots טייפינג</div></div>
+  <div class="gf"><div class="i">&#x1F4CA;</div><div class="t">useLevelUp Hook</div><div class="d">זיהוי מעבר XP→רמה, auto-clear אופציונלי, 15 טסטי יחידה + 14 טסטי קומפוננטה</div></div>
+  <div class="gf"><div class="i">&#x1F3E0;</div><div class="t">שילוב בדאשבורד</div><div class="d">Level-Up מחובר לדף הבית, מסך טעינה שודרג מ-SVG ל-CharacterLoading</div></div>
+</div>
+
+<!-- TASKS -->
+<h2>&#x2705; כל המשימות שהושלמו</h2>
+<div class="card">
+  <div class="row"><span class="icon">&#x2705;</span><span class="text">8 גיבורי צ׳יבי V1: Kai, Phantom, Master Beat, Zara, Keres, Block, Lens, Bug</span><span class="badge b-done">הושלם</span></div>
+  <div class="row"><span class="icon">&#x2705;</span><span class="text">6 עיצובים מחדש V2: Zara, Keres, Block, Master Beat, Phantom, Lens</span><span class="badge b-done">הושלם</span></div>
+  <div class="row"><span class="icon">&#x2705;</span><span class="text">Pixel V2 — יותר נשית, ניגוד ללאנס הגברי</span><span class="badge b-done">הושלם</span></div>
+  <div class="row"><span class="icon">&#x2705;</span><span class="text">Blaze V2 — יותר בוגר, גברי וקשוח (יריב בכיר של קאי)</span><span class="badge b-done">הושלם</span></div>
+  <div class="row"><span class="icon">&#x2705;</span><span class="text">Kai Fire Warrior — צורת אש (fireHeroImage)</span><span class="badge b-new">חדש!</span></div>
+  <div class="row"><span class="icon">&#x2705;</span><span class="text">Virus 3 צורות: חבר, חשיפה (מסכה נסדקת), רשע</span><span class="badge b-new">חדש!</span></div>
+  <div class="row"><span class="icon">&#x2705;</span><span class="text">11/11 תמונות תגים (patient + focused נוספו)</span><span class="badge b-done">הושלם</span></div>
+  <div class="row"><span class="icon">&#x2705;</span><span class="text">LevelUpCelebration + CharacterLoading + useLevelUp</span><span class="badge b-new">חדש!</span></div>
+  <div class="row"><span class="icon">&#x2705;</span><span class="text">Level-Up משולב בדאשבורד + טעינה שודרגה</span><span class="badge b-done">הושלם</span></div>
+  <div class="row"><span class="icon">&#x2705;</span><span class="text">עמוד סיפור: סנסיי זן + hero avatars</span><span class="badge b-done">הושלם</span></div>
+  <div class="row"><span class="icon">&#x2705;</span><span class="text">Battle: בלייז=יריב קאי, Yuki hero image fix</span><span class="badge b-done">הושלם</span></div>
+  <div class="row"><span class="icon">&#x2705;</span><span class="text">CharacterConfig: fireHeroImage, evilHeroImage, revealHeroImage</span><span class="badge b-new">חדש!</span></div>
+  <div class="row"><span class="icon">&#x2705;</span><span class="text">TypeScript: 0 שגיאות, 1144 טסטים עוברים</span><span class="badge b-done">&#x2705;</span></div>
+</div>
+
+<!-- CHARACTER DECISIONS -->
+<h2>&#x1F4CB; החלטות דמויות מרכזיות</h2>
+<div class="card">
+  <div class="row"><span class="icon">&#x1F525;</span><span class="text"><strong>קאי מדוג׳ו האש</strong> — טרנספורמציה מביישן ללוחם אש. בלייז = היריב שלו.</span></div>
+  <div class="row"><span class="icon">&#x1F47E;</span><span class="text"><strong>וירוס — 3 צורות</strong> — חבר (מסכה) → חשיפה (מסכה נסדקת) → רשע (יצור קורפטד)</span></div>
+  <div class="row"><span class="icon">&#x1F41B;</span><span class="text"><strong>זארה+קרס = בוסים</strong> — מלכה ומלך של הבאגים, אותו מין חרקי, ספייקים</span></div>
+  <div class="row"><span class="icon">&#x1F4F7;</span><span class="text"><strong>לאנס גברי / פיקסל נשית</strong> — ניגוד ברור בין היריבים</span></div>
+  <div class="row"><span class="icon">&#x1F409;</span><span class="text"><strong>בלייז בוגר+קשוח</strong> — שומר דוג׳ו, בכיר מקאי, דרגון אש מרשים</span></div>
+</div>
+
+<!-- NEXT STEPS -->
+<h2>&#x1F6A7; מה נשאר</h2>
+<div class="next">
+  <div class="nx"><span class="p p-h">גבוהה</span><h3>Chrome Review — 15 דפים</h3><p style="font-size:.8rem;color:#888">shortcuts, speed-test, story, onboarding, placement, certificates, statistics, tips, teacher, parent-report, a11y, login, register, join, student-setup</p></div>
+  <div class="nx"><span class="p p-h">גבוהה</span><h3>קולות — 9 דמויות</h3><p style="font-size:.8rem;color:#888">ElevenLabs Voice Design API</p></div>
+  <div class="nx"><span class="p p-m">בינונית</span><h3>שירי נושא — 8+ דמויות</h3><p style="font-size:.8rem;color:#888">Suno V5</p></div>
+  <div class="nx"><span class="p p-m">בינונית</span><h3>עטיפות ג׳וקבוקס</h3><p style="font-size:.8rem;color:#888">cover art לשירים חסרים</p></div>
+  <div class="nx"><span class="p p-m">בינונית</span><h3>לוח מורים/הורים</h3><p style="font-size:.8rem;color:#888">הרחבה + חיבור לנתונים</p></div>
+  <div class="nx"><span class="p p-m">בינונית</span><h3>מאסטר ביט — עוד עבודה</h3><p style="font-size:.8rem;color:#888">עדיין לא מספיק ״עתיק חסר גיל״</p></div>
+  <div class="nx"><span class="p p-m">בינונית</span><h3>סוגי באגים שונים</h3><p style="font-size:.8rem;color:#888">צבעים והתמחויות שונות</p></div>
+</div>
+
+</div>
+
+<div class="footer">
+  <div style="color:#6C5CE7;font-weight:700;font-size:1.2rem">&#x1F977; נינג׳ה מקלדת</div>
+  <p>איטרציה 17 — סקירה סופית — 1 באפריל 2026</p>
+  <p style="color:#444;font-size:.8rem">Claude Opus 4.6 | 26 hero images | 1144 tests | 0 TS errors</p>
+</div>
+
+</body>
+</html>
