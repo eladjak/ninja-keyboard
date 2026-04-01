@@ -31,6 +31,10 @@ export interface CharacterConfig {
   heroImage?: string
   /** Alternate hero image for transformed/powered-up form (e.g. Kai fire warrior) */
   fireHeroImage?: string
+  /** Evil/true form hero image (e.g. Virus after reveal) */
+  evilHeroImage?: string
+  /** Mid-transformation hero image (e.g. Virus mask cracking) */
+  revealHeroImage?: string
   /**
    * Path to the expression sheet image (reference grid of multiple expressions).
    * These are multi-panel reference sheets, not individual mood images.
@@ -361,6 +365,8 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
     nameHe: 'וירוס',
     image: '/images/characters/model-sheets/virus-dual-form.jpg',
     heroImage: '/images/characters/heroes/virus-hero.jpg',
+    evilHeroImage: '/images/characters/heroes/virus-evil-hero.jpg',
+    revealHeroImage: '/images/characters/heroes/virus-reveal-hero.jpg',
     expressionSheet: '/images/characters/expressions/virus-expressions.jpg',
     glowColor: '#D63031',
     soundProfile: {
