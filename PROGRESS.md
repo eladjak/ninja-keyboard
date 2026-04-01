@@ -8,13 +8,23 @@
 Iteration 17 COMMITTED (00326d8 + d039edb). 26 hero images (23 chars + 3 alternate forms). ALL 11 badges have images. 3 new game-feel components. V2/V3 art per user feedback. TypeScript: 0 errors, Tests: 1144/1144.
 
 ## EXACT CONTINUATION PLAN (for next session)
-1. **Chrome review remaining 15 pages**: shortcuts, speed-test, story, onboarding, placement, certificates, statistics, tips, teacher, parent-report, accessibility, login, register, join, student-setup
-2. **Voice generation**: 9 characters without voices (ElevenLabs)
-3. **Theme songs**: 8+ characters without songs (Suno V5)
-4. **Jukebox cover art**: generate missing track covers
-5. **Teacher/parent dashboard**: expand and connect to real data
-6. **3D POC**: Continue Ki 3D model (React Three Fiber, files started)
-7. **More game-feel**: power-up visuals, achievement toast improvements
+### IMMEDIATE — Art Redesigns per User Feedback (Apr 1 2026 Round 2)
+1. **Ki's dad RENAME** — Currently "Raz" same as Phantom causing confusion. RENAME to "Alon" (אלון) everywhere: config, visual bible, story chapters. Phantom stays as separate character.
+2. **Phantom 2 versions** — with cloak (current hooded V2) + WITHOUT cloak (revealed face). Save as phantom-hero.jpg + phantom-revealed-hero.jpg
+3. **Pixel V3** — Too human in V2! Make more ROBOTIC while staying feminine. Balance: feminine robot, not human girl.
+4. **Rex V2** — Slightly more mature
+5. **Block V3** — More mature, MORE GRAY (concrete block gray), more threatening
+6. **Glitch VARIATIONS** — Current design approved! Generate 2-3 more forms/variations
+7. **Blaze V2 — APPROVED** keep as is!
+
+### NEXT PRIORITY
+8. Chrome review remaining 15 pages
+9. Voice generation: 9 characters (ElevenLabs)
+10. Theme songs: 8+ characters (Suno V5)
+11. Jukebox cover art
+12. Teacher/parent dashboard
+13. 3D POC: Ki model (React Three Fiber, files started)
+14. More game-feel: power-up visuals
 
 ## KEY RULES (from user feedback)
 - ALL character art MUST be CHIBI style (big head, small body, kid-friendly)
