@@ -717,7 +717,7 @@
         "outfit": "ghostly gray-white ninja garb with translucent/fading edges, Yemenite geometric patterns woven into fabric as silver embroidery",
         "accessories": "phantom mask (half-face), ancient Yemenite silver pendant, shadow daggers",
         "colorPalette": ["#78909C", "#B0BEC5", "#37474F", "#C0C0C0"],
-        "specialNotes": "CULTURAL SENSITIVITY: Phantom is of Yemenite-Jewish heritage. Treat with historical respect and pride. Reference real Yemenite-Jewish traditions: song, craft, ancient wisdom. His heritage is a source of STRENGTH and PRIDE, not exoticism. Geometric Yemenite patterns and earth tones in design. He was Sensei Zen's most talented student who fled in shame after a team competition failure. NOT Ki's dad -- Phantom and Raz are TWO SEPARATE characters from different generations. WPM: 60-80 (nightmare difficulty)."
+        "specialNotes": "CULTURAL SENSITIVITY: Phantom is of Yemenite-Jewish heritage. Treat with historical respect and pride. Reference real Yemenite-Jewish traditions: song, craft, ancient wisdom. His heritage is a source of STRENGTH and PRIDE, not exoticism. Geometric Yemenite patterns and earth tones in design. He was Sensei Zen's most talented student who fled in shame after a team competition failure. NOT Ki's dad -- Phantom and Alon (Ki's dad) are TWO SEPARATE characters from different generations. WPM: 60-80 (nightmare difficulty)."
       },
       "mustKeep": [
         "warm brown skin (Yemenite heritage)",
@@ -739,9 +739,9 @@
       "version": "V1",
       "pageAssignment": "Unlocked after beating Blaze 3x, secret rival"
     },
-    "raz": {
-      "name": "רז קודן",
-      "nameEn": "Raz Koden",
+    "alon": {
+      "name": "אלון קודן",
+      "nameEn": "Alon Koden",
       "role": "Ki's Father / Lost Hero in the Deep Code",
       "tier": "Story Character (absent/cryptic)",
       "gender": "male",
@@ -755,7 +755,7 @@
         "outfit": "ninja-coder hybrid -- practical dark clothing (charcoal/navy) with glowing digital blue code lines running along seams, utility vest with pockets for tools and scrolls",
         "accessories": "dad's keyboard (the same one Ki now carries, but complete/uncracked), Bit Map scroll holder on back, golden code pendant (family heirloom), digital blue fingerless gloves",
         "colorPalette": ["#5D4037", "#1565C0", "#FFD700", "#37474F"],
-        "specialNotes": "Raz was Zen's most talented student in a DIFFERENT generation than Phantom. Disappeared when Ki was 4 years old -- entered the 'Deep Code' digital world to find Master Beat. Left behind 'Bit Map' puzzles for Ki to solve. His wife is Shir (שיר קודן). The empty chair labeled 'רז' in the dojo belongs to him. Appears in story as cryptic messages and holographic fragments before eventual rescue."
+        "specialNotes": "Alon was Zen's most talented student in a DIFFERENT generation than Phantom. Disappeared when Ki was 4 years old -- entered the 'Deep Code' digital world to find Master Beat. Left behind 'Bit Map' puzzles for Ki to solve. His wife is Shir (שיר קודן). The empty chair labeled 'אלון' in the dojo belongs to him. Appears in story as cryptic messages and holographic fragments before eventual rescue. IMPORTANT: Alon is NOT Phantom -- they are completely separate characters."
       },
       "mustKeep": [
         "resemblance to Ki (same hair color, similar eyes)",
@@ -796,16 +796,16 @@
         "hair": "long wavy dark brown, often in a loose braid or ponytail, warm chestnut highlights",
         "eyes": "warm hazel-brown, gentle and caring but with a hidden spark of determination",
         "outfit": "everyday casual Israeli clothing -- comfortable blouse/sweater in warm tones, modern but practical. Subtle keyboard-pattern embroidery on cuffs (nod to her ninja past)",
-        "accessories": "small golden code pendant (matching Raz's), reading glasses pushed up on head, old ninja headband kept in pocket (sentimental)",
+        "accessories": "small golden code pendant (matching Alon's), reading glasses pushed up on head, old ninja headband kept in pocket (sentimental)",
         "colorPalette": ["#8D6E63", "#FFAB91", "#FFF3E0", "#A1887F"],
-        "specialNotes": "Shir was a keyboard ninja herself before settling down to raise Ki. She retired from active typing battles after Raz disappeared but still has incredible skills. She hides her worry about Raz behind warmth and strength. She knows more about the Deep Code than she lets on. Everyday clothing -- she is NOT in ninja gear normally, but can suit up when needed."
+        "specialNotes": "Shir was a keyboard ninja herself before settling down to raise Ki. She retired from active typing battles after Alon disappeared but still has incredible skills. She hides her worry about Alon behind warmth and strength. She knows more about the Deep Code than she lets on. Everyday clothing -- she is NOT in ninja gear normally, but can suit up when needed."
       },
       "mustKeep": [
         "warm olive skin (Israeli woman)",
         "long dark brown hair",
         "warm/caring expression base",
         "everyday practical clothing (not ninja gear normally)",
-        "golden code pendant (matching Raz's)",
+        "golden code pendant (matching Alon's)",
         "hidden strength beneath warmth"
       ],
       "canChange": [
@@ -815,11 +815,11 @@
         "pendant glow (activates during story moments)",
         "reading glasses position"
       ],
-      "narrativeArc": "Supportive mother raising Ki alone after Raz's disappearance. Knows more than she reveals. In critical story moments, suits up as a keyboard ninja to help. Emotional reunion with Raz.",
+      "narrativeArc": "Supportive mother raising Ki alone after Alon's disappearance. Knows more than she reveals. In critical story moments, suits up as a keyboard ninja to help. Emotional reunion with Alon.",
       "family": {
-        "husband": "raz",
+        "husband": "alon",
         "son": "ki",
-        "relation_to_dojo": "Former student of Sensei Zen (different era from Raz)"
+        "relation_to_dojo": "Former student of Sensei Zen (different era from Alon)"
       },
       "latestApproved": null,
       "version": "NEEDS GENERATION",
@@ -843,7 +843,7 @@
         "accessories": "ancient bamboo staff topped with a FLOATING crystal (the 'Beat Crystal') that orbits the staff tip, not touching it -- pure energy connection. Prayer beads made of tiny floating keyboard keys that orbit his neck. Ancient scroll belt with scrolls that unroll and show living text.",
         "aura": "ALWAYS surrounded by a subtle golden-blue aura of floating code particles, ancient symbols, and tiny keyboard glyphs. The air around him shimmers like a heat mirage. Reality slightly warps near him.",
         "colorPalette": ["#1A237E", "#FFD700", "#00BCD4", "#4E342E", "#B0BEC5"],
-        "specialNotes": "Master Beat is NOT just a turtle -- he is the PRIMORDIAL DIGITAL ENTITY who first bridged the physical and digital worlds. He taught the first generation of typing masters. He didn't disappear -- he MERGED with the Deep Code, becoming part of the digital infrastructure itself. Raz went searching for him. When found in Chapter 6, he partially materializes -- never fully solid, always flickering between forms. He IS the typing world. His body IS code. He provides the ultimate key to defeating the final villain because the villain is corrupting what Master Beat created."
+        "specialNotes": "Master Beat is NOT just a turtle -- he is the PRIMORDIAL DIGITAL ENTITY who first bridged the physical and digital worlds. He taught the first generation of typing masters. He didn't disappear -- he MERGED with the Deep Code, becoming part of the digital infrastructure itself. Alon (Ki's father) went searching for him. When found in Chapter 6, he partially materializes -- never fully solid, always flickering between forms. He IS the typing world. His body IS code. He provides the ultimate key to defeating the final villain because the villain is corrupting what Master Beat created."
       },
       "mustKeep": [
         "TRANSCENDENT turtle entity -- semi-ethereal, partly translucent",
@@ -863,10 +863,10 @@
         "meditation pose variations",
         "digital code aura (when channeling power)"
       ],
-      "narrativeArc": "Legendary founder of the first typing dojo. Taught Sensei Zen. Disappeared into the Deep Code. Raz went to find him. When rescued/found in Chapter 6, provides ancient knowledge to defeat the final villain.",
+      "narrativeArc": "Legendary founder of the first typing dojo. Taught Sensei Zen. Disappeared into the Deep Code. Alon went to find him. When rescued/found in Chapter 6, provides ancient knowledge to defeat the final villain.",
       "relationships": {
         "student": "sensei-zen",
-        "seeker": "raz",
+        "seeker": "alon",
         "legacy": "All typing dojos trace back to Master Beat"
       },
       "latestApproved": null,

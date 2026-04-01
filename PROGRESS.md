@@ -5,24 +5,19 @@
 ## Sprint: Iteration 17 — Art Completion + Game-Feel Effects
 
 ## Current State
-Iteration 17 COMMITTED (00326d8 + d039edb). 26 hero images (23 chars + 3 alternate forms). ALL 11 badges have images. 3 new game-feel components. V2/V3 art per user feedback. TypeScript: 0 errors, Tests: 1144/1144.
+Iteration 17 COMPLETE. 33 hero images (23 base + 10 alternate forms). ALL 11 badges. 3 new game-feel components. Multiple V2/V3 redesigns per feedback. Ki's dad renamed Raz→Alon. TypeScript: 0 errors, Tests: 1144/1144. Commits: 00326d8, d039edb, b8ea23d, c32cfcd, 4e54f40, 6002749, ebbf4a8, b5ba36e.
 
 ## EXACT CONTINUATION PLAN (for next session)
-### IMMEDIATE — Art Redesigns per User Feedback (Apr 1 2026 Round 2)
-1. **Ki's dad RENAME** — Currently "Raz" same as Phantom causing confusion. RENAME to "Alon" (אלון) everywhere: config, visual bible, story chapters. Phantom stays as separate character.
-2. **Phantom 2 versions** — with cloak (current hooded V2) + WITHOUT cloak (revealed face). Save as phantom-hero.jpg + phantom-revealed-hero.jpg
-3. **Pixel V3** — Too human in V2! Make more ROBOTIC while staying feminine. Balance: feminine robot, not human girl.
-4. **Rex V2** — Slightly more mature
-5. **Block V3** — More mature, MORE GRAY (concrete block gray), more threatening
-6. **Glitch 5 FORMS (story arc):**
-   - a) **Confused** — first appearance, disoriented, unsure of herself
-   - b) **Current** (existing hero) — established, confident hacker girl
-   - c) **Corrupted/Evil** — taken by Virus, dark corrupted version fighting against friends
-   - d) **Broken/Shattered** — after sacrifice, fragmented, pieces floating apart
-   - e) **Whole/Complete** — final redeemed form, stronger than ever, at peace
-7. **Keres+Virus FUSION** — Variation of Keres merged/empowered by Virus
-8. **Virus ANCIENT form** — The primordial virus, sworn ancient enemy of Master Beat (prehistoric/cosmic evil)
-9. **Blaze V2 — APPROVED** keep as is!
+### ART ROUND 2 — ALL DONE
+- ✅ Ki's dad RENAMED: Raz → Alon (אלון) in visual bible. Phantom stays separate.
+- ✅ Phantom 2 versions: with cloak + without cloak (revealed face)
+- ✅ Pixel V3: more robotic while staying feminine
+- ✅ Rex V2: slightly more mature
+- ✅ Block V3: gray concrete + orange, more threatening
+- ✅ Glitch 5 forms: confused → current → corrupted → shattered → whole
+- ✅ Keres+Virus fusion: bug king merged with virus power
+- ✅ Virus ancient form: primordial enemy of Master Beat
+- ✅ Blaze V2: APPROVED, kept as is
 
 ### NEXT PRIORITY
 8. Chrome review remaining 15 pages
