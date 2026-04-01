@@ -37,6 +37,8 @@ import { LESSONS } from '@/lib/content/lessons'
 import { BADGE_DEFINITIONS } from '@/lib/gamification/badge-definitions'
 import { useSoundEffect, useNavigateSound } from '@/hooks/use-sound-effect'
 import { CharacterIdleWrapper } from '@/components/characters/character-idle-wrapper'
+import { useLevelUp } from '@/hooks/use-level-up'
+import { LevelUpCelebration } from '@/components/effects/level-up-celebration'
 
 function getNextLesson(
   completedLessons: Record<string, unknown>,
@@ -155,6 +157,9 @@ export function HomeDashboard() {
     .filter(Boolean)
   const progress = levelProgress()
 
+  // Level-up celebration
+  const { justLeveledUp, clearLevelUp } = useLevelUp(totalXp)
+
   // Hydration-safe XP progress: start at 0 on server & initial client render,
   // then animate to real value after mount to avoid hydration mismatch.
   const [hydratedProgress, setHydratedProgress] = useState(0)
@@ -182,6 +187,16 @@ export function HomeDashboard() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-6 p-4">
+      {/* Level-up celebration overlay */}
+      {justLeveledUp && (
+        <LevelUpCelebration
+          level={level}
+          characterImage="/images/characters/heroes/ki-hero.jpg"
+          characterName="קיי"
+          onDismiss={clearLevelUp}
+        />
+      )}
+
       {/* Hero Banner */}
       <motion.div
         initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }}

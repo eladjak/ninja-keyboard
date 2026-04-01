@@ -1,5 +1,5 @@
-import { NinjaLoader } from '@/components/feedback/ninja-loader'
+import { CharacterLoading } from '@/components/effects/character-loading'
 
 export default function AppLoading() {
-  return <NinjaLoader message="טוען..." />
+  return <CharacterLoading />
 }

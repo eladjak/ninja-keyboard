@@ -29,6 +29,8 @@ export interface CharacterConfig {
    * Present for the 7 main characters that have a dedicated hero image in public/images/characters/heroes/.
    */
   heroImage?: string
+  /** Alternate hero image for transformed/powered-up form (e.g. Kai fire warrior) */
+  fireHeroImage?: string
   /**
    * Path to the expression sheet image (reference grid of multiple expressions).
    * These are multi-panel reference sheets, not individual mood images.
@@ -160,6 +162,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
     nameHe: 'קאי',
     image: '/images/characters/model-sheets/kai-boy.jpg',
     heroImage: '/images/characters/heroes/kai-hero.jpg',
+    fireHeroImage: '/images/characters/heroes/kai-fire-hero.jpg',
     expressionSheet: '/images/characters/expressions/kai-expressions.jpg',
     glowColor: '#FDCB6E',
     soundProfile: {
@@ -247,6 +250,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
   bug: {
     nameHe: 'באג',
     image: '/images/characters/model-sheets/bug-creature.jpg',
+    heroImage: '/images/characters/heroes/bug-hero.jpg',
     expressionSheet: '/images/characters/expressions/bug-expressions.jpg',
     glowColor: '#D63031',
     soundProfile: {

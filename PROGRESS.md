@@ -1,11 +1,59 @@
 # Ninja Keyboard - Progress
 
 ## Status: Active
-## Last Updated: 2026-03-31
-## Sprint: Iteration 16 — Massive Feedback Integration + Game-Feel + Art
+## Last Updated: 2026-04-01
+## Sprint: Iteration 17 — Art Completion + Game-Feel Effects
 
 ## Current State
-Jukebox track unlocking as achievements DONE. New hook `use-track-unlocks.ts` evaluates unlock conditions against live store state, auto-unlocks eligible tracks, shows progress bars and celebration animation. TypeScript: 0 errors, Build: passing, Tests: 1115/1115.
+Building on Iteration 16 (c93459e). ALL 23 chibi heroes done. ALL 11 badges have images. 3 new game-feel components. TypeScript: 0 errors, Tests: 1144/1144 (up from 1115).
+
+## EXACT CONTINUATION PLAN (for next session)
+1. **Chrome review remaining 15 pages**: shortcuts, speed-test, story, onboarding, placement, certificates, statistics, tips, teacher, parent-report, accessibility, login, register, join, student-setup
+2. **Voice generation**: 9 characters without voices (ElevenLabs)
+3. **Theme songs**: 8+ characters without songs (Suno V5)
+4. **Jukebox cover art**: generate missing track covers
+5. **Teacher/parent dashboard**: expand and connect to real data
+6. **3D POC**: Continue Ki 3D model (React Three Fiber, files started)
+7. **More game-feel**: power-up visuals, achievement toast improvements
+
+## KEY RULES (from user feedback)
+- ALL character art MUST be CHIBI style (big head, small body, kid-friendly)
+- Pixel V3 was great (keep personality), Mika V3 has tech elements (keep)
+- Story dialog should sound like natural Israeli Hebrew (slang, unique voices)
+- App must FEEL like a real game (particles, combos, celebrations)
+- User reviews MUST be HTML in browser (never terminal text)
+- Follow iteration protocol: read context → work → verify → document → review
+
+## What Was Done (Iteration 17 — Apr 1, 2026)
+
+### Art Completion — 23/23 Heroes
+- ✅ Generated 7 remaining chibi heroes: Kai, Phantom, Master Beat, Zara, Keres, Block, Lens
+- ✅ Generated Bug hero (was missing heroImage in config)
+- ✅ ALL 23 characters now have heroImage in CHARACTER_CONFIGS
+- ✅ All heroes in consistent chibi style (big head, small body, kid-friendly)
+
+### Badge Art Completion — 11/11
+- ✅ Generated "Patient" badge (meditation ninja)
+- ✅ Generated "Focused" badge (brain concentration ninja)
+- ✅ ALL 11 badges now have unique JPG art
+
+### Game-Feel Effects (3 new components)
+- ✅ **LevelUpCelebration** — fullscreen overlay with scale-in level number, 16 CSS star rays, character celebration, auto-dismiss (3s)
+- ✅ **CharacterLoading** — random ninja hero + rotating Hebrew messages + bounce animation
+- ✅ **useLevelUp hook** — detects XP→level transitions, 15 unit tests
+- ✅ Level-up celebration integrated into Home Dashboard
+- ✅ App loading screen upgraded to CharacterLoading (was basic SVG NinjaLoader)
+
+### Story Page Upgrade
+- ✅ Sensei Zen as narrator companion (180px, gold glow)
+- ✅ Character avatars use heroImage instead of model-sheet images
+
+### Tests & Quality
+- ✅ TypeScript: 0 errors
+- ✅ 1144 tests passing (29 new from useLevelUp hook + test)
+- ✅ Loading test fixed (dir=rtl for CharacterLoading)
+
+---
 
 ## What Was Done (Iteration 16 — Mar 30, 2026)
 

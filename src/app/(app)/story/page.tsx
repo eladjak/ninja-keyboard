@@ -7,6 +7,7 @@ import { BookOpen, Lock, Play, ChevronDown, ChevronUp } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { CHARACTER_CONFIGS } from '@/lib/story/character-config'
+import { CharacterIdleWrapper } from '@/components/characters/character-idle-wrapper'
 import { useStoryStore } from '@/stores/story-store'
 import { getAllChapterBeats } from '@/hooks/use-story-trigger'
 import { StoryPlayer } from '@/components/story/story-player'
@@ -105,6 +106,19 @@ export default function StoryPage() {
         </div>
       </div>
 
+      {/* Sensei Zen narrator companion */}
+      <div className="flex justify-center">
+        <CharacterIdleWrapper character="sensei" intensity="subtle" entryAnimation>
+          <Image
+            src="/images/characters/heroes/sensei-zen-hero.jpg"
+            alt="סנסיי זן - מספר הסיפורים"
+            width={180}
+            height={180}
+            className="rounded-2xl object-cover drop-shadow-[0_0_24px_rgba(250,211,144,0.4)]"
+          />
+        </CharacterIdleWrapper>
+      </div>
+
       {/* Chapters */}
       <div className="flex flex-col gap-4">
         {chapters.map(({ chapter, titleHe, beats }) => {
@@ -196,7 +210,7 @@ export default function StoryPage() {
                                     )}
                                   >
                                     <Image
-                                      src={config.image}
+                                      src={config.heroImage ?? config.image}
                                       alt={config.nameHe}
                                       fill
                                       className="object-cover"

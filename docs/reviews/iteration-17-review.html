@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>סקירת איטרציה 17 — נינג׳ה מקלדת</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Heebo',sans-serif;background:#0d0b1a;color:#e0e0e0;line-height:1.7;padding:0}
+.hero{background:linear-gradient(135deg,#1a1530 0%,#0d0b1a 50%,#0a1628 100%);padding:3rem 2rem;text-align:center;border-bottom:2px solid #6C5CE730}
+.hero h1{font-size:3rem;color:#6C5CE7;margin-bottom:.5rem;text-shadow:0 0 30px #6C5CE740}
+.hero .sub{color:#888;font-size:1.2rem}
+.hero .date{color:#00B894;font-size:.9rem;margin-top:.5rem}
+.container{max-width:1200px;margin:0 auto;padding:0 2rem 3rem}
+h2{font-size:1.6rem;color:#6C5CE7;margin:2.5rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+h2::after{content:'';flex:1;height:1px;background:linear-gradient(to left,transparent,#6C5CE740)}
+h3{color:#00B894;margin:1.5rem 0 .8rem;font-size:1.1rem}
+.mega-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin:2rem 0}
+.mega-stat{background:linear-gradient(135deg,#1a1530,#0d0b1a);border:1px solid #6C5CE720;border-radius:16px;padding:1.5rem;text-align:center;transition:transform .2s}
+.mega-stat:hover{transform:scale(1.05)}
+.mega-stat .num{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#6C5CE7,#00B894);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.mega-stat .label{color:#888;font-size:.8rem;margin-top:.3rem}
+.section-card{background:#1a1530;border-radius:16px;padding:1.5rem 2rem;margin:1rem 0;border:1px solid #ffffff08}
+.task-row{display:flex;align-items:center;gap:.8rem;padding:.5rem 0;border-bottom:1px solid #ffffff06}
+.task-row:last-child{border:none}
+.task-icon{font-size:1.2rem;min-width:28px;text-align:center}
+.task-text{flex:1}
+.badge-done{font-size:.7rem;padding:2px 8px;border-radius:4px;font-weight:700;background:#00B89420;color:#00B894}
+.badge-new{font-size:.7rem;padding:2px 8px;border-radius:4px;font-weight:700;background:#6C5CE720;color:#6C5CE7}
+.art-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:1rem;margin:1rem 0}
+.art-item{text-align:center}
+.art-item img{width:130px;height:130px;object-fit:contain;border-radius:12px;background:#0a0818;border:2px solid #6C5CE720;transition:transform .2s}
+.art-item img:hover{transform:scale(1.1)}
+.art-item .name{font-size:.75rem;color:#aaa;margin-top:.3rem}
+.code-block{background:#0a0818;border:1px solid #ffffff10;border-radius:12px;padding:1rem 1.5rem;margin:.5rem 0;font-family:monospace;font-size:.85rem;color:#00B894;overflow-x:auto;direction:ltr;text-align:left}
+.gamefeel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1rem 0}
+.gamefeel-card{background:#0d0b1a;border-radius:12px;padding:1.2rem;border:1px solid #ffffff10;text-align:center}
+.gamefeel-card .icon{font-size:2rem;margin-bottom:.5rem}
+.gamefeel-card .title{font-weight:700;color:#6C5CE7;margin-bottom:.3rem}
+.gamefeel-card .desc{font-size:.85rem;color:#888}
+.next-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1rem 0}
+.next-card{background:#1a1530;border-radius:12px;padding:1.2rem;border:1px solid #ffffff08}
+.next-card .priority{font-size:.7rem;padding:2px 8px;border-radius:4px;font-weight:700}
+.priority-high{background:#ff6b6b20;color:#ff6b6b}
+.priority-med{background:#F9CA2420;color:#F9CA24}
+.footer{text-align:center;padding:2rem;color:#555;border-top:1px solid #ffffff10;margin-top:2rem}
+.footer .brand{color:#6C5CE7;font-size:1.2rem;font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>&#x1F525; סקירת איטרציה 17</h1>
+  <div class="sub">נינג׳ה מקלדת — השלמת אמנות + אפקטי משחק</div>
+  <div class="date">1 באפריל 2026 | סשן המשך</div>
+</div>
+
+<div class="container">
+
+<div class="mega-stats">
+  <div class="mega-stat"><div class="num">23/23</div><div class="label">גיבורי צ׳יבי</div></div>
+  <div class="mega-stat"><div class="num">11/11</div><div class="label">תמונות תגים</div></div>
+  <div class="mega-stat"><div class="num">0</div><div class="label">שגיאות TypeScript</div></div>
+  <div class="mega-stat"><div class="num">1144</div><div class="label">טסטים עוברים</div></div>
+  <div class="mega-stat"><div class="num">3</div><div class="label">קומפוננטות חדשות</div></div>
+  <div class="mega-stat"><div class="num">1</div><div class="label">hook חדש</div></div>
+</div>
+
+<h2>&#x1F3A8; אמנות — 8 גיבורי צ׳יבי חדשים</h2>
+<p>כל 23 הדמויות כוללות עכשיו hero image בסגנון צ׳יבי עקבי (ראש גדול, גוף קטן, ידידותי לילדים)</p>
+
+<div class="art-grid">
+  <div class="art-item"><img src="../../public/images/characters/heroes/kai-hero.jpg" alt="קאי"><div class="name">קאי (חדש!)</div></div>
+  <div class="art-item"><img src="../../public/images/characters/heroes/phantom-hero.jpg" alt="פאנטום"><div class="name">פאנטום (חדש!)</div></div>
+  <div class="art-item"><img src="../../public/images/characters/heroes/masterbeat-hero.jpg" alt="מאסטר ביט"><div class="name">מאסטר ביט (חדש!)</div></div>
+  <div class="art-item"><img src="../../public/images/characters/heroes/zara-hero.jpg" alt="זארה"><div class="name">זארה (חדש!)</div></div>
+  <div class="art-item"><img src="../../public/images/characters/heroes/keres-hero.jpg" alt="קרס"><div class="name">קרס (חדש!)</div></div>
+  <div class="art-item"><img src="../../public/images/characters/heroes/block-hero.jpg" alt="בלוק"><div class="name">בלוק (חדש!)</div></div>
+  <div class="art-item"><img src="../../public/images/characters/heroes/lens-hero.jpg" alt="לאנס"><div class="name">לאנס (חדש!)</div></div>
+  <div class="art-item"><img src="../../public/images/characters/heroes/bug-hero.jpg" alt="באג"><div class="name">באג (חדש!)</div></div>
+</div>
+
+<h2>&#x1F3AE; אפקטי Game-Feel חדשים</h2>
+<div class="gamefeel-grid">
+  <div class="gamefeel-card">
+    <div class="icon">&#x1F389;</div>
+    <div class="title">חגיגת Level-Up</div>
+    <div class="desc">אוברליי מסך מלא עם מספר רמה מונפש, כוכבים, ודמות חוגגת. נסגר אוטומטית אחרי 3 שניות.</div>
+  </div>
+  <div class="gamefeel-card">
+    <div class="icon">&#x1F977;</div>
+    <div class="title">טעינה עם דמויות</div>
+    <div class="desc">מסך טעינה עם דמות נינג׳ה אקראית, הודעות עבריות מתחלפות, ואנימציית bounce.</div>
+  </div>
+  <div class="gamefeel-card">
+    <div class="icon">&#x1F4CA;</div>
+    <div class="title">זיהוי Level-Up</div>
+    <div class="desc">Hook חדש (useLevelUp) שמזהה מעבר רמה מ-XP חי ומפעיל את החגיגה אוטומטית.</div>
+  </div>
+  <div class="gamefeel-card">
+    <div class="icon">&#x1F4D6;</div>
+    <div class="title">עמוד סיפור משודרג</div>
+    <div class="desc">סנסיי זן כמלווה, אווטארי hero image בביטים (במקום model-sheets).</div>
+  </div>
+</div>
+
+<h2>&#x2705; סיכום משימות</h2>
+<div class="section-card">
+  <div class="task-row"><span class="task-icon">&#x2705;</span><span class="task-text">יצירת 7 גיבורי צ׳יבי: Phantom, Master Beat, Kai, Zara, Keres, Block, Lens</span><span class="badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">&#x2705;</span><span class="task-text">יצירת גיבור צ׳יבי ל-Bug (חסר heroImage)</span><span class="badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">&#x2705;</span><span class="task-text">23/23 דמויות עם heroImage ב-CHARACTER_CONFIGS</span><span class="badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">&#x2705;</span><span class="task-text">יצירת 2 תמונות תג חסרות (patient, focused)</span><span class="badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">&#x2705;</span><span class="task-text">11/11 תגים עם תמונות</span><span class="badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">&#x2705;</span><span class="task-text">קומפוננטת LevelUpCelebration (מסך מלא, כוכבים, auto-dismiss)</span><span class="badge-new">חדש</span></div>
+  <div class="task-row"><span class="task-icon">&#x2705;</span><span class="task-text">קומפוננטת CharacterLoading (דמות אקראית, הודעות עבריות)</span><span class="badge-new">חדש</span></div>
+  <div class="task-row"><span class="task-icon">&#x2705;</span><span class="task-text">Hook useLevelUp (זיהוי מעבר רמה, auto-clear)</span><span class="badge-new">חדש</span></div>
+  <div class="task-row"><span class="task-icon">&#x2705;</span><span class="task-text">שילוב Level-Up ב-Home Dashboard</span><span class="badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">&#x2705;</span><span class="task-text">שדרוג מסך טעינה ראשי ל-CharacterLoading</span><span class="badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">&#x2705;</span><span class="task-text">עמוד סיפור: סנסיי זן כמלווה + hero avatars</span><span class="badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">&#x2705;</span><span class="task-text">תיקון טסט loading-states (dir=rtl)</span><span class="badge-done">הושלם</span></div>
+  <div class="task-row"><span class="task-icon">&#x2705;</span><span class="task-text">TypeScript: 0 שגיאות, 1144 טסטים עוברים</span><span class="badge-done">הושלם</span></div>
+</div>
+
+<h2>&#x1F4C1; קבצים חדשים/שונים</h2>
+<div class="code-block">
+// New files
+src/components/effects/level-up-celebration.tsx   (8.9KB)
+src/components/effects/character-loading.tsx       (6.5KB)
+src/hooks/use-level-up.ts                          (2.8KB)
+src/hooks/use-level-up.test.ts                     (15 tests)
+
+// Modified files
+src/lib/story/character-config.ts         (+heroImage for bug)
+src/lib/gamification/badge-definitions.ts (+images for patient, focused)
+src/app/(app)/home/home-client.tsx        (+LevelUpCelebration integration)
+src/app/(app)/story/page.tsx              (+Sensei Zen companion, hero avatars)
+src/app/(app)/loading.tsx                 (CharacterLoading replaces NinjaLoader)
+
+// New images (8 heroes + 2 badges)
+public/images/characters/heroes/kai-hero.jpg
+public/images/characters/heroes/phantom-hero.jpg
+public/images/characters/heroes/masterbeat-hero.jpg
+public/images/characters/heroes/zara-hero.jpg
+public/images/characters/heroes/keres-hero.jpg
+public/images/characters/heroes/block-hero.jpg
+public/images/characters/heroes/lens-hero.jpg
+public/images/characters/heroes/bug-hero.jpg
+public/images/badges/badge-patient.jpg
+public/images/badges/badge-focused.jpg
+</div>
+
+<h2>&#x1F6A7; המשך — מה נשאר</h2>
+<div class="next-grid">
+  <div class="next-card">
+    <span class="priority priority-high">עדיפות גבוהה</span>
+    <h3>סקירת Chrome — 15 דפים נותרו</h3>
+    <p style="font-size:.85rem;color:#888">shortcuts, speed-test, story, onboarding, placement, certificates, statistics, tips, teacher, parent-report, accessibility, login, register, join, student-setup</p>
+  </div>
+  <div class="next-card">
+    <span class="priority priority-high">עדיפות גבוהה</span>
+    <h3>קולות דמויות — 9 דמויות</h3>
+    <p style="font-size:.85rem;color:#888">ElevenLabs Voice Design API — יצירת קולות ייחודיים לכל דמות</p>
+  </div>
+  <div class="next-card">
+    <span class="priority priority-med">עדיפות בינונית</span>
+    <h3>שירי נושא — 8+ דמויות</h3>
+    <p style="font-size:.85rem;color:#888">Suno V5 — יצירת שירי נושא ייחודיים לדמויות</p>
+  </div>
+  <div class="next-card">
+    <span class="priority priority-med">עדיפות בינונית</span>
+    <h3>עטיפות ג׳וקבוקס</h3>
+    <p style="font-size:.85rem;color:#888">יצירת עטיפות לשירים חסרי cover art</p>
+  </div>
+  <div class="next-card">
+    <span class="priority priority-med">עדיפות בינונית</span>
+    <h3>לוח מורים/הורים</h3>
+    <p style="font-size:.85rem;color:#888">הרחבת הדאשבורד וחיבור לנתונים אמיתיים</p>
+  </div>
+  <div class="next-card">
+    <span class="priority priority-med">עדיפות בינונית</span>
+    <h3>3D POC</h3>
+    <p style="font-size:.85rem;color:#888">מודל 3D של קיי — React Three Fiber (כבר התחלנו)</p>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  <div class="brand">&#x1F977; נינג׳ה מקלדת</div>
+  <p>איטרציה 17 — 1 באפריל 2026</p>
+  <p style="color:#444;font-size:.8rem">נוצר אוטומטית ע״י Claude Opus 4.6</p>
+</div>
+
+</body>
+</html>
