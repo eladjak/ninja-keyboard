@@ -5,7 +5,7 @@
 ## Sprint: Iteration 17d — Gallery, Configs, Art Fixes, Dojo Expansion
 
 ## Current State
-Iteration 17d session. In-app character gallery page created. Alon+Shir added to CHARACTER_CONFIGS. All variant image paths registered. Rex V4 (friendlier) + Shadow combat V2 (matching base) regenerated. Dojo expansion narrative (10 dojos) documented. TypeScript: 0 errors, Tests: 1144/1144. Commit: d82aa32.
+Iteration 17e. 6 NEW dojo masters created: Talia (deer/Nature), Dori (octopus/Art), Raam (eagle/Thunder), Laila (panther/Shadow), Shaked (owl/Data), Gumby (chameleon/Creation). ALL 10 dojos now have dedicated masters. 31 base characters, 42 total hero images. In-app gallery page. Rex V4 + Shadow combat V2 regenerated. TypeScript: 0 errors, Tests: 1144/1144. Commits: d82aa32, a432577, 6269509.
 
 ## EXACT CONTINUATION PLAN (for next session)
 ### GAME DEVELOPMENT PRIORITIES
@@ -21,11 +21,13 @@ Iteration 17d session. In-app character gallery page created. Alon+Shir added to
 10. Teacher/parent dashboard expansion
 11. 3D POC — waiting for GLB model upload (Tripo3D/Meshy)
 
-### ART — DONE (Round 4 feedback applied)
+### ART — DONE (Round 4 + 6 new dojo masters)
 - ✅ Shadow combat V2: regenerated to match base character (same cat features)
 - ✅ Rex V4: friendlier, more smiley version (warm sympathetic gamer dino)
-- ✅ Complete art gallery HTML with all 36 heroes
+- ✅ Complete art gallery HTML with all 36+ heroes
 - ✅ Dojo expansion narrative plan (10 dojos, Hebrew HTML)
+- ✅ 6 new dojo masters: Talia, Dori, Raam, Laila, Shaked, Gumby (all with hero images)
+- ✅ All 10 dojos have dedicated master characters — no orphan dojos!
 
 ### ART ROUND 3 (Apr 3, 2026) — ALL DONE
 - ✅ Rex V3: GREEN color + gamer elements (headset, controller) + creative (beret, paintbrush)
