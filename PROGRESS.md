@@ -5,9 +5,19 @@
 ## Sprint: Iteration 17 — Art Completion + Game-Feel Effects
 
 ## Current State
-Iteration 17 COMPLETE. 33 hero images (23 base + 10 alternate forms). ALL 11 badges. 3 new game-feel components. Multiple V2/V3 redesigns per feedback. Ki's dad renamed Raz→Alon. TypeScript: 0 errors, Tests: 1144/1144. Commits: 00326d8, d039edb, b8ea23d, c32cfcd, 4e54f40, 6002749, ebbf4a8, b5ba36e.
+Iteration 17 COMPLETE. 36 hero images (25 base + 11 alternate forms). ALL 11 badges. 3 new game-feel components. Multiple V2/V3 redesigns per feedback. Ki's dad renamed Raz→Alon. TypeScript: 0 errors, Tests: 1144/1144. Commits: 00326d8, d039edb, b8ea23d, c32cfcd, 4e54f40, 6002749, ebbf4a8, b5ba36e.
 
 ## EXACT CONTINUATION PLAN (for next session)
+### ART ROUND 3 (Apr 3, 2026)
+- ✅ Rex V3: GREEN color + gamer elements (headset, controller) + creative (beret, paintbrush)
+- ✅ Shadow combat mode: hood + face mask, dual daggers, fighting stance
+- ✅ Keres+Virus mega boss V2: MUCH bigger, muscular, intimidating
+- ✅ Barak V2: with pants matching Storm's outfit
+- ✅ Alon hero (Ki's dad): first image — ninja-coder, golden pendant, digital gloves
+- ✅ Shir hero (Ki's mom): first image — warm Israeli mom, braid, reading glasses, pendant
+- ✅ Gallery corrections noted: Phantom→mentor is Sensei Zen (not Mika!), Sakura→mentor for Yuki AND other girls
+- Future: battle poses for all characters in expression sheets
+
 ### ART ROUND 2 — ALL DONE
 - ✅ Ki's dad RENAMED: Raz → Alon (אלון) in visual bible. Phantom stays separate.
 - ✅ Phantom 2 versions: with cloak + without cloak (revealed face)
