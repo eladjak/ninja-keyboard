@@ -624,6 +624,132 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
       },
     },
   },
+
+  talia: {
+    nameHe: 'טליה',
+    image: '/images/characters/heroes/talia-hero.jpg',
+    heroImage: '/images/characters/heroes/talia-hero.jpg',
+    glowColor: '#7CDB8A',
+    soundProfile: {
+      oscillatorType: 'sine',
+      frequencyRange: [300, 500],
+    },
+    idleAnimation: {
+      y: [0, -2, 0],
+      rotate: [0, 0.5, 0],
+      transition: {
+        duration: 3.5,
+        repeat: INFINITE_REPEAT,
+        repeatType: 'reverse',
+        ease: 'easeInOut',
+      },
+    },
+  },
+
+  dori: {
+    nameHe: 'דורי',
+    image: '/images/characters/heroes/dori-hero.jpg',
+    heroImage: '/images/characters/heroes/dori-hero.jpg',
+    glowColor: '#D980FA',
+    soundProfile: {
+      oscillatorType: 'sine',
+      frequencyRange: [350, 600],
+    },
+    idleAnimation: {
+      y: [0, -4, 0],
+      rotate: [0, 2, 0],
+      transition: {
+        duration: 2.0,
+        repeat: INFINITE_REPEAT,
+        repeatType: 'reverse',
+        ease: 'easeInOut',
+      },
+    },
+  },
+
+  raam: {
+    nameHe: 'רעם',
+    image: '/images/characters/heroes/raam-hero.jpg',
+    heroImage: '/images/characters/heroes/raam-hero.jpg',
+    glowColor: '#00D4FF',
+    soundProfile: {
+      oscillatorType: 'square',
+      frequencyRange: [250, 500],
+    },
+    idleAnimation: {
+      y: [0, -3, 0],
+      rotate: [0, 1, 0],
+      transition: {
+        duration: 2.8,
+        repeat: INFINITE_REPEAT,
+        repeatType: 'reverse',
+        ease: 'easeInOut',
+      },
+    },
+  },
+
+  laila: {
+    nameHe: 'ליילה',
+    image: '/images/characters/heroes/laila-hero.jpg',
+    heroImage: '/images/characters/heroes/laila-hero.jpg',
+    glowColor: '#B388FF',
+    soundProfile: {
+      oscillatorType: 'triangle',
+      frequencyRange: [200, 400],
+    },
+    idleAnimation: {
+      y: [0, -2, 0],
+      rotate: [0, 0.5, 0],
+      transition: {
+        duration: 3.5,
+        repeat: INFINITE_REPEAT,
+        repeatType: 'reverse',
+        ease: 'easeInOut',
+      },
+    },
+  },
+
+  shaked: {
+    nameHe: 'שקד',
+    image: '/images/characters/heroes/shaked-hero.jpg',
+    heroImage: '/images/characters/heroes/shaked-hero.jpg',
+    glowColor: '#00E676',
+    soundProfile: {
+      oscillatorType: 'sine',
+      frequencyRange: [300, 550],
+    },
+    idleAnimation: {
+      y: [0, -2, 0],
+      rotate: [0, 1.5, 0],
+      transition: {
+        duration: 3.0,
+        repeat: INFINITE_REPEAT,
+        repeatType: 'reverse',
+        ease: 'easeInOut',
+      },
+    },
+  },
+
+  gumby: {
+    nameHe: 'גמבי',
+    image: '/images/characters/heroes/gumby-hero.jpg',
+    heroImage: '/images/characters/heroes/gumby-hero.jpg',
+    glowColor: '#FF6B6B',
+    soundProfile: {
+      oscillatorType: 'sawtooth',
+      frequencyRange: [350, 700],
+    },
+    idleAnimation: {
+      y: [0, -5, 0],
+      rotate: [0, 3, 0],
+      transition: {
+        duration: 1.5,
+        repeat: INFINITE_REPEAT,
+        repeatType: 'reverse',
+        ease: 'easeInOut',
+      },
+    },
+  },
 }
 
 /** Characters considered heroes (player allies) */
@@ -642,6 +768,12 @@ const HERO_CHARACTERS: CharacterName[] = [
   'sakura',
   'alon',
   'shir',
+  'talia',
+  'dori',
+  'raam',
+  'laila',
+  'shaked',
+  'gumby',
 ]
 
 /**

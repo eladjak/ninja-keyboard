@@ -44,6 +44,12 @@ const CHARACTER_DESCRIPTIONS: Record<CharacterName, string> = {
   phantom: 'התלמיד האבוד של סנסיי זן',
   alon: 'אבא של קי — נינג\'ה-קודר',
   shir: 'אמא של קי',
+  talia: 'אילת מנטורית — דוג\'ו הטבע',
+  dori: 'תמנון אמן — דוג\'ו האמנות',
+  raam: 'נשר רעמים — דוג\'ו הרעם',
+  laila: 'פנתרית הצללים — דוג\'ו הצללים',
+  shaked: 'ינשוף נתונים — דוג\'ו הנתונים',
+  gumby: 'זיקית גיימר — דוג\'ו היצירה',
 }
 
 // ─── Category Definitions ──────────────────────────────────────────────────
@@ -66,7 +72,7 @@ const CATEGORIES: CategoryDef[] = [
     labelHe: 'מנטורים',
     icon: Shield,
     color: '#FAD390',
-    characters: ['senseiZen', 'masterBeat', 'sakura'],
+    characters: ['senseiZen', 'masterBeat', 'sakura', 'talia', 'dori', 'raam', 'laila', 'shaked', 'gumby'],
   },
   {
     labelHe: 'יריבים',

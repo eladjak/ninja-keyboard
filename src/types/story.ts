@@ -25,6 +25,12 @@ export type CharacterName =
   | 'lens'
   | 'alon'
   | 'shir'
+  | 'talia'
+  | 'dori'
+  | 'raam'
+  | 'laila'
+  | 'shaked'
+  | 'gumby'
 
 /** Character emotional states for animations and expression */
 export type CharacterMood =
