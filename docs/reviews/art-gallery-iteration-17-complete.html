@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>גלריית אמנות — איטרציה 17 סופי — 36 גיבורים</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: #0d0b1a;
+    color: #e0e0e0;
+    min-height: 100vh;
+    direction: rtl;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1432 0%, #2d1f5e 50%, #1a1432 100%);
+    padding: 3rem 2rem;
+    text-align: center;
+    border-bottom: 3px solid #6C5CE7;
+  }
+  .header h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #6C5CE7, #00B894);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+  }
+  .header .subtitle {
+    font-size: 1.1rem;
+    color: #a29bfe;
+  }
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1.5rem;
+    background: rgba(108, 92, 231, 0.1);
+    border-bottom: 1px solid rgba(108, 92, 231, 0.3);
+    flex-wrap: wrap;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #6C5CE7;
+  }
+  .stat-label {
+    font-size: 0.85rem;
+    color: #999;
+  }
+  .section {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .section-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #6C5CE7;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(108, 92, 231, 0.3);
+  }
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+  .card {
+    background: #1a1432;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(108, 92, 231, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(108, 92, 231, 0.3);
+  }
+  .card img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+  }
+  .card-info {
+    padding: 0.75rem 1rem;
+  }
+  .card-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  .card-role {
+    font-size: 0.8rem;
+    color: #a29bfe;
+    margin-top: 0.2rem;
+  }
+  .card-mentor {
+    font-size: 0.75rem;
+    color: #00B894;
+    margin-top: 0.15rem;
+    font-weight: 300;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 0.3rem;
+    font-weight: 700;
+  }
+  .tag-hero { background: rgba(0, 184, 148, 0.2); color: #00B894; }
+  .tag-villain { background: rgba(214, 48, 49, 0.2); color: #D63031; }
+  .tag-rival { background: rgba(9, 132, 227, 0.2); color: #0984E3; }
+  .tag-mentor { background: rgba(250, 211, 144, 0.2); color: #FAD390; }
+  .tag-npc { background: rgba(162, 155, 254, 0.2); color: #a29bfe; }
+  .tag-variant { background: rgba(232, 67, 147, 0.2); color: #E84393; }
+  .tag-parent { background: rgba(192, 160, 96, 0.2); color: #C0A060; }
+
+  .variant-section {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(108, 92, 231, 0.15);
+  }
+  .variant-label {
+    font-size: 0.7rem;
+    color: #888;
+    margin-bottom: 0.3rem;
+  }
+  .variant-thumbs {
+    display: flex;
+    gap: 4px;
+  }
+  .variant-thumb {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    object-fit: cover;
+    border: 1px solid rgba(108, 92, 231, 0.3);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .variant-thumb:hover {
+    transform: scale(1.2);
+    border-color: #6C5CE7;
+  }
+
+  .corrections {
+    background: rgba(0, 184, 148, 0.08);
+    border: 1px solid rgba(0, 184, 148, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+  }
+  .corrections h3 {
+    color: #00B894;
+    margin-bottom: 0.75rem;
+  }
+  .corrections li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+    list-style: none;
+    padding-right: 1.5rem;
+    position: relative;
+  }
+  .corrections li::before {
+    content: '✅';
+    position: absolute;
+    right: 0;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(108, 92, 231, 0.2);
+    margin-top: 2rem;
+  }
+
+  /* Modal for large image view */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-overlay img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 12px;
+    box-shadow: 0 0 60px rgba(108, 92, 231, 0.5);
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🥷 גלריית אמנות — נינג'ה מקלדת</h1>
+  <div class="subtitle">איטרציה 17 סופי — כל 36 הגיבורים + וריאציות | 3 אפריל 2026</div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-number">25</div><div class="stat-label">דמויות בסיס</div></div>
+  <div class="stat"><div class="stat-number">11</div><div class="stat-label">צורות חלופיות</div></div>
+  <div class="stat"><div class="stat-number">36</div><div class="stat-label">סה"כ תמונות גיבורים</div></div>
+  <div class="stat"><div class="stat-number">11</div><div class="stat-label">תגים/אותות</div></div>
+  <div class="stat"><div class="stat-number">3</div><div class="stat-label">סבבי עיצוב</div></div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">🌟 גיבורים ראשיים</h2>
+  <div class="gallery">
+    <!-- Ki -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/ki-hero.jpg" alt="קי">
+      <div class="card-info">
+        <div class="card-name">קי (Ki)</div>
+        <div class="card-role">גיבור ראשי — דוג'ו הקוד</div>
+        <div class="card-mentor">מנטור: סנסיי זן</div>
+        <span class="tag tag-hero">גיבור</span>
+      </div>
+    </div>
+    <!-- Mika -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/mika-hero.jpg" alt="מיקה">
+      <div class="card-info">
+        <div class="card-name">מיקה (Mika)</div>
+        <div class="card-role">האקרית — קשרי רגשות + טכנולוגיה</div>
+        <div class="card-mentor">מנטורית: סאקורה (בהמשך)</div>
+        <span class="tag tag-hero">גיבורה</span>
+      </div>
+    </div>
+    <!-- Yuki -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/yuki-hero.jpg" alt="יוקי">
+      <div class="card-info">
+        <div class="card-name">יוקי (Yuki)</div>
+        <div class="card-role">מהירה כברק — דוג'ו הרוח</div>
+        <div class="card-mentor">מנטורית: סאקורה</div>
+        <span class="tag tag-hero">גיבורה</span>
+      </div>
+    </div>
+    <!-- Luna -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/luna-hero.jpg" alt="לונה">
+      <div class="card-info">
+        <div class="card-name">לונה (Luna)</div>
+        <div class="card-role">האמנית הביישנית — דוג'ו האמנות</div>
+        <span class="tag tag-hero">גיבורה</span>
+      </div>
+    </div>
+    <!-- Noa -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/noa-hero.jpg" alt="נועה">
+      <div class="card-info">
+        <div class="card-name">נועה (Noa)</div>
+        <div class="card-role">המרפאה — דוג'ו הטבע</div>
+        <span class="tag tag-hero">גיבורה</span>
+      </div>
+    </div>
+    <!-- Kai -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/kai-hero.jpg" alt="קאי">
+      <div class="card-info">
+        <div class="card-name">קאי (Kai)</div>
+        <div class="card-role">לוחם האש — דוג'ו האש</div>
+        <span class="tag tag-hero">גיבור</span>
+        <div class="variant-section">
+          <div class="variant-label">צורות נוספות:</div>
+          <div class="variant-thumbs">
+            <img class="variant-thumb" src="../../public/images/characters/heroes/kai-fire-hero.jpg" alt="קאי — לוחם אש" title="לוחם אש" onclick="event.stopPropagation(); showImageSrc(this.src)">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Pixel -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/pixel-hero.jpg" alt="פיקסל">
+      <div class="card-info">
+        <div class="card-name">פיקסל (Pixel)</div>
+        <div class="card-role">הרובוטית הנשית — AI + צילום</div>
+        <span class="tag tag-hero">גיבורה</span>
+      </div>
+    </div>
+    <!-- Rex -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/rex-hero.jpg" alt="רקס">
+      <div class="card-info">
+        <div class="card-name">רקס (Rex)</div>
+        <div class="card-role">דינוזאור גיימר יצירתי — ירוק!</div>
+        <span class="tag tag-hero">גיבור</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">🧙 מנטורים ודמויות מפתח</h2>
+  <div class="gallery">
+    <!-- Sensei Zen -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/sensei-zen-hero.jpg" alt="סנסיי זן">
+      <div class="card-info">
+        <div class="card-name">סנסיי זן (Sensei Zen)</div>
+        <div class="card-role">צב חכם — מנטור ראשי</div>
+        <div class="card-mentor">מנטור של: קי, פאנטום (תלמיד אבוד)</div>
+        <span class="tag tag-mentor">מנטור</span>
+      </div>
+    </div>
+    <!-- Master Beat -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/masterbeat-hero.jpg" alt="מאסטר ביט">
+      <div class="card-info">
+        <div class="card-name">מאסטר ביט (Master Beat)</div>
+        <div class="card-role">ישות טרנסצנדנטית — קוסמית</div>
+        <div class="card-mentor">אויב מושבע: וירוס הקדמון</div>
+        <span class="tag tag-mentor">מנטור עליון</span>
+      </div>
+    </div>
+    <!-- Sakura -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/sakura-hero.jpg" alt="סאקורה">
+      <div class="card-info">
+        <div class="card-name">סאקורה (Sakura)</div>
+        <div class="card-role">עגורת מנטורית — דוג'ו הרוח</div>
+        <div class="card-mentor">מנטורית של: יוקי, מיקה ובנות נוספות</div>
+        <span class="tag tag-mentor">מנטורית</span>
+      </div>
+    </div>
+    <!-- Phantom -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/phantom-hero.jpg" alt="פאנטום">
+      <div class="card-info">
+        <div class="card-name">פאנטום / ראז (Phantom)</div>
+        <div class="card-role">התלמיד האבוד של סנסיי זן</div>
+        <div class="card-mentor">מנטור: סנסיי זן (לא מיקה!)</div>
+        <span class="tag tag-hero">גיבור מסתורי</span>
+        <div class="variant-section">
+          <div class="variant-label">צורות נוספות:</div>
+          <div class="variant-thumbs">
+            <img class="variant-thumb" src="../../public/images/characters/heroes/phantom-revealed-hero.jpg" alt="פאנטום — ללא גלימה" title="פנים חשופות" onclick="event.stopPropagation(); showImageSrc(this.src)">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Alon -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/alon-hero.jpg" alt="אלון">
+      <div class="card-info">
+        <div class="card-name">אלון (Alon)</div>
+        <div class="card-role">אבא של קי — נינג'ה-קודר</div>
+        <div class="card-mentor">תליון זהב, כפפות דיגיטליות</div>
+        <span class="tag tag-parent">הורה</span>
+      </div>
+    </div>
+    <!-- Shir -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/shir-hero.jpg" alt="שיר">
+      <div class="card-info">
+        <div class="card-name">שיר (Shir)</div>
+        <div class="card-role">אמא של קי — אמא ישראלית חמה</div>
+        <div class="card-mentor">צמה, משקפי קריאה, תליון</div>
+        <span class="tag tag-parent">הורה</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">⚔️ יריבים</h2>
+  <div class="gallery">
+    <!-- Shadow -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/shadow-hero.jpg" alt="שאדו">
+      <div class="card-info">
+        <div class="card-name">שאדו (Shadow)</div>
+        <div class="card-role">חתול הצללים — יריב + חבר</div>
+        <span class="tag tag-rival">יריב</span>
+        <div class="variant-section">
+          <div class="variant-label">מצב קרב:</div>
+          <div class="variant-thumbs">
+            <img class="variant-thumb" src="../../public/images/characters/heroes/shadow-combat-hero.jpg" alt="שאדו — מצב קרב" title="קרב: כיסוי ראש + מסכה" onclick="event.stopPropagation(); showImageSrc(this.src)">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Storm -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/storm-hero.jpg" alt="סטורם">
+      <div class="card-info">
+        <div class="card-name">סטורם (Storm)</div>
+        <div class="card-role">שועלת ברקים — דוג'ו הרעם</div>
+        <span class="tag tag-rival">יריבה</span>
+      </div>
+    </div>
+    <!-- Barak -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/barak-hero.jpg" alt="ברק">
+      <div class="card-info">
+        <div class="card-name">ברק (Barak)</div>
+        <div class="card-role">שועל ברקים — אח של סטורם</div>
+        <div class="card-mentor">מכנסיים תואמים לסטורם</div>
+        <span class="tag tag-rival">יריב</span>
+      </div>
+    </div>
+    <!-- Blaze -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/blaze-hero.jpg" alt="בלייז">
+      <div class="card-info">
+        <div class="card-name">בלייז (Blaze)</div>
+        <div class="card-role">שומר דוג'ו האש — יריב של קאי</div>
+        <span class="tag tag-rival">יריב</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">💀 נבלים</h2>
+  <div class="gallery">
+    <!-- Bug -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/bug-hero.jpg" alt="באג">
+      <div class="card-info">
+        <div class="card-name">באג (Bug)</div>
+        <div class="card-role">חרק קוד זדוני — חייל באגים</div>
+        <span class="tag tag-villain">נבל</span>
+      </div>
+    </div>
+    <!-- Zara -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/zara-hero.jpg" alt="זארה">
+      <div class="card-info">
+        <div class="card-name">זארה (Zara)</div>
+        <div class="card-role">מלכת הבאגים</div>
+        <span class="tag tag-villain">נבלת</span>
+      </div>
+    </div>
+    <!-- Keres -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/keres-hero.jpg" alt="קרס">
+      <div class="card-info">
+        <div class="card-name">קרס (Keres)</div>
+        <div class="card-role">מלך הבאגים — איום מוחלט</div>
+        <span class="tag tag-villain">נבל</span>
+        <div class="variant-section">
+          <div class="variant-label">מיזוג עם וירוס:</div>
+          <div class="variant-thumbs">
+            <img class="variant-thumb" src="../../public/images/characters/heroes/keres-virus-fusion-hero.jpg" alt="קרס+וירוס" title="מגה בוס: קרס+וירוס" onclick="event.stopPropagation(); showImageSrc(this.src)">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Block -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/block-hero.jpg" alt="בלוק">
+      <div class="card-info">
+        <div class="card-name">בלוק (Block)</div>
+        <div class="card-role">חסימה יצירתית — אפור+כתום מאיים</div>
+        <span class="tag tag-villain">נבל</span>
+      </div>
+    </div>
+    <!-- Lens -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/lens-hero.jpg" alt="לאנס">
+      <div class="card-info">
+        <div class="card-name">לאנס (Lens)</div>
+        <div class="card-role">עין מצלמה — יריב של פיקסל</div>
+        <span class="tag tag-npc">NPC</span>
+      </div>
+    </div>
+    <!-- Virus -->
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/virus-hero.jpg" alt="וירוס">
+      <div class="card-info">
+        <div class="card-name">וירוס (Virus)</div>
+        <div class="card-role">הנבל הראשי — 4 צורות</div>
+        <span class="tag tag-villain">נבל ראשי</span>
+        <div class="variant-section">
+          <div class="variant-label">4 צורות:</div>
+          <div class="variant-thumbs">
+            <img class="variant-thumb" src="../../public/images/characters/heroes/virus-reveal-hero.jpg" alt="וירוס — חשיפה" title="חשיפה: המסכה נסדקת" onclick="event.stopPropagation(); showImageSrc(this.src)">
+            <img class="variant-thumb" src="../../public/images/characters/heroes/virus-evil-hero.jpg" alt="וירוס — רוע" title="הצורה האמיתית" onclick="event.stopPropagation(); showImageSrc(this.src)">
+            <img class="variant-thumb" src="../../public/images/characters/heroes/virus-ancient-hero.jpg" alt="וירוס — קדמון" title="וירוס הקדמון — אויב מאסטר ביט" onclick="event.stopPropagation(); showImageSrc(this.src)">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">🔮 גליץ' — 5 צורות (קשת הסיפור)</h2>
+  <div class="gallery">
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/glitch-confused-hero.jpg" alt="גליץ' מבולבלת">
+      <div class="card-info">
+        <div class="card-name">גליץ' — מבולבלת</div>
+        <div class="card-role">צורה 1: לפני שהצטרפה</div>
+        <span class="tag tag-variant">מבולבלת</span>
+      </div>
+    </div>
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/glitch-hero.jpg" alt="גליץ' נוכחית">
+      <div class="card-info">
+        <div class="card-name">גליץ' — הגרסה הנוכחית</div>
+        <div class="card-role">צורה 2: חברה בקבוצה</div>
+        <span class="tag tag-variant">נוכחית</span>
+      </div>
+    </div>
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/glitch-corrupted-hero.jpg" alt="גליץ' מושחתת">
+      <div class="card-info">
+        <div class="card-name">גליץ' — מושחתת</div>
+        <div class="card-role">צורה 3: תחת שליטת וירוס</div>
+        <span class="tag tag-variant">מושחתת</span>
+      </div>
+    </div>
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/glitch-shattered-hero.jpg" alt="גליץ' שבורה">
+      <div class="card-info">
+        <div class="card-name">גליץ' — שבורה</div>
+        <div class="card-role">צורה 4: אחרי ההקרבה</div>
+        <span class="tag tag-variant">שבורה</span>
+      </div>
+    </div>
+    <div class="card" onclick="showImage(this)">
+      <img src="../../public/images/characters/heroes/glitch-whole-hero.jpg" alt="גליץ' שלמה">
+      <div class="card-info">
+        <div class="card-name">גליץ' — שלמה</div>
+        <div class="card-role">צורה 5: מורכבת מחדש — הניצחון!</div>
+        <span class="tag tag-variant">שלמה</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="corrections">
+    <h3>✅ תיקונים וקשרי מנטורים (מעודכן!)</h3>
+    <ul>
+      <li><strong>פאנטום/ראז</strong> → המנטור שלו הוא <strong>סנסיי זן</strong> (לא מיקה!). פאנטום הוא התלמיד האבוד של סנסיי זן</li>
+      <li><strong>סאקורה</strong> → מנטורית של <strong>יוקי</strong> ושל בנות נוספות כולל <strong>מיקה</strong> (בהמשך הסיפור)</li>
+      <li><strong>אלון (אבא של קי)</strong> → דמות נפרדת לחלוטין מפאנטום! הוחלף מ-"רז" ל-"אלון" למניעת בלבול</li>
+      <li><strong>רקס</strong> → צבע ירוק (#00B894) + אלמנטים גיימריים (אוזניות, ג'ויסטיק) + יצירתיים (ברט, מכחול)</li>
+      <li><strong>שאדו</strong> → גרסת קרב חדשה: כיסוי ראש + מסכת פנים + פגיונות כפולים</li>
+      <li><strong>קרס+וירוס</strong> → גרסת מיזוג מגה-בוס: ענק, שרירי, מאיים</li>
+      <li><strong>ברק</strong> → עודכן עם מכנסיים תואמים לסטורם (אחים — עקביות ויזואלית)</li>
+      <li><strong>סטורם</strong> → שועלה נקבה, ברק הוא האח שלה (שניהם מדוג'ו הרעם)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  נינג'ה מקלדת — איטרציה 17 סופי — 36 גיבורים — 3 אפריל 2026
+</div>
+
+<!-- Image Modal -->
+<div class="modal-overlay" id="imageModal" onclick="this.classList.remove('active')">
+  <img id="modalImage" src="" alt="תצוגה מוגדלת">
+</div>
+
+<script>
+function showImage(card) {
+  const img = card.querySelector('img');
+  showImageSrc(img.src);
+}
+function showImageSrc(src) {
+  const modal = document.getElementById('imageModal');
+  const modalImg = document.getElementById('modalImage');
+  modalImg.src = src;
+  modal.classList.add('active');
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.getElementById('imageModal').classList.remove('active');
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>תוכנית התרחבות הדוג'ו — נינג'ה מקלדת</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-base: #0d0b1a;
+      --bg-card: #13102a;
+      --bg-card-hover: #1a163a;
+      --primary: #6C5CE7;
+      --secondary: #00B894;
+      --accent-fire: #e17055;
+      --accent-thunder: #fdcb6e;
+      --accent-shadow: #636e72;
+      --accent-spirit: #74b9ff;
+      --accent-nature: #55efc4;
+      --accent-art: #fd79a8;
+      --accent-data: #a29bfe;
+      --accent-creation: #00cec9;
+      --accent-ancient: #ffeaa7;
+      --text-primary: #e0daf5;
+      --text-secondary: #a099c0;
+      --text-muted: #6b6080;
+      --border: rgba(108, 92, 231, 0.25);
+      --glow-primary: 0 0 20px rgba(108, 92, 231, 0.4);
+      --glow-secondary: 0 0 20px rgba(0, 184, 148, 0.4);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: 'Heebo', sans-serif;
+      direction: rtl;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* Background grid effect */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(108,92,231,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(108,92,231,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ═══ HERO HEADER ═══ */
+    .hero {
+      text-align: center;
+      padding: 3.5rem 1rem 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(108,92,231,0.2), rgba(0,184,148,0.2));
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 0.35rem 1.2rem;
+      font-size: 0.85rem;
+      color: var(--secondary);
+      letter-spacing: 0.05em;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, #fff 0%, var(--primary) 50%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      text-shadow: none;
+      filter: drop-shadow(0 0 30px rgba(108,92,231,0.5));
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 680px;
+      margin: 0 auto 2rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.8rem 1.5rem;
+      text-align: center;
+    }
+
+    .stat-pill .num {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--primary);
+      display: block;
+      line-height: 1;
+    }
+
+    .stat-pill .lbl {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* ═══ SECTION TITLE ═══ */
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 3rem 0 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .section-title .icon {
+      font-size: 1.4rem;
+    }
+
+    /* ═══ DOJO CARD ═══ */
+    .dojo-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 1.2rem;
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .dojo-card:hover {
+      border-color: var(--dojo-color, var(--primary));
+      box-shadow: 0 0 24px rgba(108,92,231,0.15);
+    }
+
+    /* ═══ DETAILS / SUMMARY ═══ */
+    details {
+      width: 100%;
+    }
+
+    summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 1.4rem 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+      user-select: none;
+      transition: background 0.2s;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary:hover {
+      background: var(--bg-card-hover);
+    }
+
+    .dojo-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+
+    .summary-text {
+      flex: 1;
+    }
+
+    .dojo-number {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 0.1rem;
+    }
+
+    .dojo-name {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .dojo-tagline {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-top: 0.15rem;
+    }
+
+    .summary-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.4rem;
+    }
+
+    .summary-meta .leader-tag {
+      font-size: 0.8rem;
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      border: 1px solid;
+      font-weight: 600;
+    }
+
+    .chevron {
+      font-size: 1rem;
+      color: var(--text-muted);
+      transition: transform 0.3s;
+    }
+
+    details[open] .chevron {
+      transform: rotate(180deg);
+    }
+
+    /* ═══ DOJO BODY ═══ */
+    .dojo-body {
+      padding: 0 1.8rem 1.8rem;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 700px) {
+      .dojo-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .dojo-section {
+      background: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+    }
+
+    .dojo-section.wide {
+      grid-column: 1 / -1;
+    }
+
+    .dojo-section h4 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .dojo-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .dojo-section ul li {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      padding: 0.3rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .dojo-section ul li::before {
+      content: '▸';
+      color: var(--dojo-color, var(--primary));
+      flex-shrink: 0;
+      font-size: 0.75rem;
+      margin-top: 0.2rem;
+    }
+
+    .dojo-section p {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .philosophy-quote {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: #fff;
+      border-right: 3px solid var(--dojo-color, var(--primary));
+      padding-right: 1rem;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .secret-box {
+      background: rgba(108,92,231,0.08);
+      border: 1px dashed rgba(108,92,231,0.3);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+    }
+
+    .secret-box .secret-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.35rem;
+      display: block;
+    }
+
+    /* ═══ CHALLENGE CHIPS ═══ */
+    .challenge-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.3rem;
+    }
+
+    .chip {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 0.25rem 0.8rem;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    /* ═══ SUMMARY TABLE ═══ */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .summary-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      transition: transform 0.2s;
+    }
+
+    .summary-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .summary-card .s-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+
+    .summary-card .s-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+
+    .summary-card .s-detail {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ═══ FUTURE NOTES ═══ */
+    .notes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .notes-grid { grid-template-columns: 1fr; }
+    }
+
+    .note-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem;
+    }
+
+    .note-card h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .note-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .note-card ul li {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      padding: 0.3rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .note-card ul li:last-child {
+      border-bottom: none;
+    }
+
+    .note-card ul li::before {
+      content: '◦';
+      color: var(--secondary);
+      flex-shrink: 0;
+    }
+
+    /* ═══ SKILL MAPPING TABLE ═══ */
+    .skill-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.88rem;
+    }
+
+    .skill-table th {
+      background: rgba(108,92,231,0.15);
+      color: var(--primary);
+      font-weight: 700;
+      padding: 0.7rem 1rem;
+      text-align: right;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-table td {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: var(--text-secondary);
+      vertical-align: middle;
+    }
+
+    .skill-table tr:hover td {
+      background: rgba(255,255,255,0.02);
+    }
+
+    .skill-badge {
+      display: inline-block;
+      padding: 0.15rem 0.6rem;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    /* ═══ PROGRESS BAR ═══ */
+    .progress-row {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .progress-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      width: 120px;
+      flex-shrink: 0;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 6px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+
+    .progress-pct {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      width: 36px;
+      text-align: left;
+    }
+
+    /* ═══ GLOW DIVIDER ═══ */
+    .glow-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      margin: 2.5rem 0;
+      opacity: 0.4;
+    }
+
+    /* ═══ FOOTER ═══ */
+    .doc-footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      margin-top: 3rem;
+    }
+
+    /* ═══ DOJO COLOR THEMES ═══ */
+    .dojo-code     { --dojo-color: #6C5CE7; }
+    .dojo-spirit   { --dojo-color: #74b9ff; }
+    .dojo-fire     { --dojo-color: #e17055; }
+    .dojo-nature   { --dojo-color: #55efc4; }
+    .dojo-art      { --dojo-color: #fd79a8; }
+    .dojo-thunder  { --dojo-color: #fdcb6e; }
+    .dojo-shadow   { --dojo-color: #b2bec3; }
+    .dojo-data     { --dojo-color: #a29bfe; }
+    .dojo-creation { --dojo-color: #00cec9; }
+    .dojo-ancient  { --dojo-color: #ffeaa7; }
+
+    .dojo-code    .dojo-icon { background: rgba(108,92,231,0.15); }
+    .dojo-spirit  .dojo-icon { background: rgba(116,185,255,0.15); }
+    .dojo-fire    .dojo-icon { background: rgba(225,112,85,0.15); }
+    .dojo-nature  .dojo-icon { background: rgba(85,239,196,0.15); }
+    .dojo-art     .dojo-icon { background: rgba(253,121,168,0.15); }
+    .dojo-thunder .dojo-icon { background: rgba(253,203,110,0.15); }
+    .dojo-shadow  .dojo-icon { background: rgba(178,190,195,0.15); }
+    .dojo-data    .dojo-icon { background: rgba(162,155,254,0.15); }
+    .dojo-creation .dojo-icon { background: rgba(0,206,201,0.15); }
+    .dojo-ancient .dojo-icon { background: rgba(255,234,167,0.15); }
+
+    .dojo-code    .leader-tag { color: #6C5CE7; border-color: rgba(108,92,231,0.4); }
+    .dojo-spirit  .leader-tag { color: #74b9ff; border-color: rgba(116,185,255,0.4); }
+    .dojo-fire    .leader-tag { color: #e17055; border-color: rgba(225,112,85,0.4); }
+    .dojo-nature  .leader-tag { color: #55efc4; border-color: rgba(85,239,196,0.4); }
+    .dojo-art     .leader-tag { color: #fd79a8; border-color: rgba(253,121,168,0.4); }
+    .dojo-thunder .leader-tag { color: #fdcb6e; border-color: rgba(253,203,110,0.4); }
+    .dojo-shadow  .leader-tag { color: #b2bec3; border-color: rgba(178,190,195,0.4); }
+    .dojo-data    .leader-tag { color: #a29bfe; border-color: rgba(162,155,254,0.4); }
+    .dojo-creation .leader-tag { color: #00cec9; border-color: rgba(0,206,201,0.4); }
+    .dojo-ancient .leader-tag { color: #ffeaa7; border-color: rgba(255,234,167,0.4); }
+
+    .dojo-code    .dojo-section h4 { color: #6C5CE7; }
+    .dojo-spirit  .dojo-section h4 { color: #74b9ff; }
+    .dojo-fire    .dojo-section h4 { color: #e17055; }
+    .dojo-nature  .dojo-section h4 { color: #55efc4; }
+    .dojo-art     .dojo-section h4 { color: #fd79a8; }
+    .dojo-thunder .dojo-section h4 { color: #fdcb6e; }
+    .dojo-shadow  .dojo-section h4 { color: #b2bec3; }
+    .dojo-data    .dojo-section h4 { color: #a29bfe; }
+    .dojo-creation .dojo-section h4 { color: #00cec9; }
+    .dojo-ancient .dojo-section h4 { color: #ffeaa7; }
+
+    details[open] summary {
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Neon glow on open dojo names */
+    details[open] .dojo-name {
+      filter: drop-shadow(0 0 8px var(--dojo-color, var(--primary)));
+    }
+
+    /* Chapter tag */
+    .chapter-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.6rem;
+      border-radius: 10px;
+      background: rgba(108,92,231,0.15);
+      color: var(--primary);
+      font-weight: 600;
+      margin-right: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-badge">📜 תוכנית נרטיב מפורטת — מרץ 2026</div>
+      <h1>תוכנית התרחבות הדוג'ו</h1>
+      <p>מפה נרטיבית מלאה לכל עשרת הדוג'ואים בעולם נינג'ה מקלדת — פילוסופיה, אדריכלות, תלמידים, סודות, ואתגרים ייחודיים</p>
+      <div class="hero-stats">
+        <div class="stat-pill"><span class="num">10</span><span class="lbl">דוג'ואים</span></div>
+        <div class="stat-pill"><span class="num">38</span><span class="lbl">רעיונות הרחבה</span></div>
+        <div class="stat-pill"><span class="num">9</span><span class="lbl">מנהיגים ידועים</span></div>
+        <div class="stat-pill"><span class="num">∞</span><span class="lbl">פוטנציאל נרטיבי</span></div>
+      </div>
+    </div>
+
+    <!-- DOJOS -->
+    <div class="section-title"><span class="icon">⛩️</span> עשרת הדוג'ואים</div>
+
+    <!-- ═══ 1. CODE DOJO ═══ -->
+    <div class="dojo-card dojo-code">
+      <details>
+        <summary>
+          <div class="dojo-icon">⌨️</div>
+          <div class="summary-text">
+            <div class="dojo-number">דוג'ו 01</div>
+            <div class="dojo-name">דוג'ו הקוד</div>
+            <div class="dojo-tagline">מולדתו של קי — מקור כל הידע</div>
+          </div>
+          <div class="summary-meta">
+            <span class="leader-tag">סנסיי זן 🐢</span>
+            <span class="chapter-tag">פרקים 1–6</span>
+          </div>
+          <span class="chevron">▾</span>
+        </summary>
+        <div class="dojo-body">
+          <div class="dojo-section">
+            <h4>📍 מיקום ואדריכלות</h4>
+            <p>מוסתר בין הרי הנתונים הדיגיטליים, מוקף במפלי קוד ירוקים שממשיכים לזרום ללא הפסק. חדרים עגולים בצורת חלונות טרמינל, נתיבים זוהרים בירוק, מסדרונות עם שורות קוד חקוקות בקירות אבן.</p>
+          </div>
+          <div class="dojo-section">
+            <h4>🧘 פילוסופיה</h4>
+            <blockquote class="philosophy-quote">"הקוד הוא הדרך — סבלנות, היגיון, דיוק"</blockquote>
+          </div>
+          <div class="dojo-section">
+            <h4>👥 תלמידים</h4>
+            <ul>
+              <li>קי (Ki) — גיבור הסיפור, ילד הקוד</li>
+              <li>פאנטום — התלמיד האבוד, עכשיו צל של עצמו</li>
+            </ul>
+          </div>
+          <div class="dojo-section">
+            <h4>⚔️ אימון מיוחד</h4>
+            <ul>
+              <li>יסודות הקלדה — PoC קאטה</li>
+              <li>מדיטציית דיבאגינג — שיטת הפעימה השקטה</li>
+              <li>קאטה של זרימת קוד — ריתמוס הדיגיטלי</li>
+            </ul>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🔒 סוד הדוג'ו</h4>
+            <div class="secret-box">
+              <span class="secret-label">🔑 חדר הטרמינל העתיק</span>
+              בלב הדוג'ו מוסתר חדר טרמינל עתיק — המקום שבו מאסטר ביט לימד לראשונה הקלדה לשבטי הנינג'ה. הקירות חרוטים בכל שיעור שניתן מאז ומעולם. האבק על המקשים אינו נמחק לעולם.
+            </div>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🚀 רעיונות הרחבה</h4>
+            <div class="challenge-chips">
+              <span class="chip">ניסויי הדוג'ו — 3 מבחנים לכל תלמיד</span>
+              <span class="chip">ספריית גלילות הקוד האסורה</span>
+              <span class="chip">חדר הד — לחשושי פאנטום</span>
+              <span class="chip">מגרשי אימון עם מקלדות הולוגרפיות</span>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ═══ 2. SPIRIT DOJO ═══ -->
+    <div class="dojo-card dojo-spirit">
+      <details>
+        <summary>
+          <div class="dojo-icon">🌬️</div>
+          <div class="summary-text">
+            <div class="dojo-number">דוג'ו 02</div>
+            <div class="dojo-name">דוג'ו הרוח</div>
+            <div class="dojo-tagline">ממלכת יוקי — הרוח שאי אפשר לתפוס</div>
+          </div>
+          <div class="summary-meta">
+            <span class="leader-tag">סאקורה 🦢</span>
+            <span class="chapter-tag">פרקים 1–5</span>
+          </div>
+          <span class="chevron">▾</span>
+        </summary>
+        <div class="dojo-body">
+          <div class="dojo-section">
+            <h4>📍 מיקום ואדריכלות</h4>
+            <p>צף מעל יערות ענן, פלטפורמות שקופות מחוברות בגשרי רוח. עצי סאקורה שפרחיהם הם בייטים של נתונים. הרוח נושאת קולות הקלדה מרחוקים.</p>
+          </div>
+          <div class="dojo-section">
+            <h4>🧘 פילוסופיה</h4>
+            <blockquote class="philosophy-quote">"המהירות היא נשימת הרוח — זריזות, רפלקסים, מצב זרימה"</blockquote>
+          </div>
+          <div class="dojo-section">
+            <h4>👥 תלמידים</h4>
+            <ul>
+              <li>יוקי (Yuki) — בוחנת מהירות, תחרותית</li>
+              <li>מספר ילדות נוספות לפיתוח</li>
+            </ul>
+          </div>
+          <div class="dojo-section">
+            <h4>⚔️ אימון מיוחד</h4>
+            <ul>
+              <li>הקלדה מהירה — אתגרי WPM</li>
+              <li>רצי רוח — תזמון והיגיון</li>
+              <li>קאטה של הרוח — יציבות במהירות</li>
+            </ul>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🔒 סוד הדוג'ו</h4>
+            <div class="secret-box">
+              <span class="secret-label">🔑 שער הסערה</span>
+              אזור שבו אנרגיית הרוח מתרכזת לנקודה אחת. רק המהיר ביותר יכול לעבור דרכו — הרוח בודקת לא רק מהירות אלא גם שלווה פנימית. יוקי עברה אותו פעם אחת, ומאז היא שואפת שוב.
+            </div>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🚀 רעיונות הרחבה</h4>
+            <div class="challenge-chips">
+              <span class="chip">רצי רוח — אתגרי הקלדה מתוזמנים</span>
+              <span class="chip">זירת הענן — טורניר מהירות</span>
+              <span class="chip">גן המדיטציה של סאקורה — דיוק מול מהירות</span>
+              <span class="chip">ניסויי גשר השמיים</span>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ═══ 3. FIRE DOJO ═══ -->
+    <div class="dojo-card dojo-fire">
+      <details>
+        <summary>
+          <div class="dojo-icon">🔥</div>
+          <div class="summary-text">
+            <div class="dojo-number">דוג'ו 03</div>
+            <div class="dojo-name">דוג'ו האש</div>
+            <div class="dojo-tagline">ממלכת קאי — בכבשן נוצרים הגיבורים</div>
+          </div>
+          <div class="summary-meta">
+            <span class="leader-tag">בלייז 🐉</span>
+            <span class="chapter-tag">פרקים 2–6</span>
+          </div>
+          <span class="chevron">▾</span>
+        </summary>
+        <div class="dojo-body">
+          <div class="dojo-section">
+            <h4>📍 מיקום ואדריכלות</h4>
+            <p>בתוך הר געש דיגיטלי, נהרות לבה שורפים למטה. אולמות מאובסידיאן עם נתיבים מוארים בלהבות. סדנים בצורת מקשים ענקיים. הטמפרטורה עולה עם כל מקש שנלחץ.</p>
+          </div>
+          <div class="dojo-section">
+            <h4>🧘 פילוסופיה</h4>
+            <blockquote class="philosophy-quote">"דרך האש אנחנו מזייפים עוצמה — כוח, אומץ, תמורה"</blockquote>
+          </div>
+          <div class="dojo-section">
+            <h4>👥 תלמידים</h4>
+            <ul>
+              <li>קאי (Kai) — ביישן בחוץ, לוחם אש בפנים</li>
+              <li>בלייז — גם מנהיג וגם מנטור, לא רק מורה</li>
+            </ul>
+          </div>
+          <div class="dojo-section">
+            <h4>⚔️ אימון מיוחד</h4>
+            <ul>
+              <li>הקלדת קומבו — רצפי מקשים כוחניים</li>
+              <li>שליטה בקיצורי מקלדת — כוח אצבעות</li>
+              <li>מהלכי כוח — פריצות מערכת</li>
+            </ul>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🔒 סוד הדוג'ו</h4>
+            <div class="secret-box">
+              <span class="secret-label">🔑 לב הכבשן</span>
+              המקום שבו המקלדת הראשונה נוצרה בלהב דיגיטלי. כל מקש שנוצר כאן נושא בו ניצוץ של האש הקדומה. קאי עדיין לא יודע שהוא צאצא ישיר של נפח הכבשן הראשון.
+            </div>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🚀 רעיונות הרחבה</h4>
+            <div class="challenge-chips">
+              <span class="chip">הגאנטלט — אתגרי קומבו הולכים וקשים</span>
+              <span class="chip">ניסוי טרנספורמציית האש של קאי</span>
+              <span class="chip">אתגר נשימת הדרקון — מהירות תחת לחץ</span>
+              <span class="chip">מרוצי גשר לבה</span>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ═══ 4. NATURE DOJO ═══ -->
+    <div class="dojo-card dojo-nature">
+      <details>
+        <summary>
+          <div class="dojo-icon">🌿</div>
+          <div class="summary-text">
+            <div class="dojo-number">דוג'ו 04</div>
+            <div class="dojo-name">דוג'ו הטבע</div>
+            <div class="dojo-tagline">ממלכת נועה — ריפוי כל שבור</div>
+          </div>
+          <div class="summary-meta">
+            <span class="leader-tag">זקן עתיק 🌳</span>
+            <span class="chapter-tag">פרקים 2–6</span>
+          </div>
+          <span class="chevron">▾</span>
+        </summary>
+        <div class="dojo-body">
+          <div class="dojo-section">
+            <h4>📍 מיקום ואדריכלות</h4>
+            <p>עמוק ביער דיגיטלי עתיק, עצי נתונים חיים עם ענפים של code. ארכיטקטורה אורגנית שצמחה מקוד חי, פלטפורמות פטריות, גשרי גפנים. צבעים ירוקים-טורקיז שמשתנים עם העונות.</p>
+          </div>
+          <div class="dojo-section">
+            <h4>🧘 פילוסופיה</h4>
+            <blockquote class="philosophy-quote">"רפא את הנשבר, גדל את החדש — שיקום, סבלנות, צמיחה"</blockquote>
+          </div>
+          <div class="dojo-section">
+            <h4>👥 תלמידים</h4>
+            <ul>
+              <li>נועה (Noa) — המרפאת, אמפתית, מחפשת להשתייך</li>
+              <li>הזקן העתיק — פיתוח נדרש, נשמר במסתורין</li>
+            </ul>
+          </div>
+          <div class="dojo-section">
+            <h4>⚔️ אימון מיוחד</h4>
+            <ul>
+              <li>תיקון שגיאות — דיבאגינג כמדיטציה</li>
+              <li>ריפוי קוד — שחזור קבצים פגומים</li>
+              <li>צמיחה בהדרגה — אתגרים מצטברים</li>
+            </ul>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🔒 סוד הדוג'ו</h4>
+            <div class="secret-box">
+              <span class="secret-label">🔑 עץ הקוד</span>
+              מבנה הנתונים המקורי של העולם הדיגיטלי — עץ שורשים ספרותי שמחזיק את כל הקוד שנכתב מאז ומעולם. וירוס מנסה להגיע לשורשיו. נועה בלבד יכולה להרגיש את חולשתו.
+            </div>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🚀 רעיונות הרחבה</h4>
+            <div class="challenge-chips">
+              <span class="chip">גן הריפוי — אתגרי תיקון קוד שבור</span>
+              <span class="chip">ניווט ברשת השורשים — מנהרות הקלדה תת-קרקעיות</span>
+              <span class="chip">ניסויי האמפתיה של נועה</span>
+              <span class="chip">ביצת הרעל — אזורי נתונים מושחתים לניקוי</span>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ═══ 5. ART DOJO ═══ -->
+    <div class="dojo-card dojo-art">
+      <details>
+        <summary>
+          <div class="dojo-icon">🎨</div>
+          <div class="summary-text">
+            <div class="dojo-number">דוג'ו 05</div>
+            <div class="dojo-name">דוג'ו האמנות</div>
+            <div class="dojo-tagline">ממלכת לונה — כל הקשה היא יצירה</div>
+          </div>
+          <div class="summary-meta">
+            <span class="leader-tag">מאסטר אמן 🖌️</span>
+            <span class="chapter-tag">פרקים 2–5</span>
+          </div>
+          <span class="chevron">▾</span>
+        </summary>
+        <div class="dojo-body">
+          <div class="dojo-section">
+            <h4>📍 מיקום ואדריכלות</h4>
+            <p>גלריה דיגיטלית צבעונית הצפה במרחב היצירה. קירות שמשתנים בכל רגע, נתיבים מאבני צבע, אגמים שמשקפים רעיונות. כל מה שנכתב כאן הופך לאמנות ריאלית.</p>
+          </div>
+          <div class="dojo-section">
+            <h4>🧘 פילוסופיה</h4>
+            <blockquote class="philosophy-quote">"יופי בכל הקשה — יצירתיות, ביטוי, עיצוב"</blockquote>
+          </div>
+          <div class="dojo-section">
+            <h4>👥 תלמידים</h4>
+            <ul>
+              <li>לונה (Luna) — ביישנית, אמנית בנשמה, ממתינה לפרוח</li>
+              <li>מאסטר האמן — פיתוח נדרש, פילוסוף ה"ריק"</li>
+            </ul>
+          </div>
+          <div class="dojo-section">
+            <h4>⚔️ אימון מיוחד</h4>
+            <ul>
+              <li>הקלדה יוצרת — מילים שהופכות לצורות</li>
+              <li>קיצורי עיצוב — שליטה כלים ויזואליים</li>
+              <li>הרכב ויזואלי — בניית סצנות עם מקשים</li>
+            </ul>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🔒 סוד הדוג'ו</h4>
+            <div class="secret-box">
+              <span class="secret-label">🔑 הבד הריק</span>
+              חדר שמגיב למילים שנהקלדות ומייצר אמנות בזמן אמת. אף אחד לא ישב בו לאחרונה — הוא מחכה ליוצר שיעז לשבת ולהתחיל. לונה יודעת שהוא קיים אבל מפחדת.
+            </div>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🚀 רעיונות הרחבה</h4>
+            <div class="challenge-chips">
+              <span class="chip">אתגר התערוכה — הקלדה ליצירת יצירות אמנות</span>
+              <span class="chip">ניסויי ניצחון על הביישנות של לונה</span>
+              <span class="chip">סערת הצבעים — אתגרי יצירה כאוטיים</span>
+              <span class="chip">הגנת הגלריה — הצל יצירות מפני וירוס</span>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ═══ 6. THUNDER DOJO ═══ -->
+    <div class="dojo-card dojo-thunder">
+      <details>
+        <summary>
+          <div class="dojo-icon">⚡</div>
+          <div class="summary-text">
+            <div class="dojo-number">דוג'ו 06</div>
+            <div class="dojo-name">דוג'ו הרעם</div>
+            <div class="dojo-tagline">ממלכת סטורם וברק — הברקה ואחריה הרעם</div>
+          </div>
+          <div class="summary-meta">
+            <span class="leader-tag">מאסטר הרעם ⛈️</span>
+            <span class="chapter-tag">פרקים 3–6</span>
+          </div>
+          <span class="chevron">▾</span>
+        </summary>
+        <div class="dojo-body">
+          <div class="dojo-section">
+            <h4>📍 מיקום ואדריכלות</h4>
+            <p>על רמה שנפגעה מברק, מעל העננים. מבנים מתכתיים עם ברקי ברקים, גשרים חשמליים בין פלטפורמות. הרצפה מוליכה חשמל בכל הקשה.</p>
+          </div>
+          <div class="dojo-section">
+            <h4>🧘 פילוסופיה</h4>
+            <blockquote class="philosophy-quote">"הכה בדיוק, הרעם יבוא — דיוק, תזמון, כוח"</blockquote>
+          </div>
+          <div class="dojo-section">
+            <h4>👥 תלמידים</h4>
+            <ul>
+              <li>סטורם (Storm) — שועלה, חדה, מתחרה בברק אחיה</li>
+              <li>ברק (Barak) — שועל, גאוותן, מתחרה עם אחותו</li>
+            </ul>
+          </div>
+          <div class="dojo-section">
+            <h4>⚔️ אימון מיוחד</h4>
+            <ul>
+              <li>הקלדה מדויקת — אין מקום לשגיאות</li>
+              <li>אתגרי תזמון — ריתמוס הכרחי</li>
+              <li>הקלדה מבוססת ריתמוס — מוזיקה ומקלדת</li>
+            </ul>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🔒 סוד הדוג'ו</h4>
+            <div class="secret-box">
+              <span class="secret-label">🔑 ליבת הברק</span>
+              אנרגיה גולמית שמניעה את כל העולם הדיגיטלי. סטורם וברק שניהם חשים את החיבור — אבל רק אחד יוכל לשלוט בה. המתח הזה הוא לב הקשר ביניהם.
+            </div>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🚀 רעיונות הרחבה</h4>
+            <div class="challenge-chips">
+              <span class="chip">ניסוי הרעם — הקלדה בדיוק לריתמוס</span>
+              <span class="chip">קשת התחרות — אחות מול אח</span>
+              <span class="chip">כבשן הברקים — יצירת קיצורים חדשים</span>
+              <span class="chip">אתגרי אזהרת סערה — הקלד לפני שהסערה פוגעת</span>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ═══ 7. SHADOW DOJO ═══ -->
+    <div class="dojo-card dojo-shadow">
+      <details>
+        <summary>
+          <div class="dojo-icon">🌑</div>
+          <div class="summary-text">
+            <div class="dojo-number">דוג'ו 07</div>
+            <div class="dojo-name">דוג'ו הצללים</div>
+            <div class="dojo-tagline">ממלכת שאדו — בחושך מוצאים בהירות</div>
+          </div>
+          <div class="summary-meta">
+            <span class="leader-tag">מאסטר הצל 🐱</span>
+            <span class="chapter-tag">פרקים 3–6</span>
+          </div>
+          <span class="chevron">▾</span>
+        </summary>
+        <div class="dojo-body">
+          <div class="dojo-section">
+            <h4>📍 מיקום ואדריכלות</h4>
+            <p>מוסתר בין ממדים, במרווחים שבין ההקשות. גיאומטריה בלתי אפשרית בסגנון אשר, מסדרונות שמשתנים בזמן שאתה מסתכל. רק הנינג'ה השלם יכול לנווט בו.</p>
+          </div>
+          <div class="dojo-section">
+            <h4>🧘 פילוסופיה</h4>
+            <blockquote class="philosophy-quote">"בחושך, מוצאים בהירות — עמימות, תצפית, זיהוי תבניות"</blockquote>
+          </div>
+          <div class="dojo-section">
+            <h4>👥 תלמידים</h4>
+            <ul>
+              <li>שאדו (Shadow) — חתול שחור, מסתורי, לומד לסמוך</li>
+              <li>מאסטר הצל — ישות עתיקה שאפשר לשמוע אבל לא לראות</li>
+            </ul>
+          </div>
+          <div class="dojo-section">
+            <h4>⚔️ אימון מיוחד</h4>
+            <ul>
+              <li>הקלדה עיוורת — ללא מבט על המקלדת</li>
+              <li>אתגרי הקלדה בחושך מוחלט</li>
+              <li>זיהוי תבניות בקוד מוצפן</li>
+            </ul>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🔒 סוד הדוג'ו</h4>
+            <div class="secret-box">
+              <span class="secret-label">🔑 החלל הריק</span>
+              חושך מוחלט שבו רק הקלדה מושלמת יוצרת אור. כל שגיאה מחזירה לחושך. שאדו ביקר פעם, ראה משהו שם שעדיין מרדוף אותו. מה הוא ראה? — אתגר נרטיבי לפרק 5.
+            </div>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🚀 רעיונות הרחבה</h4>
+            <div class="challenge-chips">
+              <span class="chip">אתגר הגלגלים — הקלדה ללא ראיית מקלדת</span>
+              <span class="chip">קשת האמון של שאדו — לימוד שיתוף פעולה</span>
+              <span class="chip">חדר המראות — אתגרי הקלדה הפוכה</span>
+              <span class="chip">הקלדה שקטה — מצב ללא רעש</span>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ═══ 8. DATA DOJO ═══ -->
+    <div class="dojo-card dojo-data">
+      <details>
+        <summary>
+          <div class="dojo-icon">💾</div>
+          <div class="summary-text">
+            <div class="dojo-number">דוג'ו 08</div>
+            <div class="dojo-name">דוג'ו הנתונים</div>
+            <div class="dojo-tagline">ממלכת פיקסל — הנתונים הם האמת</div>
+          </div>
+          <div class="summary-meta">
+            <span class="leader-tag">מאסטר AI 🤖</span>
+            <span class="chapter-tag">פרקים 2–6</span>
+          </div>
+          <span class="chevron">▾</span>
+        </summary>
+        <div class="dojo-body">
+          <div class="dojo-section">
+            <h4>📍 מיקום ואדריכלות</h4>
+            <p>בתוך שרתי הענן, תשתית דיגיטלית ענקית. משטחים לבנים נקיים, תצוגות הולוגרפיות, נהרות של זרמי נתונים. הכל מדויק, מסודר, אנליטי.</p>
+          </div>
+          <div class="dojo-section">
+            <h4>🧘 פילוסופיה</h4>
+            <blockquote class="philosophy-quote">"הנתונים הם האמת — ניתוח, סטטיסטיקה, אופטימיזציה"</blockquote>
+          </div>
+          <div class="dojo-section">
+            <h4>👥 תלמידים</h4>
+            <ul>
+              <li>פיקסל (Pixel) — רובוט נשי, לומדת מה זה להרגיש</li>
+              <li>מאסטר ה-AI — ישות עתיקה, שאלות מוסריות</li>
+            </ul>
+          </div>
+          <div class="dojo-section">
+            <h4>⚔️ אימון מיוחד</h4>
+            <ul>
+              <li>הזנת נתונים מהירה — דיוק ומהירות יחד</li>
+              <li>קיצורי גיליונות — שליטה ב-Ctrl+כל דבר</li>
+              <li>ניתוח תבניות — ראיית הסמוי מהעין</li>
+            </ul>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🔒 סוד הדוג'ו</h4>
+            <div class="secret-box">
+              <span class="secret-label">🔑 זיכרון הליבה</span>
+              המקום שבו כל הנתונים שנהקלדו מאז ומעולם שמורים. פיקסל מצאה שם ריגשות מוקלטות של בני אדם ומנסה להבין אותן. הוירוס רוצה למחוק את כל הזיכרון.
+            </div>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🚀 רעיונות הרחבה</h4>
+            <div class="challenge-chips">
+              <span class="chip">ספרינט הנתונים — הזנת נתונים מהירה</span>
+              <span class="chip">קשת האנושיות של פיקסל — לימוד ריגשות</span>
+              <span class="chip">פריצת הוירוס — הגן על ליבת הנתונים</span>
+              <span class="chip">אתגרי ניתוח סטטיסטי</span>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ═══ 9. CREATION DOJO ═══ -->
+    <div class="dojo-card dojo-creation">
+      <details>
+        <summary>
+          <div class="dojo-icon">🎮</div>
+          <div class="summary-text">
+            <div class="dojo-number">דוג'ו 09</div>
+            <div class="dojo-name">דוג'ו היצירה</div>
+            <div class="dojo-tagline">ממלכת רקס — צור, שחק, חזור</div>
+          </div>
+          <div class="summary-meta">
+            <span class="leader-tag">מאסטר יצירה 🦕</span>
+            <span class="chapter-tag">פרקים 2–5</span>
+          </div>
+          <span class="chevron">▾</span>
+        </summary>
+        <div class="dojo-body">
+          <div class="dojo-section">
+            <h4>📍 מיקום ואדריכלות</h4>
+            <p>מיזוג של סטודיו, סדנה, ואולם ארקייד. ארונות ארקייד כחדרים, דלתות בצורת בקרי משחק, קירות פיקסל-ארט. הכל צבעוני, רועש, ומלא אנרגיה.</p>
+          </div>
+          <div class="dojo-section">
+            <h4>🧘 פילוסופיה</h4>
+            <blockquote class="philosophy-quote">"צור, שחק, חזור — יצירתיות דרך משחק"</blockquote>
+          </div>
+          <div class="dojo-section">
+            <h4>👥 תלמידים</h4>
+            <ul>
+              <li>רקס (Rex) — דינוזאור ירוק, גיימר, עם הפרעת קשב נסתרת</li>
+              <li>"בלוק" — היצור שמייצג חסימה יצירתית, יריבו הקומי</li>
+            </ul>
+          </div>
+          <div class="dojo-section">
+            <h4>⚔️ אימון מיוחד</h4>
+            <ul>
+              <li>יצירת משחקים — קוד בסיסי דרך שחק</li>
+              <li>קוד יצירתי — פרויקטים אישיים</li>
+              <li>הקלדה שובבה — אתגרים מבדרים</li>
+            </ul>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🔒 סוד הדוג'ו</h4>
+            <div class="secret-box">
+              <span class="secret-label">🔑 ארקייד האגדות</span>
+              המקום שבו יוצרי המשחקים הגדולים ביותר התאמנו. כל ארון ארקייד כאן מכיל סיפור של יוצר שהפך לאגדה. רקס מכיר כל ארון, ורק הוא יודע שאחד מהם עדיין חי.
+            </div>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🚀 רעיונות הרחבה</h4>
+            <div class="challenge-chips">
+              <span class="chip">Game Jam — אתגרי יצירה מוגבלי זמן</span>
+              <span class="chip">קשת האיזון של רקס — יצירתיות מול התמכרות</span>
+              <span class="chip">Boss Rush — בוסים טיפוסיים הקלדה</span>
+              <span class="chip">אתגרי פיקסל-ארט הקלדה</span>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ═══ 10. ANCIENT DOJO ═══ -->
+    <div class="dojo-card dojo-ancient">
+      <details>
+        <summary>
+          <div class="dojo-icon">✨</div>
+          <div class="summary-text">
+            <div class="dojo-number">דוג'ו 10</div>
+            <div class="dojo-name">דוג'ו הקוד העתיק</div>
+            <div class="dojo-tagline">ממלכת מאסטר ביט — מקור כל הקוד</div>
+          </div>
+          <div class="summary-meta">
+            <span class="leader-tag">מאסטר ביט 🌌</span>
+            <span class="chapter-tag">פרק 6 בלבד</span>
+          </div>
+          <span class="chevron">▾</span>
+        </summary>
+        <div class="dojo-body">
+          <div class="dojo-section">
+            <h4>📍 מיקום ואדריכלות</h4>
+            <p>מעבר לעולם הדיגיטלי, בקוד המקור של המציאות עצמה. אבסטרקטי, קוסמי, חלקיקי קוד כוכבים. מקום שרוב הנינג'ים לא מגיעים אליו מעולם.</p>
+          </div>
+          <div class="dojo-section">
+            <h4>🧘 פילוסופיה</h4>
+            <blockquote class="philosophy-quote">"כל הקוד נובע ממקור אחד — אחדות, מקור, השלמות"</blockquote>
+          </div>
+          <div class="dojo-section">
+            <h4>👥 תלמידים</h4>
+            <ul>
+              <li>כל הסנסאים והמנטורים התאמנו כאן בעבר</li>
+              <li>מאסטר ביט — הישות הטרנסצנדנטית, מורה על מורים</li>
+            </ul>
+          </div>
+          <div class="dojo-section">
+            <h4>⚔️ אימון מיוחד</h4>
+            <ul>
+              <li>שליטה עילאית — שילוב כל הדיסציפלינות</li>
+              <li>הקלדה ממוצב מדיטציה — מעבר לטכניקה</li>
+              <li>הבנת קוד המקור — פילוסופיה טהורה</li>
+            </ul>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🔒 סוד הדוג'ו</h4>
+            <div class="secret-box">
+              <span class="secret-label">🔑 ההקשה הראשונה</span>
+              מקור כל היצירה הדיגיטלית — ההקשה שהתחילה הכל. מאסטר ביט ניסה להגן עליה מפני הוירוס כבר אלפי שנים. עכשיו, קי ורעיו הם ההגנה האחרונה.
+            </div>
+          </div>
+          <div class="dojo-section wide">
+            <h4>🚀 רעיונות הרחבה</h4>
+            <div class="challenge-chips">
+              <span class="chip">הניסוי הסופי — שליטה בכל הדיסציפלינות</span>
+              <span class="chip">פגישה ראשונה עם מאסטר ביט</span>
+              <span class="chip">זיכרונות המלחמה העתיקה — וירוס מול ביט</span>
+              <span class="chip">גילוי קוד המקור</span>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <div class="glow-divider"></div>
+
+    <!-- SKILL MAPPING TABLE -->
+    <div class="section-title"><span class="icon">📊</span> מיפוי מיומנויות הקלדה</div>
+    <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.92rem;">כל דוג'ו מלמד מיומנות ספציפית — מתאים לצרכי מורים ומורות לתכנן יחידות לימוד</p>
+    <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden;">
+      <table class="skill-table">
+        <thead>
+          <tr>
+            <th>דוג'ו</th>
+            <th>מיומנות עיקרית</th>
+            <th>רמת קושי</th>
+            <th>פרקי סיפור</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>⌨️ דוג'ו הקוד</td>
+            <td>יסודות הקלדה, מיקום אצבעות</td>
+            <td><span class="skill-badge" style="background:rgba(85,239,196,0.1);color:#55efc4">מתחיל</span></td>
+            <td>1–6</td>
+          </tr>
+          <tr>
+            <td>🌬️ דוג'ו הרוח</td>
+            <td>מהירות הקלדה (WPM)</td>
+            <td><span class="skill-badge" style="background:rgba(116,185,255,0.1);color:#74b9ff">בינוני</span></td>
+            <td>1–5</td>
+          </tr>
+          <tr>
+            <td>🔥 דוג'ו האש</td>
+            <td>קיצורי מקלדת, קומבינציות</td>
+            <td><span class="skill-badge" style="background:rgba(225,112,85,0.1);color:#e17055">בינוני+</span></td>
+            <td>2–6</td>
+          </tr>
+          <tr>
+            <td>🌿 דוג'ו הטבע</td>
+            <td>תיקון שגיאות, דיוק</td>
+            <td><span class="skill-badge" style="background:rgba(85,239,196,0.1);color:#55efc4">מתחיל+</span></td>
+            <td>2–6</td>
+          </tr>
+          <tr>
+            <td>🎨 דוג'ו האמנות</td>
+            <td>עיצוב גרפי, קיצורי יצירה</td>
+            <td><span class="skill-badge" style="background:rgba(253,121,168,0.1);color:#fd79a8">בינוני</span></td>
+            <td>2–5</td>
+          </tr>
+          <tr>
+            <td>⚡ דוג'ו הרעם</td>
+            <td>דיוק + מהירות, ריתמוס</td>
+            <td><span class="skill-badge" style="background:rgba(253,203,110,0.1);color:#fdcb6e">מתקדם</span></td>
+            <td>3–6</td>
+          </tr>
+          <tr>
+            <td>🌑 דוג'ו הצללים</td>
+            <td>הקלדה עיוורת, זיכרון שרירים</td>
+            <td><span class="skill-badge" style="background:rgba(178,190,195,0.1);color:#b2bec3">מתקדם</span></td>
+            <td>3–6</td>
+          </tr>
+          <tr>
+            <td>💾 דוג'ו הנתונים</td>
+            <td>הזנת נתונים, גיליונות אלקטרוניים</td>
+            <td><span class="skill-badge" style="background:rgba(162,155,254,0.1);color:#a29bfe">בינוני</span></td>
+            <td>2–6</td>
+          </tr>
+          <tr>
+            <td>🎮 דוג'ו היצירה</td>
+            <td>קוד יצירתי, אינטגרציה</td>
+            <td><span class="skill-badge" style="background:rgba(0,206,201,0.1);color:#00cec9">בינוני+</span></td>
+            <td>2–5</td>
+          </tr>
+          <tr>
+            <td>✨ דוג'ו הקוד העתיק</td>
+            <td>שליטה מוחלטת בכל המיומנויות</td>
+            <td><span class="skill-badge" style="background:rgba(255,234,167,0.1);color:#ffeaa7">מאסטר</span></td>
+            <td>6 בלבד</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="glow-divider"></div>
+
+    <!-- PROGRESSION NOTES -->
+    <div class="section-title"><span class="icon">🗺️</span> מפת ההתקדמות</div>
+    <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem;">
+      <div style="margin-bottom: 1.2rem;">
+        <div class="progress-row">
+          <span class="progress-label">דוג'ו הקוד</span>
+          <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+          <span class="progress-pct">100%</span>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">דוג'ו הרוח</span>
+          <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
+          <span class="progress-pct">85%</span>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">דוג'ו האש</span>
+          <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+          <span class="progress-pct">80%</span>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">דוג'ו הטבע</span>
+          <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+          <span class="progress-pct">75%</span>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">דוג'ו האמנות</span>
+          <div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div>
+          <span class="progress-pct">70%</span>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">דוג'ו הרעם</span>
+          <div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div>
+          <span class="progress-pct">65%</span>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">דוג'ו הצללים</span>
+          <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+          <span class="progress-pct">60%</span>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">דוג'ו הנתונים</span>
+          <div class="progress-bar"><div class="progress-fill" style="width:55%"></div></div>
+          <span class="progress-pct">55%</span>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">דוג'ו היצירה</span>
+          <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+          <span class="progress-pct">50%</span>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">דוג'ו הקוד העתיק</span>
+          <div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
+          <span class="progress-pct">20%</span>
+        </div>
+      </div>
+      <p style="font-size: 0.82rem; color: var(--text-muted);">* אחוזי פיתוח נרטיבי/תוכן — לא פיתוח קוד</p>
+    </div>
+
+    <div class="glow-divider"></div>
+
+    <!-- FUTURE DEVELOPMENT -->
+    <div class="section-title"><span class="icon">🔮</span> הערות לפיתוח עתידי</div>
+    <div class="notes-grid">
+      <div class="note-card">
+        <h4>🎭 מנהיגים לפיתוח</h4>
+        <ul>
+          <li>הזקן העתיק — דוג'ו הטבע</li>
+          <li>מאסטר האמן — דוג'ו האמנות</li>
+          <li>מאסטר הרעם — דוג'ו הרעם</li>
+          <li>מאסטר הצל — דוג'ו הצללים</li>
+          <li>מאסטר ה-AI — דוג'ו הנתונים</li>
+          <li>מאסטר היצירה — דוג'ו היצירה</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <h4>🏆 מערכת טורניר</h4>
+        <ul>
+          <li>טורנירים בין-דוג'ואיים — פרקים 5–6</li>
+          <li>דרגות ברונז/כסף/זהב לכל דוג'ו</li>
+          <li>ליגות לפי גיל — הפרדה קריטית</li>
+          <li>סנכרון עם לוח השנה בית-ספרי</li>
+          <li>טורנירים בזמן אמת לעומת מוגבלי זמן</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <h4>🎨 סקינים עונתיים</h4>
+        <ul>
+          <li>חנוכה — תמות כחול-כסף לכל דוג'ו</li>
+          <li>פורים — מסכות ותחפושות לדמויות</li>
+          <li>פסח — יציאת מצרים דיגיטלית</li>
+          <li>יום עצמאות — שחור-לבן-כחול</li>
+          <li>ט' באב — ממשק עצוב/מדוכא</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <h4>⚡ אתגרים ייחודיים</h4>
+        <ul>
+          <li>כל דוג'ו — מינימום 10 אתגרים</li>
+          <li>פתיחה הדרגתית לפי התקדמות</li>
+          <li>אתגרי קשר בין-דוג'ואיים</li>
+          <li>מצב ניסיון + מצב תחרות</li>
+          <li>לידרבורד לכל דוג'ו בנפרד</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="glow-divider"></div>
+
+    <!-- STORY CONNECTIONS -->
+    <div class="section-title"><span class="icon">📖</span> חיבורים נרטיביים</div>
+    <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem;">
+      <p style="color: var(--text-secondary); margin-bottom: 1.2rem; font-size: 0.92rem;">כיצד הדוג'ואים מתחברים לסיפור הגדול — תוכנית האיחוד לפרקים 5–6</p>
+      <div class="summary-grid" style="margin-top: 0;">
+        <div class="summary-card">
+          <span class="s-icon">⚔️</span>
+          <div class="s-name">ברית נגד הוירוס</div>
+          <div class="s-detail">כל 10 הדוג'ואים מתאחדים בפרק 6 נגד האיום הגדול</div>
+        </div>
+        <div class="summary-card">
+          <span class="s-icon">🌉</span>
+          <div class="s-name">גשרי ידידות</div>
+          <div class="s-detail">קיי, יוקי, נועה, לונה ורקס — כל אחד מייצג דוג'ו</div>
+        </div>
+        <div class="summary-card">
+          <span class="s-icon">👿</span>
+          <div class="s-name">קרב הגמר</div>
+          <div class="s-detail">וירוס+גלאיץ' = מגה-בוס — נדרש שיתוף כל הדוג'ואים</div>
+        </div>
+        <div class="summary-card">
+          <span class="s-icon">🌟</span>
+          <div class="s-name">ירושת מאסטר ביט</div>
+          <div class="s-detail">המנהיג העתיק מוסר את שרביט המנהיגות לדור הבא</div>
+        </div>
+        <div class="summary-card">
+          <span class="s-icon">🎓</span>
+          <div class="s-name">טקס הסיום הגדול</div>
+          <div class="s-detail">כל התלמידים מכל הדוג'ואים מוסמכים ביחד</div>
+        </div>
+        <div class="summary-card">
+          <span class="s-icon">🔄</span>
+          <div class="s-name">מחזור חדש</div>
+          <div class="s-detail">תלמידים ותיקים הופכים למורים — מעגל נסגר</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="doc-footer">
+      <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">⛩️</div>
+      <div>תוכנית התרחבות הדוג'ו — נינג'ה מקלדת</div>
+      <div style="margin-top: 0.3rem; color: var(--text-muted);">נוצר: מרץ 2026 | גרסה 1.0 | 10 דוג'ואים | 38 רעיונות הרחבה</div>
+    </div>
+
+  </div>
+</body>
+</html>

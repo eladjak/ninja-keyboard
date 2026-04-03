@@ -35,6 +35,20 @@ export interface CharacterConfig {
   evilHeroImage?: string
   /** Mid-transformation hero image (e.g. Virus mask cracking) */
   revealHeroImage?: string
+  /** Combat/battle mode hero image (e.g. Shadow with hood+mask) */
+  combatHeroImage?: string
+  /** Ancient/primordial form hero image (e.g. Virus ancient enemy of Master Beat) */
+  ancientHeroImage?: string
+  /** Fusion form hero image (e.g. Keres merged with Virus) */
+  fusionHeroImage?: string
+  /** Confused/early form hero image (e.g. Glitch before joining) */
+  confusedHeroImage?: string
+  /** Corrupted/evil form hero image (e.g. Glitch under Virus control) */
+  corruptedHeroImage?: string
+  /** Shattered/broken form hero image (e.g. Glitch after sacrifice) */
+  shatteredHeroImage?: string
+  /** Whole/restored form hero image (e.g. Glitch fully reassembled) */
+  wholeHeroImage?: string
   /**
    * Path to the expression sheet image (reference grid of multiple expressions).
    * These are multi-panel reference sheets, not individual mood images.
@@ -234,7 +248,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
     image: '/images/characters/model-sheets/rex-dino.jpg',
     heroImage: '/images/characters/heroes/rex-hero.jpg',
     expressionSheet: '/images/characters/expressions/rex-expressions.jpg',
-    glowColor: '#E17055',
+    glowColor: '#00B894',
     soundProfile: {
       oscillatorType: 'sawtooth',
       frequencyRange: [150, 350],
@@ -277,6 +291,10 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
     nameHe: 'גליץ\'',
     image: '/images/characters/model-sheets/glitch-entity.jpg',
     heroImage: '/images/characters/heroes/glitch-hero.jpg',
+    confusedHeroImage: '/images/characters/heroes/glitch-confused-hero.jpg',
+    corruptedHeroImage: '/images/characters/heroes/glitch-corrupted-hero.jpg',
+    shatteredHeroImage: '/images/characters/heroes/glitch-shattered-hero.jpg',
+    wholeHeroImage: '/images/characters/heroes/glitch-whole-hero.jpg',
     expressionSheet: '/images/characters/expressions/glitch-expressions.jpg',
     glowColor: '#E84393',
     soundProfile: {
@@ -299,6 +317,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
     nameHe: 'שאדו',
     image: '/images/characters/model-sheets/shadow-cat.jpg',
     heroImage: '/images/characters/heroes/shadow-hero.jpg',
+    combatHeroImage: '/images/characters/heroes/shadow-combat-hero.jpg',
     expressionSheet: '/images/characters/expressions/shadow-expressions.jpg',
     glowColor: '#636E72',
     soundProfile: {
@@ -367,6 +386,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
     heroImage: '/images/characters/heroes/virus-hero.jpg',
     evilHeroImage: '/images/characters/heroes/virus-evil-hero.jpg',
     revealHeroImage: '/images/characters/heroes/virus-reveal-hero.jpg',
+    ancientHeroImage: '/images/characters/heroes/virus-ancient-hero.jpg',
     expressionSheet: '/images/characters/expressions/virus-expressions.jpg',
     glowColor: '#D63031',
     soundProfile: {
@@ -389,6 +409,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
     nameHe: 'פאנטום',
     image: '/images/characters/model-sheets/raz-phantom.jpg',
     heroImage: '/images/characters/heroes/phantom-hero.jpg',
+    revealHeroImage: '/images/characters/heroes/phantom-revealed-hero.jpg',
     expressionSheet: '/images/characters/expressions/phantom-expressions.jpg',
     glowColor: '#9B59B6',
     soundProfile: {
@@ -499,6 +520,7 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
     nameHe: 'קרס',
     image: '/images/characters/model-sheets/keres.jpg',
     heroImage: '/images/characters/heroes/keres-hero.jpg',
+    fusionHeroImage: '/images/characters/heroes/keres-virus-fusion-hero.jpg',
     expressionSheet: '/images/characters/expressions/keres-expressions.jpg',
     glowColor: '#880E4F',
     soundProfile: {
@@ -560,6 +582,48 @@ export const CHARACTER_CONFIGS: Record<CharacterName, CharacterConfig> = {
       },
     },
   },
+
+  alon: {
+    nameHe: 'אלון',
+    image: '/images/characters/heroes/alon-hero.jpg',
+    heroImage: '/images/characters/heroes/alon-hero.jpg',
+    glowColor: '#C0A060',
+    soundProfile: {
+      oscillatorType: 'sine',
+      frequencyRange: [250, 450],
+    },
+    idleAnimation: {
+      y: [0, -3, 0],
+      rotate: [0, 1, 0],
+      transition: {
+        duration: 3.0,
+        repeat: INFINITE_REPEAT,
+        repeatType: 'reverse',
+        ease: 'easeInOut',
+      },
+    },
+  },
+
+  shir: {
+    nameHe: 'שיר',
+    image: '/images/characters/heroes/shir-hero.jpg',
+    heroImage: '/images/characters/heroes/shir-hero.jpg',
+    glowColor: '#E8A0B0',
+    soundProfile: {
+      oscillatorType: 'sine',
+      frequencyRange: [350, 550],
+    },
+    idleAnimation: {
+      y: [0, -2, 0],
+      rotate: [0, 0.5, 0],
+      transition: {
+        duration: 3.2,
+        repeat: INFINITE_REPEAT,
+        repeatType: 'reverse',
+        ease: 'easeInOut',
+      },
+    },
+  },
 }
 
 /** Characters considered heroes (player allies) */
@@ -576,6 +640,8 @@ const HERO_CHARACTERS: CharacterName[] = [
   'phantom',
   'masterBeat',
   'sakura',
+  'alon',
+  'shir',
 ]
 
 /**

@@ -23,6 +23,8 @@ export type CharacterName =
   | 'keres'
   | 'block'
   | 'lens'
+  | 'alon'
+  | 'shir'
 
 /** Character emotional states for animations and expression */
 export type CharacterMood =
