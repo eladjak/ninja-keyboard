@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Timer, Zap, Target, RotateCcw } from 'lucide-react'
+import { Timer, Zap, Target, RotateCcw, TrendingUp, Trophy, Crown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ShareButton } from '@/components/sharing/share-button'
 import { generateSpeedTestShareText } from '@/lib/sharing/share-utils'
@@ -54,6 +54,19 @@ export default function SpeedTestPage() {
   const correctRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const testText = useMemo(() => generateSpeedTestText(Date.now()), [])
+
+  // Personal best & history from speed-test sessions
+  const speedTestHistory = useMemo(() => {
+    const all = practiceHistory.results.filter((r) => r.textId === 'speed-test')
+    return all.slice(0, 10) // last 10
+  }, [practiceHistory.results])
+
+  const personalBest = useMemo(() => {
+    if (speedTestHistory.length === 0) return null
+    return speedTestHistory.reduce((best, r) => (r.wpm > best.wpm ? r : best))
+  }, [speedTestHistory])
+
+  const isNewRecord = result !== null && personalBest !== null && result.wpm > personalBest.wpm
 
   // ── Start test ──────────────────────────────────────────────
   const startTest = useCallback(() => {
@@ -239,6 +252,53 @@ export default function SpeedTestPage() {
               <Zap className="size-5" />
               התחל מבחן
             </Button>
+
+            {/* Personal best */}
+            {personalBest && (
+              <div className="flex items-center gap-3 rounded-xl px-4 py-2" style={{ background: 'oklch(0.15 0.02 292 / 40%)', border: '1px solid oklch(0.495 0.205 292 / 20%)' }}>
+                <Trophy className="size-5 text-amber-400" />
+                <div className="text-sm">
+                  <span className="text-muted-foreground">שיא אישי: </span>
+                  <span className="font-bold text-amber-400">{Math.round(personalBest.wpm)} מ/ד</span>
+                  <span className="text-muted-foreground"> | דיוק {Math.round(personalBest.accuracy)}%</span>
+                </div>
+              </div>
+            )}
+
+            {/* Recent history */}
+            {speedTestHistory.length > 1 && (
+              <div className="w-full space-y-2">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <TrendingUp className="size-4" />
+                  <span>היסטוריית מבחנים אחרונים</span>
+                </div>
+                <div className="flex items-end gap-1">
+                  {speedTestHistory.slice(0, 10).reverse().map((r, i) => {
+                    const maxWpm = Math.max(...speedTestHistory.map((h) => h.wpm), 1)
+                    const heightPct = Math.max(10, (r.wpm / maxWpm) * 100)
+                    const isBest = personalBest && r.wpm === personalBest.wpm
+                    return (
+                      <div key={r.completedAt} className="flex flex-1 flex-col items-center gap-1">
+                        <motion.div
+                          initial={{ scaleY: 0 }}
+                          animate={{ scaleY: 1 }}
+                          transition={{ delay: i * 0.05, duration: 0.15 }}
+                          className={cn(
+                            'w-full origin-bottom rounded-t',
+                            isBest ? 'bg-amber-400' : 'bg-primary/60',
+                          )}
+                          style={{ height: `${heightPct}px`, maxHeight: '60px', minHeight: '6px' }}
+                          title={`${Math.round(r.wpm)} מ/ד`}
+                        />
+                        <span className="text-[9px] text-muted-foreground tabular-nums">
+                          {Math.round(r.wpm)}
+                        </span>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
       )}
@@ -275,6 +335,21 @@ export default function SpeedTestPage() {
                 <CardTitle className="text-center text-lg">תוצאות מבחן מהירות</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
+                {/* New record banner */}
+                {isNewRecord && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex items-center justify-center gap-2 rounded-xl px-4 py-2"
+                    style={{ background: 'linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,165,0,0.15))', border: '2px solid rgba(255,215,0,0.5)' }}
+                  >
+                    <Crown className="size-5 text-amber-400" />
+                    <span className="font-bold text-amber-400">שיא אישי חדש!</span>
+                    <Crown className="size-5 text-amber-400" />
+                  </motion.div>
+                )}
+
                 {/* Rank badge */}
                 <div className="flex flex-col items-center gap-1">
                   <span className="text-5xl">{SPEED_RANK_LABELS[result.rank].emoji}</span>
