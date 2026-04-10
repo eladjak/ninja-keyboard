@@ -19,6 +19,7 @@ import { FingerGuide } from './finger-guide'
 import { SessionStats } from './session-stats'
 import { ConfettiBurst } from '@/components/effects/confetti-burst'
 import { useReducedMotion } from '@/hooks/use-reduced-motion'
+import { KiMascotFeedback } from './ki-mascot-feedback'
 import {
   computeSessionStats,
   isLessonComplete,
@@ -345,6 +346,9 @@ export function LessonView({ lessonId }: LessonViewProps) {
           onComboMilestone={handleComboMilestone}
         />
       </div>
+
+      {/* ── Ki mascot feedback ─────────────────────────────────────── */}
+      <KiMascotFeedback visible={session.isActive && !showResults} />
 
       {/* ── Keyboard ──────────────────────────────────────────────── */}
       <HebrewKeyboard

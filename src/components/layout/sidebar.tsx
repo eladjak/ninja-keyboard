@@ -19,6 +19,8 @@ import {
   LogOut,
   GraduationCap,
   Flame,
+  ImageIcon,
+  Target,
 } from 'lucide-react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
@@ -33,6 +35,7 @@ const navGroups = [
       { href: '/home', label: 'בית', icon: Home },
       { href: '/lessons', label: 'שיעורים', icon: BookOpen },
       { href: '/practice', label: 'תרגול חופשי', icon: Keyboard },
+      { href: '/drill', label: 'אימון מקשים', icon: Target },
       { href: '/speed-test', label: 'מבחן מהירות', icon: Timer },
     ],
   },
@@ -57,6 +60,7 @@ const navGroups = [
     items: [
       { href: '/profile', label: 'פרופיל', icon: User },
       { href: '/jukebox', label: "ג'וקבוקס", icon: Music },
+      { href: '/gallery', label: 'גלריית דמויות', icon: ImageIcon },
       { href: '/settings', label: 'הגדרות', icon: Settings },
     ],
   },

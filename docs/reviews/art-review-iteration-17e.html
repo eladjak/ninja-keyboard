@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>סקירת אומנות - איטרציה 17e | נינג'ה מקלדת</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: #0d0b1a;
+    color: #e0e0e0;
+    min-height: 100vh;
+    direction: rtl;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #1a1333 0%, #2d1b4e 50%, #1a1333 100%);
+    padding: 40px 20px;
+    text-align: center;
+    border-bottom: 3px solid #6C5CE7;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(108,92,231,0.15) 0%, transparent 60%),
+                radial-gradient(circle at 70% 50%, rgba(0,184,148,0.1) 0%, transparent 60%);
+  }
+  .header h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #fff;
+    position: relative;
+    text-shadow: 0 0 30px rgba(108,92,231,0.5);
+  }
+  .header p {
+    font-size: 1.1rem;
+    color: #a0a0d0;
+    margin-top: 8px;
+    position: relative;
+  }
+  .header .stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+    position: relative;
+  }
+  .header .stat {
+    text-align: center;
+  }
+  .header .stat-num {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #6C5CE7;
+  }
+  .header .stat-label {
+    font-size: 0.85rem;
+    color: #888;
+  }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+
+  .section {
+    margin-bottom: 50px;
+  }
+  .section-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title .icon { font-size: 1.5rem; }
+  .section-subtitle {
+    color: #888;
+    font-size: 1rem;
+    margin-bottom: 25px;
+    padding-right: 40px;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .card {
+    background: #151225;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #2a2545;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  .card:hover {
+    border-color: #6C5CE7;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(108,92,231,0.2);
+  }
+  .card.highlight {
+    border: 2px solid #00B894;
+    box-shadow: 0 0 20px rgba(0,184,148,0.15);
+  }
+  .card.highlight .badge { background: #00B894; }
+
+  .card-img-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    background: #0a0818;
+    overflow: hidden;
+  }
+  .card-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .card:hover .card-img-container img {
+    transform: scale(1.05);
+  }
+  .badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #6C5CE7;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .badge.updated { background: #F39C12; }
+  .badge.new { background: #00B894; }
+
+  .card-info {
+    padding: 16px 20px;
+  }
+  .card-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .card-role {
+    font-size: 0.9rem;
+    color: #6C5CE7;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .card-desc {
+    font-size: 0.85rem;
+    color: #999;
+    line-height: 1.6;
+  }
+  .card-dojo {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-top: 8px;
+    font-weight: 500;
+  }
+
+  /* Comparison section */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  .comparison-item {
+    background: #151225;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #2a2545;
+  }
+  .comparison-item .label {
+    padding: 10px 16px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  .comparison-item .label.before { background: #2d1b1b; color: #E17055; }
+  .comparison-item .label.after { background: #1b2d1f; color: #00B894; }
+  .comparison-item img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-overlay img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 12px;
+    box-shadow: 0 0 60px rgba(108,92,231,0.3);
+  }
+
+  /* Summary table */
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  .summary-table th, .summary-table td {
+    padding: 12px 16px;
+    text-align: right;
+    border-bottom: 1px solid #2a2545;
+  }
+  .summary-table th {
+    background: #1a1333;
+    color: #6C5CE7;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .summary-table td { color: #ccc; font-size: 0.9rem; }
+  .summary-table tr:hover { background: #1a1333; }
+
+  .status-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-left: 6px;
+  }
+  .status-dot.green { background: #00B894; }
+  .status-dot.yellow { background: #F39C12; }
+
+  .footer {
+    text-align: center;
+    padding: 40px;
+    color: #555;
+    border-top: 1px solid #1a1333;
+    margin-top: 60px;
+  }
+
+  @media (max-width: 768px) {
+    .card-grid { grid-template-columns: 1fr; }
+    .comparison { grid-template-columns: 1fr; }
+    .header h1 { font-size: 1.8rem; }
+    .header .stats { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>סקירת אומנות — איטרציה 17e</h1>
+  <p>עדכוני דמויות, מאסטרים חדשים, ותיקוני איור</p>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">8</div>
+      <div class="stat-label">תמונות חדשות/מעודכנות</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">42</div>
+      <div class="stat-label">סה"כ תמונות Hero</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">31</div>
+      <div class="stat-label">דמויות במערכת</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">10</div>
+      <div class="stat-label">דוג'ואים עם מאסטר</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Section 1: Updated Characters -->
+  <div class="section">
+    <div class="section-title">
+      <span class="icon">🔄</span>
+      דמויות מעודכנות
+    </div>
+    <div class="section-subtitle">רקס V4 (יותר חייכן) ושאדו קומבט V2 (תואם לדמות הבסיס)</div>
+
+    <div class="card-grid">
+      <!-- Rex V4 -->
+      <div class="card highlight" onclick="openModal('http://localhost:8787/images/characters/heroes/rex-hero.jpg')">
+        <div class="card-img-container">
+          <img src="http://localhost:8787/images/characters/heroes/rex-hero.jpg" alt="רקס V4" loading="lazy">
+          <span class="badge updated">עודכן V4</span>
+        </div>
+        <div class="card-info">
+          <div class="card-name">רקס V4</div>
+          <div class="card-role">גיימר דינוזאור סימפטי</div>
+          <div class="card-desc">
+            גרסה חדשה — יותר חייכן, חם ואוהב! דינו ירוק עם חיוך רחב ואופי סימפטי.
+            תוקן לפי פידבק: "צריך להיות לא רק מגניב אלא קצת יותר חייכן"
+          </div>
+          <span class="card-dojo" style="background:#00B89422;color:#00B894;">דוג'ו המשחקים</span>
+        </div>
+      </div>
+
+      <!-- Shadow Combat V2 -->
+      <div class="card highlight" onclick="openModal('http://localhost:8787/images/characters/heroes/shadow-combat-hero.jpg')">
+        <div class="card-img-container">
+          <img src="http://localhost:8787/images/characters/heroes/shadow-combat-hero.jpg" alt="שאדו קומבט V2" loading="lazy">
+          <span class="badge updated">עודכן V2</span>
+        </div>
+        <div class="card-info">
+          <div class="card-name">שאדו — מצב קרב V2</div>
+          <div class="card-role">חתול צללים עם ברדס ומסכה</div>
+          <div class="card-desc">
+            תוקן — עכשיו נראה כמו אותה דמות! אותו חתול כהה עם עיניים ירוקות,
+            פרווה כהה עם פסים כסופים, רק עם ברדס ומסכת נינג'ה.
+          </div>
+          <span class="card-dojo" style="background:#636E7222;color:#636E72;">דוג'ו הצללים</span>
+        </div>
+      </div>
+
+      <!-- Shadow base for comparison -->
+      <div class="card" onclick="openModal('http://localhost:8787/images/characters/heroes/shadow-hero.jpg')">
+        <div class="card-img-container">
+          <img src="http://localhost:8787/images/characters/heroes/shadow-hero.jpg" alt="שאדו בסיס" loading="lazy">
+          <span class="badge" style="background:#636E72;">בסיס</span>
+        </div>
+        <div class="card-info">
+          <div class="card-name">שאדו — דמות בסיס</div>
+          <div class="card-role">להשוואה עם מצב קרב</div>
+          <div class="card-desc">
+            דמות הבסיס של שאדו — חתול צללים עם עיניים ירוקות זוהרות, פרווה כהה עם פסים כסופים.
+            מצב הקרב V2 עכשיו תואם לעיצוב הזה.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: New Dojo Masters -->
+  <div class="section">
+    <div class="section-title">
+      <span class="icon">🏯</span>
+      6 מאסטרים חדשים לדוג'ואים
+    </div>
+    <div class="section-subtitle">כל 10 הדוג'ואים עכשיו עם מאסטר ייעודי! דמויות חיות מיוחדות, כל אחת עם אישיות ועולם ייחודי</div>
+
+    <div class="card-grid">
+      <!-- Talia -->
+      <div class="card highlight" onclick="openModal('http://localhost:8787/images/characters/heroes/talia-hero.jpg')">
+        <div class="card-img-container">
+          <img src="http://localhost:8787/images/characters/heroes/talia-hero.jpg" alt="טליה" loading="lazy">
+          <span class="badge new">חדש!</span>
+        </div>
+        <div class="card-info">
+          <div class="card-name">טליה</div>
+          <div class="card-role">מאסטרית דוג'ו הטבע — איילה</div>
+          <div class="card-desc">
+            איילת יער חכמה ורגישה, מלמדת ילדים לגלוש בטבע הדיגיטלי בסבלנות ובשקט.
+            מתמחה בהקלדה זורמת ונעימה, כמו הליכה ביער.
+          </div>
+          <span class="card-dojo" style="background:#7CDB8A22;color:#7CDB8A;">דוג'ו הטבע</span>
+        </div>
+      </div>
+
+      <!-- Dori -->
+      <div class="card highlight" onclick="openModal('http://localhost:8787/images/characters/heroes/dori-hero.jpg')">
+        <div class="card-img-container">
+          <img src="http://localhost:8787/images/characters/heroes/dori-hero.jpg" alt="דורי" loading="lazy">
+          <span class="badge new">חדש!</span>
+        </div>
+        <div class="card-info">
+          <div class="card-name">דורי</div>
+          <div class="card-role">מאסטר דוג'ו האמנות — תמנון</div>
+          <div class="card-desc">
+            תמנון יצירתי עם 8 זרועות שכותבות ומציירות בו-זמנית!
+            מלמד מולטיטאסקינג יצירתי ושימוש בקיצורי מקלדת לעיצוב.
+          </div>
+          <span class="card-dojo" style="background:#D980FA22;color:#D980FA;">דוג'ו האמנות</span>
+        </div>
+      </div>
+
+      <!-- Raam -->
+      <div class="card highlight" onclick="openModal('http://localhost:8787/images/characters/heroes/raam-hero.jpg')">
+        <div class="card-img-container">
+          <img src="http://localhost:8787/images/characters/heroes/raam-hero.jpg" alt="רעם" loading="lazy">
+          <span class="badge new">חדש!</span>
+        </div>
+        <div class="card-info">
+          <div class="card-name">רעם</div>
+          <div class="card-role">מאסטר דוג'ו הרעם — נשר</div>
+          <div class="card-desc">
+            נשר גאה ומהיר כברק! מלמד מהירות וזריזות בהקלדה.
+            הוא עד סטורם ובארק, ומפקח על אימוני המהירות הקיצוניים.
+          </div>
+          <span class="card-dojo" style="background:#00D4FF22;color:#00D4FF;">דוג'ו הרעם</span>
+        </div>
+      </div>
+
+      <!-- Laila -->
+      <div class="card highlight" onclick="openModal('http://localhost:8787/images/characters/heroes/laila-hero.jpg')">
+        <div class="card-img-container">
+          <img src="http://localhost:8787/images/characters/heroes/laila-hero.jpg" alt="ליילה" loading="lazy">
+          <span class="badge new">חדש!</span>
+        </div>
+        <div class="card-info">
+          <div class="card-name">ליילה</div>
+          <div class="card-role">מאסטרית דוג'ו הצללים — פנתר</div>
+          <div class="card-desc">
+            פנתרה שחורה מסתורית וחזקה. מלמדת דיוק, התגנבות ותכנון אסטרטגי.
+            היא המנטורית של שאדו — מלמדת אותו לשלוט בצללים.
+          </div>
+          <span class="card-dojo" style="background:#B388FF22;color:#B388FF;">דוג'ו הצללים</span>
+        </div>
+      </div>
+
+      <!-- Shaked -->
+      <div class="card highlight" onclick="openModal('http://localhost:8787/images/characters/heroes/shaked-hero.jpg')">
+        <div class="card-img-container">
+          <img src="http://localhost:8787/images/characters/heroes/shaked-hero.jpg" alt="שקד" loading="lazy">
+          <span class="badge new">חדש!</span>
+        </div>
+        <div class="card-info">
+          <div class="card-name">שקד</div>
+          <div class="card-role">מאסטרית דוג'ו הנתונים — ינשופה</div>
+          <div class="card-desc">
+            ינשופה חכמה שרואה הכל! מתמחה בניתוח נתונים, סטטיסטיקות הקלדה
+            ודפוסי למידה. מלמדת את פיקסל לקרוא נתונים כמו קוד.
+          </div>
+          <span class="card-dojo" style="background:#00E67622;color:#00E676;">דוג'ו הנתונים</span>
+        </div>
+      </div>
+
+      <!-- Gumby -->
+      <div class="card highlight" onclick="openModal('http://localhost:8787/images/characters/heroes/gumby-hero.jpg')">
+        <div class="card-img-container">
+          <img src="http://localhost:8787/images/characters/heroes/gumby-hero.jpg" alt="גמבי" loading="lazy">
+          <span class="badge new">חדש!</span>
+        </div>
+        <div class="card-info">
+          <div class="card-name">גמבי</div>
+          <div class="card-role">מאסטר דוג'ו היצירה — זיקית</div>
+          <div class="card-desc">
+            זיקית צבעונית ומשתנה! מלמדת גמישות, התאמה ויצירתיות.
+            משנה צבעים לפי מצב רוח ונושא — כל שיעור הוא הרפתקה חדשה!
+          </div>
+          <span class="card-dojo" style="background:#FF6B6B22;color:#FF6B6B;">דוג'ו היצירה</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Dojo Master Summary -->
+  <div class="section">
+    <div class="section-title">
+      <span class="icon">📊</span>
+      סיכום — כל 10 הדוג'ואים ומאסטרים
+    </div>
+
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th>דוג'ו</th>
+          <th>מאסטר</th>
+          <th>חיה</th>
+          <th>צבע</th>
+          <th>סטטוס</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>דוג'ו האש</td>
+          <td>בלייז</td>
+          <td>דרקון</td>
+          <td><span style="color:#FF6348">🔥 #FF6348</span></td>
+          <td><span class="status-dot green"></span>קיים</td>
+        </tr>
+        <tr>
+          <td>דוג'ו הרוח</td>
+          <td>סנסיי זן</td>
+          <td>צב</td>
+          <td><span style="color:#00CEC9">🌊 #00CEC9</span></td>
+          <td><span class="status-dot green"></span>קיים</td>
+        </tr>
+        <tr>
+          <td>דוג'ו הקוד</td>
+          <td>מאסטר ביט</td>
+          <td>ישות קוסמית</td>
+          <td><span style="color:#6C5CE7">💜 #6C5CE7</span></td>
+          <td><span class="status-dot green"></span>קיים</td>
+        </tr>
+        <tr>
+          <td>דוג'ו הריפוי</td>
+          <td>סאקורה</td>
+          <td>עגור</td>
+          <td><span style="color:#FD79A8">🌸 #FD79A8</span></td>
+          <td><span class="status-dot green"></span>קיים</td>
+        </tr>
+        <tr style="background:#1b2d1f22">
+          <td><strong>דוג'ו הטבע</strong></td>
+          <td><strong>טליה</strong></td>
+          <td>איילה</td>
+          <td><span style="color:#7CDB8A">🌿 #7CDB8A</span></td>
+          <td><span class="status-dot green"></span><strong>חדש!</strong></td>
+        </tr>
+        <tr style="background:#1b2d1f22">
+          <td><strong>דוג'ו האמנות</strong></td>
+          <td><strong>דורי</strong></td>
+          <td>תמנון</td>
+          <td><span style="color:#D980FA">🎨 #D980FA</span></td>
+          <td><span class="status-dot green"></span><strong>חדש!</strong></td>
+        </tr>
+        <tr style="background:#1b2d1f22">
+          <td><strong>דוג'ו הרעם</strong></td>
+          <td><strong>רעם</strong></td>
+          <td>נשר</td>
+          <td><span style="color:#00D4FF">⚡ #00D4FF</span></td>
+          <td><span class="status-dot green"></span><strong>חדש!</strong></td>
+        </tr>
+        <tr style="background:#1b2d1f22">
+          <td><strong>דוג'ו הצללים</strong></td>
+          <td><strong>ליילה</strong></td>
+          <td>פנתר</td>
+          <td><span style="color:#B388FF">🌙 #B388FF</span></td>
+          <td><span class="status-dot green"></span><strong>חדש!</strong></td>
+        </tr>
+        <tr style="background:#1b2d1f22">
+          <td><strong>דוג'ו הנתונים</strong></td>
+          <td><strong>שקד</strong></td>
+          <td>ינשופה</td>
+          <td><span style="color:#00E676">📊 #00E676</span></td>
+          <td><span class="status-dot green"></span><strong>חדש!</strong></td>
+        </tr>
+        <tr style="background:#1b2d1f22">
+          <td><strong>דוג'ו היצירה</strong></td>
+          <td><strong>גמבי</strong></td>
+          <td>זיקית</td>
+          <td><span style="color:#FF6B6B">🎭 #FF6B6B</span></td>
+          <td><span class="status-dot green"></span><strong>חדש!</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 4: What's Next -->
+  <div class="section">
+    <div class="section-title">
+      <span class="icon">🎮</span>
+      מה הלאה — תכנית פיתוח המשחק
+    </div>
+    <div class="section-subtitle">אחרי אישור הסקירה, ממשיכים לפיתוח משחק!</div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+      <div style="background:#151225;border-radius:12px;padding:20px;border:1px solid #2a2545;">
+        <div style="font-size:1.5rem;margin-bottom:8px;">🎯</div>
+        <div style="font-weight:700;color:#fff;margin-bottom:6px;">לולאת משחק מרכזית</div>
+        <div style="color:#888;font-size:0.85rem;">ליטוש זרימת שיעורים, מצבי תרגול, פידבק ממנוע ההקלדה</div>
+      </div>
+      <div style="background:#151225;border-radius:12px;padding:20px;border:1px solid #2a2545;">
+        <div style="font-size:1.5rem;margin-bottom:8px;">⚔️</div>
+        <div style="font-weight:700;color:#fff;margin-bottom:6px;">מערכת קרבות</div>
+        <div style="color:#888;font-size:0.85rem;">יריבי AI, מערכת קומבו, כוחות מיוחדים</div>
+      </div>
+      <div style="background:#151225;border-radius:12px;padding:20px;border:1px solid #2a2545;">
+        <div style="font-size:1.5rem;margin-bottom:8px;">📊</div>
+        <div style="font-weight:700;color:#fff;margin-bottom:6px;">סטטיסטיקות והתקדמות</div>
+        <div style="color:#888;font-size:0.85rem;">גרפים, היסטוריה, שיאים אישיים, WPM tracking</div>
+      </div>
+      <div style="background:#151225;border-radius:12px;padding:20px;border:1px solid #2a2545;">
+        <div style="font-size:1.5rem;margin-bottom:8px;">🔊</div>
+        <div style="font-weight:700;color:#fff;margin-bottom:6px;">סאונד ומוזיקה</div>
+        <div style="color:#888;font-size:0.85rem;">SFX לאינטראקציות, קולות ל-9 דמויות, שירי נושא</div>
+      </div>
+      <div style="background:#151225;border-radius:12px;padding:20px;border:1px solid #2a2545;">
+        <div style="font-size:1.5rem;margin-bottom:8px;">🧭</div>
+        <div style="font-weight:700;color:#fff;margin-bottom:6px;">ניווט סיידבר</div>
+        <div style="color:#888;font-size:0.85rem;">הוספת לינק לגלריה (/gallery) בתפריט הצדדי</div>
+      </div>
+      <div style="background:#151225;border-radius:12px;padding:20px;border:1px solid #2a2545;">
+        <div style="font-size:1.5rem;margin-bottom:8px;">⌨️</div>
+        <div style="font-weight:700;color:#fff;margin-bottom:6px;">מודול קיצורי מקלדת</div>
+        <div style="color:#888;font-size:0.85rem;">תרגול קיצורי דרך למערכת הפעלה ותוכנות</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  נינג'ה מקלדת — סקירת איטרציה 17e | 3 באפריל 2026<br>
+  42 תמונות Hero | 31 דמויות | 10 דוג'ואים מלאים
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal" onclick="closeModal()">
+  <img id="modal-img" src="" alt="תצוגה מוגדלת">
+</div>
+
+<script>
+function openModal(src) {
+  const modal = document.getElementById('modal');
+  const img = document.getElementById('modal-img');
+  img.src = src;
+  modal.classList.add('active');
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+
+</body>
+</html>
