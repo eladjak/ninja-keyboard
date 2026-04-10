@@ -5,22 +5,33 @@
 ## Sprint: Iteration 18 — Game Features, Art Fixes, Ki Mascot, Drill Mode
 
 ## Current State
-Iteration 18. Major gameplay features session. Art fixes (Rex V5, Shadow V3, Laila V2). Ki mascot feedback. Drill mode. Battle: combo system + power-ups (4 types, integrated). Speed-test: personal bests + history. Keyboard shortcuts module (20+ shortcuts, interactive practice). Statistics dashboard (charts, progress, weak keys). TypeScript: 0 errors, Tests: 1189+. Commits: b9722f5 through 10600e6.
+Iteration 18 COMPLETE (Apr 10, 2026). Massive gameplay session — 10 commits, 13 features shipped. Art fixes (Rex V5, Shadow V3, Laila V2). Ki mascot emotional feedback. Weak key drill mode. Battle: combo system (5 tiers) + power-ups (4 types, fully integrated into arena). Speed-test: personal bests + history chart + new record banner. Keyboard shortcuts module (22 shortcuts, 5 categories, interactive practice with SFX + difficulty stars). Statistics dashboard (overview, WPM chart, weak keys, session history, XP progress). TypeScript: 0 errors. Tests: 1189+. Commits: b9722f5 → 08ab0ca.
 
 ## EXACT CONTINUATION PLAN (for next session)
-### GAME DEVELOPMENT PRIORITIES (remaining)
-1. ~~Battle system enhancement~~ ✅ DONE (combo + power-ups + SFX)
-2. ~~Speed-test improvements~~ ✅ DONE (personal bests + history + record banner)
-3. ~~Shortcut learning module~~ ✅ DONE (20+ shortcuts, interactive practice)
-4. ~~Progress/statistics visualization~~ ✅ DONE (full dashboard with charts)
-5. ~~Sound integration~~ ✅ Already done (sidebar, tabs, home, battle)
-6. Voice generation — 9 characters still need ElevenLabs voices
-7. Theme songs — 8+ characters need Suno tracks
-8. Teacher/parent dashboard expansion
-9. 3D POC — waiting for GLB model upload (Tripo3D/Meshy)
-10. Lesson content expansion — more Hebrew texts for different levels
-11. Onboarding polish — first-time user experience
-12. Leaderboard system — competitive rankings
+### PRIORITY 1: Content & Audio
+1. Voice generation — 9 characters still need ElevenLabs voices (use voice-generate-all-hebrew.mjs)
+2. Theme songs — 8+ characters need Suno tracks (use suno-music-pipeline.mjs)
+3. Lesson content expansion — more Hebrew texts per difficulty level
+
+### PRIORITY 2: Backend & Social
+4. Leaderboard system — Supabase backend, competitive rankings by school/age
+5. Teacher/parent dashboard — class management, student progress reports, lesson planning
+6. Tournament mode — bracket system, automated scheduling
+
+### PRIORITY 3: Polish & Future
+7. Onboarding polish — first-time user experience, placement test flow
+8. 3D POC — waiting for GLB model upload (Tripo3D/Meshy)
+9. Mobile responsiveness — on-screen keyboard, touch support
+10. PWA offline mode — service worker, cache strategy
+
+### WHAT WAS COMPLETED IN ITERATION 18 (summary)
+- 5/9 original game dev priorities DONE in a single session
+- Battle system: combo (5 tiers) + power-ups (4 types) + SFX + shield mechanic
+- 3 new pages: /drill, /shortcuts (enhanced), /statistics (rebuilt)
+- Ki mascot now reacts to typing emotions in real-time
+- Speed-test now tracks personal bests with history visualization
+- Shortcut practice has difficulty stars and sound effects
+- 45 new tests added by agents (1189+ total)
 
 ### ITERATION 18 COMPLETED
 - ✅ Rex V5: balanced cool gamer dino with slight smile (not chibi)
