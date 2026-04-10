@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { soundManager } from '@/lib/audio/sound-manager'
 import { KeyCombo } from './shortcut-card'
 import type { ShortcutDefinition } from '@/lib/content/shortcuts'
 
@@ -130,6 +131,7 @@ export function ShortcutPractice({
 
       if (matchesShortcut(event, currentShortcut)) {
         // Correct!
+        soundManager.playCorrect()
         setFeedback('correct')
         setState('correct')
         setScore((prev) => prev + 1)
@@ -143,6 +145,7 @@ export function ShortcutPractice({
           event.key,
         )
         if (!isOnlyModifier) {
+          soundManager.playError()
           setFeedback('incorrect')
           setState('incorrect')
 
@@ -164,6 +167,17 @@ export function ShortcutPractice({
     setState('practicing')
     setFeedback(null)
   }
+
+  // Play completion sound once when the practice session ends
+  useEffect(() => {
+    if (!isCompleted) return
+    const xpReward = score * 10
+    if (score === total) {
+      soundManager.playLevelComplete()
+    } else if (xpReward > 0) {
+      soundManager.playXpGain()
+    }
+  }, [isCompleted, score, total])
 
   // ── Completed State ───────────────────────────────────────────
 
