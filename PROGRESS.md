@@ -1,33 +1,39 @@
 # Ninja Keyboard - Progress
 
 ## Status: Active
-## Last Updated: 2026-04-03
-## Sprint: Iteration 17d — Gallery, Configs, Art Fixes, Dojo Expansion
+## Last Updated: 2026-04-10
+## Sprint: Iteration 18 — Game Features, Art Fixes, Ki Mascot, Drill Mode
 
 ## Current State
-Iteration 17e. 6 NEW dojo masters created: Talia (deer/Nature), Dori (octopus/Art), Raam (eagle/Thunder), Laila (panther/Shadow), Shaked (owl/Data), Gumby (chameleon/Creation). ALL 10 dojos now have dedicated masters. 31 base characters, 42 total hero images. In-app gallery page. Rex V4 + Shadow combat V2 regenerated. TypeScript: 0 errors, Tests: 1144/1144. Commits: d82aa32, a432577, 6269509.
+Iteration 18. Art fixes: Rex V5, Shadow Combat V3, Laila V2. Ki mascot emotional feedback (7 states, Hebrew speech bubbles). Weak key drill mode (easy/medium/hard). Battle combo system (5 tiers, SFX, milestone popups). Sidebar: gallery+drill links. TypeScript: 0 errors, Tests: 1144/1144. Commits: b9722f5, 8e4c239.
 
 ## EXACT CONTINUATION PLAN (for next session)
 ### GAME DEVELOPMENT PRIORITIES
-1. Core gameplay loop polish — lesson flow, practice modes, typing engine feedback
-2. Battle system enhancement — AI opponents, combo system, power-ups
-3. Sidebar navigation — add gallery link (/gallery)
-4. Speed-test improvements — WPM tracking, personal bests
-5. Shortcut learning module — keyboard shortcut practice
-6. Progress/statistics visualization — charts, history
-7. Sound integration — more SFX for UI interactions
-8. Voice generation — 9 characters still need ElevenLabs voices
-9. Theme songs — 8+ characters need Suno tracks
-10. Teacher/parent dashboard expansion
-11. 3D POC — waiting for GLB model upload (Tripo3D/Meshy)
+1. Battle system enhancement — AI opponents, combo system, power-ups
+2. Speed-test improvements — WPM tracking, personal bests, rank badges
+3. Shortcut learning module — keyboard shortcut practice
+4. Progress/statistics visualization — charts, history
+5. Sound integration — more SFX for UI interactions
+6. Voice generation — 9 characters still need ElevenLabs voices
+7. Theme songs — 8+ characters need Suno tracks
+8. Teacher/parent dashboard expansion
+9. 3D POC — waiting for GLB model upload (Tripo3D/Meshy)
 
-### ART — DONE (Round 4 + 6 new dojo masters)
-- ✅ Shadow combat V2: regenerated to match base character (same cat features)
-- ✅ Rex V4: friendlier, more smiley version (warm sympathetic gamer dino)
-- ✅ Complete art gallery HTML with all 36+ heroes
-- ✅ Dojo expansion narrative plan (10 dojos, Hebrew HTML)
-- ✅ 6 new dojo masters: Talia, Dori, Raam, Laila, Shaked, Gumby (all with hero images)
-- ✅ All 10 dojos have dedicated master characters — no orphan dojos!
+### ITERATION 18 COMPLETED
+- ✅ Rex V5: balanced cool gamer dino with slight smile (not chibi)
+- ✅ Shadow Combat V3: matches base character (same gray cat with hood+mask)
+- ✅ Laila V2: anthropomorphic panther on 2 legs (consistent design language)
+- ✅ Ki mascot feedback: emotional detection + Hebrew speech bubbles during typing
+- ✅ Weak key drill page (/drill): targeted practice with easy/medium/hard modes
+- ✅ Drill text generator: per-key Hebrew words and sentences
+- ✅ Sidebar: added gallery (/gallery) and drill (/drill) navigation links
+- ✅ Ki mascot integrated into lesson-view.tsx
+- ✅ Battle combo system: 5 tiers (x5-x50+), Hebrew labels, milestone popups
+- ✅ Battle SFX: per-keystroke correct/error sounds, combo milestone hits
+
+### ART — DONE (Round 5)
+- ✅ All art user-approved (6 dojo masters, Rex V5, Shadow V3, Laila V2)
+- ✅ 42 hero images total, 31 characters in CHARACTER_CONFIGS
 
 ### ART ROUND 3 (Apr 3, 2026) — ALL DONE
 - ✅ Rex V3: GREEN color + gamer elements (headset, controller) + creative (beret, paintbrush)
