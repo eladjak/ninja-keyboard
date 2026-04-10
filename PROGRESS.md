@@ -5,19 +5,22 @@
 ## Sprint: Iteration 18 — Game Features, Art Fixes, Ki Mascot, Drill Mode
 
 ## Current State
-Iteration 18. Art fixes: Rex V5, Shadow Combat V3, Laila V2. Ki mascot emotional feedback (7 states, Hebrew speech bubbles). Weak key drill mode (easy/medium/hard). Battle combo system (5 tiers, SFX, milestone popups). Sidebar: gallery+drill links. TypeScript: 0 errors, Tests: 1144/1144. Commits: b9722f5, 8e4c239.
+Iteration 18. Major gameplay features session. Art fixes (Rex V5, Shadow V3, Laila V2). Ki mascot feedback. Drill mode. Battle: combo system + power-ups (4 types, integrated). Speed-test: personal bests + history. Keyboard shortcuts module (20+ shortcuts, interactive practice). Statistics dashboard (charts, progress, weak keys). TypeScript: 0 errors, Tests: 1189+. Commits: b9722f5 through 10600e6.
 
 ## EXACT CONTINUATION PLAN (for next session)
-### GAME DEVELOPMENT PRIORITIES
-1. Battle system enhancement — AI opponents, combo system, power-ups
-2. Speed-test improvements — WPM tracking, personal bests, rank badges
-3. Shortcut learning module — keyboard shortcut practice
-4. Progress/statistics visualization — charts, history
-5. Sound integration — more SFX for UI interactions
+### GAME DEVELOPMENT PRIORITIES (remaining)
+1. ~~Battle system enhancement~~ ✅ DONE (combo + power-ups + SFX)
+2. ~~Speed-test improvements~~ ✅ DONE (personal bests + history + record banner)
+3. ~~Shortcut learning module~~ ✅ DONE (20+ shortcuts, interactive practice)
+4. ~~Progress/statistics visualization~~ ✅ DONE (full dashboard with charts)
+5. ~~Sound integration~~ ✅ Already done (sidebar, tabs, home, battle)
 6. Voice generation — 9 characters still need ElevenLabs voices
 7. Theme songs — 8+ characters need Suno tracks
 8. Teacher/parent dashboard expansion
 9. 3D POC — waiting for GLB model upload (Tripo3D/Meshy)
+10. Lesson content expansion — more Hebrew texts for different levels
+11. Onboarding polish — first-time user experience
+12. Leaderboard system — competitive rankings
 
 ### ITERATION 18 COMPLETED
 - ✅ Rex V5: balanced cool gamer dino with slight smile (not chibi)
@@ -30,6 +33,11 @@ Iteration 18. Art fixes: Rex V5, Shadow Combat V3, Laila V2. Ki mascot emotional
 - ✅ Ki mascot integrated into lesson-view.tsx
 - ✅ Battle combo system: 5 tiers (x5-x50+), Hebrew labels, milestone popups
 - ✅ Battle SFX: per-keystroke correct/error sounds, combo milestone hits
+- ✅ Battle power-ups: speed boost, shield (3 hits), freeze AI, double XP — with cooldowns + combo earning
+- ✅ Power-ups integrated into battle arena (shield absorbs errors, tick timer, combo milestones)
+- ✅ Speed-test: personal best display, history bar chart, new record crown banner
+- ✅ Keyboard shortcuts module: 20+ shortcuts, 5 categories, interactive key combo practice, Mika avatar
+- ✅ Statistics dashboard: overview cards, WPM trend chart, problematic keys, session history, XP progress
 
 ### ART — DONE (Round 5)
 - ✅ All art user-approved (6 dojo masters, Rex V5, Shadow V3, Laila V2)
