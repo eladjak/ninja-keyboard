@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Swords, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { BattleResults } from '@/components/battle/battle-results'
+import { BattleCombo } from '@/components/battle/battle-combo'
 import { AIOpponent } from '@/components/battle/ai-opponent'
 import { soundManager } from '@/lib/audio/sound-manager'
 import { useReducedMotion } from '@/hooks/use-reduced-motion'
@@ -83,6 +84,8 @@ export function BattleArena() {
   const [battleStarted, setBattleStarted] = useState(false)
   // Final AI stats from the match result (set when AI finishes)
   const [finalAIStats, setFinalAIStats] = useState<FinalAIStats>({ wpm: 0, accuracy: 100 })
+  // Combo tracking
+  const [combo, setCombo] = useState(0)
 
   const inputRef = useRef<HTMLInputElement>(null)
   const battleEndedRef = useRef(false)
@@ -130,6 +133,7 @@ export function BattleArena() {
     if (phase === 'battle') {
       soundManager.playBattleStart()
       setBattleStarted(true)
+      setCombo(0)
       battleEndedRef.current = false
       battleStartTimeRef.current = Date.now()
       inputRef.current?.focus()
@@ -272,6 +276,22 @@ export function BattleArena() {
       const typed = value[value.length - 1]
       const expected = battleState.text[battleState.playerProgress]
       const isCorrect = typed === expected
+
+      // Combo tracking + SFX
+      if (isCorrect) {
+        setCombo((c) => {
+          const next = c + 1
+          if (next === 10 || next === 20 || next === 30 || next === 50) {
+            soundManager.playComboHit()
+          } else {
+            soundManager.playCorrect()
+          }
+          return next
+        })
+      } else {
+        setCombo(0)
+        soundManager.playError()
+      }
 
       setBattleState((prev) => {
         if (!prev || prev.status === 'finished') return prev
@@ -515,6 +535,10 @@ export function BattleArena() {
           </div>
           <div className="text-muted-foreground text-xs" aria-live="polite" aria-atomic="true">
             דיוק: {playerAccuracy}%
+          </div>
+          {/* Combo counter */}
+          <div className="relative mt-2 flex justify-center">
+            <BattleCombo combo={combo} />
           </div>
         </div>
 
