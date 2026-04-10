@@ -7,6 +7,7 @@ import { Swords, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { BattleResults } from '@/components/battle/battle-results'
 import { BattleCombo } from '@/components/battle/battle-combo'
+import { BattlePowerUps } from '@/components/battle/battle-power-ups'
 import { AIOpponent } from '@/components/battle/ai-opponent'
 import { soundManager } from '@/lib/audio/sound-manager'
 import { useReducedMotion } from '@/hooks/use-reduced-motion'
@@ -23,6 +24,16 @@ import {
   calculatePlayerAccuracy,
 } from '@/lib/battle/battle-engine'
 import { RIVAL_DISPLAY } from '@/lib/battle/ai-typing-engine'
+import {
+  type PowerUpState,
+  type PowerUpId,
+  createPowerUpState,
+  activatePowerUp,
+  tickPowerUps,
+  checkComboMilestone,
+  consumeShieldHit,
+  isShieldActive,
+} from '@/lib/battle/power-ups'
 import { useXpStore } from '@/stores/xp-store'
 import { useAIOpponentStore } from '@/stores/ai-opponent-store'
 import type { RivalName, DifficultyLevel, AIMatchResult } from '@/types/ai-opponent'
@@ -86,6 +97,8 @@ export function BattleArena() {
   const [finalAIStats, setFinalAIStats] = useState<FinalAIStats>({ wpm: 0, accuracy: 100 })
   // Combo tracking
   const [combo, setCombo] = useState(0)
+  // Power-up state
+  const [powerUpState, setPowerUpState] = useState<PowerUpState>(createPowerUpState)
 
   const inputRef = useRef<HTMLInputElement>(null)
   const battleEndedRef = useRef(false)
@@ -134,6 +147,7 @@ export function BattleArena() {
       soundManager.playBattleStart()
       setBattleStarted(true)
       setCombo(0)
+      setPowerUpState(createPowerUpState())
       battleEndedRef.current = false
       battleStartTimeRef.current = Date.now()
       inputRef.current?.focus()
@@ -146,6 +160,8 @@ export function BattleArena() {
           if (!prev || prev.status === 'finished') return prev
           return { ...prev, timeElapsed: elapsed }
         })
+        // Tick power-up timers
+        setPowerUpState((prev) => tickPowerUps(prev, 100))
       }, 100)
     }
 
@@ -277,7 +293,15 @@ export function BattleArena() {
       const expected = battleState.text[battleState.playerProgress]
       const isCorrect = typed === expected
 
-      // Combo tracking + SFX
+      // Shield absorbs errors
+      if (!isCorrect && isShieldActive(powerUpState)) {
+        setPowerUpState((prev) => consumeShieldHit(prev))
+        // Shield absorbed the hit — don't count as error, don't reset combo
+        e.target.value = ''
+        return
+      }
+
+      // Combo tracking + SFX + power-up milestones
       if (isCorrect) {
         setCombo((c) => {
           const next = c + 1
@@ -286,6 +310,8 @@ export function BattleArena() {
           } else {
             soundManager.playCorrect()
           }
+          // Check for power-up milestone grant
+          setPowerUpState((prev) => checkComboMilestone(prev, next))
           return next
         })
       } else {
@@ -511,6 +537,13 @@ export function BattleArena() {
         autoComplete="off"
         data-testid="battle-input"
         tabIndex={0}
+      />
+
+      {/* Power-ups */}
+      <BattlePowerUps
+        powerUpState={powerUpState}
+        onActivate={(id: PowerUpId) => setPowerUpState((prev) => activatePowerUp(prev, id))}
+        visible={phase === 'battle'}
       />
 
       {/* Player vs AI header */}
