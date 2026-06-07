@@ -1,7 +1,10 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { createMiddlewareClient } from '@/lib/supabase/middleware'
 
-const PROTECTED_ROUTES = ['/home', '/lessons', '/battle', '/progress', '/profile', '/settings']
+// Phase 1 (blueprint A5b): account-only routes. /lessons and /battle are public
+// so guests can play with localStorage-only (low-friction onboarding). Auth is
+// enforced only when Supabase env is present (see the env guard below).
+const PROTECTED_ROUTES = ['/home', '/progress', '/profile', '/settings']
 const AUTH_ROUTES = ['/login', '/register', '/join']
 
 export async function middleware(request: NextRequest) {

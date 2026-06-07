@@ -1,5 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { debouncedPush, fireAndForget } from '@/lib/sync/debounce'
+import { pushPlayerState } from '@/lib/sync/progress-sync'
 
 interface DailyChallengeState {
   /** Map of date string -> completion status */
@@ -19,13 +21,22 @@ export const useDailyChallengeStore = create<DailyChallengeState>()(
     (set, get) => ({
       completedChallenges: {},
 
-      completeChallenge: (date, xpEarned) =>
+      completeChallenge: (date, xpEarned) => {
         set((s) => ({
           completedChallenges: {
             ...s.completedChallenges,
             [date]: { completedAt: Date.now(), xpEarned },
           },
-        })),
+        }))
+        // Write-through: daily-challenge map lives in player_state.daily (debounced).
+        debouncedPush('player_state.daily', () => {
+          fireAndForget(
+            pushPlayerState({
+              daily: useDailyChallengeStore.getState().completedChallenges,
+            }),
+          )
+        })
+      },
 
       isChallengeCompleted: (date) => {
         return date in get().completedChallenges

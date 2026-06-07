@@ -1,5 +1,8 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { debouncedPush, fireAndForget } from '@/lib/sync/debounce'
+import { pushGamification } from '@/lib/sync/progress-sync'
+import { useXpStore } from './xp-store'
 
 interface EarnedBadgeRecord {
   earnedAt: string
@@ -32,15 +35,27 @@ export const useBadgeStore = create<BadgeState>()(
         set((s) => {
           // Do not overwrite if already earned
           if (badgeId in s.earnedBadges) return s
-          return {
-            earnedBadges: {
-              ...s.earnedBadges,
-              [badgeId]: {
-                earnedAt: new Date().toISOString(),
-                ...(lessonId !== undefined ? { lessonId } : {}),
-              },
+          const earnedBadges = {
+            ...s.earnedBadges,
+            [badgeId]: {
+              earnedAt: new Date().toISOString(),
+              ...(lessonId !== undefined ? { lessonId } : {}),
             },
           }
+          // Write-through: badges live in the gamification row; push it (debounced)
+          // alongside the current xp/level/streak so the single row stays whole.
+          debouncedPush('gamification', () => {
+            const xp = useXpStore.getState()
+            fireAndForget(
+              pushGamification({
+                xp: xp.totalXp,
+                level: xp.level,
+                streak: xp.streak,
+                badges: useBadgeStore.getState().earnedBadges,
+              }),
+            )
+          })
+          return { earnedBadges }
         }),
 
       hasBadge: (badgeId) => badgeId in get().earnedBadges,

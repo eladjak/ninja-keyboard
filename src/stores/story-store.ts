@@ -2,6 +2,9 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 import type { CharacterName, DialogChoice, StoryFlags } from '@/types/story'
+import { debouncedPush, fireAndForget } from '@/lib/sync/debounce'
+import { pushPlayerState } from '@/lib/sync/progress-sync'
+import type { StorySnapshot } from '@/lib/sync/snapshot'
 
 interface BossResult {
   defeated: boolean
@@ -73,6 +76,28 @@ const DEFAULT_FLAGS: StoryFlags = {
   finalBossDefeated: false,
 }
 
+/** Extract the serializable persisted shape of the story store. */
+function toStorySnapshot(s: StoryState): StorySnapshot {
+  return {
+    currentAct: s.currentAct,
+    unlockedCharacters: s.unlockedCharacters,
+    storyFlags: s.storyFlags,
+    seenStoryBeats: s.seenStoryBeats,
+    seenDialogBeats: s.seenDialogBeats,
+    dialogChoices: s.dialogChoices,
+    bossResults: s.bossResults,
+    storyEnabled: s.storyEnabled,
+  }
+}
+
+/** Debounced write-through of the whole story blob to player_state.story. */
+function syncStory(): void {
+  debouncedPush('player_state.story', () => {
+    const snapshot = toStorySnapshot(useStoryStore.getState())
+    fireAndForget(pushPlayerState({ story: snapshot }))
+  })
+}
+
 export const useStoryStore = create<StoryState>()(
   persist(
     (set, get) => ({
@@ -85,7 +110,7 @@ export const useStoryStore = create<StoryState>()(
       bossResults: {},
       storyEnabled: true,
 
-      markBeatSeen: (lessonNumber, phase) =>
+      markBeatSeen: (lessonNumber, phase) => {
         set((s) => {
           const existing = s.seenStoryBeats[lessonNumber] ?? {
             pre: false,
@@ -100,21 +125,25 @@ export const useStoryStore = create<StoryState>()(
               },
             },
           }
-        }),
+        })
+        syncStory()
+      },
 
-      markDialogBeatSeen: (beatId) =>
+      markDialogBeatSeen: (beatId) => {
         set((s) => ({
           seenDialogBeats: {
             ...s.seenDialogBeats,
             [beatId]: true,
           },
-        })),
+        }))
+        syncStory()
+      },
 
       isDialogBeatSeen: (beatId) => {
         return get().seenDialogBeats[beatId] === true
       },
 
-      recordDialogChoice: (beatId, lineId, choice) =>
+      recordDialogChoice: (beatId, lineId, choice) => {
         set((s) => {
           const existing = s.dialogChoices[beatId] ?? []
           const recorded: RecordedChoice = {
@@ -128,25 +157,31 @@ export const useStoryStore = create<StoryState>()(
               [beatId]: [...existing, recorded],
             },
           }
-        }),
+        })
+        syncStory()
+      },
 
-      unlockCharacter: (character) =>
+      unlockCharacter: (character) => {
         set((s) => {
           if (s.unlockedCharacters.includes(character)) return s
           return {
             unlockedCharacters: [...s.unlockedCharacters, character],
           }
-        }),
+        })
+        syncStory()
+      },
 
-      setStoryFlag: (flag) =>
+      setStoryFlag: (flag) => {
         set((s) => ({
           storyFlags: {
             ...s.storyFlags,
             [flag]: true,
           },
-        })),
+        }))
+        syncStory()
+      },
 
-      recordBossResult: (lessonNumber, defeated, accuracy) =>
+      recordBossResult: (lessonNumber, defeated, accuracy) => {
         set((s) => {
           const existing = s.bossResults[lessonNumber]
           const attempts = existing ? existing.attempts + 1 : 1
@@ -164,12 +199,16 @@ export const useStoryStore = create<StoryState>()(
               },
             },
           }
-        }),
+        })
+        syncStory()
+      },
 
-      toggleStory: () =>
+      toggleStory: () => {
         set((s) => ({
           storyEnabled: !s.storyEnabled,
-        })),
+        }))
+        syncStory()
+      },
 
       getCurrentAct: (highestCompletedLesson) => {
         if (highestCompletedLesson >= 15) {

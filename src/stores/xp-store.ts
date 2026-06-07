@@ -1,5 +1,8 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { debouncedPush, fireAndForget } from '@/lib/sync/debounce'
+import { pushGamification, pushProgress } from '@/lib/sync/progress-sync'
+import { useBadgeStore } from './badge-store'
 
 /** XP thresholds for each level (cumulative) */
 const LEVEL_THRESHOLDS = [
@@ -69,6 +72,21 @@ function getTodayString(): string {
   return new Date().toISOString().split('T')[0]
 }
 
+/**
+ * Debounced write-through of gamification totals. Reads the latest earned
+ * badges from badge-store so xp/level/streak and badges stay co-located in the
+ * single `gamification` row (matching the schema). No-op when guest / no env
+ * (the push itself guards on the current user).
+ */
+function syncGamification(totalXp: number, level: number, streak: number): void {
+  debouncedPush('gamification', () => {
+    const badges = useBadgeStore.getState().earnedBadges
+    fireAndForget(
+      pushGamification({ xp: totalXp, level, streak, badges }),
+    )
+  })
+}
+
 export const useXpStore = create<XpState>()(
   persist(
     (set, get) => ({
@@ -81,7 +99,9 @@ export const useXpStore = create<XpState>()(
       addXp: (amount) =>
         set((s) => {
           const totalXp = s.totalXp + amount
-          return { totalXp, level: calculateLevel(totalXp) }
+          const level = calculateLevel(totalXp)
+          syncGamification(totalXp, level, s.streak)
+          return { totalXp, level }
         }),
 
       completeLesson: (lessonId, wpm, accuracy) =>
@@ -96,6 +116,14 @@ export const useXpStore = create<XpState>()(
             completedAt: Date.now(),
             attempts: existing ? existing.attempts + 1 : 1,
           }
+          // Write-through: per-lesson progress upserts on completion (not debounced).
+          fireAndForget(
+            pushProgress(lessonId, {
+              bestWpm: completedLesson.bestWpm,
+              bestAccuracy: completedLesson.bestAccuracy,
+              attempts: completedLesson.attempts,
+            }),
+          )
           return {
             completedLessons: {
               ...s.completedLessons,
@@ -116,6 +144,7 @@ export const useXpStore = create<XpState>()(
           const streak =
             s.lastPracticeDate === yesterdayStr ? s.streak + 1 : 1
 
+          syncGamification(s.totalXp, s.level, streak)
           return { streak, lastPracticeDate: today }
         }),
 
