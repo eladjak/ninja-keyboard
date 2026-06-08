@@ -1,0 +1,2950 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "b77d27658222e54d3fb1f6193f286b63213874c7",
+  "generatedAt": "2026-06-08T09:22:45.684Z",
+  "files": {
+    "src/app/(app)/battle/battle-client.tsx": {
+      "filePath": "src/app/(app)/battle/battle-client.tsx",
+      "contentHash": "9d2c0a71a6c7dbef26bb65dc9805549b388d92a0cc8aa3e81b71f81211001975",
+      "functions": [
+        {
+          "name": "BattleClient",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/components/battle/battle-arena",
+          "specifiers": [
+            "BattleArena"
+          ]
+        }
+      ],
+      "exports": [
+        "BattleClient"
+      ],
+      "totalLines": 8,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/battle/loading.tsx": {
+      "filePath": "src/app/(app)/battle/loading.tsx",
+      "contentHash": "cfe1b9c7633e267a42229d0a1ff81c4dfc1e5e4d6649683cf8d5040a26d03a09",
+      "functions": [
+        {
+          "name": "BattleLoading",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/components/feedback/ninja-loader",
+          "specifiers": [
+            "NinjaLoader"
+          ]
+        }
+      ],
+      "exports": [
+        "BattleLoading"
+      ],
+      "totalLines": 6,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/battle/page.tsx": {
+      "filePath": "src/app/(app)/battle/page.tsx",
+      "contentHash": "a976a2d17823120639cbfe4fbd39ec41cfb8e828583b057bb567c8544fef9771",
+      "functions": [
+        {
+          "name": "BattlePage",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "./battle-client",
+          "specifiers": [
+            "BattleClient"
+          ]
+        }
+      ],
+      "exports": [
+        "BattlePage"
+      ],
+      "totalLines": 6,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/layout.tsx": {
+      "filePath": "src/app/(app)/layout.tsx",
+      "contentHash": "3f326852edced89e8b5efa01de8d7d3eac38182444ff8440486e8d80eb25a05e",
+      "functions": [
+        {
+          "name": "AppLayout",
+          "params": [
+            "{ children }"
+          ],
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/components/layout/app-shell",
+          "specifiers": [
+            "AppShell"
+          ]
+        }
+      ],
+      "exports": [
+        "AppLayout"
+      ],
+      "totalLines": 6,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/lessons/[id]/lesson-page-client.tsx": {
+      "filePath": "src/app/(app)/lessons/[id]/lesson-page-client.tsx",
+      "contentHash": "4e380fef152bdac76920c1a64e24726b9c1a000943a5abb490e973508129cee5",
+      "functions": [
+        {
+          "name": "LessonPageClient",
+          "params": [
+            "{ lesson, content }"
+          ],
+          "exported": true,
+          "lineCount": 419
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useEffect",
+            "useState",
+            "useCallback",
+            "useMemo",
+            "useRef"
+          ]
+        },
+        {
+          "source": "next/navigation",
+          "specifiers": [
+            "useRouter"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "specifiers": [
+            "ArrowRight",
+            "RotateCcw",
+            "Trophy",
+            "Star"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "specifiers": [
+            "motion",
+            "AnimatePresence"
+          ]
+        },
+        {
+          "source": "@/components/ui/button",
+          "specifiers": [
+            "Button"
+          ]
+        },
+        {
+          "source": "@/components/ui/card",
+          "specifiers": [
+            "CardContent",
+            "CardHeader",
+            "CardTitle"
+          ]
+        },
+        {
+          "source": "@/components/ui/badge",
+          "specifiers": [
+            "Badge"
+          ]
+        },
+        {
+          "source": "@/components/story/story-trigger-wrapper",
+          "specifiers": [
+            "StoryTriggerWrapper"
+          ]
+        },
+        {
+          "source": "@/components/effects/confetti-burst",
+          "specifiers": [
+            "ConfettiBurst"
+          ]
+        },
+        {
+          "source": "@/stores/typing-session-store",
+          "specifiers": [
+            "useTypingSessionStore"
+          ]
+        },
+        {
+          "source": "@/stores/xp-store",
+          "specifiers": [
+            "useXpStore"
+          ]
+        },
+        {
+          "source": "@/stores/settings-store",
+          "specifiers": [
+            "useSettingsStore"
+          ]
+        },
+        {
+          "source": "@/lib/audio/sound-manager",
+          "specifiers": [
+            "soundManager"
+          ]
+        },
+        {
+          "source": "@/lib/typing-engine/engine",
+          "specifiers": [
+            "computeSessionStats",
+            "isLessonComplete",
+            "calculateXpReward"
+          ]
+        },
+        {
+          "source": "@/lib/typing-engine/keyboard-layout",
+          "specifiers": [
+            "CHAR_TO_KEY"
+          ]
+        },
+        {
+          "source": "@/lib/typing-engine/types",
+          "specifiers": [
+            "LessonDefinition",
+            "LessonContent"
+          ]
+        },
+        {
+          "source": "@/hooks/use-story-trigger",
+          "specifiers": [
+            "StoryTriggerEvent"
+          ]
+        }
+      ],
+      "exports": [
+        "LessonPageClient"
+      ],
+      "totalLines": 449,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/lessons/[id]/page.tsx": {
+      "filePath": "src/app/(app)/lessons/[id]/page.tsx",
+      "contentHash": "55b3ec27932a87f946c083d42499128b68841891c26f266505d7c186f733cb14",
+      "functions": [
+        {
+          "name": "LessonPage",
+          "params": [
+            "{ params }"
+          ],
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "generateStaticParams",
+          "params": [],
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/navigation",
+          "specifiers": [
+            "notFound"
+          ]
+        },
+        {
+          "source": "@/lib/content/lessons",
+          "specifiers": [
+            "getLessonById"
+          ]
+        },
+        {
+          "source": "@/lib/content/sentences",
+          "specifiers": [
+            "getLessonContent"
+          ]
+        },
+        {
+          "source": "./lesson-page-client",
+          "specifiers": [
+            "LessonPageClient"
+          ]
+        }
+      ],
+      "exports": [
+        "LessonPage",
+        "generateStaticParams"
+      ],
+      "totalLines": 28,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/lessons/lesson-list-client.tsx": {
+      "filePath": "src/app/(app)/lessons/lesson-list-client.tsx",
+      "contentHash": "ce73825ed4273937dd7f0cb57f07fc7f86dc7df95c4b55c62ea2ad34175b5eac",
+      "functions": [
+        {
+          "name": "LessonListClient",
+          "params": [
+            "{ lessons }"
+          ],
+          "exported": true,
+          "lineCount": 106
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "specifiers": [
+            "Lock",
+            "CheckCircle2",
+            "ChevronLeft",
+            "Keyboard"
+          ]
+        },
+        {
+          "source": "@/components/ui/badge",
+          "specifiers": [
+            "Badge"
+          ]
+        },
+        {
+          "source": "@/stores/xp-store",
+          "specifiers": [
+            "useXpStore"
+          ]
+        },
+        {
+          "source": "@/lib/typing-engine/types",
+          "specifiers": [
+            "LessonDefinition"
+          ]
+        }
+      ],
+      "exports": [
+        "LessonListClient"
+      ],
+      "totalLines": 146,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/lessons/loading.tsx": {
+      "filePath": "src/app/(app)/lessons/loading.tsx",
+      "contentHash": "f72d8e1ef0215a441eb53740a4b78cad72ff19b8b3d47affa9aaa08d43a99327",
+      "functions": [
+        {
+          "name": "LessonsLoading",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/components/feedback/ninja-loader",
+          "specifiers": [
+            "NinjaLoader"
+          ]
+        }
+      ],
+      "exports": [
+        "LessonsLoading"
+      ],
+      "totalLines": 6,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/lessons/page.tsx": {
+      "filePath": "src/app/(app)/lessons/page.tsx",
+      "contentHash": "127627194b32ffff95d96070c41171638ffa988124a079f8bfd4c89dd69ed035",
+      "functions": [
+        {
+          "name": "LessonsPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 36
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/image",
+          "specifiers": [
+            "Image"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "specifiers": [
+            "BookOpen"
+          ]
+        },
+        {
+          "source": "@/lib/content/lessons",
+          "specifiers": [
+            "LESSONS"
+          ]
+        },
+        {
+          "source": "./lesson-list-client",
+          "specifiers": [
+            "LessonListClient"
+          ]
+        },
+        {
+          "source": "@/components/characters/character-idle-wrapper",
+          "specifiers": [
+            "CharacterIdleWrapper"
+          ]
+        }
+      ],
+      "exports": [
+        "LessonsPage"
+      ],
+      "totalLines": 45,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/practice/loading.tsx": {
+      "filePath": "src/app/(app)/practice/loading.tsx",
+      "contentHash": "ffa262f7ae782efcc6a836029ce4ebc39738dde239b507fa1084bbaf2821c6d1",
+      "functions": [
+        {
+          "name": "PracticeLoading",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/components/feedback/ninja-loader",
+          "specifiers": [
+            "NinjaLoader"
+          ]
+        }
+      ],
+      "exports": [
+        "PracticeLoading"
+      ],
+      "totalLines": 6,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/practice/page.tsx": {
+      "filePath": "src/app/(app)/practice/page.tsx",
+      "contentHash": "cd1374c89cd4b0658371f6efedc3002969325ca3f35bf899aa80d65db225135f",
+      "functions": [
+        {
+          "name": "PracticePage",
+          "params": [],
+          "exported": true,
+          "lineCount": 470
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/image",
+          "specifiers": [
+            "Image"
+          ]
+        },
+        {
+          "source": "react",
+          "specifiers": [
+            "useState",
+            "useCallback",
+            "useEffect",
+            "useRef"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "specifiers": [
+            "motion",
+            "AnimatePresence"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "specifiers": [
+            "Keyboard",
+            "Target",
+            "Zap",
+            "RotateCcw",
+            "ChevronDown"
+          ]
+        },
+        {
+          "source": "@/components/ui/button",
+          "specifiers": [
+            "Button"
+          ]
+        },
+        {
+          "source": "@/components/ui/badge",
+          "specifiers": [
+            "Badge"
+          ]
+        },
+        {
+          "source": "@/components/ui/card",
+          "specifiers": [
+            "Card",
+            "CardContent",
+            "CardHeader",
+            "CardTitle"
+          ]
+        },
+        {
+          "source": "@/components/typing/typing-area",
+          "specifiers": [
+            "TypingArea"
+          ]
+        },
+        {
+          "source": "@/components/typing/hebrew-keyboard",
+          "specifiers": [
+            "HebrewKeyboard"
+          ]
+        },
+        {
+          "source": "@/components/typing/session-stats",
+          "specifiers": [
+            "SessionStats"
+          ]
+        },
+        {
+          "source": "@/components/practice/practice-timer",
+          "specifiers": [
+            "PracticeTimer",
+            "TIMER_LABELS"
+          ]
+        },
+        {
+          "source": "@/components/practice/practice-timer",
+          "specifiers": [
+            "TimerDuration"
+          ]
+        },
+        {
+          "source": "@/stores/typing-session-store",
+          "specifiers": [
+            "useTypingSessionStore"
+          ]
+        },
+        {
+          "source": "@/stores/settings-store",
+          "specifiers": [
+            "useSettingsStore"
+          ]
+        },
+        {
+          "source": "@/stores/practice-history-store",
+          "specifiers": [
+            "usePracticeHistoryStore"
+          ]
+        },
+        {
+          "source": "@/stores/xp-store",
+          "specifiers": [
+            "useXpStore"
+          ]
+        },
+        {
+          "source": "@/lib/audio/sound-manager",
+          "specifiers": [
+            "soundManager"
+          ]
+        },
+        {
+          "source": "@/lib/typing-engine/engine",
+          "specifiers": [
+            "computeSessionStats"
+          ]
+        },
+        {
+          "source": "@/lib/content/practice-texts",
+          "specifiers": [
+            "PRACTICE_TEXTS"
+          ]
+        },
+        {
+          "source": "@/lib/content/practice-texts",
+          "specifiers": [
+            "PracticeText"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        },
+        {
+          "source": "@/components/characters/character-idle-wrapper",
+          "specifiers": [
+            "CharacterIdleWrapper"
+          ]
+        }
+      ],
+      "exports": [
+        "PracticePage"
+      ],
+      "totalLines": 520,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/(app)/story/page.tsx": {
+      "filePath": "src/app/(app)/story/page.tsx",
+      "contentHash": "9b892ecf99b5817f2e3d6328e7a68de62290acfa6950eb9f5efbc276d67f6322",
+      "functions": [
+        {
+          "name": "getBeatCharacters",
+          "params": [
+            "beat"
+          ],
+          "returnType": "CharacterName[]",
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "getTriggerLabel",
+          "params": [
+            "beat"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "StoryPage",
+          "params": [],
+          "exported": true,
+          "lineCount": 248
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useCallback",
+            "useState"
+          ]
+        },
+        {
+          "source": "next/image",
+          "specifiers": [
+            "Image"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "specifiers": [
+            "motion",
+            "AnimatePresence"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "specifiers": [
+            "BookOpen",
+            "Lock",
+            "Play",
+            "ChevronDown",
+            "ChevronUp"
+          ]
+        },
+        {
+          "source": "@/lib/utils",
+          "specifiers": [
+            "cn"
+          ]
+        },
+        {
+          "source": "@/lib/story/character-config",
+          "specifiers": [
+            "CHARACTER_CONFIGS"
+          ]
+        },
+        {
+          "source": "@/components/characters/character-idle-wrapper",
+          "specifiers": [
+            "CharacterIdleWrapper"
+          ]
+        },
+        {
+          "source": "@/stores/story-store",
+          "specifiers": [
+            "useStoryStore"
+          ]
+        },
+        {
+          "source": "@/hooks/use-story-trigger",
+          "specifiers": [
+            "getAllChapterBeats"
+          ]
+        },
+        {
+          "source": "@/components/story/story-player",
+          "specifiers": [
+            "StoryPlayer"
+          ]
+        },
+        {
+          "source": "@/types/story",
+          "specifiers": [
+            "DialogChoice",
+            "DialogStoryBeat",
+            "CharacterName"
+          ]
+        }
+      ],
+      "exports": [
+        "StoryPage"
+      ],
+      "totalLines": 301,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/layout.tsx": {
+      "filePath": "src/app/layout.tsx",
+      "contentHash": "7d825a069aa8b9349b13691d6c1084e602b2c5f05fb32ff0abd354d86f9f07ee",
+      "functions": [
+        {
+          "name": "RootLayout",
+          "params": [
+            "{\n  children,\n}"
+          ],
+          "exported": true,
+          "lineCount": 24
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next",
+          "specifiers": [
+            "Metadata",
+            "Viewport"
+          ]
+        },
+        {
+          "source": "@/lib/fonts",
+          "specifiers": [
+            "heebo",
+            "inter",
+            "assistant"
+          ]
+        },
+        {
+          "source": "@/components/providers/app-providers",
+          "specifiers": [
+            "AppProviders"
+          ]
+        },
+        {
+          "source": "./globals.css",
+          "specifiers": []
+        }
+      ],
+      "exports": [
+        "metadata",
+        "viewport",
+        "RootLayout"
+      ],
+      "totalLines": 43,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/auth/actions.ts": {
+      "filePath": "src/lib/auth/actions.ts",
+      "contentHash": "c7e49515e39d692e8b1eea6229f44ed54fc3310a255ce1da45532e9071146554",
+      "functions": [
+        {
+          "name": "loginWithEmail",
+          "params": [
+            "formData"
+          ],
+          "exported": true,
+          "lineCount": 21
+        },
+        {
+          "name": "loginWithGoogle",
+          "params": [],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "registerParent",
+          "params": [
+            "formData"
+          ],
+          "exported": true,
+          "lineCount": 39
+        },
+        {
+          "name": "joinClass",
+          "params": [
+            "code"
+          ],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "createStudentProfile",
+          "params": [
+            "formData"
+          ],
+          "exported": true,
+          "lineCount": 57
+        },
+        {
+          "name": "logout",
+          "params": [],
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/navigation",
+          "specifiers": [
+            "redirect"
+          ]
+        },
+        {
+          "source": "@/lib/supabase/server",
+          "specifiers": [
+            "createClient"
+          ]
+        },
+        {
+          "source": "./class-code",
+          "specifiers": [
+            "validateClassCode"
+          ]
+        },
+        {
+          "source": "./schemas",
+          "specifiers": [
+            "loginSchema",
+            "registerSchema",
+            "studentProfileSchema"
+          ]
+        }
+      ],
+      "exports": [
+        "loginWithEmail",
+        "loginWithGoogle",
+        "registerParent",
+        "joinClass",
+        "createStudentProfile",
+        "logout"
+      ],
+      "totalLines": 174,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/auth/class-code.ts": {
+      "filePath": "src/lib/auth/class-code.ts",
+      "contentHash": "62feb31f5bf7bb0c120149f5b97045c95363418def62157d1975357857320e23",
+      "functions": [
+        {
+          "name": "generateClassCode",
+          "params": [],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "validateClassCode",
+          "params": [
+            "code"
+          ],
+          "returnType": "Result<string, InvalidClassCodeError>",
+          "exported": true,
+          "lineCount": 27
+        }
+      ],
+      "classes": [
+        {
+          "name": "InvalidClassCodeError",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "imports": [
+        {
+          "source": "better-result",
+          "specifiers": [
+            "Result",
+            "TaggedError"
+          ]
+        }
+      ],
+      "exports": [
+        "generateClassCode",
+        "validateClassCode",
+        "InvalidClassCodeError"
+      ],
+      "totalLines": 49,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/auth/roles.ts": {
+      "filePath": "src/lib/auth/roles.ts",
+      "contentHash": "b1f757fedbb86c40dedeba04c349300a60aa0f3bc43d0b3a646b1c753fa68124",
+      "functions": [
+        {
+          "name": "hasPermission",
+          "params": [
+            "role",
+            "permission"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "requireRole",
+          "params": [
+            "currentRole",
+            "requiredRole"
+          ],
+          "returnType": "Result<true, InsufficientRoleError>",
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "classes": [
+        {
+          "name": "InsufficientRoleError",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "imports": [
+        {
+          "source": "better-result",
+          "specifiers": [
+            "Result",
+            "TaggedError"
+          ]
+        },
+        {
+          "source": "@/types/auth",
+          "specifiers": [
+            "UserRole"
+          ]
+        }
+      ],
+      "exports": [
+        "hasPermission",
+        "requireRole",
+        "InsufficientRoleError"
+      ],
+      "totalLines": 58,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/auth/schemas.ts": {
+      "filePath": "src/lib/auth/schemas.ts",
+      "contentHash": "4a4aa27e9eb2d598c8de514943038f5fc54ef4ee5398d8e997fcd14768e6794e",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "zod",
+          "specifiers": [
+            "z"
+          ]
+        }
+      ],
+      "exports": [
+        "loginSchema",
+        "registerSchema",
+        "studentProfileSchema"
+      ],
+      "totalLines": 19,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/battle/ai-typing-engine.ts": {
+      "filePath": "src/lib/battle/ai-typing-engine.ts",
+      "contentHash": "125a78aa39b1877ae2f9e00b6778b6881983a2a7f2a006a90c0b23833c214a06",
+      "functions": [
+        {
+          "name": "gaussianRandom",
+          "params": [
+            "mean",
+            "stdDev"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "randomBetween",
+          "params": [
+            "min",
+            "max"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "randomInt",
+          "params": [
+            "min",
+            "max"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "clamp",
+          "params": [
+            "value",
+            "min",
+            "max"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "getCurrentWord",
+          "params": [
+            "text",
+            "index"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 15
+        },
+        {
+          "name": "getAdjacentErrorChar",
+          "params": [
+            "targetChar"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "getErrorChar",
+          "params": [
+            "targetChar",
+            "errorType"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "applySpecialBehavior",
+          "params": [
+            "config",
+            "state",
+            "delay",
+            "elapsed"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 54
+        },
+        {
+          "name": "applyRubberBanding",
+          "params": [
+            "config",
+            "state",
+            "delay",
+            "textLength"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 33
+        },
+        {
+          "name": "scaleToDifficulty",
+          "params": [
+            "config",
+            "difficulty"
+          ],
+          "returnType": "AITypingConfig",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "createEngineState",
+          "params": [],
+          "returnType": "AIEngineState",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "calculateNextKeystroke",
+          "params": [
+            "config",
+            "state",
+            "targetText",
+            "textLength"
+          ],
+          "returnType": "{ delay: number; char: string; isError: boolean }",
+          "exported": true,
+          "lineCount": 91
+        },
+        {
+          "name": "createAITypingRunner",
+          "params": [
+            "config",
+            "targetText",
+            "rubberBandEnabled",
+            "onKeystroke",
+            "onComplete"
+          ],
+          "returnType": "{\r\n  start: () => void\r\n  stop: () => void\r\n  updatePlayerPosition: (position: number) => void\r\n}",
+          "exported": true,
+          "lineCount": 89
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/ai-opponent",
+          "specifiers": [
+            "AITypingConfig",
+            "AIEngineState",
+            "AIKeystrokeEvent",
+            "AIMatchResult",
+            "RivalName",
+            "DifficultyLevel"
+          ]
+        }
+      ],
+      "exports": [
+        "RIVAL_CONFIGS",
+        "scaleToDifficulty",
+        "createEngineState",
+        "calculateNextKeystroke",
+        "createAITypingRunner",
+        "RIVAL_DISPLAY"
+      ],
+      "totalLines": 699,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/battle/battle-engine.ts": {
+      "filePath": "src/lib/battle/battle-engine.ts",
+      "contentHash": "3ef33028fc9aff242e132a49700a09c03039ab8cc324da553e4c0518336debec",
+      "functions": [
+        {
+          "name": "getBattleText",
+          "params": [
+            "textLength"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 36
+        },
+        {
+          "name": "createBattle",
+          "params": [
+            "config"
+          ],
+          "returnType": "BattleState",
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "updatePlayerProgress",
+          "params": [
+            "state",
+            "charIndex",
+            "isCorrect"
+          ],
+          "returnType": "BattleState",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "updateAiProgress",
+          "params": [
+            "state",
+            "deltaMs"
+          ],
+          "returnType": "BattleState",
+          "exported": true,
+          "lineCount": 30
+        },
+        {
+          "name": "checkWinner",
+          "params": [
+            "state",
+            "textLength"
+          ],
+          "returnType": "BattleWinner",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "calculateBattleXp",
+          "params": [
+            "won",
+            "difficulty",
+            "wpm"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "getAiWpm",
+          "params": [
+            "difficulty"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getAiErrorRate",
+          "params": [
+            "difficulty"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "calculatePlayerWpm",
+          "params": [
+            "state"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "calculatePlayerAccuracy",
+          "params": [
+            "state"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "calculateAiEffectiveWpm",
+          "params": [
+            "state"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/lib/content/sentences",
+          "specifiers": [
+            "LESSON_CONTENT"
+          ]
+        },
+        {
+          "source": "@/lib/typing-engine/engine",
+          "specifiers": [
+            "calculateWpm"
+          ]
+        }
+      ],
+      "exports": [
+        "getBattleText",
+        "createBattle",
+        "updatePlayerProgress",
+        "updateAiProgress",
+        "checkWinner",
+        "calculateBattleXp",
+        "getAiWpm",
+        "getAiErrorRate",
+        "calculatePlayerWpm",
+        "calculatePlayerAccuracy",
+        "calculateAiEffectiveWpm"
+      ],
+      "totalLines": 259,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/battle/power-ups.ts": {
+      "filePath": "src/lib/battle/power-ups.ts",
+      "contentHash": "8eee6c83d8aab8b0c50616816be6e99fdf1cb3bf6c502af37501d9240b22f767",
+      "functions": [
+        {
+          "name": "createPowerUpState",
+          "params": [],
+          "returnType": "PowerUpState",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "isPowerUpAvailable",
+          "params": [
+            "state",
+            "id"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "isPowerUpActive",
+          "params": [
+            "state",
+            "id"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "getPowerUpActiveMs",
+          "params": [
+            "state",
+            "id"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getPowerUpCooldownMs",
+          "params": [
+            "state",
+            "id"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "activatePowerUp",
+          "params": [
+            "state",
+            "id"
+          ],
+          "returnType": "PowerUpState",
+          "exported": true,
+          "lineCount": 21
+        },
+        {
+          "name": "consumeShieldHit",
+          "params": [
+            "state"
+          ],
+          "returnType": "PowerUpState",
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "tickPowerUps",
+          "params": [
+            "state",
+            "deltaMs"
+          ],
+          "returnType": "PowerUpState",
+          "exported": true,
+          "lineCount": 33
+        },
+        {
+          "name": "checkComboMilestone",
+          "params": [
+            "state",
+            "combo"
+          ],
+          "returnType": "PowerUpState",
+          "exported": true,
+          "lineCount": 25
+        },
+        {
+          "name": "isAIFrozen",
+          "params": [
+            "state"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "isDoubleXpActive",
+          "params": [
+            "state"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "isSpeedBoostActive",
+          "params": [
+            "state"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "isShieldActive",
+          "params": [
+            "state"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getShieldHitsRemaining",
+          "params": [
+            "state"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "POWER_UP_DEFS",
+        "ALL_POWER_UP_IDS",
+        "createPowerUpState",
+        "isPowerUpAvailable",
+        "isPowerUpActive",
+        "getPowerUpActiveMs",
+        "getPowerUpCooldownMs",
+        "activatePowerUp",
+        "consumeShieldHit",
+        "tickPowerUps",
+        "checkComboMilestone",
+        "isAIFrozen",
+        "isDoubleXpActive",
+        "isSpeedBoostActive",
+        "isShieldActive",
+        "getShieldHitsRemaining"
+      ],
+      "totalLines": 297,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/gamification/badge-checker.ts": {
+      "filePath": "src/lib/gamification/badge-checker.ts",
+      "contentHash": "43554c827a16d3baabbc44fffe634c8c5212299cf7ef9c58bf259c11da85acf3",
+      "functions": [
+        {
+          "name": "checkBadgeEarned",
+          "params": [
+            "badge",
+            "context"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 56
+        },
+        {
+          "name": "checkAllBadges",
+          "params": [
+            "context"
+          ],
+          "returnType": "BadgeDefinition[]",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "getNewlyEarnedBadges",
+          "params": [
+            "context",
+            "alreadyEarned"
+          ],
+          "returnType": "BadgeDefinition[]",
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/lib/gamification/badge-definitions",
+          "specifiers": [
+            "BADGE_DEFINITIONS"
+          ]
+        },
+        {
+          "source": "@/lib/gamification/badge-definitions",
+          "specifiers": [
+            "BadgeDefinition",
+            "BadgeCondition"
+          ]
+        }
+      ],
+      "exports": [
+        "checkBadgeEarned",
+        "checkAllBadges",
+        "getNewlyEarnedBadges"
+      ],
+      "totalLines": 107,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/gamification/badge-definitions.ts": {
+      "filePath": "src/lib/gamification/badge-definitions.ts",
+      "contentHash": "e34651076b281b651c1415ccda5e0dda60f96e528a5e419395405c5cf5d996c9",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "BADGE_DEFINITIONS"
+      ],
+      "totalLines": 159,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/gamification/certificate.ts": {
+      "filePath": "src/lib/gamification/certificate.ts",
+      "contentHash": "2cd117d2af24061faaabb08693abb92d502f6f312f64618829b622230d4077b0",
+      "functions": [
+        {
+          "name": "getEarnedCertificates",
+          "params": [
+            "stats"
+          ],
+          "returnType": "Certificate[]",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "getHighestCertificate",
+          "params": [
+            "stats"
+          ],
+          "returnType": "Certificate | null",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "getNextCertificate",
+          "params": [
+            "stats"
+          ],
+          "returnType": "Certificate | null",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "getCertificateProgress",
+          "params": [
+            "cert",
+            "stats"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 19
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "CERTIFICATES",
+        "getEarnedCertificates",
+        "getHighestCertificate",
+        "getNextCertificate",
+        "getCertificateProgress"
+      ],
+      "totalLines": 142,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/gamification/index.ts": {
+      "filePath": "src/lib/gamification/index.ts",
+      "contentHash": "f85db81e68dab83e1bf409743f172dd1eb6b26acf56b2da19b379c2429ac93d2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 3,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/story/character-config.ts": {
+      "filePath": "src/lib/story/character-config.ts",
+      "contentHash": "6dec60e7a5e0fc65c036267d5e5964a0d9675d89a9db0748914c586234739328",
+      "functions": [
+        {
+          "name": "isHeroCharacter",
+          "params": [
+            "name"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/story",
+          "specifiers": [
+            "CharacterName"
+          ]
+        }
+      ],
+      "exports": [
+        "CHARACTER_CONFIGS",
+        "isHeroCharacter"
+      ],
+      "totalLines": 785,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/story/story-script.ts": {
+      "filePath": "src/lib/story/story-script.ts",
+      "contentHash": "1cf8d6aa561db375230113f5d423ec698f64d88b370ace2aec96a4993974b68c",
+      "functions": [
+        {
+          "name": "getStoryBeat",
+          "params": [
+            "lessonNumber",
+            "phase",
+            "condition"
+          ],
+          "returnType": "StoryBeat | null",
+          "exported": true,
+          "lineCount": 22
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/story",
+          "specifiers": [
+            "StoryBeat",
+            "StoryPhase"
+          ]
+        }
+      ],
+      "exports": [
+        "getStoryBeat"
+      ],
+      "totalLines": 182,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/supabase/client.ts": {
+      "filePath": "src/lib/supabase/client.ts",
+      "contentHash": "b805a4d2b3e856c1a093086a1f6fcfe10b643dbbdf0e3e6db376437535d34408",
+      "functions": [
+        {
+          "name": "createClient",
+          "params": [],
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@supabase/ssr",
+          "specifiers": [
+            "createBrowserClient"
+          ]
+        },
+        {
+          "source": "@/types/database",
+          "specifiers": [
+            "Database"
+          ]
+        }
+      ],
+      "exports": [
+        "createClient"
+      ],
+      "totalLines": 10,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/supabase/middleware.ts": {
+      "filePath": "src/lib/supabase/middleware.ts",
+      "contentHash": "0d44499093aed4de2427c4323df670ad22cb88c4759ebb1986bb9d5db2dcf5d4",
+      "functions": [
+        {
+          "name": "createMiddlewareClient",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 26
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@supabase/ssr",
+          "specifiers": [
+            "createServerClient"
+          ]
+        },
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/types/database",
+          "specifiers": [
+            "Database"
+          ]
+        }
+      ],
+      "exports": [
+        "createMiddlewareClient"
+      ],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/supabase/server.ts": {
+      "filePath": "src/lib/supabase/server.ts",
+      "contentHash": "3b5d0a3fdd10308916f9cc99aa780dab845ba34c632a7784764a2bd3d346645c",
+      "functions": [
+        {
+          "name": "createClient",
+          "params": [],
+          "exported": true,
+          "lineCount": 20
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@supabase/ssr",
+          "specifiers": [
+            "createServerClient"
+          ]
+        },
+        {
+          "source": "next/headers",
+          "specifiers": [
+            "cookies"
+          ]
+        },
+        {
+          "source": "@/types/database",
+          "specifiers": [
+            "Database"
+          ]
+        }
+      ],
+      "exports": [
+        "createClient"
+      ],
+      "totalLines": 25,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/sync/debounce.ts": {
+      "filePath": "src/lib/sync/debounce.ts",
+      "contentHash": "acc0e2c50171b5c9cf8b794c21c0907ab09fa0b669a25772b3f6024cf87a8e64",
+      "functions": [
+        {
+          "name": "debouncedPush",
+          "params": [
+            "key",
+            "fn",
+            "delayMs"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "fireAndForget",
+          "params": [
+            "p"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "debouncedPush",
+        "fireAndForget"
+      ],
+      "totalLines": 41,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/sync/merge.ts": {
+      "filePath": "src/lib/sync/merge.ts",
+      "contentHash": "022a60a02dcaf82dcc19358050e2b01de6377451d09f6efc67a47de4e3597516",
+      "functions": [
+        {
+          "name": "mergeCompletedLesson",
+          "params": [
+            "a",
+            "b"
+          ],
+          "returnType": "CompletedLessonSnapshot",
+          "exported": false,
+          "lineCount": 14
+        },
+        {
+          "name": "mergeCompletedLessons",
+          "params": [
+            "local",
+            "server"
+          ],
+          "returnType": "Record<string, CompletedLessonSnapshot>",
+          "exported": false,
+          "lineCount": 13
+        },
+        {
+          "name": "mergeBadges",
+          "params": [
+            "local",
+            "server"
+          ],
+          "returnType": "Record<string, EarnedBadgeSnapshot>",
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "mergeDailyChallenges",
+          "params": [
+            "local",
+            "server"
+          ],
+          "returnType": "DailyChallengesSnapshot",
+          "exported": false,
+          "lineCount": 19
+        },
+        {
+          "name": "mergeStoryFlags",
+          "params": [
+            "a",
+            "b"
+          ],
+          "returnType": "StoryFlags",
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "mergeStory",
+          "params": [
+            "local",
+            "server"
+          ],
+          "returnType": "StorySnapshot | null",
+          "exported": false,
+          "lineCount": 54
+        },
+        {
+          "name": "mergeSnapshots",
+          "params": [
+            "local",
+            "server"
+          ],
+          "returnType": "ProgressSnapshot",
+          "exported": true,
+          "lineCount": 25
+        },
+        {
+          "name": "maxDateString",
+          "params": [
+            "a",
+            "b"
+          ],
+          "returnType": "string | null",
+          "exported": false,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/story",
+          "specifiers": [
+            "StoryFlags"
+          ]
+        },
+        {
+          "source": "./snapshot",
+          "specifiers": [
+            "CompletedLessonSnapshot",
+            "DailyChallengesSnapshot",
+            "EarnedBadgeSnapshot",
+            "ProgressSnapshot",
+            "StorySnapshot"
+          ]
+        }
+      ],
+      "exports": [
+        "mergeSnapshots"
+      ],
+      "totalLines": 181,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/sync/progress-sync.ts": {
+      "filePath": "src/lib/sync/progress-sync.ts",
+      "contentHash": "a90adf1952014414e165aa44956600432b4492c8b6260bf56b05ca51fd09a188",
+      "functions": [
+        {
+          "name": "getClient",
+          "params": [],
+          "returnType": "Db | null",
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "guard",
+          "params": [
+            "label",
+            "fn"
+          ],
+          "returnType": "Promise<Result<T, SyncError>>",
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "pushProgress",
+          "params": [
+            "lessonId",
+            "input"
+          ],
+          "returnType": "Promise<Result<null, SyncError>>",
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "pushGamification",
+          "params": [
+            "input"
+          ],
+          "returnType": "Promise<Result<null, SyncError>>",
+          "exported": true,
+          "lineCount": 26
+        },
+        {
+          "name": "pushSession",
+          "params": [
+            "input"
+          ],
+          "returnType": "Promise<Result<null, SyncError>>",
+          "exported": true,
+          "lineCount": 19
+        },
+        {
+          "name": "pushPlayerState",
+          "params": [
+            "input"
+          ],
+          "returnType": "Promise<Result<null, SyncError>>",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "pushUserTrack",
+          "params": [
+            "input"
+          ],
+          "returnType": "Promise<Result<null, SyncError>>",
+          "exported": true,
+          "lineCount": 26
+        },
+        {
+          "name": "hydrateFromSupabase",
+          "params": [
+            "userId"
+          ],
+          "returnType": "Promise<Result<HydrateResult, SyncError>>",
+          "exported": true,
+          "lineCount": 106
+        },
+        {
+          "name": "pushSnapshot",
+          "params": [
+            "snapshot"
+          ],
+          "returnType": "Promise<Result<null, SyncError>>",
+          "exported": true,
+          "lineCount": 30
+        }
+      ],
+      "classes": [
+        {
+          "name": "SyncError",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "imports": [
+        {
+          "source": "better-result",
+          "specifiers": [
+            "Result",
+            "TaggedError"
+          ]
+        },
+        {
+          "source": "@supabase/supabase-js",
+          "specifiers": [
+            "SupabaseClient"
+          ]
+        },
+        {
+          "source": "@/lib/supabase/client",
+          "specifiers": [
+            "createClient"
+          ]
+        },
+        {
+          "source": "./sync-user",
+          "specifiers": [
+            "getSyncUserId",
+            "isSupabaseConfigured"
+          ]
+        },
+        {
+          "source": "./snapshot",
+          "specifiers": [
+            "DailyChallengesSnapshot",
+            "EarnedBadgeSnapshot",
+            "ProgressSnapshot",
+            "StorySnapshot",
+            "emptyProgressSnapshot"
+          ]
+        },
+        {
+          "source": "@/types/database",
+          "specifiers": [
+            "Database"
+          ]
+        }
+      ],
+      "exports": [
+        "SyncError",
+        "pushProgress",
+        "pushGamification",
+        "pushSession",
+        "pushPlayerState",
+        "pushUserTrack",
+        "hydrateFromSupabase",
+        "pushSnapshot"
+      ],
+      "totalLines": 381,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/sync/snapshot.ts": {
+      "filePath": "src/lib/sync/snapshot.ts",
+      "contentHash": "a1a7b43cada4e795a1aeca276f568f2c202a5f8ba377ae8f7147429a98078d54",
+      "functions": [
+        {
+          "name": "emptyProgressSnapshot",
+          "params": [],
+          "returnType": "ProgressSnapshot",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "hasProgress",
+          "params": [
+            "s"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/story",
+          "specifiers": [
+            "CharacterName",
+            "StoryFlags"
+          ]
+        }
+      ],
+      "exports": [
+        "emptyProgressSnapshot",
+        "hasProgress"
+      ],
+      "totalLines": 104,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/sync/sync-user.ts": {
+      "filePath": "src/lib/sync/sync-user.ts",
+      "contentHash": "f529c1afd073e7cfa61e57ea18acda0261b61c3a7168ddc113cac9091fb0a64f",
+      "functions": [
+        {
+          "name": "isSupabaseConfigured",
+          "params": [],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "setSyncUser",
+          "params": [
+            "userId"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getSyncUserId",
+          "params": [],
+          "returnType": "string | null",
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "isSupabaseConfigured",
+        "setSyncUser",
+        "getSyncUserId"
+      ],
+      "totalLines": 41,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/typing-engine/drill-generator.ts": {
+      "filePath": "src/lib/typing-engine/drill-generator.ts",
+      "contentHash": "5f5750a39b95ebd057b09ab5b50c7c4acb9eafe510f79bcd26eb755b88233bf0",
+      "functions": [
+        {
+          "name": "repeatChar",
+          "params": [
+            "char",
+            "times"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "pickRandom",
+          "params": [
+            "arr"
+          ],
+          "returnType": "T",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "buildEasyDrill",
+          "params": [
+            "weakKeys"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "buildMediumDrill",
+          "params": [
+            "weakKeys"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 26
+        },
+        {
+          "name": "buildHardDrill",
+          "params": [
+            "weakKeys"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 21
+        },
+        {
+          "name": "generateDrillText",
+          "params": [
+            "weakKeys",
+            "difficulty"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 20
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "HEBREW_DRILL_WORDS",
+        "generateDrillText"
+      ],
+      "totalLines": 253,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/typing-engine/engine.ts": {
+      "filePath": "src/lib/typing-engine/engine.ts",
+      "contentHash": "0ae911301f2907bbe05c41954e1310a9867cc68aae8f1c43d8457f3694091569",
+      "functions": [
+        {
+          "name": "calculateWpm",
+          "params": [
+            "charCount",
+            "elapsedMs"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "calculateAccuracy",
+          "params": [
+            "correctCount",
+            "totalCount"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "processKeystroke",
+          "params": [
+            "expected",
+            "actual",
+            "code",
+            "timestamp"
+          ],
+          "returnType": "Keystroke",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "computeSessionStats",
+          "params": [
+            "keystrokes",
+            "startedAt",
+            "endedAt"
+          ],
+          "returnType": "SessionStats",
+          "exported": true,
+          "lineCount": 28
+        },
+        {
+          "name": "findWeakKeys",
+          "params": [
+            "stats",
+            "minAttempts"
+          ],
+          "returnType": "Array<{ char: string; accuracy: number; total: number }>",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "calculateRealtimeWpm",
+          "params": [
+            "keystrokes",
+            "windowMs"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "isLessonComplete",
+          "params": [
+            "stats",
+            "targetWpm",
+            "targetAccuracy"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "calculateXpReward",
+          "params": [
+            "stats",
+            "targetWpm",
+            "targetAccuracy",
+            "streak"
+          ],
+          "returnType": "{\r\n  base: number\r\n  accuracyBonus: number\r\n  speedBonus: number\r\n  streakMultiplier: number\r\n  total: number\r\n}",
+          "exported": true,
+          "lineCount": 27
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "./types",
+          "specifiers": [
+            "Keystroke",
+            "SessionStats"
+          ]
+        }
+      ],
+      "exports": [
+        "calculateWpm",
+        "calculateAccuracy",
+        "processKeystroke",
+        "computeSessionStats",
+        "findWeakKeys",
+        "calculateRealtimeWpm",
+        "isLessonComplete",
+        "calculateXpReward"
+      ],
+      "totalLines": 169,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/typing-engine/index.ts": {
+      "filePath": "src/lib/typing-engine/index.ts",
+      "contentHash": "d883cd13dd752c508002fb1f646981c10c8ec476eabff0165995df95bb8e4366",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "KeyDefinition",
+        "Keystroke",
+        "SessionStats",
+        "LessonDefinition",
+        "LessonContent",
+        "LessonCategory",
+        "XpReward",
+        "TypingSession",
+        "Finger",
+        "Hand",
+        "KeyboardRow",
+        "calculateWpm",
+        "calculateAccuracy",
+        "processKeystroke",
+        "computeSessionStats",
+        "findWeakKeys",
+        "calculateRealtimeWpm",
+        "isLessonComplete",
+        "calculateXpReward",
+        "TOP_ROW",
+        "HOME_ROW",
+        "BOTTOM_ROW",
+        "SPACE_KEY",
+        "KEYBOARD_ROWS",
+        "ALL_KEYS",
+        "CHAR_TO_KEY",
+        "CODE_TO_KEY",
+        "getFingerForChar",
+        "getKeysForFinger",
+        "HOME_POSITION",
+        "FINGER_COLORS"
+      ],
+      "totalLines": 40,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/typing-engine/keyboard-layout.ts": {
+      "filePath": "src/lib/typing-engine/keyboard-layout.ts",
+      "contentHash": "b432d3a944369f4e55f6bd229ba9ee4fbed5c5053132c4b76ace8fe6e19da32d",
+      "functions": [
+        {
+          "name": "key",
+          "params": [
+            "char",
+            "code",
+            "row",
+            "finger",
+            "hand",
+            "enLabel",
+            "width"
+          ],
+          "returnType": "KeyDefinition",
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "getFingerForChar",
+          "params": [
+            "char"
+          ],
+          "returnType": "KeyDefinition | undefined",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getKeysForFinger",
+          "params": [
+            "finger",
+            "hand"
+          ],
+          "returnType": "KeyDefinition[]",
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "./types",
+          "specifiers": [
+            "KeyDefinition",
+            "Finger",
+            "Hand"
+          ]
+        }
+      ],
+      "exports": [
+        "TOP_ROW",
+        "HOME_ROW",
+        "BOTTOM_ROW",
+        "SPACE_KEY",
+        "KEYBOARD_ROWS",
+        "ALL_KEYS",
+        "CHAR_TO_KEY",
+        "CODE_TO_KEY",
+        "getFingerForChar",
+        "getKeysForFinger",
+        "HOME_POSITION",
+        "FINGER_COLORS"
+      ],
+      "totalLines": 135,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/typing-engine/types.ts": {
+      "filePath": "src/lib/typing-engine/types.ts",
+      "contentHash": "43644773718c40d4c748e882ac9e15595d204cb893002ad5d02d2faf4405d55a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 125,
+      "hasStructuralAnalysis": true
+    },
+    "src/stores/accessibility-store.ts": {
+      "filePath": "src/stores/accessibility-store.ts",
+      "contentHash": "8955b0a433114b481486f3158c48876b8f21e58250730a3662916af3d09f89a4",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "zustand",
+          "specifiers": [
+            "create"
+          ]
+        },
+        {
+          "source": "zustand/middleware",
+          "specifiers": [
+            "persist"
+          ]
+        }
+      ],
+      "exports": [
+        "FONT_SIZE_VALUES",
+        "useAccessibilityStore"
+      ],
+      "totalLines": 83,
+      "hasStructuralAnalysis": true
+    },
+    "src/stores/ai-opponent-store.ts": {
+      "filePath": "src/stores/ai-opponent-store.ts",
+      "contentHash": "5f112ef66e6a4744535a997fbf6fc5342c41ed159068fb193d19fda87079a02e",
+      "functions": [
+        {
+          "name": "calculateMood",
+          "params": [
+            "aiPosition",
+            "playerPosition",
+            "progress",
+            "errors"
+          ],
+          "returnType": "AIOpponentMood",
+          "exported": false,
+          "lineCount": 30
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "zustand",
+          "specifiers": [
+            "create"
+          ]
+        },
+        {
+          "source": "@/types/ai-opponent",
+          "specifiers": [
+            "RivalName",
+            "DifficultyLevel",
+            "AIOpponentState",
+            "AIKeystrokeEvent",
+            "AIMatchResult",
+            "AIOpponentMood"
+          ]
+        }
+      ],
+      "exports": [
+        "useAIOpponentStore"
+      ],
+      "totalLines": 191,
+      "hasStructuralAnalysis": true
+    },
+    "src/stores/badge-store.ts": {
+      "filePath": "src/stores/badge-store.ts",
+      "contentHash": "7926aef13e5ca83a913a90834b80063db78da77a4543a2b95ce60f3bbb4c6454",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "zustand",
+          "specifiers": [
+            "create"
+          ]
+        },
+        {
+          "source": "zustand/middleware",
+          "specifiers": [
+            "persist"
+          ]
+        },
+        {
+          "source": "@/lib/sync/debounce",
+          "specifiers": [
+            "debouncedPush",
+            "fireAndForget"
+          ]
+        },
+        {
+          "source": "@/lib/sync/progress-sync",
+          "specifiers": [
+            "pushGamification"
+          ]
+        },
+        {
+          "source": "./xp-store",
+          "specifiers": [
+            "useXpStore"
+          ]
+        }
+      ],
+      "exports": [
+        "useBadgeStore"
+      ],
+      "totalLines": 80,
+      "hasStructuralAnalysis": true
+    },
+    "src/stores/consent-store.ts": {
+      "filePath": "src/stores/consent-store.ts",
+      "contentHash": "4c92ded79d9e333ccb075801c6dced8eed9784e662d6ee5b692a4d15710abf21",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "zustand",
+          "specifiers": [
+            "create"
+          ]
+        },
+        {
+          "source": "zustand/middleware",
+          "specifiers": [
+            "persist"
+          ]
+        },
+        {
+          "source": "@/lib/privacy/consent-manager",
+          "specifiers": [
+            "createConsentRecord",
+            "revokeConsent",
+            "checkConsentStatus",
+            "isConsentRequired"
+          ]
+        },
+        {
+          "source": "@/lib/privacy/consent-manager",
+          "specifiers": [
+            "ConsentRecord",
+            "ConsentType"
+          ]
+        }
+      ],
+      "exports": [
+        "useConsentStore"
+      ],
+      "totalLines": 79,
+      "hasStructuralAnalysis": true
+    },
+    "src/stores/daily-challenge-store.ts": {
+      "filePath": "src/stores/daily-challenge-store.ts",
+      "contentHash": "7f4249b9c6addf15e122867fd927f69e34cef3d9b74dc3e2287ba840083ec019",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "zustand",
+          "specifiers": [
+            "create"
+          ]
+        },
+        {
+          "source": "zustand/middleware",
+          "specifiers": [
+            "persist"
+          ]
+        },
+        {
+          "source": "@/lib/sync/debounce",
+          "specifiers": [
+            "debouncedPush",
+            "fireAndForget"
+          ]
+        },
+        {
+          "source": "@/lib/sync/progress-sync",
+          "specifiers": [
+            "pushPlayerState"
+          ]
+        }
+      ],
+      "exports": [
+        "useDailyChallengeStore"
+      ],
+      "totalLines": 73,
+      "hasStructuralAnalysis": true
+    },
+    "src/stores/music-store.ts": {
+      "filePath": "src/stores/music-store.ts",
+      "contentHash": "b8b505790027434554300b51cd9658f1dabcf44a660d5575cea808f467171104",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "zustand",
+          "specifiers": [
+            "create"
+          ]
+        },
+        {
+          "source": "zustand/middleware",
+          "specifiers": [
+            "persist"
+          ]
+        },
+        {
+          "source": "@/lib/audio/music-manager",
+          "specifiers": [
+            "GameZone",
+            "HebrewHoliday"
+          ]
+        }
+      ],
+      "exports": [
+        "TRACK_UNLOCK_CONDITIONS",
+        "useMusicStore"
+      ],
+      "totalLines": 199,
+      "hasStructuralAnalysis": true
+    },
+    "src/stores/practice-history-store.ts": {
+      "filePath": "src/stores/practice-history-store.ts",
+      "contentHash": "f0f78dc84424d59d81ad6cc33453b67148bb82a6860eb45569481d5464da6ef3",
+      "functions": [
+        {
+          "name": "generateId",
+          "params": [],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "zustand",
+          "specifiers": [
+            "create"
+          ]
+        },
+        {
+          "source": "zustand/middleware",
+          "specifiers": [
+            "persist"
+          ]
+        },
+        {
+          "source": "@/lib/sync/debounce",
+          "specifiers": [
+            "fireAndForget"
+          ]
+        },
+        {
+          "source": "@/lib/sync/progress-sync",
+          "specifiers": [
+            "pushSession"
+          ]
+        }
+      ],
+      "exports": [
+        "usePracticeHistoryStore"
+      ],
+      "totalLines": 138,
+      "hasStructuralAnalysis": true
+    },
+    "src/stores/settings-store.ts": {
+      "filePath": "src/stores/settings-store.ts",
+      "contentHash": "4e3efad90a7f5d2bb3e9c661a9b02b1b6e13ffe34af4a9a9c78997c4d4c1dbcf",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "zustand",
+          "specifiers": [
+            "create"
+          ]
+        },
+        {
+          "source": "zustand/middleware",
+          "specifiers": [
+            "persist"
+          ]
+        }
+      ],
+      "exports": [
+        "useSettingsStore"
+      ],
+      "totalLines": 73,
+      "hasStructuralAnalysis": true
+    },
+    "src/stores/story-store.ts": {
+      "filePath": "src/stores/story-store.ts",
+      "contentHash": "5a0e7c2ee707a922258f14cb4faa6b5e12c687a14d57b7ce4eced6b7809e0f61",
+      "functions": [
+        {
+          "name": "toStorySnapshot",
+          "params": [
+            "s"
+          ],
+          "returnType": "StorySnapshot",
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "syncStory",
+          "params": [],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 6
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "zustand",
+          "specifiers": [
+            "create"
+          ]
+        },
+        {
+          "source": "zustand/middleware",
+          "specifiers": [
+            "persist"
+          ]
+        },
+        {
+          "source": "@/types/story",
+          "specifiers": [
+            "CharacterName",
+            "DialogChoice",
+            "StoryFlags"
+          ]
+        },
+        {
+          "source": "@/lib/sync/debounce",
+          "specifiers": [
+            "debouncedPush",
+            "fireAndForget"
+          ]
+        },
+        {
+          "source": "@/lib/sync/progress-sync",
+          "specifiers": [
+            "pushPlayerState"
+          ]
+        },
+        {
+          "source": "@/lib/sync/snapshot",
+          "specifiers": [
+            "StorySnapshot"
+          ]
+        }
+      ],
+      "exports": [
+        "useStoryStore"
+      ],
+      "totalLines": 229,
+      "hasStructuralAnalysis": true
+    },
+    "src/stores/theme-store.ts": {
+      "filePath": "src/stores/theme-store.ts",
+      "contentHash": "9aefdf9d20b209ba10e84cf73676d699a5531076e70d4ff04d3e15729d4aae8b",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "zustand",
+          "specifiers": [
+            "create"
+          ]
+        },
+        {
+          "source": "zustand/middleware",
+          "specifiers": [
+            "persist"
+          ]
+        },
+        {
+          "source": "@/types/theme",
+          "specifiers": [
+            "AgeName",
+            "ColorScheme"
+          ]
+        }
+      ],
+      "exports": [
+        "useThemeStore"
+      ],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "src/stores/typing-session-store.ts": {
+      "filePath": "src/stores/typing-session-store.ts",
+      "contentHash": "92ebd36e473047200aa6f4aeabd8d67215cbb4848551f0679989baed2031d169",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "zustand",
+          "specifiers": [
+            "create"
+          ]
+        },
+        {
+          "source": "@/lib/typing-engine/types",
+          "specifiers": [
+            "Keystroke",
+            "TypingSession"
+          ]
+        },
+        {
+          "source": "@/lib/typing-engine/engine",
+          "specifiers": [
+            "processKeystroke",
+            "computeSessionStats",
+            "calculateRealtimeWpm"
+          ]
+        }
+      ],
+      "exports": [
+        "useTypingSessionStore"
+      ],
+      "totalLines": 101,
+      "hasStructuralAnalysis": true
+    },
+    "src/stores/xp-store.ts": {
+      "filePath": "src/stores/xp-store.ts",
+      "contentHash": "3231344cdc603515029c3449d4aad2e57c0b5cfcc523934483ff79dbc0093101",
+      "functions": [
+        {
+          "name": "calculateLevel",
+          "params": [
+            "xp"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "getTodayString",
+          "params": [],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "syncGamification",
+          "params": [
+            "totalXp",
+            "level",
+            "streak"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "zustand",
+          "specifiers": [
+            "create"
+          ]
+        },
+        {
+          "source": "zustand/middleware",
+          "specifiers": [
+            "persist"
+          ]
+        },
+        {
+          "source": "@/lib/sync/debounce",
+          "specifiers": [
+            "debouncedPush",
+            "fireAndForget"
+          ]
+        },
+        {
+          "source": "@/lib/sync/progress-sync",
+          "specifiers": [
+            "pushGamification",
+            "pushProgress"
+          ]
+        },
+        {
+          "source": "./badge-store",
+          "specifiers": [
+            "useBadgeStore"
+          ]
+        }
+      ],
+      "exports": [
+        "useXpStore"
+      ],
+      "totalLines": 174,
+      "hasStructuralAnalysis": true
+    }
+  }
+}

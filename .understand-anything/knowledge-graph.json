@@ -1,0 +1,1321 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "ninja-keyboard",
+    "languages": [
+      "typescript"
+    ],
+    "frameworks": [
+      "Next.js",
+      "React",
+      "Zustand",
+      "Supabase"
+    ],
+    "description": "Hebrew-first PWA teaching kids (6-16) touch typing — gamified lessons, typing battles and story mode. Scoped knowledge graph: stores + core lib subsystems + lessons/battle/story/practice routes.",
+    "analyzedAt": "2026-06-08T09:21:51.779Z",
+    "gitCommitHash": "b77d27658222e54d3fb1f6193f286b63213874c7",
+    "scope": "Stage 1 (scoped): src/stores, src/lib/{battle,story,gamification,sync,typing-engine,supabase,auth}, src/app route entry points for lessons/battle/story/practice"
+  },
+  "nodes": [
+    {
+      "id": "file:src/app/(app)/battle/battle-client.tsx",
+      "type": "file",
+      "name": "battle-client.tsx",
+      "filePath": "src/app/(app)/battle/battle-client.tsx",
+      "summary": "Battle client UI shell mounting the typing-battle gameplay.",
+      "tags": [
+        "app",
+        "battle",
+        "client",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/(app)/battle/loading.tsx",
+      "type": "file",
+      "name": "loading.tsx",
+      "filePath": "src/app/(app)/battle/loading.tsx",
+      "summary": "Battle route loading skeleton.",
+      "tags": [
+        "app",
+        "loading",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/(app)/battle/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/battle/page.tsx",
+      "summary": "Battle route (server) rendering the battle client.",
+      "tags": [
+        "app",
+        "route",
+        "battle"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/(app)/layout.tsx",
+      "type": "file",
+      "name": "layout.tsx",
+      "filePath": "src/app/(app)/layout.tsx",
+      "summary": "Protected (app) layout wrapping the authenticated routes.",
+      "tags": [
+        "app",
+        "layout",
+        "protected"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/(app)/lessons/[id]/lesson-page-client.tsx",
+      "type": "file",
+      "name": "lesson-page-client.tsx",
+      "filePath": "src/app/(app)/lessons/[id]/lesson-page-client.tsx",
+      "summary": "Lesson player client: runs the typing session, drives XP/sound/mascot — the largest interactive route (448L, 91 calls).",
+      "tags": [
+        "app",
+        "lessons",
+        "client",
+        "gameplay"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/app/(app)/lessons/[id]/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/lessons/[id]/page.tsx",
+      "summary": "Dynamic lesson route with generateStaticParams; renders the lesson player client.",
+      "tags": [
+        "app",
+        "route",
+        "lessons",
+        "dynamic"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/(app)/lessons/lesson-list-client.tsx",
+      "type": "file",
+      "name": "lesson-list-client.tsx",
+      "filePath": "src/app/(app)/lessons/lesson-list-client.tsx",
+      "summary": "Client lesson-list UI: lists lessons with XP-gated progress.",
+      "tags": [
+        "app",
+        "lessons",
+        "client",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/app/(app)/lessons/loading.tsx",
+      "type": "file",
+      "name": "loading.tsx",
+      "filePath": "src/app/(app)/lessons/loading.tsx",
+      "summary": "Lessons route loading skeleton.",
+      "tags": [
+        "app",
+        "loading",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/(app)/lessons/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/lessons/page.tsx",
+      "summary": "Lessons index route (server) rendering the lesson list client.",
+      "tags": [
+        "app",
+        "route",
+        "lessons"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/(app)/practice/loading.tsx",
+      "type": "file",
+      "name": "loading.tsx",
+      "filePath": "src/app/(app)/practice/loading.tsx",
+      "summary": "Practice route loading skeleton.",
+      "tags": [
+        "app",
+        "loading",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app/(app)/practice/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/practice/page.tsx",
+      "summary": "Free-practice route: full typing session over practice texts wired to session/settings/history/xp stores (519L, 108 calls).",
+      "tags": [
+        "app",
+        "route",
+        "practice",
+        "gameplay"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/app/(app)/story/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "src/app/(app)/story/page.tsx",
+      "summary": "Story-mode route: renders beats from story-store + character-config (300L).",
+      "tags": [
+        "app",
+        "route",
+        "story"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/app/layout.tsx",
+      "type": "file",
+      "name": "layout.tsx",
+      "filePath": "src/app/layout.tsx",
+      "summary": "Root layout: RTL Hebrew shell, fonts, metadata/viewport.",
+      "tags": [
+        "app",
+        "layout",
+        "rtl",
+        "root"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/auth/actions.ts",
+      "type": "file",
+      "name": "actions.ts",
+      "filePath": "src/lib/auth/actions.ts",
+      "summary": "Server actions for auth: email/Google login, parent register, join class, create student profile, logout — talks to supabase/server.",
+      "tags": [
+        "auth",
+        "server-actions",
+        "supabase"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/lib/auth/class-code.ts",
+      "type": "file",
+      "name": "class-code.ts",
+      "filePath": "src/lib/auth/class-code.ts",
+      "summary": "Class-code generation + validation (teacher/class enrollment).",
+      "tags": [
+        "auth",
+        "class-code",
+        "teacher"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/auth/roles.ts",
+      "type": "file",
+      "name": "roles.ts",
+      "filePath": "src/lib/auth/roles.ts",
+      "summary": "Role/permission checks (hasPermission, requireRole) + InsufficientRoleError.",
+      "tags": [
+        "auth",
+        "roles",
+        "authorization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/auth/schemas.ts",
+      "type": "file",
+      "name": "schemas.ts",
+      "filePath": "src/lib/auth/schemas.ts",
+      "summary": "Zod schemas for login/register/student-profile validation.",
+      "tags": [
+        "auth",
+        "validation",
+        "zod"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/battle/ai-typing-engine.ts",
+      "type": "file",
+      "name": "ai-typing-engine.ts",
+      "filePath": "src/lib/battle/ai-typing-engine.ts",
+      "summary": "AI rival typing simulator: per-keystroke timing with gaussian jitter, rubber-banding, difficulty scaling and rival configs.",
+      "tags": [
+        "battle",
+        "ai",
+        "simulation"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/lib/battle/battle-engine.ts",
+      "type": "file",
+      "name": "battle-engine.ts",
+      "filePath": "src/lib/battle/battle-engine.ts",
+      "summary": "Battle gameplay engine: build battle, update player/AI progress, decide winner, compute battle XP — depends on typing-engine WPM and lesson content.",
+      "tags": [
+        "battle",
+        "engine",
+        "gameplay",
+        "xp"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/lib/battle/power-ups.ts",
+      "type": "file",
+      "name": "power-ups.ts",
+      "filePath": "src/lib/battle/power-ups.ts",
+      "summary": "Battle power-up system: shield/freeze/double-XP/speed-boost lifecycle, cooldowns and combo milestones.",
+      "tags": [
+        "battle",
+        "power-ups",
+        "gameplay"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/lib/gamification/badge-checker.ts",
+      "type": "file",
+      "name": "badge-checker.ts",
+      "filePath": "src/lib/gamification/badge-checker.ts",
+      "summary": "Evaluates badge unlock conditions against player state; returns newly-earned badges.",
+      "tags": [
+        "gamification",
+        "badges",
+        "rules"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/gamification/badge-definitions.ts",
+      "type": "file",
+      "name": "badge-definitions.ts",
+      "filePath": "src/lib/gamification/badge-definitions.ts",
+      "summary": "Declarative badge catalog (BADGE_DEFINITIONS) with unlock conditions.",
+      "tags": [
+        "gamification",
+        "badges",
+        "definitions"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/lib/gamification/certificate.ts",
+      "type": "file",
+      "name": "certificate.ts",
+      "filePath": "src/lib/gamification/certificate.ts",
+      "summary": "Certificate tiers + progress computation (earned/next/highest certificate).",
+      "tags": [
+        "gamification",
+        "certificates"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/lib/gamification/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/lib/gamification/index.ts",
+      "summary": "Barrel re-export of gamification (definitions + checker).",
+      "tags": [
+        "gamification",
+        "barrel"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/story/character-config.ts",
+      "type": "file",
+      "name": "character-config.ts",
+      "filePath": "src/lib/story/character-config.ts",
+      "summary": "Story character roster + visual config (CHARACTER_CONFIGS) and hero predicate; large content module.",
+      "tags": [
+        "story",
+        "characters",
+        "content"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/lib/story/story-script.ts",
+      "type": "file",
+      "name": "story-script.ts",
+      "filePath": "src/lib/story/story-script.ts",
+      "summary": "Story-beat script lookup (getStoryBeat) driving narrative progression.",
+      "tags": [
+        "story",
+        "script",
+        "narrative"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/lib/supabase/client.ts",
+      "type": "file",
+      "name": "client.ts",
+      "filePath": "src/lib/supabase/client.ts",
+      "summary": "Browser Supabase client factory.",
+      "tags": [
+        "supabase",
+        "client"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/supabase/middleware.ts",
+      "type": "file",
+      "name": "middleware.ts",
+      "filePath": "src/lib/supabase/middleware.ts",
+      "summary": "Edge-middleware Supabase client for auth session refresh.",
+      "tags": [
+        "supabase",
+        "middleware",
+        "auth"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/supabase/server.ts",
+      "type": "file",
+      "name": "server.ts",
+      "filePath": "src/lib/supabase/server.ts",
+      "summary": "Server-side Supabase client factory (RSC/server actions).",
+      "tags": [
+        "supabase",
+        "server"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/sync/debounce.ts",
+      "type": "file",
+      "name": "debounce.ts",
+      "filePath": "src/lib/sync/debounce.ts",
+      "summary": "Debounced fire-and-forget push helper used by stores to batch DB writes.",
+      "tags": [
+        "sync",
+        "debounce",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/sync/merge.ts",
+      "type": "file",
+      "name": "merge.ts",
+      "filePath": "src/lib/sync/merge.ts",
+      "summary": "Conflict-free merge of local vs remote snapshots (lessons, badges, story, daily challenges) for hydrate.",
+      "tags": [
+        "sync",
+        "merge",
+        "conflict-resolution"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/lib/sync/progress-sync.ts",
+      "type": "file",
+      "name": "progress-sync.ts",
+      "filePath": "src/lib/sync/progress-sync.ts",
+      "summary": "Supabase write-through/hydrate service — the ONLY place progress/gamification/session/story touch the DB; better-result surface over the supabase boundary.",
+      "tags": [
+        "sync",
+        "supabase",
+        "persistence",
+        "core",
+        "better-result"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/lib/sync/snapshot.ts",
+      "type": "file",
+      "name": "snapshot.ts",
+      "filePath": "src/lib/sync/snapshot.ts",
+      "summary": "Progress-snapshot shapes + empty/hasProgress helpers shared by stores and sync.",
+      "tags": [
+        "sync",
+        "snapshot",
+        "types"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/sync/sync-user.ts",
+      "type": "file",
+      "name": "sync-user.ts",
+      "filePath": "src/lib/sync/sync-user.ts",
+      "summary": "Sync-user identity: isSupabaseConfigured + current user id resolution; guests stay local-only.",
+      "tags": [
+        "sync",
+        "user",
+        "guest"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/typing-engine/drill-generator.ts",
+      "type": "file",
+      "name": "drill-generator.ts",
+      "filePath": "src/lib/typing-engine/drill-generator.ts",
+      "summary": "Generates drill text (Hebrew drill words) by difficulty for the drill route.",
+      "tags": [
+        "typing-engine",
+        "drill",
+        "hebrew"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/lib/typing-engine/engine.ts",
+      "type": "file",
+      "name": "engine.ts",
+      "filePath": "src/lib/typing-engine/engine.ts",
+      "summary": "Pure typing-engine math: WPM, accuracy, keystroke processing, session stats, weak-key detection, XP reward — the shared compute core.",
+      "tags": [
+        "typing-engine",
+        "wpm",
+        "accuracy",
+        "core",
+        "pure"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/lib/typing-engine/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/lib/typing-engine/index.ts",
+      "summary": "Barrel re-export of the typing-engine (engine + layout + types).",
+      "tags": [
+        "typing-engine",
+        "barrel"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/typing-engine/keyboard-layout.ts",
+      "type": "file",
+      "name": "keyboard-layout.ts",
+      "filePath": "src/lib/typing-engine/keyboard-layout.ts",
+      "summary": "Hebrew/Latin keyboard layout maps: rows, char→key, finger assignment, home position, finger colors.",
+      "tags": [
+        "typing-engine",
+        "keyboard",
+        "layout",
+        "hebrew"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/lib/typing-engine/types.ts",
+      "type": "file",
+      "name": "types.ts",
+      "filePath": "src/lib/typing-engine/types.ts",
+      "summary": "Shared typing-engine type definitions (Keystroke, SessionStats, LessonContent, etc.).",
+      "tags": [
+        "typing-engine",
+        "types"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/stores/accessibility-store.ts",
+      "type": "file",
+      "name": "accessibility-store.ts",
+      "filePath": "src/stores/accessibility-store.ts",
+      "summary": "Accessibility preferences (font size, reduced motion) backing the a11y hooks.",
+      "tags": [
+        "zustand",
+        "accessibility",
+        "a11y"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/stores/ai-opponent-store.ts",
+      "type": "file",
+      "name": "ai-opponent-store.ts",
+      "filePath": "src/stores/ai-opponent-store.ts",
+      "summary": "Battle AI-opponent runtime state (rival config, AI progress) for the typing battle.",
+      "tags": [
+        "zustand",
+        "battle",
+        "ai"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/stores/badge-store.ts",
+      "type": "file",
+      "name": "badge-store.ts",
+      "filePath": "src/stores/badge-store.ts",
+      "summary": "Earned-badge store; receives newly-earned badges from xp-store badge checks and persists/syncs them.",
+      "tags": [
+        "zustand",
+        "gamification",
+        "badges"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/stores/consent-store.ts",
+      "type": "file",
+      "name": "consent-store.ts",
+      "filePath": "src/stores/consent-store.ts",
+      "summary": "Privacy/consent store (GDPR-style child-consent flags) for compliance gating.",
+      "tags": [
+        "zustand",
+        "consent",
+        "privacy",
+        "compliance"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/stores/daily-challenge-store.ts",
+      "type": "file",
+      "name": "daily-challenge-store.ts",
+      "filePath": "src/stores/daily-challenge-store.ts",
+      "summary": "Daily-challenge state (current challenge, completion) feeding the daily loop.",
+      "tags": [
+        "zustand",
+        "daily-challenge"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/stores/music-store.ts",
+      "type": "file",
+      "name": "music-store.ts",
+      "filePath": "src/stores/music-store.ts",
+      "summary": "Background-music store with track unlock conditions tied to XP/badges/history.",
+      "tags": [
+        "zustand",
+        "music",
+        "audio",
+        "unlocks"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/stores/practice-history-store.ts",
+      "type": "file",
+      "name": "practice-history-store.ts",
+      "filePath": "src/stores/practice-history-store.ts",
+      "summary": "History of completed practice/speed-test sessions; source for statistics, certificates and track-unlock checks.",
+      "tags": [
+        "zustand",
+        "history",
+        "statistics"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/stores/settings-store.ts",
+      "type": "file",
+      "name": "settings-store.ts",
+      "filePath": "src/stores/settings-store.ts",
+      "summary": "User preferences store (keyboard layout, sound, theme preference) consumed across practice/effects/settings.",
+      "tags": [
+        "zustand",
+        "settings",
+        "preferences"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/stores/story-store.ts",
+      "type": "file",
+      "name": "story-store.ts",
+      "filePath": "src/stores/story-store.ts",
+      "summary": "Story-mode progress store: tracks story beats/flags, builds a StorySnapshot and debounced-syncs story progress to Supabase.",
+      "tags": [
+        "zustand",
+        "story",
+        "sync",
+        "progress"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/stores/theme-store.ts",
+      "type": "file",
+      "name": "theme-store.ts",
+      "filePath": "src/stores/theme-store.ts",
+      "summary": "Active age-theme store (shatil/nevet/geza/anaf/tzameret) driving design tokens.",
+      "tags": [
+        "zustand",
+        "theme"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/stores/typing-session-store.ts",
+      "type": "file",
+      "name": "typing-session-store.ts",
+      "filePath": "src/stores/typing-session-store.ts",
+      "summary": "Active typing-session state (keystrokes, live WPM/accuracy) for practice/drill/speed-test runs.",
+      "tags": [
+        "zustand",
+        "typing",
+        "session"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/stores/xp-store.ts",
+      "type": "file",
+      "name": "xp-store.ts",
+      "filePath": "src/stores/xp-store.ts",
+      "summary": "Core gamification store: tracks XP, derives level from 20 thresholds, fires badge-unlock checks and debounced backend sync of gamification snapshot.",
+      "tags": [
+        "zustand",
+        "gamification",
+        "xp",
+        "level",
+        "sync",
+        "core"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/typing-engine/engine.ts:calculateWpm",
+      "type": "function",
+      "name": "calculateWpm",
+      "filePath": "src/lib/typing-engine/engine.ts",
+      "summary": "Compute words-per-minute from keystrokes — reused by battle-engine and route gameplay.",
+      "tags": [
+        "wpm",
+        "pure"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/typing-engine/engine.ts:processKeystroke",
+      "type": "function",
+      "name": "processKeystroke",
+      "filePath": "src/lib/typing-engine/engine.ts",
+      "summary": "Process a single keystroke into session state — the typing hot path.",
+      "tags": [
+        "typing",
+        "hot-path"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/typing-engine/engine.ts:calculateXpReward",
+      "type": "function",
+      "name": "calculateXpReward",
+      "filePath": "src/lib/typing-engine/engine.ts",
+      "summary": "Map session performance to an XP reward consumed by xp-store.",
+      "tags": [
+        "xp",
+        "gamification"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/battle/battle-engine.ts:createBattle",
+      "type": "function",
+      "name": "createBattle",
+      "filePath": "src/lib/battle/battle-engine.ts",
+      "summary": "Initialize battle state from config + lesson content.",
+      "tags": [
+        "battle"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/battle/battle-engine.ts:checkWinner",
+      "type": "function",
+      "name": "checkWinner",
+      "filePath": "src/lib/battle/battle-engine.ts",
+      "summary": "Decide battle winner from player/AI progress.",
+      "tags": [
+        "battle"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/sync/progress-sync.ts:hydrateFromSupabase",
+      "type": "function",
+      "name": "hydrateFromSupabase",
+      "filePath": "src/lib/sync/progress-sync.ts",
+      "summary": "Hydrate local stores from remote snapshot on login (uses merge).",
+      "tags": [
+        "sync",
+        "hydrate"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/sync/progress-sync.ts:pushSnapshot",
+      "type": "function",
+      "name": "pushSnapshot",
+      "filePath": "src/lib/sync/progress-sync.ts",
+      "summary": "Push a full progress snapshot to Supabase (write-through).",
+      "tags": [
+        "sync",
+        "write"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/sync/merge.ts:mergeSnapshots",
+      "type": "function",
+      "name": "mergeSnapshots",
+      "filePath": "src/lib/sync/merge.ts",
+      "summary": "Conflict-free merge of local vs remote progress snapshots.",
+      "tags": [
+        "sync",
+        "merge"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/gamification/badge-checker.ts:getNewlyEarnedBadges",
+      "type": "function",
+      "name": "getNewlyEarnedBadges",
+      "filePath": "src/lib/gamification/badge-checker.ts",
+      "summary": "Return badges newly unlocked by current state — called from xp-store.",
+      "tags": [
+        "gamification",
+        "badges"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/auth/actions.ts:registerParent",
+      "type": "function",
+      "name": "registerParent",
+      "filePath": "src/lib/auth/actions.ts",
+      "summary": "Server action: register a parent account via supabase.",
+      "tags": [
+        "auth"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/lib/typing-engine/engine.ts",
+      "target": "function:src/lib/typing-engine/engine.ts:calculateWpm",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/typing-engine/engine.ts",
+      "target": "function:src/lib/typing-engine/engine.ts:processKeystroke",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/typing-engine/engine.ts",
+      "target": "function:src/lib/typing-engine/engine.ts:calculateXpReward",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/battle/battle-engine.ts",
+      "target": "function:src/lib/battle/battle-engine.ts:createBattle",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/battle/battle-engine.ts",
+      "target": "function:src/lib/battle/battle-engine.ts:checkWinner",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/sync/progress-sync.ts",
+      "target": "function:src/lib/sync/progress-sync.ts:hydrateFromSupabase",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/sync/progress-sync.ts",
+      "target": "function:src/lib/sync/progress-sync.ts:pushSnapshot",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/sync/merge.ts",
+      "target": "function:src/lib/sync/merge.ts:mergeSnapshots",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/gamification/badge-checker.ts",
+      "target": "function:src/lib/gamification/badge-checker.ts:getNewlyEarnedBadges",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/auth/actions.ts",
+      "target": "function:src/lib/auth/actions.ts:registerParent",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/app/(app)/battle/page.tsx",
+      "target": "file:src/app/(app)/battle/battle-client.tsx",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/app/(app)/lessons/[id]/page.tsx",
+      "target": "file:src/app/(app)/lessons/[id]/lesson-page-client.tsx",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/app/(app)/lessons/page.tsx",
+      "target": "file:src/app/(app)/lessons/lesson-list-client.tsx",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/auth/actions.ts",
+      "target": "file:src/lib/auth/class-code.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/auth/actions.ts",
+      "target": "file:src/lib/auth/schemas.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/auth/actions.ts",
+      "target": "file:src/lib/supabase/server.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/sync/merge.ts",
+      "target": "file:src/lib/sync/snapshot.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/sync/progress-sync.ts",
+      "target": "file:src/lib/sync/snapshot.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/sync/progress-sync.ts",
+      "target": "file:src/lib/sync/sync-user.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/sync/progress-sync.ts",
+      "target": "file:src/lib/supabase/client.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/typing-engine/engine.ts",
+      "target": "file:src/lib/typing-engine/types.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/typing-engine/keyboard-layout.ts",
+      "target": "file:src/lib/typing-engine/types.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/typing-engine/index.ts",
+      "target": "file:src/lib/typing-engine/engine.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/typing-engine/index.ts",
+      "target": "file:src/lib/typing-engine/keyboard-layout.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/typing-engine/index.ts",
+      "target": "file:src/lib/typing-engine/types.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/battle/battle-engine.ts",
+      "target": "file:src/lib/typing-engine/engine.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/story/story-script.ts",
+      "target": "file:src/lib/story/character-config.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/gamification/index.ts",
+      "target": "file:src/lib/gamification/badge-definitions.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/gamification/index.ts",
+      "target": "file:src/lib/gamification/badge-checker.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/gamification/badge-checker.ts",
+      "target": "file:src/lib/gamification/badge-definitions.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/app/(app)/story/page.tsx",
+      "target": "file:src/lib/story/character-config.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/app/(app)/story/page.tsx",
+      "target": "file:src/stores/story-store.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/app/(app)/practice/page.tsx",
+      "target": "file:src/stores/typing-session-store.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/app/(app)/practice/page.tsx",
+      "target": "file:src/stores/settings-store.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/app/(app)/practice/page.tsx",
+      "target": "file:src/stores/practice-history-store.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/app/(app)/practice/page.tsx",
+      "target": "file:src/stores/xp-store.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/app/(app)/practice/page.tsx",
+      "target": "file:src/lib/typing-engine/engine.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/stores/badge-store.ts",
+      "target": "file:src/stores/xp-store.ts",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/stores/xp-store.ts",
+      "target": "file:src/stores/badge-store.ts",
+      "type": "depends_on",
+      "weight": 0.6,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/stores/xp-store.ts",
+      "target": "file:src/lib/sync/debounce.ts",
+      "type": "depends_on",
+      "weight": 0.6,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/stores/story-store.ts",
+      "target": "file:src/lib/sync/snapshot.ts",
+      "type": "depends_on",
+      "weight": 0.6,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/stores/story-store.ts",
+      "target": "file:src/lib/sync/debounce.ts",
+      "type": "depends_on",
+      "weight": 0.6,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/stores/xp-store.ts",
+      "target": "file:src/lib/gamification/badge-checker.ts",
+      "type": "depends_on",
+      "weight": 0.6,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/sync/progress-sync.ts",
+      "target": "file:src/lib/sync/merge.ts",
+      "type": "depends_on",
+      "weight": 0.6,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/battle/battle-engine.ts",
+      "target": "file:src/lib/battle/ai-typing-engine.ts",
+      "type": "related",
+      "weight": 0.5,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/lib/battle/battle-engine.ts",
+      "target": "file:src/lib/battle/power-ups.ts",
+      "type": "related",
+      "weight": 0.5,
+      "direction": "forward"
+    },
+    {
+      "source": "file:src/stores/xp-store.ts",
+      "target": "file:src/stores/badge-store.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7,
+      "recoveredFromImportMap": true
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:client-state",
+      "name": "Client State (Zustand stores)",
+      "description": "Per-domain Zustand stores that own client state and act as the sync boundary to Supabase.",
+      "nodeIds": [
+        "file:src/stores/xp-store.ts",
+        "file:src/stores/badge-store.ts",
+        "file:src/stores/story-store.ts",
+        "file:src/stores/typing-session-store.ts",
+        "file:src/stores/practice-history-store.ts",
+        "file:src/stores/settings-store.ts",
+        "file:src/stores/theme-store.ts",
+        "file:src/stores/accessibility-store.ts",
+        "file:src/stores/consent-store.ts",
+        "file:src/stores/music-store.ts",
+        "file:src/stores/daily-challenge-store.ts",
+        "file:src/stores/ai-opponent-store.ts"
+      ]
+    },
+    {
+      "id": "layer:typing-engine",
+      "name": "Typing Engine (core compute)",
+      "description": "Pure typing math + keyboard layout + drill generation — the shared compute core reused by routes and battle.",
+      "nodeIds": [
+        "file:src/lib/typing-engine/engine.ts",
+        "file:src/lib/typing-engine/keyboard-layout.ts",
+        "file:src/lib/typing-engine/drill-generator.ts",
+        "file:src/lib/typing-engine/types.ts",
+        "file:src/lib/typing-engine/index.ts"
+      ]
+    },
+    {
+      "id": "layer:gameplay-battle",
+      "name": "Battle Gameplay",
+      "description": "Typing-battle engine: gameplay state, AI rival simulation and power-ups.",
+      "nodeIds": [
+        "file:src/lib/battle/battle-engine.ts",
+        "file:src/lib/battle/ai-typing-engine.ts",
+        "file:src/lib/battle/power-ups.ts"
+      ]
+    },
+    {
+      "id": "layer:story",
+      "name": "Story Mode",
+      "description": "Narrative content: character roster/config and story-beat script.",
+      "nodeIds": [
+        "file:src/lib/story/character-config.ts",
+        "file:src/lib/story/story-script.ts"
+      ]
+    },
+    {
+      "id": "layer:gamification",
+      "name": "Gamification",
+      "description": "Badges and certificates: declarative definitions + rule evaluation + certificate tiers.",
+      "nodeIds": [
+        "file:src/lib/gamification/badge-definitions.ts",
+        "file:src/lib/gamification/badge-checker.ts",
+        "file:src/lib/gamification/certificate.ts",
+        "file:src/lib/gamification/index.ts"
+      ]
+    },
+    {
+      "id": "layer:persistence-sync",
+      "name": "Persistence & Sync",
+      "description": "Supabase write-through/hydrate service, snapshot shapes, conflict-free merge and debounced push — the single DB boundary.",
+      "nodeIds": [
+        "file:src/lib/sync/progress-sync.ts",
+        "file:src/lib/sync/snapshot.ts",
+        "file:src/lib/sync/merge.ts",
+        "file:src/lib/sync/debounce.ts",
+        "file:src/lib/sync/sync-user.ts",
+        "file:src/lib/supabase/client.ts",
+        "file:src/lib/supabase/server.ts",
+        "file:src/lib/supabase/middleware.ts"
+      ]
+    },
+    {
+      "id": "layer:auth",
+      "name": "Auth & Roles",
+      "description": "Server-action auth flows, class-code enrollment, role/permission checks and validation schemas.",
+      "nodeIds": [
+        "file:src/lib/auth/actions.ts",
+        "file:src/lib/auth/class-code.ts",
+        "file:src/lib/auth/roles.ts",
+        "file:src/lib/auth/schemas.ts"
+      ]
+    },
+    {
+      "id": "layer:routes",
+      "name": "App Routes (lessons / battle / story / practice)",
+      "description": "Next.js App-Router entry points and their client components for the core learning surfaces.",
+      "nodeIds": [
+        "file:src/app/layout.tsx",
+        "file:src/app/(app)/layout.tsx",
+        "file:src/app/(app)/lessons/page.tsx",
+        "file:src/app/(app)/lessons/lesson-list-client.tsx",
+        "file:src/app/(app)/lessons/[id]/page.tsx",
+        "file:src/app/(app)/lessons/[id]/lesson-page-client.tsx",
+        "file:src/app/(app)/lessons/loading.tsx",
+        "file:src/app/(app)/battle/page.tsx",
+        "file:src/app/(app)/battle/battle-client.tsx",
+        "file:src/app/(app)/battle/loading.tsx",
+        "file:src/app/(app)/story/page.tsx",
+        "file:src/app/(app)/practice/page.tsx",
+        "file:src/app/(app)/practice/loading.tsx"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "Root shell & protected layout",
+      "description": "Start at the RTL Hebrew root layout and the protected (app) layout that wraps the authenticated learning routes.",
+      "nodeIds": [
+        "file:src/app/layout.tsx",
+        "file:src/app/(app)/layout.tsx"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "The typing engine (compute core)",
+      "description": "The pure engine computing WPM/accuracy/keystrokes plus the Hebrew keyboard layout — reused everywhere.",
+      "nodeIds": [
+        "file:src/lib/typing-engine/engine.ts",
+        "file:src/lib/typing-engine/keyboard-layout.ts"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "A lesson runs",
+      "description": "The lessons route loads a lesson and the lesson-player client runs a typing session against the engine.",
+      "nodeIds": [
+        "file:src/app/(app)/lessons/[id]/page.tsx",
+        "file:src/app/(app)/lessons/[id]/lesson-page-client.tsx"
+      ]
+    },
+    {
+      "order": 4,
+      "title": "Earning XP and badges",
+      "description": "Sessions feed xp-store, which derives level and triggers the badge-checker; newly-earned badges flow to badge-store.",
+      "nodeIds": [
+        "file:src/stores/xp-store.ts",
+        "file:src/lib/gamification/badge-checker.ts",
+        "file:src/stores/badge-store.ts"
+      ]
+    },
+    {
+      "order": 5,
+      "title": "Persisting progress",
+      "description": "Stores debounce-push snapshots through the single Supabase sync service; merge resolves local-vs-remote on hydrate.",
+      "nodeIds": [
+        "file:src/lib/sync/progress-sync.ts",
+        "file:src/lib/sync/merge.ts",
+        "file:src/lib/sync/debounce.ts"
+      ]
+    },
+    {
+      "order": 6,
+      "title": "Battle mode",
+      "description": "The battle engine builds a race, the AI typing engine simulates a rival, and power-ups spice the fight.",
+      "nodeIds": [
+        "file:src/lib/battle/battle-engine.ts",
+        "file:src/lib/battle/ai-typing-engine.ts",
+        "file:src/lib/battle/power-ups.ts"
+      ]
+    },
+    {
+      "order": 7,
+      "title": "Story mode",
+      "description": "The story route renders narrative beats from the character config and story script, tracked by story-store.",
+      "nodeIds": [
+        "file:src/app/(app)/story/page.tsx",
+        "file:src/lib/story/character-config.ts",
+        "file:src/stores/story-store.ts"
+      ]
+    }
+  ]
+}

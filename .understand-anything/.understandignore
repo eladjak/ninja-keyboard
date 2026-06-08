@@ -1,0 +1,58 @@
+# .understandignore — Stage 1 scoped run (high-value core only)
+# Strategy: exclude everything, then re-include the scoped target dirs.
+# Targets: src/stores, src/lib/{battle,story,gamification,sync,typing-engine,supabase,auth},
+#          and the lessons/battle/story/practice route entry points under src/app/(app).
+
+# 1) Exclude everything by default
+/*
+src/*
+
+# 2) Re-include scoped roots (need parent dirs un-ignored to descend)
+!src/
+!src/stores/
+!src/lib/
+!src/app/
+
+# 3) src/stores — full (the client-state heart)
+!src/stores/**
+
+# 4) src/lib — only the core subsystems + data layer
+src/lib/*
+!src/lib/battle/
+!src/lib/battle/**
+!src/lib/story/
+!src/lib/story/**
+!src/lib/gamification/
+!src/lib/gamification/**
+!src/lib/sync/
+!src/lib/sync/**
+!src/lib/typing-engine/
+!src/lib/typing-engine/**
+!src/lib/supabase/
+!src/lib/supabase/**
+!src/lib/auth/
+!src/lib/auth/**
+
+# 5) src/app — only route entry points (page.tsx/layout.tsx) for lessons/battle/story/practice
+src/app/*
+!src/app/layout.tsx
+!src/app/(app)/
+src/app/(app)/*
+!src/app/(app)/layout.tsx
+!src/app/(app)/lessons/
+!src/app/(app)/lessons/**
+!src/app/(app)/battle/
+!src/app/(app)/battle/**
+!src/app/(app)/story/
+!src/app/(app)/story/**
+!src/app/(app)/practice/
+!src/app/(app)/practice/**
+
+# 6) Always exclude tests + generated noise within the included scope
+**/*.test.*
+**/*.spec.*
+**/__tests__/**
+**/3d-poc/**
+**/.understand-anything/**
+
+# Built-in defaults (node_modules, dist, etc.) still apply.
