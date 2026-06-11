@@ -387,3 +387,11 @@ Ran 5 parallel agents to verify the full project:
 
 ### Iteration 6-5
 - Copyright, voices, music system, gaming UI, holiday skins, story V2
+
+---
+
+## 2026-06-11 — apps-finish sweep (Fable-5 / Claude Opus 4.8)
+- **audit:** `npm audit fix` (no --force) resolved 13 vulns incl. 1 CRITICAL (vitest UI RCE) + 5 HIGH (next, vite, fast-uri, path-to-regexp, picomatch) — all within semver. Down to 3 moderate (need major/`--force` = deferred). Commit `45be4a1` (package-lock.json only).
+- **verify:** tsc 0 · `next build` exit 0 · lockfile-only change.
+- **NOT touched (intentional, working patterns):** 36 eslint "errors" = React-Compiler heuristic rules (set-state-in-effect / refs / preserve-manual-memoization) across many files — rewriting changes runtime; out of scope for a types/lint-only sweep.
+- **Needs Elad / next session:** PRIORITY-1 content (9 char voices ElevenLabs · 8+ Suno theme songs · lesson texts) · PRIORITY-2 backend (leaderboard/teacher dashboard/tournament Supabase) · 3D POC awaits GLB upload · mobile on-screen keyboard · PWA offline. Project is local/unpushed (no Vercel) — no live-deploy risk.
