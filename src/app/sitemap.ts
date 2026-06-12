@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ninja-keyboard.vercel.app'
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ninja-keyboard-nine.vercel.app'
 
 const ROUTES: { path: string; priority: number }[] = [
   { path: '/', priority: 1 },

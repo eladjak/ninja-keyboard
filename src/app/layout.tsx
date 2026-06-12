@@ -4,7 +4,7 @@ import { AppProviders } from '@/components/providers/app-providers'
 import './globals.css'
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ninja-keyboard.vercel.app'
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ninja-keyboard-nine.vercel.app'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

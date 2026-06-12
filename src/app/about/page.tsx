@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ninja-keyboard.vercel.app'
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ninja-keyboard-nine.vercel.app'
 
 export const metadata: Metadata = {
   title: 'אודות | נינג׳ה מקלדת',
