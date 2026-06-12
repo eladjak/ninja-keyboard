@@ -1,8 +1,34 @@
 # Ninja Keyboard - Progress
 
 ## Status: 🟢 LIVE IN PRODUCTION — https://ninja-keyboard-nine.vercel.app
-## Last Updated: 2026-06-12 (evening — V2 deep-iteration)
-## Sprint: V2 narrative + juice (Shabbat autonomous deep-iteration)
+## Last Updated: 2026-06-12 (night — V3 deep-iteration)
+## Sprint: V3 certificate + taunts + confidence gating (Shabbat autonomous deep-iteration)
+
+## V3 Deep-Iteration (2026-06-12 night) — Blocks 1-3
+**Commits:** 84238c2 (blocks 1-3) → e15188a (cert goal-preview UX). Gates green: tsc 0, **1257 tests (+35 from 1222)**, build ✓, prod deploy ✓.
+
+- **Block 1 — Shareable "תעודת נינ׳ה" (certificate PNG)** ✅ NEW. `src/lib/gamification/certificate-canvas.ts` — pure, dependency-free, draws a brand-consistent RTL Hebrew certificate to a canvas (kid's persisted name, milestone title/emoji, stars, dd.MM.yyyy date, brand frame in #6C5CE7/#00B894). Exports downloadable PNG + Web Share (`navigator.share({files})` with download fallback). New persisted `playerName` in settings-store (editable inline). Component `ninja-certificate.tsx` (live canvas preview + name input + download/share). Surfaced on `/certificates` — shows highest earned milestone, or bronze as an aspirational goal-preview when none earned yet. +12 unit tests (date/filename/stars/buildData helpers).
+- **Block 2 — Victory/defeat taunt wiring** ✅. Added `playerWon`/`playerLost` rival categories (6 rivals, in-character — bug gloats/shocked, shadow gracious, yuki warm, etc.) + Mika `victory`/`defeat` coach lines (supportive, never punishing) to `battle-taunts.ts`. Surfaced in `battle-results.tsx` results modal: rival taunt (themed) + Mika line, deterministic seed, `aria-live`, reduced-motion respected. Passes `rival={selectedRival}` from arena. +6 tests (distinctness, win/loss pick, supportiveness); extended existing taunt test to cover new categories.
+- **Block 3 — Confidence-gated progression** ✅. `src/lib/typing-engine/progression.ts` — pure lib. Next lesson unlocks only when the previous lesson clears a confidence accuracy gate = `max(70 floor, targetAccuracy − 5 grace)`, replacing completion-only unlock. New `needs-practice` status (completed but below gate) with amber styling + encouraging non-punishing retry nudge showing the EXACT accuracy gap ("עוד N% ותפתח את השיעור הבא. נסה שוב — אתה משתפר!"). Wired into `lesson-list-client.tsx`. +13 tests. **Live-verified:** fresh guest sees lesson 1 unlocked, 2-20 locked.
+
+### V3 backlog — status after this session
+1. ~~Per-key ripple on on-screen keyboard~~ → DEFERRED to v4 (low priority, only renders in practice/placement)
+2. ~~Confidence-gated progression~~ → ✅ DONE (Block 3)
+3. ~~Printable certificate at milestones~~ → ✅ SUPERSEDED by Block 1 (shareable downloadable PNG, parent-visible artifact)
+4. Auto-suggest weak-key drill after a lesson with <85% accuracy → v4 (synergizes with the new needs-practice state)
+5. Spendable currency economy (Nitro Type garage pattern) → v4
+6. Polish pass: leaderboard demo-label UX, mobile viewport sanity, empty/loading states sweep → v4
+7. ~~Rival taunts in battle RESULTS screen (victory/defeat)~~ → ✅ DONE (Block 2)
+
+### V4 backlog (next session)
+- Per-key ripple / on-screen keyboard juice in the main lesson flow (item 1)
+- Auto-suggest weak-key drill after <85% accuracy lesson — hook into `needs-practice` (item 4)
+- Trigger the certificate modal automatically on course/belt completion (currently lives on /certificates page; add a celebratory auto-surface on the 5/10/15/20 milestone completion)
+- Spendable currency economy (item 5)
+- Polish sweep (item 6)
+
+---
+
 
 ## V2 Deep-Iteration (2026-06-12 evening) — Blocks 1-5
 **Commits:** c21932f (research) → a4a7559 (narrative) → 427e26d (juice). All gates green: tsc 0, 1222 tests, build, deploy.
