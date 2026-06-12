@@ -6,9 +6,11 @@ import {
   CheckCircle2,
   ChevronLeft,
   Keyboard,
+  Star,
 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { useXpStore } from '@/stores/xp-store'
+import { calculateStars } from '@/lib/typing-engine/stars'
 import type { LessonDefinition } from '@/lib/typing-engine/types'
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -125,7 +127,34 @@ export function LessonListClient({ lessons }: LessonListClientProps) {
               {/* Stats / arrow */}
               <div className="flex shrink-0 items-center gap-3">
                 {data && (
-                  <div className="text-end text-sm">
+                  <div className="flex flex-col items-end gap-0.5 text-end text-sm">
+                    {/* Mastery stars (1-3) */}
+                    <div
+                      className="flex gap-0.5"
+                      data-testid={`lesson-stars-${lesson.id}`}
+                      aria-label={`${calculateStars(data.bestWpm, data.bestAccuracy, lesson.targetWpm, lesson.targetAccuracy)} מתוך 3 כוכבים`}
+                    >
+                      {Array.from({ length: 3 }, (_, i) => {
+                        const earned =
+                          i <
+                          calculateStars(
+                            data.bestWpm,
+                            data.bestAccuracy,
+                            lesson.targetWpm,
+                            lesson.targetAccuracy,
+                          )
+                        return (
+                          <Star
+                            key={i}
+                            className={`size-4 ${
+                              earned
+                                ? 'fill-yellow-400 text-yellow-400 drop-shadow-[0_0_4px_rgba(250,204,21,0.5)]'
+                                : 'text-muted-foreground/25'
+                            }`}
+                          />
+                        )
+                      })}
+                    </div>
                     <div className="font-bold" style={{ color: 'var(--game-accent-purple)' }}>{data.bestWpm} מ/ד</div>
                     <div className="text-xs text-muted-foreground">
                       {data.bestAccuracy}%

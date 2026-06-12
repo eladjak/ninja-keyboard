@@ -18,6 +18,7 @@ import {
   isLessonComplete,
   calculateXpReward,
 } from '@/lib/typing-engine/engine'
+import { calculateStars } from '@/lib/typing-engine/stars'
 import { CHAR_TO_KEY } from '@/lib/typing-engine/keyboard-layout'
 import type { LessonDefinition, LessonContent } from '@/lib/typing-engine/types'
 import type { StoryTriggerEvent } from '@/hooks/use-story-trigger'
@@ -42,6 +43,8 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
   const [currentLineIndex, setCurrentLineIndex] = useState(0)
   const [pressedKey, setPressedKey] = useState<string | undefined>()
   const [lastCorrect, setLastCorrect] = useState<boolean | null>(null)
+  // Combo streak: consecutive correct keystrokes (escalating visual tiers)
+  const [streak, setStreak] = useState(0)
   const [showResults, setShowResults] = useState(false)
   const [lessonCompleted, setLessonCompleted] = useState(false)
   const [storyFinished, setStoryFinished] = useState(false)
@@ -81,6 +84,20 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
       const correct = key === expected
 
       store.typeKey(key, code)
+
+      // Combo streak tracking
+      if (correct) {
+        setStreak((s) => {
+          const next = s + 1
+          // Combo milestone hit sound on tier boundaries
+          if (next === 10 || next === 25 || next === 50) {
+            soundManager.playComboHit()
+          }
+          return next
+        })
+      } else {
+        setStreak(0)
+      }
 
       // Sound feedback
       soundManager.playKeyClick()
@@ -183,6 +200,7 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
 
   const handleRetry = () => {
     setCurrentLineIndex(0)
+    setStreak(0)
     setShowResults(false)
     setLessonCompleted(false)
     setStoryFinished(false)
@@ -205,15 +223,8 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
     }
   }
 
-  const getStars = (stats: ReturnType<typeof computeSessionStats>): number => {
-    const wpmRatio = stats.wpm / lesson.targetWpm
-    const accRatio = stats.accuracy / lesson.targetAccuracy
-    const avg = (wpmRatio + accRatio) / 2
-    if (avg >= 1.3) return 3
-    if (avg >= 1.0) return 2
-    if (avg >= 0.7) return 1
-    return 0
-  }
+  const getStars = (stats: ReturnType<typeof computeSessionStats>): number =>
+    calculateStars(stats.wpm, stats.accuracy, lesson.targetWpm, lesson.targetAccuracy)
 
   return (
     <StoryTriggerWrapper
@@ -242,10 +253,41 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
       </div>
 
       {/* Real-time Stats */}
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-5 gap-2">
         <div className="game-card-border p-3 text-center">
           <div className="text-2xl font-bold tabular-nums">{realtimeWpm || stats?.wpm || 0}</div>
           <div className="text-xs text-muted-foreground">מ/ד</div>
+        </div>
+        {/* Combo streak with escalating tiers */}
+        <div
+          className="game-card-border p-3 text-center"
+          data-testid="lesson-streak"
+          style={
+            streak >= 50
+              ? { borderColor: 'oklch(0.75 0.18 60 / 70%)', boxShadow: '0 0 14px oklch(0.75 0.18 60 / 35%)' }
+              : streak >= 25
+                ? { borderColor: 'oklch(0.55 0.2 292 / 70%)', boxShadow: '0 0 10px oklch(0.55 0.2 292 / 30%)' }
+                : streak >= 10
+                  ? { borderColor: 'oklch(0.672 0.148 168 / 60%)' }
+                  : undefined
+          }
+        >
+          <div
+            key={streak >= 10 ? Math.floor(streak / 5) : 0}
+            className={`text-2xl font-bold tabular-nums ${streak >= 10 ? 'animate-in zoom-in-95 duration-150' : ''}`}
+            style={
+              streak >= 50
+                ? { color: '#fbbf24' }
+                : streak >= 25
+                  ? { color: 'var(--game-accent-purple)' }
+                  : streak >= 10
+                    ? { color: '#00B894' }
+                    : undefined
+            }
+          >
+            {streak >= 50 ? '🔥' : ''}{streak}
+          </div>
+          <div className="text-xs text-muted-foreground">רצף</div>
         </div>
         <div className="game-card-border p-3 text-center">
           <div className="text-2xl font-bold tabular-nums">{stats?.accuracy ?? 100}%</div>
