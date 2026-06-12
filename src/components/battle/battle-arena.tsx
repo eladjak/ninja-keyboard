@@ -803,6 +803,7 @@ export function BattleArena() {
           xpEarned={xpEarned}
           difficulty={difficulty}
           rivalDisplay={rivalDisplay}
+          rival={selectedRival}
           onPlayAgain={handlePlayAgain}
           onBack={handleBack}
         />

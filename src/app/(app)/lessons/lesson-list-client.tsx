@@ -11,6 +11,10 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { useXpStore } from '@/stores/xp-store'
 import { calculateStars } from '@/lib/typing-engine/stars'
+import {
+  lessonProgressionStatus,
+  retryGuidance,
+} from '@/lib/typing-engine/progression'
 import type { LessonDefinition } from '@/lib/typing-engine/types'
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -42,18 +46,14 @@ interface LessonListClientProps {
 export function LessonListClient({ lessons }: LessonListClientProps) {
   const { completedLessons } = useXpStore()
 
-  const isUnlocked = (level: number): boolean => {
-    if (level <= 1) return true
-    const prevId = `lesson-${String(level - 1).padStart(2, '0')}`
-    return prevId in completedLessons
-  }
-
   return (
     <div className="space-y-3">
       {lessons.map((lesson) => {
-        const completed = lesson.id in completedLessons
-        const unlocked = isUnlocked(lesson.level)
         const data = completedLessons[lesson.id]
+        const status = lessonProgressionStatus(lesson, lessons, completedLessons)
+        const unlocked = status !== 'locked'
+        const needsPractice = status === 'needs-practice'
+        const nudge = needsPractice ? retryGuidance(lesson, data) : null
 
         return (
           <Link
@@ -66,23 +66,27 @@ export function LessonListClient({ lessons }: LessonListClientProps) {
                 !unlocked ? 'opacity-40' : ''
               }`}
               style={
-                completed
+                status === 'mastered'
                   ? { borderColor: 'oklch(0.672 0.148 168 / 50%)', background: 'linear-gradient(135deg, oklch(0.15 0.04 168 / 60%) 0%, oklch(0.12 0.01 280 / 80%) 100%)' }
-                  : undefined
+                  : needsPractice
+                    ? { borderColor: 'oklch(0.78 0.16 75 / 50%)', background: 'linear-gradient(135deg, oklch(0.16 0.04 75 / 50%) 0%, oklch(0.12 0.01 280 / 80%) 100%)' }
+                    : undefined
               }
             >
               {/* Level number */}
               <div
                 className="flex size-12 shrink-0 items-center justify-center rounded-xl text-lg font-bold"
                 style={
-                  completed
+                  status === 'mastered'
                     ? { background: 'linear-gradient(135deg, #00B894, #00A381)', color: '#fff', boxShadow: '0 0 12px oklch(0.672 0.148 168 / 40%)' }
-                    : unlocked
-                      ? { background: 'linear-gradient(135deg, #6C5CE7, #5A4BD1)', color: '#fff', boxShadow: '0 0 10px oklch(0.495 0.205 292 / 30%)' }
-                      : { background: 'oklch(0.18 0.02 290)', color: 'oklch(0.65 0.02 290)' }
+                    : needsPractice
+                      ? { background: 'linear-gradient(135deg, #f5b301, #d99500)', color: '#fff', boxShadow: '0 0 10px oklch(0.78 0.16 75 / 35%)' }
+                      : unlocked
+                        ? { background: 'linear-gradient(135deg, #6C5CE7, #5A4BD1)', color: '#fff', boxShadow: '0 0 10px oklch(0.495 0.205 292 / 30%)' }
+                        : { background: 'oklch(0.18 0.02 290)', color: 'oklch(0.65 0.02 290)' }
                 }
               >
-                {completed ? (
+                {status === 'mastered' ? (
                   <CheckCircle2 className="size-6" />
                 ) : unlocked ? (
                   lesson.level
@@ -105,6 +109,15 @@ export function LessonListClient({ lessons }: LessonListClientProps) {
                 <p className="mt-0.5 text-sm text-muted-foreground">
                   {lesson.descriptionHe}
                 </p>
+                {nudge && (
+                  <p
+                    className="mt-1 text-xs font-medium"
+                    style={{ color: 'oklch(0.82 0.15 75)' }}
+                    data-testid={`lesson-nudge-${lesson.id}`}
+                  >
+                    {nudge}
+                  </p>
+                )}
                 {lesson.newKeys.length > 0 && (
                   <div className="mt-1 flex items-center gap-1">
                     <Keyboard className="size-3 text-muted-foreground" />

@@ -10,6 +10,7 @@ import {
   getHighestCertificate,
   getCertificateProgress,
 } from '@/lib/gamification/certificate'
+import { NinjaCertificate } from '@/components/gamification/ninja-certificate'
 import { useXpStore } from '@/stores/xp-store'
 import { usePracticeHistoryStore } from '@/stores/practice-history-store'
 import { cn } from '@/lib/utils'
@@ -54,6 +55,25 @@ export default function CertificatesPage() {
               <p className="text-sm text-muted-foreground">התעודה הגבוהה ביותר שלך</p>
               <p className="text-lg font-bold text-primary">{highest.titleHe}</p>
             </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Shareable "תעודת נינ׳ה" — downloadable PNG for the highest milestone */}
+      {highest && (
+        <Card
+          className="game-card-border"
+          style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}
+        >
+          <CardContent className="space-y-1 px-4 py-4">
+            <h2 className="text-lg font-bold text-glow">התעודה שלך להורדה ולשיתוף</h2>
+            <p className="mb-3 text-sm text-muted-foreground">
+              הוסף את שמך, הורד כתמונה או שתף עם ההורים והחברים.
+            </p>
+            <NinjaCertificate
+              level={highest.level}
+              stars={Math.min(3, earnedCerts.length)}
+            />
           </CardContent>
         </Card>
       )}

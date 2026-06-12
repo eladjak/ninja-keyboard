@@ -20,6 +20,10 @@ interface SettingsState {
   keyboardLayout: KeyboardLayout
   /** Theme preference (system/light/dark) */
   themePreference: ThemePreference
+  /** The player's display name (used on certificates). Persisted. */
+  playerName: string
+  /** Set the player's display name */
+  setPlayerName: (name: string) => void
   /** Toggle sound on/off */
   toggleSound: () => void
   /** Set volume */
@@ -47,6 +51,9 @@ export const useSettingsStore = create<SettingsState>()(
       showKeyboardColors: true,
       keyboardLayout: 'standard' as KeyboardLayout,
       themePreference: 'system' as ThemePreference,
+      playerName: '',
+
+      setPlayerName: (name) => set({ playerName: name.slice(0, 30) }),
 
       toggleSound: () => set((s) => ({ soundEnabled: !s.soundEnabled })),
 

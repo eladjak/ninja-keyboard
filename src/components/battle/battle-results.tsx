@@ -5,6 +5,8 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { useReducedMotion } from '@/hooks/use-reduced-motion'
 import type { BattleWinner, BattleDifficulty } from '@/lib/battle/battle-engine'
+import type { RivalName } from '@/types/ai-opponent'
+import { pickCoachLine, pickRivalTaunt } from '@/lib/battle/battle-taunts'
 import {
   Dialog,
   DialogContent,
@@ -38,6 +40,8 @@ interface BattleResultsProps {
   xpEarned: number
   difficulty: BattleDifficulty
   rivalDisplay: RivalDisplayInfo
+  /** Which rival was fought — drives the personality victory/defeat taunt. */
+  rival: RivalName
   onPlayAgain: () => void
   onBack: () => void
 }
@@ -55,11 +59,18 @@ export function BattleResults({
   xpEarned,
   difficulty,
   rivalDisplay,
+  rival,
   onPlayAgain,
   onBack,
 }: BattleResultsProps) {
   const reduceMotion = useReducedMotion()
   const playerWon = winner === 'player'
+
+  // Surface the rival's in-character results taunt + Mika's coach line.
+  // Seed is deterministic per outcome so it's stable within a single result.
+  const seed = stats.playerWpm + stats.aiWpm + stats.timeSeconds
+  const rivalLine = pickRivalTaunt(rival, playerWon ? 'playerWon' : 'playerLost', seed)
+  const coachLine = pickCoachLine(playerWon ? 'victory' : 'defeat', seed)
 
   return (
     <Dialog open={open}>
@@ -97,6 +108,37 @@ export function BattleResults({
               : `${rivalDisplay.nameHe} ניצח הפעם. נסה שוב!`}
           </DialogDescription>
         </DialogHeader>
+
+        {/* Personality taunt (rival) + supportive coach line (Mika) */}
+        <div className="space-y-2" aria-live="polite">
+          <motion.p
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.18, ease: 'easeOut' }}
+            className="rounded-xl px-3 py-2 text-sm font-medium"
+            style={{
+              background: `${rivalDisplay.themeColor}1a`,
+              border: `1px solid ${rivalDisplay.themeColor}40`,
+              color: rivalDisplay.themeColor,
+            }}
+          >
+            <span aria-hidden="true">{rivalDisplay.emoji} </span>
+            {rivalLine}
+          </motion.p>
+          <motion.p
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={reduceMotion ? { duration: 0 } : { delay: 0.08, duration: 0.18, ease: 'easeOut' }}
+            className="rounded-xl px-3 py-2 text-sm"
+            style={{
+              background: 'oklch(0.672 0.148 168 / 12%)',
+              border: '1px solid oklch(0.672 0.148 168 / 30%)',
+              color: 'var(--game-accent-green)',
+            }}
+          >
+            {coachLine}
+          </motion.p>
+        </div>
 
         <div className="my-4 space-y-3">
           {/* Stats comparison table */}

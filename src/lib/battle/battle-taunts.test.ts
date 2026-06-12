@@ -15,8 +15,15 @@ const TAUNT_CATEGORIES: TauntCategory[] = [
   'playerLeading',
   'playerBehind',
   'comboBroken',
+  'playerWon',
+  'playerLost',
 ]
-const COACH_CATEGORIES: CoachCategory[] = ['comboMilestone', 'comeback']
+const COACH_CATEGORIES: CoachCategory[] = [
+  'comboMilestone',
+  'comeback',
+  'victory',
+  'defeat',
+]
 
 describe('RIVAL_TAUNTS', () => {
   it.each(RIVALS)('%s has non-empty Hebrew lines in every category', (rival) => {
@@ -84,5 +91,28 @@ describe('pickCoachLine', () => {
     const line = pickCoachLine('comboMilestone', 1)
     expect(COACH_LINES.comboMilestone).toContain(line)
     expect(pickCoachLine('comboMilestone', 1)).toBe(line)
+  })
+})
+
+describe('results-screen taunts (victory/defeat wiring)', () => {
+  it.each(RIVALS)('%s has distinct playerWon vs playerLost lines', (rival) => {
+    const won = RIVAL_TAUNTS[rival].playerWon
+    const lost = RIVAL_TAUNTS[rival].playerLost
+    expect(won.length).toBeGreaterThanOrEqual(2)
+    expect(lost.length).toBeGreaterThanOrEqual(2)
+    // No overlap between the win and loss lines for a rival.
+    for (const line of won) expect(lost).not.toContain(line)
+  })
+
+  it('picks a playerWon taunt for a win and playerLost for a loss', () => {
+    const win = pickRivalTaunt('yuki', 'playerWon', 5)
+    const loss = pickRivalTaunt('yuki', 'playerLost', 5)
+    expect(RIVAL_TAUNTS.yuki.playerWon).toContain(win)
+    expect(RIVAL_TAUNTS.yuki.playerLost).toContain(loss)
+  })
+
+  it('Mika victory and defeat lines are supportive (contain מיקה)', () => {
+    expect(pickCoachLine('victory', 0)).toContain('מיקה')
+    expect(pickCoachLine('defeat', 0)).toContain('מיקה')
   })
 })
