@@ -24,6 +24,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 5,
     targetAccuracy: 80,
     category: 'home-row',
+    storyIntroHe:
+      'קי מוצא מקלדת זוהרת בדוג\'ו הישן. קול עמוק לוחש מהחושך: "אהה... תלמיד חדש".',
+    storyOutroHe:
+      'המקלדת מהבהבת בשמחה. הקול לוחש: "התחלה טובה, קי. וזו רק ההתחלה".',
   },
   {
     id: 'lesson-02',
@@ -36,6 +40,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 5,
     targetAccuracy: 80,
     category: 'home-row',
+    storyIntroHe:
+      'מיקה יוצאת מהצללים ומחייכת: "גם היד השנייה? בוא ננסה ביחד, קי!"',
+    storyOutroHe:
+      'מיקה נותנת כיף: "ידעתי שתצליח! מעכשיו אנחנו צוות".',
   },
   {
     id: 'lesson-03',
@@ -48,6 +56,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 8,
     targetAccuracy: 85,
     category: 'home-row',
+    storyIntroHe:
+      '"שתי ידיים זה כמו שני נינג\'ות", אומרת מיקה. "כשהן עובדות יחד, אין מי שיעצור אותן".',
+    storyOutroHe:
+      'קי מרגיש את האצבעות זזות לבד. מיקה צוחקת: "רואה? המקלדת כבר מקשיבה לך".',
   },
   {
     id: 'lesson-04',
@@ -60,6 +72,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 8,
     targetAccuracy: 85,
     category: 'home-row',
+    storyIntroHe:
+      'מיקה מצביעה על הזרת: "האצבעות הקטנות הן הנשק הסודי של כל נינג\'ה".',
+    storyOutroHe:
+      '"אפילו הזרת שלך נינג\'ה עכשיו!" מיקה מוחאת כפיים.',
   },
   {
     id: 'lesson-05',
@@ -72,6 +88,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 10,
     targetAccuracy: 85,
     category: 'home-row',
+    storyIntroHe:
+      'צחקוק מוזר בוקע מהמסך... באג מציץ החוצה: "מילים שלמות? הא! בחיים לא תצליחו!"',
+    storyOutroHe:
+      'באג נעלם בענן ירוק וזועף: "סתם היה לכם מזל...". מיקה: "הוא יחזור. נהיה מוכנים".',
   },
 
   // ── Top Row ──────────────────────────────────────────────────
@@ -86,6 +106,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 10,
     targetAccuracy: 85,
     category: 'top-row',
+    storyIntroHe:
+      'מיקה מציירת באוויר: "א\' ו-ו\' מסתתרות כמעט בכל מילה. מי ששולט בהן שולט בשפה".',
+    storyOutroHe:
+      '"שורה חדשה נפתחה!" קי מרגיש את הכוח גדל באצבעות.',
   },
   {
     id: 'lesson-07',
@@ -98,6 +122,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 10,
     targetAccuracy: 85,
     category: 'top-row',
+    storyIntroHe:
+      'באג חוזר ומערבב את האותיות על המסך! "ר... ט... ק... עכשיו תתבלבלו!"',
+    storyOutroHe:
+      'האותיות חוזרות למקומן. באג בורח: "זה עוד לא נגמר!". מיקה: "ניצחון ראשון אמיתי, קי".',
   },
   {
     id: 'lesson-08',
@@ -110,6 +138,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 10,
     targetAccuracy: 85,
     category: 'top-row',
+    storyIntroHe:
+      'דמות שקטה מופיעה בדוג\'ו. סנסאי זן קד קידה: "סבלנות היא הנשק החזק ביותר. נתחיל".',
+    storyOutroHe:
+      'סנסאי זן מהנהן לאט: "היום ראיתי נינג\'ה צעיר הופך לתלמיד אמיתי".',
   },
 
   // ── Bottom Row ───────────────────────────────────────────────
@@ -124,6 +156,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 10,
     targetAccuracy: 85,
     category: 'bottom-row',
+    storyIntroHe:
+      'סנסאי זן עוצם עיניים: "המקלדת מדברת אל מי שמקשיב. השורה התחתונה מחכה לך".',
+    storyOutroHe:
+      '"שמעת אותה?" מחייך סנסאי זן. "גם היא שמעה אותך".',
   },
   {
     id: 'lesson-10',
@@ -136,6 +172,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 12,
     targetAccuracy: 85,
     category: 'bottom-row',
+    storyIntroHe:
+      'יוקי מסתחררת באוויר ונוחתת מולך: "אני הכי מהירה בדוג\'ו! נראה אותך, קי!"',
+    storyOutroHe:
+      'יוקי פוערת עיניים: "וואו. אולי יום אחד תהיה כמעט מהיר כמוני". אצלה זו מחמאה ענקית.',
   },
   {
     id: 'lesson-11',
@@ -148,6 +188,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 12,
     targetAccuracy: 85,
     category: 'bottom-row',
+    storyIntroHe:
+      'לונה מחכה בגן הירח, רגועה לגמרי: "נשימה עמוקה... האותיות האחרונות מחכות לך".',
+    storyOutroHe:
+      '"עכשיו כל המקלדת שלך", לוחשת לונה. "כל אות. כל מילה. הכול".',
   },
 
   // ── Full Keyboard ────────────────────────────────────────────
@@ -162,6 +206,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 12,
     targetAccuracy: 85,
     category: 'full-keyboard',
+    storyIntroHe:
+      'המסך מהבהב מוזר... גליץ\' מופיע ונעלם: "א-א-אני רק ב-ב-בודק אתכם!"',
+    storyOutroHe:
+      'גליץ\' מהבהב ונעלם. משהו בעיניים שלו לא נראה רע באמת. מוזר.',
   },
   {
     id: 'lesson-13',
@@ -174,6 +222,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 12,
     targetAccuracy: 90,
     category: 'full-keyboard',
+    storyIntroHe:
+      'קאי מדליק להבה: "בוא נילחם!". נועה מחייכת ברוגע: "ואני אתקן מה שיישבר". הצוות שלם.',
+    storyOutroHe:
+      'כל הצוות מריע! קאי: "האותיות הסופיות? סגורות אצלך ביד!"',
   },
 
   // ── Words & Sentences ────────────────────────────────────────
@@ -188,6 +240,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 15,
     targetAccuracy: 90,
     category: 'words',
+    storyIntroHe:
+      'סנסאי זן: "נינג\'ה אמיתי לא חושב על אותיות. הוא חושב על מילים שלמות".',
+    storyOutroHe:
+      'המילים זורמות מהאצבעות. מיקה: "אתה כבר לא מקליד, קי. אתה מדבר עם המקלדת".',
   },
   {
     id: 'lesson-15',
@@ -200,6 +256,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 15,
     targetAccuracy: 90,
     category: 'sentences',
+    storyIntroHe:
+      'אזעקה בדוג\'ו! באג וגליץ\' תוקפים יחד. "הפעם הבאתי חבר!" צוחק באג.',
+    storyOutroHe:
+      'באג וגליץ\' נסוגים. סנסאי זן: "עמדת מול שניים ולא נשברת. המערכה השנייה הושלמה".',
   },
   {
     id: 'lesson-16',
@@ -212,6 +272,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 18,
     targetAccuracy: 90,
     category: 'sentences',
+    storyIntroHe:
+      'באג מופיע על מסך ענק: "ברוכים הבאים לעולם שלי!" - מבוך של פתגמים עתיקים.',
+    storyOutroHe:
+      'כל פתגם שהקלדת מאיר עוד פינה במבוך. הדרך החוצה מתבהרת.',
   },
   {
     id: 'lesson-17',
@@ -224,6 +288,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 18,
     targetAccuracy: 90,
     category: 'sentences',
+    storyIntroHe:
+      'מיקה תופסת פיקוד: "אחריי! כל משפט חזק שאנחנו מקלידים שובר עוד חומה של באג".',
+    storyOutroHe:
+      'החומה נופלת! מיקה מסתובבת אליך: "הכוח הזה? הוא היה שלך כל הזמן".',
   },
   {
     id: 'lesson-18',
@@ -236,6 +304,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 20,
     targetAccuracy: 90,
     category: 'sentences',
+    storyIntroHe:
+      'גליץ\' חוסם את הדרך... ואז לוחש: "א-אני לא רוצה להיות ר-רע. ת-תעזרו לי?". הקלדה מדויקת תרגיע אותו.',
+    storyOutroHe:
+      'גליץ\' מפסיק להבהב לרגע ומחייך: "ת-תודה...". הוא פותח לכם שביל סודי.',
   },
 
   // ── Speed & Mastery ──────────────────────────────────────────
@@ -250,6 +322,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 25,
     targetAccuracy: 90,
     category: 'speed',
+    storyIntroHe:
+      'יוקי מופיעה לצד קי: "המאורה של מלך הבאגים מעבר לפינה. עכשיו - טסים!"',
+    storyOutroHe:
+      'יוקי מתנשפת: "טוב... זה היה באמת מהיר". סנסאי זן: "מוכנים לקרב האחרון".',
   },
   {
     id: 'lesson-20',
@@ -262,6 +338,10 @@ export const LESSONS: LessonDefinition[] = [
     targetWpm: 30,
     targetAccuracy: 95,
     category: 'master',
+    storyIntroHe:
+      'מלך הבאגים יושב על כס זהב: "אני מלך הבאגים!". כל החברים מאחוריך. זה הרגע, קי.',
+    storyOutroHe:
+      'הכתר נופל. האור חוזר לדוג\'ו. סנסאי זן קד קידה: "קום, קי. נינג\'ה מקלדת אמיתי".',
   },
 ]
 

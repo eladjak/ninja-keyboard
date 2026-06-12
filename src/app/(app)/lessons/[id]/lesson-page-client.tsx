@@ -304,9 +304,24 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
           })}
         </div>
         {!store.isActive && !showResults && (
-          <p className="mt-4 text-center text-muted-foreground">
-            לחצו על מקש כלשהו כדי להתחיל...
-          </p>
+          <div className="mt-4 space-y-3 text-center">
+            {lesson.storyIntroHe && (
+              <p
+                data-testid="lesson-story-intro"
+                className="mx-auto max-w-lg rounded-xl px-4 py-3 text-sm leading-relaxed"
+                style={{
+                  background: 'oklch(0.495 0.205 292 / 12%)',
+                  border: '1.5px solid oklch(0.495 0.205 292 / 30%)',
+                  color: 'var(--game-accent-purple, #a78bfa)',
+                }}
+              >
+                {lesson.storyIntroHe}
+              </p>
+            )}
+            <p className="text-muted-foreground">
+              לחצו על מקש כלשהו כדי להתחיל...
+            </p>
+          </div>
         )}
       </div>
 
@@ -373,6 +388,22 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
                     ? 'כל הכבוד! עברתם את השיעור!'
                     : 'נסיון טוב! נסו שוב'}
                 </CardTitle>
+                {lesson.storyOutroHe &&
+                  isLessonComplete(
+                    finalStats,
+                    lesson.targetWpm,
+                    lesson.targetAccuracy,
+                  ) && (
+                    <motion.p
+                      data-testid="lesson-story-outro"
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3, duration: 0.18, ease: 'easeOut' }}
+                      className="mt-2 text-sm leading-relaxed text-muted-foreground"
+                    >
+                      {lesson.storyOutroHe}
+                    </motion.p>
+                  )}
               </CardHeader>
               <CardContent className="space-y-4">
                 {/* Main stats */}

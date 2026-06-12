@@ -34,6 +34,11 @@ import {
   consumeShieldHit,
   isShieldActive,
 } from '@/lib/battle/power-ups'
+import {
+  pickRivalTaunt,
+  pickCoachLine,
+  type TauntCategory,
+} from '@/lib/battle/battle-taunts'
 import { useXpStore } from '@/stores/xp-store'
 import { useAIOpponentStore } from '@/stores/ai-opponent-store'
 import type { RivalName, DifficultyLevel, AIMatchResult } from '@/types/ai-opponent'
@@ -99,8 +104,17 @@ export function BattleArena() {
   const [combo, setCombo] = useState(0)
   // Power-up state
   const [powerUpState, setPowerUpState] = useState<PowerUpState>(createPowerUpState)
+  // Speech line (rival taunt / Mika encouragement) shown during battle
+  const [speechLine, setSpeechLine] = useState<{
+    text: string
+    speaker: 'rival' | 'coach'
+  } | null>(null)
 
   const inputRef = useRef<HTMLInputElement>(null)
+  const comboRef = useRef(0)
+  const speechSeedRef = useRef(0)
+  const lastSpeechAtRef = useRef(0)
+  const speechTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const battleEndedRef = useRef(false)
   // Timer ref for tracking elapsed time during battle
   const battleTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -108,6 +122,50 @@ export function BattleArena() {
 
   const addXp = useXpStore((s) => s.addXp)
   const aiOpponentState = useAIOpponentStore((s) => s.opponentState)
+
+  // ── Speech Lines (taunts & encouragements) ─────────────────────
+
+  /** Show a speech line, throttled to one per 5s (force bypasses throttle). */
+  const showSpeech = useCallback(
+    (
+      kind: { speaker: 'rival'; category: TauntCategory } | { speaker: 'coach'; category: 'comboMilestone' | 'comeback' },
+      force = false,
+    ) => {
+      const now = Date.now()
+      if (!force && now - lastSpeechAtRef.current < 5000) return
+      lastSpeechAtRef.current = now
+      speechSeedRef.current += 1
+      const text =
+        kind.speaker === 'rival'
+          ? pickRivalTaunt(selectedRival, kind.category, speechSeedRef.current)
+          : pickCoachLine(kind.category, speechSeedRef.current)
+      setSpeechLine({ text, speaker: kind.speaker })
+      if (speechTimerRef.current) clearTimeout(speechTimerRef.current)
+      speechTimerRef.current = setTimeout(() => setSpeechLine(null), 3500)
+    },
+    [selectedRival],
+  )
+
+  // Keep comboRef in sync for use inside input handler branches
+  useEffect(() => {
+    comboRef.current = combo
+  }, [combo])
+
+  // Rival opens the battle with a taunt
+  useEffect(() => {
+    if (phase === 'battle') {
+      showSpeech({ speaker: 'rival', category: 'battleStart' }, true)
+    } else if (phase !== 'results') {
+      setSpeechLine(null)
+    }
+  }, [phase, showSpeech])
+
+  // Cleanup speech timer on unmount
+  useEffect(() => {
+    return () => {
+      if (speechTimerRef.current) clearTimeout(speechTimerRef.current)
+    }
+  }, [])
 
   // ── Countdown Logic ────────────────────────────────────────────
 
@@ -303,18 +361,24 @@ export function BattleArena() {
 
       // Combo tracking + SFX + power-up milestones
       if (isCorrect) {
-        setCombo((c) => {
-          const next = c + 1
-          if (next === 10 || next === 20 || next === 30 || next === 50) {
-            soundManager.playComboHit()
-          } else {
-            soundManager.playCorrect()
-          }
-          // Check for power-up milestone grant
-          setPowerUpState((prev) => checkComboMilestone(prev, next))
-          return next
-        })
+        const next = comboRef.current + 1
+        comboRef.current = next
+        if (next === 10 || next === 20 || next === 30 || next === 50) {
+          soundManager.playComboHit()
+          // Mika cheers on combo milestones
+          showSpeech({ speaker: 'coach', category: 'comboMilestone' })
+        } else {
+          soundManager.playCorrect()
+        }
+        // Check for power-up milestone grant
+        setPowerUpState((prev) => checkComboMilestone(prev, next))
+        setCombo(next)
       } else {
+        // Rival mocks a broken combo (only when it actually hurt)
+        if (comboRef.current >= 10) {
+          showSpeech({ speaker: 'rival', category: 'comboBroken' })
+        }
+        comboRef.current = 0
         setCombo(0)
         soundManager.playError()
       }
@@ -342,7 +406,7 @@ export function BattleArena() {
       // Clear input for next character
       e.target.value = ''
     },
-    [phase, battleState],
+    [phase, battleState, powerUpState, showSpeech],
   )
 
   const handlePlayAgain = useCallback(() => {
@@ -374,6 +438,16 @@ export function BattleArena() {
   const playerWpm = battleState ? calculatePlayerWpm(battleState) : 0
   const playerAccuracy = battleState ? calculatePlayerAccuracy(battleState) : 100
   const rivalDisplay = RIVAL_DISPLAY[selectedRival]
+
+  // Rival taunts when one side pulls clearly ahead (throttled inside showSpeech)
+  useEffect(() => {
+    if (phase !== 'battle' || playerPercent < 10) return
+    if (aiPercent - playerPercent >= 25) {
+      showSpeech({ speaker: 'rival', category: 'playerBehind' })
+    } else if (playerPercent - aiPercent >= 25) {
+      showSpeech({ speaker: 'rival', category: 'playerLeading' })
+    }
+  }, [phase, playerPercent, aiPercent, showSpeech])
 
   // ── Render: Rival Selection ──────────────────────────────────
 
@@ -592,6 +666,40 @@ export function BattleArena() {
             />
           )}
         </div>
+      </div>
+
+      {/* Speech line: rival taunt / Mika encouragement */}
+      <div className="relative z-10 flex h-9 items-center justify-center" aria-live="polite">
+        <AnimatePresence>
+          {speechLine && phase === 'battle' && (
+            <motion.div
+              key={speechLine.text}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={reduceMotion ? { duration: 0 } : { duration: 0.15, ease: 'easeOut' }}
+              data-testid="battle-speech-line"
+              className="rounded-full px-4 py-1.5 text-sm font-medium"
+              style={
+                speechLine.speaker === 'rival'
+                  ? {
+                      background: 'oklch(0.2 0.06 25 / 70%)',
+                      border: `1.5px solid ${rivalDisplay.themeColor}`,
+                      color: rivalDisplay.themeColor,
+                    }
+                  : {
+                      background: 'oklch(0.18 0.05 168 / 70%)',
+                      border: '1.5px solid #00B894',
+                      color: '#34d9b5',
+                    }
+              }
+            >
+              {speechLine.speaker === 'rival'
+                ? `${rivalDisplay.nameHe}: ${speechLine.text}`
+                : speechLine.text}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Progress bars */}

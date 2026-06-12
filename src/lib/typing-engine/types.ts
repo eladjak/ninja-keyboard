@@ -72,6 +72,10 @@ export interface LessonDefinition {
   targetAccuracy: number
   /** Category tag */
   category: LessonCategory
+  /** Hebrew story beat shown before the lesson starts (Ki's journey) */
+  storyIntroHe?: string
+  /** Hebrew story beat shown when the lesson is completed */
+  storyOutroHe?: string
 }
 
 export type LessonCategory =
