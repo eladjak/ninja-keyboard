@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { useThemeStore } from '@/stores/theme-store'
 import { useXpStore } from '@/stores/xp-store'
 import { useClickSound, useNavigateSound } from '@/hooks/use-sound-effect'
+import { AnimatedWordmark } from '@/components/layout/animated-wordmark'
 
 export function Header() {
   const { colorScheme, toggleDarkMode } = useThemeStore()
@@ -21,16 +22,18 @@ export function Header() {
       <div className="h-0.5 ninja-gradient" />
 
       <div className="flex h-14 items-center justify-between px-4 md:px-6">
-        {/* Mobile brand */}
-        <div className="flex items-center gap-2 md:hidden">
+        {/* Mobile brand — mascot pop + letter bounce (logo-animation-pattern.md) */}
+        <div className="ninja-brand flex items-center gap-2 md:hidden">
           <Image
             src="/images/characters/ki-mascot.jpg"
             alt="Ki"
             width={32}
             height={32}
-            className="rounded-lg"
+            className="logo-mascot-anim rounded-lg"
           />
-          <span className="font-bold text-foreground">נינג&apos;ה מקלדת</span>
+          <span className="font-bold text-foreground">
+            <AnimatedWordmark />
+          </span>
         </div>
 
         {/* Desktop: XP indicator */}
