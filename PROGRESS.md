@@ -1,10 +1,29 @@
 # Ninja Keyboard - Progress
 
 ## Status: 🟢 LIVE IN PRODUCTION — https://ninja-keyboard-nine.vercel.app
-## Last Updated: 2026-06-12
-## Sprint: v1 Production Launch (guest-first, Shabbat autonomous session)
+## Last Updated: 2026-06-12 (evening — V2 deep-iteration)
+## Sprint: V2 narrative + juice (Shabbat autonomous deep-iteration)
 
-## Current State
+## V2 Deep-Iteration (2026-06-12 evening) — Blocks 1-5
+**Commits:** c21932f (research) → a4a7559 (narrative) → 427e26d (juice). All gates green: tsc 0, 1222 tests, build, deploy.
+
+- **Block 1 RESEARCH** ✅ `docs/v2-research.md` — 12 mechanics extracted from TypingClub/NitroType/DanceMat/keybr, each mapped vs codebase. Key insight: most genre mechanics already shipped in iters 16-18; V2's job was CONNECTING them into one journey.
+- **Block 2 SOUND** ✅ audit only — already exceeds brief: sound-manager (16 MP3 SFX + Web Audio synthesis fallback), music-manager (15 zones, crossfade), persisted soundEnabled/soundVolume in settings-store, reduced-motion respected. No work needed.
+- **Block 3 NARRATIVE** ✅ shipped — `storyIntroHe`/`storyOutroHe` on all 20 lessons (Ki's 3-act journey: awakening 1-7 / training 8-15 / ninja 16-20, matching docs/character-integration-map). Intro beat renders on lesson idle screen, outro in results modal on pass. Battle: `src/lib/battle/battle-taunts.ts` — per-rival personality taunts (6 rivals × 4 moments) + Mika coach encouragements on combo milestones; throttled aria-live speech strip in arena. NOTE: brief said "Box" but Box isn't in this game's canon (he's an agent-network character) — implemented per the actual character bible (rivals + Mika).
+- **Block 4 JUICE** ✅ shipped — shared `calculateStars` lib (+6 tests), mastery stars (1-3) on lessons map from best WPM/accuracy, escalating combo streak counter in lesson page (10=green / 25=purple / 50=gold+🔥, comboHit SFX at tiers).
+- **Block 5 BACKGROUNDS** ✅ already shipped previously — 10 themed JPGs in public/images/backgrounds wired across all 10 scenes.
+- **Block 6 POLISH** → deferred to v3 (see backlog below).
+
+### V3 backlog (from V2 research + deferred polish)
+1. Per-key ripple on on-screen keyboard (only renders in practice/placement, not main lesson flow — low priority)
+2. Confidence-gated progression (keybr-style: unlock next lesson by accuracy, not just completion)
+3. Printable certificate at lessons 5/10/15/20 (Dance Mat pattern, parent-visible artifact)
+4. Auto-suggest weak-key drill after a lesson with <85% accuracy
+5. Spendable currency economy (Nitro Type garage pattern)
+6. Polish pass: leaderboard demo-label UX, mobile viewport sanity, empty/loading states sweep
+7. Rival taunts in battle RESULTS screen (victory/defeat lines — lib categories exist, UI not wired)
+
+## Current State (pre-V2 baseline)
 Iteration 18 COMPLETE (Apr 10, 2026). Massive gameplay session — 10 commits, 13 features shipped. Art fixes (Rex V5, Shadow V3, Laila V2). Ki mascot emotional feedback. Weak key drill mode. Battle: combo system (5 tiers) + power-ups (4 types, fully integrated into arena). Speed-test: personal bests + history chart + new record banner. Keyboard shortcuts module (22 shortcuts, 5 categories, interactive practice with SFX + difficulty stars). Statistics dashboard (overview, WPM chart, weak keys, session history, XP progress). TypeScript: 0 errors. Tests: 1189+. Commits: b9722f5 → 08ab0ca.
 
 ## EXACT CONTINUATION PLAN (for next session)
