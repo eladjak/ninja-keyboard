@@ -79,7 +79,8 @@ export function Sidebar() {
         <div className="flex items-center gap-3">
           <Image src="/images/characters/ki-mascot.jpg" alt="Ki" width={44} height={44} className="rounded-xl" />
           <div>
-            <h1 className="text-lg font-bold text-foreground" style={{ textShadow: 'var(--game-text-glow)' }}>נינג&apos;ה מקלדת</h1>
+            {/* Brand text — not an h1 so each page keeps exactly one h1 (GEO/a11y) */}
+            <p className="text-lg font-bold text-foreground" style={{ textShadow: 'var(--game-text-glow)' }}>נינג&apos;ה מקלדת</p>
             <p className="text-xs text-muted-foreground">אימון הקלדה בעברית</p>
           </div>
         </div>
