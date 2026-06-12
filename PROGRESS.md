@@ -1,8 +1,8 @@
 # Ninja Keyboard - Progress
 
-## Status: Active
-## Last Updated: 2026-04-10
-## Sprint: Iteration 18 — Game Features, Art Fixes, Ki Mascot, Drill Mode
+## Status: 🟢 LIVE IN PRODUCTION — https://ninja-keyboard-nine.vercel.app
+## Last Updated: 2026-06-12
+## Sprint: v1 Production Launch (guest-first, Shabbat autonomous session)
 
 ## Current State
 Iteration 18 COMPLETE (Apr 10, 2026). Massive gameplay session — 10 commits, 13 features shipped. Art fixes (Rex V5, Shadow V3, Laila V2). Ki mascot emotional feedback. Weak key drill mode. Battle: combo system (5 tiers) + power-ups (4 types, fully integrated into arena). Speed-test: personal bests + history chart + new record banner. Keyboard shortcuts module (22 shortcuts, 5 categories, interactive practice with SFX + difficulty stars). Statistics dashboard (overview, WPM chart, weak keys, session history, XP progress). TypeScript: 0 errors. Tests: 1189+. Commits: b9722f5 → 08ab0ca.
@@ -395,3 +395,37 @@ Ran 5 parallel agents to verify the full project:
 - **verify:** tsc 0 · `next build` exit 0 · lockfile-only change.
 - **NOT touched (intentional, working patterns):** 36 eslint "errors" = React-Compiler heuristic rules (set-state-in-effect / refs / preserve-manual-memoization) across many files — rewriting changes runtime; out of scope for a types/lint-only sweep.
 - **Needs Elad / next session:** PRIORITY-1 content (9 char voices ElevenLabs · 8+ Suno theme songs · lesson texts) · PRIORITY-2 backend (leaderboard/teacher dashboard/tournament Supabase) · 3D POC awaits GLB upload · mobile on-screen keyboard · PWA offline. Project is local/unpushed (no Vercel) — no live-deploy risk.
+
+---
+
+## 2026-06-12 — 🚀 v1 PRODUCTION LAUNCH (Fable-5, autonomous Shabbat session)
+
+**LIVE:** https://ninja-keyboard-nine.vercel.app (Vercel project `ninja-keyboard`, scope eladjaks-projects)
+
+### Launch decision: guest-first deploy (no Supabase env in production)
+- Middleware already skips auth when Supabase env is absent → ALL 40 routes publicly playable as guest, progress in localStorage. Zero login wall for kids.
+- Backend accounts/sync = deferred to v1.1 (env vars + Supabase project flip it on; code is ready — Phase 1 store-boundary sync from `82adfd0`).
+
+### Shipped this session
+- **Landing page at `/`** (was a bare redirect to /home): server-rendered Hebrew RTL marketing page — hero with Ki, 6 feature cards (real character art), parents/teachers section, 6-question FAQ, external links, contact footer. Exactly 1 h1, full semantic tags, alt on all images.
+- **`/about` page** — story, principles, creator, contact.
+- **GEO/AEO bundle**: JSON-LD as plain script in initial HTML (WebSite + WebApplication + Person + WebPage + FAQPage), robots.txt (AI bots allowed), sitemap.ts (22 routes), llms.txt, metadataBase + canonical + OpenGraph. **Local geo-scan score: 100/100 (0 failed).** mole-ai scanner returned no score (quota).
+- **Auth graceful degradation**: all server actions in `src/lib/auth/actions.ts` return friendly Hebrew guest-mode message when Supabase env missing (was: server-action crash). Auth layout shows guest notice + "כניסה כאורחים" CTA. Verified live: form submit → friendly message.
+- **Leaderboard mock data honestly labeled** as demo ("תחרות אמיתית תיפתח יחד עם החשבונות").
+- **Sidebar brand h1 → p** — exactly one h1 per app page (a11y/SEO).
+- **3D POC committed** (Ki GLB viewer, hidden route /3d-poc, graceful missing-model state).
+
+### Gates
+- tsc: 0 errors · tests: 1197/1197 pass (68 files) · next build: clean (40 routes)
+- Live verification (agent-browser headless): / 200, /home 200 guest-accessible, /lessons + /lesson-01 render, /battle renders, /login graceful, robots/sitemap/llms 200.
+
+### Commits
+`b57ac5d` (launch) · `980f47e` (canonical domain fix → ninja-keyboard-nine.vercel.app) · `9e7c4bb` (sidebar h1) — all pushed to master.
+
+### Deferred (honest list for next session)
+1. Character voices (ElevenLabs — paid) + theme songs (Suno — paid): hooks exist, skipped per no-paid-APIs constraint.
+2. Real backend: Supabase env not set in prod → accounts, real leaderboard, teacher dashboard, cross-device sync OFF. To enable: `vercel env add NEXT_PUBLIC_SUPABASE_URL/ANON_KEY production` + verify RLS + decide on the /home auth-wall UX (currently guest-first).
+3. Lesson content expansion (more Hebrew texts per level) — needs Elad's creative pass.
+4. Mobile on-screen keyboard / touch, PWA offline mode, 3D GLB model upload.
+5. Teacher `student-list-mobile.tsx` TODO: notification/messaging hookup.
+6. Custom domain (currently *.vercel.app default — per launch constraints, no DNS touched).
