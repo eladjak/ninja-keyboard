@@ -345,7 +345,8 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
             )
           })}
         </div>
-        {!store.isActive && !showResults && (
+        {/* Shown until the first keystroke (startSession activates immediately on mount) */}
+        {store.keystrokes.length === 0 && !showResults && (
           <div className="mt-4 space-y-3 text-center">
             {lesson.storyIntroHe && (
               <p
