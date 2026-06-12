@@ -59,24 +59,25 @@ export default function CertificatesPage() {
         </Card>
       )}
 
-      {/* Shareable "תעודת נינ׳ה" — downloadable PNG for the highest milestone */}
-      {highest && (
-        <Card
-          className="game-card-border"
-          style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}
-        >
-          <CardContent className="space-y-1 px-4 py-4">
-            <h2 className="text-lg font-bold text-glow">התעודה שלך להורדה ולשיתוף</h2>
-            <p className="mb-3 text-sm text-muted-foreground">
-              הוסף את שמך, הורד כתמונה או שתף עם ההורים והחברים.
-            </p>
-            <NinjaCertificate
-              level={highest.level}
-              stars={Math.min(3, earnedCerts.length)}
-            />
-          </CardContent>
-        </Card>
-      )}
+      {/* Shareable "תעודת נינ׳ה" — downloadable PNG. Shows the highest earned
+          milestone, or the first one as a goal preview when none earned yet. */}
+      <Card
+        className="game-card-border"
+        style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}
+      >
+        <CardContent className="space-y-1 px-4 py-4">
+          <h2 className="text-lg font-bold text-glow">התעודה שלך להורדה ולשיתוף</h2>
+          <p className="mb-3 text-sm text-muted-foreground">
+            {highest
+              ? 'הוסף את שמך, הורד כתמונה או שתף עם ההורים והחברים.'
+              : 'כך תיראה התעודה שלך! התחל לתרגל, השג תעודה — ואז תוכל להוריד ולשתף.'}
+          </p>
+          <NinjaCertificate
+            level={(highest ?? CERTIFICATES[0]).level}
+            stars={Math.max(1, Math.min(3, earnedCerts.length))}
+          />
+        </CardContent>
+      </Card>
 
       {/* All certificates */}
       <div className="space-y-3">
