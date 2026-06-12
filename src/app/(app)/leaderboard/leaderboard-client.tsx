@@ -13,6 +13,14 @@ export function LeaderboardClient() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-4 p-4" dir="rtl">
+      {/* Demo-data notice (honest label until real backend rankings ship) */}
+      <p
+        className="text-muted-foreground rounded-lg border border-dashed px-3 py-2 text-center text-xs"
+        role="note"
+      >
+        {'הדירוג כאן הוא הדגמה — תחרות אמיתית בין שחקנים תיפתח יחד עם החשבונות 🏆'}
+      </p>
+
       {/* Podium card */}
       <Card className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}>
         <CardHeader>

@@ -5,7 +5,23 @@ import { createClient } from '@/lib/supabase/server'
 import { validateClassCode } from './class-code'
 import { loginSchema, registerSchema, studentProfileSchema } from './schemas'
 
+// Guest-mode guard: when Supabase env is missing (v1 guest-first deploy),
+// auth actions degrade gracefully instead of crashing the server action.
+function isAuthEnabled(): boolean {
+  return Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  )
+}
+
+const GUEST_MODE_MESSAGE =
+  'החשבונות עוד לא נפתחו — בינתיים משחקים כאורחים, וכל ההתקדמות נשמרת על המכשיר הזה 🥷'
+
 export async function loginWithEmail(formData: FormData) {
+  if (!isAuthEnabled()) {
+    return { error: GUEST_MODE_MESSAGE }
+  }
+
   const parsed = loginSchema.safeParse({
     email: formData.get('email'),
     password: formData.get('password'),
@@ -28,6 +44,10 @@ export async function loginWithEmail(formData: FormData) {
 }
 
 export async function loginWithGoogle() {
+  if (!isAuthEnabled()) {
+    return { error: GUEST_MODE_MESSAGE }
+  }
+
   const supabase = await createClient()
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
@@ -57,6 +77,10 @@ export async function registerParent(formData: FormData) {
   }
 
   const { displayName, email, password } = parsed.data
+
+  if (!isAuthEnabled()) {
+    return { error: GUEST_MODE_MESSAGE }
+  }
 
   const supabase = await createClient()
 
@@ -93,6 +117,10 @@ export async function joinClass(code: string) {
 
   const normalizedCode = validationResult.value
 
+  if (!isAuthEnabled()) {
+    return { error: GUEST_MODE_MESSAGE }
+  }
+
   const supabase = await createClient()
   const { data: classData, error: classError } = await supabase
     .from('classes')
@@ -120,6 +148,10 @@ export async function createStudentProfile(formData: FormData) {
   }
 
   const { displayName, avatarId, classId } = parsed.data
+
+  if (!isAuthEnabled()) {
+    return { error: GUEST_MODE_MESSAGE }
+  }
 
   const supabase = await createClient()
 
@@ -167,6 +199,10 @@ export async function createStudentProfile(formData: FormData) {
 }
 
 export async function logout() {
+  if (!isAuthEnabled()) {
+    redirect('/home')
+  }
+
   const supabase = await createClient()
   await supabase.auth.signOut()
   redirect('/login')

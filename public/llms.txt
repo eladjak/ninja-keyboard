@@ -1,0 +1,33 @@
+# נינג׳ה מקלדת (Ninja Keyboard)
+
+> אפליקציית ווב חינמית ללימוד הקלדה עיוורת בעברית לילדים ונוער בגילאי 6–16.
+> Free Hebrew-first web app that teaches kids ages 6-16 touch typing through games, battles, and an adventure story.
+
+## What it offers
+- 20 graded Hebrew touch-typing lessons (home row to full keyboard)
+- Battle arena: typing combat with combos, shields and power-ups
+- 3 typing games: word rain, ninja slice, letter memory
+- Speed tests with WPM tracking, personal bests and history charts
+- 22 Windows keyboard shortcuts with interactive practice
+- Adventure story featuring Ki the ninja and Sensei Zen (Hebrew)
+- 5 age-based visual themes, WCAG 2.2 AA accessibility, full RTL
+
+## Key facts
+- Price: free, no ads, no in-app purchases
+- No registration required — guest play with on-device progress
+- Language: Hebrew (RTL-first), built for Israeli kids
+- Creator: Elad Yaakobovitch (אלעד יעקובוביץ׳), full-stack developer and programming teacher, Migdal HaEmek, Israel
+- Contact: eladhiteclearning@gmail.com
+
+## Pages
+- [Home / landing](/) — overview, FAQ, features
+- [About](/about) — the story behind the app
+- [Lessons](/lessons) — 20 graded typing lessons
+- [Battle](/battle) — typing battle arena
+- [Games](/games) — typing mini-games
+- [Speed test](/speed-test) — WPM measurement
+
+## Creator links
+- https://www.eladjak.com
+- https://www.fullstack-eladjak.co.il
+- https://github.com/eladjak

@@ -3,7 +3,11 @@ import { heebo, inter, assistant } from '@/lib/fonts'
 import { AppProviders } from '@/components/providers/app-providers'
 import './globals.css'
 
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ninja-keyboard.vercel.app'
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: 'נינג\'ה מקלדת | לימוד הקלדה בעברית',
   description:
     'אפליקציית לימוד הקלדה בעברית לילדים ונוער. למדו להקליד מהר ובדיוק עם משחקים, אתגרים ותרגולים מותאמים אישית.',

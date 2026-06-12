@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ki 3D POC - מדריך יצירת מודל</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0b1a;
+    --bg-card: #1a1730;
+    --bg-card-alt: #221f35;
+    --brand: #6C5CE7;
+    --brand2: #00B894;
+    --accent: #fd79a8;
+    --warn: #fdcb6e;
+    --text: #e8e6f0;
+    --text2: #a8a4b8;
+    --text-muted: #6c6880;
+    --border: #2d2a42;
+    --grad: linear-gradient(135deg, #6C5CE7, #00B894);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Heebo', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+  .hero {
+    background: linear-gradient(180deg, #1a1040, var(--bg));
+    padding: 50px 30px 30px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p { color: var(--text2); margin-top: 8px; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 20px 0;
+  }
+  .card h2 {
+    font-size: 1.4rem;
+    color: var(--brand);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card h3 { color: var(--brand2); margin: 16px 0 8px; }
+
+  .step {
+    background: var(--bg-card-alt);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px 0;
+    border-right: 4px solid var(--brand);
+  }
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--brand);
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-left: 10px;
+  }
+  .step p { margin: 8px 0 0; color: var(--text2); font-size: 0.95rem; }
+
+  .prompt-box {
+    background: #0a0820;
+    border: 1px solid var(--brand);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    position: relative;
+  }
+  .prompt-box .label {
+    position: absolute;
+    top: -10px;
+    right: 12px;
+    background: var(--brand);
+    color: white;
+    padding: 2px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .copy-btn {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: var(--brand);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-family: 'Heebo', sans-serif;
+  }
+  .copy-btn:hover { background: var(--brand2); }
+
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.9rem;
+  }
+  .compare-table th {
+    background: var(--bg-card-alt);
+    padding: 10px 12px;
+    text-align: right;
+    color: var(--brand);
+    border-bottom: 2px solid var(--border);
+  }
+  .compare-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+  }
+  .compare-table tr:hover td { background: rgba(108, 92, 231, 0.05); }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .badge-free { background: rgba(0, 184, 148, 0.2); color: var(--brand2); }
+  .badge-paid { background: rgba(253, 203, 110, 0.2); color: var(--warn); }
+  .badge-best { background: rgba(108, 92, 231, 0.2); color: var(--brand); }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    padding: 8px 0;
+    color: var(--text2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .checklist li::before { content: '☐'; font-size: 1.2rem; color: var(--brand); }
+
+  .warning {
+    background: rgba(253, 203, 110, 0.1);
+    border: 1px solid rgba(253, 203, 110, 0.3);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 16px 0;
+  }
+  .warning::before { content: '⚠️ '; }
+
+  .success {
+    background: rgba(0, 184, 148, 0.1);
+    border: 1px solid rgba(0, 184, 148, 0.3);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 16px 0;
+  }
+
+  .anim-table td:first-child { font-weight: 600; color: var(--text); }
+
+  a { color: var(--brand); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  code {
+    background: var(--bg-card-alt);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    direction: ltr;
+    display: inline-block;
+  }
+
+  .pipeline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    direction: ltr;
+  }
+  .pipeline-step {
+    background: var(--bg-card-alt);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    text-align: center;
+    min-width: 120px;
+  }
+  .pipeline-step .icon { font-size: 1.5rem; }
+  .pipeline-step .name { font-size: 0.8rem; color: var(--text2); margin-top: 4px; }
+  .pipeline-arrow { color: var(--brand); font-size: 1.5rem; }
+
+  .ref-image {
+    max-width: 300px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+  }
+  .images-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 16px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>🥷 Ki 3D POC — מדריך יצירת מודל</h1>
+  <p>מודל תלת-ממדי של קי (Ki) עבור נינג'ה מקלדת</p>
+  <p style="color: var(--text-muted); font-size: 0.85rem;">מרץ 2026 | גרסה 1.0</p>
+</div>
+
+<div class="container">
+
+  <!-- Pipeline Overview -->
+  <div class="card">
+    <h2>🔄 הפייפליין המלא</h2>
+    <div class="pipeline">
+      <div class="pipeline-step">
+        <div class="icon">🖼️</div>
+        <div class="name">Model Sheet<br>(2D Reference)</div>
+      </div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-step" style="border-color: var(--brand);">
+        <div class="icon">🤖</div>
+        <div class="name">AI Image-to-3D<br>(Tripo / Meshy)</div>
+      </div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-step">
+        <div class="icon">🦴</div>
+        <div class="name">Auto-Rigging<br>(Built-in / Mixamo)</div>
+      </div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-step">
+        <div class="icon">💃</div>
+        <div class="name">Animations<br>(Mixamo Library)</div>
+      </div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-step" style="border-color: var(--brand2);">
+        <div class="icon">📦</div>
+        <div class="name">GLB Export<br>→ React Three Fiber</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reference Images -->
+  <div class="card">
+    <h2>🖼️ תמונות ייחוס</h2>
+    <p style="color: var(--text2);">קבצים מוכנים להעלאה בתיקייה <code>docs/3d-poc/</code></p>
+
+    <h3>קובץ ראשי — Model Sheet מלא (מומלץ!)</h3>
+    <p>הקובץ הזה כולל 4 זוויות: Front, Side, Back, 3/4 View — אידיאלי לכלי Image-to-3D</p>
+    <p><code>public/images/characters/model-sheets/ki-boy.jpg</code> (1024x1024)</p>
+
+    <h3>קובץ גיבוי — Front View בלבד</h3>
+    <p>אם הכלי מבקש תמונה בודדת, השתמש בזה</p>
+    <p><code>docs/3d-poc/ki-front-view.jpg</code></p>
+
+    <div class="warning">
+      <strong>חשוב:</strong> העלה את ה-Model Sheet המלא (ki-boy.jpg) כקובץ ראשי. כלי AI טובים יודעים לפרש multi-view sheets ויפיקו מודל 3D מדויק יותר עם כל הזוויות.
+    </div>
+  </div>
+
+  <!-- Text Prompt -->
+  <div class="card">
+    <h2>📝 פרומפט טקסט (העתק והדבק)</h2>
+
+    <div class="prompt-box">
+      <span class="label">English Prompt</span>
+      <button class="copy-btn" onclick="copyPrompt('prompt-en')">העתק</button>
+      <div id="prompt-en" style="direction: ltr; text-align: left;">
+Chibi cartoon ninja boy character for a kids' typing game. 12-year-old boy with large head (40% of body height), big expressive purple eyes, spiky black hair. Wearing a purple/violet ninja outfit with green/teal trim and belt. Purple headband with long flowing ribbons at the back. Gray metal shuriken (ninja star) attached to belt. Purple boots. Light olive skin tone. Standing in a neutral T-pose or A-pose for rigging. Clean geometry, game-ready, low-poly stylized. Single character, white background.
+      </div>
+    </div>
+
+    <div class="prompt-box">
+      <span class="label">Short Prompt (אם יש הגבלת תווים)</span>
+      <button class="copy-btn" onclick="copyPrompt('prompt-short')">העתק</button>
+      <div id="prompt-short" style="direction: ltr; text-align: left;">
+Chibi ninja boy, purple outfit, green trim, spiky black hair, purple headband with ribbons, shuriken belt, big purple eyes, cartoon game character, T-pose
+      </div>
+    </div>
+
+    <div class="prompt-box">
+      <span class="label">Style Keywords (הוסף לפרומפט אם אפשר)</span>
+      <button class="copy-btn" onclick="copyPrompt('prompt-style')">העתק</button>
+      <div id="prompt-style" style="direction: ltr; text-align: left;">
+chibi, cartoon, game-ready, stylized, low-poly, bold colors, clean topology, riggable humanoid
+      </div>
+    </div>
+  </div>
+
+  <!-- Tool Comparison -->
+  <div class="card">
+    <h2>⚖️ השוואת כלים</h2>
+    <table class="compare-table">
+      <tr>
+        <th>כלי</th>
+        <th>Free Tier</th>
+        <th>קרטון/צ'יבי</th>
+        <th>Auto-Rig</th>
+        <th>אנימציות</th>
+        <th>GLB</th>
+      </tr>
+      <tr>
+        <td><strong>Tripo AI</strong> <span class="badge badge-best">מומלץ</span></td>
+        <td>~24 מודלים/חודש</td>
+        <td>מעולה</td>
+        <td>✅ כלול</td>
+        <td>ספריה מצומצמת</td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td><strong>Meshy AI</strong> <span class="badge badge-best">מומלץ</span></td>
+        <td>10 הורדות/חודש</td>
+        <td>מעולה</td>
+        <td>✅ כלול</td>
+        <td><strong>500+ פריסטים</strong></td>
+        <td>✅</td>
+      </tr>
+      <tr>
+        <td><strong>Mixamo</strong> <span class="badge badge-free">חינם</span></td>
+        <td>ללא הגבלה</td>
+        <td>כל מודל</td>
+        <td>✅ חינם</td>
+        <td><strong>100+ חינם</strong></td>
+        <td>via Blender</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- TRIPO GUIDE -->
+  <div class="card">
+    <h2>🔵 מדריך Tripo AI (tripo3d.ai)</h2>
+
+    <div class="step">
+      <span class="step-num">1</span>
+      <strong>הירשם לחינם</strong>
+      <p>גש ל-<a href="https://www.tripo3d.ai" target="_blank">tripo3d.ai</a> → Create Account (Google/GitHub)</p>
+    </div>
+
+    <div class="step">
+      <span class="step-num">2</span>
+      <strong>העלה תמונה (Image to 3D)</strong>
+      <p>לחץ "Create" → "Image to 3D" → העלה את <code>ki-boy.jpg</code> (ה-Model Sheet המלא)</p>
+    </div>
+
+    <div class="step">
+      <span class="step-num">3</span>
+      <strong>הגדר סגנון</strong>
+      <p>אם יש אפשרות סגנון, בחר: <strong>Cartoon / Stylized / Chibi</strong></p>
+      <p>הדבק את הפרומפט הקצר אם יש שדה טקסט</p>
+    </div>
+
+    <div class="step">
+      <span class="step-num">4</span>
+      <strong>צור והמתן (~2-5 דקות)</strong>
+      <p>לחץ Generate. צפה בתצוגה מקדימה. אם לא מספק — נסה שוב עם ה-front view בלבד</p>
+    </div>
+
+    <div class="step">
+      <span class="step-num">5</span>
+      <strong>Rigging (אם זמין)</strong>
+      <p>לחץ על "Rig" או "Animate" → בחר humanoid skeleton → Apply</p>
+    </div>
+
+    <div class="step">
+      <span class="step-num">6</span>
+      <strong>הורד GLB</strong>
+      <p>לחץ Download → בחר פורמט <strong>GLB</strong></p>
+      <p>שמור בנתיב: <code>public/characters/3d/ki-tripo.glb</code></p>
+    </div>
+  </div>
+
+  <!-- MESHY GUIDE -->
+  <div class="card">
+    <h2>🟢 מדריך Meshy AI (meshy.ai)</h2>
+
+    <div class="step">
+      <span class="step-num">1</span>
+      <strong>הירשם לחינם</strong>
+      <p>גש ל-<a href="https://www.meshy.ai" target="_blank">meshy.ai</a> → Sign Up (Google/GitHub)</p>
+    </div>
+
+    <div class="step">
+      <span class="step-num">2</span>
+      <strong>בחר Image to 3D</strong>
+      <p>לחץ "Create" → "Image to 3D" → העלה את <code>ki-boy.jpg</code></p>
+    </div>
+
+    <div class="step">
+      <span class="step-num">3</span>
+      <strong>הגדרות</strong>
+      <p>Art Style: <strong>Cartoon</strong> | Topology: <strong>Quad</strong> (אם זמין)</p>
+      <p>הדבק את הפרומפט הקצר בשדה Description</p>
+    </div>
+
+    <div class="step">
+      <span class="step-num">4</span>
+      <strong>צור והמתן (~30 שניות - 3 דקות)</strong>
+      <p>Meshy מהיר יותר מ-Tripo. תקבל תצוגה מקדימה 3D</p>
+    </div>
+
+    <div class="step">
+      <span class="step-num">5</span>
+      <strong>Auto-Rig + Animation</strong>
+      <p>לחץ על "Rig & Animate" → Meshy ייצור skeleton אוטומטי</p>
+      <p>בחר אנימציות: <strong>idle</strong>, <strong>wave</strong>, <strong>victory dance</strong></p>
+      <p>⚠️ ב-free tier: 20 אנימציות בלבד</p>
+    </div>
+
+    <div class="step">
+      <span class="step-num">6</span>
+      <strong>הורד GLB</strong>
+      <p>לחץ Download → <strong>GLB</strong></p>
+      <p>שמור בנתיב: <code>public/characters/3d/ki-meshy.glb</code></p>
+    </div>
+
+    <div class="warning">
+      <strong>הגבלת Free Tier:</strong> Meshy-4 מודלים בלבד להורדה בחינם. Meshy-5/6 דורשים Pro ($20/חודש). נסה קודם ב-free — אם האיכות לא מספיקה, שקול Pro לחודש אחד.
+    </div>
+  </div>
+
+  <!-- MIXAMO PIPELINE -->
+  <div class="card">
+    <h2>💃 Mixamo — אנימציות חינם</h2>
+    <p style="color: var(--text2);">בין אם יצרת ב-Tripo או Meshy, Mixamo מוסיף אנימציות איכותיות בחינם</p>
+
+    <div class="step">
+      <span class="step-num">1</span>
+      <strong>גש ל-Mixamo</strong>
+      <p><a href="https://www.mixamo.com" target="_blank">mixamo.com</a> → Sign in with Adobe ID (חינם)</p>
+    </div>
+
+    <div class="step">
+      <span class="step-num">2</span>
+      <strong>העלה את המודל</strong>
+      <p>"Upload Character" → העלה את קובץ ה-GLB או FBX שהורדת</p>
+      <p>Mixamo יזהה אוטומטית את הגוף וייצור skeleton</p>
+    </div>
+
+    <div class="step">
+      <span class="step-num">3</span>
+      <strong>בחר אנימציות</strong>
+      <p>חפש וסמן את האנימציות האלה:</p>
+      <table class="compare-table anim-table">
+        <tr><th>Mood</th><th>חיפוש ב-Mixamo</th><th>הערות</th></tr>
+        <tr><td>idle</td><td>"Idle" / "Breathing Idle"</td><td>לולאה, נשימה עדינה</td></tr>
+        <tr><td>typing</td><td>"Typing" / "Sitting Typing"</td><td>יש אנימציית הקלדה!</td></tr>
+        <tr><td>celebrate</td><td>"Victory" / "Happy Dance" / "Cheering"</td><td>ניצחון, ריקוד</td></tr>
+        <tr><td>error</td><td>"Disappointed" / "Sad Idle" / "Defeat"</td><td>תגובת טעות</td></tr>
+      </table>
+    </div>
+
+    <div class="step">
+      <span class="step-num">4</span>
+      <strong>הורד כל אנימציה</strong>
+      <p>Format: <strong>FBX Binary</strong> | Skin: <strong>With Skin</strong> (לאנימציה הראשונה) / <strong>Without Skin</strong> (לשאר)</p>
+      <p>Keyframe Reduction: <strong>None</strong></p>
+    </div>
+
+    <div class="step">
+      <span class="step-num">5</span>
+      <strong>המר ל-GLB (Blender)</strong>
+      <p>1. פתח Blender → Import FBX</p>
+      <p>2. ודא שהאנימציה נטענה (תראה ב-Dope Sheet)</p>
+      <p>3. Export → glTF 2.0 (.glb) עם "Include Animations" מסומן</p>
+      <p>4. שמור כ: <code>public/characters/3d/ki.glb</code></p>
+    </div>
+
+    <div class="success">
+      💡 <strong>טיפ:</strong> ב-Blender ניתן לייבא את כל ה-FBX קבצים לסצנה אחת ולייצא GLB אחד עם כל האנימציות. כך ה-R3F viewer יכול לעבור בין אנימציות לפי mood.
+    </div>
+  </div>
+
+  <!-- Animation Mapping -->
+  <div class="card">
+    <h2>🎮 מיפוי אנימציות → קוד</h2>
+    <p style="color: var(--text2);">הקוד ב-<code>ki-model.tsx</code> כבר מחפש אנימציות לפי שם:</p>
+
+    <div class="prompt-box" style="direction: ltr; text-align: left;">
+      <span class="label">Animation Name Convention</span>
+<pre style="color: var(--text); font-size: 0.85rem;">
+// Current code in ki-model.tsx:
+const animationName = names.find(
+  (n) => n.toLowerCase().includes(mood)
+       || n.toLowerCase().includes('idle')
+)
+
+// Name your animations in Blender like:
+// "idle"     → matches mood='idle'
+// "typing"   → matches mood='typing'
+// "celebrate" → matches mood='celebrate'
+// "error"    → matches mood='error'
+</pre>
+    </div>
+
+    <p style="color: var(--text2); margin-top: 12px;">
+      אם שמות האנימציות מ-Mixamo שונים (למשל "Victory Dance" במקום "celebrate"),
+      פשוט שנה את שמם ב-Blender לפני הייצוא.
+    </p>
+  </div>
+
+  <!-- Quality Checklist -->
+  <div class="card">
+    <h2>✅ צ'קליסט איכות (לפני שימוש בפרודקשן)</h2>
+    <ul class="checklist">
+      <li>המודל נראה כמו קי (צבעים, בגדים, שיער, רצועת ראש)</li>
+      <li>פרופורציות צ'יבי (ראש גדול ~40% מהגוף)</li>
+      <li>אין ארטיפקטים בטקסטורה</li>
+      <li>Rigging תקין — הגוף זז טבעי</li>
+      <li>4 אנימציות קיימות (idle, typing, celebrate, error)</li>
+      <li>GLB פחות מ-5MB (אידיאלי: 1-3MB)</li>
+      <li>נטען ב-POC page בלי שגיאות</li>
+      <li>סיבוב אוטומטי עובד</li>
+      <li>מעבר בין moods חלק (fadeIn/fadeOut)</li>
+    </ul>
+  </div>
+
+  <!-- File Placement -->
+  <div class="card">
+    <h2>📁 איפה לשמור</h2>
+    <div class="prompt-box" style="direction: ltr; text-align: left;">
+      <span class="label">File Paths</span>
+<pre style="color: var(--text); font-size: 0.85rem;">
+# Final model (rename the best result):
+public/characters/3d/ki.glb
+
+# Comparison files (keep both for reference):
+public/characters/3d/ki-tripo.glb
+public/characters/3d/ki-meshy.glb
+
+# The POC page auto-detects the file at:
+# /characters/3d/ki.glb
+# Once it exists → the 3D viewer loads automatically!
+</pre>
+    </div>
+  </div>
+
+  <!-- Next Steps -->
+  <div class="card">
+    <h2>🚀 שלבים הבאים (אחרי שיש מודל)</h2>
+    <div class="step">
+      <span class="step-num">1</span>
+      <strong>בדיקת POC</strong>
+      <p>הכנס את ה-GLB ל-<code>public/characters/3d/ki.glb</code> → פתח <code>/3d-poc</code> → בדוק את 4 ה-moods</p>
+    </div>
+    <div class="step">
+      <span class="step-num">2</span>
+      <strong>אינטגרציה בדף הבית</strong>
+      <p>החלף את ה-2D avatar של קי בדף הבית ב-<code>Ki3DViewer</code> (כבר קיים כ-component)</p>
+    </div>
+    <div class="step">
+      <span class="step-num">3</span>
+      <strong>Typing Feedback</strong>
+      <p>חבר את ה-mood ל-typing engine: הקלדה נכונה → celebrate, שגיאה → error, ממתין → idle</p>
+    </div>
+    <div class="step">
+      <span class="step-num">4</span>
+      <strong>Performance Budget</strong>
+      <p>ודא שה-GLB &lt; 3MB. אם גדול: השתמש ב-<code>gltf-transform</code> ל-compress</p>
+      <p><code style="direction: ltr;">npx @gltf-transform/cli optimize ki.glb ki-opt.glb --compress draco</code></p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function copyPrompt(id) {
+  const el = document.getElementById(id);
+  const text = el.innerText.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = el.parentElement.querySelector('.copy-btn');
+    const orig = btn.textContent;
+    btn.textContent = 'הועתק! ✓';
+    setTimeout(() => btn.textContent = orig, 2000);
+  });
+}
+</script>
+
+</body>
+</html>
