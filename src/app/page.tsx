@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { AnimatedWordmark } from '@/components/layout/animated-wordmark'
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ninja-keyboard-nine.vercel.app'
@@ -193,15 +194,17 @@ export default function LandingPage() {
             aria-label="ניווט עליון"
             className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3"
           >
-            <div className="flex items-center gap-2">
+            <div className="ninja-brand flex items-center gap-2">
               <Image
                 src="/images/characters/ki-mascot.jpg"
                 alt="קי — הקמע של נינג׳ה מקלדת"
                 width={36}
                 height={36}
-                className="rounded-lg"
+                className="logo-mascot-anim rounded-lg"
               />
-              <span className="text-lg font-bold">נינג׳ה מקלדת</span>
+              <span className="text-lg font-bold">
+                <AnimatedWordmark />
+              </span>
             </div>
             <div className="flex items-center gap-4 text-sm">
               <Link
