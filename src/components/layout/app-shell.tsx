@@ -5,12 +5,15 @@ import { BottomTabs } from './bottom-tabs'
 import { Header } from './header'
 import { PageTransition } from '@/components/transitions/page-transition'
 import { FloatingParticles } from '@/components/effects/floating-particles'
+import { CertificateCelebration } from '@/components/gamification/certificate-celebration'
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-dvh">
       {/* Floating particles sit behind everything in the app shell */}
       <FloatingParticles />
+      {/* Auto-surfaces a celebratory certificate modal on milestone completion */}
+      <CertificateCelebration />
       <Sidebar />
       <div className="relative z-10 flex flex-1 flex-col game-bg">
         <Header />

@@ -5,6 +5,7 @@ import {
   getHighestCertificate,
   getNextCertificate,
   getCertificateProgress,
+  detectNewCertificate,
 } from '@/lib/gamification/certificate'
 
 describe('CERTIFICATES', () => {
@@ -136,5 +137,51 @@ describe('getCertificateProgress', () => {
       lessonsCompleted: 100,
     })
     expect(progress).toBe(100)
+  })
+})
+
+describe('detectNewCertificate', () => {
+  it('returns null when nothing is earned', () => {
+    expect(
+      detectNewCertificate(
+        { bestWpm: 0, bestAccuracy: 0, lessonsCompleted: 0 },
+        [],
+      ),
+    ).toBeNull()
+  })
+
+  it('returns the bronze cert when 5 lessons done and not yet celebrated', () => {
+    const result = detectNewCertificate(
+      { bestWpm: 0, bestAccuracy: 0, lessonsCompleted: 5 },
+      [],
+    )
+    expect(result?.level).toBe('bronze')
+  })
+
+  it('returns null when the earned cert was already celebrated', () => {
+    expect(
+      detectNewCertificate(
+        { bestWpm: 0, bestAccuracy: 0, lessonsCompleted: 5 },
+        ['bronze'],
+      ),
+    ).toBeNull()
+  })
+
+  it('returns the highest newly earned cert when several are earned at once', () => {
+    // Qualifies for bronze + silver; bronze already celebrated -> silver is new.
+    const result = detectNewCertificate(
+      { bestWpm: 20, bestAccuracy: 85, lessonsCompleted: 12 },
+      ['bronze'],
+    )
+    expect(result?.level).toBe('silver')
+  })
+
+  it('returns the top new cert when none have been celebrated', () => {
+    // Qualifies for bronze + silver; both new -> celebrate the higher one.
+    const result = detectNewCertificate(
+      { bestWpm: 20, bestAccuracy: 85, lessonsCompleted: 12 },
+      [],
+    )
+    expect(result?.level).toBe('silver')
   })
 })

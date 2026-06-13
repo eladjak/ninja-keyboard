@@ -119,6 +119,25 @@ export function getNextCertificate(stats: {
   return null // All certificates earned!
 }
 
+/**
+ * Detect the highest certificate that is newly earned given the current stats
+ * but has not yet been celebrated. Returns null when there is nothing new to
+ * celebrate. Pure — the caller owns the "already celebrated" set.
+ */
+export function detectNewCertificate(
+  stats: { bestWpm: number; bestAccuracy: number; lessonsCompleted: number },
+  celebratedLevels: readonly CertificateLevel[],
+): Certificate | null {
+  const earned = getEarnedCertificates(stats)
+  const celebrated = new Set(celebratedLevels)
+  // Earned is ordered low→high; the newest milestone to celebrate is the
+  // highest earned level that has not been celebrated yet.
+  for (let i = earned.length - 1; i >= 0; i--) {
+    if (!celebrated.has(earned[i].level)) return earned[i]
+  }
+  return null
+}
+
 /** Calculate progress toward a specific certificate (0-100) */
 export function getCertificateProgress(
   cert: Certificate,
