@@ -21,6 +21,7 @@ import {
   Flame,
   ImageIcon,
   Target,
+  ShoppingBag,
 } from 'lucide-react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
@@ -52,6 +53,7 @@ const navGroups = [
     items: [
       { href: '/leaderboard', label: 'טבלת מובילים', icon: Trophy },
       { href: '/certificates', label: 'תעודות', icon: Award },
+      { href: '/shop', label: 'חנות', icon: ShoppingBag },
       { href: '/statistics', label: 'סטטיסטיקות', icon: BarChart3 },
     ],
   },

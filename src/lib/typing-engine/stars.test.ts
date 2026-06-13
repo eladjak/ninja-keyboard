@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { calculateStars } from './stars'
+import { calculateStars, totalStarsEarned } from './stars'
 
 describe('calculateStars', () => {
   it('returns 3 stars at 130% of combined target', () => {
@@ -26,5 +26,20 @@ describe('calculateStars', () => {
   it('strong accuracy can compensate for slightly low wpm (average model)', () => {
     // wpmRatio 0.9 + accRatio 1.1 => avg 1.0 => 2 stars
     expect(calculateStars(9, 93.5, 10, 85)).toBe(2)
+  })
+})
+
+describe('totalStarsEarned', () => {
+  it('sums stars across lessons', () => {
+    const total = totalStarsEarned([
+      { bestWpm: 13, bestAccuracy: 111, targetWpm: 10, targetAccuracy: 85 }, // 3
+      { bestWpm: 10, bestAccuracy: 85, targetWpm: 10, targetAccuracy: 85 }, // 2
+      { bestWpm: 7, bestAccuracy: 60, targetWpm: 10, targetAccuracy: 85 }, // 1
+    ])
+    expect(total).toBe(6)
+  })
+
+  it('returns 0 for no lessons', () => {
+    expect(totalStarsEarned([])).toBe(0)
   })
 })

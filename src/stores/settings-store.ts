@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { DEFAULT_ACCENT_ID } from '@/lib/gamification/coins'
 
 /** Keyboard layout variants: standard Hebrew or Dvorak Hebrew */
 export type KeyboardLayout = 'standard' | 'dvorak'
@@ -24,6 +25,16 @@ interface SettingsState {
   playerName: string
   /** Set the player's display name */
   setPlayerName: (name: string) => void
+  /** Coins spent so far (live balance = earned-from-stars − this). Persisted. */
+  coinsSpent: number
+  /** Cosmetic item ids the player has unlocked (free items are implicit). */
+  unlockedCosmetics: string[]
+  /** Currently equipped accent cosmetic id. */
+  equippedAccent: string
+  /** Record a purchase: spend coins and unlock the item. */
+  purchaseCosmetic: (itemId: string, cost: number) => void
+  /** Equip an (already unlocked) accent cosmetic. */
+  equipAccent: (itemId: string) => void
   /** Toggle sound on/off */
   toggleSound: () => void
   /** Set volume */
@@ -52,8 +63,25 @@ export const useSettingsStore = create<SettingsState>()(
       keyboardLayout: 'standard' as KeyboardLayout,
       themePreference: 'system' as ThemePreference,
       playerName: '',
+      coinsSpent: 0,
+      unlockedCosmetics: [],
+      equippedAccent: DEFAULT_ACCENT_ID,
 
       setPlayerName: (name) => set({ playerName: name.slice(0, 30) }),
+
+      purchaseCosmetic: (itemId, cost) =>
+        set((s) =>
+          s.unlockedCosmetics.includes(itemId)
+            ? s
+            : {
+                coinsSpent: s.coinsSpent + Math.max(0, cost),
+                unlockedCosmetics: [...s.unlockedCosmetics, itemId],
+                // Auto-equip the freshly purchased accent.
+                equippedAccent: itemId,
+              },
+        ),
+
+      equipAccent: (itemId) => set({ equippedAccent: itemId }),
 
       toggleSound: () => set((s) => ({ soundEnabled: !s.soundEnabled })),
 

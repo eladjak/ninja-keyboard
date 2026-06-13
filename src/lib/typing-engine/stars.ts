@@ -21,3 +21,24 @@ export function calculateStars(
   if (avg >= 0.7) return 1
   return 0
 }
+
+/** Per-lesson best result needed to score its stars. */
+export interface LessonStarInputs {
+  bestWpm: number
+  bestAccuracy: number
+  targetWpm: number
+  targetAccuracy: number
+}
+
+/**
+ * Sum the mastery stars across a set of completed lessons. Used to derive the
+ * spendable coin economy deterministically from progress.
+ */
+export function totalStarsEarned(lessons: readonly LessonStarInputs[]): number {
+  return lessons.reduce(
+    (sum, l) =>
+      sum +
+      calculateStars(l.bestWpm, l.bestAccuracy, l.targetWpm, l.targetAccuracy),
+    0,
+  )
+}

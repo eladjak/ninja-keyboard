@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useXpStore } from '@/stores/xp-store'
+import { useSettingsStore } from '@/stores/settings-store'
+import { getCosmetic, DEFAULT_ACCENT_ID } from '@/lib/gamification/coins'
 import {
   getNinjaRank,
   getRankDisplayName,
@@ -27,6 +29,12 @@ export function ProfileCard({ className }: ProfileCardProps) {
 
   const [displayName, setDisplayName] = useState('נינג׳ה אנונימי')
   const [isEditing, setIsEditing] = useState(false)
+
+  // Equipped cosmetic accent (bought in the shop). Falls back to the default.
+  const equippedAccent = useSettingsStore((s) => s.equippedAccent)
+  const accentColor =
+    (getCosmetic(equippedAccent) ?? getCosmetic(DEFAULT_ACCENT_ID))?.color ??
+    '#6C5CE7'
 
   const rank = getNinjaRank(level)
   const rankName = getRankDisplayName(rank)
@@ -62,10 +70,11 @@ export function ProfileCard({ className }: ProfileCardProps) {
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             className="flex size-24 items-center justify-center rounded-full text-5xl"
             style={{
-              border: '4px solid var(--game-accent-purple)',
-              background: 'oklch(0.495 0.205 292 / 15%)',
-              boxShadow: '0 0 24px oklch(0.495 0.205 292 / 40%)',
+              border: `4px solid ${accentColor}`,
+              background: `${accentColor}26`,
+              boxShadow: `0 0 24px ${accentColor}66`,
             }}
+            data-testid="profile-avatar"
             aria-label={`דרגת נינג׳ה: ${rankName}`}
           >
             <span role="img" aria-hidden="true">

@@ -97,3 +97,44 @@ describe('useSettingsStore', () => {
     expect(state.themePreference).toBe('system')
   })
 })
+
+describe('useSettingsStore — cosmetic currency', () => {
+  beforeEach(() => {
+    useSettingsStore.setState({
+      coinsSpent: 0,
+      unlockedCosmetics: [],
+      equippedAccent: 'accent-purple',
+    })
+  })
+
+  it('purchases a cosmetic: spends coins, unlocks and auto-equips it', () => {
+    useSettingsStore.getState().purchaseCosmetic('accent-teal', 50)
+    const s = useSettingsStore.getState()
+    expect(s.coinsSpent).toBe(50)
+    expect(s.unlockedCosmetics).toContain('accent-teal')
+    expect(s.equippedAccent).toBe('accent-teal')
+  })
+
+  it('does not double-charge for an already-owned cosmetic', () => {
+    const { purchaseCosmetic } = useSettingsStore.getState()
+    purchaseCosmetic('accent-teal', 50)
+    purchaseCosmetic('accent-teal', 50)
+    const s = useSettingsStore.getState()
+    expect(s.coinsSpent).toBe(50)
+    expect(s.unlockedCosmetics).toEqual(['accent-teal'])
+  })
+
+  it('equips an accent without changing spend', () => {
+    const { purchaseCosmetic, equipAccent } = useSettingsStore.getState()
+    purchaseCosmetic('accent-teal', 50)
+    equipAccent('accent-purple')
+    const s = useSettingsStore.getState()
+    expect(s.equippedAccent).toBe('accent-purple')
+    expect(s.coinsSpent).toBe(50)
+  })
+
+  it('clamps a negative cost to zero spend', () => {
+    useSettingsStore.getState().purchaseCosmetic('accent-rose', -20)
+    expect(useSettingsStore.getState().coinsSpent).toBe(0)
+  })
+})
