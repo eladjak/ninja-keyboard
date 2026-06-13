@@ -1,6 +1,10 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { DEFAULT_ACCENT_ID } from '@/lib/gamification/coins'
+import {
+  DEFAULT_ACCENT_ID,
+  DEFAULT_TITLE_ID,
+  getCosmetic,
+} from '@/lib/gamification/coins'
 
 /** Keyboard layout variants: standard Hebrew or Dvorak Hebrew */
 export type KeyboardLayout = 'standard' | 'dvorak'
@@ -31,10 +35,14 @@ interface SettingsState {
   unlockedCosmetics: string[]
   /** Currently equipped accent cosmetic id. */
   equippedAccent: string
-  /** Record a purchase: spend coins and unlock the item. */
+  /** Currently equipped title cosmetic id. */
+  equippedTitle: string
+  /** Record a purchase: spend coins and unlock the item (auto-equips by category). */
   purchaseCosmetic: (itemId: string, cost: number) => void
   /** Equip an (already unlocked) accent cosmetic. */
   equipAccent: (itemId: string) => void
+  /** Equip an (already unlocked) title cosmetic. */
+  equipTitle: (itemId: string) => void
   /** Toggle sound on/off */
   toggleSound: () => void
   /** Set volume */
@@ -66,22 +74,27 @@ export const useSettingsStore = create<SettingsState>()(
       coinsSpent: 0,
       unlockedCosmetics: [],
       equippedAccent: DEFAULT_ACCENT_ID,
+      equippedTitle: DEFAULT_TITLE_ID,
 
       setPlayerName: (name) => set({ playerName: name.slice(0, 30) }),
 
       purchaseCosmetic: (itemId, cost) =>
-        set((s) =>
-          s.unlockedCosmetics.includes(itemId)
-            ? s
-            : {
-                coinsSpent: s.coinsSpent + Math.max(0, cost),
-                unlockedCosmetics: [...s.unlockedCosmetics, itemId],
-                // Auto-equip the freshly purchased accent.
-                equippedAccent: itemId,
-              },
-        ),
+        set((s) => {
+          if (s.unlockedCosmetics.includes(itemId)) return s
+          // Auto-equip the freshly purchased item into its category slot.
+          const category = getCosmetic(itemId)?.category
+          return {
+            coinsSpent: s.coinsSpent + Math.max(0, cost),
+            unlockedCosmetics: [...s.unlockedCosmetics, itemId],
+            ...(category === 'title'
+              ? { equippedTitle: itemId }
+              : { equippedAccent: itemId }),
+          }
+        }),
 
       equipAccent: (itemId) => set({ equippedAccent: itemId }),
+
+      equipTitle: (itemId) => set({ equippedTitle: itemId }),
 
       toggleSound: () => set((s) => ({ soundEnabled: !s.soundEnabled })),
 

@@ -3,8 +3,13 @@ import {
   COINS_PER_STAR,
   COSMETICS,
   DEFAULT_ACCENT_ID,
+  DEFAULT_ACCENT_COLOR,
+  DEFAULT_TITLE_ID,
+  accentColorFor,
   coinBalance,
   coinsFromStars,
+  cosmeticsByCategory,
+  equippedTitleFor,
   evaluatePurchase,
   getCosmetic,
   isUnlocked,
@@ -96,5 +101,58 @@ describe('evaluatePurchase', () => {
     const r = evaluatePurchase({ itemId: paid.id, ownedIds: [], totalStars: 1000, coinsSpent: 0 })
     expect(r.ok).toBe(true)
     expect(r.spend).toBe(paid.cost)
+  })
+})
+
+describe('cosmetic categories', () => {
+  it('cosmeticsByCategory splits accents and titles', () => {
+    const accents = cosmeticsByCategory('accent')
+    const titles = cosmeticsByCategory('title')
+    expect(accents.length).toBeGreaterThan(0)
+    expect(titles.length).toBeGreaterThan(0)
+    expect(accents.every((c) => c.category === 'accent')).toBe(true)
+    expect(titles.every((c) => c.category === 'title')).toBe(true)
+    expect(accents.length + titles.length).toBe(COSMETICS.length)
+  })
+
+  it('each category has a free default first', () => {
+    expect(cosmeticsByCategory('accent')[0].id).toBe(DEFAULT_ACCENT_ID)
+    expect(cosmeticsByCategory('accent')[0].cost).toBe(0)
+    expect(cosmeticsByCategory('title')[0].id).toBe(DEFAULT_TITLE_ID)
+    expect(cosmeticsByCategory('title')[0].cost).toBe(0)
+  })
+})
+
+describe('equippedTitleFor', () => {
+  it('returns empty strings for the default no-title', () => {
+    expect(equippedTitleFor(DEFAULT_TITLE_ID)).toEqual({ textHe: '', emoji: '' })
+  })
+
+  it('returns text + emoji for a real title', () => {
+    const title = cosmeticsByCategory('title').find((c) => c.cost > 0)!
+    expect(equippedTitleFor(title.id)).toEqual({
+      textHe: title.nameHe,
+      emoji: title.emoji,
+    })
+  })
+
+  it('returns empty for an accent id or unknown id (no cross-slot leakage)', () => {
+    expect(equippedTitleFor(DEFAULT_ACCENT_ID)).toEqual({ textHe: '', emoji: '' })
+    expect(equippedTitleFor('does-not-exist')).toEqual({ textHe: '', emoji: '' })
+  })
+})
+
+describe('accentColorFor', () => {
+  it('returns the catalog color for a known accent', () => {
+    const teal = COSMETICS.find((c) => c.id === 'accent-teal')!
+    expect(accentColorFor('accent-teal')).toBe(teal.color)
+  })
+
+  it('falls back to the default color for an unknown id', () => {
+    expect(accentColorFor('accent-removed-long-ago')).toBe(DEFAULT_ACCENT_COLOR)
+  })
+
+  it('the default color matches the default accent', () => {
+    expect(accentColorFor(DEFAULT_ACCENT_ID)).toBe(DEFAULT_ACCENT_COLOR)
   })
 })

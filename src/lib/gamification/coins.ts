@@ -10,7 +10,7 @@
 /** Coins granted per star earned. */
 export const COINS_PER_STAR = 10
 
-export type CosmeticCategory = 'accent'
+export type CosmeticCategory = 'accent' | 'title'
 
 export interface CosmeticItem {
   /** Stable id, persisted in the unlocked set. */
@@ -28,10 +28,10 @@ export interface CosmeticItem {
 }
 
 /**
- * Cosmetic catalog — accent colors the kid can equip on their profile.
+ * Accent-color cosmetics the kid can equip on their profile.
  * The first item is free and acts as the default.
  */
-export const COSMETICS: readonly CosmeticItem[] = [
+const ACCENT_COSMETICS: readonly CosmeticItem[] = [
   { id: 'accent-purple', category: 'accent', nameHe: 'סגול נינג׳ה', cost: 0, color: '#6C5CE7', emoji: '🟣' },
   { id: 'accent-teal', category: 'accent', nameHe: 'טורקיז', cost: 50, color: '#00B894', emoji: '🟢' },
   { id: 'accent-rose', category: 'accent', nameHe: 'ורוד אש', cost: 80, color: '#E84393', emoji: '🌸' },
@@ -42,8 +42,38 @@ export const COSMETICS: readonly CosmeticItem[] = [
   { id: 'accent-cosmic', category: 'accent', nameHe: 'סגול קוסמי', cost: 250, color: '#A29BFE', emoji: '✨' },
 ] as const
 
+/**
+ * Title cosmetics — a fun Hebrew "rank flavour" the kid wears under their name
+ * on the profile. The first is free (no title) and acts as the default.
+ * The `nameHe` doubles as the equipped title text (empty for the default).
+ */
+const TITLE_COSMETICS: readonly CosmeticItem[] = [
+  { id: 'title-none', category: 'title', nameHe: '', cost: 0, color: '#6C5CE7', emoji: '🚫' },
+  { id: 'title-fast-fingers', category: 'title', nameHe: 'אצבעות ברק', cost: 40, color: '#F5B301', emoji: '⚡' },
+  { id: 'title-shadow', category: 'title', nameHe: 'נינג׳ת הצללים', cost: 60, color: '#6C5CE7', emoji: '🥷' },
+  { id: 'title-keyboard-master', category: 'title', nameHe: 'אלוף המקלדת', cost: 100, color: '#00B894', emoji: '⌨️' },
+  { id: 'title-dragon-typist', category: 'title', nameHe: 'דרקון ההקלדה', cost: 150, color: '#D63031', emoji: '🐉' },
+  { id: 'title-legend', category: 'title', nameHe: 'אגדה חיה', cost: 220, color: '#A29BFE', emoji: '🌟' },
+] as const
+
+/** Full cosmetic catalog across all categories. */
+export const COSMETICS: readonly CosmeticItem[] = [
+  ...ACCENT_COSMETICS,
+  ...TITLE_COSMETICS,
+] as const
+
+/** Cosmetics of a single category, in catalog order. */
+export function cosmeticsByCategory(
+  category: CosmeticCategory,
+): readonly CosmeticItem[] {
+  return COSMETICS.filter((c) => c.category === category)
+}
+
 /** The default cosmetic that is always unlocked and equipped initially. */
 export const DEFAULT_ACCENT_ID = 'accent-purple'
+
+/** The default (empty) title that is always unlocked and equipped initially. */
+export const DEFAULT_TITLE_ID = 'title-none'
 
 /** Lifetime coins earned from a star total. */
 export function coinsFromStars(totalStars: number): number {
@@ -98,4 +128,35 @@ export function isUnlocked(itemId: string, ownedIds: readonly string[]): boolean
   const item = getCosmetic(itemId)
   if (!item) return false
   return item.cost === 0 || ownedIds.includes(itemId)
+}
+
+/** The default accent color (purple) — used as a safe fallback. */
+export const DEFAULT_ACCENT_COLOR =
+  getCosmetic(DEFAULT_ACCENT_ID)?.color ?? '#6C5CE7'
+
+/**
+ * Resolve the hex color for an equipped accent id, falling back to the default
+ * if the id is unknown (e.g. a persisted id from a removed cosmetic).
+ */
+export function accentColorFor(equippedAccentId: string): string {
+  return getCosmetic(equippedAccentId)?.color ?? DEFAULT_ACCENT_COLOR
+}
+
+export interface EquippedTitle {
+  /** Hebrew title text ('' when the default/no-title is equipped). */
+  textHe: string
+  /** Emoji prefix for the title ('' for the default). */
+  emoji: string
+}
+
+/**
+ * Resolve the equipped title (text + emoji). Returns empty strings for the
+ * default "no title" cosmetic or an unknown id.
+ */
+export function equippedTitleFor(equippedTitleId: string): EquippedTitle {
+  const item = getCosmetic(equippedTitleId)
+  if (!item || item.category !== 'title' || item.id === DEFAULT_TITLE_ID) {
+    return { textHe: '', emoji: '' }
+  }
+  return { textHe: item.nameHe, emoji: item.emoji }
 }

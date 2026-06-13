@@ -1,53 +1,35 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Coins, Check, Lock, Sparkles } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
-import { LESSONS } from '@/lib/content'
-import { totalStarsEarned } from '@/lib/typing-engine/stars'
 import {
-  COSMETICS,
-  coinBalance,
-  coinsFromStars,
+  cosmeticsByCategory,
   evaluatePurchase,
   isUnlocked,
   type CosmeticItem,
 } from '@/lib/gamification/coins'
 import { soundManager } from '@/lib/audio/sound-manager'
-import { useXpStore } from '@/stores/xp-store'
 import { useSettingsStore } from '@/stores/settings-store'
+import { useCoinBalance } from '@/hooks/use-coin-balance'
 import { cn } from '@/lib/utils'
 
 export default function ShopPage() {
-  const completedLessons = useXpStore((s) => s.completedLessons)
   const coinsSpent = useSettingsStore((s) => s.coinsSpent)
   const unlockedCosmetics = useSettingsStore((s) => s.unlockedCosmetics)
   const equippedAccent = useSettingsStore((s) => s.equippedAccent)
+  const equippedTitle = useSettingsStore((s) => s.equippedTitle)
   const purchaseCosmetic = useSettingsStore((s) => s.purchaseCosmetic)
   const equipAccent = useSettingsStore((s) => s.equipAccent)
+  const equipTitle = useSettingsStore((s) => s.equipTitle)
+
+  const { totalStars, earned, balance } = useCoinBalance()
 
   const [flash, setFlash] = useState<string | null>(null)
 
-  // Total stars are derived deterministically from best results per lesson.
-  const totalStars = useMemo(() => {
-    const inputs = LESSONS.flatMap((lesson) => {
-      const data = completedLessons[lesson.id]
-      if (!data) return []
-      return [
-        {
-          bestWpm: data.bestWpm,
-          bestAccuracy: data.bestAccuracy,
-          targetWpm: lesson.targetWpm,
-          targetAccuracy: lesson.targetAccuracy,
-        },
-      ]
-    })
-    return totalStarsEarned(inputs)
-  }, [completedLessons])
-
-  const earned = coinsFromStars(totalStars)
-  const balance = coinBalance(totalStars, coinsSpent)
+  const accents = cosmeticsByCategory('accent')
+  const titles = cosmeticsByCategory('title')
 
   function handleBuy(item: CosmeticItem) {
     const result = evaluatePurchase({
@@ -65,12 +47,83 @@ export default function ShopPage() {
     }
     purchaseCosmetic(item.id, result.spend)
     soundManager.playLevelComplete()
-    setFlash(`קנית: ${item.nameHe} 🎉`)
+    setFlash(`קנית: ${item.nameHe || 'בלי תואר'} 🎉`)
   }
 
   function handleEquip(item: CosmeticItem) {
-    equipAccent(item.id)
-    setFlash(`הצבע ${item.nameHe} פעיל עכשיו!`)
+    if (item.category === 'title') {
+      equipTitle(item.id)
+      setFlash(item.nameHe ? `התואר "${item.nameHe}" פעיל עכשיו!` : 'הסרת את התואר.')
+    } else {
+      equipAccent(item.id)
+      setFlash(`הצבע ${item.nameHe} פעיל עכשיו!`)
+    }
+  }
+
+  function equippedIdFor(category: CosmeticItem['category']) {
+    return category === 'title' ? equippedTitle : equippedAccent
+  }
+
+  function renderCard(item: CosmeticItem) {
+    const owned = isUnlocked(item.id, unlockedCosmetics)
+    const equipped = equippedIdFor(item.category) === item.id
+    const affordable = balance >= item.cost
+    const label = item.nameHe || 'בלי תואר'
+
+    return (
+      <Card
+        key={item.id}
+        className="game-card-border overflow-hidden"
+        style={equipped ? { borderColor: item.color, boxShadow: `0 0 12px ${item.color}66` } : undefined}
+        data-testid={`cosmetic-${item.id}`}
+      >
+        <CardContent className="flex flex-col items-center gap-2 p-3 text-center">
+          {/* Swatch */}
+          <div
+            className="flex size-12 items-center justify-center rounded-full text-2xl"
+            style={{ background: `${item.color}22`, border: `2px solid ${item.color}` }}
+            aria-hidden
+          >
+            {item.emoji}
+          </div>
+          <span className="text-sm font-semibold">{label}</span>
+
+          {/* Action */}
+          {equipped ? (
+            <span
+              className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-bold text-white"
+              style={{ background: item.color }}
+            >
+              <Check className="size-3" />
+              פעיל
+            </span>
+          ) : owned ? (
+            <button
+              onClick={() => handleEquip(item)}
+              className="rounded-lg border px-3 py-1.5 text-xs font-semibold transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              style={{ borderColor: item.color, color: item.color }}
+              aria-label={`הפעל ${label}`}
+            >
+              הפעל
+            </button>
+          ) : (
+            <button
+              onClick={() => handleBuy(item)}
+              disabled={!affordable}
+              aria-label={`קנה את ${label} ב-${item.cost} מטבעות`}
+              className={cn(
+                'flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-bold transition-opacity',
+                affordable ? 'text-white hover:opacity-90' : 'cursor-not-allowed opacity-50',
+              )}
+              style={{ background: affordable ? 'linear-gradient(135deg, #f5b301, #d99500)' : 'var(--game-bg-input)', color: affordable ? '#fff' : 'var(--muted-foreground)' }}
+            >
+              {affordable ? <Coins className="size-3" /> : <Lock className="size-3" />}
+              {item.cost}
+            </button>
+          )}
+        </CardContent>
+      </Card>
+    )
   }
 
   return (
@@ -116,71 +169,26 @@ export default function ShopPage() {
         </motion.p>
       )}
 
-      {/* Accent cosmetics grid */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-        {COSMETICS.map((item) => {
-          const owned = isUnlocked(item.id, unlockedCosmetics)
-          const equipped = equippedAccent === item.id
-          const affordable = balance >= item.cost
+      {/* Accent colors */}
+      <section className="space-y-3" aria-labelledby="shop-accents">
+        <h2 id="shop-accents" className="flex items-center gap-2 text-sm font-bold">
+          <span aria-hidden>🎨</span> צבעי פרופיל
+        </h2>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {accents.map(renderCard)}
+        </div>
+      </section>
 
-          return (
-            <Card
-              key={item.id}
-              className="game-card-border overflow-hidden"
-              style={equipped ? { borderColor: item.color, boxShadow: `0 0 12px ${item.color}66` } : undefined}
-              data-testid={`cosmetic-${item.id}`}
-            >
-              <CardContent className="flex flex-col items-center gap-2 p-3 text-center">
-                {/* Swatch */}
-                <div
-                  className="flex size-12 items-center justify-center rounded-full text-2xl"
-                  style={{ background: `${item.color}22`, border: `2px solid ${item.color}` }}
-                  aria-hidden
-                >
-                  {item.emoji}
-                </div>
-                <span className="text-sm font-semibold">{item.nameHe}</span>
-
-                {/* Action */}
-                {equipped ? (
-                  <span
-                    className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-bold text-white"
-                    style={{ background: item.color }}
-                  >
-                    <Check className="size-3" />
-                    פעיל
-                  </span>
-                ) : owned ? (
-                  <button
-                    onClick={() => handleEquip(item)}
-                    className="rounded-lg border px-3 py-1.5 text-xs font-semibold transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                    style={{ borderColor: item.color, color: item.color }}
-                    aria-label={`הפעל את הצבע ${item.nameHe}`}
-                  >
-                    הפעל
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => handleBuy(item)}
-                    disabled={!affordable}
-                    aria-label={`קנה את ${item.nameHe} ב-${item.cost} מטבעות`}
-                    className={cn(
-                      'flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-bold transition-opacity',
-                      affordable
-                        ? 'text-white hover:opacity-90'
-                        : 'cursor-not-allowed opacity-50',
-                    )}
-                    style={{ background: affordable ? 'linear-gradient(135deg, #f5b301, #d99500)' : 'var(--game-bg-input)', color: affordable ? '#fff' : 'var(--muted-foreground)' }}
-                  >
-                    {affordable ? <Coins className="size-3" /> : <Lock className="size-3" />}
-                    {item.cost}
-                  </button>
-                )}
-              </CardContent>
-            </Card>
-          )
-        })}
-      </div>
+      {/* Titles */}
+      <section className="space-y-3" aria-labelledby="shop-titles">
+        <h2 id="shop-titles" className="flex items-center gap-2 text-sm font-bold">
+          <span aria-hidden>🏷️</span> תוארי נינ׳ה
+        </h2>
+        <p className="text-xs text-muted-foreground">תואר מגניב שמופיע מתחת לשם שלך בפרופיל.</p>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {titles.map(renderCard)}
+        </div>
+      </section>
 
       <p className="flex items-center justify-center gap-1.5 pt-2 text-center text-xs text-muted-foreground">
         <Sparkles className="size-3.5" style={{ color: 'var(--game-accent-green)' }} />

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useXpStore } from '@/stores/xp-store'
 import { useSettingsStore } from '@/stores/settings-store'
-import { getCosmetic, DEFAULT_ACCENT_ID } from '@/lib/gamification/coins'
+import { accentColorFor, equippedTitleFor } from '@/lib/gamification/coins'
 import {
   getNinjaRank,
   getRankDisplayName,
@@ -30,11 +30,11 @@ export function ProfileCard({ className }: ProfileCardProps) {
   const [displayName, setDisplayName] = useState('נינג׳ה אנונימי')
   const [isEditing, setIsEditing] = useState(false)
 
-  // Equipped cosmetic accent (bought in the shop). Falls back to the default.
+  // Equipped cosmetics (bought in the shop). Fall back to the defaults.
   const equippedAccent = useSettingsStore((s) => s.equippedAccent)
-  const accentColor =
-    (getCosmetic(equippedAccent) ?? getCosmetic(DEFAULT_ACCENT_ID))?.color ??
-    '#6C5CE7'
+  const equippedTitle = useSettingsStore((s) => s.equippedTitle)
+  const accentColor = accentColorFor(equippedAccent)
+  const title = equippedTitleFor(equippedTitle)
 
   const rank = getNinjaRank(level)
   const rankName = getRankDisplayName(rank)
@@ -108,6 +108,17 @@ export function ProfileCard({ className }: ProfileCardProps) {
             >
               {displayName}
             </button>
+          )}
+
+          {/* Equipped title cosmetic (from the shop) */}
+          {title.textHe && (
+            <span
+              className="text-sm font-semibold"
+              style={{ color: accentColor }}
+              data-testid="profile-title"
+            >
+              {title.emoji} {title.textHe}
+            </span>
           )}
 
           {/* Rank badge */}

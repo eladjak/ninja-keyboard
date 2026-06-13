@@ -2,24 +2,31 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Moon, Sun, Settings, Zap } from 'lucide-react'
+import { Moon, Sun, Settings, Zap, Coins } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useThemeStore } from '@/stores/theme-store'
 import { useXpStore } from '@/stores/xp-store'
 import { useClickSound, useNavigateSound } from '@/hooks/use-sound-effect'
+import { useCoinBalance } from '@/hooks/use-coin-balance'
 import { AnimatedWordmark } from '@/components/layout/animated-wordmark'
 
 export function Header() {
   const { colorScheme, toggleDarkMode } = useThemeStore()
   const isDark = colorScheme === 'dark' || colorScheme === 'dark-high-contrast'
   const { level, totalXp } = useXpStore()
+  const { balance, accentColor } = useCoinBalance()
   const playClick = useClickSound()
   const playNavigate = useNavigateSound()
 
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--game-border)] bg-[var(--game-bg-primary)]/90 backdrop-blur-md">
-      {/* Gradient accent line */}
-      <div className="h-0.5 ninja-gradient" />
+      {/* Gradient accent line — tinted by the equipped accent */}
+      <div
+        className="h-0.5"
+        style={{
+          background: `linear-gradient(90deg, ${accentColor}, var(--game-secondary, #00B894))`,
+        }}
+      />
 
       <div className="flex h-14 items-center justify-between px-4 md:px-6">
         {/* Mobile brand — mascot pop + letter bounce (logo-animation-pattern.md) */}
@@ -36,17 +43,42 @@ export function Header() {
           </span>
         </div>
 
-        {/* Desktop: XP indicator */}
+        {/* Desktop: XP + coins indicators */}
         <div className="hidden md:flex items-center gap-2">
-          <div className="game-stat-badge badge-pulse">
-            <Zap className="size-3.5 text-primary" />
-            <span className="text-xs font-semibold text-primary">{totalXp} XP</span>
+          <div
+            className="game-stat-badge badge-pulse"
+            style={{ borderColor: `${accentColor}55` }}
+          >
+            <Zap className="size-3.5" style={{ color: accentColor }} />
+            <span className="text-xs font-semibold" style={{ color: accentColor }}>
+              {totalXp} XP
+            </span>
             <span className="text-[10px] text-muted-foreground">רמה {level}</span>
           </div>
+          <Link
+            href="/shop"
+            onClick={playNavigate}
+            className="game-stat-badge transition-opacity hover:opacity-80"
+            aria-label={`${balance} מטבעות — לחנות`}
+            title="מטבעות נינ׳ה — לחנות"
+          >
+            <Coins className="size-3.5 text-[#F5B301]" />
+            <span className="text-xs font-semibold tabular-nums text-[#F5B301]">{balance}</span>
+          </Link>
         </div>
 
         {/* Actions */}
         <div className="flex items-center gap-1">
+          {/* Mobile coin badge */}
+          <Link
+            href="/shop"
+            onClick={playNavigate}
+            className="game-stat-badge me-0.5 md:hidden transition-opacity hover:opacity-80"
+            aria-label={`${balance} מטבעות — לחנות`}
+          >
+            <Coins className="size-3 text-[#F5B301]" />
+            <span className="text-[10px] font-semibold tabular-nums text-[#F5B301]">{balance}</span>
+          </Link>
           {/* Mobile XP badge */}
           <div className="game-stat-badge me-1 md:hidden badge-pulse">
             <Zap className="size-3 text-primary" />
