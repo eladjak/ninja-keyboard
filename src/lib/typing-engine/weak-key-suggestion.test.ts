@@ -5,6 +5,9 @@ import {
   drillHref,
   findMissedKeys,
   parseDrillKeys,
+  isLessonId,
+  parseFromLesson,
+  lessonHref,
 } from './weak-key-suggestion'
 import type { SessionStats } from './types'
 
@@ -168,5 +171,49 @@ describe('drillHref / parseDrillKeys', () => {
     expect(parseDrillKeys(' א , ב ,, ')).toEqual(['א', 'ב'])
     expect(parseDrillKeys(null)).toEqual([])
     expect(parseDrillKeys('')).toEqual([])
+  })
+})
+
+describe('drill→lesson loop closure helpers', () => {
+  it('drillHref carries a valid lesson id as ?from', () => {
+    const href = drillHref(['א'], 'lesson-07')
+    const url = new URL(href, 'https://x.test')
+    expect(url.pathname).toBe('/drill')
+    expect(parseDrillKeys(url.searchParams.get('keys'))).toEqual(['א'])
+    expect(url.searchParams.get('from')).toBe('lesson-07')
+  })
+
+  it('drillHref omits an invalid from (no path-traversal leakage)', () => {
+    expect(drillHref(['א'], '../../etc/passwd')).toBe(
+      drillHref(['א']),
+    )
+    expect(drillHref(['א'], 'home')).toBe(drillHref(['א']))
+    expect(drillHref(['א'], null)).toBe(drillHref(['א']))
+  })
+
+  it('drillHref can carry from with no keys', () => {
+    const url = new URL(drillHref([], 'lesson-03'), 'https://x.test')
+    expect(url.searchParams.get('keys')).toBeNull()
+    expect(url.searchParams.get('from')).toBe('lesson-03')
+  })
+
+  it('isLessonId accepts canonical ids only', () => {
+    expect(isLessonId('lesson-01')).toBe(true)
+    expect(isLessonId('lesson-20')).toBe(true)
+    expect(isLessonId('lesson-1')).toBe(false)
+    expect(isLessonId('lesson-')).toBe(false)
+    expect(isLessonId('/lessons/lesson-01')).toBe(false)
+    expect(isLessonId(null)).toBe(false)
+    expect(isLessonId(undefined)).toBe(false)
+  })
+
+  it('parseFromLesson returns the id or null', () => {
+    expect(parseFromLesson('lesson-12')).toBe('lesson-12')
+    expect(parseFromLesson('lesson-bad')).toBeNull()
+    expect(parseFromLesson(null)).toBeNull()
+  })
+
+  it('lessonHref builds the lesson route', () => {
+    expect(lessonHref('lesson-09')).toBe('/lessons/lesson-09')
   })
 })

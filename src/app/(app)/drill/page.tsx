@@ -1,16 +1,21 @@
 'use client'
 
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Target, RotateCcw, Play, ChevronDown, ChevronUp, TrendingUp } from 'lucide-react'
+import { Target, RotateCcw, Play, ChevronDown, ChevronUp, TrendingUp, ArrowRight } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { TypingArea } from '@/components/typing/typing-area'
 import { SessionStats } from '@/components/typing/session-stats'
 import { usePracticeHistoryStore } from '@/stores/practice-history-store'
 import { useTypingSessionStore } from '@/stores/typing-session-store'
 import { generateDrillText, type DrillDifficulty } from '@/lib/typing-engine/drill-generator'
-import { parseDrillKeys } from '@/lib/typing-engine/weak-key-suggestion'
+import {
+  parseDrillKeys,
+  parseFromLesson,
+  lessonHref,
+} from '@/lib/typing-engine/weak-key-suggestion'
 import { cn } from '@/lib/utils'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -131,12 +136,14 @@ function ResultsPanel({
   stats,
   drillKeys,
   previousAccuracies,
+  returnLessonId,
   onRetry,
   onNewDrill,
 }: {
   stats: { wpm: number; accuracy: number; durationMs: number }
   drillKeys: WeakKeyEntry[]
   previousAccuracies: Record<string, number>
+  returnLessonId: string | null
   onRetry: () => void
   onNewDrill: () => void
 }) {
@@ -215,6 +222,19 @@ function ResultsPanel({
         </Card>
       )}
 
+      {/* Back to the lesson that triggered this drill (loop closure) */}
+      {returnLessonId && (
+        <Link
+          href={lessonHref(returnLessonId)}
+          data-testid="drill-return-to-lesson"
+          className="flex items-center justify-center gap-2 rounded-lg py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+          style={{ background: 'linear-gradient(135deg, #00B894, #019875)' }}
+        >
+          <ArrowRight className="size-4" />
+          חזרה לשיעור — בוא ננסה שוב!
+        </Link>
+      )}
+
       {/* Actions */}
       <div className="flex gap-3">
         <button
@@ -265,6 +285,9 @@ function DrillPageInner() {
   } | null>(null)
   const [previousAccuracies, setPreviousAccuracies] = useState<Record<string, number>>({})
   const [showAllKeys, setShowAllKeys] = useState(false)
+
+  // Lesson id that deep-linked us here (loop closure: offer a return path).
+  const returnLessonId = parseFromLesson(searchParams.get('from'))
 
   const elapsedTimer = useRef<ReturnType<typeof setInterval> | null>(null)
 
@@ -592,6 +615,7 @@ function DrillPageInner() {
               stats={finishedStats}
               drillKeys={weakKeys.filter((k) => selectedKeys.has(k.char))}
               previousAccuracies={previousAccuracies}
+              returnLessonId={returnLessonId}
               onRetry={handleRetry}
               onNewDrill={handleNewDrill}
             />

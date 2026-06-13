@@ -29,6 +29,9 @@ export {
   buildDrillSuggestion,
   drillHref,
   parseDrillKeys,
+  isLessonId,
+  parseFromLesson,
+  lessonHref,
 } from './weak-key-suggestion'
 export type { WeakKeyHit, DrillSuggestion } from './weak-key-suggestion'
 

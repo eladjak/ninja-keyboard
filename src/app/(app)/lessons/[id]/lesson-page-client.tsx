@@ -560,7 +560,7 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
                       ))}
                     </div>
                     <Link
-                      href={drillHref(drillSuggestion.keys)}
+                      href={drillHref(drillSuggestion.keys, lesson.id)}
                       className="mt-1 inline-flex w-full items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
                       style={{ background: 'linear-gradient(135deg, #f5b301, #d99500)' }}
                     >

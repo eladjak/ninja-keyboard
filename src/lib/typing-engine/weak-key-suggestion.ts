@@ -116,12 +116,37 @@ export function buildDrillSuggestion(
 
 /**
  * Build the `/drill` deep-link URL for a set of weak keys.
- * Keys are URL-encoded and comma-separated.
+ * Keys are URL-encoded and comma-separated. When `from` is a lesson id
+ * (e.g. "lesson-07"), it is carried along so the drill can offer a
+ * "back to the lesson" return path after the kid finishes practising.
  */
-export function drillHref(keys: string[]): string {
-  if (keys.length === 0) return '/drill'
-  const param = encodeURIComponent(keys.join(','))
-  return `/drill?keys=${param}`
+export function drillHref(keys: string[], from?: string | null): string {
+  const params = new URLSearchParams()
+  if (keys.length > 0) params.set('keys', keys.join(','))
+  if (from && isLessonId(from)) params.set('from', from)
+  const qs = params.toString()
+  return qs ? `/drill?${qs}` : '/drill'
+}
+
+/** Matches a canonical lesson id like "lesson-01" / "lesson-20". */
+const LESSON_ID_RE = /^lesson-\d{2,}$/
+
+/** Whether a string is a safe, canonical lesson id (no path traversal). */
+export function isLessonId(value: string | null | undefined): value is string {
+  return typeof value === 'string' && LESSON_ID_RE.test(value)
+}
+
+/**
+ * Parse a `from` query-param into a safe lesson id, or null if absent/invalid.
+ * Guards against arbitrary values being turned into a navigation target.
+ */
+export function parseFromLesson(raw: string | null | undefined): string | null {
+  return isLessonId(raw) ? raw : null
+}
+
+/** Build the route for a lesson id (e.g. "lesson-07" → "/lessons/lesson-07"). */
+export function lessonHref(lessonId: string): string {
+  return `/lessons/${lessonId}`
 }
 
 /**
