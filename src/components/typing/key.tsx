@@ -1,7 +1,9 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { useSettingsStore } from '@/stores/settings-store'
 import type { Finger, Hand } from '@/lib/typing-engine/types'
 
 interface KeyProps {
@@ -44,6 +46,28 @@ export function Key({
         ? 'rgba(239,68,68,0.85)' // red-500
         : undefined
 
+  // Per-key ripple: a transform/opacity-only pulse that fires on each press.
+  // `rippleId` bumps every time the key transitions into the pressed state, so
+  // rapid re-presses of the same key each spawn a fresh ripple. Reduced-motion
+  // users opt out entirely.
+  const reducedMotion = useSettingsStore((s) => s.reducedMotion)
+  const [rippleId, setRippleId] = useState(0)
+  const wasPressedRef = useRef(false)
+  useEffect(() => {
+    if (isPressed && !wasPressedRef.current) {
+      setRippleId((n) => n + 1)
+    }
+    wasPressedRef.current = isPressed
+  }, [isPressed])
+  const showRipple = rippleId > 0 && !reducedMotion
+  // Ripple tint matches the correctness flash, else the finger zone colour.
+  const rippleColor =
+    isCorrect === true
+      ? 'rgba(34,197,94,0.5)'
+      : isCorrect === false
+        ? 'rgba(239,68,68,0.5)'
+        : fingerColor
+
   return (
     <motion.button
       type="button"
@@ -83,6 +107,19 @@ export function Key({
       >
         {enLabel}
       </span>
+
+      {/* Per-key ripple — scale + fade only, ≤200ms, reduced-motion-aware */}
+      {showRipple && (
+        <motion.span
+          key={`ripple-${rippleId}`}
+          data-testid="key-ripple"
+          className="pointer-events-none absolute left-1/2 top-1/2 size-8 -translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{ backgroundColor: rippleColor }}
+          initial={{ scale: 0.3, opacity: 0.55 }}
+          animate={{ scale: 2.4, opacity: 0 }}
+          transition={{ duration: 0.18, ease: 'easeOut' }}
+        />
+      )}
 
       {/* Correct / incorrect flash overlay (opacity animation only) */}
       <AnimatePresence>
