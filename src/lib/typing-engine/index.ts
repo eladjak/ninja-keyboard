@@ -24,6 +24,15 @@ export {
 } from './engine'
 
 export {
+  DRILL_SUGGEST_THRESHOLD,
+  findMissedKeys,
+  buildDrillSuggestion,
+  drillHref,
+  parseDrillKeys,
+} from './weak-key-suggestion'
+export type { WeakKeyHit, DrillSuggestion } from './weak-key-suggestion'
+
+export {
   TOP_ROW,
   HOME_ROW,
   BOTTOM_ROW,

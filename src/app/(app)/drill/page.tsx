@@ -1,6 +1,7 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Target, RotateCcw, Play, ChevronDown, ChevronUp, TrendingUp } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -9,7 +10,7 @@ import { SessionStats } from '@/components/typing/session-stats'
 import { usePracticeHistoryStore } from '@/stores/practice-history-store'
 import { useTypingSessionStore } from '@/stores/typing-session-store'
 import { generateDrillText, type DrillDifficulty } from '@/lib/typing-engine/drill-generator'
-import { computeSessionStats } from '@/lib/typing-engine/engine'
+import { parseDrillKeys } from '@/lib/typing-engine/weak-key-suggestion'
 import { cn } from '@/lib/utils'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -236,7 +237,8 @@ function ResultsPanel({
 
 // ─── Main page ────────────────────────────────────────────────────────────────
 
-export default function DrillPage() {
+function DrillPageInner() {
+  const searchParams = useSearchParams()
   const getProblematicKeys = usePracticeHistoryStore((s) => s.getProblematicKeys)
 
   const sessionText = useTypingSessionStore((s) => s.text)
@@ -266,13 +268,31 @@ export default function DrillPage() {
 
   const elapsedTimer = useRef<ReturnType<typeof setInterval> | null>(null)
 
-  // ── Load weak keys from history on mount ──
+  // ── Load weak keys from history on mount, honoring a ?keys= deep-link ──
   useEffect(() => {
-    const keys = getProblematicKeys().slice(0, MAX_WEAK_KEYS)
+    const historyKeys = getProblematicKeys()
+    const requested = parseDrillKeys(searchParams.get('keys'))
+
+    if (requested.length > 0) {
+      // Deep-linked from a low-accuracy lesson: prioritize the requested keys.
+      // Merge in their known accuracy from history when available.
+      const byChar = new Map(historyKeys.map((k) => [k.char, k]))
+      const requestedEntries: WeakKeyEntry[] = requested.map(
+        (char) => byChar.get(char) ?? { char, accuracy: 0, total: 0 },
+      )
+      // Append other historical weak keys not already requested.
+      const extra = historyKeys.filter((k) => !requested.includes(k.char))
+      const merged = [...requestedEntries, ...extra].slice(0, MAX_WEAK_KEYS)
+      setWeakKeys(merged)
+      setSelectedKeys(new Set(requested))
+      return
+    }
+
+    const keys = historyKeys.slice(0, MAX_WEAK_KEYS)
     setWeakKeys(keys)
     // Pre-select all returned keys by default
     setSelectedKeys(new Set(keys.map((k) => k.char)))
-  }, [getProblematicKeys])
+  }, [getProblematicKeys, searchParams])
 
   // ── Elapsed timer ──
   useEffect(() => {
@@ -579,5 +599,19 @@ export default function DrillPage() {
         )}
       </AnimatePresence>
     </main>
+  )
+}
+
+export default function DrillPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="mx-auto max-w-2xl space-y-5 px-4 py-6" dir="rtl" lang="he">
+          <div className="h-40 animate-pulse rounded-xl bg-[#12102a]" />
+        </main>
+      }
+    >
+      <DrillPageInner />
+    </Suspense>
   )
 }

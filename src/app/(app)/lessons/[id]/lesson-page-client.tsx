@@ -1,8 +1,9 @@
 'use client'
 
 import { useEffect, useState, useCallback, useMemo, useRef } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { ArrowRight, RotateCcw, Trophy, Star } from 'lucide-react'
+import { ArrowRight, RotateCcw, Trophy, Star, Target } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -12,12 +13,18 @@ import { ConfettiBurst } from '@/components/effects/confetti-burst'
 import { useTypingSessionStore } from '@/stores/typing-session-store'
 import { useXpStore } from '@/stores/xp-store'
 import { useSettingsStore } from '@/stores/settings-store'
+import { usePracticeHistoryStore } from '@/stores/practice-history-store'
 import { soundManager } from '@/lib/audio/sound-manager'
 import {
   computeSessionStats,
   isLessonComplete,
   calculateXpReward,
 } from '@/lib/typing-engine/engine'
+import {
+  buildDrillSuggestion,
+  drillHref,
+  type DrillSuggestion,
+} from '@/lib/typing-engine/weak-key-suggestion'
 import { calculateStars } from '@/lib/typing-engine/stars'
 import { CHAR_TO_KEY } from '@/lib/typing-engine/keyboard-layout'
 import type { LessonDefinition, LessonContent } from '@/lib/typing-engine/types'
@@ -32,6 +39,7 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
   const router = useRouter()
   const store = useTypingSessionStore()
   const xpStore = useXpStore()
+  const addPracticeResult = usePracticeHistoryStore((s) => s.addResult)
   const { soundEnabled, soundVolume } = useSettingsStore()
 
   // Keep sound in sync with settings
@@ -51,6 +59,11 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
   const [finalStats, setFinalStats] = useState<ReturnType<
     typeof computeSessionStats
   > | null>(null)
+  // Weak-key drill auto-suggestion (set when a finished lesson is below the
+  // accuracy threshold and the kid missed specific keys).
+  const [drillSuggestion, setDrillSuggestion] = useState<DrillSuggestion | null>(
+    null,
+  )
   // Screen shake: set to true on error, cleared after animation via onAnimationEnd
   const [isShaking, setIsShaking] = useState(false)
   const shakeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -158,6 +171,21 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
           xpStore.addXp(reward.total)
           xpStore.completeLesson(lesson.id, stats.wpm, stats.accuracy)
         }
+        // Record the session so per-key history (and the drill page) learn from
+        // it, then auto-suggest a weak-key drill when accuracy was low.
+        addPracticeResult({
+          textId: lesson.id,
+          wpm: stats.wpm,
+          accuracy: stats.accuracy,
+          durationMs: stats.durationMs,
+          totalKeystrokes: stats.totalKeystrokes,
+          correctKeystrokes: stats.correctKeystrokes,
+          keyAccuracy: stats.keyAccuracy,
+          completedAt: Date.now(),
+          timerDuration: 0,
+        })
+        const suggestion = buildDrillSuggestion(stats)
+        setDrillSuggestion(suggestion.suggest ? suggestion : null)
       }
       // Play completion sound
       soundManager.playLevelComplete()
@@ -205,6 +233,7 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
     setLessonCompleted(false)
     setStoryFinished(false)
     setFinalStats(null)
+    setDrillSuggestion(null)
     setIsShaking(false)
     setShowConfetti(false)
     store.startSession(content.lines[0], lesson.id)
@@ -493,6 +522,51 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
                       }{' '}
                       XP
                     </span>
+                  </motion.div>
+                )}
+
+                {/* Weak-key drill auto-suggestion (encouraging, non-punishing) */}
+                {drillSuggestion && (
+                  <motion.div
+                    data-testid="drill-suggestion"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.18, ease: 'easeOut' }}
+                    className="space-y-2 rounded-xl p-3 text-center"
+                    style={{
+                      background: 'oklch(0.78 0.16 75 / 12%)',
+                      border: '1.5px solid oklch(0.78 0.16 75 / 35%)',
+                    }}
+                  >
+                    <p className="text-sm font-bold" style={{ color: 'oklch(0.82 0.15 75)' }}>
+                      {drillSuggestion.titleHe}
+                    </p>
+                    <p className="text-xs leading-relaxed text-muted-foreground">
+                      {drillSuggestion.messageHe}
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-1.5">
+                      {drillSuggestion.keys.map((k) => (
+                        <kbd
+                          key={k}
+                          className="rounded px-2 py-0.5 font-mono text-sm font-bold"
+                          style={{
+                            background: 'var(--game-bg-input)',
+                            border: '1px solid oklch(0.78 0.16 75 / 40%)',
+                            color: 'oklch(0.82 0.15 75)',
+                          }}
+                        >
+                          {k}
+                        </kbd>
+                      ))}
+                    </div>
+                    <Link
+                      href={drillHref(drillSuggestion.keys)}
+                      className="mt-1 inline-flex w-full items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                      style={{ background: 'linear-gradient(135deg, #f5b301, #d99500)' }}
+                    >
+                      <Target className="size-4" />
+                      בוא נתרגל יחד
+                    </Link>
                   </motion.div>
                 )}
 

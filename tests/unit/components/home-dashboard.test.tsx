@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen } from '../../../tests/utils'
+import { render, screen, within } from '../../../tests/utils'
 import { HomeDashboard } from '@/app/(app)/home/home-client'
 
 // Mock next/link
@@ -200,9 +200,11 @@ describe('HomeDashboard', () => {
     render(<HomeDashboard />)
     const challenge = screen.getByTestId('daily-challenge')
     expect(challenge).toBeInTheDocument()
-    expect(screen.getByText('אתגר יומי')).toBeInTheDocument()
+    // Scope assertions to the card: the "אתגר יומי" heading also appears in the
+    // date-seeded typing-tip on some days, so query within the card container.
+    expect(within(challenge).getByText('אתגר יומי')).toBeInTheDocument()
     // New DailyChallengeCard shows challenge title and start button
-    expect(screen.getByText('התחל אתגר')).toBeInTheDocument()
+    expect(within(challenge).getByText('התחל אתגר')).toBeInTheDocument()
   })
 
   it('renders empty state for new user (0 XP, level 1, no streak)', () => {
