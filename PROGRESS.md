@@ -1,8 +1,22 @@
 # Ninja Keyboard - Progress
 
 ## Status: 🟢 LIVE IN PRODUCTION — https://ninja-keyboard-nine.vercel.app
-## Last Updated: 2026-06-13 (V4 deep-iteration)
-## Sprint: V4 weak-key drill + cert auto-surface + coin economy + key ripple (Shabbat autonomous deep-iteration)
+## Last Updated: 2026-06-14 (V5 deep-iteration)
+## Sprint: V5 drill→lesson loop + coin-in-header + title cosmetics + QA layer (autonomous overnight deep-iteration)
+
+## V5 Deep-Iteration (2026-06-14) — Blocks 1-4
+**Commits:** e27175d → 2d308e1 → a383f77. Gates green every block: tsc 0, **1324 tests (+17 from 1307)**, build ✓, prod deploy ✓, live agent-browser verification ✓. Handoff: `handoffs/v5-session.md`.
+
+- **Block 1 — Weak-key drill → lesson loop closure** ✅. `drillHref(keys, from?)` now carries a validated `?from=lesson-XX` (path-traversal-safe via `isLessonId` regex). New pure helpers `isLessonId`/`parseFromLesson`/`lessonHref` in `weak-key-suggestion.ts` (+6 tests). The lesson results modal passes `from={lesson.id}` into the drill deep-link; the `/drill` results panel reads `from` and shows a green "חזרה לשיעור — בוא ננסה שוב!" CTA so the kid can retry the lesson that triggered the drill. **Live-verified:** `/drill?keys=א,ב&from=lesson-07` pre-selects both keys, start enabled.
+- **Block 2 — Coin balance in header + accent everywhere** ✅. New shared `useCoinBalance()` hook (totalStars/earned/balance/equippedAccent/accentColor) — the shop was refactored onto it so header and shop share ONE source of truth (no drift). Header gains a live coin badge (desktop + mobile, links to /shop, aria-labelled) and the XP badge + top gradient line are tinted by the equipped accent color. New lib `accentColorFor`/`DEFAULT_ACCENT_COLOR` (+ tests). **Live-verified** in the header.
+- **Block 3 — More cosmetic categories (shop depth)** ✅. New cosmetic category **'title'** — 6 Hebrew ninja titles (אצבעות ברק / נינ׳ת הצללים / אלוף המקלדת / דרקון ההקלדה / אגדה חיה, 40–220 coins) with its own equip slot (`equippedTitle`/`equipTitle`, `DEFAULT_TITLE_ID`). `purchaseCosmetic` is now category-aware (auto-equips into the correct slot). Shop renders two sections (🎨 צבעי פרופיל · 🏷️ תוארי נינ׳ה); the profile card shows the equipped title under the name. New lib `cosmeticsByCategory`/`equippedTitleFor` (+ tests). Cosmetic-only, no payments. **Live-verified:** shop shows 8 accents + 6 titles.
+- **Block 4 — QA layer (team-build)** ✅. Hard QA pass on live prod via agent-browser: (1) **journey pass** — all 18 routes 200, exactly 1 h1, dir=rtl/lang=he each; (2) **text-fit/RTL pass** at 375px — found `/home` overflowing 42px horizontally; **root-caused to the app-shell `flex-1` content column lacking `min-w-0`** (default min-width:auto let wide content blow past the viewport) and **fixed it** (`min-w-0`); re-verified every route 0 overflow; (3) **cross-device pass** 360/375/414/768 — clean. Two intermittent readings (/home, /battle) were correctly diagnosed as measurement/animation artifacts (stable re-measures + 700ms settle = 0 overflow), not bugs. **1 real fix shipped, 1307→1324 tests kept green.**
+
+### V6 backlog (next session — free + high-value)
+- Coin-collect SFX distinct from level-complete; celebratory voice on cert auto-surface (needs FREE TTS — ElevenLabs/Suno are paid → deferred).
+- 3rd cosmetic category: avatar frames (decorative ring styles) — same equip pattern as titles.
+- Real backend leaderboard + certificate persistence (Supabase env still not set in prod).
+- Playwright e2e for the full drill→lesson loop + a shop purchase (unit-covered now; no live interactive e2e yet).
 
 ## V4 Deep-Iteration (2026-06-13) — Blocks 1-5
 **Commits:** e6a0702 → a3da292 → 1bf2562 → 3daaba4 → 314b928. Gates green every block: tsc 0, **1307 tests (+50 from 1257)**, build ✓, prod deploy ✓.
