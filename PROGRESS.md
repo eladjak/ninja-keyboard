@@ -1,8 +1,25 @@
 # Ninja Keyboard - Progress
 
 ## Status: 🟢 LIVE IN PRODUCTION — https://ninja-keyboard-nine.vercel.app
-## Last Updated: 2026-06-12 (night — V3 deep-iteration)
-## Sprint: V3 certificate + taunts + confidence gating (Shabbat autonomous deep-iteration)
+## Last Updated: 2026-06-13 (V4 deep-iteration)
+## Sprint: V4 weak-key drill + cert auto-surface + coin economy + key ripple (Shabbat autonomous deep-iteration)
+
+## V4 Deep-Iteration (2026-06-13) — Blocks 1-5
+**Commits:** e6a0702 → a3da292 → 1bf2562 → 3daaba4 → 314b928. Gates green every block: tsc 0, **1307 tests (+50 from 1257)**, build ✓, prod deploy ✓.
+
+- **Block 1 — Weak-key drill auto-suggest (<85%)** ✅. New pure lib `src/lib/typing-engine/weak-key-suggestion.ts` (`findMissedKeys`, `buildDrillSuggestion`, `drillHref`, `parseDrillKeys`, +15 tests). After any finished lesson the session is recorded to practice-history; when accuracy < 85% the results modal shows an encouraging, non-punishing amber drill card listing the specific missed keys with a "בוא נתרגל יחד" deep-link to `/drill?keys=…`. The `/drill` page now reads `?keys=` and pre-seeds/selects those keys (Suspense-wrapped for `useSearchParams`). Also fixed a pre-existing date-seeded flake in home-dashboard test (scoped `within()` the daily-challenge card).
+- **Block 2 — Certificate auto-surface on milestone** ✅. New pure `detectNewCertificate()` in `certificate.ts` (+5 tests) + persisted `certificate-celebration-store` (+4 tests). New `CertificateCelebration` component mounted once in `app-shell`: when a kid crosses a bronze/silver/gold/platinum/ninja-master milestone, a confetti modal with the shareable `NinjaCertificate` pops automatically anywhere in the app. Hydration guard marks already-earned certs from prior sessions silently so only genuinely-new milestones pop. Reduced-motion respected.
+- **Block 3 — Polish: leaderboard demo-label** ✅. Stopped dishonestly marking a random mock entry as "אתה" (you). Notice copy clarifies the names are an illustrative demo until real accounts ship; e2e expectation updated. (Statistics/drill empty+loading states were already present.)
+- **Block 4 — Spendable coin economy + cosmetic shop** ✅. New pure `coins.ts` (8-accent catalog, `coinsFromStars` @10/star, `coinBalance`, `evaluatePurchase`, `isUnlocked`, +21 tests) + `totalStarsEarned()` in stars.ts (+2 tests). Coins are EARNED deterministically from stars (re-derivable); only spend is persisted (balance = earned−spent). settings-store gained `coinsSpent`/`unlockedCosmetics`/`equippedAccent` + idempotent `purchaseCosmetic` (auto-equip) + `equipAccent` (+4 tests). New `/shop` ("חנות הנינג׳ה") — balance, buy/equip cards, affordability gating, explicit "no real money" note. Equipped accent recolors the profile avatar ring+glow. Added to sidebar nav.
+- **Block 5 — Per-key ripple on on-screen keyboard** ✅. The `Key` component emits a soft radial ripple on each press across ALL flows that render `HebrewKeyboard` (practice, lesson-view, speed-test, onboarding). Transform/opacity only, 180ms, tinted by correctness or finger-zone colour; reduced-motion users opt out. +3 tests.
+
+### V5 backlog (next session)
+- Sound/voice for the new flows: a celebratory voice line on the certificate auto-surface modal; a coin-collect SFX distinct from level-complete.
+- Shop depth: more cosmetic categories beyond accent (avatar emoji/frames, lesson-map themes); show the equipped accent in more surfaces (header, XP bar gradient).
+- Weak-key drill loop closure: after completing an auto-suggested drill, offer "חזרה לשיעור" to retry the lesson that triggered it (carry the lessonId through `/drill?keys=…&from=lesson-XX`).
+- Coin balance visible in the header/profile (currently only on /shop) so kids feel the economy passively.
+- Real backend leaderboard + certificate persistence (still demo/local).
+- Per-key ripple: consider `overflow-visible` container tuning if neighbor overlap is ever distracting on small mobile keyboards (currently fine — pointer-events-none + fast fade).
 
 ## V3 Deep-Iteration (2026-06-12 night) — Blocks 1-3
 **Commits:** 84238c2 (blocks 1-3) → e15188a (cert goal-preview UX). Gates green: tsc 0, **1257 tests (+35 from 1222)**, build ✓, prod deploy ✓.
