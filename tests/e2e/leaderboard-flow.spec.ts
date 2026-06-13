@@ -84,10 +84,12 @@ test.describe('Leaderboard Page', () => {
     expect(await medals.count()).toBeGreaterThanOrEqual(3)
   })
 
-  test('highlights current player row with badge', async ({ page }) => {
-    // Current player (player-3) should be highlighted with "אתה" badge
-    await expect(page.getByTestId('current-player-badge')).toBeVisible()
-    await expect(page.getByTestId('current-player-badge')).toContainText('אתה')
+  test('does not fake a current-player highlight on demo data', async ({ page }) => {
+    // The leaderboard is illustrative demo data until real accounts ship, so no
+    // mock entry is dishonestly marked as "you".
+    await expect(page.getByTestId('current-player-badge')).toHaveCount(0)
+    // The demo notice makes the illustrative nature explicit.
+    await expect(page.getByRole('note')).toContainText('הדגמה')
   })
 
   // ── Category Tabs ───────────────────────────────────────────────

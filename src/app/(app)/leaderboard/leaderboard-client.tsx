@@ -6,19 +6,19 @@ import { LeaderboardTable } from '@/components/leaderboard/leaderboard-table'
 import { LeaderboardPodium } from '@/components/leaderboard/leaderboard-podium'
 import { generateMockLeaderboard } from '@/lib/leaderboard/leaderboard-utils'
 
-const CURRENT_PLAYER_ID = 'player-3'
-
 export function LeaderboardClient() {
   const entries = useMemo(() => generateMockLeaderboard(20), [])
 
   return (
     <div className="mx-auto max-w-2xl space-y-4 p-4" dir="rtl">
-      {/* Demo-data notice (honest label until real backend rankings ship) */}
+      {/* Demo-data notice (honest label until real backend rankings ship).
+          We do NOT fake a "current player" highlight here — the names below are
+          illustrative examples, not real competitors, so nothing is marked "you". */}
       <p
         className="text-muted-foreground rounded-lg border border-dashed px-3 py-2 text-center text-xs"
         role="note"
       >
-        {'הדירוג כאן הוא הדגמה — תחרות אמיתית בין שחקנים תיפתח יחד עם החשבונות 🏆'}
+        {'השמות כאן הם הדגמה בלבד 🏆 תחרות אמיתית בין שחקנים תיפתח יחד עם החשבונות — ואז תופיע כאן גם אתה!'}
       </p>
 
       {/* Podium card */}
@@ -43,7 +43,7 @@ export function LeaderboardClient() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <LeaderboardTable entries={entries} currentPlayerId={CURRENT_PLAYER_ID} />
+          <LeaderboardTable entries={entries} />
         </CardContent>
       </Card>
     </div>
