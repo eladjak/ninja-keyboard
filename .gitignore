@@ -42,3 +42,15 @@ next-env.d.ts
 
 .vercel
 .env.suno
+
+# playwright / test artifacts
+/playwright-report
+/test-results
+pw-local.config.ts
+
+# local agent / tooling cruft
+/.omc
+/_infra
+/_radar
+bun.lock
+raw_ninja.png

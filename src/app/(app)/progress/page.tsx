@@ -5,6 +5,7 @@ import { BarChart3, Zap, Flame, Trophy, Target } from 'lucide-react'
 import { useXpStore } from '@/stores/xp-store'
 import { motion } from 'framer-motion'
 import { CharacterIdleWrapper } from '@/components/characters/character-idle-wrapper'
+import { formatNumber } from '@/lib/utils'
 
 export default function ProgressPage() {
   const { totalXp, level, streak, completedLessons, levelProgress } =
@@ -51,7 +52,7 @@ export default function ProgressPage() {
           <span className="font-bold text-lg" style={{ color: 'var(--game-accent-purple)' }}>רמה {level}</span>
           <span className="game-stat-badge">
             <Zap className="size-3 text-amber-400" />
-            {totalXp.toLocaleString()} XP
+            {formatNumber(totalXp)} XP
           </span>
         </div>
 

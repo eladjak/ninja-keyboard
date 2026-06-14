@@ -102,7 +102,7 @@ export default function RegisterPage() {
           </Button>
 
           <p className="text-center text-sm">
-            <Link href="/login" className="text-primary hover:underline">
+            <Link href="/login" className="text-primary-link hover:underline">
               {'\u05DB\u05D1\u05E8 \u05D9\u05E9 \u05DC\u05DA \u05D7\u05E9\u05D1\u05D5\u05DF? \u05D4\u05D9\u05DB\u05E0\u05E1'}
             </Link>
           </p>

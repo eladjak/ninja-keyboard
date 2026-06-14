@@ -8,7 +8,10 @@ test.describe('Battle Mode', () => {
   // ── Difficulty Selection Phase ──────────────────────────────────
 
   test('shows difficulty selection screen with title', async ({ page }) => {
-    await expect(page.getByText('זירת קרב')).toBeVisible()
+    // "זירת קרב" also appears in the sidebar nav link — scope to the page heading.
+    await expect(
+      page.getByRole('heading', { name: 'זירת קרב', level: 1 }),
+    ).toBeVisible()
   })
 
   test('shows all three difficulty buttons', async ({ page }) => {
@@ -23,20 +26,29 @@ test.describe('Battle Mode', () => {
     await expect(page.getByTestId('difficulty-hard').getByText('קשה')).toBeVisible()
   })
 
-  test('shows WPM for easy difficulty (15 מ/ד)', async ({ page }) => {
-    await expect(page.getByTestId('difficulty-easy').getByText('15 מ/ד')).toBeVisible()
+  // The selection screen offers named rival opponents (each with a difficulty
+  // rating) plus three "legacy" difficulty buttons. The per-difficulty WPM
+  // labels were removed in the v4/v5 battle redesign, so these tests assert the
+  // current rival-selection UI instead.
+
+  test('shows the easy-tier rival option (באג)', async ({ page }) => {
+    await expect(page.getByTestId('rival-bug')).toBeVisible()
+    await expect(page.getByTestId('rival-bug').getByText('באג')).toBeVisible()
   })
 
-  test('shows WPM for medium difficulty (30 מ/ד)', async ({ page }) => {
-    await expect(page.getByTestId('difficulty-medium').getByText('30 מ/ד')).toBeVisible()
+  test('shows a mid-tier rival option (צל / סערה)', async ({ page }) => {
+    await expect(page.getByTestId('rival-shadow')).toBeVisible()
+    await expect(page.getByTestId('rival-storm')).toBeVisible()
   })
 
-  test('shows WPM for hard difficulty (50 מ/ד)', async ({ page }) => {
-    await expect(page.getByTestId('difficulty-hard').getByText('50 מ/ד')).toBeVisible()
+  test('shows the top-tier rival option (יוקי)', async ({ page }) => {
+    await expect(page.getByTestId('rival-yuki')).toBeVisible()
+    await expect(page.getByTestId('rival-yuki').getByText('יוקי')).toBeVisible()
   })
 
-  test('shows bot opponent description', async ({ page }) => {
-    await expect(page.getByText(/נינג.*ה בוט/)).toBeVisible()
+  test('shows rival opponent description', async ({ page }) => {
+    // Each rival card shows a short descriptive tagline.
+    await expect(page.getByText('כאוטי, הרבה טעויות')).toBeVisible()
   })
 
   // ── Countdown Phase ─────────────────────────────────────────────
@@ -67,7 +79,9 @@ test.describe('Battle Mode', () => {
   test('shows player progress bar during battle', async ({ page }) => {
     await page.getByTestId('difficulty-easy').click()
     await page.waitForTimeout(4500)
-    await expect(page.getByTestId('player-progress')).toBeVisible()
+    // The fill element starts at width:0% (player hasn't typed yet), so it has
+    // zero rendered width — assert it's attached rather than visibly-painted.
+    await expect(page.getByTestId('player-progress')).toBeAttached()
   })
 
   test('shows AI progress bar during battle', async ({ page }) => {
@@ -85,7 +99,8 @@ test.describe('Battle Mode', () => {
   test('shows AI WPM display during battle', async ({ page }) => {
     await page.getByTestId('difficulty-easy').click()
     await page.waitForTimeout(4500)
-    await expect(page.getByTestId('ai-wpm')).toBeVisible()
+    // The AI WPM is rendered by the AIOpponent component under data-testid="ai-wpm-display".
+    await expect(page.getByTestId('ai-wpm-display')).toBeVisible()
   })
 
   test('hidden battle input is accessible with correct aria-label', async ({ page }) => {

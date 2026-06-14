@@ -76,7 +76,8 @@ test.describe('Progress Dashboard', () => {
     })
     await page.reload()
 
-    await expect(page.getByText('רמה 3')).toBeVisible()
+    // "רמה N" also appears in the app-shell header/sidebar — scope to the page.
+    await expect(page.getByRole('main').getByText('רמה 3')).toBeVisible()
   })
 
   test('displays streak counter', async ({ page }) => {
@@ -95,10 +96,10 @@ test.describe('Progress Dashboard', () => {
     })
     await page.reload()
 
-    // Streak value
-    await expect(page.getByText('7')).toBeVisible()
-    // Streak label
-    await expect(page.getByText('ימים ברצף')).toBeVisible()
+    // Streak label + value, scoped to the page (header shows level/streak too).
+    const main = page.getByRole('main')
+    await expect(main.getByText('ימים ברצף')).toBeVisible()
+    await expect(main.getByText('7', { exact: true }).first()).toBeVisible()
   })
 
   test('displays completed lessons count', async ({ page }) => {
@@ -257,12 +258,14 @@ test.describe('Progress Dashboard', () => {
     })
     await page.reload()
 
-    // Level 1, 0 XP
-    await expect(page.getByText('רמה 1')).toBeVisible()
-    await expect(page.getByText('0 XP')).toBeVisible()
+    // Level 1, 0 XP — scope to the page (header/sidebar also show level + XP).
+    const mainRegion = page.getByRole('main')
+    await expect(mainRegion.getByText('רמה 1')).toBeVisible()
+    await expect(mainRegion.getByText('0 XP').first()).toBeVisible()
 
-    // 0 completed lessons, 0 streak, 0 XP in grid
-    const zeroValues = page.locator('.text-2xl.font-bold', { hasText: '0' })
+    // 0 completed lessons, 0 streak, 0 XP in the stats grid.
+    // Stat values render as `text-2xl font-black tabular-nums`.
+    const zeroValues = page.locator('.text-2xl.font-black', { hasText: '0' })
     expect(await zeroValues.count()).toBeGreaterThanOrEqual(3)
   })
 })

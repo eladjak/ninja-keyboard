@@ -15,7 +15,8 @@ test.describe('Games Hub', () => {
   })
 
   test('shows Battle game card', async ({ page }) => {
-    await expect(page.getByText('זירת קרב')).toBeVisible()
+    // "זירת קרב" also appears in the sidebar nav — scope to the page content.
+    await expect(page.getByRole('main').getByText('זירת קרב')).toBeVisible()
   })
 
   test('navigates to Word Rain', async ({ page }) => {
@@ -34,9 +35,12 @@ test.describe('Word Rain Game', () => {
   })
 
   test('shows difficulty selection', async ({ page }) => {
-    await expect(page.getByText('קל')).toBeVisible()
-    await expect(page.getByText('בינוני')).toBeVisible()
-    await expect(page.getByText('קשה')).toBeVisible()
+    // Scope to <main> + exact match: "קל" is a substring of nav words like
+    // "מקלדת"/"קיצורי מקלדת" in the app shell.
+    const main = page.getByRole('main')
+    await expect(main.getByText('קל', { exact: true })).toBeVisible()
+    await expect(main.getByText('בינוני', { exact: true })).toBeVisible()
+    await expect(main.getByText('קשה', { exact: true })).toBeVisible()
   })
 
   test('shows start button', async ({ page }) => {
@@ -61,7 +65,11 @@ test.describe('Speed Test', () => {
   })
 
   test('shows speed test page', async ({ page }) => {
-    await expect(page.getByText('מבחן מהירות')).toBeVisible()
+    // "מבחן מהירות" appears in the sidebar nav AND twice in the page (h1 + h2).
+    // Target the page's main heading.
+    await expect(
+      page.getByRole('heading', { name: 'מבחן מהירות', exact: true }),
+    ).toBeVisible()
   })
 
   test('shows start button', async ({ page }) => {
@@ -82,12 +90,15 @@ test.describe('Certificates', () => {
   })
 
   test('shows certificates page', async ({ page }) => {
-    await expect(page.getByText('תעודות')).toBeVisible()
+    // "תעודות" also appears in the sidebar nav — scope to the page content.
+    await expect(page.getByRole('main').getByText('תעודות').first()).toBeVisible()
   })
 
   test('shows certificate levels', async ({ page }) => {
-    await expect(page.getByText('ארד')).toBeVisible()
-    await expect(page.getByText('כסף')).toBeVisible()
-    await expect(page.getByText('זהב')).toBeVisible()
+    // Certificate tiers (the bronze tier is now "ברונזה", previously "ארד").
+    const main = page.getByRole('main')
+    await expect(main.getByText('ברונזה').first()).toBeVisible()
+    await expect(main.getByText('כסף').first()).toBeVisible()
+    await expect(main.getByText('זהב').first()).toBeVisible()
   })
 })

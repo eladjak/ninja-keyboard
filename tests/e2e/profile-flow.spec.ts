@@ -27,8 +27,9 @@ test.describe('Profile Page', () => {
   })
 
   test('shows player level', async ({ page }) => {
-    // Level label — default is level 1
-    await expect(page.getByText(/רמה \d+/)).toBeVisible()
+    // Level label — default is level 1. "רמה N" also appears in the app-shell
+    // header/sidebar, so scope to the page content.
+    await expect(page.getByRole('main').getByText(/רמה \d+/).first()).toBeVisible()
   })
 
   test('shows rank name with emoji', async ({ page }) => {
@@ -53,18 +54,17 @@ test.describe('Profile Page', () => {
   })
 
   test('shows streak counter', async ({ page }) => {
-    // Shows ימים ברצף or streak-related text
-    await expect(page.getByText(/ברצף|רצף/).first()).toBeVisible()
+    // The profile card shows a streak stat labelled "סטריק" with a "N ימים" value.
+    await expect(page.getByText(/סטריק|ימים/).first()).toBeVisible()
   })
 
   test('shows edit name button or editable name field', async ({ page }) => {
-    // Profile card has an edit button for the display name
-    const editTrigger = page.getByRole('button').filter({ hasText: /ערוך|עריכה/ })
+    // The display-name edit trigger is an icon-only button whose accessible name
+    // is "ערוך שם תצוגה" (match by accessible name, not visible text). Wait for the
+    // client-rendered profile card before asserting either the button or an input.
+    const editTrigger = page.getByRole('button', { name: /ערוך|עריכה/ })
     const nameInput = page.getByRole('textbox')
-    // Either an edit button or directly an input should exist
-    const hasEditButton = await editTrigger.count() > 0
-    const hasInput = await nameInput.count() > 0
-    expect(hasEditButton || hasInput).toBe(true)
+    await expect(editTrigger.or(nameInput).first()).toBeVisible()
   })
 
   // ── Stats Chart ─────────────────────────────────────────────────
@@ -118,7 +118,8 @@ test.describe('Profile Page', () => {
     await page.reload()
 
     await expect(page.getByText(/250 XP/).first()).toBeVisible()
-    await expect(page.getByText(/רמה 4/)).toBeVisible()
+    // "רמה N" also appears in the app-shell header/sidebar — scope to the page.
+    await expect(page.getByRole('main').getByText(/רמה 4/)).toBeVisible()
   })
 
   test('shows best WPM after completing lessons', async ({ page }) => {

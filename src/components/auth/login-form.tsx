@@ -88,10 +88,10 @@ export function LoginForm() {
       </form>
 
       <div className="flex flex-col gap-2 text-center text-sm">
-        <Link href="/register" className="text-primary hover:underline">
+        <Link href="/register" className="text-primary-link hover:underline">
           {'\u05D0\u05D9\u05DF \u05DC\u05DA \u05D7\u05E9\u05D1\u05D5\u05DF? \u05D4\u05D9\u05E8\u05E9\u05DD \u05E2\u05DB\u05E9\u05D9\u05D5'}
         </Link>
-        <Link href="/join" className="text-primary hover:underline">
+        <Link href="/join" className="text-primary-link hover:underline">
           {'\u05D9\u05E9 \u05DC\u05D9 \u05E7\u05D5\u05D3 \u05DB\u05D9\u05EA\u05D4'}
         </Link>
       </div>

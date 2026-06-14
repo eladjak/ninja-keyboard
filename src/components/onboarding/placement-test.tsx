@@ -351,8 +351,8 @@ export function PlacementTest({ onComplete }: PlacementTestProps) {
           >
             <Card>
               <CardHeader>
-                <CardTitle className="text-center text-2xl font-bold">
-                  מבחן מיקום — נינג׳ה מקלדת
+                <CardTitle className="text-center text-2xl font-bold" asChild>
+                  <h1>מבחן מיקום — נינג׳ה מקלדת</h1>
                 </CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col gap-6 text-center">

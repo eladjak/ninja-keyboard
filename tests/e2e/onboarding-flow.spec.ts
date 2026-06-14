@@ -1,6 +1,30 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, type Page } from '@playwright/test'
+
+/**
+ * Types Hebrew characters by dispatching real `keydown` events on `window`.
+ *
+ * The onboarding typing area (TypingArea) listens on `window` keydown and reads
+ * `event.key`. A physical Hebrew keyboard produces keydown events with
+ * `event.key` set to the Hebrew letter — but Playwright's `keyboard.type()`
+ * cannot map characters that are absent from the (US) hardware layout, so it
+ * delivers them via `insertText` with NO keydown. We therefore dispatch the
+ * keydown ourselves to faithfully reproduce real Hebrew-keyboard input.
+ */
+async function typeHebrew(page: Page, text: string): Promise<void> {
+  for (const key of text) {
+    await page.evaluate((k) => {
+      window.dispatchEvent(
+        new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true }),
+      )
+    }, key)
+    await page.waitForTimeout(60)
+  }
+}
 
 test.describe('Onboarding Flow', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/onboarding')
+  })
   test.beforeEach(async ({ page }) => {
     await page.goto('/onboarding')
   })
@@ -57,11 +81,14 @@ test.describe('Onboarding Flow', () => {
       page.getByText('הקלד כל אות בזהירות — לא נחזיר אותך'),
     ).toBeVisible()
 
-    // The letters שלום should be displayed individually
-    await expect(page.getByText('ש')).toBeVisible()
-    await expect(page.getByText('ל').first()).toBeVisible()
-    await expect(page.getByText('ו').first()).toBeVisible()
-    await expect(page.getByText('ם').first()).toBeVisible()
+    // The letters שלום should be displayed individually in the word display.
+    // Scope to the word-display container (aria-label "הקלד: שלום") so the
+    // assertion targets the per-letter spans, not unrelated text in the shell.
+    const wordDisplay = page.locator('[aria-label="הקלד: שלום"]')
+    await expect(wordDisplay).toBeVisible()
+    for (const letter of ['ש', 'ל', 'ו', 'ם']) {
+      await expect(wordDisplay.getByText(letter, { exact: true })).toBeVisible()
+    }
   })
 
   test('step 2: typing correct keys advances and shows green feedback', async ({
@@ -71,10 +98,8 @@ test.describe('Onboarding Flow', () => {
     await page.getByRole('button', { name: 'הבנתי, בוא נתחיל!' }).click()
     await page.waitForTimeout(300) // Wait for animation
 
-    // Type the Hebrew characters for שלום
-    // On Hebrew keyboard layout: ש=a, ל=k, ו=u, ם=o (final mem)
-    // We simulate typing the actual Hebrew characters
-    await page.keyboard.type('ש')
+    // Type the first Hebrew character of שלום (dispatched as a real keydown)
+    await typeHebrew(page, 'ש')
     await page.waitForTimeout(200)
 
     // After typing first correct character, it should show green
@@ -91,13 +116,7 @@ test.describe('Onboarding Flow', () => {
     await page.waitForTimeout(300)
 
     // Type שלום character by character
-    await page.keyboard.type('ש')
-    await page.waitForTimeout(100)
-    await page.keyboard.type('ל')
-    await page.waitForTimeout(100)
-    await page.keyboard.type('ו')
-    await page.waitForTimeout(100)
-    await page.keyboard.type('ם')
+    await typeHebrew(page, 'שלום')
 
     // Wait for the 400ms delay + animation
     await page.waitForTimeout(800)
@@ -114,7 +133,7 @@ test.describe('Onboarding Flow', () => {
     await page.getByRole('button', { name: 'הבנתי, בוא נתחיל!' }).click()
     await page.waitForTimeout(300)
 
-    await page.keyboard.type('שלום')
+    await typeHebrew(page, 'שלום')
     await page.waitForTimeout(800)
 
     // XP reward badge
@@ -137,7 +156,7 @@ test.describe('Onboarding Flow', () => {
     await page.getByRole('button', { name: 'הבנתי, בוא נתחיל!' }).click()
     await page.waitForTimeout(300)
 
-    await page.keyboard.type('שלום')
+    await typeHebrew(page, 'שלום')
     await page.waitForTimeout(800)
 
     // Click continue
@@ -156,7 +175,7 @@ test.describe('Onboarding Flow', () => {
     await page.getByRole('button', { name: 'הבנתי, בוא נתחיל!' }).click()
     await page.waitForTimeout(300)
 
-    await page.keyboard.type('שלום')
+    await typeHebrew(page, 'שלום')
     await page.waitForTimeout(800)
 
     await page.getByRole('button', { name: 'המשך' }).click()
@@ -173,18 +192,14 @@ test.describe('Onboarding Flow', () => {
     await page.getByRole('button', { name: 'הבנתי, בוא נתחיל!' }).click()
     await page.waitForTimeout(300)
 
-    await page.keyboard.type('שלום')
+    await typeHebrew(page, 'שלום')
     await page.waitForTimeout(800)
 
     await page.getByRole('button', { name: 'המשך' }).click()
     await page.waitForTimeout(300)
 
     // Type שלום עולם (with space)
-    await page.keyboard.type('שלום')
-    await page.waitForTimeout(100)
-    await page.keyboard.type(' ')
-    await page.waitForTimeout(100)
-    await page.keyboard.type('עולם')
+    await typeHebrew(page, 'שלום עולם')
     await page.waitForTimeout(800)
 
     // Step 5 should show
@@ -197,21 +212,23 @@ test.describe('Onboarding Flow', () => {
     await page.getByRole('button', { name: 'הבנתי, בוא נתחיל!' }).click()
     await page.waitForTimeout(300)
 
-    await page.keyboard.type('שלום')
+    await typeHebrew(page, 'שלום')
     await page.waitForTimeout(800)
 
     await page.getByRole('button', { name: 'המשך' }).click()
     await page.waitForTimeout(300)
 
-    await page.keyboard.type('שלום עולם')
+    await typeHebrew(page, 'שלום עולם')
     await page.waitForTimeout(800)
 
-    // Summary card should show
-    await expect(page.getByText('סיכום האימון')).toBeVisible()
-    await expect(page.getByText('מילים שהקלדת')).toBeVisible()
-    await expect(page.getByText('2')).toBeVisible() // 2 words typed
-    await expect(page.getByText('XP שנצברו')).toBeVisible()
-    await expect(page.getByText('+50')).toBeVisible()
+    // Summary card should show. Scope number/value lookups to <main> so the
+    // app-shell chrome (sidebar/header level counters) can't collide.
+    const main = page.getByRole('main')
+    await expect(main.getByText('סיכום האימון')).toBeVisible()
+    await expect(main.getByText('מילים שהקלדת')).toBeVisible()
+    await expect(main.getByText('2', { exact: true })).toBeVisible() // 2 words typed
+    await expect(main.getByText('XP שנצברו')).toBeVisible()
+    await expect(main.getByText('+50', { exact: true })).toBeVisible()
 
     // Next step tease
     await expect(
@@ -226,13 +243,13 @@ test.describe('Onboarding Flow', () => {
     await page.getByRole('button', { name: 'הבנתי, בוא נתחיל!' }).click()
     await page.waitForTimeout(300)
 
-    await page.keyboard.type('שלום')
+    await typeHebrew(page, 'שלום')
     await page.waitForTimeout(800)
 
     await page.getByRole('button', { name: 'המשך' }).click()
     await page.waitForTimeout(300)
 
-    await page.keyboard.type('שלום עולם')
+    await typeHebrew(page, 'שלום עולם')
     await page.waitForTimeout(800)
 
     // Click the finish button

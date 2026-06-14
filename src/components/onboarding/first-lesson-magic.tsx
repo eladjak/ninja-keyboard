@@ -133,7 +133,7 @@ function Step1FingerPlacement({ onNext }: { onNext: () => void }) {
         whileTap={reduceMotion ? {} : { scale: 0.97 }}
         transition={reduceMotion ? { duration: 0 } : { duration: 0.1 }}
         onClick={onNext}
-        aria-label="המשך לשלב הבא"
+        aria-label="הבנתי, בוא נתחיל! המשך לשלב הבא"
       >
         הבנתי, בוא נתחיל!
       </motion.button>
@@ -562,7 +562,7 @@ function Step5Finish({
         whileTap={reduceMotion ? {} : { scale: 0.97 }}
         transition={reduceMotion ? { duration: 0 } : { duration: 0.1 }}
         onClick={onComplete}
-        aria-label="עבור לשיעורים"
+        aria-label="בוא נתחיל! עבור לשיעורים"
       >
         בוא נתחיל!
       </motion.button>

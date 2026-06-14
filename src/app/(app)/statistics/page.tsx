@@ -28,7 +28,7 @@ import { KeyboardHeatmap } from '@/components/statistics/keyboard-heatmap'
 import { usePracticeHistoryStore } from '@/stores/practice-history-store'
 import { useXpStore } from '@/stores/xp-store'
 import { CharacterIdleWrapper } from '@/components/characters/character-idle-wrapper'
-import { cn } from '@/lib/utils'
+import { cn, formatNumber } from '@/lib/utils'
 
 /** Format milliseconds to a compact Hebrew string */
 function formatDuration(ms: number): string {
@@ -378,7 +378,7 @@ export default function StatisticsPage() {
                 </div>
               </div>
               <Badge variant="outline" className="tabular-nums">
-                {totalXp.toLocaleString('he-IL')} XP
+                {formatNumber(totalXp)} XP
               </Badge>
             </div>
 
@@ -386,8 +386,8 @@ export default function StatisticsPage() {
             {!isMaxLevel && (
               <div className="space-y-1.5">
                 <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>{xpCurrentLevel.toLocaleString('he-IL')}</span>
-                  <span>{xpNextLevel.toLocaleString('he-IL')}</span>
+                  <span>{formatNumber(xpCurrentLevel)}</span>
+                  <span>{formatNumber(xpNextLevel)}</span>
                 </div>
                 <Progress
                   value={levelPct}

@@ -12,7 +12,7 @@ import {
   TableRow,
   TableCell,
 } from '@/components/ui/table'
-import { cn } from '@/lib/utils'
+import { cn, formatNumber } from '@/lib/utils'
 import {
   sortLeaderboard,
   assignRanks,
@@ -67,7 +67,7 @@ function getCategoryValue(entry: LeaderboardEntry, category: LeaderboardCategory
     case 'accuracy':
       return `${entry.accuracy}%`
     case 'xp':
-      return `${entry.xp.toLocaleString()}`
+      return `${formatNumber(entry.xp)}`
     case 'streak':
       return `${entry.streak}`
   }

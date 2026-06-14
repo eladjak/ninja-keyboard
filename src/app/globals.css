@@ -35,6 +35,7 @@
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
+  --color-primary-link: var(--primary-link);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -76,6 +77,9 @@
   --popover-foreground: oklch(0.95 0.01 290);
   --primary: oklch(0.55 0.2 292);
   --primary-foreground: oklch(0.98 0 0);
+  /* Brighter primary for use AS TEXT on dark surfaces (WCAG AA: ~7:1).
+     The base --primary stays dark enough for white text on a primary bg. */
+  --primary-link: oklch(0.72 0.18 292);
   --secondary: oklch(0.672 0.148 168);
   --secondary-foreground: oklch(0.98 0 0);
   --muted: oklch(0.18 0.02 290);
@@ -128,6 +132,9 @@
   --popover-foreground: oklch(0.95 0.01 290);
   --primary: oklch(0.55 0.2 292);
   --primary-foreground: oklch(0.98 0 0);
+  /* Brighter primary for use AS TEXT on dark surfaces (WCAG AA: ~7:1).
+     The base --primary stays dark enough for white text on a primary bg. */
+  --primary-link: oklch(0.72 0.18 292);
   --secondary: oklch(0.672 0.148 168);
   --secondary-foreground: oklch(0.98 0 0);
   --muted: oklch(0.18 0.02 290);
@@ -180,6 +187,8 @@
   --popover-foreground: oklch(0.145 0 0);
   --primary: oklch(0.495 0.205 292);
   --primary-foreground: oklch(0.985 0 0);
+  /* On the light theme, primary-as-text sits on white — the dark primary passes AA. */
+  --primary-link: oklch(0.495 0.205 292);
   --secondary: oklch(0.672 0.148 168);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.97 0 0);

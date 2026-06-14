@@ -18,7 +18,8 @@ test.describe('Leaderboard Page', () => {
   // ── Podium Section ──────────────────────────────────────────────
 
   test('shows מובילים (leaders) section title', async ({ page }) => {
-    await expect(page.getByText('מובילים')).toBeVisible()
+    // "מובילים" also appears in the sidebar nav ("טבלת מובילים") — scope to main.
+    await expect(page.getByRole('main').getByText('מובילים').first()).toBeVisible()
   })
 
   test('shows podium with three positions', async ({ page }) => {

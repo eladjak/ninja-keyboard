@@ -11,7 +11,7 @@ import {
   getRankEmoji,
   getNextMilestone,
 } from '@/lib/profile/profile-utils'
-import { cn } from '@/lib/utils'
+import { cn, formatNumber } from '@/lib/utils'
 
 interface ProfileCardProps {
   className?: string
@@ -183,7 +183,7 @@ export function ProfileCard({ className }: ProfileCardProps) {
             className="text-2xl font-black"
             style={{ color: 'var(--game-accent-purple)', textShadow: 'var(--game-text-glow)' }}
           >
-            {totalXp.toLocaleString()}
+            {formatNumber(totalXp)}
           </span>{' '}
           <span className="text-sm text-muted-foreground">נקודות ניסיון</span>
         </div>

@@ -12,7 +12,7 @@ export default function AuthLayout({
 
   return (
     <div className="flex min-h-dvh items-center justify-center bg-gradient-to-b from-background to-muted/30 p-4">
-      <div className="w-full max-w-md">
+      <main id="main-content" className="w-full max-w-md">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold tracking-tight">
             {'\u{1F977} נינג׳ה מקלדת'}
@@ -34,14 +34,14 @@ export default function AuthLayout({
             </p>
             <Link
               href="/home"
-              className="text-primary mt-2 inline-block font-semibold underline underline-offset-4"
+              className="text-primary-link mt-2 inline-block font-semibold underline underline-offset-4"
             >
               כניסה כאורחים ומתחילים לשחק
             </Link>
           </div>
         )}
         {children}
-      </div>
+      </main>
     </div>
   )
 }

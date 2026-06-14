@@ -36,15 +36,23 @@ test.describe('Settings Flow', () => {
   })
 
   test('volume slider changes value', async ({ page }) => {
-    const volumeSlider = page.locator('#sound-volume')
+    const volumeSlider = page.locator('#sound-volume').first()
     await expect(volumeSlider).toBeVisible()
 
+    // The sound-volume % badge is the sibling of the "עוצמת קול" label inside the
+    // slider's control group. Scope to that group — the page also has a separate
+    // music-volume control whose % badge would otherwise collide.
+    const volumeGroup = page
+      .locator('div.space-y-2')
+      .filter({ has: page.locator('#sound-volume') })
+      .first()
+
     // Default volume is 70% (0.7)
-    await expect(page.getByText('70%')).toBeVisible()
+    await expect(volumeGroup.getByText('70%')).toBeVisible()
 
     // Change the slider value
     await volumeSlider.fill('0.5')
-    await expect(page.getByText('50%')).toBeVisible()
+    await expect(volumeGroup.getByText('50%')).toBeVisible()
   })
 
   test('volume slider is disabled when sound is off', async ({ page }) => {
@@ -67,7 +75,9 @@ test.describe('Settings Flow', () => {
   })
 
   test('change theme preference to dark', async ({ page }) => {
-    const darkButton = page.getByRole('button', { name: 'כהה' })
+    // exact:true so this matches the theme-preference button "כהה" and not the
+    // app-shell header's "מצב כהה" dark-mode toggle.
+    const darkButton = page.getByRole('button', { name: 'כהה', exact: true })
     await darkButton.click()
 
     // The dark button should now be pressed
@@ -77,7 +87,7 @@ test.describe('Settings Flow', () => {
     const systemButton = page.getByRole('button', {
       name: 'אוטומטי (מערכת)',
     })
-    const lightButton = page.getByRole('button', { name: 'בהיר' })
+    const lightButton = page.getByRole('button', { name: 'בהיר', exact: true })
     await expect(systemButton).toHaveAttribute('aria-pressed', 'false')
     await expect(lightButton).toHaveAttribute('aria-pressed', 'false')
   })
@@ -104,11 +114,13 @@ test.describe('Settings Flow', () => {
     await expect(
       page.getByRole('heading', { name: 'תצוגת שיעור' }),
     ).toBeVisible()
-    await expect(page.getByText('פריסת מקלדת')).toBeVisible()
+    // "פריסת מקלדת" is both the section label and part of a description string —
+    // match the section label exactly.
+    await expect(page.getByText('פריסת מקלדת', { exact: true })).toBeVisible()
 
     // Two layout options
-    await expect(page.getByText('תקנית')).toBeVisible()
-    await expect(page.getByText('דבורק')).toBeVisible()
+    await expect(page.getByText('תקנית').first()).toBeVisible()
+    await expect(page.getByText('דבורק').first()).toBeVisible()
   })
 
   test('change keyboard layout to dvorak', async ({ page }) => {
@@ -157,8 +169,8 @@ test.describe('Settings Flow', () => {
     await soundSwitch.click()
     await expect(soundSwitch).not.toBeChecked()
 
-    // Change theme to dark
-    const darkButton = page.getByRole('button', { name: 'כהה' })
+    // Change theme to dark (exact:true to avoid the header "מצב כהה" toggle)
+    const darkButton = page.getByRole('button', { name: 'כהה', exact: true })
     await darkButton.click()
 
     // Change keyboard layout to dvorak
@@ -179,7 +191,7 @@ test.describe('Settings Flow', () => {
 
     // Theme should still be dark
     await expect(
-      page.getByRole('button', { name: 'כהה' }),
+      page.getByRole('button', { name: 'כהה', exact: true }),
     ).toHaveAttribute('aria-pressed', 'true')
 
     // Keyboard layout should still be dvorak
@@ -206,18 +218,25 @@ test.describe('Settings Flow', () => {
   })
 
   test('volume slider displays correct percentage', async ({ page }) => {
-    const volumeSlider = page.locator('#sound-volume')
+    // Wait for the page-enter transition to settle (AnimatePresence mode="wait"
+    // can briefly keep the previous page mounted) before targeting the slider.
+    const volumeSlider = page.locator('#sound-volume').first()
+    await expect(volumeSlider).toBeVisible()
+    const volumeGroup = page
+      .locator('div.space-y-2')
+      .filter({ has: page.locator('#sound-volume') })
+      .first()
 
     // Set to 0.25
     await volumeSlider.fill('0.25')
-    await expect(page.getByText('25%')).toBeVisible()
+    await expect(volumeGroup.getByText('25%', { exact: true })).toBeVisible()
 
     // Set to 1.0
     await volumeSlider.fill('1')
-    await expect(page.getByText('100%')).toBeVisible()
+    await expect(volumeGroup.getByText('100%', { exact: true })).toBeVisible()
 
     // Set to 0
     await volumeSlider.fill('0')
-    await expect(page.getByText('0%')).toBeVisible()
+    await expect(volumeGroup.getByText('0%', { exact: true })).toBeVisible()
   })
 })
