@@ -12,6 +12,7 @@ import { themes } from '@/styles/themes'
 import type { AgeName } from '@/types/theme'
 import { cn } from '@/lib/utils'
 import { useClickSound } from '@/hooks/use-sound-effect'
+import { useHydrated } from '@/hooks/use-hydrated'
 
 const KEYBOARD_LAYOUTS: { value: KeyboardLayout; label: string; description: string }[] = [
   { value: 'standard', label: 'תקנית', description: 'פריסת מקלדת עברית תקנית' },
@@ -25,30 +26,42 @@ const THEME_OPTIONS: { value: ThemePreference; label: string; icon: typeof Monit
 ]
 
 export default function SettingsPage() {
-  const { ageName, setAgeName } = useThemeStore()
+  // Every control below reflects a persisted (localStorage) store. Until those
+  // rehydrate on the client, render the same defaults the server emitted so the
+  // first client render matches — a mismatch here makes React drop and rebuild
+  // the whole settings tree, which flakes the E2E assertions.
+  const hydrated = useHydrated()
+
+  const setAgeName = useThemeStore((s) => s.setAgeName)
+  const ageNameRaw = useThemeStore((s) => s.ageName)
+  const ageName = hydrated ? ageNameRaw : 'geza'
   const playClick = useClickSound()
 
+  const settings = useSettingsStore()
   const {
-    soundEnabled,
-    soundVolume,
-    showFingerGuide,
-    showKeyboardColors,
-    keyboardLayout,
-    themePreference,
     toggleSound,
     setVolume,
     toggleFingerGuide,
     toggleKeyboardColors,
     setKeyboardLayout,
     setThemePreference,
-  } = useSettingsStore()
+  } = settings
+  const soundEnabled = hydrated ? settings.soundEnabled : true
+  const soundVolume = hydrated ? settings.soundVolume : 0.7
+  const showFingerGuide = hydrated ? settings.showFingerGuide : true
+  const showKeyboardColors = hydrated ? settings.showKeyboardColors : true
+  const keyboardLayout = hydrated ? settings.keyboardLayout : 'standard'
+  const themePreference = hydrated ? settings.themePreference : 'system'
 
-  const musicEnabled = useMusicStore((s) => s.musicEnabled)
-  const musicVolume = useMusicStore((s) => s.musicVolume)
-  const musicMuted = useMusicStore((s) => s.musicMuted)
   const toggleMusicEnabled = useMusicStore((s) => s.toggleMusicEnabled)
   const setMusicVolume = useMusicStore((s) => s.setMusicVolume)
   const toggleMusicMute = useMusicStore((s) => s.toggleMusicMute)
+  const musicEnabledRaw = useMusicStore((s) => s.musicEnabled)
+  const musicVolumeRaw = useMusicStore((s) => s.musicVolume)
+  const musicMutedRaw = useMusicStore((s) => s.musicMuted)
+  const musicEnabled = hydrated ? musicEnabledRaw : true
+  const musicVolume = hydrated ? musicVolumeRaw : 0.5
+  const musicMuted = hydrated ? musicMutedRaw : false
 
   const gameCardStyle = { borderColor: 'oklch(0.495 0.205 292 / 30%)' }
   const selectedBtnStyle = {

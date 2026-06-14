@@ -3,17 +3,24 @@
 import { useXpStore } from '@/stores/xp-store'
 import { cn } from '@/lib/utils'
 import { BarChart3 } from 'lucide-react'
+import { useHydrated } from '@/hooks/use-hydrated'
 
 interface StatsChartProps {
   className?: string
 }
+
+const EMPTY_LESSONS: Record<string, never> = {}
 
 /**
  * Simple WPM bar chart using pure CSS/divs.
  * Shows the last 10 session WPMs from completed lessons (sorted by date).
  */
 export function StatsChart({ className }: StatsChartProps) {
-  const { completedLessons } = useXpStore()
+  // Render an empty chart until the persisted store rehydrates, so the first
+  // client render matches the server's empty default (no hydration mismatch).
+  const hydrated = useHydrated()
+  const { completedLessons: completedLessonsRaw } = useXpStore()
+  const completedLessons = hydrated ? completedLessonsRaw : EMPTY_LESSONS
 
   const sessions = Object.values(completedLessons)
     .sort((a, b) => a.completedAt - b.completedAt)

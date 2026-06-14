@@ -33,6 +33,7 @@ import { ProgressChart } from '@/components/statistics/progress-chart'
 import { useXpStore } from '@/stores/xp-store'
 import { useBadgeStore } from '@/stores/badge-store'
 import { usePracticeHistoryStore } from '@/stores/practice-history-store'
+import { useHydrated } from '@/hooks/use-hydrated'
 import { LESSONS } from '@/lib/content/lessons'
 import { BADGE_DEFINITIONS } from '@/lib/gamification/badge-definitions'
 import { useSoundEffect, useNavigateSound } from '@/hooks/use-sound-effect'
@@ -128,12 +129,28 @@ const STAT_CARDS = [
   { key: 'lessons', icon: Trophy, color: 'text-green-400', accent: '#00B894', label: 'שיעורים' },
 ] as const
 
+// Stable empty references for the pre-hydration render so memo deps and child
+// props don't churn each render (a new {}/[] literal would).
+const EMPTY_LESSONS: Record<string, never> = {}
+const EMPTY_RESULTS: never[] = []
+const EMPTY_BADGE_IDS: string[] = []
+
 export function HomeDashboard() {
   const reduceMotion = useReducedMotion()
-  const { totalXp, level, streak, completedLessons, levelProgress } =
-    useXpStore()
+  // Persisted stores hydrate from localStorage only on the client. Until then,
+  // render the same default state the server emitted (0 XP / level 1 / no
+  // lessons / no badges) so the first client render matches — no hydration
+  // mismatch. After mount the real persisted values flow through.
+  const hydrated = useHydrated()
+  const xp = useXpStore()
+  const totalXp = hydrated ? xp.totalXp : 0
+  const level = hydrated ? xp.level : 1
+  const streak = hydrated ? xp.streak : 0
+  const completedLessons = hydrated ? xp.completedLessons : EMPTY_LESSONS
+  const levelProgress = xp.levelProgress
   const { getRecentBadges, hasBadge } = useBadgeStore()
-  const practiceResults = usePracticeHistoryStore((s) => s.results)
+  const practiceResultsRaw = usePracticeHistoryStore((s) => s.results)
+  const practiceResults = hydrated ? practiceResultsRaw : EMPTY_RESULTS
   const playAchievement = useSoundEffect('achievement')
   const playNavigate = useNavigateSound()
 
@@ -151,11 +168,12 @@ export function HomeDashboard() {
   const lessonsCompletedCount = Object.keys(completedLessons).length
   const nextLesson = getNextLesson(completedLessons)
   const recentLessons = getRecentCompletedLessons(completedLessons, 3)
-  const recentBadgeIds = getRecentBadges(3)
+  const recentBadgeIds = hydrated ? getRecentBadges(3) : EMPTY_BADGE_IDS
   const recentBadges = recentBadgeIds
     .map((id) => BADGE_DEFINITIONS.find((b) => b.id === id))
     .filter(Boolean)
-  const progress = levelProgress()
+  // levelProgress() reads the live store via get(); pin to 0 pre-hydration.
+  const progress = hydrated ? levelProgress() : 0
 
   // Level-up celebration
   const { justLeveledUp, clearLevelUp } = useLevelUp(totalXp)

@@ -133,13 +133,18 @@ export function LeaderboardTable({ entries, currentPlayerId }: LeaderboardTableP
         <ScrollArea className="h-[400px]">
           <Table>
             <TableHeader>
+              {/*
+                No whitespace or trailing comments between these <TableHead>
+                cells: a text node between <th> elements is an invalid child of
+                <tr> and triggers a hydration error. Keep the tags tight.
+              */}
               <TableRow>
-                <TableHead>{'\u05D3\u05D9\u05E8\u05D5\u05D2'}</TableHead> {/* דירוג */}
-                <TableHead>{'\u05E9\u05DD'}</TableHead> {/* שם */}
-                <TableHead>{'\u05DE\u05D4\u05D9\u05E8\u05D5\u05EA'}</TableHead> {/* מהירות */}
-                <TableHead>{'\u05D3\u05D9\u05D5\u05E7'}</TableHead> {/* דיוק */}
-                <TableHead>{'\u05E8\u05DE\u05D4'}</TableHead> {/* רמה */}
-                <TableHead>{'\u05DE\u05D2\u05DE\u05D4'}</TableHead> {/* מגמה */}
+                <TableHead>{'\u05D3\u05D9\u05E8\u05D5\u05D2'}</TableHead>
+                <TableHead>{'\u05E9\u05DD'}</TableHead>
+                <TableHead>{'\u05DE\u05D4\u05D9\u05E8\u05D5\u05EA'}</TableHead>
+                <TableHead>{'\u05D3\u05D9\u05D5\u05E7'}</TableHead>
+                <TableHead>{'\u05E8\u05DE\u05D4'}</TableHead>
+                <TableHead>{'\u05DE\u05D2\u05DE\u05D4'}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

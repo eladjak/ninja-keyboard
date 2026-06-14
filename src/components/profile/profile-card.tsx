@@ -4,7 +4,12 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useXpStore } from '@/stores/xp-store'
 import { useSettingsStore } from '@/stores/settings-store'
-import { accentColorFor, equippedTitleFor } from '@/lib/gamification/coins'
+import {
+  accentColorFor,
+  equippedTitleFor,
+  DEFAULT_ACCENT_ID,
+  DEFAULT_TITLE_ID,
+} from '@/lib/gamification/coins'
 import {
   getNinjaRank,
   getRankDisplayName,
@@ -12,35 +17,42 @@ import {
   getNextMilestone,
 } from '@/lib/profile/profile-utils'
 import { cn, formatNumber } from '@/lib/utils'
+import { useHydrated } from '@/hooks/use-hydrated'
 
 interface ProfileCardProps {
   className?: string
 }
 
+/** XP to the next level from the level-1 default (matches xp-store thresholds). */
+const LEVEL1_XP_TO_NEXT = 50
+
 export function ProfileCard({ className }: ProfileCardProps) {
-  const {
-    totalXp,
-    level,
-    streak,
-    completedLessons,
-    levelProgress,
-    xpToNextLevel,
-  } = useXpStore()
+  // Until the persisted stores rehydrate on the client, fall back to the same
+  // default state the server rendered (level 1 / 0 XP / no lessons / default
+  // cosmetics) so SSR and the first client render match — no hydration mismatch.
+  const hydrated = useHydrated()
+  const xp = useXpStore()
+  const totalXp = hydrated ? xp.totalXp : 0
+  const level = hydrated ? xp.level : 1
+  const streak = hydrated ? xp.streak : 0
+  const completedLessons = hydrated ? xp.completedLessons : {}
 
   const [displayName, setDisplayName] = useState('נינג׳ה אנונימי')
   const [isEditing, setIsEditing] = useState(false)
 
   // Equipped cosmetics (bought in the shop). Fall back to the defaults.
-  const equippedAccent = useSettingsStore((s) => s.equippedAccent)
-  const equippedTitle = useSettingsStore((s) => s.equippedTitle)
+  const equippedAccentRaw = useSettingsStore((s) => s.equippedAccent)
+  const equippedTitleRaw = useSettingsStore((s) => s.equippedTitle)
+  const equippedAccent = hydrated ? equippedAccentRaw : DEFAULT_ACCENT_ID
+  const equippedTitle = hydrated ? equippedTitleRaw : DEFAULT_TITLE_ID
   const accentColor = accentColorFor(equippedAccent)
   const title = equippedTitleFor(equippedTitle)
 
   const rank = getNinjaRank(level)
   const rankName = getRankDisplayName(rank)
   const rankEmoji = getRankEmoji(rank)
-  const progress = levelProgress()
-  const xpRemaining = xpToNextLevel()
+  const progress = hydrated ? xp.levelProgress() : 0
+  const xpRemaining = hydrated ? xp.xpToNextLevel() : LEVEL1_XP_TO_NEXT
   const milestone = getNextMilestone(totalXp)
 
   const lessonsArray = Object.values(completedLessons)

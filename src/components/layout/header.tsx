@@ -9,12 +9,26 @@ import { useXpStore } from '@/stores/xp-store'
 import { useClickSound, useNavigateSound } from '@/hooks/use-sound-effect'
 import { useCoinBalance } from '@/hooks/use-coin-balance'
 import { AnimatedWordmark } from '@/components/layout/animated-wordmark'
+import { useHydrated } from '@/hooks/use-hydrated'
+import { accentColorFor, DEFAULT_ACCENT_ID } from '@/lib/gamification/coins'
 
 export function Header() {
+  // Persisted stores (theme/xp/coins) render their defaults during SSR; hold
+  // those defaults through the first client render so hydration matches, then
+  // switch to the rehydrated values after mount.
+  const hydrated = useHydrated()
   const { colorScheme, toggleDarkMode } = useThemeStore()
-  const isDark = colorScheme === 'dark' || colorScheme === 'dark-high-contrast'
-  const { level, totalXp } = useXpStore()
-  const { balance, accentColor } = useCoinBalance()
+  const isDark =
+    hydrated &&
+    (colorScheme === 'dark' || colorScheme === 'dark-high-contrast')
+  const xp = useXpStore()
+  const level = hydrated ? xp.level : 1
+  const totalXp = hydrated ? xp.totalXp : 0
+  const coins = useCoinBalance()
+  const balance = hydrated ? coins.balance : 0
+  const accentColor = hydrated
+    ? coins.accentColor
+    : accentColorFor(DEFAULT_ACCENT_ID)
   const playClick = useClickSound()
   const playNavigate = useNavigateSound()
 

@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import Image from 'next/image'
 import { getRandomTip, CATEGORY_LABELS } from '@/lib/content/typing-tips'
 import { useXpStore } from '@/stores/xp-store'
+import { useHydrated } from '@/hooks/use-hydrated'
 import { cn } from '@/lib/utils'
 
 const CATEGORY_ACCENT: Record<string, string> = {
@@ -18,7 +19,12 @@ interface DailyTipProps {
 }
 
 export function DailyTip({ className }: DailyTipProps) {
-  const { level } = useXpStore()
+  // Gate the persisted level so the first client render matches the server's
+  // (level 1) — otherwise the tip text picked from the seed differs and React
+  // reports a hydration mismatch.
+  const hydrated = useHydrated()
+  const { level: storeLevel } = useXpStore()
+  const level = hydrated ? storeLevel : 1
 
   // Deterministic tip based on today's date
   const tip = useMemo(() => {

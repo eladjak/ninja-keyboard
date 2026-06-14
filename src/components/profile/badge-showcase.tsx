@@ -8,13 +8,20 @@ import {
 } from '@/lib/gamification/badge-definitions'
 import { Lock, Trophy } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useHydrated } from '@/hooks/use-hydrated'
 
 interface BadgeShowcaseProps {
   className?: string
 }
 
+const EMPTY_BADGES: Record<string, never> = {}
+
 export function BadgeShowcase({ className }: BadgeShowcaseProps) {
-  const { earnedBadges } = useBadgeStore()
+  // Earned badges come from a persisted store; render none until hydrated so the
+  // first client render matches the server's empty default.
+  const hydrated = useHydrated()
+  const { earnedBadges: earnedBadgesRaw } = useBadgeStore()
+  const earnedBadges = hydrated ? earnedBadgesRaw : EMPTY_BADGES
   const [selectedBadge, setSelectedBadge] = useState<BadgeDefinition | null>(
     null,
   )

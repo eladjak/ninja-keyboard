@@ -28,6 +28,7 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { useXpStore } from '@/stores/xp-store'
 import { useNavigateSound } from '@/hooks/use-sound-effect'
+import { useHydrated } from '@/hooks/use-hydrated'
 
 const navGroups = [
   {
@@ -70,9 +71,16 @@ const navGroups = [
 
 export function Sidebar() {
   const pathname = usePathname()
-  const { level, streak, totalXp, levelProgress } = useXpStore()
+  const hydrated = useHydrated()
+  const xp = useXpStore()
   const playNavigate = useNavigateSound()
-  const progress = levelProgress()
+  // Until the persisted store rehydrates on the client, render the same default
+  // values the server emitted (level 1 / streak 0 / 0 XP / empty bar) so SSR and
+  // the first client render match. After mount we show the real persisted state.
+  const level = hydrated ? xp.level : 1
+  const streak = hydrated ? xp.streak : 0
+  const totalXp = hydrated ? xp.totalXp : 0
+  const progress = hydrated ? xp.levelProgress() : 0
 
   return (
     <aside className="hidden md:flex md:w-[280px] md:flex-col border-ie border-[var(--game-border)] h-dvh sticky top-0 bg-[var(--game-bg-secondary)]">

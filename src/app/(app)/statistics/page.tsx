@@ -29,6 +29,7 @@ import { usePracticeHistoryStore } from '@/stores/practice-history-store'
 import { useXpStore } from '@/stores/xp-store'
 import { CharacterIdleWrapper } from '@/components/characters/character-idle-wrapper'
 import { cn, formatNumber } from '@/lib/utils'
+import { useHydrated } from '@/hooks/use-hydrated'
 
 /** Format milliseconds to a compact Hebrew string */
 function formatDuration(ms: number): string {
@@ -100,15 +101,24 @@ const itemVariants = {
 }
 
 export default function StatisticsPage() {
+  // Persisted stores rehydrate from localStorage only on the client. Until then
+  // render the server's empty/default state (no sessions, 0 XP, level 1) so the
+  // first client render matches; real values flow in after mount.
+  const hydrated = useHydrated()
   const practiceHistory = usePracticeHistoryStore()
-  const { totalXp, level, streak, xpToNextLevel, levelProgress } = useXpStore()
+  const xp = useXpStore()
+  const totalXp = hydrated ? xp.totalXp : 0
+  const level = hydrated ? xp.level : 1
+  const streak = hydrated ? xp.streak : 0
+  const xpToNextLevel = xp.xpToNextLevel
+  const levelProgress = xp.levelProgress
 
-  const bestWpm = practiceHistory.getBestWpm()
-  const bestAccuracy = practiceHistory.getBestAccuracy()
-  const totalTime = practiceHistory.getTotalPracticeTime()
-  const problematicKeys = practiceHistory.getProblematicKeys()
-  const wpmTrend = practiceHistory.getWpmTrend()
-  const totalSessions = practiceHistory.results.length
+  const bestWpm = hydrated ? practiceHistory.getBestWpm() : 0
+  const bestAccuracy = hydrated ? practiceHistory.getBestAccuracy() : 0
+  const totalTime = hydrated ? practiceHistory.getTotalPracticeTime() : 0
+  const problematicKeys = hydrated ? practiceHistory.getProblematicKeys() : []
+  const wpmTrend = hydrated ? practiceHistory.getWpmTrend() : []
+  const totalSessions = hydrated ? practiceHistory.results.length : 0
   const hasData = totalSessions > 0
 
   // Averages across all sessions
@@ -132,9 +142,9 @@ export default function StatisticsPage() {
     return recentAvg - prevAvg
   }, [practiceHistory])
 
-  // XP progress bar values
-  const xpNeeded = xpToNextLevel()
-  const levelPct = levelProgress()
+  // XP progress bar values (pinned to level-1 defaults pre-hydration)
+  const xpNeeded = hydrated ? xpToNextLevel() : 50
+  const levelPct = hydrated ? levelProgress() : 0
   const xpCurrentLevel = xpForLevel(level)
   const xpNextLevel = xpForLevel(level + 1)
   const isMaxLevel = level >= 20

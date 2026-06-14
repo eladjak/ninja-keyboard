@@ -6,13 +6,22 @@ import { useXpStore } from '@/stores/xp-store'
 import { motion } from 'framer-motion'
 import { CharacterIdleWrapper } from '@/components/characters/character-idle-wrapper'
 import { formatNumber } from '@/lib/utils'
+import { useHydrated } from '@/hooks/use-hydrated'
+
+const EMPTY_LESSONS: Record<string, never> = {}
 
 export default function ProgressPage() {
-  const { totalXp, level, streak, completedLessons, levelProgress } =
-    useXpStore()
+  // Hold the server's default state (0 XP / level 1 / no lessons) through the
+  // first client render so SSR matches before the persisted store rehydrates.
+  const hydrated = useHydrated()
+  const xp = useXpStore()
+  const totalXp = hydrated ? xp.totalXp : 0
+  const level = hydrated ? xp.level : 1
+  const streak = hydrated ? xp.streak : 0
+  const completedLessons = hydrated ? xp.completedLessons : EMPTY_LESSONS
 
   const completedCount = Object.keys(completedLessons).length
-  const progress = levelProgress()
+  const progress = hydrated ? xp.levelProgress() : 0
 
   return (
     <div className="mx-auto max-w-2xl space-y-5 p-4">
