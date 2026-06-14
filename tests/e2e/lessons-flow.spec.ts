@@ -165,10 +165,14 @@ test.describe('Lessons Flow', () => {
 
     // Reload to see completion state
     await page.goto('/lessons')
+    // The stat renders only after client hydration + persisted-store rehydration
+    // (gated by useHydrated), landing ~1-2s after load under CI dev-server load.
+    // Settle the page and give the assertion a generous timeout so it isn't a flake.
+    await page.waitForLoadState('networkidle')
 
     // After completion, first lesson should show checkmark and stats
-    await expect(page.getByText('10 מ/ד')).toBeVisible()
-    await expect(page.getByText('90%')).toBeVisible()
+    await expect(page.getByText('10 מ/ד')).toBeVisible({ timeout: 15000 })
+    await expect(page.getByText('90%')).toBeVisible({ timeout: 15000 })
   })
 
   test('completing first lesson unlocks second lesson', async ({ page }) => {
