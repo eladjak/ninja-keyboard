@@ -1,4 +1,34 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, type Page } from '@playwright/test'
+
+/**
+ * Seed the persisted xp-store with a completed lesson-01 BEFORE the app's
+ * client code runs. Using addInitScript (rather than page.evaluate after
+ * navigation) guarantees the value is present in localStorage when the zustand
+ * persist store first rehydrates, so the live store never overwrites it.
+ */
+async function seedCompletedLessonOne(page: Page): Promise<void> {
+  await page.addInitScript(() => {
+    const xpState = {
+      state: {
+        totalXp: 50,
+        level: 1,
+        streak: 1,
+        lastPracticeDate: new Date().toISOString().split('T')[0],
+        completedLessons: {
+          'lesson-01': {
+            lessonId: 'lesson-01',
+            bestWpm: 10,
+            bestAccuracy: 90,
+            completedAt: Date.now(),
+            attempts: 1,
+          },
+        },
+      },
+      version: 0,
+    }
+    window.localStorage.setItem('ninja-keyboard-xp', JSON.stringify(xpState))
+  })
+}
 
 test.describe('Lessons Flow', () => {
   test.beforeEach(async ({ page }) => {
@@ -131,73 +161,25 @@ test.describe('Lessons Flow', () => {
   })
 
   test('results modal shows after lesson completion', async ({ page }) => {
-    await page.goto('/lessons/lesson-01')
+    // Seed the persisted xp-store BEFORE any app code runs. addInitScript writes
+    // localStorage prior to the page's store hydrating, so the live store
+    // rehydrates *with* the completed lesson. (Setting localStorage via
+    // page.evaluate after navigation is racy: the lesson page's store flushes its
+    // in-memory empty state back to localStorage right after, clobbering the
+    // injected value — the real root cause of the prior flake.)
+    await seedCompletedLessonOne(page)
 
-    // Simulate completing the lesson by injecting completion state via
-    // localStorage (the xp-store is persisted). We check the results UI elements.
-    // In a real E2E scenario, the user would type all characters.
-    // Here we verify the results modal structure by checking its presence
-    // after setting up the required state.
-
-    await page.evaluate(() => {
-      // Pre-set completed lesson in localStorage so we can verify the
-      // lessons list shows completion state
-      const xpState = {
-        state: {
-          totalXp: 50,
-          level: 1,
-          streak: 1,
-          lastPracticeDate: new Date().toISOString().split('T')[0],
-          completedLessons: {
-            'lesson-01': {
-              lessonId: 'lesson-01',
-              bestWpm: 10,
-              bestAccuracy: 90,
-              completedAt: Date.now(),
-              attempts: 1,
-            },
-          },
-        },
-        version: 0,
-      }
-      localStorage.setItem('ninja-keyboard-xp', JSON.stringify(xpState))
-    })
-
-    // Reload to see completion state
     await page.goto('/lessons')
-    // The stat renders only after client hydration + persisted-store rehydration
-    // (gated by useHydrated), landing ~1-2s after load under CI dev-server load.
-    // Settle the page and give the assertion a generous timeout so it isn't a flake.
     await page.waitForLoadState('networkidle')
 
-    // After completion, first lesson should show checkmark and stats
+    // After completion, first lesson should show checkmark and stats.
     await expect(page.getByText('10 מ/ד')).toBeVisible({ timeout: 15000 })
     await expect(page.getByText('90%')).toBeVisible({ timeout: 15000 })
   })
 
   test('completing first lesson unlocks second lesson', async ({ page }) => {
-    // Set up completed lesson-01 in localStorage
-    await page.evaluate(() => {
-      const xpState = {
-        state: {
-          totalXp: 50,
-          level: 1,
-          streak: 1,
-          lastPracticeDate: new Date().toISOString().split('T')[0],
-          completedLessons: {
-            'lesson-01': {
-              lessonId: 'lesson-01',
-              bestWpm: 10,
-              bestAccuracy: 90,
-              completedAt: Date.now(),
-              attempts: 1,
-            },
-          },
-        },
-        version: 0,
-      }
-      localStorage.setItem('ninja-keyboard-xp', JSON.stringify(xpState))
-    })
+    // Seed completed lesson-01 before app code runs (see note above).
+    await seedCompletedLessonOne(page)
 
     await page.goto('/lessons')
 
