@@ -168,9 +168,9 @@ export function LessonListClient({ lessons }: LessonListClientProps) {
                         )
                       })}
                     </div>
-                    <div className="font-bold" style={{ color: 'var(--game-accent-purple)' }}>{data.bestWpm} מ/ד</div>
+                    <div className="font-bold" style={{ color: 'var(--game-accent-purple)' }}>{`${data.bestWpm} מ/ד`}</div>
                     <div className="text-xs text-muted-foreground">
-                      {data.bestAccuracy}%
+                      {`${data.bestAccuracy}%`}
                     </div>
                   </div>
                 )}

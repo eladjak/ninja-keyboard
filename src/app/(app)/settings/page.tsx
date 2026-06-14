@@ -167,7 +167,7 @@ export default function SettingsPage() {
               className="game-stat-badge tabular-nums"
               style={{ borderColor: 'oklch(0.672 0.148 168 / 30%)' }}
             >
-              {Math.round(soundVolume * 100)}%
+              {`${Math.round(soundVolume * 100)}%`}
             </span>
           </div>
           <input
@@ -213,7 +213,7 @@ export default function SettingsPage() {
           <div className="flex items-center justify-between">
             <Label htmlFor="music-volume" className="text-sm text-muted-foreground">עוצמת מוזיקה</Label>
             <span className="game-stat-badge tabular-nums">
-              {Math.round(musicVolume * 100)}%
+              {`${Math.round(musicVolume * 100)}%`}
             </span>
           </div>
           <input
