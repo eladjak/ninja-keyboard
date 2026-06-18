@@ -1,8 +1,24 @@
 # Ninja Keyboard - Progress
 
 ## Status: 🟢 LIVE IN PRODUCTION — https://ninja-keyboard-nine.vercel.app
-## Last Updated: 2026-06-18 (V6 — free TTS voice)
-## Sprint: V6 free Web Speech API TTS (unblocks celebratory voice w/o ElevenLabs/Suno)
+## Last Updated: 2026-06-18 (V6 — avatar frames + free TTS voice)
+## Sprint: V6 — 3rd cosmetic category (avatar frames) + free Web Speech API TTS
+
+## V6 (2026-06-18) — Avatar-frame cosmetic category (3rd equip slot)
+**Commit:** `b3f9f1c`. Gates: tsc 0 · tests **1358 (+17 from 1341)** · build ✓ · prod deploy Ready · live-verified.
+
+- **Closes the carried-forward V5/V6 backlog item "avatar frames"** — a 3rd cosmetic category in the coin shop, following the EXACT buy/own/equip pattern of accents + titles. Cosmetic-only, no payments.
+- **`coins.ts`**: new `'frame'` category + `FrameStyle` union (none/solid/double/dashed/glow/gradient). **6 frames** (טבעת רגילה=free · טבעת מלאה 40 · טבעת כפולה 70 · טבעת נינ׳ה 110 · הילה זוהרת 160 · קשת קסם 240). `DEFAULT_FRAME_ID='frame-none'`. New pure resolvers `equippedFrameFor` (no cross-slot leakage) + `frameDecoration(style, accentColor)` → inline CSS. **Frames are pure on-brand CSS rings (no external/paid images); the ring is tinted by the equipped ACCENT color, so frames + accents compose.**
+- **settings-store**: new `equippedFrame` state + `equipFrame` action (persisted); `purchaseCosmetic` is now **3-way category-aware** (auto-equips into accent | title | frame slot).
+- **shop**: third "🖼️ מסגרות אווטאר" section; each frame swatch previews its REAL ring (tinted by the equipped accent).
+- **profile-card**: the equipped frame is applied to the avatar ring (overrides the base border/glow), tinted by the accent color.
+- **Tests (+17)**: frame catalog/`equippedFrameFor`/`frameDecoration` (coins.test.ts), store 3-way auto-equip + `equipFrame` + idempotency (new settings-store.test.ts), profile-card applies the equipped frame (new profile-card.test.tsx).
+- **Live-verified** on prod: shop renders 8 accents + 6 titles + **6 frames**, 1 h1, dir=rtl/lang=he; the gradient frame swatch renders a live conic-gradient ring; profile avatar with an equipped **glow** frame + **teal** accent shows the glow box-shadow AND border both tinted `rgb(0,184,148)` — proving the frame+accent composition end-to-end.
+
+### Note — Ponytail
+Not installed in this project (`.claude/skills/ponytail` absent) → not invoked, not installed globally. Worked in its spirit (minimal, YAGNI: reused the existing cosmetic pattern, no new store/route, no speculative abstraction) while definition-of-done governed (full feature: catalog + shop UI + equip + avatar display + tests). Net feature LOC ≈ +213 across 5 files + 2 new focused test files. definition-of-done preserved.
+
+## V6 (2026-06-18) — Free celebratory voice (Web Speech API)
 
 ## V6 (2026-06-18) — Free celebratory voice (Web Speech API)
 **Commit:** `6d375e4`. Gates: tsc 0 · tests **1341 (+17 from 1324)** · build ✓ · prod deploy Ready · live-verified.
@@ -23,8 +39,9 @@
 - **Block 4 — QA layer (team-build)** ✅. Hard QA pass on live prod via agent-browser: (1) **journey pass** — all 18 routes 200, exactly 1 h1, dir=rtl/lang=he each; (2) **text-fit/RTL pass** at 375px — found `/home` overflowing 42px horizontally; **root-caused to the app-shell `flex-1` content column lacking `min-w-0`** (default min-width:auto let wide content blow past the viewport) and **fixed it** (`min-w-0`); re-verified every route 0 overflow; (3) **cross-device pass** 360/375/414/768 — clean. Two intermittent readings (/home, /battle) were correctly diagnosed as measurement/animation artifacts (stable re-measures + 700ms settle = 0 overflow), not bugs. **1 real fix shipped, 1307→1324 tests kept green.**
 
 ### V6 backlog (next session — free + high-value)
-- Coin-collect SFX distinct from level-complete; celebratory voice on cert auto-surface (needs FREE TTS — ElevenLabs/Suno are paid → deferred).
-- 3rd cosmetic category: avatar frames (decorative ring styles) — same equip pattern as titles.
+- Coin-collect SFX distinct from level-complete (celebratory voice ✅ shipped this sprint; cert auto-surface already speaks).
+- ~~3rd cosmetic category: avatar frames~~ → ✅ DONE (commit b3f9f1c, see top of file).
+- 4th cosmetic surface idea: apply the equipped frame to the header avatar / lesson-map too (currently only the profile avatar). Lesson-map themes.
 - Real backend leaderboard + certificate persistence (Supabase env still not set in prod).
 - Playwright e2e for the full drill→lesson loop + a shop purchase (unit-covered now; no live interactive e2e yet).
 
