@@ -1,8 +1,20 @@
 # Ninja Keyboard - Progress
 
 ## Status: 🟢 LIVE IN PRODUCTION — https://ninja-keyboard-nine.vercel.app
-## Last Updated: 2026-06-18 (V6 — avatar frames + free TTS voice)
-## Sprint: V6 — 3rd cosmetic category (avatar frames) + free Web Speech API TTS
+## Last Updated: 2026-06-18 (V6 — interactive E2E for the core loops)
+## Sprint: V6 — interactive Playwright E2E (drill→lesson + shop buy→equip)
+
+## V6 (2026-06-18) — Interactive E2E for the core loops (drill→lesson + shop buy→equip)
+**Gates:** tsc 0 · unit tests **1358 (unchanged)** · build ✓ · new specs 48/48 under `--workers=3 --repeat-each=4` (zero flake). Handoff: `handoffs/v6-e2e-session.md`.
+
+- **Closes the carried-forward V5/V6 backlog item** "Drive the full drill→lesson loop + a shop purchase in an e2e (Playwright) test — unit-covered now, but no live interactive e2e yet." Two new spec files, **12 interactive tests**, no product changes (purely additive coverage).
+- **`tests/e2e/drill-loop.spec.ts` (5 tests)** — the DRILL → LESSON loop end-to-end: bootstrap weak keys from seeded practice-history; deep-link `?keys=…&from=lesson-XX` pre-selects keys; a **full interactive run** that actually TYPES the generated drill text to completion → results panel → "חזרה לשיעור" CTA → navigates back to the originating lesson; a no-origin run (results, no CTA); RTL/one-h1.
+- **`tests/e2e/shop-buy-equip.spec.ts` (7 tests)** — the SHOP buy→equip→APPLIED loop across all 3 cosmetic categories: spendable balance derived from seeded stars (45★→450 coins); buy **accent** → avatar ring recolored (asserts the rgb); buy **title** → shown under the profile name; buy **frame** → avatar box-shadow ring applied; owned-but-unequipped re-equip; too-expensive gating; RTL/one-h1/3 sections.
+- **Stability techniques (no arbitrary sleeps):** Hebrew typing via dispatched `keydown` (Playwright `keyboard.type` emits none for non-ASCII; engine compares `event.key===expected`), reading the live cursor span each step (NBSP→space) so we stay in sync with `currentIndex`; seed localStorage before hydration via `addInitScript`; never clear settings in `addInitScript` (it re-runs on every nav and would wipe purchases); assert on the UNION of the two responsive profile-avatar styles; poll the h1 count past the Suspense fallback swap.
+- **No regressions:** full chromium e2e 215/216 — the single failure is a PRE-EXISTING load-only flake in `battle-flow.spec.ts:87` (passes 3/3 in isolation), untouched by this work.
+
+### Note — Ponytail
+Skill not installed in this project (`.claude/skills/ponytail` absent) → not invoked, not installed globally. Worked in its spirit (minimal, no product changes, reused the existing e2e patterns) while definition-of-done governed (real, stable, passing interactive tests for both core loops).
 
 ## V6 (2026-06-18) — Avatar-frame cosmetic category (3rd equip slot)
 **Commit:** `b3f9f1c`. Gates: tsc 0 · tests **1358 (+17 from 1341)** · build ✓ · prod deploy Ready · live-verified.
@@ -43,7 +55,7 @@ Not installed in this project (`.claude/skills/ponytail` absent) → not invoked
 - ~~3rd cosmetic category: avatar frames~~ → ✅ DONE (commit b3f9f1c, see top of file).
 - 4th cosmetic surface idea: apply the equipped frame to the header avatar / lesson-map too (currently only the profile avatar). Lesson-map themes.
 - Real backend leaderboard + certificate persistence (Supabase env still not set in prod).
-- Playwright e2e for the full drill→lesson loop + a shop purchase (unit-covered now; no live interactive e2e yet).
+- ~~Playwright e2e for the full drill→lesson loop + a shop purchase~~ → ✅ DONE (see top of file — `tests/e2e/drill-loop.spec.ts` + `tests/e2e/shop-buy-equip.spec.ts`, 12 interactive tests).
 
 ## V4 Deep-Iteration (2026-06-13) — Blocks 1-5
 **Commits:** e6a0702 → a3da292 → 1bf2562 → 3daaba4 → 314b928. Gates green every block: tsc 0, **1307 tests (+50 from 1257)**, build ✓, prod deploy ✓.
