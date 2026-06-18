@@ -1,8 +1,18 @@
 # Ninja Keyboard - Progress
 
 ## Status: 🟢 LIVE IN PRODUCTION — https://ninja-keyboard-nine.vercel.app
-## Last Updated: 2026-06-14 (V5 deep-iteration)
-## Sprint: V5 drill→lesson loop + coin-in-header + title cosmetics + QA layer (autonomous overnight deep-iteration)
+## Last Updated: 2026-06-18 (V6 — free TTS voice)
+## Sprint: V6 free Web Speech API TTS (unblocks celebratory voice w/o ElevenLabs/Suno)
+
+## V6 (2026-06-18) — Free celebratory voice (Web Speech API)
+**Commit:** `6d375e4`. Gates: tsc 0 · tests **1341 (+17 from 1324)** · build ✓ · prod deploy Ready · live-verified.
+
+- **Unblocks the deferred "celebratory voice" feature** without the paid ElevenLabs/Suno dependency, using the FREE in-browser Web Speech API (`window.speechSynthesis`).
+- **New `useSpeech` hook** (`src/hooks/use-speech.ts`) — wraps SpeechSynthesis; picks a `he-IL` voice via pure `pickHebrewVoice`; **graceful fallback = stays SILENT** when no Hebrew voice exists (never reads Hebrew with an English accent, never crashes). Gated by pure `shouldSpeak`: requires `voiceEnabled` ∧ `soundEnabled` (global mute also mutes voice) ∧ NOT reduced-motion ∧ platform has SpeechSynthesis. SSR-safe (speak/cancel no-op on server); async `voiceschanged` handled; cancels on unmount + on modal close.
+- **Wired into the certificate auto-surface modal** (`certificate-celebration.tsx`): when a new bronze/silver/gold/platinum/ninja-master milestone pops, speaks "כל הכבוד {שם}! השגת {תעודה}!" alongside the existing level-complete SFX. Does not touch the existing music/SFX system.
+- **Settings UI toggle** "קול חגיגי" added under the Sound section (disabled when sound is off), persisted via new `voiceEnabled` + `toggleVoice` in settings-store. Hydration-safe.
+- **Test** `src/hooks/use-speech.test.ts` (+17): pure helpers (Hebrew-voice pick, gating matrix) + hook behavior against a faked SpeechSynthesis — speaks with Hebrew voice, silent fallback when none, blocked by each gate, no-crash when API absent.
+- **Live-verified** on prod: settings shows the toggle; browser exposes `he-IL: Microsoft Asaf` voice; simulated speak path picks `he-IL` and does not throw; page RTL (dir=rtl/lang=he). If a test env had NO Hebrew voice, the hook stays silent (verified by the `hebrewVoiceAvailable=false → no speak` unit test).
 
 ## V5 Deep-Iteration (2026-06-14) — Blocks 1-4
 **Commits:** e27175d → 2d308e1 → a383f77. Gates green every block: tsc 0, **1324 tests (+17 from 1307)**, build ✓, prod deploy ✓, live agent-browser verification ✓. Handoff: `handoffs/v5-session.md`.
