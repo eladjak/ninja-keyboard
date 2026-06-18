@@ -10,7 +10,21 @@
 /** Coins granted per star earned. */
 export const COINS_PER_STAR = 10
 
-export type CosmeticCategory = 'accent' | 'title'
+export type CosmeticCategory = 'accent' | 'title' | 'frame'
+
+/**
+ * The visual recipe for an avatar frame (a decorative ring around the avatar).
+ * Frames are pure on-brand CSS — NO external/paid images. The ring color is the
+ * equipped accent color, so frames and accents compose; `frameStyle` only
+ * describes the ring's *shape/decoration*.
+ */
+export type FrameStyle =
+  | 'none' // plain ring (the free default)
+  | 'solid' // thick solid ring
+  | 'double' // double ring
+  | 'dashed' // dashed "ninja" ring
+  | 'glow' // solid ring with a strong outer glow
+  | 'gradient' // conic gradient ring (rainbow shimmer)
 
 export interface CosmeticItem {
   /** Stable id, persisted in the unlocked set. */
@@ -25,6 +39,8 @@ export interface CosmeticItem {
   color: string
   /** Emoji shown on the shop card. */
   emoji: string
+  /** For 'frame' cosmetics: the decorative ring recipe. */
+  frameStyle?: FrameStyle
 }
 
 /**
@@ -56,10 +72,26 @@ const TITLE_COSMETICS: readonly CosmeticItem[] = [
   { id: 'title-legend', category: 'title', nameHe: 'אגדה חיה', cost: 220, color: '#A29BFE', emoji: '🌟' },
 ] as const
 
+/**
+ * Avatar-frame cosmetics — a decorative ring style worn around the profile
+ * avatar. The ring is tinted by the equipped accent color, so frames compose
+ * with accents (the `color` here is only the shop-swatch hint). The first frame
+ * is free (plain ring) and acts as the default. Pure CSS, no external images.
+ */
+const FRAME_COSMETICS: readonly CosmeticItem[] = [
+  { id: 'frame-none', category: 'frame', nameHe: 'טבעת רגילה', cost: 0, color: '#6C5CE7', emoji: '⭕', frameStyle: 'none' },
+  { id: 'frame-solid', category: 'frame', nameHe: 'טבעת מלאה', cost: 40, color: '#00B894', emoji: '🟢', frameStyle: 'solid' },
+  { id: 'frame-double', category: 'frame', nameHe: 'טבעת כפולה', cost: 70, color: '#0984E3', emoji: '🔵', frameStyle: 'double' },
+  { id: 'frame-dashed', category: 'frame', nameHe: 'טבעת נינג׳ה', cost: 110, color: '#A29BFE', emoji: '🥷', frameStyle: 'dashed' },
+  { id: 'frame-glow', category: 'frame', nameHe: 'הילה זוהרת', cost: 160, color: '#F5B301', emoji: '✨', frameStyle: 'glow' },
+  { id: 'frame-gradient', category: 'frame', nameHe: 'קשת קסם', cost: 240, color: '#E84393', emoji: '🌈', frameStyle: 'gradient' },
+] as const
+
 /** Full cosmetic catalog across all categories. */
 export const COSMETICS: readonly CosmeticItem[] = [
   ...ACCENT_COSMETICS,
   ...TITLE_COSMETICS,
+  ...FRAME_COSMETICS,
 ] as const
 
 /** Cosmetics of a single category, in catalog order. */
@@ -74,6 +106,9 @@ export const DEFAULT_ACCENT_ID = 'accent-purple'
 
 /** The default (empty) title that is always unlocked and equipped initially. */
 export const DEFAULT_TITLE_ID = 'title-none'
+
+/** The default avatar frame (plain ring), always unlocked and equipped initially. */
+export const DEFAULT_FRAME_ID = 'frame-none'
 
 /** Lifetime coins earned from a star total. */
 export function coinsFromStars(totalStars: number): number {
@@ -159,4 +194,53 @@ export function equippedTitleFor(equippedTitleId: string): EquippedTitle {
     return { textHe: '', emoji: '' }
   }
   return { textHe: item.nameHe, emoji: item.emoji }
+}
+
+/**
+ * Resolve the equipped avatar-frame style. Falls back to the plain default ring
+ * ('none') for an unknown id, a non-frame id (no cross-slot leakage), or the
+ * default frame. Pure — the consumer turns the style into CSS.
+ */
+export function equippedFrameFor(equippedFrameId: string): FrameStyle {
+  const item = getCosmetic(equippedFrameId)
+  if (!item || item.category !== 'frame') return 'none'
+  return item.frameStyle ?? 'none'
+}
+
+/**
+ * Concrete inline CSS for an avatar frame, derived from a style + the accent
+ * color. A plain string-keyed record (no React dependency) that spreads directly
+ * onto an element's `style`. Pure and image-free, so the shop swatch and the
+ * profile avatar render an identical ring.
+ */
+export function frameDecoration(
+  style: FrameStyle,
+  accentColor: string,
+): Record<string, string> {
+  switch (style) {
+    case 'solid':
+      return { border: `6px solid ${accentColor}` }
+    case 'double':
+      return {
+        border: `4px double ${accentColor}`,
+        outline: `2px solid ${accentColor}`,
+        outlineOffset: '2px',
+      }
+    case 'dashed':
+      return { border: `4px dashed ${accentColor}` }
+    case 'glow':
+      return {
+        border: `4px solid ${accentColor}`,
+        boxShadow: `0 0 18px ${accentColor}, 0 0 6px ${accentColor}`,
+      }
+    case 'gradient':
+      return {
+        border: '4px solid transparent',
+        backgroundImage: `conic-gradient(from 0deg, ${accentColor}, #E84393, #F5B301, #00B894, ${accentColor})`,
+        backgroundOrigin: 'border-box',
+        backgroundClip: 'border-box',
+      }
+    default:
+      return { border: `4px solid ${accentColor}` }
+  }
 }

@@ -6,8 +6,11 @@ import { useXpStore } from '@/stores/xp-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import {
   accentColorFor,
+  equippedFrameFor,
   equippedTitleFor,
+  frameDecoration,
   DEFAULT_ACCENT_ID,
+  DEFAULT_FRAME_ID,
   DEFAULT_TITLE_ID,
 } from '@/lib/gamification/coins'
 import {
@@ -43,10 +46,14 @@ export function ProfileCard({ className }: ProfileCardProps) {
   // Equipped cosmetics (bought in the shop). Fall back to the defaults.
   const equippedAccentRaw = useSettingsStore((s) => s.equippedAccent)
   const equippedTitleRaw = useSettingsStore((s) => s.equippedTitle)
+  const equippedFrameRaw = useSettingsStore((s) => s.equippedFrame)
   const equippedAccent = hydrated ? equippedAccentRaw : DEFAULT_ACCENT_ID
   const equippedTitle = hydrated ? equippedTitleRaw : DEFAULT_TITLE_ID
+  const equippedFrame = hydrated ? equippedFrameRaw : DEFAULT_FRAME_ID
   const accentColor = accentColorFor(equippedAccent)
   const title = equippedTitleFor(equippedTitle)
+  // The avatar ring = the equipped frame's CSS, tinted by the accent color.
+  const frameRing = frameDecoration(equippedFrameFor(equippedFrame), accentColor)
 
   const rank = getNinjaRank(level)
   const rankName = getRankDisplayName(rank)
@@ -82,9 +89,11 @@ export function ProfileCard({ className }: ProfileCardProps) {
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             className="flex size-24 items-center justify-center rounded-full text-5xl"
             style={{
-              border: `4px solid ${accentColor}`,
               background: `${accentColor}26`,
               boxShadow: `0 0 24px ${accentColor}66`,
+              // The equipped frame supplies the ring (border / extra glow /
+              // gradient); it overrides the base border + boxShadow above.
+              ...frameRing,
             }}
             data-testid="profile-avatar"
             aria-label={`דרגת נינג׳ה: ${rankName}`}

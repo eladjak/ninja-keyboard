@@ -4,13 +4,16 @@ import {
   COSMETICS,
   DEFAULT_ACCENT_ID,
   DEFAULT_ACCENT_COLOR,
+  DEFAULT_FRAME_ID,
   DEFAULT_TITLE_ID,
   accentColorFor,
   coinBalance,
   coinsFromStars,
   cosmeticsByCategory,
+  equippedFrameFor,
   equippedTitleFor,
   evaluatePurchase,
+  frameDecoration,
   getCosmetic,
   isUnlocked,
 } from './coins'
@@ -105,14 +108,19 @@ describe('evaluatePurchase', () => {
 })
 
 describe('cosmetic categories', () => {
-  it('cosmeticsByCategory splits accents and titles', () => {
+  it('cosmeticsByCategory splits accents, titles and frames', () => {
     const accents = cosmeticsByCategory('accent')
     const titles = cosmeticsByCategory('title')
+    const frames = cosmeticsByCategory('frame')
     expect(accents.length).toBeGreaterThan(0)
     expect(titles.length).toBeGreaterThan(0)
+    expect(frames.length).toBeGreaterThan(0)
     expect(accents.every((c) => c.category === 'accent')).toBe(true)
     expect(titles.every((c) => c.category === 'title')).toBe(true)
-    expect(accents.length + titles.length).toBe(COSMETICS.length)
+    expect(frames.every((c) => c.category === 'frame')).toBe(true)
+    expect(accents.length + titles.length + frames.length).toBe(
+      COSMETICS.length,
+    )
   })
 
   it('each category has a free default first', () => {
@@ -120,6 +128,70 @@ describe('cosmetic categories', () => {
     expect(cosmeticsByCategory('accent')[0].cost).toBe(0)
     expect(cosmeticsByCategory('title')[0].id).toBe(DEFAULT_TITLE_ID)
     expect(cosmeticsByCategory('title')[0].cost).toBe(0)
+    expect(cosmeticsByCategory('frame')[0].id).toBe(DEFAULT_FRAME_ID)
+    expect(cosmeticsByCategory('frame')[0].cost).toBe(0)
+  })
+})
+
+describe('avatar frames', () => {
+  it('every frame cosmetic declares a frameStyle', () => {
+    const frames = cosmeticsByCategory('frame')
+    expect(frames.every((c) => typeof c.frameStyle === 'string')).toBe(true)
+  })
+
+  it('the default frame is the plain "none" ring', () => {
+    expect(getCosmetic(DEFAULT_FRAME_ID)?.frameStyle).toBe('none')
+  })
+
+  it('equippedFrameFor returns the style for a real frame', () => {
+    const paidFrame = cosmeticsByCategory('frame').find((c) => c.cost > 0)!
+    expect(equippedFrameFor(paidFrame.id)).toBe(paidFrame.frameStyle)
+  })
+
+  it('equippedFrameFor falls back to "none" for unknown / cross-slot ids', () => {
+    expect(equippedFrameFor('frame-removed-long-ago')).toBe('none')
+    // No cross-slot leakage from accent / title ids.
+    expect(equippedFrameFor(DEFAULT_ACCENT_ID)).toBe('none')
+    expect(equippedFrameFor(DEFAULT_TITLE_ID)).toBe('none')
+  })
+
+  it('a paid frame is purchasable with enough balance', () => {
+    const paidFrame = cosmeticsByCategory('frame').find((c) => c.cost > 0)!
+    const r = evaluatePurchase({
+      itemId: paidFrame.id,
+      ownedIds: [],
+      totalStars: 1000,
+      coinsSpent: 0,
+    })
+    expect(r.ok).toBe(true)
+    expect(r.spend).toBe(paidFrame.cost)
+  })
+})
+
+describe('frameDecoration', () => {
+  const accent = '#123456'
+
+  it('the default / none ring is a solid accent border', () => {
+    expect(frameDecoration('none', accent).border).toBe(`4px solid ${accent}`)
+  })
+
+  it('the glow ring adds a boxShadow tinted by the accent', () => {
+    const css = frameDecoration('glow', accent)
+    expect(css.border).toContain(accent)
+    expect(css.boxShadow).toContain(accent)
+  })
+
+  it('the gradient ring uses a transparent border + conic gradient', () => {
+    const css = frameDecoration('gradient', accent)
+    expect(css.border).toBe('4px solid transparent')
+    expect(css.backgroundImage).toContain('conic-gradient')
+    expect(css.backgroundImage).toContain(accent)
+  })
+
+  it('every frame style produces a border', () => {
+    for (const style of ['none', 'solid', 'double', 'dashed', 'glow', 'gradient'] as const) {
+      expect(frameDecoration(style, accent).border).toBeTruthy()
+    }
   })
 })
 

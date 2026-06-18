@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import {
   cosmeticsByCategory,
   evaluatePurchase,
+  frameDecoration,
   isUnlocked,
   type CosmeticItem,
 } from '@/lib/gamification/coins'
@@ -20,16 +21,19 @@ export default function ShopPage() {
   const unlockedCosmetics = useSettingsStore((s) => s.unlockedCosmetics)
   const equippedAccent = useSettingsStore((s) => s.equippedAccent)
   const equippedTitle = useSettingsStore((s) => s.equippedTitle)
+  const equippedFrame = useSettingsStore((s) => s.equippedFrame)
   const purchaseCosmetic = useSettingsStore((s) => s.purchaseCosmetic)
   const equipAccent = useSettingsStore((s) => s.equipAccent)
   const equipTitle = useSettingsStore((s) => s.equipTitle)
+  const equipFrame = useSettingsStore((s) => s.equipFrame)
 
-  const { totalStars, earned, balance } = useCoinBalance()
+  const { totalStars, earned, balance, accentColor } = useCoinBalance()
 
   const [flash, setFlash] = useState<string | null>(null)
 
   const accents = cosmeticsByCategory('accent')
   const titles = cosmeticsByCategory('title')
+  const frames = cosmeticsByCategory('frame')
 
   function handleBuy(item: CosmeticItem) {
     const result = evaluatePurchase({
@@ -54,6 +58,9 @@ export default function ShopPage() {
     if (item.category === 'title') {
       equipTitle(item.id)
       setFlash(item.nameHe ? `התואר "${item.nameHe}" פעיל עכשיו!` : 'הסרת את התואר.')
+    } else if (item.category === 'frame') {
+      equipFrame(item.id)
+      setFlash(`המסגרת ${item.nameHe} פעילה עכשיו!`)
     } else {
       equipAccent(item.id)
       setFlash(`הצבע ${item.nameHe} פעיל עכשיו!`)
@@ -61,7 +68,9 @@ export default function ShopPage() {
   }
 
   function equippedIdFor(category: CosmeticItem['category']) {
-    return category === 'title' ? equippedTitle : equippedAccent
+    if (category === 'title') return equippedTitle
+    if (category === 'frame') return equippedFrame
+    return equippedAccent
   }
 
   function renderCard(item: CosmeticItem) {
@@ -78,10 +87,15 @@ export default function ShopPage() {
         data-testid={`cosmetic-${item.id}`}
       >
         <CardContent className="flex flex-col items-center gap-2 p-3 text-center">
-          {/* Swatch */}
+          {/* Swatch — frames preview their actual ring (tinted by the equipped
+              accent color); accents/titles show a tinted emoji chip. */}
           <div
             className="flex size-12 items-center justify-center rounded-full text-2xl"
-            style={{ background: `${item.color}22`, border: `2px solid ${item.color}` }}
+            style={
+              item.category === 'frame' && item.frameStyle
+                ? { background: 'var(--game-bg-input)', ...frameDecoration(item.frameStyle, accentColor) }
+                : { background: `${item.color}22`, border: `2px solid ${item.color}` }
+            }
             aria-hidden
           >
             {item.emoji}
@@ -187,6 +201,17 @@ export default function ShopPage() {
         <p className="text-xs text-muted-foreground">תואר מגניב שמופיע מתחת לשם שלך בפרופיל.</p>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {titles.map(renderCard)}
+        </div>
+      </section>
+
+      {/* Avatar frames */}
+      <section className="space-y-3" aria-labelledby="shop-frames">
+        <h2 id="shop-frames" className="flex items-center gap-2 text-sm font-bold">
+          <span aria-hidden>🖼️</span> מסגרות אווטאר
+        </h2>
+        <p className="text-xs text-muted-foreground">טבעת מעוצבת סביב האווטאר שלך — נצבעת לפי צבע הפרופיל שבחרת.</p>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {frames.map(renderCard)}
         </div>
       </section>
 

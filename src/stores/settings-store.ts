@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import {
   DEFAULT_ACCENT_ID,
+  DEFAULT_FRAME_ID,
   DEFAULT_TITLE_ID,
   getCosmetic,
 } from '@/lib/gamification/coins'
@@ -39,12 +40,16 @@ interface SettingsState {
   equippedAccent: string
   /** Currently equipped title cosmetic id. */
   equippedTitle: string
+  /** Currently equipped avatar-frame cosmetic id. */
+  equippedFrame: string
   /** Record a purchase: spend coins and unlock the item (auto-equips by category). */
   purchaseCosmetic: (itemId: string, cost: number) => void
   /** Equip an (already unlocked) accent cosmetic. */
   equipAccent: (itemId: string) => void
   /** Equip an (already unlocked) title cosmetic. */
   equipTitle: (itemId: string) => void
+  /** Equip an (already unlocked) avatar-frame cosmetic. */
+  equipFrame: (itemId: string) => void
   /** Toggle sound on/off */
   toggleSound: () => void
   /** Toggle celebratory spoken voice on/off */
@@ -80,6 +85,7 @@ export const useSettingsStore = create<SettingsState>()(
       unlockedCosmetics: [],
       equippedAccent: DEFAULT_ACCENT_ID,
       equippedTitle: DEFAULT_TITLE_ID,
+      equippedFrame: DEFAULT_FRAME_ID,
 
       setPlayerName: (name) => set({ playerName: name.slice(0, 30) }),
 
@@ -88,18 +94,24 @@ export const useSettingsStore = create<SettingsState>()(
           if (s.unlockedCosmetics.includes(itemId)) return s
           // Auto-equip the freshly purchased item into its category slot.
           const category = getCosmetic(itemId)?.category
+          const equipPatch =
+            category === 'title'
+              ? { equippedTitle: itemId }
+              : category === 'frame'
+                ? { equippedFrame: itemId }
+                : { equippedAccent: itemId }
           return {
             coinsSpent: s.coinsSpent + Math.max(0, cost),
             unlockedCosmetics: [...s.unlockedCosmetics, itemId],
-            ...(category === 'title'
-              ? { equippedTitle: itemId }
-              : { equippedAccent: itemId }),
+            ...equipPatch,
           }
         }),
 
       equipAccent: (itemId) => set({ equippedAccent: itemId }),
 
       equipTitle: (itemId) => set({ equippedTitle: itemId }),
+
+      equipFrame: (itemId) => set({ equippedFrame: itemId }),
 
       toggleSound: () => set((s) => ({ soundEnabled: !s.soundEnabled })),
 
