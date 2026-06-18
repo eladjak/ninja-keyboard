@@ -40,6 +40,7 @@ export default function SettingsPage() {
   const settings = useSettingsStore()
   const {
     toggleSound,
+    toggleVoice,
     setVolume,
     toggleFingerGuide,
     toggleKeyboardColors,
@@ -48,6 +49,7 @@ export default function SettingsPage() {
   } = settings
   const soundEnabled = hydrated ? settings.soundEnabled : true
   const soundVolume = hydrated ? settings.soundVolume : 0.7
+  const voiceEnabled = hydrated ? settings.voiceEnabled : true
   const showFingerGuide = hydrated ? settings.showFingerGuide : true
   const showKeyboardColors = hydrated ? settings.showKeyboardColors : true
   const keyboardLayout = hydrated ? settings.keyboardLayout : 'standard'
@@ -180,6 +182,24 @@ export default function SettingsPage() {
             disabled={!soundEnabled}
             onChange={(e) => setVolume(Number(e.target.value))}
             className="w-full accent-primary disabled:opacity-40"
+          />
+        </div>
+
+        {/* Celebratory spoken voice (free Web Speech API) */}
+        <div className="flex items-center justify-between">
+          <div className="space-y-0.5">
+            <Label htmlFor="voice-enabled" className="font-medium">
+              קול חגיגי
+            </Label>
+            <p className="text-xs text-muted-foreground">
+              הקראה קולית של הישגים בעברית (אם הדפדפן תומך)
+            </p>
+          </div>
+          <Switch
+            id="voice-enabled"
+            checked={voiceEnabled}
+            disabled={!soundEnabled}
+            onCheckedChange={() => { playClick(); toggleVoice() }}
           />
         </div>
       </div>

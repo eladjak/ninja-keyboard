@@ -17,6 +17,8 @@ interface SettingsState {
   soundEnabled: boolean
   /** Sound volume, 0-1 */
   soundVolume: number
+  /** Whether celebratory spoken voice (Web Speech API) is enabled */
+  voiceEnabled: boolean
   /** Show the finger guide diagram during lessons */
   showFingerGuide: boolean
   /** Show color zones on the visual keyboard */
@@ -45,6 +47,8 @@ interface SettingsState {
   equipTitle: (itemId: string) => void
   /** Toggle sound on/off */
   toggleSound: () => void
+  /** Toggle celebratory spoken voice on/off */
+  toggleVoice: () => void
   /** Set volume */
   setVolume: (volume: number) => void
   /** Toggle finger guide */
@@ -66,6 +70,7 @@ export const useSettingsStore = create<SettingsState>()(
     (set) => ({
       soundEnabled: true,
       soundVolume: 0.7,
+      voiceEnabled: true,
       showFingerGuide: true,
       showKeyboardColors: true,
       keyboardLayout: 'standard' as KeyboardLayout,
@@ -97,6 +102,8 @@ export const useSettingsStore = create<SettingsState>()(
       equipTitle: (itemId) => set({ equippedTitle: itemId }),
 
       toggleSound: () => set((s) => ({ soundEnabled: !s.soundEnabled })),
+
+      toggleVoice: () => set((s) => ({ voiceEnabled: !s.voiceEnabled })),
 
       setVolume: (volume) =>
         set({ soundVolume: Math.max(0, Math.min(1, volume)) }),

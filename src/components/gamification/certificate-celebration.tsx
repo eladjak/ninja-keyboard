@@ -10,6 +10,8 @@ import {
   detectNewCertificate,
 } from '@/lib/gamification/certificate'
 import { soundManager } from '@/lib/audio/sound-manager'
+import { useSpeech } from '@/hooks/use-speech'
+import { useSettingsStore } from '@/stores/settings-store'
 import { useXpStore } from '@/stores/xp-store'
 import { usePracticeHistoryStore } from '@/stores/practice-history-store'
 import { useCertificateCelebrationStore } from '@/stores/certificate-celebration-store'
@@ -28,6 +30,8 @@ export function CertificateCelebration() {
     (s) => s.celebratedLevels,
   )
   const markCelebrated = useCertificateCelebrationStore((s) => s.markCelebrated)
+  const playerName = useSettingsStore((s) => s.playerName)
+  const { speak, cancel } = useSpeech()
 
   const [active, setActive] = useState<Certificate | null>(null)
   // Guard so we don't fire on the very first hydration render before stores
@@ -55,12 +59,22 @@ export function CertificateCelebration() {
     setActive(fresh)
     markCelebrated(fresh.level)
     soundManager.playLevelComplete()
+
+    // Celebratory spoken Hebrew line (free Web Speech API). No-ops silently
+    // when voice is off, sound is muted, reduced-motion is on, or no Hebrew
+    // voice exists in this browser.
+    const greeting = playerName.trim()
+      ? `כל הכבוד ${playerName.trim()}! השגת ${fresh.titleHe}!`
+      : `כל הכבוד! השגת ${fresh.titleHe}!`
+    speak(greeting)
   }, [
     completedLessons,
     celebratedLevels,
     getBestWpm,
     getBestAccuracy,
     markCelebrated,
+    playerName,
+    speak,
   ])
 
   // Once we've run at least one effect, subsequent earns are "new".
@@ -103,7 +117,10 @@ export function CertificateCelebration() {
             dir="rtl"
           >
             <button
-              onClick={() => setActive(null)}
+              onClick={() => {
+                cancel()
+                setActive(null)
+              }}
               className="absolute end-3 top-3 flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               aria-label="סגור"
             >
