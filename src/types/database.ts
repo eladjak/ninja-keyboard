@@ -303,7 +303,19 @@ export interface Database {
       }
     }
     Views: Record<string, never>
-    Functions: Record<string, never>
+    Functions: {
+      get_leaderboard: {
+        Args: { p_limit?: number }
+        Returns: {
+          id: string
+          name: string
+          avatar_id: string
+          xp: number
+          level: number
+          streak: number
+        }[]
+      }
+    }
     Enums: Record<string, never>
     CompositeTypes: Record<string, never>
   }
