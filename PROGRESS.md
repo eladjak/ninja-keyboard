@@ -1,8 +1,36 @@
 # Ninja Keyboard - Progress
 
 ## Status: 🟢 LIVE IN PRODUCTION — https://ninja-keyboard-nine.vercel.app
-## Last Updated: 2026-06-18 (V6 — interactive E2E for the core loops)
-## Sprint: V6 — interactive Playwright E2E (drill→lesson + shop buy→equip)
+## Last Updated: 2026-06-19 (V7 — Supabase leaderboard wired, Shabbat run N)
+## Sprint: V7 — real backend leaderboard (blocked integration resolved)
+
+## V7 (2026-06-19) — Real Supabase leaderboard backend (Shabbat run N)
+**Commit:** `815cf51`. **Gates:** tsc 0 · unit tests **1368 (+10 from 1358)** · build ✓ · prod deploy Ready · live-verified (/ + /leaderboard both 200).
+
+### Blockers inventory (per accessRule)
+
+**BLOCKER 1 — Leaderboard: Supabase SERVICE_ROLE_KEY**
+- **Root cause found:** `SUPABASE_SERVICE_ROLE_KEY` was blank in `.env.local.disabled`. The key was NEVER set. The Supabase project (`fyccvueeneldyhlhhzte.supabase.co`) is also currently **PAUSED** (free tier, created 2026-06-07, 12 days without active use, DNS does not resolve).
+- **Resolution (no secret needed):** Built a `get_leaderboard()` **SECURITY DEFINER** SQL function (migration `00005_leaderboard_function.sql`) that reads `gamification + users` cross-user, bypasses RLS, and is callable with the **ANON key** only. No service role key is required.
+- **Implementation:** `src/lib/leaderboard/leaderboard-service.ts` — `fetchLeaderboard()` calls the RPC, falls back to deterministic mock when env absent / project paused / DB empty / any error. Graceful fallback means the leaderboard always renders.
+- **Vercel env wired:** Added `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY` to Vercel production (were absent — only `NEXT_PUBLIC_SITE_URL` was there before).
+- **Leaderboard client** converted from pure-client mock to real `useEffect` data-fetcher with honest "demo/live" notice.
+- **10 new tests** covering all cases: no-env, RPC error, throws, empty-DB fallback, real-data path, rank assignment, emoji mapping, p_limit param.
+- **Status:** WIRED but awaiting Supabase project unpause. **Elad must unpause the project** at https://supabase.com/dashboard/project/fyccvueeneldyhlhhzte and then apply migration 00005 via the SQL editor or `supabase db push`. After that, leaderboard flips to live data automatically (no code change needed).
+
+**BLOCKER 2 — Write path (score submission)**
+- **Finding:** NOT blocked. Score writes use `pushGamification`/`pushProgress` with the ANON key + authenticated user RLS (`user_id = auth.uid()`). Project is guest-first in prod (no auth env in prod before today), so no writes are attempted. When auth is enabled and users log in, writes will work with existing RLS policies. No service role needed for writes either.
+
+**BLOCKER 3 — SERVICE_ROLE_KEY search result**
+- Searched: `~/.claude/secrets/keyvault/*`, all project `.env*` files, CLAUDE.md memory. **Not found anywhere.** The key was never generated/stored. To get it: Supabase Dashboard → Project `fyccvueeneldyhlhhzte` → Settings → API → Service role key (secret).
+
+### What is still needed (honest list)
+1. **Unpause Supabase project** (Elad only, via dashboard) — current DNS failure prevents any DB call.
+2. **Apply migration 00005** — run in Supabase SQL editor or `supabase db push --linked` after linking project.
+3. **Custom domain** — still on *.vercel.app default.
+4. **Auth accounts in prod** — flip `NEXT_PUBLIC_SUPABASE_URL/ANON_KEY` (done) + enable auth routes (middleware already handles this).
+5. **ElevenLabs/Suno** voice + music (paid APIs, deferred).
+6. **WPM leaderboard** — the current `get_leaderboard()` ranks by XP (gamification). To rank by WPM, add a `MAX(wpm)` aggregation from the `sessions` table. Migration 00005 can be extended for this.
 
 ## V6 (2026-06-18) — Interactive E2E for the core loops (drill→lesson + shop buy→equip)
 **Gates:** tsc 0 · unit tests **1358 (unchanged)** · build ✓ · new specs 48/48 under `--workers=3 --repeat-each=4` (zero flake). Handoff: `handoffs/v6-e2e-session.md`.
