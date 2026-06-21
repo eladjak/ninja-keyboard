@@ -1,8 +1,22 @@
 # Ninja Keyboard - Progress
 
-## Status: 🟡 LIVE · Supabase RESTORED (Elad, Jun 21) · DB awake · Migration 00005 NOT applied yet
-## Last Updated: 2026-06-21 (DB restore verified + .env.local activated)
-## Sprint: V7 — real backend leaderboard (one step left: apply migration 00005)
+## Status: 🟢 LIVE · Supabase RESTORED · Migration 00005 APPLIED (RPC live) · Guest /home regression FIXED
+## Last Updated: 2026-06-21 (guest-access regression fix + 00005 re-verified live)
+## Sprint: V7 — real backend leaderboard
+
+## 2026-06-21 (PM) — "app fairly broken" diagnosis + fix
+**Reported:** Supabase connected/"connected", but the app itself "fairly broken."
+
+**Root cause found (the real breakage):** activating `.env.local` (so `NEXT_PUBLIC_SUPABASE_URL`/`ANON_KEY` are now present) flipped the middleware from "skip auth (guest-first)" into "enforce auth on PROTECTED_ROUTES." `/home` was in that list — but `/home` is the guest-first hub and the landing page's PRIMARY CTA ("מתחילים לשחק — חינם / בלי הרשמה"). So every guest who clicked Start got bounced to `/login`, with no accounts existing → the app's #1 button was dead, contradicting the advertised no-registration flow.
+- **Fix (`fix/guest-home-access`, commit 49694c7):** removed `/home` from `PROTECTED_ROUTES` in `src/middleware.ts`. `/home` is entirely localStorage-driven (xp/badge/practice-history stores) — zero Supabase/account data, fully guest-safe. `/progress`,`/profile`,`/settings` stay gated.
+- **Verified:** tsc 0 · 1368/1368 unit tests · `next build` ✓ · live dev guest `/home` → **200** (was 307→/login); `/progress`,`/profile`,`/settings` still 307→/login.
+
+**Migration 00005 — CORRECTION (was reported "NOT applied"):** re-probed the live RPC today:
+`POST /rest/v1/rpc/get_leaderboard {"p_limit":5}` with the anon key → **HTTP 200 `[]`** (NOT the old 404/PGRST202). The function EXISTS and is callable — **00005 IS applied**. The empty array is just "no real users yet," so the leaderboard correctly shows mock data (by design, `leaderboard-service.ts` falls back to mock on empty). No SQL-editor step remains for the leaderboard backend.
+
+**Remaining (manual, optional — none block the app):**
+- To see REAL leaderboard rows instead of mock: real users must sign up + earn XP (the `users`/`gamification` tables are currently empty). No code/SQL change needed.
+- Auth accounts in prod, custom domain, ElevenLabs/Suno voice+music — all still deferred (paid / product decisions), none are "broken."
 
 ## 2026-06-21 — DB restore verification + .env.local activation
 **Evidence:**
