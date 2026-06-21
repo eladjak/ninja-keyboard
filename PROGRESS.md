@@ -1,8 +1,24 @@
 # Ninja Keyboard - Progress
 
-## Status: 🟢 LIVE IN PRODUCTION — https://ninja-keyboard-nine.vercel.app
-## Last Updated: 2026-06-19 (V7 — Supabase leaderboard wired, Shabbat run N)
-## Sprint: V7 — real backend leaderboard (blocked integration resolved)
+## Status: 🟡 LIVE · Supabase RESTORED (Elad, Jun 21) · DB awake · Migration 00005 NOT applied yet
+## Last Updated: 2026-06-21 (DB restore verified + .env.local activated)
+## Sprint: V7 — real backend leaderboard (one step left: apply migration 00005)
+
+## 2026-06-21 — DB restore verification + .env.local activation
+**Evidence:**
+- Elad restored Supabase project `fyccvueeneldyhlhhzte` via dashboard
+- `POST /rest/v1/rpc/get_leaderboard {"p_limit":5}` with anon key → HTTP 404 PGRST202 "function does not exist" → DB is **awake** but migration 00005 is **NOT applied**
+- `.env.local` activated: copied from `.env.local.disabled` (was ignored from git via `.env*` rule, stays ignored)
+- Vercel Production already has `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY` (confirmed via `vercel env ls`)
+- Live `/leaderboard` page: HTTP 200, renders mock data gracefully (no crash; service falls back to mock on PGRST202)
+- Public routes `/lessons` `/shop` `/leaderboard` stay public: middleware only protects `/home` `/progress` `/profile` `/settings`
+
+**One step still blocking real leaderboard data:**
+- Supabase SQL Editor (2 min): paste content of `supabase/migrations/00005_leaderboard_function.sql` → Run
+- URL: https://supabase.com/dashboard/project/fyccvueeneldyhlhhzte/sql/new
+- After that: RPC returns real data, leaderboard flips from mock to live automatically. No code change needed.
+
+**No DB password found anywhere** (searched: all `.env*` in project, `~/.claude/secrets/keyvault/*`, `vercel env pull`, Windows Credential Manager). Only path to apply 00005 is Supabase SQL Editor.
 
 ## V7 (2026-06-19) — Real Supabase leaderboard backend (Shabbat run N)
 **Commit:** `815cf51`. **Gates:** tsc 0 · unit tests **1368 (+10 from 1358)** · build ✓ · prod deploy Ready · live-verified (/ + /leaderboard both 200).
@@ -25,8 +41,8 @@
 - Searched: `~/.claude/secrets/keyvault/*`, all project `.env*` files, CLAUDE.md memory. **Not found anywhere.** The key was never generated/stored. To get it: Supabase Dashboard → Project `fyccvueeneldyhlhhzte` → Settings → API → Service role key (secret).
 
 ### What is still needed (honest list)
-1. **Unpause Supabase project** (Elad only, via dashboard) — current DNS failure prevents any DB call.
-2. **Apply migration 00005** — run in Supabase SQL editor or `supabase db push --linked` after linking project.
+1. ~~**Unpause Supabase project**~~ ✅ DONE (Elad, 2026-06-21 — DB confirmed awake via REST 200)
+2. **Apply migration 00005** — ONE remaining step. Paste `supabase/migrations/00005_leaderboard_function.sql` into https://supabase.com/dashboard/project/fyccvueeneldyhlhhzte/sql/new → Run (2 min). After this, leaderboard shows real data instantly.
 3. **Custom domain** — still on *.vercel.app default.
 4. **Auth accounts in prod** — flip `NEXT_PUBLIC_SUPABASE_URL/ANON_KEY` (done) + enable auth routes (middleware already handles this).
 5. **ElevenLabs/Suno** voice + music (paid APIs, deferred).
