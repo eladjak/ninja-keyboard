@@ -4,7 +4,13 @@ import { createMiddlewareClient } from '@/lib/supabase/middleware'
 // Phase 1 (blueprint A5b): account-only routes. /lessons and /battle are public
 // so guests can play with localStorage-only (low-friction onboarding). Auth is
 // enforced only when Supabase env is present (see the env guard below).
-const PROTECTED_ROUTES = ['/home', '/progress', '/profile', '/settings']
+//
+// /home is the guest-first hub (the landing-page primary CTA "מתחילים לשחק — חינם"
+// points here) and is entirely localStorage-driven — it must stay public, or
+// activating Supabase env (anon key) would bounce every guest to /login, breaking
+// the advertised no-registration flow. Only genuinely account-scoped surfaces
+// (progress/profile/settings) are gated.
+const PROTECTED_ROUTES = ['/progress', '/profile', '/settings']
 const AUTH_ROUTES = ['/login', '/register', '/join']
 
 export async function middleware(request: NextRequest) {
