@@ -29,6 +29,7 @@ import { Button } from '@/components/ui/button'
 import { useXpStore } from '@/stores/xp-store'
 import { useNavigateSound } from '@/hooks/use-sound-effect'
 import { useHydrated } from '@/hooks/use-hydrated'
+import { logout } from '@/lib/auth/actions'
 
 const navGroups = [
   {
@@ -156,7 +157,11 @@ export function Sidebar() {
       {/* Footer */}
       <div className="p-3 pt-0">
         <div className="rounded-lg border border-[var(--game-border)] p-2">
-          <form action="/api/auth/logout" method="POST">
+          {/* Uses the `logout` server action (src/lib/auth/actions.ts).
+              The previous `/api/auth/logout` POST hit a route that does not
+              exist → 404, making this button silently dead. The action also
+              handles the guest / auth-disabled case (redirects to /home). */}
+          <form action={logout}>
             <Button variant="ghost" size="sm" className="w-full justify-start gap-2 text-muted-foreground hover:text-destructive" type="submit">
               <LogOut className="size-4" />
               <span className="text-sm">התנתק</span>
