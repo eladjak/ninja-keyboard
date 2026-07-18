@@ -27,12 +27,14 @@ export default function WordRainPage() {
   const [state, setState] = useState<WordRainState>(createWordRainState('easy'))
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>('easy')
   const { soundEnabled, soundVolume } = useSettingsStore()
-  const xpStore = useXpStore()
 
   const inputRef = useRef<HTMLInputElement>(null)
   const tickRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const spawnRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const elapsedRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  // Guards the one-shot XP award so it can never fire twice for the same
+  // game-over (StrictMode double-invoke / re-render safety).
+  const rewardedRef = useRef(false)
 
   useEffect(() => {
     soundManager.setEnabled(soundEnabled)
@@ -50,6 +52,7 @@ export default function WordRainPage() {
 
   const startGame = useCallback(() => {
     clearAllTimers()
+    rewardedRef.current = false
     const initial = { ...createWordRainState(selectedDifficulty), phase: 'playing' as const }
     setState(initial)
 
@@ -73,17 +76,24 @@ export default function WordRainPage() {
     setTimeout(() => inputRef.current?.focus(), 100)
   }, [selectedDifficulty, clearAllTimers])
 
-  // Stop timers on gameover
+  // Stop timers and award XP once on gameover.
+  // NOTE: uses the non-reactive store handle (useXpStore.getState()) and a
+  // one-shot ref guard. Depending on the reactive `xpStore` object here caused
+  // an infinite update loop: addXp() → store returns a new object → effect dep
+  // changes → effect re-runs → addXp() … ("Maximum update depth exceeded",
+  // which also inflated XP). getState() is stable and never re-triggers.
   useEffect(() => {
-    if (state.phase === 'gameover') {
+    if (state.phase === 'gameover' && !rewardedRef.current) {
+      rewardedRef.current = true
       clearAllTimers()
       const finalScore = calculateFinalScore(state)
       const xp = getXpReward(finalScore.totalScore)
+      const xpStore = useXpStore.getState()
       xpStore.addXp(xp)
       xpStore.updateStreak()
       soundManager.playLevelComplete()
     }
-  }, [state.phase, clearAllTimers, xpStore]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [state.phase, clearAllTimers]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
@@ -178,11 +188,19 @@ export default function WordRainPage() {
             </div>
           </div>
 
-          {/* Game area */}
+          {/* Game area — themed "night sky" so it matches the dark app chrome.
+              Uses the --game-bg tokens (not `dark:` utilities, which only apply
+              in the explicit dark colorScheme, whereas the default scheme is
+              already a dark palette). A subtle top-to-bottom gradient reads as a
+              rain-sky while staying on-brand. */}
           <div
-            className="relative h-80 overflow-hidden rounded-lg border bg-gradient-to-b from-sky-50 to-sky-100 dark:from-sky-950/30 dark:to-sky-900/30 sm:h-96"
+            className="relative h-80 overflow-hidden rounded-lg border sm:h-96"
             aria-label="אזור משחק"
-            style={{ borderColor: 'var(--game-border)' }}
+            style={{
+              borderColor: 'var(--game-border)',
+              backgroundImage:
+                'linear-gradient(to bottom, var(--game-bg-elevated), var(--game-bg-secondary))',
+            }}
           >
             <AnimatePresence>
               {state.words.map((word) => (

@@ -25,11 +25,12 @@ const CHECK_DELAY = 800
 export default function LetterMemoryPage() {
   const [state, setState] = useState<LetterMemoryState>(createLetterMemoryState('easy'))
   const [selectedDifficulty, setSelectedDifficulty] = useState<MemoryDifficulty>('easy')
-  const xpStore = useXpStore()
 
   const inputRef = useRef<HTMLInputElement>(null)
   const elapsedRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const checkTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  // Guards the one-shot XP award so it can never fire twice for the same win.
+  const rewardedRef = useRef(false)
 
   const clearTimers = useCallback(() => {
     if (elapsedRef.current !== null) {
@@ -46,6 +47,7 @@ export default function LetterMemoryPage() {
 
   const startGame = useCallback(() => {
     clearTimers()
+    rewardedRef.current = false
     const initial: LetterMemoryState = {
       ...createLetterMemoryState(selectedDifficulty),
       phase: 'playing',
@@ -68,16 +70,22 @@ export default function LetterMemoryPage() {
     }
   }, [state.phase])
 
-  // When game completes, stop timers and award XP
+  // When game completes, stop timers and award XP once.
+  // Uses the non-reactive store handle + a one-shot ref guard. Depending on the
+  // reactive `xpStore` object caused an infinite update loop (addXp → new store
+  // object → dep change → re-run), i.e. "Maximum update depth exceeded" which
+  // also inflated XP. getState() is stable and never re-triggers the effect.
   useEffect(() => {
-    if (state.phase === 'complete') {
+    if (state.phase === 'complete' && !rewardedRef.current) {
+      rewardedRef.current = true
       clearTimers()
       const final = calculateFinalScore(state)
       const xp = getXpReward(final.totalScore)
+      const xpStore = useXpStore.getState()
       xpStore.addXp(xp)
       xpStore.updateStreak()
     }
-  }, [state.phase, clearTimers, xpStore]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [state.phase, clearTimers]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value

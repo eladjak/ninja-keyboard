@@ -38,7 +38,6 @@ export default function NinjaSlicePage() {
   const [state, setState] = useState<NinjaSliceState>(createNinjaSliceState('easy'))
   const [selectedDifficulty, setSelectedDifficulty] = useState<SliceDifficulty>('easy')
   const [sliceEffect, setSliceEffect] = useState<string | null>(null)
-  const xpStore = useXpStore()
   const { soundEnabled, soundVolume } = useSettingsStore()
 
   useEffect(() => {
@@ -50,6 +49,8 @@ export default function NinjaSlicePage() {
   const tickRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const spawnRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const elapsedRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  // Guards the one-shot XP award so it can never fire twice for the same game-over.
+  const rewardedRef = useRef(false)
 
   const clearAllTimers = useCallback(() => {
     if (tickRef.current !== null)   { clearInterval(tickRef.current);   tickRef.current   = null }
@@ -62,6 +63,7 @@ export default function NinjaSlicePage() {
 
   const startGame = useCallback(() => {
     clearAllTimers()
+    rewardedRef.current = false
     const initial: NinjaSliceState = { ...createNinjaSliceState(selectedDifficulty), phase: 'playing' }
     setState(initial)
 
@@ -85,17 +87,23 @@ export default function NinjaSlicePage() {
     setTimeout(() => inputRef.current?.focus(), 100)
   }, [selectedDifficulty, clearAllTimers])
 
-  // Stop timers and award XP on gameover
+  // Stop timers and award XP once on gameover.
+  // Uses the non-reactive store handle + a one-shot ref guard. Depending on the
+  // reactive `xpStore` object caused an infinite update loop (addXp → new store
+  // object → dep change → re-run), i.e. "Maximum update depth exceeded" which
+  // also inflated XP. getState() is stable and never re-triggers the effect.
   useEffect(() => {
-    if (state.phase === 'gameover') {
+    if (state.phase === 'gameover' && !rewardedRef.current) {
+      rewardedRef.current = true
       clearAllTimers()
       const finalScore = calculateFinalScore(state)
       const xp = getXpReward(finalScore.totalScore)
+      const xpStore = useXpStore.getState()
       xpStore.addXp(xp)
       xpStore.updateStreak()
       soundManager.playLevelComplete()
     }
-  }, [state.phase, clearAllTimers, xpStore]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [state.phase, clearAllTimers]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
