@@ -25,6 +25,15 @@ interface KeyProps {
   width?: number
   /** Finger zone colour (CSS colour value from FINGER_COLORS) */
   fingerColor: string
+  /**
+   * When provided, the key becomes REAL touch/click input: tapping it feeds
+   * `(char, code)` into the same typing pipeline a physical keystroke uses.
+   * When omitted, the key stays a purely-visual indicator (legacy behaviour).
+   */
+  onInput?: (char: string, code: string) => void
+  /** Physical key code (e.g. 'KeyA') — sent with `onInput` so the engine's
+   *  per-key/finger stats treat taps identically to physical presses. */
+  code?: string
 }
 
 export function Key({
@@ -37,7 +46,31 @@ export function Key({
   hand: _hand,
   width = 1,
   fingerColor,
+  onInput,
+  code,
 }: KeyProps) {
+  const interactive = typeof onInput === 'function'
+
+  // Fire input on pointer-DOWN (not click) so the key responds the instant a
+  // finger lands — matching the immediacy of a physical keydown and feeling
+  // snappy for kids. `preventDefault` stops the synthetic 300ms click / focus
+  // shuffle and, crucially, keeps focus off the button so a paired hidden
+  // input (mobile) or the window keydown path is never stolen mid-lesson.
+  function handlePointerDown(e: React.PointerEvent<HTMLButtonElement>) {
+    if (!interactive) return
+    e.preventDefault()
+    onInput?.(char, code ?? '')
+  }
+
+  // Keyboard activation (Enter/Space) for users navigating the on-screen keys
+  // with a real keyboard / switch device. Space would otherwise scroll.
+  function handleKeyDown(e: React.KeyboardEvent<HTMLButtonElement>) {
+    if (!interactive) return
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      onInput?.(char, code ?? '')
+    }
+  }
   // Flash colour: green for correct, red for incorrect
   const flashColor =
     isCorrect === true
@@ -71,22 +104,40 @@ export function Key({
   return (
     <motion.button
       type="button"
-      aria-label={`מקש ${char}`}
+      // A non-interactive visual key stays out of the tab order and is hidden
+      // from AT (the parent keyboard is labelled as a whole). An interactive
+      // key is a real, focusable, labelled button.
+      aria-label={interactive ? `הקש ${char === ' ' ? 'רווח' : char}` : `מקש ${char}`}
       aria-pressed={isPressed}
-      // Width: each unit ≈ 2.5rem (min-w-10 = 2.5rem)
+      aria-hidden={interactive ? undefined : true}
+      tabIndex={interactive ? undefined : -1}
+      disabled={!interactive}
+      onPointerDown={handlePointerDown}
+      onKeyDown={handleKeyDown}
+      // Prevent the button from grabbing focus on tap (keeps the typing input /
+      // window keydown path alive) while still allowing keyboard focus via Tab.
+      onMouseDown={(e) => interactive && e.preventDefault()}
+      // Width: each unit ≈ 2.5rem (min-w-10 = 2.5rem). Interactive keys get a
+      // ≥44px tap target (min-h-11) per WCAG 2.5.5 for touch.
       style={{
         minWidth: `${width * 2.5}rem`,
         backgroundColor: flashColor ?? (isActive ? fingerColor : undefined),
         transition: 'background-color 80ms ease',
+        touchAction: 'manipulation',
       }}
       // Depress animation — scale only (transform), ≤ 100ms
       animate={{ scale: isPressed ? 0.93 : 1 }}
       transition={{ duration: 0.08, ease: 'easeOut' }}
       className={cn(
         // Base shape
-        'relative h-10 rounded-lg flex items-center justify-center',
-        'select-none cursor-default focus-visible:outline-none',
+        'relative rounded-lg flex items-center justify-center',
+        'select-none focus-visible:outline-none',
         'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1',
+        // Interactive keys are larger (≥44px) tap targets and clickable;
+        // visual-only keys keep the compact 40px height + default cursor.
+        interactive
+          ? 'h-11 min-h-11 cursor-pointer active:brightness-95'
+          : 'h-10 cursor-default',
         // Shadow gives a physical key feel
         'shadow-sm border border-border',
         // Default background (overridden via style when active/flashing)

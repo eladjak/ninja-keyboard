@@ -20,6 +20,13 @@ interface HebrewKeyboardProps {
   lastCorrect?: boolean | null
   /** Show finger-zone colour coding (default true) */
   showFingerColors?: boolean
+  /**
+   * When provided, EVERY key becomes real touch/click input: tapping a key
+   * feeds `(char, code)` into the same handler physical keystrokes use. This
+   * is what makes the game playable for touch-only kids (tablet/Chromebook).
+   * When omitted, the keyboard stays a purely-visual highlight indicator.
+   */
+  onKeyInput?: (char: string, code: string) => void
   /** Optional extra class names */
   className?: string
 }
@@ -36,8 +43,11 @@ export function HebrewKeyboard({
   pressedKey,
   lastCorrect = null,
   showFingerColors = true,
+  onKeyInput,
   className,
 }: HebrewKeyboardProps) {
+  const interactive = typeof onKeyInput === 'function'
+
   /** Render a single KeyDefinition as a <Key /> */
   function renderKey(keyDef: KeyDefinition) {
     const colorKey = `${keyDef.hand}-${keyDef.finger}` as const
@@ -56,6 +66,7 @@ export function HebrewKeyboard({
       <Key
         key={keyDef.code}
         char={keyDef.char}
+        code={keyDef.code}
         enLabel={keyDef.enLabel}
         isActive={isActive}
         isPressed={isPressed}
@@ -64,6 +75,7 @@ export function HebrewKeyboard({
         hand={keyDef.hand}
         width={keyDef.width ?? 1}
         fingerColor={fingerColor}
+        onInput={onKeyInput}
       />
     )
   }
@@ -102,6 +114,7 @@ export function HebrewKeyboard({
       <div key="space" className="flex flex-row justify-center gap-1">
         <Key
           char={SPACE_KEY.char}
+          code={SPACE_KEY.code}
           enLabel={SPACE_KEY.enLabel}
           isActive={isActive}
           isPressed={isPressed}
@@ -110,6 +123,7 @@ export function HebrewKeyboard({
           hand={SPACE_KEY.hand}
           width={SPACE_KEY.width ?? 6}
           fingerColor={fingerColor}
+          onInput={onKeyInput}
         />
       </div>
     )
@@ -123,8 +137,10 @@ export function HebrewKeyboard({
         'select-none',
         className,
       )}
-      role="img"
-      aria-label="מקלדת עברית ויזואלית"
+      // Interactive: a group of real buttons the child can tap to type.
+      // Visual-only: a decorative image of the keyboard layout.
+      role={interactive ? 'group' : 'img'}
+      aria-label={interactive ? 'מקלדת עברית — הקישו על המקשים כדי להקליד' : 'מקלדת עברית ויזואלית'}
     >
       {renderRow(TOP_ROW, 'top')}
       {renderRow(HOME_ROW, 'home')}
