@@ -224,6 +224,21 @@ describe('syncPendingResults', () => {
 
     vi.restoreAllMocks()
   })
+
+  it('does not lose a new result added while a flush is in progress', async () => {
+    vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(true)
+    savePendingResult('lesson-01', makeStats())
+
+    await syncPendingResults(async () => {
+      savePendingResult('lesson-02', makeStats())
+    })
+
+    const remaining = getPendingResults()
+    expect(remaining).toHaveLength(1)
+    expect(remaining[0].lessonId).toBe('lesson-02')
+
+    vi.restoreAllMocks()
+  })
 })
 
 // ── clearCache ──────────────────────────────────────────────────────────────

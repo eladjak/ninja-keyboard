@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { fireAndForget } from '@/lib/sync/debounce'
-import { pushSession } from '@/lib/sync/progress-sync'
+import { pushSessionOrQueue } from '@/lib/offline/session-sync'
 
 /** A single practice session result */
 export interface PracticeResult {
@@ -61,12 +61,14 @@ export const usePracticeHistoryStore = create<PracticeHistoryState>()(
         set((s) => {
           // Write-through: sessions are append-only -> insert (no debounce).
           fireAndForget(
-            pushSession({
-              lessonId: result.textId,
+            pushSessionOrQueue(result.textId, {
               wpm: result.wpm,
               accuracy: result.accuracy,
-              durationSeconds: Math.round(result.durationMs / 1000),
-              keyStats: result.keyAccuracy,
+              durationMs: result.durationMs,
+              totalKeystrokes: result.totalKeystrokes,
+              correctKeystrokes: result.correctKeystrokes,
+              errorKeystrokes: result.totalKeystrokes - result.correctKeystrokes,
+              keyAccuracy: result.keyAccuracy,
             }),
           )
           return {

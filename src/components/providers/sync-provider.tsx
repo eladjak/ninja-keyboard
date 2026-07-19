@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { setSyncUser } from '@/lib/sync/sync-user'
@@ -14,6 +14,8 @@ import { useXpStore } from '@/stores/xp-store'
 import { useBadgeStore } from '@/stores/badge-store'
 import { useStoryStore } from '@/stores/story-store'
 import { useDailyChallengeStore } from '@/stores/daily-challenge-store'
+import { flushPendingSessionResults } from '@/lib/offline/session-sync'
+import { OfflineIndicator } from '@/components/offline/offline-indicator'
 
 /** Read the current local (guest cache) state from the v1 stores. */
 function readLocalSnapshot(): ProgressSnapshot {
@@ -82,6 +84,16 @@ function applySnapshot(s: ProgressSnapshot): void {
 export function SyncProvider({ children }: { children: React.ReactNode }) {
   const { user, status } = useCurrentUser()
   const mergedForUser = useRef<string | null>(null)
+  const [isSyncingSessions, setIsSyncingSessions] = useState(false)
+
+  const flushSessions = useCallback(async () => {
+    setIsSyncingSessions(true)
+    try {
+      await flushPendingSessionResults()
+    } finally {
+      setIsSyncingSessions(false)
+    }
+  }, [])
 
   useEffect(() => {
     setSyncUser(user?.id ?? null)
@@ -96,7 +108,6 @@ export function SyncProvider({ children }: { children: React.ReactNode }) {
       const result = await hydrateFromSupabase(user.id)
       if (cancelled || result.isErr()) {
         if (result.isErr()) {
-          // eslint-disable-next-line no-console
           console.warn('[sync] hydrate failed', result.error)
         }
         return
@@ -136,5 +147,36 @@ export function SyncProvider({ children }: { children: React.ReactNode }) {
     }
   }, [user, status])
 
-  return <>{children}</>
+  useEffect(() => {
+    function handleOnline(): void {
+      if (status !== 'authenticated' || !user) return
+
+      void (async () => {
+        await flushSessions()
+
+        // Store mutations stay authoritative in localStorage while offline.
+        // Re-push the merged snapshot so lesson progress/XP joins the queued
+        // append-only sessions after connectivity returns.
+        const result = await pushSnapshot(readLocalSnapshot())
+        if (result.isErr()) {
+          console.warn('[sync] reconnect snapshot push failed', result.error)
+        }
+      })()
+    }
+
+    window.addEventListener('online', handleOnline)
+    if (status === 'authenticated' && user) void flushSessions()
+
+    return () => window.removeEventListener('online', handleOnline)
+  }, [flushSessions, status, user])
+
+  return (
+    <>
+      {children}
+      <OfflineIndicator
+        isSyncing={isSyncingSessions}
+        className="fixed start-4 end-4 top-4 z-[100] mx-auto max-w-md"
+      />
+    </>
+  )
 }

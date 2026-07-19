@@ -12,6 +12,24 @@ export const metadata: Metadata = {
   description:
     'אפליקציית לימוד הקלדה בעברית לילדים ונוער. למדו להקליד מהר ובדיוק עם משחקים, אתגרים ותרגולים מותאמים אישית.',
   manifest: '/manifest.json',
+  icons: {
+    icon: [
+      { url: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      {
+        url: '/icons/apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+    ],
+  },
+  appleWebApp: {
+    capable: true,
+    title: "נינג'ה מקלדת",
+    statusBarStyle: 'black-translucent',
+  },
 }
 
 export const viewport: Viewport = {

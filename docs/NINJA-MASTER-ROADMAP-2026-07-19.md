@@ -101,7 +101,7 @@ Legend: 🟢 built & real · 🟡 partial/needs wiring · 🟠 stub/mock · 🔴
 | **Curriculum pillars 3–6** (Windows/files, computer literacy, mouseless, multimodal) | 🔴 | **Not graded curriculum.** Only touch-typing + a standalone `/shortcuts` practice page exist. These 4 are the *market differentiator* and are the largest scope gap |
 | **Windows simulator** (desktop/file-explorer DOM sandbox) | 🔴 | Spec §6.4; not built |
 | **Keyboard-shortcuts as GRADED lessons** | 🟡 | Content lib exists (`keyboard-shortcuts.ts`) + `/shortcuts` page; not promoted into the XP/badge graded track |
-| **PWA / offline** | 🟡 | `src/lib/offline` exists; service-worker strategy unconfirmed/incomplete |
+| **PWA / offline** | 🟢 | Installable manifest + revisioned SW; core lessons/mini-games browser-verified offline; queued session sync on reconnect |
 | **3D Ki character** | 🟠 | `/3d-poc` uncommitted stub waiting on a GLB model; lowest priority |
 | ~~83 dead `dark:` utilities~~ | ❌ INVALID (Codex-verified 19.7) | The audit was WRONG: globals.css defines `@custom-variant dark (&:is(.dark *))` + ThemeProvider toggles `.dark` on `<html>`, so `dark:` **IS functional** — NOT dead. Do not remove. |
 | **Tests / CI** | 🟢 | **1368+ unit tests, 96 test files**, e2e (Playwright) green, CI 4/4 jobs green. *(The June state doc's "only 5 test files" claim was wrong/outdated — coverage is a strength, not a gap.)* |
@@ -168,9 +168,13 @@ Spec §4.3 + §6.4: a browser-only desktop/file-explorer sandbox with graded "mi
 Batch-run `ninja-keyboard-voice` (ElevenLabs) for the ~9 unvoiced characters and `ninja-keyboard-suno`/`-music` for missing theme songs + jukebox covers. Pipelines exist — this is execution, but paid APIs.
 - **Size:** M (mostly runtime). **Deps:** API keys/budget. **Elad:** 🟡 budget approval + voice-casting sign-off.
 
-**B5. PWA / offline finalize.** 🟡
-Confirm service-worker caching strategy (spec §6.9), offline lessons + mini-games + background-sync of pending sessions.
-- **Size:** M. **Deps:** none. **Elad:** ❌ no.
+**B5. PWA / offline finalize. ✅ DONE — 2026-07-19 (branch `feat/pwa-offline`).**
+- Valid Hebrew/RTL standalone manifest with real 192/512/maskable icons and brand launch colors.
+- Lightweight generated service worker: build-revisioned caches, old-cache cleanup on activate, network-first HTML, cache-first same-origin static assets, and explicit API/auth/Supabase/RSC bypass.
+- Precaches the app shell, all 25 bundled lessons, practice routes, battle, and all 3 mini-games; offline Next links fall back to document navigation so cached pages work without RSC requests.
+- Guest progress remains authoritative in Zustand/localStorage. Authenticated session writes queue in localStorage on offline/network failure and flush on reconnect; the local progress snapshot is then pushed too.
+- Production Playwright verification loaded the lesson list, a typing lesson, a shortcut lesson, and all 3 mini-games with the browser offline. `tsc`, 1,409 unit tests (+12), and `next build` green.
+- **Size:** M. **Deps:** none. **Elad:** ❌ no; optional only if a bespoke app icon/splash should replace the reused Ki hero art.
 
 ### HORIZON C — "Depth, reach & IP" (post-product, months)
 

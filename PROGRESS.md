@@ -1,8 +1,18 @@
 # Ninja Keyboard - Progress
 
-## Status: 🟢 LIVE · Supabase RESTORED · A1 touch keyboard DONE · A3 leaderboard ranking/filter logic READY (00006 pending manual apply)
-## Last Updated: 2026-07-19 (A3: XP/WPM/improvement rankings + age/class filters)
-## Sprint: V7 — real backend leaderboard
+## Status: 🟢 LIVE · Supabase RESTORED · A1 touch keyboard DONE · A3 leaderboard READY · B5 PWA/OFFLINE DONE
+## Last Updated: 2026-07-19 (B5: installable PWA + browser-verified core offline + reconnect sync)
+## Sprint: Horizon B — PWA/offline finalization
+
+## 2026-07-19 — Horizon B / B5: installable PWA + core offline ✅ (branch `feat/pwa-offline`)
+
+- **Found before the change:** `public/manifest.json` existed but referenced a missing `public/icons/` directory; metadata/theme color existed; there was no service worker or registration. `src/lib/offline/sync-manager.ts`, `OfflineIndicator`, and `useOnlineStatus` existed with tests but were not connected to the app. Lessons and all 3 mini-games were already bundle/localStorage-driven with no API content dependency.
+- **Manifest/icons:** completed Hebrew/RTL standalone metadata (`id`, `/home?source=pwa`, scope, brand `#6C5CE7` theme/background), added Apple metadata, and generated real 192/512/maskable/180 icons by reusing the existing square Ki hero art.
+- **Caching:** added a dependency-free SW generated in `prebuild`/`predev`. Its revision derives from the commit + relevant working tree, so each deploy gets new shell/static cache names; activate deletes old Ninja PWA caches. Core HTML is network-first (4s fallback), same-origin static assets are cache-first, and API/auth/Supabase/sensitive-header/RSC traffic is never cached. The install pass precaches all 25 lessons, practice/speed/drill, battle, and all 3 mini-games plus discovered Next chunks, core art, icons, and SFX.
+- **Offline runtime:** production-only registration with `updateViaCache:'none'`; offline core links force a full document navigation so Next RSC failure cannot block cached routes. Fixed the existing `useOnlineStatus` first-render mismatch exposed by true offline boot. The global RTL indicator now respects reduced motion and reports queued results.
+- **Persistence/sync:** guest play remains local-only and authoritative in Zustand/localStorage. For an authenticated user, append-only session writes queue in localStorage while offline or after a failed network write, flush on `online`, preserve concurrently-added entries, and then push the current local progress snapshot.
+- **Verified:** `bunx tsc --noEmit` ✅ · Vitest **1409/1409** (+12 from 1397: 6 manifest/SW safety, 5 session queue/flush, 1 concurrent-queue regression) ✅ · `next build` ✅. Playwright against `next start` confirmed `/sw.js` active, revisioned shell/static caches, no API/Supabase cache entries, and successful offline loads for `/lessons`, typing + shortcut lessons, and all 3 mini-games. No push/deploy.
+- **Elad:** nothing required. Optional later: commission bespoke app icon/splash art; current install icon intentionally reuses the existing Ki hero.
 
 ## 2026-07-19 — Horizon A / A3: leaderboard ready for real ranking data ✅ (branch `feat/leaderboard-ranking`)
 
