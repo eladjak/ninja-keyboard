@@ -1,10 +1,8 @@
-import { redirect } from 'next/navigation'
 import { OnboardingClient } from './onboarding-client'
 
 /**
- * Onboarding page — server component wrapper.
- * Renders the FirstLessonMagic onboarding experience.
- * On completion, navigates the player to the lessons page.
+ * Guest-first onboarding page. The client guard resumes returning guests at
+ * placement or their recommended lesson after persisted state hydrates.
  */
 export default function OnboardingPage() {
   return <OnboardingClient />

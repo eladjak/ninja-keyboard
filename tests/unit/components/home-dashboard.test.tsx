@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, within } from '../../../tests/utils'
 import { HomeDashboard } from '@/app/(app)/home/home-client'
+import { useThemeStore } from '@/stores/theme-store'
 
 // Mock next/link
 vi.mock('next/link', () => ({
@@ -98,6 +99,9 @@ vi.mock('radix-ui', () => ({
 
 describe('HomeDashboard', () => {
   beforeEach(() => {
+    // The dashboard is only shown AFTER onboarding (new guests are redirected to
+    // /onboarding); mark it done so these tests exercise the dashboard itself.
+    useThemeStore.setState({ onboardingCompleted: true })
     // Reset to default new-user state
     mockXpStore.totalXp = 0
     mockXpStore.level = 1

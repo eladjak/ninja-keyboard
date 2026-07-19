@@ -58,11 +58,13 @@ type Stage = 'intro' | 'stage1' | 'stage2' | 'stage3' | 'results'
 // ── Component ────────────────────────────────────────────────────
 
 interface PlacementTestProps {
-  /** Called when the test is complete with results */
+  /** Called as soon as the result is calculated, before the results CTA. */
+  onResult?: (result: PlacementResult) => void
+  /** Called when the player accepts the result and continues. */
   onComplete?: (result: PlacementResult) => void
 }
 
-export function PlacementTest({ onComplete }: PlacementTestProps) {
+export function PlacementTest({ onResult, onComplete }: PlacementTestProps) {
   const addXp = useXpStore((s) => s.addXp)
   const { soundEnabled, soundVolume } = useSettingsStore()
 
@@ -192,9 +194,9 @@ export function PlacementTest({ onComplete }: PlacementTestProps) {
       setStage('results')
       soundManager.playLevelComplete()
       addXp(20)
-      onComplete?.(finalResult)
+      onResult?.(finalResult)
     },
-    [clearTimer, keystrokes, stage1Duration, addXp, onComplete],
+    [clearTimer, keystrokes, stage1Duration, addXp, onResult],
   )
 
   // ── Stage 1 keyboard handler ─────────────────────────────────────
