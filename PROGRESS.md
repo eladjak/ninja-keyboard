@@ -1,8 +1,16 @@
 # Ninja Keyboard - Progress
 
-## Status: 🟢 LIVE · Supabase RESTORED · Migration 00005 APPLIED (RPC live) · A1 on-screen touch keyboard DONE (touch-only playable)
-## Last Updated: 2026-07-19 (A1: on-screen keyboard as real touch input — #1 roadmap gap closed)
+## Status: 🟢 LIVE · Supabase RESTORED · A1 touch keyboard DONE · A3 leaderboard ranking/filter logic READY (00006 pending manual apply)
+## Last Updated: 2026-07-19 (A3: XP/WPM/improvement rankings + age/class filters)
 ## Sprint: V7 — real backend leaderboard
+
+## 2026-07-19 — Horizon A / A3: leaderboard ready for real ranking data ✅ (branch `feat/leaderboard-ranking`)
+
+- Preserved the live `get_leaderboard(p_limit)`/empty-result deterministic mock fallback. The service first calls the expanded signature, then retries migration 00005's legacy signature until 00006 is applied.
+- Added pure, immutable XP/WPM/improvement ranking and age-group/class filtering. "אלופי השיפור" ranks by `latest WPM − first WPM`, with `latest accuracy − first accuracy` as the tie-breaker, so raw speed does not determine the winner.
+- Leaderboard UI now switches the podium and table together across XP, WPM, improvement, accuracy, and streak; added Hebrew age and school/class read filters using the existing shadcn/Radix Select.
+- Added `supabase/migrations/00006_leaderboard_rankings_and_filters.sql` — **PENDING MANUAL APPLY / NOT APPLIED**. It extends the same RPC with `MAX(wpm)`, best accuracy, improvement deltas, and age/class filters.
+- Verification: `bunx tsc --noEmit` ✓ · Vitest **1397/1397** (+13) ✓ · `next build` ✓ · `/leaderboard` local HTTP 200. In-app Browser target was unavailable, so no interactive screenshot review was possible in this session. React Doctor changed-scope: 92/100, one pre-existing full-Framer-Motion-import warning.
 
 ## 2026-07-19 — Horizon A / A1: on-screen keyboard as REAL touch input ✅ (branch `feat/onscreen-keyboard`)
 **The #1 roadmap gap is closed.** Before: the visual `HebrewKeyboard` was `role="img"` with non-interactive keys, and the live lesson route only listened to `window` keydown → **a touch-only kid (tablet/Chromebook) literally could not type.**

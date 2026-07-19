@@ -2,7 +2,8 @@
  * Hand-authored Supabase database types for Ninja Keyboard.
  *
  * Mirrors the schema defined in supabase/migrations/00001_initial_schema.sql
- * through 00004_phase1_player_state.sql. These are authored by hand (NOT via
+ * through pending 00006_leaderboard_rankings_and_filters.sql. These are
+ * authored by hand (NOT via
  * `supabase gen types`) because Phase 1 has no live Supabase project yet.
  *
  * When a real project exists, regenerate with:
@@ -305,7 +306,12 @@ export interface Database {
     Views: Record<string, never>
     Functions: {
       get_leaderboard: {
-        Args: { p_limit?: number }
+        Args: {
+          p_limit?: number
+          p_ranking?: string
+          p_age_group?: AgeGroup | null
+          p_class_id?: string | null
+        }
         Returns: {
           id: string
           name: string
@@ -313,6 +319,13 @@ export interface Database {
           xp: number
           level: number
           streak: number
+          best_wpm: number
+          best_accuracy: number
+          wpm_improvement: number
+          accuracy_improvement: number
+          age_group: AgeGroup | null
+          class_id: string | null
+          class_name: string | null
         }[]
       }
     }
