@@ -27,10 +27,15 @@ vi.mock('framer-motion', () => ({
       return <div {...domProps}>{children}</div>
     },
   },
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  AnimatePresence: ({ children }: { children: React.ReactNode }) => (
+    <>{children}</>
+  ),
+  useReducedMotion: () => false,
 }))
 
-function makeEntry(overrides: Partial<LeaderboardEntry> = {}): LeaderboardEntry {
+function makeEntry(
+  overrides: Partial<LeaderboardEntry> = {},
+): LeaderboardEntry {
   return {
     id: 'p1',
     rank: 1,
@@ -38,20 +43,56 @@ function makeEntry(overrides: Partial<LeaderboardEntry> = {}): LeaderboardEntry 
     avatarEmoji: '\u{1F977}',
     wpm: 30,
     accuracy: 90,
+    wpmImprovement: 5,
+    accuracyImprovement: 2,
     level: 5,
     xp: 500,
     streak: 3,
     trend: 'stable',
+    age: 10,
+    ageGroup: 'geza',
+    classId: 'class-a',
+    className: 'כיתה א׳',
     ...overrides,
   }
 }
 
 const mockEntries = assignRanks([
-  makeEntry({ id: 'p1', name: '\u05D3\u05E0\u05D9\u05D0\u05DC', wpm: 50, accuracy: 95, level: 10 }),
-  makeEntry({ id: 'p2', name: '\u05E0\u05D5\u05E2\u05D4', wpm: 40, accuracy: 92, level: 8 }),
-  makeEntry({ id: 'p3', name: '\u05D0\u05D9\u05EA\u05D9', wpm: 30, accuracy: 88, level: 6 }),
-  makeEntry({ id: 'p4', name: '\u05DE\u05D9\u05D4', wpm: 25, accuracy: 85, level: 4 }),
-  makeEntry({ id: 'p5', name: '\u05D9\u05D5\u05D1\u05DC', wpm: 20, accuracy: 80, level: 3 }),
+  makeEntry({
+    id: 'p1',
+    name: '\u05D3\u05E0\u05D9\u05D0\u05DC',
+    wpm: 50,
+    accuracy: 95,
+    level: 10,
+  }),
+  makeEntry({
+    id: 'p2',
+    name: '\u05E0\u05D5\u05E2\u05D4',
+    wpm: 40,
+    accuracy: 92,
+    level: 8,
+  }),
+  makeEntry({
+    id: 'p3',
+    name: '\u05D0\u05D9\u05EA\u05D9',
+    wpm: 30,
+    accuracy: 88,
+    level: 6,
+  }),
+  makeEntry({
+    id: 'p4',
+    name: '\u05DE\u05D9\u05D4',
+    wpm: 25,
+    accuracy: 85,
+    level: 4,
+  }),
+  makeEntry({
+    id: 'p5',
+    name: '\u05D9\u05D5\u05D1\u05DC',
+    wpm: 20,
+    accuracy: 80,
+    level: 3,
+  }),
 ])
 
 // ─── LeaderboardTable ───────────────────────────────────────────
@@ -59,10 +100,18 @@ const mockEntries = assignRanks([
 describe('LeaderboardTable', () => {
   it('renders all table columns', () => {
     render(<LeaderboardTable entries={mockEntries} />)
-    expect(screen.getByText('\u05D3\u05D9\u05E8\u05D5\u05D2')).toBeInTheDocument() // דירוג
+    expect(
+      screen.getByText('\u05D3\u05D9\u05E8\u05D5\u05D2'),
+    ).toBeInTheDocument() // דירוג
     expect(screen.getByText('\u05E9\u05DD')).toBeInTheDocument() // שם
-    expect(screen.getByText('\u05DE\u05D4\u05D9\u05E8\u05D5\u05EA', { selector: 'th' })).toBeInTheDocument() // מהירות
-    expect(screen.getByText('\u05D3\u05D9\u05D5\u05E7', { selector: 'th' })).toBeInTheDocument() // דיוק
+    expect(
+      screen.getByText('\u05DE\u05D4\u05D9\u05E8\u05D5\u05EA', {
+        selector: 'th',
+      }),
+    ).toBeInTheDocument() // מהירות
+    expect(
+      screen.getByText('\u05D3\u05D9\u05D5\u05E7', { selector: 'th' }),
+    ).toBeInTheDocument() // דיוק
     expect(screen.getByText('\u05E8\u05DE\u05D4')).toBeInTheDocument() // רמה
   })
 
@@ -87,9 +136,29 @@ describe('LeaderboardTable', () => {
   it('renders all category tabs', () => {
     render(<LeaderboardTable entries={mockEntries} />)
     expect(screen.getByTestId('category-wpm')).toBeInTheDocument()
+    expect(screen.getByTestId('category-improvement')).toBeInTheDocument()
     expect(screen.getByTestId('category-accuracy')).toBeInTheDocument()
     expect(screen.getByTestId('category-xp')).toBeInTheDocument()
     expect(screen.getByTestId('category-streak')).toBeInTheDocument()
+  })
+
+  it('switches to the improvement board', async () => {
+    const user = userEvent.setup()
+    render(<LeaderboardTable entries={mockEntries} />)
+
+    await user.click(screen.getByTestId('category-improvement'))
+    expect(screen.getByTestId('leaderboard-title')).toHaveTextContent(
+      'אלופי השיפור',
+    )
+  })
+
+  it('renders age and class read filters', () => {
+    render(<LeaderboardTable entries={mockEntries} />)
+    expect(screen.getByTestId('filter-age')).toBeInTheDocument()
+    expect(screen.getByTestId('filter-class')).toBeInTheDocument()
+    expect(
+      screen.getByRole('group', { name: 'סינון דירוגים' }),
+    ).toBeInTheDocument()
   })
 
   it('switches category when tab is clicked', async () => {
@@ -97,11 +166,15 @@ describe('LeaderboardTable', () => {
     render(<LeaderboardTable entries={mockEntries} />)
 
     // Initially shows WPM title
-    expect(screen.getByTestId('leaderboard-title')).toHaveTextContent('\u05DE\u05D4\u05D9\u05E8\u05D5\u05EA')
+    expect(screen.getByTestId('leaderboard-title')).toHaveTextContent(
+      '\u05DE\u05D4\u05D9\u05E8\u05D5\u05EA',
+    )
 
     // Click accuracy tab
     await user.click(screen.getByTestId('category-accuracy'))
-    expect(screen.getByTestId('leaderboard-title')).toHaveTextContent('\u05D3\u05D9\u05D5\u05E7')
+    expect(screen.getByTestId('leaderboard-title')).toHaveTextContent(
+      '\u05D3\u05D9\u05D5\u05E7',
+    )
   })
 
   it('renders time range buttons', () => {
@@ -152,6 +225,11 @@ describe('LeaderboardPodium', () => {
     expect(screen.getByTestId('podium-wpm-1')).toBeInTheDocument()
     expect(screen.getByTestId('podium-wpm-2')).toBeInTheDocument()
     expect(screen.getByTestId('podium-wpm-3')).toBeInTheDocument()
+  })
+
+  it('shows improvement instead of raw speed on the improvement podium', () => {
+    render(<LeaderboardPodium entries={mockEntries} category="improvement" />)
+    expect(screen.getByTestId('podium-improvement-1')).toHaveTextContent('מל״ד')
   })
 
   it('returns null when fewer than 3 entries', () => {

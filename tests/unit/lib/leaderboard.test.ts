@@ -1,15 +1,22 @@
 import { describe, it, expect } from 'vitest'
 import {
   sortLeaderboard,
+  filterLeaderboard,
+  rankLeaderboard,
   assignRanks,
   getMedalEmoji,
   getLeaderboardTitle,
   generateMockLeaderboard,
   findPlayerRank,
 } from '@/lib/leaderboard/leaderboard-utils'
-import type { LeaderboardEntry, LeaderboardCategory } from '@/lib/leaderboard/leaderboard-utils'
+import type {
+  LeaderboardEntry,
+  LeaderboardCategory,
+} from '@/lib/leaderboard/leaderboard-utils'
 
-function makeEntry(overrides: Partial<LeaderboardEntry> = {}): LeaderboardEntry {
+function makeEntry(
+  overrides: Partial<LeaderboardEntry> = {},
+): LeaderboardEntry {
   return {
     id: 'p1',
     rank: 0,
@@ -17,10 +24,16 @@ function makeEntry(overrides: Partial<LeaderboardEntry> = {}): LeaderboardEntry 
     avatarEmoji: '\u{1F977}',
     wpm: 30,
     accuracy: 90,
+    wpmImprovement: 5,
+    accuracyImprovement: 2,
     level: 5,
     xp: 500,
     streak: 3,
     trend: 'stable',
+    age: 10,
+    ageGroup: 'geza',
+    classId: 'class-a',
+    className: 'כיתה א׳',
     ...overrides,
   }
 }
@@ -54,10 +67,67 @@ describe('sortLeaderboard', () => {
     expect(sorted.map((e) => e.id)).toEqual(['b', 'c', 'a'])
   })
 
+  it('sorts improvement by WPM delta, then accuracy delta', () => {
+    const improving = [
+      makeEntry({
+        id: 'a',
+        wpm: 60,
+        wpmImprovement: 2,
+        accuracyImprovement: 8,
+      }),
+      makeEntry({
+        id: 'b',
+        wpm: 20,
+        wpmImprovement: 12,
+        accuracyImprovement: 1,
+      }),
+      makeEntry({
+        id: 'c',
+        wpm: 30,
+        wpmImprovement: 12,
+        accuracyImprovement: 5,
+      }),
+    ]
+
+    expect(
+      sortLeaderboard(improving, 'improvement').map((entry) => entry.id),
+    ).toEqual(['c', 'b', 'a'])
+  })
+
   it('does not mutate original array', () => {
     const original = [...entries]
     sortLeaderboard(entries, 'wpm')
     expect(entries).toEqual(original)
+  })
+})
+
+describe('leaderboard filters and ranking', () => {
+  const entries = [
+    makeEntry({ id: 'a', xp: 100, ageGroup: 'geza', classId: 'class-a' }),
+    makeEntry({ id: 'b', xp: 300, ageGroup: 'anaf', classId: 'class-a' }),
+    makeEntry({ id: 'c', xp: 200, ageGroup: 'geza', classId: 'class-b' }),
+    makeEntry({ id: 'legacy', xp: 999, ageGroup: null, classId: null }),
+  ]
+
+  it('filters by age group and class without mutating source rows', () => {
+    const filtered = filterLeaderboard(entries, {
+      ageGroup: 'geza',
+      classId: 'class-a',
+    })
+    expect(filtered.map((entry) => entry.id)).toEqual(['a'])
+    expect(entries).toHaveLength(4)
+  })
+
+  it('does not match legacy rows missing active filter metadata', () => {
+    expect(
+      filterLeaderboard(entries, { ageGroup: 'geza' }).map((entry) => entry.id),
+    ).not.toContain('legacy')
+  })
+
+  it('filters, sorts, limits, and reassigns ranks in one pure operation', () => {
+    const ranked = rankLeaderboard(entries, 'xp', { ageGroup: 'geza' }, 1)
+    expect(ranked).toHaveLength(1)
+    expect(ranked[0]).toMatchObject({ id: 'c', rank: 1 })
   })
 })
 
@@ -114,6 +184,7 @@ describe('getMedalEmoji', () => {
 describe('getLeaderboardTitle', () => {
   const cases: [LeaderboardCategory, string][] = [
     ['wpm', '\u05DE\u05D4\u05D9\u05E8\u05D5\u05EA'],
+    ['improvement', 'אלופי השיפור'],
     ['accuracy', '\u05D3\u05D9\u05D5\u05E7'],
     ['xp', '\u05E0\u05D9\u05E7\u05D5\u05D3'],
     ['streak', '\u05E8\u05E6\u05E3'],
@@ -140,10 +211,14 @@ describe('generateMockLeaderboard', () => {
     expect(entry).toHaveProperty('avatarEmoji')
     expect(entry).toHaveProperty('wpm')
     expect(entry).toHaveProperty('accuracy')
+    expect(entry).toHaveProperty('wpmImprovement')
+    expect(entry).toHaveProperty('accuracyImprovement')
     expect(entry).toHaveProperty('level')
     expect(entry).toHaveProperty('xp')
     expect(entry).toHaveProperty('streak')
     expect(entry).toHaveProperty('trend')
+    expect(entry).toHaveProperty('ageGroup')
+    expect(entry).toHaveProperty('classId')
   })
 
   it('assigns ranks starting at 1', () => {

@@ -19,7 +19,9 @@ test.describe('Leaderboard Page', () => {
 
   test('shows מובילים (leaders) section title', async ({ page }) => {
     // "מובילים" also appears in the sidebar nav ("טבלת מובילים") — scope to main.
-    await expect(page.getByRole('main').getByText('מובילים').first()).toBeVisible()
+    await expect(
+      page.getByRole('main').getByText('מובילים').first(),
+    ).toBeVisible()
   })
 
   test('shows podium with three positions', async ({ page }) => {
@@ -34,10 +36,12 @@ test.describe('Leaderboard Page', () => {
     await expect(page.getByTestId('podium-name-3')).toBeVisible()
   })
 
-  test('shows WPM for each podium entry', async ({ page }) => {
-    await expect(page.getByTestId('podium-wpm-1')).toBeVisible()
-    await expect(page.getByTestId('podium-wpm-2')).toBeVisible()
-    await expect(page.getByTestId('podium-wpm-3')).toBeVisible()
+  test('shows XP for each podium entry on the default points board', async ({
+    page,
+  }) => {
+    await expect(page.getByTestId('podium-xp-1')).toBeVisible()
+    await expect(page.getByTestId('podium-xp-2')).toBeVisible()
+    await expect(page.getByTestId('podium-xp-3')).toBeVisible()
   })
 
   test('shows player avatars on podium', async ({ page }) => {
@@ -51,7 +55,9 @@ test.describe('Leaderboard Page', () => {
     await expect(podiumList).toBeVisible()
   })
 
-  test('podium items have accessible aria-label with rank and name', async ({ page }) => {
+  test('podium items have accessible aria-label with rank and name', async ({
+    page,
+  }) => {
     // Each podium item has aria-label="מקום N: playerName"
     await expect(page.getByRole('listitem', { name: /מקום 1/ })).toBeVisible()
     await expect(page.getByRole('listitem', { name: /מקום 2/ })).toBeVisible()
@@ -71,9 +77,13 @@ test.describe('Leaderboard Page', () => {
   })
 
   test('shows table header columns in Hebrew', async ({ page }) => {
-    await expect(page.getByRole('columnheader', { name: 'דירוג' })).toBeVisible()
+    await expect(
+      page.getByRole('columnheader', { name: 'דירוג' }),
+    ).toBeVisible()
     await expect(page.getByRole('columnheader', { name: 'שם' })).toBeVisible()
-    await expect(page.getByRole('columnheader', { name: 'מהירות' })).toBeVisible()
+    await expect(
+      page.getByRole('columnheader', { name: 'ניקוד' }),
+    ).toBeVisible()
     await expect(page.getByRole('columnheader', { name: 'דיוק' })).toBeVisible()
     await expect(page.getByRole('columnheader', { name: 'רמה' })).toBeVisible()
     await expect(page.getByRole('columnheader', { name: 'מגמה' })).toBeVisible()
@@ -85,7 +95,9 @@ test.describe('Leaderboard Page', () => {
     expect(await medals.count()).toBeGreaterThanOrEqual(3)
   })
 
-  test('does not fake a current-player highlight on demo data', async ({ page }) => {
+  test('does not fake a current-player highlight on demo data', async ({
+    page,
+  }) => {
     // The leaderboard is illustrative demo data until real accounts ship, so no
     // mock entry is dishonestly marked as "you".
     await expect(page.getByTestId('current-player-badge')).toHaveCount(0)
@@ -95,8 +107,9 @@ test.describe('Leaderboard Page', () => {
 
   // ── Category Tabs ───────────────────────────────────────────────
 
-  test('shows all four category tabs', async ({ page }) => {
+  test('shows all five category tabs', async ({ page }) => {
     await expect(page.getByTestId('category-wpm')).toBeVisible()
+    await expect(page.getByTestId('category-improvement')).toBeVisible()
     await expect(page.getByTestId('category-accuracy')).toBeVisible()
     await expect(page.getByTestId('category-xp')).toBeVisible()
     await expect(page.getByTestId('category-streak')).toBeVisible()
@@ -104,12 +117,17 @@ test.describe('Leaderboard Page', () => {
 
   test('category tab labels are in Hebrew', async ({ page }) => {
     await expect(page.getByTestId('category-wpm')).toContainText('מהירות')
+    await expect(page.getByTestId('category-improvement')).toContainText(
+      'אלופי השיפור',
+    )
     await expect(page.getByTestId('category-accuracy')).toContainText('דיוק')
     await expect(page.getByTestId('category-xp')).toContainText('ניקוד')
     await expect(page.getByTestId('category-streak')).toContainText('רצף')
   })
 
-  test('switching to accuracy category shows leaderboard title', async ({ page }) => {
+  test('switching to accuracy category shows leaderboard title', async ({
+    page,
+  }) => {
     await page.getByTestId('category-accuracy').click()
     await expect(page.getByTestId('leaderboard-title')).toBeVisible()
   })
@@ -117,6 +135,24 @@ test.describe('Leaderboard Page', () => {
   test('switching to XP category shows leaderboard title', async ({ page }) => {
     await page.getByTestId('category-xp').click()
     await expect(page.getByTestId('leaderboard-title')).toBeVisible()
+  })
+
+  test('switching to improvement ranks by delta and updates the podium metric', async ({
+    page,
+  }) => {
+    await page.getByTestId('category-improvement').click()
+    await expect(page.getByTestId('leaderboard-title')).toContainText(
+      'אלופי השיפור',
+    )
+    await expect(page.getByTestId('podium-improvement-1')).toBeVisible()
+  })
+
+  test('shows age and school/class read filters', async ({ page }) => {
+    await expect(
+      page.getByRole('group', { name: 'סינון דירוגים' }),
+    ).toBeVisible()
+    await expect(page.getByTestId('filter-age')).toBeVisible()
+    await expect(page.getByTestId('filter-class')).toBeVisible()
   })
 
   // ── Time Range Selector ─────────────────────────────────────────

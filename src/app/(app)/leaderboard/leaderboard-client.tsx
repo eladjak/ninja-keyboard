@@ -5,25 +5,48 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { LeaderboardTable } from '@/components/leaderboard/leaderboard-table'
 import { LeaderboardPodium } from '@/components/leaderboard/leaderboard-podium'
 import { fetchLeaderboard } from '@/lib/leaderboard/leaderboard-service'
-import type { LeaderboardEntry } from '@/lib/leaderboard/leaderboard-utils'
+import type {
+  LeaderboardCategory,
+  LeaderboardClassOption,
+  LeaderboardEntry,
+  LeaderboardFilters,
+} from '@/lib/leaderboard/leaderboard-utils'
 
 export function LeaderboardClient() {
   const [entries, setEntries] = useState<LeaderboardEntry[]>([])
   const [isReal, setIsReal] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [category, setCategory] = useState<LeaderboardCategory>('xp')
+  const [filters, setFilters] = useState<LeaderboardFilters>({})
+  const [classOptions, setClassOptions] = useState<LeaderboardClassOption[]>([])
 
   useEffect(() => {
     let cancelled = false
-    fetchLeaderboard(20).then((result) => {
-      if (cancelled) return
-      if (result.isOk()) {
-        setEntries(result.value.entries)
-        setIsReal(result.value.isReal)
-      }
-      setLoading(false)
-    })
-    return () => { cancelled = true }
-  }, [])
+    setLoading(true)
+    fetchLeaderboard({ limit: 20, ranking: category, filters }).then(
+      (result) => {
+        if (cancelled) return
+        if (result.isOk()) {
+          setEntries(result.value.entries)
+          setIsReal(result.value.isReal)
+          setClassOptions((current) => {
+            const merged = new Map(
+              current.map((option) => [option.id, option.name]),
+            )
+            for (const entry of result.value.entries) {
+              if (entry.classId && entry.className)
+                merged.set(entry.classId, entry.className)
+            }
+            return [...merged].map(([id, name]) => ({ id, name }))
+          })
+        }
+        setLoading(false)
+      },
+    )
+    return () => {
+      cancelled = true
+    }
+  }, [category, filters])
 
   return (
     <div className="mx-auto max-w-2xl space-y-4 p-4" dir="rtl">
@@ -43,26 +66,35 @@ export function LeaderboardClient() {
       )}
 
       {loading ? (
-        <div className="py-8 text-center text-muted-foreground" data-testid="loading-state">
+        <div
+          className="py-8 text-center text-muted-foreground"
+          data-testid="loading-state"
+        >
           {'טוען דירוגים...'}
         </div>
       ) : (
         <>
           {/* Podium card */}
-          <Card className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}>
+          <Card
+            className="game-card-border"
+            style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}
+          >
             <CardHeader>
               <CardTitle className="text-glow flex items-center gap-2">
                 <span className="text-xl">{'🏆'}</span>
-                {'מובילים'} {/* מובילים */}
+                {category === 'improvement' ? 'אלופי השיפור' : 'מובילים'}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <LeaderboardPodium entries={entries} />
+              <LeaderboardPodium entries={entries} category={category} />
             </CardContent>
           </Card>
 
           {/* Full table card */}
-          <Card className="game-card-border" style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}>
+          <Card
+            className="game-card-border"
+            style={{ borderColor: 'oklch(0.495 0.205 292 / 35%)' }}
+          >
             <CardHeader>
               <CardTitle className="text-glow flex items-center gap-2">
                 <span className="text-xl">{'📊'}</span>
@@ -70,7 +102,14 @@ export function LeaderboardClient() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <LeaderboardTable entries={entries} />
+              <LeaderboardTable
+                entries={entries}
+                category={category}
+                onCategoryChange={setCategory}
+                filters={filters}
+                onFiltersChange={setFilters}
+                classOptions={classOptions}
+              />
             </CardContent>
           </Card>
         </>
