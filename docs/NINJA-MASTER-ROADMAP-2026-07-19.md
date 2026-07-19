@@ -80,7 +80,7 @@ Legend: 🟢 built & real · 🟡 partial/needs wiring · 🟠 stub/mock · 🔴
 | **Typing engine** (WPM/accuracy, per-key stats, finger detection, bigrams, adaptive weak-key) | 🟢 | `src/lib/typing-engine/` — real, unit-tested |
 | **20 graded lessons** (Hebrew touch-typing, 3-act story intro/outro per lesson) | 🟢 | `src/lib/content/lessons.ts` (20 lessons) |
 | **On-screen Hebrew keyboard** (visual highlight) | 🟢 | `src/components/typing/hebrew-keyboard.tsx` |
-| **On-screen keyboard as TOUCH INPUT** (tap to type) | 🔴 **#1 GAP** | `key.tsx` is a `<motion.button>` with **`cursor-default`, no `onClick`, no dispatch**; `typing-area.tsx` only listens to `window` `keydown` → **a touch-only child cannot type at all** |
+| **On-screen keyboard as TOUCH INPUT** (tap to type) | 🟢 **DONE (2026-07-19)** | `Key`/`HebrewKeyboard` now accept `onInput`/`onKeyInput`; tapping a key feeds `(char, code)` through the SAME handler physical keys use. Wired into the live `/lessons/[id]` route (`LessonPageClient`) + practice/speed-test/drill/onboarding/placement. Auto-on for touch devices (`use-touch-device`), toggle on desktop. Verified: lesson-01 completed touch-only (0 physical keys) at 390px, 44px targets, no keyboard overflow. See §A1. |
 | **Battle mode** (AI rivals, 5 typing patterns, rubber-banding, combos, power-ups, taunts) | 🟢 | `src/lib/battle/ai-typing-engine.ts`, `battle-taunts.ts` |
 | **Mini-games** (letter-memory, ninja-slice, word-rain) | 🟢 | `src/app/(app)/games/*` (infinite-XP bug fixed Jul 2026) |
 | **Story / dialog system** (6 chapters, 83 beats, trigger + bubble player) | 🟢 | `src/data/story/*`, `src/components/story/dialog-box.tsx` |
@@ -124,9 +124,15 @@ Legend: 🟢 built & real · 🟡 partial/needs wiring · 🟠 stub/mock · 🔴
 
 ### HORIZON A — "Make every kid able to play, and make progress real" (highest leverage, ~2–4 weeks)
 
-**A1. On-screen keyboard as real touch input (THE #1 audience gap).** 🔴
-Make `Key` interactive: add `onPointerDown` that feeds the same character into the typing engine as a physical keypress (refactor `typing-area` to accept input from BOTH `window` keydown AND on-screen taps via a shared handler). Add a visually-hidden focusable input (or `inputMode`) so tablets/phones can also raise/route the soft keyboard. Gate behavior on device detection (spec §2.3 Device Awareness). **This alone unlocks the majority of the target audience** (Israeli classrooms are heavily Chromebook/iPad; the spec explicitly promises tablet+touch tracks).
-- **Size:** M (focused engineering, well-scoped). **Deps:** none. **Elad:** ❌ no — spec-clear, pure engineering.
+**A1. On-screen keyboard as real touch input (THE #1 audience gap). ✅ DONE — 2026-07-19 (branch `feat/onscreen-keyboard`).**
+A touch-only kid can now type an entire lesson with zero physical keyboard. **How it works:**
+- **`Key`** (`src/components/typing/key.tsx`) gained an optional `onInput(char, code)` + `code` prop. When present the key becomes a REAL, focusable, `aria-label`led button that fires on **pointer-down** (plus Enter/Space for switch/keyboard users), `preventDefault`s to avoid stealing focus, and renders a **≥44px** tap target (WCAG 2.5.5). Width is now **flexible** (`flex-grow` by unit, `minWidth:0`) so a full 10-key row shrinks to fit any container — **no 390px overflow**. Omitting `onInput` keeps the legacy visual-only, `aria-hidden` behaviour (100% backward-compatible with every existing caller).
+- **`HebrewKeyboard`** gained `onKeyInput`; it routes every key + the space bar through that one handler and switches `role="img"`→`role="group"` when interactive.
+- **`use-touch-device`** hook (`(pointer: coarse)` + `maxTouchPoints`) decides when tap-input is the **primary** input (auto-on) vs. an opt-in **toggle** on desktop.
+- **Reuse, not reinvent:** every consumer passes its *existing* `onKeyPress`/`typeKey` handler as `onKeyInput`, so on-screen taps and physical keys share ONE engine path (`session.typeKey` → `processKeystroke`) — identical stats/XP/stars. Both input methods coexist; the physical keyboard is untouched.
+- **Wired into:** the live lesson route `LessonPageClient` (the real fix — `LessonView` was dead code), `/practice`, `/speed-test`, `/drill`, onboarding `first-lesson-magic` (Step2/Step4) and `placement-test` (stage1 typing + stage2 key-ID; stage3 modifier-combos left keyboard-only by design).
+- **Verified** with Playwright on a 390×844 iPhone-13 touch context: keyboard interactive by default, all rows 308px (fits), 44px keys, **lesson-01 completed with 119 taps and 0 physical keystrokes** (3★/100%/+114XP). Tests added for both input paths + the hook. `next build` + `tsc` + 1378 unit tests all green.
+- **Note for Elad:** `src/components/typing/lesson-view.tsx` is **dead code** (defined, never imported — the live route is `LessonPageClient`). Left in place (now consistent) — recommend deleting it in a later cleanup pass.
 
 **A2. Wire real persistence (accounts → cross-device progress).** 🟡→🟢
 On auth, hydrate Zustand stores from Supabase (`progress`, `gamification`, `00004` player-state); write-through on lesson/battle completion; keep localStorage as offline cache with merge-on-login (guest→account migration). Backend is already provisioned and typed. **This unblocks leaderboard, teacher dashboard, and retention in one move.**
@@ -184,7 +190,7 @@ Confirm service-worker caching strategy (spec §6.9), offline lessons + mini-gam
 
 These can begin **immediately, autonomously**, in impact order:
 
-1. **A1 — On-screen keyboard touch input.** The single biggest audience unlock; makes the typing core playable for kids on phones/tablets. Pure engineering, spec-clear (§2.3 Device Awareness). *(M)*
+1. ~~**A1 — On-screen keyboard touch input.**~~ ✅ **DONE 2026-07-19** (branch `feat/onscreen-keyboard`). The single biggest audience unlock — the typing core is now playable touch-only on phones/tablets/Chromebooks. See §A1.
 2. **A5 — `dark:` dead-utility cleanup.** Fast, safe hygiene; screenshot-diff verifies zero regression. *(S)*
 3. **A4 — Onboarding→placement→first-lesson flow.** Stitch existing pages; big retention win on first impression. *(S–M)*
 4. **B1 — Shortcuts → graded track.** Converts a differentiator claim to fact using content that already exists. *(M)*

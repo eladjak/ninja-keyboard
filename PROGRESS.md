@@ -1,8 +1,22 @@
 # Ninja Keyboard - Progress
 
-## Status: 🟢 LIVE · Supabase RESTORED · Migration 00005 APPLIED (RPC live) · Guest /home regression FIXED
-## Last Updated: 2026-06-21 (guest-access regression fix + 00005 re-verified live)
+## Status: 🟢 LIVE · Supabase RESTORED · Migration 00005 APPLIED (RPC live) · A1 on-screen touch keyboard DONE (touch-only playable)
+## Last Updated: 2026-07-19 (A1: on-screen keyboard as real touch input — #1 roadmap gap closed)
 ## Sprint: V7 — real backend leaderboard
+
+## 2026-07-19 — Horizon A / A1: on-screen keyboard as REAL touch input ✅ (branch `feat/onscreen-keyboard`)
+**The #1 roadmap gap is closed.** Before: the visual `HebrewKeyboard` was `role="img"` with non-interactive keys, and the live lesson route only listened to `window` keydown → **a touch-only kid (tablet/Chromebook) literally could not type.**
+
+**What was done:**
+- `Key` gained optional `onInput(char, code)` → a real, focusable, `aria-label`led button firing on pointer-down (Enter/Space too), ≥44px tap target, **flexible width** so it never overflows 390px. Omitting `onInput` = legacy visual-only, `aria-hidden` (backward compatible).
+- `HebrewKeyboard` gained `onKeyInput` (routes every key + space through it; `role` img→group when interactive).
+- New `use-touch-device` hook (`pointer: coarse` + `maxTouchPoints`): tap-input auto-on for touch, toggle on desktop.
+- **Reuse-first:** every consumer passes its EXISTING `onKeyPress`/`typeKey` — taps and physical keys share ONE engine path. **Both input methods coexist.**
+- **Key discovery:** the live `/lessons/[id]` route is `LessonPageClient`, NOT the unused `LessonView` — so the real fix landed there. Also wired: `/practice`, `/speed-test`, `/drill`, `first-lesson-magic`, `placement-test`.
+
+**Verified:** Playwright on iPhone-13 390px touch → keyboard interactive by default, 44px keys, rows fit (308px), **lesson-01 completed with 119 taps, 0 physical keystrokes** (3★/100%/+114XP). Screenshots in `Documents/reports/ninja-keyboard-feature/`. `next build` ✓ · `tsc` 0 · **1378/1378** unit tests (10 new).
+
+**For Elad / follow-ups:** `src/components/typing/lesson-view.tsx` is dead code (never imported) — recommend deleting later. placement stage3 (Ctrl+C-style combos) is still physical-keyboard-only by design. No deploy/push done (per instructions).
 
 ## 2026-06-21 (PM) — "app fairly broken" diagnosis + fix
 **Reported:** Supabase connected/"connected", but the app itself "fairly broken."
