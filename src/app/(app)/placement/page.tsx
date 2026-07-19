@@ -1,4 +1,4 @@
-import { PlacementTest } from '@/components/onboarding/placement-test'
+import { PlacementClient } from './placement-client'
 
 export const metadata = {
   title: 'מבחן מיקום — נינג׳ה מקלדת',
@@ -11,7 +11,7 @@ export default function PlacementPage() {
       className="flex min-h-dvh flex-col items-center justify-start bg-background"
       dir="rtl"
     >
-      <PlacementTest />
+      <PlacementClient />
     </main>
   )
 }

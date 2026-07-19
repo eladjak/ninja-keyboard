@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import {
   BookOpen,
   Keyboard,
@@ -33,6 +34,7 @@ import { ProgressChart } from '@/components/statistics/progress-chart'
 import { useXpStore } from '@/stores/xp-store'
 import { useBadgeStore } from '@/stores/badge-store'
 import { usePracticeHistoryStore } from '@/stores/practice-history-store'
+import { useThemeStore } from '@/stores/theme-store'
 import { useHydrated } from '@/hooks/use-hydrated'
 import { LESSONS } from '@/lib/content/lessons'
 import { BADGE_DEFINITIONS } from '@/lib/gamification/badge-definitions'
@@ -136,12 +138,16 @@ const EMPTY_RESULTS: never[] = []
 const EMPTY_BADGE_IDS: string[] = []
 
 export function HomeDashboard() {
+  const router = useRouter()
   const reduceMotion = useReducedMotion()
   // Persisted stores hydrate from localStorage only on the client. Until then,
   // render the same default state the server emitted (0 XP / level 1 / no
   // lessons / no badges) so the first client render matches — no hydration
   // mismatch. After mount the real persisted values flow through.
   const hydrated = useHydrated()
+  const onboardingCompleted = useThemeStore(
+    (state) => state.onboardingCompleted,
+  )
   const xp = useXpStore()
   const totalXp = hydrated ? xp.totalXp : 0
   const level = hydrated ? xp.level : 1
@@ -185,6 +191,18 @@ export function HomeDashboard() {
     setHydratedProgress(progress)
   }, [progress])
 
+  // Only truly-new guests (no onboarding yet) are bounced from the dashboard.
+  // Placement stays OPTIONAL here — the dashboard offers a placement-test link
+  // rather than hard-gating it — so a returning guest who skipped placement
+  // still lands on their home. The onboarding→placement→lesson flow is guided
+  // from the onboarding screen itself, not enforced by the home guard.
+  const firstRunDestination =
+    hydrated && !onboardingCompleted ? '/onboarding' : null
+
+  useEffect(() => {
+    if (firstRunDestination) router.replace(firstRunDestination)
+  }, [firstRunDestination, router])
+
   // Play achievement sound once on mount when there are recent badges
   const hasRecentBadges = recentBadges.length > 0
   useEffect(() => {
@@ -201,6 +219,17 @@ export function HomeDashboard() {
     xp: totalXp,
     streak,
     lessons: lessonsCompletedCount,
+  }
+
+  if (!hydrated || firstRunDestination) {
+    return (
+      <div
+        className="flex min-h-[50dvh] items-center justify-center"
+        role="status"
+      >
+        <p className="text-muted-foreground">מכינים את המסלול שלך…</p>
+      </div>
+    )
   }
 
   return (

@@ -22,8 +22,10 @@ export function getThemeByName(name: AgeName): AgeTheme {
 }
 
 export function getThemeForAge(age: number): AgeTheme {
-  const match = themes.find(
-    (t) => age >= t.ageRange[0] && age < t.ageRange[1],
-  )
+  const match = themes.find((theme, index) => {
+    const [minAge, maxAge] = theme.ageRange
+    const isLastTheme = index === themes.length - 1
+    return age >= minAge && (age < maxAge || (isLastTheme && age <= maxAge))
+  })
   return match ?? geza
 }
