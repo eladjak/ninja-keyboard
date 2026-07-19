@@ -12,6 +12,7 @@ import { useXpStore } from '@/stores/xp-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { soundManager } from '@/lib/audio/sound-manager'
 import { useReducedMotion } from '@/hooks/use-reduced-motion'
+import { useTouchDevice } from '@/hooks/use-touch-device'
 
 /** Mascot configuration per onboarding step */
 const STEP_MASCOT: Record<Step, { mood: MascotMood; message: string }> = {
@@ -150,6 +151,7 @@ interface Step2TypingProps {
 
 function Step2Typing({ onWordComplete, soundEnabled }: Step2TypingProps) {
   const reduceMotion = useReducedMotion()
+  const isTouch = useTouchDevice()
   const [keystrokes, setKeystrokes] = useState<Keystroke[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [mascotMood, setMascotMood] = useState<MascotMood>('happy')
@@ -253,6 +255,7 @@ function Step2Typing({ onWordComplete, soundEnabled }: Step2TypingProps) {
         activeKey={activeChar}
         showFingerColors
         className="scale-90 sm:scale-100"
+        onKeyInput={isTouch ? handleKeyPress : undefined}
       />
 
       <FingerGuide
@@ -354,6 +357,7 @@ interface Step4TypingProps {
 
 function Step4Typing({ onComplete, soundEnabled }: Step4TypingProps) {
   const reduceMotion = useReducedMotion()
+  const isTouch = useTouchDevice()
   const [keystrokes, setKeystrokes] = useState<Keystroke[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [mascotMood, setMascotMood] = useState<MascotMood>('excited')
@@ -473,6 +477,7 @@ function Step4Typing({ onComplete, soundEnabled }: Step4TypingProps) {
         activeKey={activeChar}
         showFingerColors
         className="scale-90 sm:scale-100"
+        onKeyInput={isTouch ? handleKeyPress : undefined}
       />
 
       <FingerGuide

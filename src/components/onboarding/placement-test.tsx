@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
 import { HebrewKeyboard } from '@/components/typing/hebrew-keyboard'
+import { useTouchDevice } from '@/hooks/use-touch-device'
 import { processKeystroke } from '@/lib/typing-engine/engine'
 import { ALL_KEYS } from '@/lib/typing-engine/keyboard-layout'
 import {
@@ -64,6 +65,8 @@ interface PlacementTestProps {
 export function PlacementTest({ onComplete }: PlacementTestProps) {
   const addXp = useXpStore((s) => s.addXp)
   const { soundEnabled, soundVolume } = useSettingsStore()
+
+  const isTouch = useTouchDevice()
 
   // Stage management
   const [stage, setStage] = useState<Stage>('intro')
@@ -229,26 +232,21 @@ export function PlacementTest({ onComplete }: PlacementTestProps) {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [stage, handleStage1Key])
 
-  // ── Stage 2 keyboard handler ─────────────────────────────────────
-  useEffect(() => {
-    if (stage !== 'stage2' || !awaitingKey) return
-    if (currentKeyIndex >= stage2Keys.length) return
+  // ── Stage 2 key-identification handler (shared by window + on-screen tap) ──
+  const handleStage2Key = useCallback(
+    (pressedChar: string) => {
+      if (stageRef.current !== 'stage2' || !awaitingKey) return
+      if (currentKeyIndex >= stage2Keys.length) return
 
-    const expectedChar = stage2Keys[currentKeyIndex]
-
-    function onKeyDown(e: KeyboardEvent) {
-      if (['Control', 'Alt', 'Shift', 'Meta'].includes(e.key)) return
-
-      const isCorrect = e.key === expectedChar
+      const expectedChar = stage2Keys[currentKeyIndex]
+      const isCorrect = pressedChar === expectedChar
       setStage2Feedback(isCorrect)
       soundManager.playKeyClick()
       if (isCorrect) soundManager.playCorrect()
       else soundManager.playError()
       setAwaitingKey(false)
 
-      const nextKnown = isCorrect
-        ? [...knownKeys, expectedChar]
-        : knownKeys
+      const nextKnown = isCorrect ? [...knownKeys, expectedChar] : knownKeys
 
       setTimeout(() => {
         setStage2Feedback(null)
@@ -261,11 +259,23 @@ export function PlacementTest({ onComplete }: PlacementTestProps) {
           setAwaitingKey(true)
         }
       }, 400)
+    },
+    [awaitingKey, currentKeyIndex, stage2Keys, knownKeys, advanceToStage3OrResults],
+  )
+
+  // Attach window keydown for stage 2 (physical keyboard)
+  useEffect(() => {
+    if (stage !== 'stage2' || !awaitingKey) return
+    if (currentKeyIndex >= stage2Keys.length) return
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (['Control', 'Alt', 'Shift', 'Meta'].includes(e.key)) return
+      handleStage2Key(e.key)
     }
 
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [stage, awaitingKey, currentKeyIndex, stage2Keys, knownKeys, advanceToStage3OrResults])
+  }, [stage, awaitingKey, currentKeyIndex, stage2Keys, handleStage2Key])
 
   // ── Stage 3 keyboard handler ─────────────────────────────────────
   useEffect(() => {
@@ -447,13 +457,14 @@ export function PlacementTest({ onComplete }: PlacementTestProps) {
               </CardContent>
             </Card>
 
-            {/* Visual keyboard */}
+            {/* Keyboard — tap-to-type on touch devices, visual on desktop */}
             <div className="flex justify-center">
               <HebrewKeyboard
                 activeKey={STAGE1_TEXT[currentIndex]}
                 pressedKey={pressedKey ?? undefined}
                 lastCorrect={lastCorrect}
                 showFingerColors
+                onKeyInput={isTouch ? handleStage1Key : undefined}
               />
             </div>
           </motion.div>
@@ -518,11 +529,12 @@ export function PlacementTest({ onComplete }: PlacementTestProps) {
               </CardContent>
             </Card>
 
-            {/* Visual keyboard with highlighted key */}
+            {/* Keyboard — tap any key to answer on touch; highlight on desktop */}
             <div className="flex justify-center">
               <HebrewKeyboard
                 activeKey={activeKeyForStage2}
                 showFingerColors={false}
+                onKeyInput={isTouch ? (char) => handleStage2Key(char) : undefined}
               />
             </div>
           </motion.div>

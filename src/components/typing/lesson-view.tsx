@@ -19,6 +19,7 @@ import { FingerGuide } from './finger-guide'
 import { SessionStats } from './session-stats'
 import { ConfettiBurst } from '@/components/effects/confetti-burst'
 import { useReducedMotion } from '@/hooks/use-reduced-motion'
+import { useTouchDevice } from '@/hooks/use-touch-device'
 import { KiMascotFeedback } from './ki-mascot-feedback'
 import {
   computeSessionStats,
@@ -57,6 +58,7 @@ function calculateStars(
  */
 export function LessonView({ lessonId }: LessonViewProps) {
   const reduceMotion = useReducedMotion()
+  const isTouch = useTouchDevice()
   const session = useTypingSessionStore()
   const xpStore = useXpStore()
   const { soundEnabled, soundVolume } = useSettingsStore()
@@ -77,6 +79,13 @@ export function LessonView({ lessonId }: LessonViewProps) {
   // Screen shake state for error feedback
   const [isShaking, setIsShaking] = useState(false)
   const shakeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // On-screen keyboard as INPUT. Enabled by default on touch devices (where it
+  // is the only way to type); users can toggle it on any device. `undefined`
+  // means "not decided yet" so we can fall back to the device default once
+  // `isTouch` resolves after mount.
+  const [tapInputOn, setTapInputOn] = useState<boolean | null>(null)
+  const tapInputEnabled = tapInputOn ?? isTouch
 
   // Refs to avoid stale closures in effects
   const pressedKeyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -351,11 +360,26 @@ export function LessonView({ lessonId }: LessonViewProps) {
       <KiMascotFeedback visible={session.isActive && !showResults} />
 
       {/* ── Keyboard ──────────────────────────────────────────────── */}
-      <HebrewKeyboard
-        activeKey={activeChar}
-        pressedKey={pressedKey ?? undefined}
-        lastCorrect={lastCorrect}
-      />
+      <div className="flex flex-col items-center gap-2">
+        <HebrewKeyboard
+          className="w-full max-w-xl"
+          activeKey={activeChar}
+          pressedKey={pressedKey ?? undefined}
+          lastCorrect={lastCorrect}
+          onKeyInput={tapInputEnabled ? handleKeyPress : undefined}
+        />
+        {/* Toggle: let anyone turn tap-to-type on/off. Touch devices default on. */}
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          className="text-xs text-muted-foreground"
+          aria-pressed={tapInputEnabled}
+          onClick={() => setTapInputOn((v) => !(v ?? isTouch))}
+        >
+          {tapInputEnabled ? 'מקלדת מגע פעילה — כבה' : 'הפעל מקלדת מגע (הקלדה בנגיעה)'}
+        </Button>
+      </div>
 
       {/* ── Finger guide ──────────────────────────────────────────── */}
       <FingerGuide activeChar={activeChar} />

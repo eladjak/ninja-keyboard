@@ -22,6 +22,7 @@ import { PRACTICE_TEXTS } from '@/lib/content/practice-texts'
 import type { PracticeText } from '@/lib/content/practice-texts'
 import { cn } from '@/lib/utils'
 import { CharacterIdleWrapper } from '@/components/characters/character-idle-wrapper'
+import { useTouchDevice } from '@/hooks/use-touch-device'
 
 /** Difficulty badge colors */
 const DIFFICULTY_COLORS: Record<PracticeText['difficulty'], string> = {
@@ -71,6 +72,10 @@ export default function PracticePage() {
   // Key press visual state
   const [pressedKey, setPressedKey] = useState<string | null>(null)
   const [lastCorrect, setLastCorrect] = useState<boolean | null>(null)
+  // On-screen tap-to-type: on by default on touch devices, toggleable anywhere.
+  const isTouch = useTouchDevice()
+  const [tapInputOn, setTapInputOn] = useState<boolean | null>(null)
+  const tapInputEnabled = tapInputOn ?? isTouch
   const pressedKeyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const lastCorrectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const elapsedTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -401,11 +406,25 @@ export default function PracticePage() {
 
       {/* ── Keyboard ────────────────────────────────────────────── */}
       {hasStarted && !showResults && (
-        <HebrewKeyboard
-          activeKey={activeChar}
-          pressedKey={pressedKey ?? undefined}
-          lastCorrect={lastCorrect}
-        />
+        <div className="flex flex-col items-center gap-2">
+          <HebrewKeyboard
+            className="w-full max-w-xl"
+            activeKey={activeChar}
+            pressedKey={pressedKey ?? undefined}
+            lastCorrect={lastCorrect}
+            onKeyInput={tapInputEnabled ? handleKeyPress : undefined}
+          />
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="text-xs text-muted-foreground"
+            aria-pressed={tapInputEnabled}
+            onClick={() => setTapInputOn((v) => !(v ?? isTouch))}
+          >
+            {tapInputEnabled ? 'מקלדת מגע פעילה — כבה' : 'הפעל מקלדת מגע (הקלדה בנגיעה)'}
+          </Button>
+        </div>
       )}
 
       {/* ── Results ─────────────────────────────────────────────── */}

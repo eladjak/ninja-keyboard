@@ -23,6 +23,7 @@ import {
 } from '@/lib/challenges/speed-test'
 import { cn } from '@/lib/utils'
 import { CharacterIdleWrapper } from '@/components/characters/character-idle-wrapper'
+import { useTouchDevice } from '@/hooks/use-touch-device'
 
 const TEST_DURATION = 60 // 1 minute
 
@@ -49,6 +50,9 @@ export default function SpeedTestPage() {
 
   const [pressedKey, setPressedKey] = useState<string | null>(null)
   const [lastCorrect, setLastCorrect] = useState<boolean | null>(null)
+  const isTouch = useTouchDevice()
+  const [tapInputOn, setTapInputOn] = useState<boolean | null>(null)
+  const tapInputEnabled = tapInputOn ?? isTouch
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const pressedRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const correctRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -313,11 +317,25 @@ export default function SpeedTestPage() {
             isActive={true}
             onKeyPress={handleKeyPress}
           />
-          <HebrewKeyboard
-            activeKey={activeChar}
-            pressedKey={pressedKey ?? undefined}
-            lastCorrect={lastCorrect}
-          />
+          <div className="flex flex-col items-center gap-2">
+            <HebrewKeyboard
+              className="w-full max-w-xl"
+              activeKey={activeChar}
+              pressedKey={pressedKey ?? undefined}
+              lastCorrect={lastCorrect}
+              onKeyInput={tapInputEnabled ? handleKeyPress : undefined}
+            />
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="text-xs text-muted-foreground"
+              aria-pressed={tapInputEnabled}
+              onClick={() => setTapInputOn((v) => !(v ?? isTouch))}
+            >
+              {tapInputEnabled ? 'מקלדת מגע פעילה — כבה' : 'הפעל מקלדת מגע (הקלדה בנגיעה)'}
+            </Button>
+          </div>
         </>
       )}
 

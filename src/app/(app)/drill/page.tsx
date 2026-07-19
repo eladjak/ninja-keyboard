@@ -7,7 +7,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Target, RotateCcw, Play, ChevronDown, ChevronUp, TrendingUp, ArrowRight } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { TypingArea } from '@/components/typing/typing-area'
+import { HebrewKeyboard } from '@/components/typing/hebrew-keyboard'
 import { SessionStats } from '@/components/typing/session-stats'
+import { useTouchDevice } from '@/hooks/use-touch-device'
 import { usePracticeHistoryStore } from '@/stores/practice-history-store'
 import { useTypingSessionStore } from '@/stores/typing-session-store'
 import { generateDrillText, type DrillDifficulty } from '@/lib/typing-engine/drill-generator'
@@ -270,6 +272,8 @@ function DrillPageInner() {
   const endSession = useTypingSessionStore((s) => s.endSession)
   const getStats = useTypingSessionStore((s) => s.getStats)
   const startedAt = useTypingSessionStore((s) => s.startedAt)
+
+  const isTouch = useTouchDevice()
 
   // ── Local state ──
   const [phase, setPhase] = useState<DrillPhase>('setup')
@@ -590,6 +594,17 @@ function DrillPageInner() {
               isActive={isActive}
               onKeyPress={typeKey}
             />
+
+            {/* On-screen keyboard as input on touch devices */}
+            {isTouch && (
+              <div className="flex justify-center">
+                <HebrewKeyboard
+                  className="w-full max-w-xl"
+                  activeKey={drillText[currentIndex] ?? undefined}
+                  onKeyInput={typeKey}
+                />
+              </div>
+            )}
 
             {/* Abandon button */}
             <button
