@@ -130,16 +130,16 @@ describe('BadgeShowcase', () => {
 
   it('renders badge count', () => {
     render(<BadgeShowcase />)
-    // 2 earned out of 11 total badge definitions
-    expect(screen.getByText(/2\/11 תגים/)).toBeInTheDocument()
+    // 2 earned out of 13 total badge definitions (added 2 shortcut-track badges)
+    expect(screen.getByText(/2\/13 תגים/)).toBeInTheDocument()
   })
 
   it('renders all badge items in the grid', () => {
     render(<BadgeShowcase />)
     const badgeList = screen.getByRole('list', { name: 'רשימת תגים' })
     const items = within(badgeList).getAllByRole('listitem')
-    // 11 total badge definitions
-    expect(items).toHaveLength(11)
+    // 13 total badge definitions (added 2 shortcut-track badges)
+    expect(items).toHaveLength(13)
   })
 
   it('shows badge details when clicked', async () => {

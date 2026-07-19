@@ -6,10 +6,11 @@ import {
   getLessonsByCategory,
 } from '@/lib/content/lessons'
 import { getLessonContent, getRandomLine, getLessonLines } from '@/lib/content/sentences'
+import { getShortcutLessonById } from '@/lib/content/shortcuts'
 
 describe('LESSONS', () => {
-  it('has exactly 20 lessons', () => {
-    expect(LESSONS).toHaveLength(20)
+  it('has exactly 25 graded lessons', () => {
+    expect(LESSONS).toHaveLength(25)
   })
 
   it('lessons are in order by level', () => {
@@ -30,9 +31,9 @@ describe('LESSONS', () => {
     }
   })
 
-  it('lesson levels go from 1 to 20', () => {
+  it('lesson levels go from 1 to 25', () => {
     expect(LESSONS[0].level).toBe(1)
-    expect(LESSONS[LESSONS.length - 1].level).toBe(20)
+    expect(LESSONS[LESSONS.length - 1].level).toBe(25)
   })
 })
 
@@ -71,11 +72,23 @@ describe('getLessonsByCategory', () => {
 })
 
 describe('getLessonContent', () => {
-  it('returns content for every lesson', () => {
-    for (const lesson of LESSONS) {
+  it('returns typing content for every typing lesson', () => {
+    for (const lesson of LESSONS.filter((item) => item.activity !== 'shortcuts')) {
       const content = getLessonContent(lesson.id)
       expect(content).toBeDefined()
       expect(content!.lines.length).toBeGreaterThan(0)
+    }
+  })
+
+  it('maps every graded shortcut lesson to existing shortcut content', () => {
+    const shortcutLessons = LESSONS.filter(
+      (lesson) => lesson.activity === 'shortcuts',
+    )
+    expect(shortcutLessons).toHaveLength(5)
+    for (const lesson of shortcutLessons) {
+      const content = getShortcutLessonById(lesson.id)
+      expect(content).toBeDefined()
+      expect(content!.shortcuts).toHaveLength(8)
     }
   })
 

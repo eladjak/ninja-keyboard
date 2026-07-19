@@ -19,6 +19,7 @@ export type BadgeCondition =
   | { type: 'return_after_absence'; days: number }
   | { type: 'wpm_milestone'; wpm: number }
   | { type: 'lessons_completed'; count: number }
+  | { type: 'lesson_completed'; lessonId: string }
   | { type: 'first_lesson' }
   | { type: 'perfect_lesson' }
 
@@ -54,6 +55,30 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     image: '/images/badges/badge-perfect-lesson.jpg',
     category: 'accuracy',
     condition: { type: 'perfect_lesson' },
+  },
+  {
+    id: 'shortcut-apprentice',
+    nameHe: 'שוליית קיצורים',
+    nameEn: 'Shortcut Apprentice',
+    description: 'השלמת את שיעור הקיצורים המדורג הראשון!',
+    emoji: '⌨️',
+    category: 'exploration',
+    condition: {
+      type: 'lesson_completed',
+      lessonId: 'shortcut-lesson-basic',
+    },
+  },
+  {
+    id: 'shortcut-master',
+    nameHe: 'מאסטר קיצורים',
+    nameEn: 'Shortcut Master',
+    description: 'השלמת את כל מסלול קיצורי המקלדת!',
+    emoji: '⚡',
+    category: 'special',
+    condition: {
+      type: 'lesson_completed',
+      lessonId: 'shortcut-lesson-advanced',
+    },
   },
 
   // --- persistence ---

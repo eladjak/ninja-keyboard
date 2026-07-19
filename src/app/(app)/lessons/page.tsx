@@ -20,7 +20,7 @@ export default function LessonsPage() {
         <div>
           <h1 className="text-2xl font-bold text-glow">שיעורי הקלדה</h1>
           <p className="text-sm text-muted-foreground">
-            20 שיעורים מדורגים - משורת הבית ועד מאסטר מקלדת
+            25 שיעורים מדורגים - משורת הבית ועד מאסטר קיצורים
           </p>
         </div>
       </div>

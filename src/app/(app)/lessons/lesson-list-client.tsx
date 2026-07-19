@@ -26,6 +26,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   sentences: 'משפטים',
   speed: 'מהירות',
   master: 'מאסטר',
+  shortcuts: 'קיצורי מקלדת',
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -37,6 +38,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   sentences: 'bg-pink-500/20 text-pink-300 border-pink-500/30',
   speed: 'bg-red-500/20 text-red-300 border-red-500/30',
   master: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
+  shortcuts: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
 }
 
 interface LessonListClientProps {
@@ -168,7 +170,11 @@ export function LessonListClient({ lessons }: LessonListClientProps) {
                         )
                       })}
                     </div>
-                    <div className="font-bold" style={{ color: 'var(--game-accent-purple)' }}>{`${data.bestWpm} מ/ד`}</div>
+                    <div className="font-bold" style={{ color: 'var(--game-accent-purple)' }}>
+                      {lesson.activity === 'shortcuts'
+                        ? `${data.bestWpm} ק/ד`
+                        : `${data.bestWpm} מ/ד`}
+                    </div>
                     <div className="text-xs text-muted-foreground">
                       {`${data.bestAccuracy}%`}
                     </div>

@@ -54,8 +54,10 @@ export interface SessionStats {
 export interface LessonDefinition {
   /** Unique lesson identifier */
   id: string
-  /** Lesson number (1-20) */
+  /** Sequential position in the graded curriculum */
   level: number
+  /** Activity rendered by the lesson route (typing when omitted) */
+  activity?: 'typing' | 'shortcuts'
   /** Hebrew title */
   titleHe: string
   /** English title */
@@ -87,6 +89,7 @@ export type LessonCategory =
   | 'sentences'
   | 'speed'
   | 'master'
+  | 'shortcuts'
 
 export interface LessonContent {
   /** Lesson ID */

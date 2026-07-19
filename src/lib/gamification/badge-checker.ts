@@ -75,6 +75,9 @@ export function checkBadgeEarned(
     case 'lessons_completed':
       return context.completedLessonsCount >= cond.count
 
+    case 'lesson_completed':
+      return context.lessonId === cond.lessonId
+
     case 'one_hand_lesson':
     case 'self_voicing_lesson':
       // These require session metadata not yet available; return false for now
