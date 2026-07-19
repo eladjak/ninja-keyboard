@@ -1,11 +1,14 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { WifiOff, RefreshCw, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useOnlineStatus } from '@/hooks/use-online-status'
-import { getPendingResultCount } from '@/lib/offline/sync-manager'
+import {
+  getPendingResultCount,
+  PENDING_RESULTS_CHANGED_EVENT,
+} from '@/lib/offline/sync-manager'
 
 export interface OfflineIndicatorProps {
   /** Whether results are currently being synced */
@@ -22,16 +25,30 @@ export interface OfflineIndicatorProps {
 export function OfflineIndicator({ isSyncing = false, className }: OfflineIndicatorProps) {
   const { isOnline, wasOffline } = useOnlineStatus()
   const [dismissed, setDismissed] = useState(false)
+  const [pendingCount, setPendingCount] = useState(getPendingResultCount)
+  const reduceMotion = useReducedMotion()
 
-  const pendingCount = getPendingResultCount()
   const showSyncing = isOnline && wasOffline && isSyncing
   const showOffline = !isOnline
   const showBanner = (showOffline || showSyncing) && !dismissed
 
-  // Reset dismissed state when going offline again
-  if (!isOnline && dismissed) {
-    setDismissed(false)
-  }
+  useEffect(() => {
+    function refreshPendingCount(): void {
+      setPendingCount(getPendingResultCount())
+    }
+
+    window.addEventListener(PENDING_RESULTS_CHANGED_EVENT, refreshPendingCount)
+    return () => window.removeEventListener(PENDING_RESULTS_CHANGED_EVENT, refreshPendingCount)
+  }, [])
+
+  useEffect(() => {
+    function resetDismissal(): void {
+      setDismissed(false)
+    }
+
+    window.addEventListener('offline', resetDismissal)
+    return () => window.removeEventListener('offline', resetDismissal)
+  }, [])
 
   return (
     <AnimatePresence>
@@ -47,10 +64,10 @@ export function OfflineIndicator({ isSyncing = false, className }: OfflineIndica
               : 'border-amber-300 bg-amber-100 text-amber-900 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-100',
             className,
           )}
-          initial={{ opacity: 0, y: -8 }}
+          initial={reduceMotion ? false : { opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.18, ease: 'easeOut' }}
+          transition={{ duration: reduceMotion ? 0 : 0.18, ease: 'easeOut' }}
         >
           {/* Icon */}
           <span aria-hidden="true" className="shrink-0">

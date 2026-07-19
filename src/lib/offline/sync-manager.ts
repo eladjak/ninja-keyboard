@@ -16,6 +16,7 @@ import type { LessonDefinition, SessionStats } from '@/lib/typing-engine/types'
 
 const STORAGE_KEY_LESSONS = 'ninja:offline:lessons'
 const STORAGE_KEY_PENDING = 'ninja:offline:pending-results'
+export const PENDING_RESULTS_CHANGED_EVENT = 'ninja:pending-results-changed'
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -114,6 +115,7 @@ function readPendingResults(): PendingLessonResult[] {
 function writePendingResults(results: PendingLessonResult[]): void {
   if (!isBrowser()) return
   localStorage.setItem(STORAGE_KEY_PENDING, JSON.stringify(results))
+  window.dispatchEvent(new Event(PENDING_RESULTS_CHANGED_EVENT))
 }
 
 // ── Public API ───────────────────────────────────────────────────────────────
@@ -193,22 +195,22 @@ export async function syncPendingResults(
   const results = readPendingResults()
   if (results.length === 0) return 0
 
-  const synced: PendingLessonResult[] = []
-  const failed: PendingLessonResult[] = []
+  const syncedIds = new Set<string>()
 
   for (const result of results) {
     try {
       await onSync(result)
-      synced.push(result)
+      syncedIds.add(result.id)
     } catch {
-      failed.push(result)
+      // Keep failed results for the next reconnect.
     }
   }
 
-  // Keep only the failed results for retry
-  writePendingResults(failed)
+  // Re-read before writing so a result queued during this flush is never lost.
+  const latest = readPendingResults()
+  writePendingResults(latest.filter((result) => !syncedIds.has(result.id)))
 
-  return synced.length
+  return syncedIds.size
 }
 
 /**
@@ -218,6 +220,7 @@ export function clearCache(): void {
   if (!isBrowser()) return
   localStorage.removeItem(STORAGE_KEY_LESSONS)
   localStorage.removeItem(STORAGE_KEY_PENDING)
+  window.dispatchEvent(new Event(PENDING_RESULTS_CHANGED_EVENT))
 }
 
 /**
@@ -234,6 +237,7 @@ export function clearLessonCache(): void {
 export function clearPendingResults(): void {
   if (!isBrowser()) return
   localStorage.removeItem(STORAGE_KEY_PENDING)
+  window.dispatchEvent(new Event(PENDING_RESULTS_CHANGED_EVENT))
 }
 
 /**

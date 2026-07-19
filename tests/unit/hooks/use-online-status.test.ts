@@ -38,19 +38,21 @@ describe('useOnlineStatus', () => {
   })
 
   it('detects going offline via window event', () => {
-    vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(true)
+    const online = vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(true)
     const { result } = renderHook(() => useOnlineStatus())
     expect(result.current.isOnline).toBe(true)
 
+    online.mockReturnValue(false)
     fireOffline()
     expect(result.current.isOnline).toBe(false)
   })
 
   it('detects coming back online via window event', () => {
-    vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(false)
+    const online = vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(false)
     const { result } = renderHook(() => useOnlineStatus())
     expect(result.current.isOnline).toBe(false)
 
+    online.mockReturnValue(true)
     fireOnline()
     expect(result.current.isOnline).toBe(true)
   })
@@ -83,20 +85,24 @@ describe('useOnlineStatus', () => {
   })
 
   it('handles multiple offline/online cycles', () => {
-    vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(true)
+    const online = vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(true)
     const { result } = renderHook(() => useOnlineStatus())
 
+    online.mockReturnValue(false)
     fireOffline()
     expect(result.current.isOnline).toBe(false)
     expect(result.current.wasOffline).toBe(true)
 
+    online.mockReturnValue(true)
     fireOnline()
     expect(result.current.isOnline).toBe(true)
     expect(result.current.wasOffline).toBe(true)
 
+    online.mockReturnValue(false)
     fireOffline()
     expect(result.current.isOnline).toBe(false)
 
+    online.mockReturnValue(true)
     fireOnline()
     expect(result.current.isOnline).toBe(true)
     expect(result.current.wasOffline).toBe(true)

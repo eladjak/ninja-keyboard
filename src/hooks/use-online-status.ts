@@ -1,12 +1,29 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useEffect, useState, useSyncExternalStore } from 'react'
 
 export interface OnlineStatus {
   /** Whether the browser currently has a network connection */
   isOnline: boolean
   /** Whether the user went offline at any point during this session */
   wasOffline: boolean
+}
+
+function subscribeToConnection(onChange: () => void): () => void {
+  window.addEventListener('online', onChange)
+  window.addEventListener('offline', onChange)
+  return () => {
+    window.removeEventListener('online', onChange)
+    window.removeEventListener('offline', onChange)
+  }
+}
+
+function getConnectionSnapshot(): boolean {
+  return navigator.onLine
+}
+
+function getServerConnectionSnapshot(): boolean {
+  return true
 }
 
 /**
@@ -17,36 +34,23 @@ export interface OnlineStatus {
  *   during the component's lifetime (useful for showing "syncing" UI)
  */
 export function useOnlineStatus(): OnlineStatus {
-  const [isOnline, setIsOnline] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return true
-    return navigator.onLine
-  })
-
-  const wasOfflineRef = useRef(false)
+  // useSyncExternalStore uses the optimistic server snapshot during hydration,
+  // then switches to navigator.onLine without creating an SSR mismatch.
+  const isOnline = useSyncExternalStore(
+    subscribeToConnection,
+    getConnectionSnapshot,
+    getServerConnectionSnapshot,
+  )
   const [wasOffline, setWasOffline] = useState(false)
 
-  const handleOnline = useCallback(() => {
-    setIsOnline(true)
-  }, [])
-
-  const handleOffline = useCallback(() => {
-    setIsOnline(false)
-    wasOfflineRef.current = true
-    setWasOffline(true)
-  }, [])
-
   useEffect(() => {
-    // Sync with actual browser state on mount (handles SSR mismatch)
-    setIsOnline(navigator.onLine)
-
-    window.addEventListener('online', handleOnline)
-    window.addEventListener('offline', handleOffline)
-
-    return () => {
-      window.removeEventListener('online', handleOnline)
-      window.removeEventListener('offline', handleOffline)
+    function markOffline(): void {
+      setWasOffline(true)
     }
-  }, [handleOnline, handleOffline])
+
+    window.addEventListener('offline', markOffline)
+    return () => window.removeEventListener('offline', markOffline)
+  }, [])
 
   return { isOnline, wasOffline }
 }
