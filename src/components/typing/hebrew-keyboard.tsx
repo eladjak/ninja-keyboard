@@ -88,7 +88,7 @@ export function HebrewKeyboard({
     return (
       <div
         key={rowName}
-        className="flex flex-row gap-1"
+        className="flex w-full flex-row gap-1"
         style={{ paddingInlineStart: ROW_OFFSETS[rowName] }}
       >
         {keys.map(renderKey)}
@@ -111,7 +111,7 @@ export function HebrewKeyboard({
     const isCorrect = isPressed ? lastCorrect : null
 
     return (
-      <div key="space" className="flex flex-row justify-center gap-1">
+      <div key="space" className="flex w-full flex-row justify-center gap-1">
         <Key
           char={SPACE_KEY.char}
           code={SPACE_KEY.code}
@@ -132,7 +132,9 @@ export function HebrewKeyboard({
   return (
     <div
       className={cn(
-        'inline-flex flex-col gap-1.5 p-3',
+        // Full-width flex column so the rows stretch to (and never exceed) the
+        // available width — keys flex-shrink to fit, preventing 390px overflow.
+        'flex w-full flex-col gap-1.5 p-2 sm:p-3',
         'rounded-xl bg-card border border-border shadow-md',
         'select-none',
         className,

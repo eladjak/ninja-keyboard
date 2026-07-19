@@ -117,10 +117,14 @@ export function Key({
       // Prevent the button from grabbing focus on tap (keeps the typing input /
       // window keydown path alive) while still allowing keyboard focus via Tab.
       onMouseDown={(e) => interactive && e.preventDefault()}
-      // Width: each unit ≈ 2.5rem (min-w-10 = 2.5rem). Interactive keys get a
-      // ≥44px tap target (min-h-11) per WCAG 2.5.5 for touch.
+      // Flexible width: each key flex-grows by its `width` unit and can SHRINK
+      // (minWidth:0) so a full 10-key row always fits its container — no 390px
+      // overflow. `flex-basis:0` makes grow ratios exact. A soft min-width keeps
+      // keys tappable on very narrow phones (rows scroll only in the extreme).
       style={{
-        minWidth: `${width * 2.5}rem`,
+        flex: `${width} 1 0`,
+        minWidth: interactive ? '1.75rem' : 0,
+        maxWidth: `${width * 3}rem`,
         backgroundColor: flashColor ?? (isActive ? fingerColor : undefined),
         transition: 'background-color 80ms ease',
         touchAction: 'manipulation',

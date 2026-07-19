@@ -9,7 +9,9 @@ import { Button } from '@/components/ui/button'
 import { CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { StoryTriggerWrapper } from '@/components/story/story-trigger-wrapper'
+import { HebrewKeyboard } from '@/components/typing/hebrew-keyboard'
 import { ConfettiBurst } from '@/components/effects/confetti-burst'
+import { useTouchDevice } from '@/hooks/use-touch-device'
 import { useTypingSessionStore } from '@/stores/typing-session-store'
 import { useXpStore } from '@/stores/xp-store'
 import { useSettingsStore } from '@/stores/settings-store'
@@ -41,6 +43,12 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
   const xpStore = useXpStore()
   const addPracticeResult = usePracticeHistoryStore((s) => s.addResult)
   const { soundEnabled, soundVolume } = useSettingsStore()
+  const isTouch = useTouchDevice()
+
+  // On-screen keyboard as INPUT. On by default on touch devices (the only way
+  // a tablet/Chromebook kid can type); toggleable on any device.
+  const [tapInputOn, setTapInputOn] = useState<boolean | null>(null)
+  const tapInputEnabled = tapInputOn ?? isTouch
 
   // Keep sound in sync with settings
   useEffect(() => {
@@ -408,6 +416,33 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
               : activeKeyDef.finger === 'middle'
                 ? 'אמה'
                 : 'אצבע מורה'}
+        </div>
+      )}
+
+      {/* On-screen keyboard — real tap-to-type input (primary on touch devices,
+          toggleable on desktop). Tapping a key feeds the SAME handleKeyPress a
+          physical keystroke uses, so both input paths coexist. */}
+      {!showResults && (
+        <div className="flex flex-col items-center gap-2">
+          <HebrewKeyboard
+            className="w-full max-w-xl"
+            activeKey={activeChar}
+            pressedKey={pressedKey}
+            lastCorrect={lastCorrect}
+            onKeyInput={tapInputEnabled ? handleKeyPress : undefined}
+          />
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="text-xs text-muted-foreground"
+            aria-pressed={tapInputEnabled}
+            onClick={() => setTapInputOn((v) => !(v ?? isTouch))}
+          >
+            {tapInputEnabled
+              ? 'מקלדת מגע פעילה — כבה'
+              : 'הפעל מקלדת מגע (הקלדה בנגיעה)'}
+          </Button>
         </div>
       )}
 
