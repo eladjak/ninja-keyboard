@@ -103,7 +103,7 @@ Legend: 🟢 built & real · 🟡 partial/needs wiring · 🟠 stub/mock · 🔴
 | **Keyboard-shortcuts as GRADED lessons** | 🟡 | Content lib exists (`keyboard-shortcuts.ts`) + `/shortcuts` page; not promoted into the XP/badge graded track |
 | **PWA / offline** | 🟡 | `src/lib/offline` exists; service-worker strategy unconfirmed/incomplete |
 | **3D Ki character** | 🟠 | `/3d-poc` uncommitted stub waiting on a GLB model; lowest priority |
-| **83 dead `dark:` utilities** | 🔴 cleanup | ~102 `dark:` occurrences in `src/`; theming is **`data-theme`-driven** (`theme-provider.tsx`, `theme-vars.css`) so Tailwind `dark:` variants are **inert dead code** |
+| ~~83 dead `dark:` utilities~~ | ❌ INVALID (Codex-verified 19.7) | The audit was WRONG: globals.css defines `@custom-variant dark (&:is(.dark *))` + ThemeProvider toggles `.dark` on `<html>`, so `dark:` **IS functional** — NOT dead. Do not remove. |
 | **Tests / CI** | 🟢 | **1368+ unit tests, 96 test files**, e2e (Playwright) green, CI 4/4 jobs green. *(The June state doc's "only 5 test files" claim was wrong/outdated — coverage is a strength, not a gap.)* |
 | **Build / typecheck** | 🟢 | `next build` + `tsc --noEmit` green (Next 16, React 19.2) |
 
@@ -146,8 +146,8 @@ RPC is live; once A2 seeds `gamification`, replace the mock fallback path with r
 The pages exist; connect them so a first-time child picks device/age, takes the 2-min placement test, and lands on a seeded first lesson with the age theme applied. First impression = retention.
 - **Size:** S–M. **Deps:** none (independent of A2, better with it). **Elad:** ❌ no.
 
-**A5. `dark:` dead-utility cleanup.** 🔴 cleanup
-Remove the ~102 inert `dark:` Tailwind variants across `src/` (theming is `data-theme`-driven). Pure hygiene; reduces class noise and prevents future confusion. Verify no visual regression via the existing Playwright screenshot sweep.
+**A5. ~~`dark:` dead-utility cleanup~~ — ❌ CANCELLED (Codex-verified 19.7).**
+The premise was wrong: Tailwind v4 `@custom-variant dark (&:is(.dark *))` + ThemeProvider adding/removing `.dark` on `<html>` means `dark:` IS functional dark-mode styling, not dead code. Removing it would break dark mode. Item removed from the backlog.
 - **Size:** S. **Deps:** none. **Elad:** ❌ no.
 
 ### HORIZON B — "Deliver the differentiator + close the product loop" (~3–6 weeks)
@@ -191,7 +191,7 @@ Confirm service-worker caching strategy (spec §6.9), offline lessons + mini-gam
 These can begin **immediately, autonomously**, in impact order:
 
 1. ~~**A1 — On-screen keyboard touch input.**~~ ✅ **DONE 2026-07-19** (branch `feat/onscreen-keyboard`). The single biggest audience unlock — the typing core is now playable touch-only on phones/tablets/Chromebooks. See §A1.
-2. **A5 — `dark:` dead-utility cleanup.** Fast, safe hygiene; screenshot-diff verifies zero regression. *(S)*
+2. ~~A5 — `dark:` cleanup~~ — CANCELLED (Codex verified `dark:` is functional, not dead).
 3. **A4 — Onboarding→placement→first-lesson flow.** Stitch existing pages; big retention win on first impression. *(S–M)*
 4. **B1 — Shortcuts → graded track.** Converts a differentiator claim to fact using content that already exists. *(M)*
 5. **A3 — Real leaderboard + WPM ranking + "improvement" board.** *(Do A2 first if accounts are turned on; otherwise ship the WPM/improvement ranking logic + filters now against the RPC so it's ready.)* *(S–M)*
