@@ -74,9 +74,24 @@ interface ShortcutPracticeProps {
   /** Shortcuts to practice in this session */
   shortcuts: ShortcutDefinition[]
   /** Called when all shortcuts are completed with score */
-  onComplete: (score: number, total: number) => void
+  onComplete: (
+    score: number,
+    total: number,
+    result: ShortcutPracticeResult,
+  ) => void
   /** Called to go back */
   onBack: () => void
+  /** Standalone practice owns its legacy XP display; graded lessons do not. */
+  showXpReward?: boolean
+}
+
+export interface ShortcutPracticeResult {
+  score: number
+  total: number
+  attempts: number
+  accuracy: number
+  shortcutsPerMinute: number
+  durationMs: number
 }
 
 // ── Component ─────────────────────────────────────────────────────
@@ -85,6 +100,7 @@ export function ShortcutPractice({
   shortcuts,
   onComplete,
   onBack,
+  showXpReward = true,
 }: ShortcutPracticeProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [score, setScore] = useState(0)
@@ -93,6 +109,9 @@ export function ShortcutPractice({
     null,
   )
   const feedbackTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const attemptsRef = useRef(0)
+  const startedAtRef = useRef<number | null>(null)
+  const finishedAtRef = useRef<number | null>(null)
 
   const currentShortcut = shortcuts[currentIndex] as
     | ShortcutDefinition
@@ -129,31 +148,38 @@ export function ShortcutPractice({
 
       if (!currentShortcut) return
 
+      const isOnlyModifier = ['Control', 'Shift', 'Alt', 'Meta'].includes(
+        event.key,
+      )
+      if (isOnlyModifier) return
+
+      if (startedAtRef.current === null) {
+        startedAtRef.current = performance.now()
+      }
+      attemptsRef.current += 1
+
       if (matchesShortcut(event, currentShortcut)) {
         // Correct!
         soundManager.playCorrect()
         setFeedback('correct')
         setState('correct')
         setScore((prev) => prev + 1)
+        if (currentIndex + 1 >= total) {
+          finishedAtRef.current = performance.now()
+        }
 
         feedbackTimeoutRef.current = setTimeout(() => {
           advanceToNext()
         }, 1200)
       } else {
-        // Only give feedback if user pressed a non-modifier key
-        const isOnlyModifier = ['Control', 'Shift', 'Alt', 'Meta'].includes(
-          event.key,
-        )
-        if (!isOnlyModifier) {
-          soundManager.playError()
-          setFeedback('incorrect')
-          setState('incorrect')
+        soundManager.playError()
+        setFeedback('incorrect')
+        setState('incorrect')
 
-          feedbackTimeoutRef.current = setTimeout(() => {
-            setFeedback(null)
-            setState('practicing')
-          }, 1200)
-        }
+        feedbackTimeoutRef.current = setTimeout(() => {
+          setFeedback(null)
+          setState('practicing')
+        }, 1200)
       }
     }
 
@@ -166,6 +192,9 @@ export function ShortcutPractice({
     setScore(0)
     setState('practicing')
     setFeedback(null)
+    attemptsRef.current = 0
+    startedAtRef.current = null
+    finishedAtRef.current = null
   }
 
   // Play completion sound once when the practice session ends
@@ -183,6 +212,24 @@ export function ShortcutPractice({
 
   if (isCompleted) {
     const xpReward = score * 10
+    const startedAt = startedAtRef.current
+    const finishedAt = finishedAtRef.current
+    const durationMs =
+      startedAt !== null && finishedAt !== null
+        ? Math.max(0, finishedAt - startedAt)
+        : 0
+    const attempts = attemptsRef.current
+    const result: ShortcutPracticeResult = {
+      score,
+      total,
+      attempts,
+      accuracy: attempts > 0 ? Math.round((score / attempts) * 100) : 0,
+      shortcutsPerMinute:
+        durationMs > 0
+          ? Math.round(total / (Math.max(durationMs, 1000) / 60_000))
+          : 0,
+      durationMs,
+    }
     return (
       <Card className="mx-auto max-w-lg text-center">
         <CardHeader>
@@ -202,7 +249,7 @@ export function ShortcutPractice({
                 ? 'כל הכבוד! המשיכו לתרגל!'
                 : 'נסו שוב - תרגול עושה מאסטר!'}
           </p>
-          {xpReward > 0 && (
+          {showXpReward && xpReward > 0 && (
             <p className="text-sm font-medium text-primary">
               +{xpReward} XP
             </p>
@@ -217,7 +264,7 @@ export function ShortcutPractice({
             </Button>
             <Button
               variant="default"
-              onClick={() => onComplete(score, total)}
+              onClick={() => onComplete(score, total, result)}
             >
               סיום
             </Button>

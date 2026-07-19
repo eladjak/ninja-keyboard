@@ -17,6 +17,7 @@ import { useXpStore } from '@/stores/xp-store'
 import { useSettingsStore } from '@/stores/settings-store'
 import { usePracticeHistoryStore } from '@/stores/practice-history-store'
 import { soundManager } from '@/lib/audio/sound-manager'
+import { getLessonByLevel } from '@/lib/content/lessons'
 import {
   computeSessionStats,
   isLessonComplete,
@@ -252,12 +253,8 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
   }, [])
 
   const handleNextLesson = () => {
-    const nextLevel = lesson.level + 1
-    if (nextLevel <= 20) {
-      router.push(`/lessons/lesson-${String(nextLevel).padStart(2, '0')}`)
-    } else {
-      router.push('/lessons')
-    }
+    const nextLesson = getLessonByLevel(lesson.level + 1)
+    router.push(nextLesson ? `/lessons/${nextLesson.id}` : '/lessons')
   }
 
   const getStars = (stats: ReturnType<typeof computeSessionStats>): number =>

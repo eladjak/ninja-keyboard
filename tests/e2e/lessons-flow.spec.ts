@@ -40,16 +40,16 @@ test.describe('Lessons Flow', () => {
       page.getByRole('heading', { name: 'שיעורי הקלדה' }),
     ).toBeVisible()
     await expect(
-      page.getByText('20 שיעורים מדורגים - משורת הבית ועד מאסטר מקלדת'),
+      page.getByText('25 שיעורים מדורגים - משורת הבית ועד מאסטר קיצורים'),
     ).toBeVisible()
   })
 
-  test('renders all 20 lessons in the list', async ({ page }) => {
+  test('renders all 25 lessons in the list', async ({ page }) => {
     // Each lesson has a card with its Hebrew title
     const lessonCards = page.locator('[class*="card"]').filter({
       has: page.locator('h3'),
     })
-    await expect(lessonCards).toHaveCount(20)
+    await expect(lessonCards).toHaveCount(25)
   })
 
   test('first lesson (level 1) is unlocked', async ({ page }) => {

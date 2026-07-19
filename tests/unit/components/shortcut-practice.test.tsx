@@ -1,6 +1,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { render, screen, act } from '@testing-library/react'
-import { ShortcutPractice } from '@/components/shortcuts/shortcut-practice'
+import {
+  ShortcutPractice,
+  type ShortcutPracticeResult,
+} from '@/components/shortcuts/shortcut-practice'
 import type { ShortcutDefinition } from '@/lib/content/shortcuts'
 
 // Mock framer-motion to avoid animation complexity in tests
@@ -46,12 +49,22 @@ const mockShortcuts: ShortcutDefinition[] = [
 ]
 
 describe('ShortcutPractice', () => {
-  let onComplete: (score: number, total: number) => void
+  let onComplete: (
+    score: number,
+    total: number,
+    result: ShortcutPracticeResult,
+  ) => void
   let onBack: () => void
 
   beforeEach(() => {
     vi.useFakeTimers()
-    onComplete = vi.fn<(score: number, total: number) => void>()
+    onComplete = vi.fn<
+      (
+        score: number,
+        total: number,
+        result: ShortcutPracticeResult,
+      ) => void
+    >()
     onBack = vi.fn<() => void>()
   })
 
@@ -331,6 +344,54 @@ describe('ShortcutPractice', () => {
 
     // XP shown: 3 correct * 10 = 30
     expect(screen.getByText('+30 XP')).toBeInTheDocument()
+  })
+
+  it('reports first-attempt accuracy and pace for graded curriculum scoring', () => {
+    render(
+      <ShortcutPractice
+        shortcuts={mockShortcuts.slice(0, 1)}
+        onComplete={onComplete}
+        onBack={onBack}
+        showXpReward={false}
+      />,
+    )
+
+    act(() => {
+      window.dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'a', bubbles: true }),
+      )
+    })
+    act(() => {
+      vi.advanceTimersByTime(1500)
+    })
+    act(() => {
+      window.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'c',
+          ctrlKey: true,
+          bubbles: true,
+        }),
+      )
+    })
+    act(() => {
+      vi.advanceTimersByTime(1500)
+    })
+
+    expect(screen.queryByText(/XP/)).toBeNull()
+    act(() => {
+      screen.getByRole('button', { name: 'סיום' }).click()
+    })
+
+    expect(onComplete).toHaveBeenCalledWith(
+      1,
+      1,
+      expect.objectContaining({
+        score: 1,
+        total: 1,
+        attempts: 2,
+        accuracy: 50,
+      }),
+    )
   })
 
   it('calls onBack when back button is clicked', () => {

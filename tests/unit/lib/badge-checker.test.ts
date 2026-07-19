@@ -42,6 +42,24 @@ describe('checkBadgeEarned - perfect_lesson', () => {
   })
 })
 
+describe('checkBadgeEarned - lesson_completed', () => {
+  const badge = BADGE_DEFINITIONS.find(
+    (definition) => definition.id === 'shortcut-apprentice',
+  )!
+
+  it('matches the configured graded shortcut lesson only', () => {
+    expect(
+      checkBadgeEarned(
+        badge,
+        makeContext({ lessonId: 'shortcut-lesson-basic' }),
+      ),
+    ).toBe(true)
+    expect(
+      checkBadgeEarned(badge, makeContext({ lessonId: 'lesson-01' })),
+    ).toBe(false)
+  })
+})
+
 describe('checkBadgeEarned - accuracy threshold', () => {
   const badge = BADGE_DEFINITIONS.find(
     (b) => b.condition.type === 'accuracy',

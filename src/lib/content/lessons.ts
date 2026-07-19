@@ -1,4 +1,8 @@
 import type { LessonDefinition, LessonContent } from '@/lib/typing-engine/types'
+import {
+  SHORTCUT_LESSONS,
+  type ShortcutCategory,
+} from '@/lib/content/shortcuts'
 
 /**
  * 20 progressive Hebrew typing lessons.
@@ -11,7 +15,7 @@ import type { LessonDefinition, LessonContent } from '@/lib/typing-engine/types'
  * 12-13: Final forms + full keyboard
  * 14-20: Words, sentences, speed, mastery
  */
-export const LESSONS: LessonDefinition[] = [
+const TYPING_LESSONS: LessonDefinition[] = [
   // ── Home Row ─────────────────────────────────────────────────
   {
     id: 'lesson-01',
@@ -343,6 +347,98 @@ export const LESSONS: LessonDefinition[] = [
     storyOutroHe:
       'הכתר נופל. האור חוזר לדוג\'ו. סנסאי זן קד קידה: "קום, קי. נינג\'ה מקלדת אמיתי".',
   },
+]
+
+interface ShortcutCurriculumMeta {
+  titleEn: string
+  targetShortcutsPerMinute: number
+  targetAccuracy: number
+  storyIntroHe: string
+  storyOutroHe: string
+}
+
+const SHORTCUT_CURRICULUM_META: Record<
+  ShortcutCategory,
+  ShortcutCurriculumMeta
+> = {
+  basic: {
+    titleEn: 'Essential Shortcuts',
+    targetShortcutsPerMinute: 6,
+    targetAccuracy: 75,
+    storyIntroHe:
+      'אחרי הניצחון, מיקה פותחת אגף סודי בדוג\'ו: "אותיות הן רק ההתחלה. עכשיו נלמד לשלוט במחשב עצמו".',
+    storyOutroHe:
+      'העתקה, הדבקה ושמירה נדלקות על הקיר. מיקה מחייכת: "יש לך כבר חגורת קיצורים ראשונה".',
+  },
+  text: {
+    titleEn: 'Text Editing Shortcuts',
+    targetShortcutsPerMinute: 6,
+    targetAccuracy: 80,
+    storyIntroHe:
+      'מגילה דיגיטלית מתפרקת מול קי. מיקה קוראת: "עריכה מהירה תחבר אותה מחדש — בלי לעזוב את המקלדת".',
+    storyOutroHe:
+      'המגילה מתחברת והאותיות זוהרות. סנסאי זן מהנהן: "עכשיו הידיים שלך גם כותבות וגם עורכות".',
+  },
+  browser: {
+    titleEn: 'Browser Shortcuts',
+    targetShortcutsPerMinute: 7,
+    targetAccuracy: 80,
+    storyIntroHe:
+      'שערים רבים נפתחים ברשת. יוקי קוראת: "כרטיסיות הן מסלולים — נינג\'ה אמיתי עובר ביניהן במהירות".',
+    storyOutroHe:
+      'כל השערים מסתדרים בשורה. יוקי צוחקת: "מהיר, מדויק, ואף יד לא עזבה את המקלדת!".',
+  },
+  windows: {
+    titleEn: 'Windows Shortcuts',
+    targetShortcutsPerMinute: 7,
+    targetAccuracy: 85,
+    storyIntroHe:
+      'חדר הבקרה מתמלא חלונות. מיקה מצביעה על הסמל: "הפעם שולטים בכל המחשב, לא רק במסמך אחד".',
+    storyOutroHe:
+      'החלונות נעים למקומם וחדר הבקרה נרגע. קי כבר יודע להגיע לכל כלי בלי לחפש בתפריטים.',
+  },
+  advanced: {
+    titleEn: 'Advanced Shortcuts',
+    targetShortcutsPerMinute: 8,
+    targetAccuracy: 85,
+    storyIntroHe:
+      'האתגר האחרון באגף הסייבר נדלק. כל החברים מתאספים כשמיקה אומרת: "זה מבחן קיצורי המאסטר".',
+    storyOutroHe:
+      'סמל קיצור מוזהב מופיע מעל המקלדת. סנסאי זן קד קידה: "אתה לא רק מקליד מהר — אתה שולט בכלי שלך".',
+  },
+}
+
+const SHORTCUT_CURRICULUM_LESSONS: LessonDefinition[] = SHORTCUT_LESSONS.map(
+  (shortcutLesson, index) => {
+    const meta = SHORTCUT_CURRICULUM_META[shortcutLesson.category]
+    return {
+      id: shortcutLesson.id,
+      level: TYPING_LESSONS.length + index + 1,
+      activity: 'shortcuts',
+      titleHe: shortcutLesson.title,
+      titleEn: meta.titleEn,
+      descriptionHe: shortcutLesson.description,
+      targetKeys: Array.from(
+        new Set(shortcutLesson.shortcuts.flatMap((shortcut) => shortcut.keys)),
+      ),
+      newKeys: [],
+      targetWpm: meta.targetShortcutsPerMinute,
+      targetAccuracy: meta.targetAccuracy,
+      category: 'shortcuts',
+      storyIntroHe: meta.storyIntroHe,
+      storyOutroHe: meta.storyOutroHe,
+    }
+  },
+)
+
+/**
+ * Single graded curriculum used by the lessons map and progression gates.
+ * The original 20 typing lessons remain unchanged; shortcut specialisation
+ * continues the same journey at levels 21-25.
+ */
+export const LESSONS: LessonDefinition[] = [
+  ...TYPING_LESSONS,
+  ...SHORTCUT_CURRICULUM_LESSONS,
 ]
 
 /** Get a lesson by ID */
