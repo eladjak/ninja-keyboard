@@ -1905,3 +1905,34 @@
   .ninja-brand:hover .logo-anim__ch,
   .ninja-brand:hover .logo-mascot-anim { transform: none; }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   Reduced-motion BLANKET — belt 1 of the triple belt.
+
+   The blocks above enumerate classes by name, and they are thorough:
+   measured across 6 routes, 189 live animations with motion on became 0
+   under `prefers-reduced-motion`. But an enumerated belt only covers what
+   someone remembered to list, so every new animated class silently opts
+   itself IN until a human adds it here. This is a product for children,
+   some of whom are motion-sensitive; the default must be stillness.
+
+   Deliberately `0.01ms` rather than `animation: none`. `none` would strip an
+   animation whose FINAL frame is the visible state (fill-mode: forwards),
+   leaving the element stuck invisible. A 0.01ms run still lands on the last
+   frame, so the base state ends up correct — the standard's belt-3 rule
+   ("the base state is the final visible state") survives.
+
+   Framer Motion writes INLINE styles that CSS cannot reach, which is why the
+   JS gate (useReducedMotion) is the belt that actually guards the results
+   screen. This is the floor beneath it, not a replacement for it.
+   ══════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
