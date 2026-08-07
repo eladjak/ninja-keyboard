@@ -51,6 +51,24 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
   const [tapInputOn, setTapInputOn] = useState<boolean | null>(null)
   const tapInputEnabled = tapInputOn ?? isTouch
 
+  // On a phone the keyboard renders below the fold, and its bottom row (11 keys
+  // on a 393px viewport — including SPACE and ה/נ/מ/ב) lands underneath the
+  // fixed bottom tab bar. Those taps hit a nav link instead of the key, which
+  // does not merely fail: it navigates away and destroys the lesson in progress.
+  // Scrolling fixes it, but nothing tells a child to scroll. So bring the
+  // keyboard fully into view once, when it is the primary input.
+  const keyboardRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (!tapInputEnabled) return
+    const el = keyboardRef.current
+    if (!el) return
+    // rAF so layout has settled; 'end' keeps the whole keyboard above the bar.
+    const id = requestAnimationFrame(() =>
+      el.scrollIntoView({ block: 'end', behavior: 'smooth' }),
+    )
+    return () => cancelAnimationFrame(id)
+  }, [tapInputEnabled])
+
   // Keep sound in sync with settings
   useEffect(() => {
     soundManager.setEnabled(soundEnabled)
@@ -420,7 +438,12 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
           toggleable on desktop). Tapping a key feeds the SAME handleKeyPress a
           physical keystroke uses, so both input paths coexist. */}
       {!showResults && (
-        <div className="flex flex-col items-center gap-2">
+        <div
+          ref={keyboardRef}
+          /* scroll-mb-20 = the h-16 fixed bottom tab bar + breathing room, so
+             scrollIntoView('end') leaves the last key row ABOVE the bar. */
+          className="flex scroll-mb-20 flex-col items-center gap-2 md:scroll-mb-0"
+        >
           <HebrewKeyboard
             className="w-full max-w-xl"
             activeKey={activeChar}
