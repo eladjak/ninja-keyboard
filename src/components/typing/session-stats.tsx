@@ -9,8 +9,8 @@ import { useReducedMotion } from '@/hooks/use-reduced-motion'
 interface SessionStatsProps {
   /** Current words per minute */
   wpm: number
-  /** Current accuracy percentage (0-100) */
-  accuracy: number
+  /** Current accuracy percentage (0-100), or null before any keystroke. */
+  accuracy: number | null
   /** Total keystrokes so far */
   keystrokes: number
   /** Elapsed time in milliseconds */
@@ -28,7 +28,8 @@ function formatElapsed(ms: number): string {
 }
 
 /** Accuracy colour: green > 90, yellow > 75, red otherwise */
-function accuracyColor(accuracy: number): string {
+function accuracyColor(accuracy: number | null): string {
+  if (accuracy === null) return 'text-muted-foreground'
   if (accuracy > 90) return 'text-green-600 dark:text-green-400'
   if (accuracy > 75) return 'text-yellow-600 dark:text-yellow-400'
   return 'text-red-600 dark:text-red-400'
@@ -99,7 +100,7 @@ export function SessionStats({
       <StatCard
         icon={<Target className="size-4" />}
         label="דיוק"
-        value={`${accuracy}%`}
+        value={accuracy === null ? '—' : `${accuracy}%`}
         valueClassName={accuracyColor(accuracy)}
       />
       <StatCard

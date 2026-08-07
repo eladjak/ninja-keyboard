@@ -436,7 +436,8 @@ export function BattleArena() {
     ? Math.round((battleState.aiProgress / battleState.text.length) * 100)
     : 0
   const playerWpm = battleState ? calculatePlayerWpm(battleState) : 0
-  const playerAccuracy = battleState ? calculatePlayerAccuracy(battleState) : 100
+  // null = the child never typed. Not 100%.
+  const playerAccuracy = battleState ? calculatePlayerAccuracy(battleState) : null
   const rivalDisplay = RIVAL_DISPLAY[selectedRival]
 
   // Rival taunts when one side pulls clearly ahead (throttled inside showSpeech)
@@ -641,7 +642,7 @@ export function BattleArena() {
             {playerWpm} <span className="text-sm font-normal text-muted-foreground">מ/ד</span>
           </div>
           <div className="text-muted-foreground text-xs" aria-live="polite" aria-atomic="true">
-            דיוק: {playerAccuracy}%
+            דיוק: {playerAccuracy === null ? '—' : `${playerAccuracy}%`}
           </div>
           {/* Combo counter */}
           <div className="relative mt-2 flex justify-center">

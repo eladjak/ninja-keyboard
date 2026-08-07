@@ -18,6 +18,12 @@ import { usePracticeHistoryStore } from '@/stores/practice-history-store'
 import { useXpStore } from '@/stores/xp-store'
 import { soundManager } from '@/lib/audio/sound-manager'
 import { computeSessionStats } from '@/lib/typing-engine/engine'
+import { useDailyChallengeStore } from '@/stores/daily-challenge-store'
+import {
+  getDailyChallenge,
+  getTodayDateStr,
+  isDailyChallengeCompleted,
+} from '@/lib/challenges/daily-challenge'
 import { PRACTICE_TEXTS } from '@/lib/content/practice-texts'
 import type { PracticeText } from '@/lib/content/practice-texts'
 import { cn } from '@/lib/utils'
@@ -131,6 +137,26 @@ export default function PracticePage() {
         timerDuration,
       })
 
+      // The daily challenge card promises "פרס השלמה +XP" and an "אתגר הושלם!"
+      // state, but `completeChallenge` and `isDailyChallengeCompleted` had zero
+      // callers anywhere in src/ — the reward was unreachable every day, for
+      // every child, and the card renewed the promise each morning. Its CTA
+      // links here, so this is where the attempt is judged.
+      const today = getTodayDateStr()
+      const challenge = getDailyChallenge(today)
+      const challengeStore = useDailyChallengeStore.getState()
+      if (
+        !challengeStore.isChallengeCompleted(today) &&
+        isDailyChallengeCompleted(challenge, {
+          wpm: stats.wpm,
+          accuracy: stats.accuracy,
+          totalKeystrokes: stats.totalKeystrokes,
+        })
+      ) {
+        challengeStore.completeChallenge(today, challenge.xpReward)
+        xpStore.addXp(challenge.xpReward)
+      }
+
       setResult({
         wpm: stats.wpm,
         accuracy: stats.accuracy,
@@ -237,9 +263,13 @@ export default function PracticePage() {
 
   // ── Computed values ────────────────────────────────────────────
   const realtimeWpm = session.getRealtimeWpm()
+  // Accuracy over zero keystrokes is undefined, not perfect. This showed
+  // "100% דיוק" beside "0 הקשות" on the live HUD every time a child started a
+  // practice run and before they touched a key — the same lie as the battle
+  // scorecard's 100% on a loss. null renders as a dash.
   const accuracy =
     session.keystrokes.length === 0
-      ? 100
+      ? null
       : Math.round(
           (session.keystrokes.filter((k) => k.isCorrect).length /
             session.keystrokes.length) *

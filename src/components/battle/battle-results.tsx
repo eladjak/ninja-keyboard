@@ -20,7 +20,8 @@ import { Trophy, RotateCcw, ArrowRight } from 'lucide-react'
 interface BattleStats {
   playerWpm: number
   aiWpm: number
-  playerAccuracy: number
+  /** null when the child never typed — rendered as a dash, never as 100%. */
+  playerAccuracy: number | null
   aiAccuracy: number
   timeSeconds: number
 }
@@ -197,7 +198,9 @@ export function BattleResults({
                 <div className="text-muted-foreground" role="rowheader">
                   דיוק
                 </div>
-                <div className="tabular-nums" role="cell">{stats.playerAccuracy}%</div>
+                <div className="tabular-nums" role="cell">
+                  {stats.playerAccuracy === null ? '—' : `${stats.playerAccuracy}%`}
+                </div>
                 <div className="tabular-nums" role="cell">{stats.aiAccuracy}%</div>
               </div>
 

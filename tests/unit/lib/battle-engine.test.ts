@@ -407,7 +407,9 @@ describe('calculatePlayerWpm', () => {
 // ── calculatePlayerAccuracy ───────────────────────────────────────
 
 describe('calculatePlayerAccuracy', () => {
-  it('returns 100 when no keystrokes', () => {
+  // This case used to assert 100, enshrining the defect: a child who never
+  // typed was shown PERFECT accuracy on the screen telling them they lost.
+  it('returns null when the child never typed, not a perfect score', () => {
     const state: BattleState = {
       playerProgress: 0,
       aiProgress: 0,
@@ -422,7 +424,7 @@ describe('calculatePlayerAccuracy', () => {
       aiFractionalProgress: 0,
     }
 
-    expect(calculatePlayerAccuracy(state)).toBe(100)
+    expect(calculatePlayerAccuracy(state)).toBeNull()
   })
 
   it('calculates accuracy correctly', () => {

@@ -241,10 +241,17 @@ export function calculatePlayerWpm(state: BattleState): number {
 }
 
 /**
- * Calculate player accuracy from battle state.
+ * Calculate player accuracy from battle state, or null when the child never
+ * typed.
+ *
+ * This used to return 100 for zero keystrokes, and that number is rendered on
+ * the battle scorecard beside a red "הפסד". A child who froze, or whose
+ * attention wandered while the AI ran to the end of the text, was told they had
+ * achieved PERFECT accuracy on the screen announcing they lost. Accuracy over
+ * zero keystrokes is not 100%, it is undefined — the scorecard renders a dash.
  */
-export function calculatePlayerAccuracy(state: BattleState): number {
-  if (state.playerTotalKeystrokes === 0) return 100
+export function calculatePlayerAccuracy(state: BattleState): number | null {
+  if (state.playerTotalKeystrokes === 0) return null
   return Math.round(
     (state.playerCorrectKeystrokes / state.playerTotalKeystrokes) * 100,
   )

@@ -45,7 +45,13 @@ export function checkBadgeEarned(
       return context.accuracy >= cond.minAccuracy
 
     case 'lesson_no_backspace':
-      return context.backspaceCount === 0
+      // The lesson key handler ignores Backspace entirely (it only forwards
+      // single characters and space), so a child CANNOT press it and
+      // backspaceCount is always 0. Awarding this would hand out a badge for
+      // something the child never did — praise with nothing behind it, which
+      // is the same defect as a gold star on a failed lesson. Unavailable
+      // until backspace is actually supported and counted.
+      return false
 
     case 'streak':
       return context.streak >= cond.days

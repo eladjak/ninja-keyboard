@@ -79,8 +79,14 @@ describe('checkBadgeEarned - accuracy threshold', () => {
 describe('checkBadgeEarned - lesson_no_backspace', () => {
   const badge = BADGE_DEFINITIONS.find((b) => b.condition.type === 'lesson_no_backspace')!
 
-  it('returns true when backspaceCount is 0', () => {
-    expect(checkBadgeEarned(badge, makeContext({ backspaceCount: 0 }))).toBe(true)
+  // Now that badges are actually AWARDED from the lesson flow, this one had to
+  // become unreachable rather than free. The lesson key handler never forwards
+  // Backspace (it only passes single characters and space), so backspaceCount
+  // is structurally always 0 — awarding it would hand every child a badge for
+  // something they did not do, which is the same defect as a gold star on a
+  // failed lesson. It stays false until backspace is supported and counted.
+  it('is NOT earned for free just because backspace cannot be pressed', () => {
+    expect(checkBadgeEarned(badge, makeContext({ backspaceCount: 0 }))).toBe(false)
   })
 
   it('returns false when backspaceCount is 1 or more', () => {

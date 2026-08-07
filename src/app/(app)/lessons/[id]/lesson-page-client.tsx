@@ -16,6 +16,8 @@ import { useReducedMotion } from '@/hooks/use-reduced-motion'
 import { CountUp } from '@/components/ui/count-up'
 import { useTypingSessionStore } from '@/stores/typing-session-store'
 import { useXpStore } from '@/stores/xp-store'
+import { useBadgeStore } from '@/stores/badge-store'
+import { getNewlyEarnedBadges } from '@/lib/gamification/badge-checker'
 import { useSettingsStore } from '@/stores/settings-store'
 import { usePracticeHistoryStore } from '@/stores/practice-history-store'
 import { soundManager } from '@/lib/audio/sound-manager'
@@ -121,9 +123,16 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
     return { type: 'lesson-complete', lessonId: lesson.id }
   }, [lessonCompleted, lesson.id])
 
+  // The date of the child's previous practice, captured BEFORE updateStreak()
+  // moves it to today. The return_after_absence badges compare against it, so
+  // reading it at completion time would always see a zero-day gap and they
+  // could never fire.
+  const lastPracticeBeforeThisLesson = useRef<string | null>(null)
+
   // Initialize session with first line
   useEffect(() => {
     if (content.lines.length > 0) {
+      lastPracticeBeforeThisLesson.current = useXpStore.getState().lastPracticeDate
       store.startSession(content.lines[0], lesson.id)
       xpStore.updateStreak()
     }
@@ -218,6 +227,39 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
           )
           xpStore.addXp(reward.total)
           xpStore.completeLesson(lesson.id, stats.wpm, stats.accuracy)
+
+          // Award badges. `checkAllBadges` and `getNewlyEarnedBadges` had ZERO
+          // callers anywhere in src/, so the badges page advertised 13 and the
+          // main curriculum could earn none of them: streak, accuracy, wpm
+          // milestones, focus duration and return-after-absence were all
+          // unreachable. Only the shortcut lesson path awarded anything, and
+          // only lesson_completed badges.
+          //
+          // Read state AFTER completeLesson so the lesson just finished counts,
+          // and read it from the store rather than the render closure, which
+          // still holds the pre-completion values.
+          const xpNow = useXpStore.getState()
+          const badgeState = useBadgeStore.getState()
+          const newBadges = getNewlyEarnedBadges(
+            {
+              wpm: stats.wpm,
+              accuracy: stats.accuracy,
+              // Backspace is not forwarded by the lesson key handler, so there
+              // is nothing to count; the checker treats that badge as
+              // unavailable rather than free.
+              backspaceCount: 0,
+              durationMs: stats.durationMs,
+              streak: xpNow.streak,
+              completedLessonsCount: Object.keys(xpNow.completedLessons).length,
+              modulesVisited: [],
+              lastActiveDate: lastPracticeBeforeThisLesson.current,
+              lessonId: lesson.id,
+            },
+            Object.keys(badgeState.earnedBadges),
+          )
+          for (const badge of newBadges) {
+            badgeState.earnBadge(badge.id, lesson.id)
+          }
         }
         // Record the session so per-key history (and the drill page) learn from
         // it, then auto-suggest a weak-key drill when accuracy was low.
