@@ -8,9 +8,19 @@ import { createMiddlewareClient } from '@/lib/supabase/middleware'
 // /home is the guest-first hub (the landing-page primary CTA "מתחילים לשחק — חינם"
 // points here) and is entirely localStorage-driven — it must stay public, or
 // activating Supabase env (anon key) would bounce every guest to /login, breaking
-// the advertised no-registration flow. Only genuinely account-scoped surfaces
-// (progress/profile/settings) are gated.
-const PROTECTED_ROUTES = ['/progress', '/profile', '/settings']
+// the advertised no-registration flow.
+//
+// /progress, /profile and /settings were gated here on the assumption that they
+// were "account-scoped". They are not: all three read exclusively from the
+// Zustand/localStorage stores and contain no server-side account data. Gating
+// them meant a guest who played a lesson and earned XP hit a login wall the
+// moment they clicked "פרופיל" or "הגדרות" in the sidebar — links the sidebar
+// shows to guests. That is the advertised no-registration flow breaking on the
+// three surfaces where a child goes to admire their own progress.
+//
+// A route belongs here only when it renders data that lives behind auth. Add it
+// back the moment such a surface exists (e.g. a teacher roster reading Supabase).
+const PROTECTED_ROUTES: string[] = []
 const AUTH_ROUTES = ['/login', '/register', '/join']
 
 export async function middleware(request: NextRequest) {
