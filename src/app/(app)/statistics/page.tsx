@@ -402,6 +402,10 @@ export default function StatisticsPage() {
                 <Progress
                   value={levelPct}
                   className="h-3"
+                  // The only one of the six <Progress> usages in the app with no
+                  // accessible name: a screen reader announced a bare percentage
+                  // with nothing to attach it to.
+                  aria-label={`התקדמות לרמה ${level + 1}: ${Math.round(levelPct)}%`}
                   style={
                     {
                       '--progress-color': 'var(--game-accent-purple)',

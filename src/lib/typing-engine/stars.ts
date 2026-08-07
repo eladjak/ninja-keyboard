@@ -27,9 +27,21 @@ export function calculateStars(
 
   const stars = avgStars(wpmRatio, accRatio)
 
-  // ...and below the accuracy target, one star ("close") is the ceiling —
-  // 2 and 3 stars mean "target met" / "mastered", which speed alone cannot earn.
-  return accRatio < 1 && stars > 1 ? 1 : stars
+  // ...and below EITHER target, one star ("close") is the ceiling — 2 and 3
+  // stars mean "target met" / "mastered", and the results card reserves those
+  // words for `isLessonComplete`, which requires BOTH targets.
+  //
+  // The accuracy half of this gate was added first, but the speed half was left
+  // open, and it is the half a small child actually lands on. On lesson-01
+  // (target 5 wpm / 80%) a careful six-year-old typing 4 wpm at 96% scored
+  // avg 1.0 => TWO GOLD STARS on the same card that read "נסיון טוב! נסו שוב"
+  // and paid no XP. A sweep of the shipped curriculum found 167 such
+  // (wpm, accuracy) points across all 25 lessons — see stars.test.ts.
+  //
+  // The two halves stay asymmetric on purpose: wildly inaccurate typing earns
+  // ZERO however fast it was, while accurate-but-slow still earns its one star.
+  // Speed is a goal; accuracy is a gate.
+  return (accRatio < 1 || wpmRatio < 1) && stars > 1 ? 1 : stars
 }
 
 /** The original average model, retained as the speed/accuracy blend. */

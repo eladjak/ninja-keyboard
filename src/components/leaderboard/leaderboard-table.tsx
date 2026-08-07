@@ -75,10 +75,22 @@ interface LeaderboardTableProps {
   classOptions?: LeaderboardClassOption[]
 }
 
+/**
+ * The podium rows used `bg-yellow-50 dark:bg-yellow-950/30`, but this app does
+ * not theme through Tailwind's `dark` class — it sets `data-theme` on <html>
+ * and drives colours from CSS variables, so `<html class>` is empty and EVERY
+ * `dark:` utility is inert. The light base therefore won: near-white rows under
+ * a dark palette whose text is #eeedf5, measured at a contrast ratio of 1.12
+ * against a required 4.5. The top three places — the part of a leaderboard a
+ * child actually looks at — were unreadable.
+ *
+ * Translucent tints over the real background instead, matching the convention
+ * already used across the lesson map and badges.
+ */
 function getRankRowClass(rank: number): string {
-  if (rank === 1) return 'bg-yellow-50 dark:bg-yellow-950/30'
-  if (rank === 2) return 'bg-gray-50 dark:bg-gray-800/30'
-  if (rank === 3) return 'bg-orange-50 dark:bg-orange-950/30'
+  if (rank === 1) return 'bg-yellow-500/15'
+  if (rank === 2) return 'bg-slate-400/15'
+  if (rank === 3) return 'bg-orange-500/15'
   return ''
 }
 

@@ -18,6 +18,14 @@ function ScrollArea({
     >
       <ScrollAreaPrimitive.Viewport
         data-slot="scroll-area-viewport"
+        // A scrollable region must be reachable by keyboard, or its overflow is
+        // simply unavailable to anyone not using a pointer. The viewport already
+        // carried focus-visible ring styling — it was written expecting to be
+        // focusable — but had no tab stop, so the styles could never apply and
+        // axe flagged `scrollable-region-focusable`. In a TYPING app the
+        // keyboard is the primary input, which makes this the wrong corner to
+        // cut. Sole consumer today is the leaderboard table.
+        tabIndex={0}
         className="focus-visible:ring-ring/50 size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:outline-1"
       >
         {children}

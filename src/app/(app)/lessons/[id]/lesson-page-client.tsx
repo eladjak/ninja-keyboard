@@ -296,6 +296,17 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
     router.push(nextLesson ? `/lessons/${nextLesson.id}` : '/lessons')
   }
 
+  // The lessons map gates progression on a confidence threshold and renders 24
+  // padlocked, pointer-events:none cards for a new player. The results modal
+  // walked straight through all of them: after FAILING lesson-01 its primary
+  // button pushed the child into a fully playable lesson-02, and the same click
+  // chains the whole 25-lesson curriculum. The padlock was decorative from the
+  // inside. The shortcut lesson screen already sends a failed player back to the
+  // map; this is the same rule, applied to the screen the curriculum runs on.
+  const passedLesson = finalStats
+    ? isLessonComplete(finalStats, lesson.targetWpm, lesson.targetAccuracy)
+    : false
+
   const getStars = (stats: ReturnType<typeof computeSessionStats>): number =>
     calculateStars(stats.wpm, stats.accuracy, lesson.targetWpm, lesson.targetAccuracy)
 
@@ -665,16 +676,24 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
 
                 {/* Action buttons */}
                 <div className="flex gap-2">
+                  {/* On a failed lesson the emphasis was backwards: retry was
+                      the muted button and "next lesson" was the bright one. */}
                   <Button
-                    variant="outline"
+                    variant={passedLesson ? 'outline' : 'default'}
                     className="flex-1"
                     onClick={handleRetry}
                   >
                     <RotateCcw className="me-2 size-4" />
                     נסו שוב
                   </Button>
-                  <Button className="flex-1" onClick={handleNextLesson}>
-                    השיעור הבא
+                  <Button
+                    variant={passedLesson ? 'default' : 'outline'}
+                    className="flex-1"
+                    onClick={
+                      passedLesson ? handleNextLesson : () => router.push('/lessons')
+                    }
+                  >
+                    {passedLesson ? 'השיעור הבא' : 'חזרה למסלול'}
                     <ArrowRight className="ms-2 size-4" />
                   </Button>
                 </div>

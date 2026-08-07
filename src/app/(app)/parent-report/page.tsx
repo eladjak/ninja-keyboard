@@ -21,6 +21,7 @@ import { Separator } from '@/components/ui/separator'
 import { generateParentReport, TREND_LABELS } from '@/lib/reports/parent-report'
 import { useXpStore } from '@/stores/xp-store'
 import { usePracticeHistoryStore } from '@/stores/practice-history-store'
+import { LESSONS } from '@/lib/content/lessons'
 import { cn } from '@/lib/utils'
 
 const TREND_ICONS = {
@@ -45,7 +46,10 @@ export default function ParentReportPage() {
       level,
       streak,
       lessonsCompleted: Object.keys(completedLessons).length,
-      totalLessons: 20,
+      // Was hardcoded to 20 while the curriculum ships 25 lessons (20 typing +
+      // 5 shortcut). Both lesson screens call `completeLesson`, so a child who
+      // finishes everything showed their PARENT "25/20 שיעורים". Derive it.
+      totalLessons: LESSONS.length,
       results: practiceHistory.results.map((r) => ({
         wpm: r.wpm,
         accuracy: r.accuracy,

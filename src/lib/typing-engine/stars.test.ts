@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { calculateStars, totalStarsEarned } from './stars'
+import { isLessonComplete } from './engine'
+import { LESSONS } from '@/lib/content/lessons'
 
 describe('calculateStars', () => {
   it('returns 3 stars at 130% of combined target', () => {
@@ -23,9 +25,11 @@ describe('calculateStars', () => {
     expect(calculateStars(10, 90, 0, 0)).toBe(0)
   })
 
-  it('strong accuracy can compensate for slightly low wpm (average model)', () => {
-    // wpmRatio 0.9 + accRatio 1.1 => avg 1.0 => 2 stars
-    expect(calculateStars(9, 93.5, 10, 85)).toBe(2)
+  it('caps strong-accuracy-but-slow at 1 star (speed target not met)', () => {
+    // wpmRatio 0.9 + accRatio 1.1 => avg 1.0, which the average model scored 2.
+    // But 9 wpm fails the 10 wpm target, so the lesson did NOT pass, and 2 stars
+    // would claim "target met" on a card that says "try again".
+    expect(calculateStars(9, 93.5, 10, 85)).toBe(1)
   })
 
   // --- Accuracy is a gate: speed must never buy away inaccuracy. ---
@@ -45,6 +49,58 @@ describe('calculateStars', () => {
   it('caps at 1 star below the accuracy target, however fast', () => {
     // accRatio 0.94 (just under target) with huge speed: "close", never mastery.
     expect(calculateStars(60, 75, 5, 80)).toBe(1)
+  })
+
+  // --- Speed is a gate for MASTERY too: the stars must never claim more than
+  // the results card does. Regression guard for the "2 gold stars on a lesson
+  // that said try again" defect — the mirror image of the one above, and the
+  // one a careful, slow six-year-old actually lands on.
+
+  it('never shows 2+ stars on a lesson that did not pass, across the whole curriculum', () => {
+    const contradictions: string[] = []
+    let checked = 0
+    for (const lesson of LESSONS) {
+      const { targetWpm, targetAccuracy } = lesson
+      for (let wpm = 0; wpm <= 40; wpm++) {
+        for (let acc = 0; acc <= 100; acc++) {
+          checked++
+          const passed = isLessonComplete(
+            { wpm, accuracy: acc } as Parameters<typeof isLessonComplete>[0],
+            targetWpm,
+            targetAccuracy,
+          )
+          if (calculateStars(wpm, acc, targetWpm, targetAccuracy) >= 2 && !passed) {
+            contradictions.push(`${lesson.id}: ${wpm}wpm/${acc}%`)
+          }
+        }
+      }
+    }
+    // The sweep really ran (an empty sweep would pass vacuously).
+    expect(LESSONS.length).toBeGreaterThan(20)
+    expect(checked).toBeGreaterThan(50_000)
+    expect(contradictions.slice(0, 10)).toEqual([])
+  })
+
+  it('the exact observed case: 4 wpm at 96% on lesson-01 is 1 star, not 2', () => {
+    // Old formula: (4/5 + 96/80) / 2 = 1.0 => 2 stars, while the card said
+    // "נסיון טוב! נסו שוב" and paid 0 XP.
+    expect(calculateStars(4, 96, 5, 80)).toBe(1)
+    expect(
+      isLessonComplete(
+        { wpm: 4, accuracy: 96 } as Parameters<typeof isLessonComplete>[0],
+        5,
+        80,
+      ),
+    ).toBe(false)
+  })
+
+  it('CONTROL: accurate-but-slow still earns its one star, not zero', () => {
+    // The speed gate must CAP mastery, never punish a careful child down to 0 —
+    // otherwise the tests above would also pass with `if (wpmRatio < 1) return
+    // 0`, which is a different and worse product. Both cases below scored 2
+    // under the old average model, so a zeroing gate would show 0 here.
+    expect(calculateStars(4, 96, 5, 80)).toBe(1)
+    expect(calculateStars(9, 93.5, 10, 85)).toBe(1)
   })
 
   it('still awards full stars when the accuracy target IS met', () => {
