@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useSettingsStore } from '@/stores/settings-store'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
 
 interface ConfettiBurstProps {
   /** Whether to trigger the burst */
@@ -24,7 +24,10 @@ const COLORS = ['#6C5CE7', '#00B894', '#FDCB6E', '#E17055', '#74B9FF', '#A29BFE'
 
 export function ConfettiBurst({ active, count = 30 }: ConfettiBurstProps) {
   const [particles, setParticles] = useState<Particle[]>([])
-  const reducedMotion = useSettingsStore((s) => s.reducedMotion)
+  // Was reading ONLY the settings-store flag, so a child with the OS-level
+  // prefers-reduced-motion set still got confetti. The hook ORs all three
+  // sources (OS + accessibility store + settings store) and fails closed.
+  const reducedMotion = useReducedMotion()
 
   useEffect(() => {
     if (!active || reducedMotion) {

@@ -12,6 +12,8 @@ import { StoryTriggerWrapper } from '@/components/story/story-trigger-wrapper'
 import { HebrewKeyboard } from '@/components/typing/hebrew-keyboard'
 import { ConfettiBurst } from '@/components/effects/confetti-burst'
 import { useTouchDevice } from '@/hooks/use-touch-device'
+import { useReducedMotion } from '@/hooks/use-reduced-motion'
+import { CountUp } from '@/components/ui/count-up'
 import { useTypingSessionStore } from '@/stores/typing-session-store'
 import { useXpStore } from '@/stores/xp-store'
 import { useSettingsStore } from '@/stores/settings-store'
@@ -46,6 +48,10 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
   const addPracticeResult = usePracticeHistoryStore((s) => s.addResult)
   const { soundEnabled, soundVolume } = useSettingsStore()
   const isTouch = useTouchDevice()
+  // The results screen is the emotional peak — and it animated stars, the modal
+  // and the XP badge unconditionally. This is a children's product; some of them
+  // are motion-sensitive. Belt 2 of the triple belt was simply absent here.
+  const reduceMotion = useReducedMotion()
 
   // On-screen keyboard as INPUT. On by default on touch devices (the only way
   // a tablet/Chromebook kid can type); toggleable on any device.
@@ -157,7 +163,10 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
         soundManager.playCorrect()
       } else {
         soundManager.playError()
-        // Trigger screen shake (clear any in-flight shake first)
+        // Trigger screen shake (clear any in-flight shake first).
+        // Skipped entirely under reduced motion — a shaking screen on every
+        // mistake is exactly what a motion-sensitive child asked not to have.
+        if (reduceMotion) return
         setIsShaking(false)
         if (shakeTimerRef.current) clearTimeout(shakeTimerRef.current)
         // Tiny delay so React re-renders false→true even on rapid errors
@@ -175,7 +184,7 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
       setLastCorrect(correct)
       setTimeout(() => setLastCorrect(null), 200)
     },
-    [store],
+    [store, reduceMotion],
   )
 
   // Check if current line is complete
@@ -488,10 +497,10 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 16 }}
+              initial={reduceMotion ? false : { opacity: 0, scale: 0.9, y: 16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 16 }}
-              transition={{ duration: 0.18, ease: 'easeOut' }}
+              exit={reduceMotion ? {} : { opacity: 0, scale: 0.9, y: 16 }}
+              transition={reduceMotion ? { duration: 0 } : { duration: 0.18, ease: 'easeOut' }}
               className="game-card-border w-full max-w-md"
             >
               <CardHeader className="text-center">
@@ -502,9 +511,13 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
                     return (
                       <motion.div
                         key={i}
-                        initial={{ scale: 0, rotate: -15 }}
+                        initial={reduceMotion ? false : { scale: 0, rotate: -15 }}
                         animate={{ scale: 1, rotate: 0 }}
-                        transition={{ delay: 0.08 * i, duration: 0.15, ease: 'easeOut' }}
+                        transition={
+                          reduceMotion
+                            ? { duration: 0 }
+                            : { delay: 0.08 * i, duration: 0.15, ease: 'easeOut' }
+                        }
                       >
                         <Star
                           className={`size-9 ${
@@ -534,9 +547,13 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
                   ) && (
                     <motion.p
                       data-testid="lesson-story-outro"
-                      initial={{ opacity: 0, y: 6 }}
+                      initial={reduceMotion ? false : { opacity: 0, y: 6 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3, duration: 0.18, ease: 'easeOut' }}
+                      transition={
+                        reduceMotion
+                          ? { duration: 0 }
+                          : { delay: 0.3, duration: 0.18, ease: 'easeOut' }
+                      }
                       className="mt-2 text-sm leading-relaxed text-muted-foreground"
                     >
                       {lesson.storyOutroHe}
@@ -550,14 +567,18 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
                     className="rounded-xl p-3"
                     style={{ background: 'oklch(0.15 0.02 292 / 40%)', border: '1.5px solid var(--game-border)' }}
                   >
-                    <div className="text-3xl font-bold tabular-nums">{finalStats.wpm}</div>
+                    <div className="text-3xl font-bold tabular-nums">
+                      <CountUp value={finalStats.wpm} />
+                    </div>
                     <div className="text-sm text-muted-foreground">מילים לדקה</div>
                   </div>
                   <div
                     className="rounded-xl p-3"
                     style={{ background: 'oklch(0.15 0.02 292 / 40%)', border: '1.5px solid var(--game-border)' }}
                   >
-                    <div className="text-3xl font-bold tabular-nums">{finalStats.accuracy}%</div>
+                    <div className="text-3xl font-bold tabular-nums">
+                      <CountUp value={finalStats.accuracy} suffix="%" />
+                    </div>
                     <div className="text-sm text-muted-foreground">דיוק</div>
                   </div>
                 </div>
@@ -569,23 +590,29 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
                   lesson.targetAccuracy,
                 ) && (
                   <motion.div
-                    initial={{ scale: 0.6, opacity: 0 }}
+                    initial={reduceMotion ? false : { scale: 0.6, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.25, duration: 0.18, ease: 'easeOut' }}
+                    transition={
+                      reduceMotion
+                        ? { duration: 0 }
+                        : { delay: 0.25, duration: 0.18, ease: 'easeOut' }
+                    }
                     className="flex items-center justify-center gap-2 rounded-xl py-2"
                     style={{ background: 'oklch(0.495 0.205 292 / 15%)', border: '1.5px solid oklch(0.495 0.205 292 / 35%)' }}
                   >
                     <Trophy className="size-5 text-primary" />
                     <span className="text-lg font-bold text-primary">
                       +
-                      {
-                        calculateXpReward(
-                          finalStats,
-                          lesson.targetWpm,
-                          lesson.targetAccuracy,
-                          xpStore.streak,
-                        ).total
-                      }{' '}
+                      <CountUp
+                        value={
+                          calculateXpReward(
+                            finalStats,
+                            lesson.targetWpm,
+                            lesson.targetAccuracy,
+                            xpStore.streak,
+                          ).total
+                        }
+                      />{' '}
                       XP
                     </span>
                   </motion.div>

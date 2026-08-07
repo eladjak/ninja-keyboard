@@ -20,6 +20,7 @@ import {
   Timer,
   Sparkles,
 } from 'lucide-react'
+import { CountUp } from '@/components/ui/count-up'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { GameCard } from '@/components/ui/game-card'
 import { Button } from '@/components/ui/button'
@@ -349,7 +350,7 @@ export function HomeDashboard() {
                   className="text-2xl font-bold"
                   style={{ color: stat.accent, textShadow: `0 0 12px ${stat.accent}60` }}
                 >
-                  {value}
+                  <CountUp value={value} />
                 </span>
                 <span className="text-xs text-muted-foreground">{stat.label}</span>
               </div>
