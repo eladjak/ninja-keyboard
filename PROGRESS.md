@@ -56,6 +56,36 @@ score of 0. **Not tested at all** (must not be read as working): anything behind
 mini-games, shop purchase, certificates, parent report; mobile was Chromium's Pixel 5 emulation,
 not a physical device.
 
+## 2026-08-07 (later) — wow-ui-standard, wave 1: the lesson-end moment ✅ (master `e048614`)
+
+Applied `wow-ui-standard` principle 13 (count-up) where it belongs — the end of a lesson, when a
+learner finds out how they did — plus the home stat cards. **Inside this project's own brand**
+(#6C5CE7/#00B894, Heebo, RTL); no new palette, no new font, `transform`/`opacity` only.
+
+**The audit found something that mattered more than the effect.** The results screen — the emotional
+peak — had **no reduced-motion handling at all**: it animated the stars, the modal, the XP badge, the
+story outro and a **screen-shake on every mistake**, unconditionally. And `ConfettiBurst` read only
+`settings-store.reducedMotion`, so the OS-level `prefers-reduced-motion` reached it not at all — the
+app had grown **two unsynced reducedMotion flags**. `useReducedMotion` now ORs all three sources
+(OS + accessibility store + settings store) and fails closed. This is a children's product; some of
+them are motion-sensitive.
+
+**Verified in a browser, two arms** (either alone proves nothing): motion on → `0,79,165,205,239,257,264,265`
+climbs and lands; reduced motion → `260,260,260,260,260,260,260,260`, never animates **[CONTROL]**.
+It lands on truth, not a tween artefact: displayed `257/100%` === engine `257/100%`. The
+reduced-motion screenshot shows the complete final state — nothing stuck invisible.
+
+**Correctness survived the visual work** (re-run on production afterwards): good arm 100% / 3 gold
+stars / 502 XP · garbage arm 50% / **0 stars** / 0 XP · guest routes still 200 · mobile 119 taps →
+100%, 130 XP, survived reload.
+
+**Deliberately NOT done, with reasons** — the standard's own rule is that one precise effect beats ten
+sparkly ones: **sunrise splash** (principle 7) skipped — a blocking overlay on an app a child opens
+daily buys little and risks trapping the user if self-removal fails; **logo self-draw** (8),
+**slow-glide drawer** (1) and **particles** (4) skipped — this app's navigation is a bottom tab bar
+and a sidebar that already work, and particles are explicitly *not* a default. These are wave-2
+candidates, not oversights.
+
 ## Status (historical): 🟢 LIVE · Supabase RESTORED · A1 touch keyboard DONE · A3 leaderboard READY · B5 PWA/OFFLINE DONE
 ## Previous Update: 2026-07-19 (B5: installable PWA + browser-verified core offline + reconnect sync)
 ## Previous Sprint: Horizon B — PWA/offline finalization
