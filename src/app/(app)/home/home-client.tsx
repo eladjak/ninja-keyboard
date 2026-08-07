@@ -196,8 +196,17 @@ export function HomeDashboard() {
   // rather than hard-gating it — so a returning guest who skipped placement
   // still lands on their home. The onboarding→placement→lesson flow is guided
   // from the onboarding screen itself, not enforced by the home guard.
+  //
+  // "Truly new" means NO PROGRESS, not merely "never walked the wizard". The
+  // landing page also links straight to "לרשימת השיעורים", and the sidebar
+  // exposes שיעורים on every screen — so a child can play, earn XP and finish
+  // lessons without ever seeing onboarding. Bouncing them meant the hub greeted
+  // a returning player holding 130 XP with "ברוכים הבאים... נצא ישר לשיעור
+  // הראשון". Having played IS the onboarding.
+  const hasProgress =
+    hydrated && (xp.totalXp > 0 || Object.keys(xp.completedLessons).length > 0)
   const firstRunDestination =
-    hydrated && !onboardingCompleted ? '/onboarding' : null
+    hydrated && !onboardingCompleted && !hasProgress ? '/onboarding' : null
 
   useEffect(() => {
     if (firstRunDestination) router.replace(firstRunDestination)
