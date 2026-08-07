@@ -6,6 +6,7 @@ import {
   DEFAULT_TITLE_ID,
   getCosmetic,
 } from '@/lib/gamification/coins'
+import { persistVersioning } from './persist-version'
 
 /** Keyboard layout variants: standard Hebrew or Dvorak Hebrew */
 export type KeyboardLayout = 'standard' | 'dvorak'
@@ -134,6 +135,6 @@ export const useSettingsStore = create<SettingsState>()(
       toggleReducedMotion: () =>
         set((s) => ({ reducedMotion: !s.reducedMotion })),
     }),
-    { name: 'ninja-keyboard-settings' },
+    { name: 'ninja-keyboard-settings', ...persistVersioning() },
   ),
 )

@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { GameZone, HebrewHoliday } from '@/lib/audio/music-manager'
+import { persistVersioning } from './persist-version'
 
 // ---------------------------------------------------------------------------
 // Track unlock conditions
@@ -186,6 +187,7 @@ export const useMusicStore = create<MusicState>()(
     }),
     {
       name: 'ninja-keyboard-music',
+      ...persistVersioning(),
       partialize: (state) => ({
         musicVolume: state.musicVolume,
         musicMuted: state.musicMuted,

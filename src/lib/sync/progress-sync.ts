@@ -65,7 +65,59 @@ export interface ProgressRowInput {
   attempts?: number
 }
 
-/** Upsert a per-lesson progress row. No-op when guest / no env. */
+/** A stored progress row, as far as the max rule cares. */
+export interface ProgressRowMaxes {
+  bestWpm: number
+  bestAccuracy: number
+  stars?: number
+  attempts?: number
+}
+
+/**
+ * A personal best must never go DOWN.
+ *
+ * `pushProgress` was a plain upsert of this device's locally-computed best, so
+ * a second (or stale) device completing the same lesson at 20 wpm overwrote a
+ * 55 wpm already on the server. `mergeSnapshots` already encodes the correct
+ * rule, but it runs once at sign-in — not on the path that writes.
+ *
+ * Pure and separately tested so the rule itself is verified even though the
+ * database round-trip around it is not.
+ */
+export function resolveProgressMaxes(
+  existing: ProgressRowMaxes | null,
+  incoming: ProgressRowInput,
+): ProgressRowMaxes {
+  if (!existing) {
+    return {
+      bestWpm: incoming.bestWpm,
+      bestAccuracy: incoming.bestAccuracy,
+      stars: incoming.stars ?? 0,
+      attempts: incoming.attempts ?? 1,
+    }
+  }
+  return {
+    bestWpm: Math.max(existing.bestWpm, incoming.bestWpm),
+    bestAccuracy: Math.max(existing.bestAccuracy, incoming.bestAccuracy),
+    stars: Math.max(existing.stars ?? 0, incoming.stars ?? 0),
+    // Attempts is a counter, not a max: the higher of the two still loses
+    // count, but it never goes backwards, which is the property that matters.
+    attempts: Math.max(existing.attempts ?? 0, incoming.attempts ?? 1),
+  }
+}
+
+/**
+ * Upsert a per-lesson progress row, never lowering a stored personal best.
+ * No-op when guest / no env.
+ *
+ * Reads the current row first and merges with `resolveProgressMaxes`. If that
+ * read fails we fall back to writing the incoming values — exactly today's
+ * behaviour — so this can only ever preserve MORE than before, never less.
+ *
+ * NOT fully atomic: two devices writing in the same instant can still race.
+ * The durable fix is a `GREATEST(...)` upsert in a Postgres function, which is
+ * a schema/policy change and therefore Elad's call. See the report.
+ */
 export async function pushProgress(
   lessonId: string,
   input: ProgressRowInput,
@@ -74,15 +126,37 @@ export async function pushProgress(
   const supabase = getClient()
   if (!userId || !supabase) return Result.ok(null)
 
+  let existing: ProgressRowMaxes | null = null
+  try {
+    const { data } = await supabase
+      .from('progress')
+      .select('best_wpm, best_accuracy, stars, attempts')
+      .eq('user_id', userId)
+      .eq('lesson_id', lessonId)
+      .maybeSingle()
+    if (data) {
+      existing = {
+        bestWpm: data.best_wpm ?? 0,
+        bestAccuracy: data.best_accuracy ?? 0,
+        stars: data.stars ?? 0,
+        attempts: data.attempts ?? 0,
+      }
+    }
+  } catch {
+    // Read failed: fall through with existing = null, i.e. today's behaviour.
+  }
+
+  const resolved = resolveProgressMaxes(existing, input)
+
   return guard('pushProgress', async () => {
     const { error } = await supabase.from('progress').upsert(
       {
         user_id: userId,
         lesson_id: lessonId,
-        best_wpm: Math.round(input.bestWpm),
-        best_accuracy: input.bestAccuracy,
-        stars: input.stars ?? 0,
-        attempts: input.attempts ?? 1,
+        best_wpm: Math.round(resolved.bestWpm),
+        best_accuracy: resolved.bestAccuracy,
+        stars: resolved.stars ?? 0,
+        attempts: resolved.attempts ?? 1,
         last_attempt_at: new Date().toISOString(),
       },
       { onConflict: 'user_id,lesson_id' },

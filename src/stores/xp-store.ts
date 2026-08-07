@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware'
 import { debouncedPush, fireAndForget } from '@/lib/sync/debounce'
 import { pushGamification, pushProgress } from '@/lib/sync/progress-sync'
 import { useBadgeStore } from './badge-store'
+import { persistVersioning } from './persist-version'
 
 /** XP thresholds for each level (cumulative) */
 const LEVEL_THRESHOLDS = [
@@ -168,6 +169,6 @@ export const useXpStore = create<XpState>()(
         return lessonId in get().completedLessons
       },
     }),
-    { name: 'ninja-keyboard-xp' },
+    { name: 'ninja-keyboard-xp', ...persistVersioning() },
   ),
 )

@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware'
 import { debouncedPush, fireAndForget } from '@/lib/sync/debounce'
 import { pushGamification } from '@/lib/sync/progress-sync'
 import { useXpStore } from './xp-store'
+import { persistVersioning } from './persist-version'
 
 interface EarnedBadgeRecord {
   earnedAt: string
@@ -74,6 +75,6 @@ export const useBadgeStore = create<BadgeState>()(
           .map(([id]) => id)
       },
     }),
-    { name: 'ninja-keyboard-badges' },
+    { name: 'ninja-keyboard-badges', ...persistVersioning() },
   ),
 )

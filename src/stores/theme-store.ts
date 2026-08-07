@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { AgeName, ColorScheme } from '@/types/theme'
 import type { PlacementResult } from '@/lib/placement/placement-engine'
+import { persistVersioning } from './persist-version'
 
 interface ThemeState {
   ageName: AgeName
@@ -44,6 +45,6 @@ export const useThemeStore = create<ThemeState>()(
                   : 'high-contrast',
         })),
     }),
-    { name: 'ninja-keyboard-theme' },
+    { name: 'ninja-keyboard-theme', ...persistVersioning() },
   ),
 )

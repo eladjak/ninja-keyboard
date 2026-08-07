@@ -5,6 +5,7 @@ import type { CharacterName, DialogChoice, StoryFlags } from '@/types/story'
 import { debouncedPush, fireAndForget } from '@/lib/sync/debounce'
 import { pushPlayerState } from '@/lib/sync/progress-sync'
 import type { StorySnapshot } from '@/lib/sync/snapshot'
+import { persistVersioning } from './persist-version'
 
 interface BossResult {
   defeated: boolean
@@ -223,6 +224,6 @@ export const useStoryStore = create<StoryState>()(
         return 1
       },
     }),
-    { name: 'ninja-keyboard-story' },
+    { name: 'ninja-keyboard-story', ...persistVersioning() },
   ),
 )

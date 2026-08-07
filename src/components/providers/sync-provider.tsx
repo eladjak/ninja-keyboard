@@ -83,7 +83,10 @@ function applySnapshot(s: ProgressSnapshot): void {
  */
 export function SyncProvider({ children }: { children: React.ReactNode }) {
   const { user, status } = useCurrentUser()
+  /** Users whose merge COMPLETED. Set only after success — see the effect. */
   const mergedForUser = useRef<string | null>(null)
+  /** Users whose merge is currently running, so a re-render cannot start a second. */
+  const mergeInFlight = useRef<string | null>(null)
   const [isSyncingSessions, setIsSyncingSessions] = useState(false)
 
   const flushSessions = useCallback(async () => {
@@ -100,18 +103,44 @@ export function SyncProvider({ children }: { children: React.ReactNode }) {
 
     if (status !== 'authenticated' || !user) return
     if (mergedForUser.current === user.id) return
-    mergedForUser.current = user.id
+    if (mergeInFlight.current === user.id) return
+    mergeInFlight.current = user.id
 
     let cancelled = false
 
     void (async () => {
-      const result = await hydrateFromSupabase(user.id)
-      if (cancelled || result.isErr()) {
-        if (result.isErr()) {
-          console.warn('[sync] hydrate failed', result.error)
-        }
+      // The completion marker used to be set BEFORE the network call. One
+      // failure on school wifi therefore stranded a guest's progress: the merge
+      // never ran, nothing retried because the marker already said "done", and
+      // the only trace was a console.warn. A warning nobody reads is
+      // indistinguishable from silence.
+      //
+      // So: retry with backoff, mark complete only on success, and if it still
+      // fails, TELL the child their progress is safe but not yet on the account.
+      let result = await hydrateFromSupabase(user.id)
+      for (let attempt = 1; attempt < 3 && !cancelled && result.isErr(); attempt++) {
+        await new Promise((r) => setTimeout(r, 800 * attempt))
+        if (cancelled) break
+        result = await hydrateFromSupabase(user.id)
+      }
+
+      if (cancelled) {
+        mergeInFlight.current = null
         return
       }
+
+      if (result.isErr()) {
+        console.warn('[sync] hydrate failed', result.error)
+        mergeInFlight.current = null // leave it retryable
+        toast.error('לא הצלחנו לסנכרן את ההתקדמות לחשבון', {
+          description:
+            'ההתקדמות שלך שמורה על המכשיר הזה ולא אבדה. ננסה שוב בהתחברות הבאה.',
+        })
+        return
+      }
+
+      mergedForUser.current = user.id
+      mergeInFlight.current = null
 
       const { snapshot: serverSnapshot, serverHadState } = result.value
       const localSnapshot = readLocalSnapshot()

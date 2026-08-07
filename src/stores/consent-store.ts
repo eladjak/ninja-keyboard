@@ -7,6 +7,7 @@ import {
   isConsentRequired,
 } from '@/lib/privacy/consent-manager'
 import type { ConsentRecord, ConsentType } from '@/lib/privacy/consent-manager'
+import { persistVersioning } from './persist-version'
 
 interface ConsentState {
   /** All consent records for this student */
@@ -73,6 +74,6 @@ export const useConsentStore = create<ConsentState>()(
 
       setStudentAge: (age) => set({ studentAge: age }),
     }),
-    { name: 'ninja-keyboard-consent' },
+    { name: 'ninja-keyboard-consent', ...persistVersioning() },
   ),
 )

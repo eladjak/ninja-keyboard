@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { persistVersioning } from './persist-version'
 
 /** Font size preference for accessibility */
 export type FontSize = 'small' | 'medium' | 'large' | 'extra-large'
@@ -77,6 +78,6 @@ export const useAccessibilityStore = create<AccessibilityState>()(
 
       resetAll: () => set(DEFAULT_STATE),
     }),
-    { name: 'ninja-keyboard-accessibility' },
+    { name: 'ninja-keyboard-accessibility', ...persistVersioning() },
   ),
 )

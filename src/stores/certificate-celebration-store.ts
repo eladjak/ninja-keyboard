@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { CertificateLevel } from '@/lib/gamification/certificate'
+import { persistVersioning } from './persist-version'
 
 interface CertificateCelebrationState {
   /** Certificate levels whose milestone modal has already been shown. */
@@ -26,6 +27,6 @@ export const useCertificateCelebrationStore =
 
         hasCelebrated: (level) => get().celebratedLevels.includes(level),
       }),
-      { name: 'ninja-keyboard-cert-celebrations' },
+      { name: 'ninja-keyboard-cert-celebrations', ...persistVersioning() },
     ),
   )

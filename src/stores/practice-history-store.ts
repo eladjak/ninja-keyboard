@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { fireAndForget } from '@/lib/sync/debounce'
 import { pushSessionOrQueue } from '@/lib/offline/session-sync'
+import { persistVersioning } from './persist-version'
 
 /** A single practice session result */
 export interface PracticeResult {
@@ -134,6 +135,6 @@ export const usePracticeHistoryStore = create<PracticeHistoryState>()(
 
       clearHistory: () => set({ results: [] }),
     }),
-    { name: 'ninja-keyboard-practice-history' },
+    { name: 'ninja-keyboard-practice-history', ...persistVersioning() },
   ),
 )

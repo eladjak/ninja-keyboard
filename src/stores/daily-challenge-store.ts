@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { debouncedPush, fireAndForget } from '@/lib/sync/debounce'
 import { pushPlayerState } from '@/lib/sync/progress-sync'
+import { persistVersioning } from './persist-version'
 
 interface DailyChallengeState {
   /** Map of date string -> completion status */
@@ -67,6 +68,6 @@ export const useDailyChallengeStore = create<DailyChallengeState>()(
         return Object.keys(get().completedChallenges).length
       },
     }),
-    { name: 'ninja-keyboard-daily-challenges' },
+    { name: 'ninja-keyboard-daily-challenges', ...persistVersioning() },
   ),
 )

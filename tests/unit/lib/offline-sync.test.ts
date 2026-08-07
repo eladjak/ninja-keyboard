@@ -143,7 +143,10 @@ describe('savePendingResult + getPendingResults', () => {
     const before = Date.now()
     const result = savePendingResult('lesson-05', makeStats())
     const after = Date.now()
-    const completedMs = new Date(result.completedAt).getTime()
+    // savePendingResult now returns null when the write did not land, so a
+    // successful queue is an assertion rather than an assumption.
+    expect(result).not.toBeNull()
+    const completedMs = new Date(result!.completedAt).getTime()
     expect(completedMs).toBeGreaterThanOrEqual(before)
     expect(completedMs).toBeLessThanOrEqual(after)
   })

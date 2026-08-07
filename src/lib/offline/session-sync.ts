@@ -20,7 +20,14 @@ function toSessionInput(lessonId: string, stats: SessionStats): SessionInput {
 
 function queueResult(lessonId: string, stats: SessionStats): Result<SessionDelivery, SyncError> {
   try {
-    savePendingResult(lessonId, stats)
+    // savePendingResult returns null when the write did not land (quota, or a
+    // locked/So-full storage on a school tablet). Reporting 'queued' then would
+    // tell the caller a completed lesson is safe when it has just been dropped.
+    if (savePendingResult(lessonId, stats) === null) {
+      return Result.err(
+        new SyncError({ message: 'queueSession: could not persist pending result' }),
+      )
+    }
     return Result.ok('queued' as const)
   } catch (cause) {
     return Result.err(new SyncError({ message: 'queueSession: localStorage failed', cause }))

@@ -94,9 +94,32 @@ function readLessonCache(): Record<string, LessonCacheEntry> {
   }
 }
 
-function writeLessonCache(cache: Record<string, LessonCacheEntry>): void {
-  if (!isBrowser()) return
-  localStorage.setItem(STORAGE_KEY_LESSONS, JSON.stringify(cache))
+/**
+ * Storage writes that cannot take the app down.
+ *
+ * These `setItem` calls had no try/catch of their own — safe only by the
+ * coincidence that the single real caller happened to wrap them. A
+ * QuotaExceededError from any future caller would have propagated out of a
+ * fire-and-forget path. On the low-end school tablets this product targets,
+ * a full disk is not exotic.
+ *
+ * Returns false on failure so a caller CAN react. It never throws, and it
+ * never pretends: the queued-result path checks the return value rather than
+ * assuming the write landed.
+ */
+function safeSetItem(key: string, value: string): boolean {
+  try {
+    localStorage.setItem(key, value)
+    return true
+  } catch (e) {
+    console.warn(`[offline] could not write ${key}`, e)
+    return false
+  }
+}
+
+function writeLessonCache(cache: Record<string, LessonCacheEntry>): boolean {
+  if (!isBrowser()) return false
+  return safeSetItem(STORAGE_KEY_LESSONS, JSON.stringify(cache))
 }
 
 function readPendingResults(): PendingLessonResult[] {
@@ -112,10 +135,13 @@ function readPendingResults(): PendingLessonResult[] {
   }
 }
 
-function writePendingResults(results: PendingLessonResult[]): void {
-  if (!isBrowser()) return
-  localStorage.setItem(STORAGE_KEY_PENDING, JSON.stringify(results))
-  window.dispatchEvent(new Event(PENDING_RESULTS_CHANGED_EVENT))
+function writePendingResults(results: PendingLessonResult[]): boolean {
+  if (!isBrowser()) return false
+  const ok = safeSetItem(STORAGE_KEY_PENDING, JSON.stringify(results))
+  // Only announce a change that actually happened. Firing the event on a
+  // failed write tells every listener the queue was updated when it was not.
+  if (ok) window.dispatchEvent(new Event(PENDING_RESULTS_CHANGED_EVENT))
+  return ok
 }
 
 // ── Public API ───────────────────────────────────────────────────────────────
@@ -158,11 +184,19 @@ export function getAllCachedLessons(): Record<string, LessonCacheEntry> {
 /**
  * Save a lesson result that could not be synced (offline).
  * Appends to the pending results array without mutating existing entries.
+ *
+ * Returns null when the write did NOT land. It used to return the result
+ * unconditionally, which — once the underlying setItem stopped throwing —
+ * would have reported a lesson as safely queued while it was dropped. A guard
+ * that converts a loud failure into a quiet one is worse than no guard.
  */
-export function savePendingResult(lessonId: string, stats: SessionStats): PendingLessonResult {
+export function savePendingResult(
+  lessonId: string,
+  stats: SessionStats,
+): PendingLessonResult | null {
   const existing = readPendingResults()
   const result = createPendingResult(lessonId, stats)
-  writePendingResults([...existing, result])
+  if (!writePendingResults([...existing, result])) return null
   return result
 }
 
