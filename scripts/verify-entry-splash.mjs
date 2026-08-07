@@ -79,6 +79,14 @@ const shown = (page) =>
   const after = await shown(page)
   await page.screenshot({ path: `${OUT}/2-after-entrance.png` })
   check('gets out of the way when done', !after.visible, JSON.stringify(after))
+  // Gone from the DOM, not merely display:none. An overlay that has mounted and
+  // still holds a full-viewport node is a weaker guarantee than one that is not
+  // there, and only the second one is the contract.
+  check(
+    'removed from the DOM, not merely hidden',
+    after.reason === 'absent',
+    JSON.stringify(after),
+  )
   check(
     'no page errors (hydration intact)',
     page.errors.length === 0,
@@ -131,6 +139,55 @@ const shown = (page) =>
     'CONTROL: fresh browser plays it again (the gate is the reason, not breakage)',
     s.visible,
     JSON.stringify(s),
+  )
+  await ctx.close()
+}
+
+// ─── 4b. THE BACKUP, PROVEN BY BREAKING THE PRIMARY PATH ────────────────────
+// The objection this whole feature is built against is a self-removal that
+// misfires, leaving a child staring at an unusable app they cannot describe.
+// The answer is a second teardown path that does not depend on the first. A
+// removal only ever observed to succeed is indistinguishable from one that
+// cannot fail — so break `animationend` outright and prove the timeout alone
+// still clears the screen.
+{
+  const ctx = await browser.newContext({ viewport: { width: 430, height: 860 } })
+  await ctx.addInitScript(() => {
+    window.__swallowedAnimationEnd = 0
+    const orig = EventTarget.prototype.addEventListener
+    EventTarget.prototype.addEventListener = function (type, ...rest) {
+      if (type === 'animationend') {
+        window.__swallowedAnimationEnd++
+        return // never registered: the primary teardown path cannot fire
+      }
+      return orig.call(this, type, ...rest)
+    }
+  })
+  const page = await openPage(ctx)
+  await page.goto(url, { waitUntil: 'domcontentloaded' })
+  await page.waitForTimeout(700)
+  const during = await shown(page)
+  check(
+    'BROKEN-PATH: splash still plays with animationend disabled',
+    during.visible,
+    JSON.stringify(during),
+  )
+  // Give the timeout its full budget plus margin.
+  await page.waitForTimeout(3400)
+  const after = await shown(page)
+  await page.screenshot({ path: `${OUT}/6-backup-teardown.png` })
+  check(
+    'BROKEN-PATH: timeout backup alone removes the overlay',
+    after.reason === 'absent',
+    JSON.stringify(after),
+  )
+  // Control for the sabotage itself: if nothing was swallowed, the overlay may
+  // simply have been removed by animationend as usual and this proves nothing.
+  const swallowed = await page.evaluate(() => window.__swallowedAnimationEnd)
+  check(
+    'CONTROL: animationend really was disabled (sabotage took effect)',
+    swallowed > 0,
+    `swallowed=${swallowed}`,
   )
   await ctx.close()
 }
