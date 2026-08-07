@@ -29,6 +29,7 @@ import {
   type DrillSuggestion,
 } from '@/lib/typing-engine/weak-key-suggestion'
 import { calculateStars } from '@/lib/typing-engine/stars'
+import { buildPositionCorrectnessMap } from '@/lib/typing-engine/keystroke-map'
 import { CHAR_TO_KEY } from '@/lib/typing-engine/keyboard-layout'
 import type { LessonDefinition, LessonContent } from '@/lib/typing-engine/types'
 import type { StoryTriggerEvent } from '@/hooks/use-story-trigger'
@@ -76,6 +77,17 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
   }, [soundEnabled, soundVolume])
 
   const [currentLineIndex, setCurrentLineIndex] = useState(0)
+
+  // Per-character colouring. keystrokes[] is indexed by KEYSTROKE, not by text
+  // position, and a lesson keeps one list across all its lines while resetting
+  // currentIndex per line — so both a mistake and a line break shifted the
+  // colours. Skip the characters already completed on earlier lines, then walk.
+  const positionWasClean = useMemo(() => {
+    const completedChars = content.lines
+      .slice(0, currentLineIndex)
+      .reduce((n, line) => n + line.length, 0)
+    return buildPositionCorrectnessMap(store.keystrokes, completedChars)
+  }, [store.keystrokes, currentLineIndex, content.lines])
   const [pressedKey, setPressedKey] = useState<string | undefined>()
   const [lastCorrect, setLastCorrect] = useState<boolean | null>(null)
   // Combo streak: consecutive correct keystrokes (escalating visual tiers)
@@ -382,8 +394,7 @@ export function LessonPageClient({ lesson, content }: LessonPageClientProps) {
           {store.text.split('').map((char, i) => {
             let className = 'text-muted-foreground/40'
             if (i < store.currentIndex) {
-              const keystroke = store.keystrokes[i]
-              className = keystroke?.isCorrect
+              className = positionWasClean.get(i) !== false
                 ? 'text-green-600 dark:text-green-400'
                 : 'text-red-600 dark:text-red-400'
             } else if (i === store.currentIndex) {

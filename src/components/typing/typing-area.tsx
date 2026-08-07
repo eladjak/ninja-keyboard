@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import { useReducedMotion } from '@/hooks/use-reduced-motion'
+import { buildPositionCorrectnessMap } from '@/lib/typing-engine/keystroke-map'
 
 interface Keystroke {
   expected: string
@@ -109,14 +110,14 @@ export function TypingArea({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isActive, onKeyPress])
 
-  // Build a lookup: index → keystroke result (for characters already typed)
-  const keystrokeMap = useMemo(() => {
-    const map = new Map<number, boolean>()
-    keystrokes.forEach((ks, i) => {
-      map.set(i, ks.isCorrect)
-    })
-    return map
-  }, [keystrokes])
+  // Build a lookup: text POSITION → was it typed cleanly. Not `keystrokes[i]`:
+  // that is the i-th keystroke, and since only correct keystrokes advance the
+  // text, indexing by it drifts by the number of mistakes — painting characters
+  // the child typed perfectly as errors.
+  const keystrokeMap = useMemo(
+    () => buildPositionCorrectnessMap(keystrokes),
+    [keystrokes],
+  )
 
   const characters = useMemo(
     () =>
