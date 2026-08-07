@@ -1,8 +1,64 @@
 # Ninja Keyboard - Progress
 
-## Status: 🟢 LIVE · Supabase RESTORED · A1 touch keyboard DONE · A3 leaderboard READY · B5 PWA/OFFLINE DONE
-## Last Updated: 2026-07-19 (B5: installable PWA + browser-verified core offline + reconnect sync)
-## Sprint: Horizon B — PWA/offline finalization
+## Status: 🟢 LIVE · guest journey unblocked · reward integrity fixed · mobile tap-typing reachable
+## Last Updated: 2026-08-07 (pre-launch UX audit — 5 defects found by driving the product, all fixed + deployed)
+## Sprint: pre-launch journey audit
+
+## 2026-08-07 — Pre-launch UX audit: 5 journey defects fixed and shipped ✅ (master `bcd2d72`)
+
+**Method note, because it is the finding behind the findings.** Every defect below was invisible to
+the gates this project already had: `tsc --noEmit` was clean, 1409 unit tests passed, and the site
+returned 200. None of that is a child typing a lesson. All five were found by driving a real browser
+with real keystrokes (CDP `Input.dispatchKeyEvent` — Playwright cannot press Hebrew keys) and by
+running a **failing arm** next to every passing one.
+
+1. **Guest dead-end (was live on prod).** `/progress`, `/profile`, `/settings` sat in
+   `PROTECTED_ROUTES`, so with Supabase env present every logged-out visitor was 307'd to `/login` —
+   including from the "פרופיל"/"הגדרות" links the sidebar shows guests. All three read only from
+   Zustand/localStorage; the gate protected nothing and broke the advertised no-registration flow.
+   *Verified: guest with 504 XP now reaches a real profile page. Routes 200, 404 control still reads.*
+2. **Three gold stars on a failed lesson.** `calculateStars` averaged the wpm ratio with the accuracy
+   ratio and had no accuracy floor, so speed bought away inaccuracy: on lesson-01 (5 wpm / 80%) a run
+   at 30 wpm / 50% showed 3 gold stars beside "נסיון טוב! נסו שוב" and 0 XP — reachable by any
+   beginner at ~12 wpm / 25%. Accuracy is now a gate (<70% of target → 0 stars; below target → 1 max).
+   *Verified: identical garbage run now shows 3 EMPTY stars; good run still earns 3 gold + XP.*
+3. **Mobile: 11 of 31 keys unreachable.** On a 393px viewport the keyboard's bottom row — including
+   SPACE and ה/נ/מ/ב/ס/ז — sat under the fixed `h-16` tab bar (measured with `elementFromPoint`, not
+   eyeballed). A tap there hit a nav link, navigating away and destroying the lesson in progress.
+   The keyboard now scrolls itself into view when it is the primary input. *Verified: 11 covered → 0,
+   and a touch-only run completed lesson-01 with 119 real taps (50 wpm, 100%, 3 stars, 132 XP,
+   surviving a reload).*
+4. **Hub re-onboarded players who already had progress.** `/home` bounced anyone lacking the
+   onboarding flag to the wizard regardless of XP — and the landing page links straight to
+   "לרשימת השיעורים", so a child could finish lessons and then be greeted "ברוכים הבאים… נצא ישר
+   לשיעור הראשון" holding 130 XP. Having played now counts as onboarded. *Both arms verified.*
+5. **Children shown mistakes they never made.** Both renderers coloured characters with
+   `keystrokes[i]`, treating the i-th keystroke as position i; only correct keystrokes advance, so
+   the mapping drifted by the error count. One miss at position 0 painted positions 0 AND 1 red.
+   Extracted `buildPositionCorrectnessMap()` (tested) and used it in both places. *Verified in
+   browser: red cells `[0,1]` → `[0]`.* Invisible on a flawless run — it only misfires once a child
+   errs, i.e. exactly when the feedback matters.
+
+**Gates:** vitest **1418/1418** (+9), `tsc --noEmit` clean, `next build` ok, prod deploy Ready and
+**re-verified against production itself**. Counter-controls run rather than assumed: the new star
+tests fail against the old formula ("expected 3 to be 0"), and tsc was proven to read the changed
+file by injecting a deliberate error. PWA offline re-checked after the changes (4 routes load
+offline; the uncached-fetch control still fails, proving the offline state was real).
+
+**Verified working, not merely assumed:** full guest lesson → result → reload persistence; garbage
+arm scoring differently from a good one; PWA offline; on-screen keyboard tap-typing; word-rain
+start→play→score→end (+XP); leaderboard's mock data carries an honest on-screen "demo only" note.
+
+**Known-open (found, not fixed):** placement stages end only on the 30s timer with no "I'm done"
+control, so a child who finishes early waits on a completed sentence; word-rain awards +10 XP for a
+score of 0. **Not tested at all** (must not be read as working): anything behind an account
+(register/login, class codes, teacher view, real leaderboard data), battle mode, the other two
+mini-games, shop purchase, certificates, parent report; mobile was Chromium's Pixel 5 emulation,
+not a physical device.
+
+## Status (historical): 🟢 LIVE · Supabase RESTORED · A1 touch keyboard DONE · A3 leaderboard READY · B5 PWA/OFFLINE DONE
+## Previous Update: 2026-07-19 (B5: installable PWA + browser-verified core offline + reconnect sync)
+## Previous Sprint: Horizon B — PWA/offline finalization
 
 ## 2026-07-19 — Horizon B / B5: installable PWA + core offline ✅ (branch `feat/pwa-offline`)
 
