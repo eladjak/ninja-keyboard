@@ -13,6 +13,7 @@ import type { AgeName } from '@/types/theme'
 import { cn } from '@/lib/utils'
 import { useClickSound } from '@/hooks/use-sound-effect'
 import { useHydrated } from '@/hooks/use-hydrated'
+import { DataDeletionDialog } from '@/components/privacy/data-deletion-dialog'
 
 const KEYBOARD_LAYOUTS: { value: KeyboardLayout; label: string; description: string }[] = [
   { value: 'standard', label: 'תקנית', description: 'פריסת מקלדת עברית תקנית' },
@@ -318,6 +319,30 @@ export default function SettingsPage() {
                 </button>
               )
             })}
+          </div>
+        </div>
+
+        {/* Privacy. The whole privacy module (ConsentForm, ConsentGate,
+            DataDeletionDialog) was built and never mounted anywhere in the app,
+            so a parent had no way to delete their child's data at all. The
+            deletion control is mounted here because it blocks nothing and is
+            reversible. The consent GATE is deliberately still unmounted: it can
+            lock a child out of the product, which is a product and legal
+            decision, not a cleanup. */}
+        <div className="space-y-3">
+          <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+            פרטיות
+          </Label>
+          <div
+            className="flex flex-col gap-3 rounded-xl p-3"
+            style={{ border: '1.5px solid var(--game-border)' }}
+          >
+            <p className="text-sm text-muted-foreground">
+              כל ההתקדמות נשמרת על המכשיר הזה. אפשר למחוק אותה בכל רגע.
+            </p>
+            <div>
+              <DataDeletionDialog />
+            </div>
           </div>
         </div>
       </div>
